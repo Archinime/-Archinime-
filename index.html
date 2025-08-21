@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Añadido id para cambiar dinámicamente si fuera necesario -->
+  <meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=1">
+  <title>Archinime</title>
+
+  <link rel="icon" href="Logo_Archinime.png" type="image/png">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{
+      height:100%;
+      overflow-x:hidden;
+      overflow-y:auto;
+      font-family:sans-serif;
+      color:#fff;
+    }
+    /* Fondo galaxia */
+    #bg-video{
+      position:fixed; 
+      top:0; 
+      left:0;
+      width:100%; 
+      height:100%;
+      object-fit:cover; 
+      z-index:-1;
+      will-change: opacity, transform;
+    }
+    #overlay{
+      position:fixed; 
+      top:0; 
+      left:0;
+      width:100%; 
+      height:100%;
+      z-index:-1;
+      will-change: background;
+    }
+
+
+    /* Botón circular de apoyo */
+    #support {
+      position: fixed; bottom:1rem; right:1rem;
+      text-align:center; z-index:11;
+    }
+    #tiktok-btn, #youtube-btn {
+      width:60px; height:60px; border:none;
+      border-radius:50%; background:#fff;
+      padding:0; cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,0.5);
+      transition:transform .2s; overflow:hidden;
+    }
+    #tiktok-btn:hover, #youtube-btn:hover { transform:scale(1.1); }
+    #tiktok-btn img, #youtube-btn img { width:100%;height:100%;object-fit:cover; }
+    #support-text{
+      margin-top:.4rem; font-size:.9rem;
+      color:#0ff; text-shadow:1px 1px 2px #000;
+      font-weight:bold; white-space:nowrap;
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; padding:1rem 2rem;
+      display:flex; align-items:center; gap:1rem;
+      background:rgba(0,0,0,0.7); backdrop-filter:blur(5px);
+      z-index:10; transition:background .3s;
+      /* permitimos que otros elementos puedan envolver, pero protegeremos el título */
+      flex-wrap:wrap;
+    }
+    header.scrolled{background:rgba(0,0,0,0.95);}
+    /* Título + logo: forzar que se mantengan en la misma línea siempre */
+    header h1{
+      cursor:pointer; 
+      font-size:1.8rem;
+      font-weight: 800;
+
+      background: linear-gradient(135deg, #00fff7, #ff00cc, #ffd700);
+      background-size:300% 300%;
+      -webkit-background-clip:text; 
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      display:flex; align-items:center; gap:.6rem;
+      flex:0 0 auto;             /* evita que el h1 se reduzca/encole o salte a otra línea */
+      white-space:nowrap;        /* evita el quiebre de línea entre logo y texto */
+      animation: gradientMove 6s ease infinite, fadeIn 2s ease-in-out;
+    }
+
+    /* Logo pequeño al lado del título */
+    header h1 img#logo {
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      border-radius:6px;
+      background:transparent;
+      display:block;
+      flex:0 0 auto;
+    }
+    header h1 img#logo {
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      border-radius:6px;
+      background:transparent;
+      display:block;
+    }
+    header select, header input{
+      padding:.5rem 1rem; border:none; border-radius:5px;
+      font-size:1rem; transition:box-shadow .3s;
+      background:rgba(255,255,255,0.9); color:#000;
+    }
+    header select:focus, header input:focus{
+      box-shadow:0 0 8px #0ff;
+    }
+    #search{width:200px;}
+    .container{max-width:1200px;margin:6rem auto 2rem;padding:0 2rem;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.5rem;}
+    .card{
+      opacity:0; transform:translateY(30px);
+      transition:all .6s ease-out; cursor:pointer;
+      border-radius:10px; overflow:hidden; position:relative;
+      will-change: opacity, transform;
+    }
+    .card.visible{opacity:1;transform:translateY(0);}
+    .card img{
+      width:100%; display:block;
+      filter:brightness(100%);
+      transition:transform .4s,filter .4s;
+    }
+    .card:hover img{
+      transform:scale(1.05); filter:brightness(75%);
+    }
+    .info{
+      position:absolute; bottom:0; left:0; right:0;
+      background:rgba(0,0,0,0.7); padding:.75rem;
+      transform:translateY(100%); transition:transform .3s;
+    }
+    .card:hover .info{transform:translateY(0);}
+    .info strong{display:block;font-size:1.05rem;margin-bottom:.25rem;}
+    .info span{
+      background:#0ff; color:#000;
+      padding:2px 6px; border-radius:4px; font-size:.85rem;
+    }
+
+    /* —————— Media query para móviles (≤600px) —————— */
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        padding: 0.5rem 1rem;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+      header select, header input#search,
+      #genre-select, #rating-select {
+        flex: 1 1 100%;
+        max-width: 100%;
+        padding: 0.4rem;
+        font-size: 0.9rem;
+      }
+      #support {
+        display: flex; flex-direction: column; align-items: center;
+      }
+      #tiktok-btn, #youtube-btn {
+        width: 50px; height: 50px; margin: 0.3rem 0;
+      }
+      #support-text {
+        font-size: 0.75rem; text-align: center;
+      }
+    }
+
+    /* Animación del gradiente para el título (Archinime) */
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Vídeo de fondo -->
+<video id="bg-video" autoplay muted loop playsinline>
+    <source src="galaxia.mp4" type="video/mp4">
+  </video>
+  <div id="overlay"></div>
+
+  <audio id="bg-music" autoplay>
+    <source src="https://www.dropbox.com/scl/fi/k85eln5jkukzgw8auarsh/Yo-y-los-que-tuvieron-etapa-Vocaloid-cuando-suena.mp3?rlkey=kpl5z8pbl6gz3w4ob3b8lx3sl&st=90mh5kmo&raw=1" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+  </audio>
+
+  <!-- Botones circulares de apoyo (ahora usan JS para abrir en nueva ventana/pestaña) -->
+  <div id="support">
+    <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña"
+            onclick="openInNewTab('https://www.youtube.com/@Archinime-k2g')">
+      <img src="youtube.jpg" alt="YouTube">
+    </button>
+
+    <button id="tiktok-btn" type="button" aria-label="Abrir TikTok en nueva pestaña"
+            onclick="openInNewTab('https://www.tiktok.com/@archiduque8')">
+      <img src="tiktok.jpg" alt="TikTok">
+    </button>
+
+    <div id="support-text">Sugiéreme un anime 👆</div>
+  </div>
+
+  <header>
+    <h1 onclick="location.reload()">
+      <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime">
+      Archinime
+    </h1>
+
+    <select id="genre-select" onchange="filtro()">
+      <option value="">Todos los géneros</option>
+<option>Acción</option>
+<option>Animación</option>
+<option>Aventura</option>
+<option>Ciencia ficción</option>
+<option>Comedia</option>
+<option>Comedia oscura</option>
+<option>Crimen</option>
+<option>Cyberpunk</option>
+<option>Deportivo</option>
+<option>Dibujo Animado</option>
+<option>Divulgación Científica</option>
+<option>Drama</option>
+<option>Ecchi</option>
+<option>Escolar</option>
+<option>Fantasía</option>
+<option>Fantasía oscura</option>
+<option>Familiar</option>
+<option>Gore</option>
+<option>Harem</option>
+<option>Hentai</option>
+<option>Histórico</option>
+<option>Horror</option>
+<option>Incesto</option>
+<option>Infantil</option>
+<option>Isekai</option>
+<option>Isekai Inverso</option>
+<option>Josei</option>
+<option>Kaiju</option>
+<option>Kodomo</option>
+<option>Mahō Shōjo</option>
+<option>Mecha</option>
+<option>Militar</option>
+<option>Misterio</option>
+<option>Musical</option>
+<option>Nekketsu</option>
+<option>Parodia</option>
+<option>Post-apocalíptico</option>
+<option>Psicológico</option>
+<option>Reverse Harem</option>
+<option>Romance</option>
+<option>Romance escolar</option>
+<option>Seinen</option>
+<option>Shōjo</option>
+<option>Shōnen</option>
+<option>Slice of Life</option>
+<option>Sobrenatural</option>
+<option>Superhéroes</option>
+<option>Tentáculos</option>
+<option>Terror</option>
+<option>Terror psicológico</option>
+<option>Thriller</option>
+<option>Thriller psicológico</option>
+<option>Tragedia</option>
+<option>Yaoi</option>
+<option>Yuri</option>
+    </select>
+
+    <select id="rating-select" onchange="filtro()">
+      <option value="">⭐ Todas</option>
+      <option value="excellent">⭐ Excelente (4.8–5.0)</option>
+      <option value="good">⭐ Buena (4.6–4.7)</option>
+      <option value="regular">⭐ Regular (&lt;4.5)</option>
+    </select>
+
+    <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()">
+  </header>
+
+  <main class="container">
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('bg-music');
+      // aseguramos que el audio esté en modo loop (atributo + JS por seguridad)
+      try {
+        audio.loop = true;
+      } catch(e) {
+        console.warn('No se pudo establecer audio.loop programáticamente:', e);
+      }
+      audio.volume = 0.8;
+      audio.play().catch(() => {
+        // políticas de autoplay: reproducir cuando el usuario haga click por primera vez
+        document.addEventListener('click', () => {
+          audio.play();
+        }, { once: true });
+      });
+
+      // Fallback adicional: si por algún motivo el loop no se respeta, reiniciamos al terminar
+      audio.addEventListener('ended', () => {
+        // reiniciamos y reproducimos
+        try {
+          audio.currentTime = 0;
+          audio.play();
+        } catch (e) {
+          console.warn('No se pudo reiniciar el audio al terminar:', e);
+        }
+      });
+    });
+    // Abre en nueva pestaña/ventana e intenta volver a enfocar la ventana actual.
+    // Nota: el control exacto del foco depende del navegador y su política de seguridad.
+    function openInNewTab(url) {
+      // Abrir la URL en una nueva pestaña/ventana sin pasar el opener (seguridad)
+      const win = window.open(url, '_blank', 'noopener,noreferrer');
+      // Intentar restablecer foco a la ventana actual (no garantizado en todos los navegadores)
+      try {
+        // Pequeño retraso para que el navegador procese la nueva pestaña
+        setTimeout(() => {
+          if (typeof window.focus === 'function') {
+            window.focus();
+          }
+        }, 100);
+      } catch (e) {
+        // no hacemos nada si falla
+        console.warn('No se pudo forzar el foco (comportamiento del navegador):', e);
+      }
+      // Retornar la referencia por si se necesita
+      return win;
+    }
+    const animes = [
+      {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Shōnen","Sobrenatural","Comedia","Romance","Comedia oscura"]},
+      {id:2, title:"Jujutsu Kaisen", img:"Jujutsu.jpg", rating:4.9, genres:["Shōnen","Sobrenatural","Fantasía oscura","Acción","Nekketsu"]},
+      {id:3, title:"Konosuba", img:"https://www.dropbox.com/scl/fi/973zjlsi4a03w1hde7ivd/DrPytSFXgAYg1Z_-1.jpg?rlkey=wr2btn7cf7wp9yyt7id7uy9uy&st=gxhbfwyq&raw=1", rating:4.8, genres:["Aventura","Comedia","Fantasía","Sobrenatural","Isekai","Ecchi","Shōnen"]},
+      {id:4, title:"Re:Zero − Empezar vida en otro mundo", img:"rezero.png", rating:4.8, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Thriller psicológico","Terror psicológico","Isekai","Shōnen"]},
+      {id:5, title:"Mushoku Tensei", img:"mushoku.jpg", rating:4.8, genres:["Isekai","Ecchi","Romance","Harem","Acción","Aventura","Drama","Fantasía","Seinen"]},
+      {id:6, title:"Tensei Shitara Slime Datta Ken", img:"slime.jpg", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía"]},
+      {id:7, title:"Saga of Tanya the Evil (Yōjo Senki)", img:"tanya1.jpg", rating:4.8, genres:["Acción","Aventura","Fantasía","Militar","Drama","Ciencia ficción","Seinen"]},
+      {id:8, title:"Akame Ga Kill", img:"Akame1.jpg", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Shōnen","Romance","Tragedia"]},
+      {id:9, title:"To Be Hero X", img:"hero11.jpg", rating:4.8, genres:["Acción","Comedia","Animación","Fantasía","Superhéroes","Seinen"]},
+      {id:10, title:"Demon Slayer", img:"demon.jpg", rating:4.8, genres:["Fantasía"]},
+      {id:11, title:"Maou 2099", img:"https://www.dropbox.com/scl/fi/su8i4y0cynftlnzlldfhj/maou2099-1.jpg?rlkey=4yg0msepo25lpn80kxg9ni3um&st=vdhrcc8y&raw=1", rating:4.7, genres:["Ciencia ficción","Isekai Inverso","Acción","Fantasía","Cyberpunk"]},
+      {id:12, title:"Wistoria: Wand and Sword", img:"wistoria.jpg", rating:4.8, genres:["Fantasía","Aventura","Shōnen"]},
+      {id:13, title:"Izure Saikyou no Renkinjutsushi", img:"Izure.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Isekai","Shōnen"]},
+      {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", img:"alia.jpg", rating:4.8, genres:["Comedia","Romance","Romance escolar","Escolar","Josei"]},
+      {id:15, title:"Reborn as a Vending Machine, I Now Wander the Dungeon", img:"jidou.jpg", rating:4.2, genres:["Fantasía","Isekai","Shōnen"]},
+      {id:16, title:"kimi to boku no saigo no senjou", img:"kimi22222.jpg", rating:4.5, genres:["Acción","Fantasía","Romance","Militar","Seinen"]},
+      {id:17, title:"The Gorila God's Go- To Girl", img:"gorila11.jpg", rating:4.5, genres:["Fantasía","Comedia","Escolar","Romance","Shōjo"]},
+      {id:18, title:"Chainsaw Man", img:"chaiw11.jpg", rating:4.9, genres:["Fantasía oscura","Acción","Shōnen","Comedia oscura"]},
+      {id:19, title:"The Rising of the Shield Hero", img:"https://www.dropbox.com/scl/fi/qriw9hu1jsc46jh75xsgw/FqaFeK9XoAMW7_lg-1-1.jpg?rlkey=5516wyvugdk4y8kpflr49y5cr&st=2mq5x24h&raw=1", rating:4.7, genres:["Aventura","Drama","Fantasía","Acción","Seinen","Romance","Isekai"]},
+      {id:20, title:"Overflow", img:"overflow.jpg", rating:4.6, genres:["Hentai","Escolar","Romance","Harem","Incesto"]},
+      {id:21, title:"Shiunji-ke no Kodomotachi", img:"Shiux.jpg", rating:4.6, genres:["Comedia","Romance","Drama","Harem","Slice of Life","Seinen"]},
+      {id:22, title:"Goblin Slayer", img:"https://www.dropbox.com/scl/fi/ltdh8xylehw9b4p1gql9l/goblins-1-1.jpg?rlkey=glkiwc6kmlxkyt2htyxvawjaf&st=f4aqlj2g&raw=1", rating:4.7, genres:["Seinen","Fantasía oscura","Horror","Aventura","Fantasía"]},
+      {id:23, title:"Kanchigai no Atelier Meister", img:"atelier1.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Acción","Shōnen"]},
+      {id:24, title:"Definitivamente. ¡No me gusta mi hermano para nada!", img:"Oni.jpg", rating:4.1, genres:["Seinen","Comedia","Romance","Slice of Life","Harem","Ecchi"]},
+      {id:25, title:"Kaiju No. 8", img:"https://www.dropbox.com/scl/fi/ay1uv6tunghtxgty33kor/easgsdagsgd-1.jpg?rlkey=4o7rpeem4b4q1j3bvb5658qmr&st=dvv92bay&raw=1", rating:4.9, genres:["Shōnen","Sobrenatural","Fantasía oscura","Acción","Ciencia ficción","Aventura","Comedia","Kaiju"]},
+      {id:26, title:"Zootopia", img:"https://www.dropbox.com/scl/fi/fqx51rdmzpzey4l5dswwv/zootopia.jpg?rlkey=52hnhfwz3pxr74564l5nzd6il&st=hiby8o0e&raw=1", rating:4.7, genres:["Aventura","Comedia","Crimen","Infantil","Familiar","Misterio","Animación","Dibujo Animado"]},
+      {id:27, title:"Clevatess -Majuu no Ou to Akago", img:"https://www.dropbox.com/scl/fi/znhu04opb4czg3o0m7dam/Clevatess-Majuu-no-Ou-to-Akago.jpg?rlkey=rsbqms1bnsx4nc80dgb6yme6k&st=y9r1feiz&raw=1", rating:4.8, genres:["Acción","Fantasía","Drama"]},
+      {id:28, title:"Dr. Stone", img:"https://www.dropbox.com/scl/fi/2z36rgoagk82dw2cb0lql/Dr._Stone_29_.jpg?rlkey=mqb5z6o7hj41ricpm6fnsm8hy&st=dh105dpx&raw=1", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Shōnen","Post-apocalíptico"]},
+      {id:29, title:"One Piece (Live Action)", img:"https://www.dropbox.com/scl/fi/50vo69ws4i64qv4kxibs7/oneeee.jpg?rlkey=ok8a8nt6bh8g0rzzpqisptfoe&st=psff3vov&raw=1", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama"]},
+      {id:30, title:"Shoujo Ramune", img:"https://www.dropbox.com/scl/fi/ok7pcimnqtue7gg30i70x/shoujo.jpg?rlkey=sl1bn5cj5bmxu003jq2q6906d&st=fd15ap5n&raw=1", rating:4.3, genres:["Hentai","Harem","Incesto"]},
+      {id:37, title:"Shinsei Kourin Dacryon Luna", img:"https://www.dropbox.com/scl/fi/f3ada5jvt69z0si1f82eo/portadah.jpg?rlkey=l6y1gyidiucos6j2g1gjyp7k3&st=82m33282&raw=1", rating:4.0, genres:["Tentáculos","Hentai","Fantasía","Seinen","Fantasía oscura"]},
+    ];
+
+
+  function debounce(fn, wait) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), wait);
+    };
+  }
+  const debouncedFiltro = debounce(filtro, 200);
+
+  function render(list) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = list.map(a => `
+      <div class="card" onclick="location='anime-detail.html?id=${a.id}'">
+        <img src="${a.img}" alt="${a.title}">
+        <div class="info">
+          <strong>${a.title}</strong>
+          <span>⭐ ${a.rating.toFixed(1)}</span>
+        </div>
+      </div>
+    `).join('');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.2});
+    document.querySelectorAll('.card').forEach(c => observer.observe(c));
+  }
+
+  function filtro(){
+    const q   = document.getElementById('search').value.toLowerCase();
+    const g   = document.getElementById('genre-select').value;
+    const cat = document.getElementById('rating-select').value;
+    const filtrados = animes.filter(a => {
+      const byText   = a.title.toLowerCase().startsWith(q);
+      const byGenre  = !g || a.genres.includes(g);
+      let byRating = true;
+      if(cat==='excellent') byRating = a.rating >= 4.8;
+      else if(cat==='good')    byRating = a.rating >= 4.6 && a.rating < 4.8;
+      else if(cat==='regular') byRating = a.rating < 4.6;
+      return byText && byGenre && byRating;
+    });
+    render(filtrados);
+  }
+
+  // Función para barajar (Fisher-Yates)
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  // Barajar el arreglo al cargar la página para que cada carga tenga un orden distinto
+  shuffleArray(animes);
+
+  // Render inicial
+  render(animes);
+
+  // —————————— Cambiar header al hacer scroll ——————————
+  window.addEventListener('scroll', () => {
+    document.querySelector('header')
+      .classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // —————————— Enlazar búsqueda al debounce ——————————
+  document.getElementById('search')
+          .addEventListener('input', debouncedFiltro);
+  document.getElementById('genre-select')
+          .addEventListener('change', filtro);
+  document.getElementById('rating-select')
+          .addEventListener('change', filtro);
+</script>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

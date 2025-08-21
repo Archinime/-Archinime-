@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title></title>  <!-- se rellenará con el título del capítulo -->
+
+  <link rel="icon" href="Logo_Archinime.png" type="image/png">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    /* Fondo de galaxia */
+    #bg-video {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: -2;
+    }
+    #overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); z-index: -1;
+    }
+
+    .container {
+      position: relative; z-index: 0;
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    h1.chapter-title {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      text-align: center;
+      color: #0ff;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color .3s;
+    }
+    .back:hover { color: #08c; }
+
+    video#player {
+      width: 100%;
+      max-height: 60vh;
+      border-radius: 6px;
+      background: #000;
+    }
+
+    .actions {
+      margin-top: 15px;
+      display: flex; flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .actions a {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      transition: background .3s, transform .2s;
+      cursor: pointer;
+    }
+    .actions a:hover {
+      background: rgba(0,255,255,0.2);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    /* Toast oculto por defecto, sin animación en CSS */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: #0ff;
+      color: #000;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,255,255,0.4);
+      pointer-events: none;
+      z-index: 100;
+    }
+    @keyframes popin {
+  from { transform:translateX(-50%) scale(0.5) translateY(20px); opacity:0; }
+  to   { transform:translateX(-50%) scale(1)   translateY(0);    opacity:1; }
+    }
+/* dura 0.6s en lugar de 0.4s */
+.toast-in { animation-duration: 0.6s; }
+
+    @keyframes popout {
+  from { transform:translateX(-50%) scale(1)   translateY(0);    opacity:1; }
+  to   { transform:translateX(-50%) scale(0.5) translateY(-20px); opacity:0; }
+}
+/* dura 0.7s en lugar de 0.5s */
+.toast-out { animation-duration: 0.7s; }
+    
+
+    .nav-chapters {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-chapters a {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background .3s, transform .2s;
+    }
+    .nav-chapters a:hover {
+      background: rgba(0,255,255,0.2);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    /* Forzar que el botón 'next' esté a la derecha */
+    .nav-chapters a#next { margin-left: auto; }
+
+    @media (max-width: 600px) {
+      .container { margin: 40px 1rem; padding: 1rem; }
+      video#player { max-height: 40vh; }
+
+    }
+  </style>
+</head>
+<body>
+  <video id="bg-video" autoplay loop muted playsinline>
+    <source src="https://www.dropbox.com/scl/fi/ckoormrj6fgd6zcw0xgwq/galaxia.mp4?raw=1" type="video/mp4">
+  </video>
+  <div id="overlay"></div>
+
+  <div class="container">
+    <h1 class="chapter-title" id="chapter-title"></h1>
+    <a id="back" class="back">← Volver</a>
+    <video id="player" controls autoplay playsinline></video>
+    <div class="actions">
+      <a id="download" download>⤓ Descargar</a>
+      <a id="share">🔗 Compartir</a>
+    </div>
+    <div class="nav-chapters">
+      <a id="prev" style="display:none;">⏮ Capítulo anterior</a>
+      <a id="next" style="display:none;">⏭ Siguiente capítulo</a>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">✅ El enlace ha sido copiado</div>
+
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    const qs      = new URLSearchParams(location.search),
+          anime   = qs.get('anime'),
+          s       = qs.get('s'),
+          e       = qs.get('e'),
+          back    = document.getElementById('back'),
+          player  = document.getElementById('player'),
+          dlLink  = document.getElementById('download'),
+          sh      = document.getElementById('share'),
+          toast   = document.getElementById('toast'),
+          titleEl = document.getElementById('chapter-title'),
+          prev    = document.getElementById('prev'),
+          next    = document.getElementById('next');
+
+    const DB = {
+      "1": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/91lzoa0pa9tf53qsrq87n/DAN-DA-DAN-Cap-1.mp4?rlkey=br7i2ynaofngd9jbzgtzk255f&st=h8pdnqfz&raw=1', title:'DAN DA DAN T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/i8gmhwj5oc09vxd64n8e9/DAN-DA-DAN-Cap-2.mp4?rlkey=cle7qfkf3kkoeqn7bgs5kv8v5&st=h9c2tiu5&raw=1', title:'DAN DA DAN T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/cxy012kb4w17744rqpdyh/DAN-DA-DAN-Cap-3.mp4?rlkey=u31hr05a42xzqo79xbnny9mnn&st=8i6jequ2&raw=1', title:'DAN DA DAN T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/2lxcy0npcrg6nvwelvhca/DAN-DA-DAN-Cap-4.mp4?rlkey=lk147ebi39e308jcp4cn8u89u&st=5f9zgf9c&raw=1', title:'DAN DA DAN T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/snuiwpza97pk7jz8ir4df/DAN-DA-DAN-Cap-5.mp4?rlkey=p7vids5ctlmzibfxuuu5xsfmm&st=hhqymy02&raw=1', title:'DAN DA DAN T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/e3jxd9g3yaa9tczfliwvt/DAN-DA-DAN-Cap-6.mp4?rlkey=65ym1fdd4o384c02m3jj3urt0&st=mltb1xje&raw=1', title:'DAN DA DAN T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/zrh7a3lmyu65iexqvleky/DAN-DA-DAN-Cap-7.mp4?rlkey=qh1eeg9g8v42hcia5gjsqp7n3&st=zvpdvaeo&raw=1', title:'DAN DA DAN T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/uvwnog6tbz43gblarvl3p/DAN-DA-DAN-Cap-8.mp4?rlkey=pufbemussuuu5bhv10fwnincv&st=mdnqjwx9&raw=1', title:'DAN DA DAN T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/bw2wvyxrazd6l8vhbczee/DAN-DA-DAN-Cap-9.mp4?rlkey=9uex19n1anunj3l40rzce9fuz&st=was5t5j7&raw=1', title:'DAN DA DAN T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/kpdc4u4zkv5p6jxjbqmg9/DAN-DA-DAN-Cap-10.mp4?rlkey=j3glzy88o4ktgr5qzpm0w6u80&st=dyoqerh3&raw=1', title:'DAN DA DAN T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/xav52d0kilrer6d4j9uks/DAN-DA-DAN-Cap-111.mp4?rlkey=13otgp4nkxg4kxf5z70leil7d&st=ft3mtwrn&raw=1', title:'DAN DA DAN T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/xthqgcir9wwfgo8ka9fbs/DAN-DA-DAN-Cap-12.mp4?rlkey=7b4preahkt3k7a7p35d1azac6&st=qi7fanj8&raw=1', title:'DAN DA DAN T1 Cap 12' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/v4mcnpon5mo0wce4wjvmb/DAN-DA-DAN-T2-Cap-1.mp4?rlkey=qspzubpwr1ygbwa1p2lcswfgg&st=ayhv2p04&raw=1', title:'DAN DA DAN T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/oqu9213qj9d2z4v93n0yx/DAN-DA-DAN-T2-Cap-2.mp4?rlkey=l4doynj03vzyrqvhf38a2fd81&st=dwd3qegm&raw=1', title:'DAN DA DAN T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/vogmosm4yn9bbh39lajgh/Dan-Da-Dan-T2-Cap-3.mp4?rlkey=ccefipzk2d5q3mx8t5fki3i2c&st=494i1yca&raw=1', title:'DAN DA DAN T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/eed4fvyr67oe7sdgd0ylr/DAN-DA-DAN-T2-Cap-4.mp4?rlkey=kvmpwye0fas4siunt202sw6v2&st=8k91pr7n&raw=1', title:'DAN DA DAN T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/bja4u4qk5tt8ykfl24kmo/DAN-DA-DAN-T2-Cap-5.mp4?rlkey=e8kcor08nxfz7f5hnoxbxu3fv&st=bw0rjbh0&raw=1', title:'DAN DA DAN T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/7aini8cfrjrlv3fh9zd06/DAN-DA-DAN-T2-Cap-6.mp4?rlkey=hsf5o8o506kegfhlpocu1mffn&st=rzebnlkt&&raw=1', title:'DAN DA DAN T2 Cap 6' },
+        }
+      },
+      "2": {
+        "1": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/phrigudlols4zz8ty0b5q/Jujutsu-Kaisen-0-Pelicula.mp4?rlkey=ms7lrj4dg0s9ai93agf1pjd52&st=sz8f55oy&raw=1', title:'Jujutsu Kaisen 0: La Película' },
+        },
+        "2": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/k61fh6arfnysfdwnvvre9/Jujutsu-Kaisen-temporada-1-capitulo-1.mp4?rlkey=o7x7zr04l3e07snr6te7b545h&st=wjc1ulxr&raw=1', title:'Jujutsu Kaisen T1 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/0b5ltidwzaktth3btzol2/Jujutsu-Kaisen-temporada-2.mp4?rlkey=jod8kebs0e5l4ec4brqx25jsz&st=giycm3pb&raw=1', title:'Jujutsu Kaisen T1 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/klg1x86omhl3yoyb0pi4x/Jujutsu-Kaisen-temporada-3.mp4?rlkey=4rumbwt5tb4azuzrgho5mitwu&st=ogh7govx&raw=1', title:'Jujutsu Kaisen T1 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/5s44od1tlgc2ijpb9rhw3/Jujutsu-Kaisen-temporada-4.mp4?rlkey=l6xumr1auk3z2n3svigrsf4jc&st=df77xjaa&raw=1', title:'Jujutsu Kaisen T1 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/5w444fkk721cfuat6eq99/Jujutsu-Kaisen-temporada-5.mp4?rlkey=c5rezuv9c22pk0znbr53nj1pr&st=ocrn93ch&raw=1', title:'Jujutsu Kaisen T1 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/5uuhum4imxhxoha7fzkkf/Jujutsu-Kaisen-temporada-6.mp4?rlkey=zq0h7aqfv4unjwxkdsm0w200f&st=10yf7spp&raw=1', title:'Jujutsu Kaisen T1 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/snke5bmte98c8d198vxqv/Jujutsu-Kaisen-temporada-7.mp4?rlkey=o2klnxudwfrhoufsmuce9w0q3&st=89sh00c1&raw=1', title:'Jujutsu Kaisen T1 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/ppc4rhjjpiysxa9vhwdpe/Jujutsu-Kaisen-temporada-8.mp4?rlkey=q4kc0fs6w0tf5kusu5rjv0sa3&st=0hh0szj6&raw=1', title:'Jujutsu Kaisen T1 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/phudgq2i9decsqi7dtmim/Jujutsu-Kaisen-temporada-9.mp4?rlkey=2w2jsn8s5pgaafqf92t7si7vd&st=sxpup5g6&raw=1', title:'Jujutsu Kaisen T1 Cap 9' },
+          "10":  { link:'https://www.dropbox.com/scl/fi/468cmpk9u785fgfxfajla/Jujutsu-Kaisen-temporada-10.mp4?rlkey=bywj210dmonhuccg9k88g6bww&st=x5hllacj&raw=1', title:'Jujutsu Kaisen T1 Cap 10' },
+          "11":  { link:'https://www.dropbox.com/scl/fi/6eoll81fzy48yb7ac284p/Jujutsu-Kaisen-temporada-11.mp4?rlkey=rn8947ymzm9jeazch91vunset&st=wnffmj7v&raw=1', title:'Jujutsu Kaisen T1 Cap 11' },
+          "12":  { link:'https://www.dropbox.com/scl/fi/0fq78hok417kzf9o4qbjw/Jujutsu-Kaisen-temporada-12.mp4?rlkey=i44pgtixprubh3bnn1z2e8el4&st=643k79a8&raw=1', title:'Jujutsu Kaisen T1 Cap 12' },
+          "13":  { link:'https://www.dropbox.com/scl/fi/hak7liynrncmvm6x4epc8/Jujutsu-Kaisen-temporada-13.mp4?rlkey=s6vzs17mofaklmd1pplvtc23d&st=c8os1o6z&raw=1', title:'Jujutsu Kaisen T1 Cap 13' },
+          "14":  { link:'https://www.dropbox.com/scl/fi/rm2s40i2jvn1f26lfshwc/Jujutsu-Kaisen-temporada-14.mp4?rlkey=njw1x9qoy3jhhk4zt23hi2bfo&st=k25oksxn&raw=1', title:'Jujutsu Kaisen T1 Cap 14' },
+          "15":  { link:'https://www.dropbox.com/scl/fi/467aicanr4fr5ao52jq1s/Jujutsu-Kaisen-temporada-15.mp4?rlkey=ksww5y0bfz8pdgcfvsigevii5&st=pou20ppj&raw=1', title:'Jujutsu Kaisen T1 Cap 15' },
+          "16":  { link:'https://www.dropbox.com/scl/fi/5bmfrehforynsq3eyi48o/Jujutsu-Kaisen-temporada-16.mp4?rlkey=3kpatnlhe2bsigwtvrmazflza&st=z9r13nmc&raw=1', title:'Jujutsu Kaisen T1 Cap 16' },
+          "17":  { link:'https://www.dropbox.com/scl/fi/2z5crkjc7hf0u384wv8qn/Jujutsu-Kaisen-temporada-17.mp4?rlkey=kwh6p9ry9rq217z8lzpdgoj38&st=8e19jr04&raw=1', title:'Jujutsu Kaisen T1 Cap 17' },
+          "18":  { link:'https://www.dropbox.com/scl/fi/of2r0rjibdodntpyc4s7a/Jujutsu-Kaisen-temporada-18.mp4?rlkey=1yr1j7n7c5hmjdctjmqe1276s&st=7c1jbbrw&raw=1', title:'Jujutsu Kaisen T1 Cap 18' },
+          "29":  { link:'https://www.dropbox.com/scl/fi/imwiacp6g8tvild0gofsf/Jujutsu-Kaisen-temporada-19.mp4?rlkey=djsup77pvspv9bmxg0d9m51fw&st=thbey4lz&raw=1', title:'Jujutsu Kaisen T1 Cap 19' },
+          "20":  { link:'https://www.dropbox.com/scl/fi/qdkmz3mmbs13196l4xiv5/Jujutsu-Kaisen-temporada-20.mp4?rlkey=2fv5g8vu8vydtcqet47rcn30j&st=8yvcsd3m&raw=1', title:'Jujutsu Kaisen T1 Cap 20' },
+          "21":  { link:'https://www.dropbox.com/scl/fi/0kc90kvef5v3lbxaawr20/Jujutsu-Kaisen-temporada-21.mp4?rlkey=8qdu3rx6f7ywlk2j31nz0bhaq&st=8gk37dis&raw=1', title:'Jujutsu Kaisen T1 Cap 21' },
+          "22":  { link:'https://www.dropbox.com/scl/fi/l8ls4l2zk37hnav923gu3/Jujutsu-Kaisen-temporada-22.mp4?rlkey=nyxngah5zxsm2x1fx6o04vr1p&st=b8omtoij&raw=1', title:'Jujutsu Kaisen T1 Cap 22' },
+          "23":  { link:'https://www.dropbox.com/scl/fi/p3bxqu3wmrg9tfgf7z5ka/Jujutsu-Kaisen-temporada-23.mp4?rlkey=szn8hoybnbbbkn7wwizl2q56a&st=mhaagnyx&raw=1', title:'Jujutsu Kaisen T1 Cap 23' },
+          "24":  { link:'https://www.dropbox.com/scl/fi/6bp5ck93o4d773ejwrxky/Jujutsu-Kaisen-temporada-24.mp4?rlkey=6tvj0gfnnbh3smg2s4mfjjcv0&st=21a6xnaq&raw=1', title:'Jujutsu Kaisen T1 Cap 24' },
+
+        },
+        "3": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/gaaiu3pglnf640ex5g2yg/Jujutsu-Kaisen-capitulo-1-temporada-2.mp4?rlkey=qe600rpf3fslze8tj046645um&st=matr26u0&raw=1', title:'Jujutsu Kaisen T2 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/6i04oit8fvk7qk2u67e7v/Jujutsu-Kaisen-capitulo-2-temporada-2.mp4?rlkey=nmmkoadag1ayd1zppmadmvyo6&st=vrz9o7lp&raw=1', title:'Jujutsu Kaisen T2 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/dxlb18ea95q7ihbi1x2h3/Jujutsu-Kaisen-capitulo-3-temporada-2.mp4?rlkey=2rk0vv4jhg05kw4arjf7ogd3i&st=jv4b3y8a&raw=1', title:'Jujutsu Kaisen T2 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/8nhu3l5x29emd2yrd4g9e/Jujutsu-Kaisen-capitulo-4-temporada-2.mp4?rlkey=q9zqz2enh7m9bb0f5mcxbr645&st=xafxqney&raw=1', title:'Jujutsu Kaisen T2 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/ffffotjzoo4tq4jij54pl/Jujutsu-Kaisen-capitulo-5-temporada-2.mp4?rlkey=h22njobnxm2eb9tqhlttkutjo&st=kbrwcy2b&raw=1', title:'Jujutsu Kaisen T2 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/guqn7egvj93f59ed1l8w6/Jujutsu-Kaisen-capitulo-6-temporada-2.mp4?rlkey=qg342sx6dpjbtnjxhjjtyrv5o&st=gi5ydkjc&raw=1', title:'Jujutsu Kaisen T2 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/4v1ujkzjyo8ejcw1wkgm5/Jujutsu-Kaisen-capitulo-7-temporada-2.mp4?rlkey=0m9qk5lntr3xgyn14xc1izk4p&st=djn8s72r&raw=1', title:'Jujutsu Kaisen T2 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/onefd5tb8zw2sodu5pwup/Jujutsu-Kaisen-capitulo-8-temporada-2.mp4?rlkey=6pvhtl0idzq0a5byomscpxefd&st=87d6k5d9&raw=1', title:'Jujutsu Kaisen T2 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/bgdainzzw7322u15irgel/Jujutsu-Kaisen-capitulo-9-temporada-2.mp4?rlkey=kf2hltaflmmwx966s27d435by&st=o46n47xo&raw=1', title:'Jujutsu Kaisen T2 Cap 9' },
+          "10":  { link:'https://www.dropbox.com/scl/fi/d1yodj85fbm56zngakqks/Jujutsu-Kaisen-capitulo-10-temporada-2.mp4?rlkey=kcce8gjdk5jsobwdg4gcohh2y&st=935x98zx&raw=1', title:'Jujutsu Kaisen T2 Cap 10' },
+          "11":  { link:'https://www.dropbox.com/scl/fi/f8da20qes7jx2sxxxcsho/Jujutsu-Kaisen-capitulo-11-temporada-2.mp4?rlkey=v64zbkjy71fqa2ofqs8qypfqo&st=py0166kz&raw=1', title:'Jujutsu Kaisen T2 Cap 11' },
+          "12":  { link:'https://www.dropbox.com/scl/fi/naqz6k11ysm4c7ecln7wi/Jujutsu-Kaisen-capitulo-12-temporada-2.mp4?rlkey=wg184ihd24vnmnyw5f0c5mlqm&st=w7lf6q50&raw=1', title:'Jujutsu Kaisen T2 Cap 12' },
+          "13":  { link:'https://www.dropbox.com/scl/fi/8iel5cn6no4wk0hkrvajm/Jujutsu-Kaisen-capitulo-13-temporada-2.mp4?rlkey=fh4gm726sirqut4yo1rkc77ow&st=ecjp0wun&raw=1', title:'Jujutsu Kaisen T2 Cap 13' },
+          "14":  { link:'https://www.dropbox.com/scl/fi/p97ph5ta26qezfx95ohjk/Jujutsu-Kaisen-capitulo-14-temporada-2.mp4?rlkey=jcbr9u3k9hknpkfol585w17bi&st=dge0crhe&raw=1', title:'Jujutsu Kaisen T2 Cap 14' },
+          "15":  { link:'https://www.dropbox.com/scl/fi/9yl59ho9nuogctnb5h5hr/Jujutsu-Kaisen-capitulo-15-temporada-2.mp4?rlkey=h9gia3g7dkfpgo0o182pnwvzk&st=btg02wtx&raw=1', title:'Jujutsu Kaisen T2 Cap 15' },
+          "16":  { link:'https://www.dropbox.com/scl/fi/1xtze4oozpk106gbh7ud6/Jujutsu-Kaisen-capitulo-16-temporada-2.mp4?rlkey=tdyhtvuab5ym5p7rpdj9gfho8&st=a6reejuo&raw=1', title:'Jujutsu Kaisen T2 Cap 16' },
+          "17":  { link:'https://www.dropbox.com/scl/fi/6tcdfsyobqco26ihrqjox/Jujutsu-Kaisen-capitulo-17-temporada-2.mp4?rlkey=ft1ko97q7na1dgqm86iocbmbx&st=fcn75lp2&raw=1', title:'Jujutsu Kaisen T2 Cap 17' },
+          "18":  { link:'https://www.dropbox.com/scl/fi/sgb2shkb41b9t73ubtm5y/Jujutsu-Kaisen-capitulo-18-temporada-2.mp4?rlkey=eh2mtzksppu6ftvrwxuy4s04t&st=5dcari2w&raw=1', title:'Jujutsu Kaisen T2 Cap 18' },
+          "19":  { link:'https://www.dropbox.com/scl/fi/fvz13ig1xapyilvd55g7m/Jujutsu-Kaisen-capitulo-19-temporada-2.mp4?rlkey=52rv7utqbq26dqk3mz4j2n801&st=q0xpdxkz&raw=1', title:'Jujutsu Kaisen T2 Cap 19' },
+          "20":  { link:'https://www.dropbox.com/scl/fi/vhk7hinjpxpf0tqw7vqsw/Jujutsu-Kaisen-capitulo-20-temporada-2.mp4?rlkey=iri2jviwx44dd9fsmj2r6g20u&st=j03uy6rm&raw=1', title:'Jujutsu Kaisen T2 Cap 20' },
+          "21":  { link:'https://www.dropbox.com/scl/fi/i6xitgfi7sy3f9mxpp0c5/Jujutsu-Kaisen-capitulo-21-temporada-2.mp4?rlkey=3c8z9yjewqmv2fnti5tm0s0c6&st=o9sc0n1c&raw=1', title:'Jujutsu Kaisen T2 Cap 21' },
+          "22":  { link:'https://www.dropbox.com/scl/fi/whtgi5o2alg1xk966h1nr/Jujutsu-Kaisen-capitulo-22-temporada-2.mp4?rlkey=ivcw62kxsfe8o661bf2cti5bo&st=i9vlyop4&raw=1', title:'Jujutsu Kaisen T2 Cap 22' },
+          "23":  { link:'https://www.dropbox.com/scl/fi/nszyv5ba2w9dywbrazp8v/Jujutsu-Kaisen-capitulo-23-temporada-2.mp4?rlkey=yko7livmuwj8tpr5tr9blauxz&st=sw0v2pbf&raw=1', title:'Jujutsu Kaisen T2 Cap 23' }
+        }
+      },
+      "3": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/d85e3fd9dma3c0oao4z5p/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-1.mp4?rlkey=gdyo8h37600vuz4xtuhe63c4t&st=jv8oj8ns&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/ddnb1rxe9k4n4ahmfygbz/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-2.mp4?rlkey=swk1jy9lqgmqk58qb6930mp5w&st=5os922wo&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/tdr3ly33odyby08ne1wwt/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-3.mp4?rlkey=tgy8833hakcjijbybdzhpcpmk&st=pd1odh44&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/szx884iao5cm5l8j7z6sv/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-4.mp4?rlkey=kih6a6wqxkx2wv6qd4q90mtqn&st=uz4g7lcb&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/ufifcckovo7p87uy2huxe/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-5.mp4?rlkey=lofj30e8q5l599uo5u6xxdzam&st=1ddb24m9&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/n3xqbufdwjeqt8x3kmdbs/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-6.mp4?rlkey=9qaqtmsrex96qw3qmlnjy4yge&st=bna4b6xb&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/jxdvdp8s5myee44yf71wv/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-7.mp4?rlkey=hx0j30bbet47nd8crdcxepvyb&st=i03ph7a6&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/3o7vu3d8xli760xn4vdw6/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-8.mp4?rlkey=n73hqovvmgo7wmayuuoukdi18&st=mqsbyynv&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/hf6ud6on5m7hu5ib0roi6/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-9.mp4?rlkey=o7whvnyq7vhwmhy7mm7e6igdp&st=j9le4g5y&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/k7lrhwn5cqhiew2iw6bsg/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-10.mp4?rlkey=wirjbeofaefvoibb0g35e1skj&st=r2krolkg&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/fpgxve2e8mdytfcl1sowe/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-11.mp4?rlkey=2vkpsksmw1hxmn57wwj94kn8v&st=raovsek7&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/bd6v592gq68z5zn268nk7/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-12.mp4?rlkey=opbt0iengt11jr25g2t2li9ic&st=1m3qiwfw&raw=1', title:'KonoSuba: Explosión en un mundo maravilloso Cap 12' }
+        },
+        "2": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/7mw5jj1gcqee3hm3hogta/Konosuba-temporada-1-capitulo-1.mp4?rlkey=m7dwevzfmxdwplf1lxkn0yebg&st=8oyw5vil&raw=1', title:'Konosuba T1 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/sq7bvjbkqr5xiqvpcogrl/Konosuba-temporada-1-capitulo-2.mp4?rlkey=7436ru4xkdg03mb2wyto2dv9w&st=e0rosfgd&raw=1', title:'Konosuba T1 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/3ldvnz3vnn68fppd26c4p/Konosuba-temporada-1-capitulo-3.mp4?rlkey=hsv5i90hrlqpptuvni8ai37jp&st=6aw85pcr&raw=1', title:'Konosuba T1 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/xu9e12akcxcfryzxenvuk/Konosuba-temporada-1-capitulo-4.mp4?rlkey=eu0cpc6v18yivfdipt9ieextj&st=u7xbc5f7&raw=1', title:'Konosuba T1 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/mmvnfra3q74ar9g4e6p74/Konosuba-temporada-1-capitulo-5.mp4?rlkey=9mxdge6s4ipc0xrvpbs0auc04&st=i7o3jge4&raw=1', title:'Konosuba T1 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/xaur8474k12h76nsryram/Konosuba-temporada-1-capitulo-6.mp4?rlkey=z94mn0uhxh0nggtkvorxi7ha2&st=vq5wdcqd&raw=1', title:'Konosuba T1 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/nn9lipvkbgsizwhk7ggmt/Konosuba-temporada-1-capitulo-7.mp4?rlkey=zlx7adcjwpg4ub3ojzc9y9t3m&st=0q1tvhtx&raw=1', title:'Konosuba T1 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/nn1tptmn24mh0ayursdw3/Konosuba-temporada-1-capitulo-8.mp4?rlkey=rs3ov0c2y9tli0x9l5jrr4r6k&st=gggs059d&raw=1', title:'Konosuba T1 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/7n6buke5wushh7v3zfdvw/Konosuba-temporada-1-capitulo-9.mp4?rlkey=v2hn3d64got41b5u8lzepm4r3&st=de1i91k1&raw=1', title:'Konosuba T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/0muafn4xtz70wxqibknf6/Konosuba-temporada-1-capitulo-10.mp4?rlkey=dwlzhu8j8xpa02njh6nki4abs&st=zbkicsov&raw=1', title:'Konosuba T1 Cap 10' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/iqbvofr4dfek9yrvyo42o/Konosuba-OVA-1.mp4?rlkey=rsejvimb6ob52gtioupi7johu&st=jypnotph&raw=1', title:'KonoSuba OVA 1 La ¡Bendita sea esta maravillosa gargantilla!' }
+        },
+        "4": {
+          "1": { link:'https://www.dropbox.com/scl/fi/td7z0o5hdi39soq542zi2/Konosuba-temporada-2-capitulo-1.mp4?rlkey=u7vdh20v0y5cj5d2wofoptnzw&st=ik5cd3vu&raw=1', title:'Konosuba T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/hvk2nqjorvm4wo4n0oc1h/Konosuba-temporada-2-capitulo-2.mp4?rlkey=h4qkm209c64wjbh81ap10pifa&st=vvmvg50w&raw=1', title:'Konosuba T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/lqu2g92n3l89khjeygynh/Konosuba-temporada-2-capitulo-3.mp4?rlkey=9f5xelhijb2382qm0lsu1m3d6&st=kya6r653&raw=1', title:'Konosuba T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/mg2w16jwtk114hqo854iv/Konosuba-temporada-2-capitulo-4.mp4?rlkey=bggk86fe9h4ntoeu5qks4j35d&st=0v5utiga&raw=1', title:'Konosuba T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/vfx021rsyh6g9zgg3k4ub/Konosuba-temporada-2-capitulo-5.mp4?rlkey=az0dxwba3qwq51e4kdfznkmk9&st=wolqhfg5&raw=1', title:'Konosuba T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/f04pw8dwbjz5g78mrad64/Konosuba-temporada-2-cap-6.mp4?rlkey=fhspdbliaj5apkv01qefwbvkw&st=ycggktp7&raw=1', title:'Konosuba T2 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/atws9vf26vhejy8uz9edp/Konosuba-temporada-2-cap-7.mp4?rlkey=efdw91076kpcs6s5akng884z0&st=w99p48oo&raw=1', title:'Konosuba T2 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/1eb4bf5b4z20qvv1r74el/Konosuba-temporada-2-capitulo-8.mp4?rlkey=wwycbokmf4nf3swdlf5vd4wmb&st=zq3d6vl4&raw=1', title:'Konosuba T2 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/7k51ugtkqmazb5h5ibrex/Konosuba-Temporada-2-Capitulo-9-Espa-ol-Latino.mp4?rlkey=pw4xg16v8v0kv70v4hlddxcsu&st=7rjomo6v&raw=1', title:'Konosuba T2 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/cxv5yg6r1am2nu793mo08/Konosuba-temporada-2-cap-10.mp4?rlkey=uqddznfnvb94vbm2b57v6a5ol&st=15svir7c&raw=1', title:'Konosuba T2 Cap 10' },
+        },
+        "5": {
+          "1": { link:'https://www.dropbox.com/scl/fi/g20nwz9z1dm7tja0qtqvg/Konosuba-OVA-2.mp4?rlkey=72pq2kso86jrq4l2b3dg7slit&st=049nyw04&raw=1', title:'KonoSuba OVA 2 ¡Bendita sea esta maravillosa pieza de arte!' },
+        },
+        "6": {
+          "1": { link:'https://www.dropbox.com/scl/fi/hyl4eur6kqntu2ozeizgu/Konosuba-Temporada-2-Pel-cula-Espa-ol-Latino.mp4?rlkey=st3432fudhrwaxad8ru97lsfx&st=pzg0s915&raw=1', title:'Konosuba Pelicula 1 \"La Leyenda Carmesí\"' }
+        },
+        "7": {
+          "1": { link:'https://www.dropbox.com/scl/fi/i22l6ijecclkufdrysi5r/Konosuba-Temporada-3-Capitulo-1-Espa-ol-Latino.mp4?rlkey=l2ryz566b6wcopayhdqv2u1ls&st=wnb5ozk8&raw=1', title:'Konosuba T3 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/rydgtjc1kizy7c8a98kbb/Konosuba-Temporada-3-Capitulo-2-Espa-ol-Latino.mp4?rlkey=6d8gm5eo9du91e6rw0rhx33bn&st=dwn6cjdp&raw=1', title:'Konosuba T3 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/7c6eskzgzw95d7n7vtinz/Konosuba-Temporada-3-Capitulo-3-Espa-ol-Latino.mp4?rlkey=a1kk39fufmnzjzugm8tvrxnfn&st=xcfc7hs1&raw=1', title:'Konosuba T3 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/n5h1vlbxwhlmfsqw75qgo/Konosuba-Temporada-3-Capitulo-4-Espa-ol-Latino.mp4?rlkey=z3nohbgobmiwr28o0wc6ipwvg&st=9ubfq3xu&raw=1', title:'Konosuba T3 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/ltl1zrtscbj7eq08dlfva/Konosuba-Temporada-3-Capitulo-5-Espa-ol-Latino.mp4?rlkey=b31pz7jc0gyg9d3l6qmvm4uuu&st=cguu8qrv&raw=1', title:'Konosuba T3 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/1m53j5anshau171sys6tw/Konosuba-Temporada-3-Capitulo-6-Espa-ol-Latino.mp4?rlkey=s9fjkt32fcermqevrecwzhx1a&st=73zai8rj&raw=1', title:'Konosuba T3 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/byvas3t6unx7fu0pnal8s/Konosuba-Temporada-3-Capitulo-7-Espa-ol-Latino.mp4?rlkey=gggs4wgr6iy5mvug7zakcx1ej&st=n50aldnc&raw=1', title:'Konosuba T3 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/szzlksezmsgoh1qjocd77/Konosuba-Temporada-3-Capitulo-8-Espa-ol-Latino.mp4?rlkey=gwqan9xwazhlftun1vops5ve1&st=o8onr8ao&raw=1', title:'Konosuba T3 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/hak49mtphnj23b4y3uw2l/Konosuba-Temporada-3-Capitulo-9-Espa-ol-Latino.mp4?rlkey=2se2cb8epv90of14to5tlckon&st=d85bxlbx&raw=1', title:'Konosuba T3 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/46hlrxw3zch1zizdeorbo/Konosuba-Temporada-3-Capitulo-10-Espa-ol-Latino.mp4?rlkey=x2q3dovgi7vgxg4zo996792gv&st=imx2a5an&raw=1', title:'Konosuba T3 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/qepig1ktfvcgeg97mepiw/Konosuba-Temporada-3-Capitulo-11-Espa-ol-Latino.mp4?rlkey=3jnxyndee30nlaaub8hdwmcdl&st=lkxdltvh&raw=1', title:'Konosuba T3 Cap 11' }
+        }
+      },
+      "4": {
+        "1": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/zrgyad07wgax0x3tant33/ReZero-Temporada-1-Capitulo-1-Espa-ol-Latino.mp4?rlkey=3r6mgn7utdabl6sgdovs08jyz&st=b99od388&raw=1', title:'Re:Zero T1 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/yxu2x1fdgjigk8qoc8mnj/ReZero-Temporada-1-Capitulo-2-Espa-ol-Latino.mp4?rlkey=q2h3atsz2w55ka0f3br10yei6&st=z6fie2kb&raw=1', title:'Re:Zero T1 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/ung8oin2v68b9bn8h10ul/ReZero-Temporada-1-Capitulo-3-Espa-ol-Latino.mp4?rlkey=1kxsyhj3oxe87vu8pml0adgof&st=3msq0buc&raw=1', title:'Re:Zero T1 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/hrd1wpz46n7hi38u4w7by/ReZero-Temporada-1-Capitulo-4-Espa-ol-Latino.mp4?rlkey=taydzmxnvucghvpwuf0gx9r4q&st=lgi8ndrp&raw=1', title:'Re:Zero T1 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/h7aolyl3gn7wzmn30otyl/ReZero-Temporada-1-Capitulo-5-Espa-ol-Latino.mp4?rlkey=y5r5mkkcm3r5i2c4mun8vvfcz&st=3lyzt26r&raw=1', title:'Re:Zero T1 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/dg7pxjm2giv16hcttve8s/ReZero-Temporada-1-Capitulo-6-Espa-ol-Latino.mp4?rlkey=im44td6hqckq8xuvphomwzcur&st=mz2jmugz&raw=1', title:'Re:Zero T1 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/vsfuzhju9rrhnj9kan5cp/ReZero-Temporada-1-Capitulo-7-Espa-ol-Latino.mp4?rlkey=ocxdqrpr6hwle0ygosxdf8suy&st=2ouhs0pe&raw=1', title:'Re:Zero T1 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/8ti116jjme5cyi1uo0yb4/ReZero-Temporada-1-Capitulo-8-Espa-ol-Latino.mp4?rlkey=rjds2iqtfxuc3ae7j2ykb2fau&st=caltzwr3&raw=1', title:'Re:Zero T1 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/jedn8jdujd7r7yaes4jla/ReZero-Temporada-1-Capitulo-9-Espa-ol-Latino.mp4?rlkey=n7hqe3mbmu067nn5s5thy7b7q&st=cynqm3bx&raw=1', title:'Re:Zero T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/9318wxghqyna2x8wwtytq/ReZero-Temporada-1-Capitulo-10-Espa-ol-Latino.mp4?rlkey=6ahczms2679oy1x9ww9bzr1lg&st=u995ys9h&raw=1', title:'Re:Zero T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/ndwb0y6uyrwtdz8vfbp1i/ReZero-Temporada-1-Capitulo-11-Espa-ol-Latino.mp4?rlkey=3ozyzwg04yymp6vg7emgticpn&st=xk2p0obd&raw=1', title:'Re:Zero T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/w7r6aj9ykuczfuumgz7yf/ReZero-Temporada-1-Capitulo-12-Espa-ol-Latino.mp4?rlkey=1wingrvdtdrkmf0a5mjvdggrx&st=oun4z01t&raw=1', title:'Re:Zero T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/io9kh7d0povt5excw6qiz/ReZero-Temporada-1-Capitulo-13-Espa-ol-Latino.mp4?rlkey=aa6lu9ueonnlvmkohq1mkqr0m&st=wonf1ob0&raw=1', title:'Re:Zero T1 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/5y1ykfaq0m5gulrujcte8/ReZero-Temporada-1-Capitulo-14-Espa-ol-Latino.mp4?rlkey=czx41rep09c71xki0mybb8gft&st=ysrt1ssr&raw=1', title:'Re:Zero T1 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/mecovbhxxbvc4d68dae2v/ReZero-Temporada-1-Capitulo-15-Espa-ol-Latino.mp4?rlkey=108eujwuthyqobjn5unizn1sm&st=a5721h8w&raw=1', title:'Re:Zero T1 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/0eghbocd5ckd0uqatkcnd/ReZero-Temporada-1-Capitulo-16-Espa-ol-Latino.mp4?rlkey=s9rmd6ml5ar9xof1p2g5buq6&st=oz4cxz8g&raw=1', title:'Re:Zero T1 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/hxrvyxwe1062yykyylmwk/ReZero-Temporada-2-Capitulo-24-Espa-ol-Latino.mp4?rlkey=2xyh9rcfdw8x4k0axviv0pgu6&st=dka4b0me&raw=1', title:'Re:Zero T1 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/uru2i8yrmrmyw14181kc4/ReZero-Temporada-1-Capitulo-18-Espa-ol-Latino.mp4?rlkey=hlpha90785h2qnnmt9hdfaq8j&st=khtbof0j&raw=1', title:'Re:Zero T1 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/l7g1aokxystbz8e0op04h/ReZero-Temporada-1-Capitulo-19-Espa-ol-Latino.mp4?rlkey=0ki9jynw1c8tdcdkwd6h5ps32&st=h4pfpuhx&raw=1', title:'Re:Zero T1 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/6givoeay0746k982j5bow/ReZero-Temporada-1-Capitulo-20-Espa-ol-Latino.mp4?rlkey=d48r6lvnecbf4asdymckb9lpk&st=uy88snsw&raw=1', title:'Re:Zero T1 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/cj3e4a2m87h5s1o4lxyjf/ReZero-Temporada-1-Capitulo-21-Espa-ol-Latino.mp4?rlkey=0vwquoh9cxbpsc74vby3veo2u&st=5uw0ewy2u&raw=1', title:'Re:Zero T1 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/pe8sauxuevta5ajf2asvs/ReZero-Temporada-1-Capitulo-22-Espa-ol-Latino.mp4?rlkey=gh54t3hvenb2y3i866zubl3ox&st=q1zmbxvk&raw=1', title:'Re:Zero T1 Cap 22' },
+          "23": { link:'https://www.dropbox.com/scl/fi/wnmcmc155ouhf6g1h6z15/ReZero-Temporada-1-Capitulo-23-Espa-ol-Latino.mp4?rlkey=1reputj9hjauvsyzwzpxgkhvv&st=jsw86qcz&raw=1', title:'Re:Zero T1 Cap 23' },
+          "24": { link:'https://www.dropbox.com/scl/fi/ev0ezspz3b2gbeazjwokt/ReZero-Temporada-1-Capitulo-24-Espa-ol-Latino.mp4?rlkey=io71hjm1wdag84q4gl7m3yq4w&st=7s5ni4lj&raw=1', title:'Re:Zero T1 Cap 24' },
+          "25": { link:'https://www.dropbox.com/scl/fi/hp3dsakkzaolj3ti8uaxn/ReZero-Temporada-1-Capitulo-25-Espa-ol-Latino.mp4?rlkey=4w2epb31k0kw26plsvb6zd79a&st=t7vi8yl7&raw=1', title:'Re:Zero T1 Cap 25' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/dx5fu7ncxmjupsnakoz3x/ReZero-Temporada-1-OVA-1-Memory-Snow-Espa-ol-Latino.mp4?rlkey=q6nk3vye9e5udpi8h6wq39jyw&st=4veo55yj&raw=1', title:'Re:Zero OVA 1 \"Memory Snow\"' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/ujeugofjinpckpobxtgvy/ReZero-Temporada-1-OVA-2-Frozen-Bonds-Espa-ol-Latino.mp4?rlkey=6b8j4cakykc7ib45fbkkc2q3s&st=fbh3v6m0&raw=1', title:'Re:Zero OVA 2 \"Frozen Bonds\"' },
+        },
+        "4": {
+          "1": { link:'https://www.dropbox.com/scl/fi/ly4c1u5a9btdevpsp5aex/ReZero-Temporada-2-Capitulo-1-Espa-ol-Latino.mp4?rlkey=j7jwh0swz15soxvlc0j52lr64&st=zux5xker&raw=1', title:'Re:Zero T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/uhv5bmmuwagi0b4pfr4nj/ReZero-Temporada-2-Capitulo-2-Espa-ol-Latino.mp4?rlkey=7xkcaw729cosltf73qtk0k9h7&st=1fvgh9gn&raw=1', title:'Re:Zero T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/g228hkid7p4vvjj6iit3o/ReZero-Temporada-2-Capitulo-3-Espa-ol-Latino.mp4?rlkey=nnh6wyrr2ob5dpzzargg1dyzk&st=gir4hgoq&raw=1', title:'Re:Zero T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/3iz1eyjio77qdts70sf4l/ReZero-Temporada-2-Capitulo-4-Espa-ol-Latino.mp4?rlkey=3lp6n8wylvwza567r24krjzri&st=7umxzfpq&raw=1', title:'Re:Zero T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/t5o3wsgk2exavuypecik8/ReZero-Temporada-2-Capitulo-5-Espa-ol-Latino.mp4?rlkey=0l2gzvujf1qlcpvfhrbym1jb6&st=amjtklrk&raw=1', title:'Re:Zero T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/rm8xdfpbiukkh578k6vi8/ReZero-Temporada-2-Capitulo-6-Espa-ol-Latino.mp4?rlkey=eiu9tyri5qr532bslzkgv370g&st=cj6lfwjq&raw=1', title:'Re:Zero T2 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/pma8mz4hlxogclqc0hi92/ReZero-Temporada-2-Capitulo-7-Espa-ol-Latino.mp4?rlkey=od4xczzf8al3l76koeato4dht&st=bl9vnutc&raw=1', title:'Re:Zero T2 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/st6fljeskjqu3v3j19khx/ReZero-Temporada-2-Capitulo-8-Espa-ol-Latino.mp4?rlkey=jbaqprkwcql8wf708tlzsayqb&st=0pzuadtw&raw=1', title:'Re:Zero T2 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/a16syaov60nv19omjmc83/ReZero-Temporada-2-Capitulo-9-Espa-ol-Latino.mp4?rlkey=x415f1dnfptr933nt4710mmd8&st=qjbvq3z7&raw=1', title:'Re:Zero T2 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/axu1hwcyu0aov4j4qg6qj/ReZero-Temporada-2-Capitulo-10-Espa-ol-Latino.mp4?rlkey=f9tqodqfkmhgsbqnjelvg6ez5&st=mo7luzpp&raw=1', title:'Re:Zero T2 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/prualfobxqjo0fp5ufk8m/ReZero-Temporada-2-Capitulo-11-Espa-ol-Latino.mp4?rlkey=4w31luj0exjoqdm9ie90qvuz7&st=4n8sbxaf&raw=1', title:'Re:Zero T2 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/b9693nvxc28kx79qkuhoj/ReZero-Temporada-2-Capitulo-12-Espa-ol-Latino.mp4?rlkey=bc8agghtf6a7o947n09crx7t4&st=xoe99g9a&raw=1', title:'Re:Zero T2 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/dox8paoe1kfj1yttjlyt4/ReZero-Temporada-2-Capitulo-13-Espa-ol-Latino.mp4?rlkey=tlxjt3mrfnfx9tk2vyw6ieio8&st=7apn7525&raw=1', title:'Re:Zero T2 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/0l72h7ix4kg78ih225ob0/ReZero-Temporada-2-Capitulo-14-Espa-ol-Latino.mp4?rlkey=ssdbd534l54vig5pyekyly2vx&st=j3woa6gc&raw=1', title:'Re:Zero T2 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/92zzvn4q8zdqrza5em2p6/ReZero-Temporada-2-Capitulo-15-Espa-ol-Latino.mp4?rlkey=ezdodnevq7j4i0jya7ycgx4fk&st=1l8tmapj&raw=1', title:'Re:Zero T2 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/t6f1di802naq1eiw1f3z5/ReZero-Temporada-2-Capitulo-16-Espa-ol-Latino.mp4?rlkey=rya1ms5mjggipo4k77lhv101x&st=pjvnbs6d&raw=1', title:'Re:Zero T2 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/lgccpp1pju2q67yy8nayv/ReZero-Temporada-2-Capitulo-17-Espa-ol-Latino.mp4?rlkey=729fy51k4hdrn58jb7umo42lz&st=lfu2bq0q&raw=1', title:'Re:Zero T2 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/m1tuvrs3vnptgefxhdsfq/ReZero-Temporada-2-Capitulo-18-Espa-ol-Latino.mp4?rlkey=qo3pfheyiza2snt4j68b72nd4&st=jpmo1kv0&raw=1', title:'Re:Zero T2 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/bzi0gov0cxft0agkbedsd/ReZero-Temporada-2-Capitulo-19-Espa-ol-Latino.mp4?rlkey=rpm9h46uyvrna1dz8pnb7veki&st=63ienowv&raw=1', title:'Re:Zero T2 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/c70ma4c50nfbd5zlzat7z/ReZero-Temporada-2-Capitulo-20-Espa-ol-Latino.mp4?rlkey=1jwi0i18ff236ly1qr0i72pgb&st=heae10ax&raw=1', title:'Re:Zero T2 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/hf8iwpbqgr56uo4emtnyg/ReZero-Temporada-2-Capitulo-21-Espa-ol-Latino.mp4?rlkey=m2s0bpeazjgvbz4hzzvq1zj8d&st=sus8vhdx&raw=1', title:'Re:Zero T2 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/u9udkecuktvkjxlhzy21m/ReZero-Temporada-2-Capitulo-22-Espa-ol-Latino.mp4?rlkey=fhdp0rs0gsd9t48k57nwbhvp9&st=xw09v5oi&raw=1', title:'Re:Zero T2 Cap 22' },
+          "23": { link:'https://www.dropbox.com/scl/fi/delyxo1r5ff8ivvdzunr6/ReZero-Temporada-2-Capitulo-23-Espa-ol-Latino.mp4?rlkey=1wfvjmdbzhkfdtgcjasrzrjq9&st=e7kz062x&raw=1', title:'Re:Zero T2 Cap 23' },
+          "24": { link:'https://www.dropbox.com/scl/fi/cvvsxfuem7kq4bpyq8yc3/ReZero-Temporada-2-Capitulo-24-Espa-ol-Latino.mp4?rlkey=vlh2mf96bh8z3bzv6mpe5idja&st=ejn2jkr5&raw=1', title:'Re:Zero T2 Cap 24' },
+          "25": { link:'https://www.dropbox.com/scl/fi/uzq9pnmwurzlrmkkzam4e/ReZero-Temporada-2-Capitulo-25-Espa-ol-Latino.mp4?rlkey=9ee5wcy05xqiim80j6vksq9nn&st=63d9ftkn&raw=1', title:'Re:Zero T2 Cap 25' },
+        },
+        "5": {
+          "1": { link:'https://www.dropbox.com/scl/fi/x4ff752jbur4ij4lpmecn/ReZero-Temporada-3-Capitulo-1-Espa-ol-Latino.mp4?rlkey=o9edg4c3u2gi9a5vclpfuceow&st=7ywl9tda&raw=1', title:'Re:Zero T3 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/zuuu01c7bz43svh6fc114/ReZero-Temporada-3-Capitulo-2-Espa-ol-Latino.mp4?rlkey=jjf4ym712fs1e47ncyooh3r3v&st=u4j3pt21&raw=1', title:'Re:Zero T3 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/2gf5hq3hre1k58oakvcts/ReZero-Temporada-3-Capitulo-3-Espa-ol-Latino.mp4?rlkey=dwwr6pfl54nzvaii4vwk51l3k&st=70au1qax&raw=1', title:'Re:Zero T3 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/ofnv2yp5x5g8yql8fa8cy/ReZero-Temporada-3-Capitulo-4-Espa-ol-Latino.mp4?rlkey=j2in90g3iuxzpyfmwsalpmtac&st=4rgvsb4j&raw=1', title:'Re:Zero T3 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/kg64c0v02srrzt7xza1v6/ReZero-Temporada-3-Capitulo-5-Espa-ol-Latino.mp4?rlkey=2xp5ypptd1yz40aobfkwqlcct&st=lk5uyz2w&raw=1', title:'Re:Zero T3 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/krxbixrzckp0olanz0xri/ReZero-Temporada-3-Capitulo-6-Espa-ol-Latino.mp4?rlkey=kvwi1bhf3s8z8yzan5zvhh2uf&st=13vuz935&raw=1', title:'Re:Zero T3 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/jo1ufc1b0xllqggm890xa/ReZero-Temporada-3-Capitulo-7-Espa-ol-Latino.mp4?rlkey=h36k51bc98epclmy9v2p3x4j9&st=mp64g9v1&raw=1', title:'Re:Zero T3 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/v8ib6dcpaufzwuxeqfwx6/ReZero-Temporada-3-Capitulo-8-Espa-ol-Latino.mp4?rlkey=4qthkjkwmks4vmx8w4o1tnbly&st=juu988z5&raw=1', title:'Re:Zero T3 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/rfjhimip5l33pixxuyuyp/ReZero-Temporada-3-Capitulo-9-Espa-ol-Latino.mp4?rlkey=ni2a1kts4ejazf4h9ik7b41i1&st=t0ik0ds8&raw=1', title:'Re:Zero T3 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/t1rkab120l5i7vrwm6ra6/ReZero-Temporada-3-Capitulo-10-Espa-ol-Latino.mp4?rlkey=c11z06t071frr9qqh7f123caz&st=rmkpeox7&raw=1', title:'Re:Zero T3 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/f3p1b1ak75h7eouanvs74/ReZero-Temporada-3-Capitulo-11-Espa-ol-Latino.mp4?rlkey=ejsp7zz1kypwigdj0dthf7yfj&st=cvfdtxzp&raw=1', title:'Re:Zero T3 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/kp7bkf59sjbsfqi7fosmw/ReZero-Temporada-3-Capitulo-12-Espa-ol-Latino.mp4?rlkey=82ftjitnuzlmlp6767gag61ub&st=053et5td&raw=1', title:'Re:Zero T3 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/zh8nctko2jnt6077jxys8/ReZero-Temporada-3-Capitulo-13-Espa-ol-Latino.mp4?rlkey=tjrs6cj7ju6ldlb7ko102lqkq&st=o8bshtbq&raw=1', title:'Re:Zero T3 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/0tj2thdwzl1ot7xdvletn/ReZero-Temporada-3-Capitulo-14-Espa-ol-Latino.mp4?rlkey=8z60gr0sbww6hcws89mhtut78&st=epeuwm2b&raw=1', title:'Re:Zero T3 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/texmatvri4y2eyfhpruro/ReZero-Temporada-3-Capitulo-15-Espa-ol-Latino.mp4?rlkey=e6ubakhu9u7ex1uqqt6pm6hno&st=znur3gvx&raw=1', title:'Re:Zero T3 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/ypdzpqn428vcb760dr8yi/ReZero-Temporada-3-Capitulo-16-Espa-ol-Latino.mp4?rlkey=qgwbt32ob5mgz41yc7yfp9mv4&st=c79g5b09&raw=1', title:'Re:Zero T3 Cap 16' },
+        }
+      },
+      "5": {
+        "1": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/ct7h9cw7zpyyq2vzm6wl3/Mushoku-Tensei-T1-Cap-1.mp4?rlkey=85zkfqqx471twhntnirmn1z27&st=ince4h30&raw=1', title:'Mushoku Tensei T1 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/fqjo0012vo75opsqyi20i/Mushoku-Tensei-T1-Cap-2.mp4?rlkey=s86t2jwzg5k3nrn7bojt9gswp&st=jz263opa&raw=1', title:'Mushoku Tensei T1 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/mms5qpo1q59x4idei3exf/Mushoku-Tensei-T1-Cap-3.mp4?rlkey=hpq5wqfm6vuie4kzb1i272mlr&st=4b1s8fa1&raw=1', title:'Mushoku Tensei T1 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/idku940xq6arlmhrul47z/Mushoku-Tensei-T1-Cap-4.mp4?rlkey=5shwgegof2m2fidll1f96fudv&st=6n6lpqdb&raw=1', title:'Mushoku Tensei T1 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/9cht3485c2d242gchq1m0/Mushoku-Tensei-T1-Cap-5.mp4?rlkey=4cjbc6tir9z42gm5htsdfb20w&st=23v886ts&raw=1', title:'Mushoku Tensei T1 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/mmg4m03tkbzxpd3dpjd6d/Mushoku-Tensei-T1-Cap-6.mp4?rlkey=czeui2baf553lhlzaneepxzcp&st=1vq94m6f&raw=1', title:'Mushoku Tensei T1 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/4dmo8e7vpixpw7u226ixj/Mushoku-Tensei-T1-Cap-7.mp4?rlkey=fabe81nrqfye8xzq2j0m6xpsx&st=d9scp9cu&raw=1', title:'Mushoku Tensei T1 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/2b0yf1m2hhwqcqa33t3kp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-8-a.mp4?rlkey=josp2qxbxjel0ukuzt4c7wwfw&st=meqb6tw5&raw=1', title:'Mushoku Tensei T1 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/ccd7hgxpmwjiwltmlch06/Mushoku-Tensei-T1-Cap-9.mp4?rlkey=6xczugwsfc2vcseprzy9r1sk2&st=kguxy7ke&raw=1', title:'Mushoku Tensei T1 Cap 9' },
+          "10":  { link:'https://www.dropbox.com/scl/fi/1mg3ay0v8loq1qepxbyrd/Mushoku-Tensei-T1-Cap-10.mp4?rlkey=j1u88r9p7samczpy8hg1azbmx&st=844rbh0z&raw=1', title:'Mushoku Tensei T1 Cap 10' },
+          "11":  { link:'https://www.dropbox.com/scl/fi/rys6xb1ltkodtj0fmpp7t/Mushoku-Tensei-T1-Cap-11.mp4?rlkey=1btmjhw4tw3xlh5tuf8z8zty4&st=qouruq4h&raw=1', title:'Mushoku Tensei T1 Cap 11' },
+          "12":  { link:'https://www.dropbox.com/scl/fi/ili9l6xgyptd53ekrfyok/Mushoku-Tensei-T1-Cap-12.mp4?rlkey=hd4shpm2jscdp82fvwm7k9urf&st=65vq3rv9&raw=1', title:'Mushoku Tensei T1 Cap 12' },
+          "13":  { link:'https://www.dropbox.com/scl/fi/75k3ayj111ifgmj9nj2jw/Mushoku-Tensei-T1-Cap-13.mp4?rlkey=2dfso53qubmo3jqr54rcqltkb&st=mt680w35&raw=1', title:'Mushoku Tensei T1 Cap 13' },
+          "14":  { link:'https://www.dropbox.com/scl/fi/250vzlf0prhkyq83douxf/Mushoku-Tensei-T1-Cap-14.mp4?rlkey=dzoua26mb2q7bpl9dpbzy5obq&st=wtsf5i7s&raw=1', title:'Mushoku Tensei T1 Cap 14' },
+          "15":  { link:'https://www.dropbox.com/scl/fi/83vtzobfcyzhygzr12v4l/Mushoku-Tensei-T1-Cap-15.mp4?rlkey=85dbnhde2lhey98ifpysklwxc&st=7vyqlil3&raw=1', title:'Mushoku Tensei T1 Cap 15' },
+          "16":  { link:'https://www.dropbox.com/scl/fi/g3ubel5mgp69vi0ilgnnx/Mushoku-Tensei-T1-Cap-16.mp4?rlkey=ozpmgqpyjx44vfanue3szkhwk&st=dxe6z9cy&raw=1', title:'Mushoku Tensei T1 Cap 16' },
+          "17":  { link:'https://www.dropbox.com/scl/fi/vts0dd0hvsk3fqftylyag/Mushoku-Tensei-T1-Cap-17.mp4?rlkey=xyn8tb5qo66o1qsyrhi5nssgk&st=h0l2gtgx&raw=1', title:'Mushoku Tensei T1 Cap 17' },
+          "18":  { link:'https://www.dropbox.com/scl/fi/z7wwpz6yf6dkxg0dyyp83/Mushoku-Tensei-T1-Cap-18.mp4?rlkey=np03zdl23ykud3vfahdei0qnx&st=m7342n6h&raw=1', title:'Mushoku Tensei T1 Cap 18' },
+          "19":  { link:'https://www.dropbox.com/scl/fi/0rtivunhohu7covm7xjr3/Mushoku-Tensei-T1-Cap-19.mp4?rlkey=iby6q0n3jz7omh5579vaz1x30&st=ld15t3p8&raw=1', title:'Mushoku Tensei T1 Cap 19' },
+          "20":  { link:'https://www.dropbox.com/scl/fi/l3ufu6ut8hmk7nifysu12/Mushoku-Tensei-T1-Cap-20.mp4?rlkey=j06z01pm7mfdzah6xro89towd&st=qf2mvmsx&raw=1', title:'Mushoku Tensei T1 Cap 20' },
+          "21":  { link:'https://www.dropbox.com/scl/fi/ht6e27z3869jt4t0p4f6s/Mushoku-Tensei-T1-Cap-21.mp4?rlkey=fw1k58fegjmxkipdq7avf2nns&st=jffzz2lv&raw=1', title:'Mushoku Tensei T1 Cap 21' },
+          "22":  { link:'https://www.dropbox.com/scl/fi/9nqizaqof1qpp9h8gcmjv/Mushoku-Tensei-T1-Cap-22.mp4?rlkey=9vs60r9w8otsxjuru6fnzrpso&st=fikngonr&raw=1', title:'Mushoku Tensei T1 Cap 22' },
+          "23":  { link:'https://www.dropbox.com/scl/fi/kkhqhrxp3go9642e42ynk/Mushoku-Tensei-T1-Cap-23.mp4?rlkey=9pyjnufiyq7l5pl8old6cr369&st=b611fdza&raw=1', title:'Mushoku Tensei T1 Cap 23' },
+          "24":  { link:'https://www.dropbox.com/scl/fi/ddv6w7ezmo25gh3onasnd/Mushoku-Tensei-T1-Ova-1-Eris-la-cazaduendes.mp4?rlkey=iq6x0honjnmz7o5xjzfljqqcc&st=hbf9px27&raw=1', title:'Mushoku Tensei T1 OVA 1 \"Eris La Cazaduendes\"' },
+        },
+        "2": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/j51vz79fh9lpg4kkl8vd1/Mushoku-Tensei-T2-Cap-0.mp4?rlkey=dup4n89p4fp39suuq6181536b&st=6r2i7xlw&raw=1', title:'Mushoku Tensei T2 Cap 0' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/yc0iqle1ngpl1f8bisyvb/Mushoku-Tensei-T2-Cap-1.mp4?rlkey=j0q6osg9byqhmxkicuenatemf&st=6xohulvi&raw=1', title:'Mushoku Tensei T2 Cap 1' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/pfkknznprjno2ije99ds3/Mushoku-Tensei-T2-Cap-2.mp4?rlkey=75sjt2dsum6zpox0mgctipuhq&st=c24ontgu&raw=1', title:'Mushoku Tensei T2 Cap 2' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/jxca3che6j2p6iwc6a59z/Mushoku-Tensei-T2-Cap-3.mp4?rlkey=amzgeqbqk31dudd41hs14fq7t&st=xlvwq82q&raw=1', title:'Mushoku Tensei T2 Cap 3' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/bd1y7bwntrlx33extwqaz/Mushoku-Tensei-T2-Cap-4.mp4?rlkey=r3hcekd4aidyb9khioxd360h8&st=91q8ua9q&raw=1', title:'Mushoku Tensei T2 Cap 4' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/ewbwltyjjblju4q23ihzk/Mushoku-Tensei-T2-Cap-5.mp4?rlkey=vsud4dy9je15rhf5xczdiyzcv&st=q9n2davc&raw=1', title:'Mushoku Tensei T2 Cap 5' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/z5uzllvsepdjhvtx21fuk/Mushoku-Tensei-T2-Cap-6.mp4?rlkey=tx8wrpxiddwct51qdooz6ar6s&st=t2upbpbf&raw=1', title:'Mushoku Tensei T2 Cap 6' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/cz9phj3rjb4ioyoczyqbt/Mushoku-Tensei-T2-Cap-7.mp4?rlkey=wvyyrt0r659e6lltd6ybbmnyq&st=kginksl1&raw=1', title:'Mushoku Tensei T2 Cap 7' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/uf5dxl3s7kqo4s6q3z9mt/Mushoku-Tensei-T2-Cap-8.mp4?rlkey=77zqn0qy8l8mrgig795hqtkj0&st=y81bbxtw&raw=1', title:'Mushoku Tensei T2 Cap 8' },
+          "10":  { link:'https://www.dropbox.com/scl/fi/1wibgrqc3gbd4wt29cpbk/Mushoku-Tensei-T2-Cap-9.mp4?rlkey=1f8su608aua8rmvo8bxpg6acq&st=5m942hy8&raw=1', title:'Mushoku Tensei T2 Cap 9' },
+          "11":  { link:'https://www.dropbox.com/scl/fi/r6am0tz1lp11qg346774x/Mushoku-Tensei-T2-Cap-10.mp4?rlkey=jx0bqchoi3so1o3si4can582z&st=vtrgxf3t&raw=1', title:'Mushoku Tensei T2 Cap 10' },
+          "12":  { link:'https://www.dropbox.com/scl/fi/1fbbifxdy6aqtcn0kuxb9/Mushoku-Tensei-T2-Cap-11.mp4?rlkey=2q8o6prj49yppc4p7dpsmpzdb&st=jlvasifn&raw=1', title:'Mushoku Tensei T2 Cap 11' },
+          "13":  { link:'https://www.dropbox.com/scl/fi/02zvkea32rw1m7oa6jumi/Mushoku-Tensei-T2-Cap-12.mp4?rlkey=uh0lu5x4gmprjr8tj93mgx5p9&st=zd5jyuj1&raw=1', title:'Mushoku Tensei T2 Cap 12' },
+          "14":  { link:'https://www.dropbox.com/scl/fi/6uh9f41xzeiglajx1wya1/Mushoku-Tensei-T2-Cap-13.mp4?rlkey=bu5uaads1ysisudxdn8rwimsn&st=aiu8y9z3&raw=1', title:'Mushoku Tensei T2 Cap 13' },
+          "15":  { link:'https://www.dropbox.com/scl/fi/nrp507muc5i3vxlbizkgv/Mushoku-Tensei-T2-Cap-14.mp4?rlkey=gu4xgaln4gqxfacs2gt34dnhv&st=grbfbq2c&raw=1', title:'Mushoku Tensei T2 Cap 14' },
+          "16":  { link:'https://www.dropbox.com/scl/fi/n8b2d700zizfkmvfts4vh/Mushoku-Tensei-T2-Cap-15.mp4?rlkey=x38mikmghbrgik1dqdpld8vfw&st=h512jfkm&raw=1', title:'Mushoku Tensei T2 Cap 15' },
+          "17":  { link:'https://www.dropbox.com/scl/fi/qc7pb5bmqh54tcdw7exrx/Mushoku-Tensei-T2-Cap-16.mp4?rlkey=lqx8o0vbpjb3zjznzwlt3p6i2&st=3ugg5zzq&raw=1', title:'Mushoku Tensei T2 Cap 16' },
+          "18":  { link:'https://www.dropbox.com/scl/fi/dzqz7xb38n6dqs4lxkbqr/Mushoku-Tensei-T2-Cap-17.mp4?rlkey=aphzdshfp78ftjo05sx88b2s0&st=ogkwz0zm&raw=1', title:'Mushoku Tensei T2 Cap 17' },
+          "19":  { link:'https://www.dropbox.com/scl/fi/6ch3edyg1x50yv85udsmr/Mushoku-Tensei-T2-Cap-18.mp4?rlkey=c2kmg0437cd48u5tf1897nt9w&st=qr33nuu6&raw=1', title:'Mushoku Tensei T2 Cap 18' },
+          "20":  { link:'https://www.dropbox.com/scl/fi/jaz6zsd476cxkxfvhyzf9/Mushoku-Tensei-T2-Cap-19.mp4?rlkey=gk0hfaqrdedfedioc3v8alahc&st=bysju2cp&raw=1', title:'Mushoku Tensei T2 Cap 19' },
+          "21":  { link:'https://www.dropbox.com/scl/fi/8xhp59fvs2ker1d822z0m/Mushoku-Tensei-T2-Cap-20.mp4?rlkey=xros1h8ivi973i40o3c0kolcq&st=rw4qtchb&raw=1', title:'Mushoku Tensei T2 Cap 20' },
+          "22":  { link:'https://www.dropbox.com/scl/fi/gnsw86l45nrcohuuzy759/Mushoku-Tensei-T2-Cap-21.mp4?rlkey=09k1kjvybyr9bqoqqrkess12v&st=yi3z0ei3&raw=1', title:'Mushoku Tensei T2 Cap 21' },
+          "23":  { link:'https://www.dropbox.com/scl/fi/z3f59oca9n8ukgvi2cy7t/Mushoku-Tensei-T2-Cap-22.mp4?rlkey=cgf7z31k8j9ivqvtxddlkfdc9&st=qztnc6v7&raw=1', title:'Mushoku Tensei T2 Cap 22' },
+          "24":  { link:'https://www.dropbox.com/scl/fi/n74atkx1vksxpggveir1i/Mushoku-Tensei-T2-Cap-23.mp4?rlkey=4m78au6nhbk2kzbxw3wze93m1&st=orudxnz5&raw=1', title:'Mushoku Tensei T2 Cap 23' },
+          "25":  { link:'https://www.dropbox.com/scl/fi/mcxy85cgd71cgxlwpnppg/Mushoku-Tensei-T2-Cap-24.mp4?rlkey=p8ea4i5r5fgvm8pgzw0n5dbx5&st=wb62g3v8&raw=1', title:'Mushoku Tensei T2 Cap 24' },
+        }
+      },
+      "6": {
+        "1": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/ctrl3eaetkbom5fc2wuww/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-1.mp4?rlkey=m1eepq1ota64om02ks9vt388a&st=b5935yem&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/a9q48lok4yb4vyxddrirl/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-2.mp4?rlkey=9y0kl9v1c8c7iduh62u8wzcba&st=fbl3yzq1&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/ucg2h14tak8xw9xm2pfbn/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-3.mp4?rlkey=locvy04kfzhgy9tchauyz5bbb&st=bsrr7tmu&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/a32z9pdch7dnpum8loj59/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-4.mp4?rlkey=28u449ubxw383t8ka9fv3ti4t&st=enm7t4hk&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/slpbp35fstmtkf068wmah/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-5.mp4?rlkey=qj1k7is1d09yyyfg9nv7e4x9z&st=q1724p3j&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/the10z6y243rb36olx8y2/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-6.mp4?rlkey=2xc4subwlgeg41d5fzyl23p0g&st=35t6dotu&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/g0sao8081afjlph8ywpq8/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-7.mp4?rlkey=23taqjjhjcdrig5ijqfzp6q0g&st=8vzj21oq&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/2b0yf1m2hhwqcqa33t3kp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-8-a.mp4?rlkey=josp2qxbxjel0ukuzt4c7wwfw&st=jvzkn0s7&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/g9vsyym2aiueeziiuh8an/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-9.mp4?rlkey=26a1xpfslasiv4dihrao4uvl7&st=o6czfmvc&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/zdbhkr0ptkrs2ql7ei7ow/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-10.mp4?rlkey=lqwa23kn6zpjk79b0ct24yngp&st=uda5e98e&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/dl8k9ukq3puv1cbsc0tay/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-11.mp4?rlkey=gday8d863poc9xes0tdtmy98j&st=ws63ssgf&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/56r8aqwzsufzd2fxdrusl/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-12.mp4?rlkey=dtr5nm5vxtvncdifb70vjl8ro&st=6wpuk23n&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/wovaoldw67tgxmlus2v7j/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-13.mp4?rlkey=smnvfb5q5hupwhui9nf7ei8p1&st=kb8nh3cj&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/0lsx4jchghe4mgmsqd0os/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-14.mp4?rlkey=zu0f0jz9y5nex2gzn5w8gge3b&st=vhchmpdl&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/zdqlgnjtcwj9qi2eoix8e/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-15.mp4?rlkey=vmdqwyk1tromhilyj8rm5fs21&st=l5rpuyq5&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/mkn68mp9hdhybja53f630/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-16.mp4?rlkey=ylkuuisf9pk8twam7jp2ghhu9&st=xe19y5uw&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/auew8t8l3kxhafm9nov8v/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-17.mp4?rlkey=x6o85nwspw2l6fy6d6b48d56w&st=1a1mqcqa&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/j8nka14b8m25pymdrv470/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-18.mp4?rlkey=72dlkyuqnrlvl5c2jbe4bq98t&st=d4g725hm&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/64n2px5om612mxv8g0crg/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-19.mp4?rlkey=p90cxlgb7vi8oto2xrs1bmfol&st=b186psg0&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/hlqwmls0maxskjljlkfzp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-20.mp4?rlkey=6g0gls6o56keb38ctzl7lgsnp&st=vp323tv7&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/leyeiqeud4vzn2l0pty6v/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-21.mp4?rlkey=g0u1zvrs18wz7wfrusgt6mato&st=cuwhbmfh&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/zj3eh69got35j8c07qnsa/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-22.mp4?rlkey=4j5fy2k1q283rnpss6e9cm49q&st=ni3bg14c&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 22' },
+          "23": { link:'https://www.dropbox.com/scl/fi/b9cc4i5gla34pq2g0u5he/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-23.mp4?rlkey=swgsr7jia2xv4p7syo97bjau5&st=qfcna3d0&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 23' },
+          "24": { link:'https://www.dropbox.com/scl/fi/jvg4jsfgz9ce7arrry5g5/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-24.mp4?rlkey=kbdwdt72cwgncgx3qcjlts6jg&st=729dp9iy&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 24' },
+          "25": { link:'https://www.dropbox.com/scl/fi/30726zjyg772o83owr668/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-25.mp4?rlkey=2uxrvdx99ztjqxmi1zryp47tx&st=m8nanaf0&raw=1', title:'Tensei Shitara Slime Datta Ken T1 Cap 25' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/dg1gihw1m9a4cx3ur9ynm/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-1.mp4?rlkey=om37eijsa86nctlw5jxqn13rm&st=fsaih6eh&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 1' },
+        },
+        "3": {
+          "2": { link:'https://www.dropbox.com/scl/fi/eo6nnmc76ptcfdponu9iq/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-2.mp4?rlkey=vbh8tway6rpca2gag7zcakip1&st=mxxfapr6&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 2' },
+        },
+        "4": {
+          "3": { link:'https://www.dropbox.com/scl/fi/qe68tplarmtxdk0rdgo7v/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-3.mp4?rlkey=swantjta9zwj59tfvuwa8gfie&st=scx8f532&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 3' },
+        },
+        "5": {
+          "4": { link:'https://www.dropbox.com/scl/fi/h9haq0noqzt42uzchukyp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-4.mp4?rlkey=niv26dx2iiuduetxn2q32r2ns&st=3q847623&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 4' },
+        },
+        "6": {
+          "5": { link:'https://www.dropbox.com/scl/fi/c1m3ykx8rzhag5sqvqdb3/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-5.mp4?rlkey=vj1p96f27j5ojxu8lskfp8yo5&st=fmmaj72k&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 5' },
+        },
+        "7": {
+          "1": { link:'https://www.dropbox.com/scl/fi/wn1mj5866g19ru1oeflst/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-1.mp4?rlkey=qeve4wwo9h92jdt51dr12may6&st=vffdbn2n&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 1' },
+        },
+        "8": {
+          "2": { link:'https://www.dropbox.com/scl/fi/ofego48zdjtnhh17guu81/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-3.mp4?rlkey=ol4r0bsb3ir6d3da1f0pwlxcs&st=vc231rrf&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 2' },
+        },
+        "9": {
+          "3": { link:'https://www.dropbox.com/scl/fi/uybxp5xjjwx99ob2bb8ux/FDownloader.Net_AQOhjAIXNx3QiC6NQpKOxF6_qlOyAG1m_ua6kqDvbZXXc-yn26Qb0Sgp1r10GbmemSNKzhEN-6LhJhZQp8s3QFjsLfvvPsfhWE7NtbdlTuV7N4EyTWJN4DhcGXIQRpysOo8Bs1yiNw_720p_-HD.mp4?rlkey=6x2yal7i0h8ut1gdofw231pwa&st=y13ci5lv&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 3' },
+        },
+        "10": {
+          "1": { link:'https://www.dropbox.com/scl/fi/1xrcdui64y7a3bjmw9z9e/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-1.mp4?rlkey=2gekwanefsudfm8rv9vjrh5qb&st=kwhutwym&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/6bfo3d4qcmj6lrq1um8b8/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-2.mp4?rlkey=v0nibj1sqtdmhnhkqcsqp9knz&st=c8wn9gg3&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/git43h8dvs7wwxkbbvxsz/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-3.mp4?rlkey=kj4g50ipiuf4093b2icvzq025&st=q6w0k207&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/jws0kv356p7z293islwm7/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-4.mp4?rlkey=s3jyoyxzmauqe4ahrz85djtff&st=swpb9uvm&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/nfcurywlcp4h70ei4ayy5/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-5.mp4?rlkey=3615nugl49n5h6jtozdn5g03x&st=51fzz1oo&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/ncudv5n0gsp1bumlt0glo/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-6.mp4?rlkey=c5f7t40tgy9720d0m8fk9mda1&st=we4mpz6w&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/qoof6dse9tkr8cleo1ctb/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-7.mp4?rlkey=k271mflrhz0i8afyihtg7d073&st=obkxkn9x&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/60i1vys3707mj843npxpt/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-8.mp4?rlkey=2a9qlzv0lyi0hk3xfoftbdi78&st=b42cnavc&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/qulfu68y06ngz7gz7ygwh/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-9.mp4?rlkey=wn3u2bycklpi6mvwnf1zieshb&st=nc4nf5pu&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/2onspwn8hdebiuclw8l14/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-10.mp4?rlkey=wilbrwngn38qlsb8md9kh6aym&st=pclix4bp&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/mn9vmddoweo1bf3yd715q/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-11.mp4?rlkey=peixn7mjh9qc3yc7adsnknx6l&st=d0l0inzy&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/vjbhsoxhitcdgbujzo9rm/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-12.mp4?rlkey=fgi9gn0an7jittqb68lqyv8l6&st=en0ppejy&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 12' },
+        },
+        "11": {
+          "13": { link:'https://www.dropbox.com/scl/fi/jz5hsw8llga7bgzsgeby0/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-1.mp4?rlkey=23j042475e3xhcogn23xcg1g5&st=92eb4iqa&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 1' },
+          "14": { link:'https://www.dropbox.com/scl/fi/q4ucsuyiyeafz98oqcix7/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-2.mp4?rlkey=9thrgmgh23p6h0xj6h28feoya&st=s4b2fteo&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 2' },
+          "15": { link:'https://www.dropbox.com/scl/fi/tggrxjealnpqz1sblf25b/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-3.mp4?rlkey=emr6lo7d1euye8maeplmxblg3&st=6tr37ma4&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 3' },
+          "16": { link:'https://www.dropbox.com/scl/fi/csg7yezcqogm9vulnbd2u/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-4.mp4?rlkey=fnepn73cm9wmwgidttpajvy1x&st=a9xi3n61&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 4' },
+          "17": { link:'https://www.dropbox.com/scl/fi/9zzyet86ou5ih355hpivg/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-5.mp4?rlkey=ynn6cxj3v4999qul2jsdj8ya2&st=nsfba8ar&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 5' },
+          "18": { link:'https://www.dropbox.com/scl/fi/u1f85vbuhwqh75u9et6gl/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-6.mp4?rlkey=k1ky4eufl66kjz3kgfdpth5sa&st=g59k96u0&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 6' },
+          "19": { link:'https://www.dropbox.com/scl/fi/gl6fwo7bzyha46r635qmn/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-7.mp4?rlkey=ek6x8b3q05mlt6dp4y04vayqb&st=ihiq6vmz&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 7' },
+          "20": { link:'https://www.dropbox.com/scl/fi/5qz3ss655m6w2iadpv540/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-8.mp4?rlkey=fesfxp6b98im1qg4yx0k1kagh&st=22gf1ucm&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 8' },
+          "21": { link:'https://www.dropbox.com/scl/fi/uuw3bht4wmzfzrx4n6g3h/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-9.mp4?rlkey=55wxs2wkyb6nkgzudclqd4b6u&st=ypy47fiq&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 9' },
+          "22": { link:'https://www.dropbox.com/scl/fi/wf1tcg5j0mca5uktcg2qy/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-10.mp4?rlkey=sk4jzq2y7s7swygwzs83grper&st=ql09lj6g&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 10' },
+          "23": { link:'https://www.dropbox.com/scl/fi/u9vvvdug22p1xsy3f8uyv/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-11.mp4?rlkey=pf221tjynf14mi25g0kliibsj&st=ht4eo4gg&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 11' },
+          "24": { link:'https://www.dropbox.com/scl/fi/yslm26m5nwy4haeh9syj6/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-12.mp4?rlkey=tzchu97pgzwazitz79e10v25r&st=bbnqi5hn&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 12' },
+          "25": { link:'https://www.dropbox.com/scl/fi/7lwwck53uu6ht7l3ta657/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-13.mp4?rlkey=4zxam86id74t26jtjp7e1vkr2&st=c0vxlic0&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 13' },
+          "26": { link:'https://www.dropbox.com/scl/fi/0lsx4jchghe4mgmsqd0os/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-14.mp4?rlkey=zu0f0jz9y5nex2gzn5w8gge3b&st=vhchmpdl&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 14' },
+          "27": { link:'https://www.dropbox.com/scl/fi/n7n3yssgcl4ol22ml52kx/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-15.mp4?rlkey=lfnltyh9hl6r4econn3f2x3dy&st=32uiwhkd&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 15' },
+          "28": { link:'https://www.dropbox.com/scl/fi/5e3sixlwc4nu3xi5zufli/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-16.mp4?rlkey=fig6irun5w56yjxb94d8u2u1c&st=zwj69250&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 16' },
+          "29": { link:'https://www.dropbox.com/scl/fi/fomps97pb3h6suwkp9hy1/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-17.mp4?rlkey=m3y1wwgb7xr3h729ljbyu6s73&st=ralr76kq&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 17' },
+          "30": { link:'https://www.dropbox.com/scl/fi/892agv8g3rvhxl86oat3c/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-18.mp4?rlkey=9dmtyedvw7p45oxvjnxs7geub&st=uhyqap5l&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 18' },
+          "31": { link:'https://www.dropbox.com/scl/fi/1nxq2s0p1qigu05i9ck3d/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-19.mp4?rlkey=ksqumym8sulakflbfrdp4o3x5&st=zevuwum5&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 19' },
+          "32": { link:'https://www.dropbox.com/scl/fi/zq53mkfueitasizbx6gl8/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-20.mp4?rlkey=q9w6scf7zf0yf6q4eeei7qk3c&st=ppbx3a7c&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 20' },
+          "33": { link:'https://www.dropbox.com/scl/fi/0io3nxodpuveuox5lutoz/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-21.mp4?rlkey=6tipvd3yn91ilh84fb5nipog7&st=jnorhlso&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 21' },
+          "34": { link:'https://www.dropbox.com/scl/fi/4kprfk69pbmzezwrqw2d4/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-22.mp4?rlkey=tv0t2dt1ignqhpb2oudp5ab5v&st=f2mj8jb2&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 22' },
+          "35": { link:'https://www.dropbox.com/scl/fi/i2xmfueynvv3skfa8180p/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-23.mp4?rlkey=11byqgo3sr5cnqqrjr76qg759&st=svlpi5wt&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 23' },
+          "36": { link:'https://www.dropbox.com/scl/fi/ccq7b0pcnoflx5q9zi8f6/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-24.mp4?rlkey=z298tlgob7v86rqq69k50ticd&st=o9gmm9j4&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 24' },
+        },
+        "12": {
+          "1": { link:'https://www.dropbox.com/scl/fi/m6566spuq1ogelsnd4fiz/Tensei-Shitara-Slime-Datta-Ken-T3-PELICULA-EL-VINCULO-ESCARLATA.mp4?rlkey=52hl9araz4b7gdhdldvr4y3cg&st=drxxxh1g&raw=1', title:'Tensei Shitara Slime Datta Ken  Pelicula 1 \"El Vinculo Escarlata\"' },
+        },
+        "13": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/7xe3tnmoguj7muqpqjfwj/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-0.mp4?rlkey=jjs6qbwdy7ylsjm3tx5a3hvhf&st=pd3qlj1x&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 0' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/19q7cn1v2kcb9chs6d7uz/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-1.mp4?rlkey=ogbzz286t6dowd3ra8v8l922k&st=5rfp7sl2&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 1' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/iz5kzp5yanxme21jpvcf8/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-2.mp4?rlkey=r9py4fr3gg35hi5q4iyhu83q8&st=tsv15jyw&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 2' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/jyfo4fzfintsqurnn573j/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-3.mp4?rlkey=zvqblnhnw4e5g33y4fyv2yeft&st=v0g4yxuy&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 3' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/d2faozmbh6csuuxgaiu4i/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-4.mp4?rlkey=43d683cneinm43t4a91orphup&st=vxf4hwzv&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 4' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/v2lua7v1sm2bovo894gef/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-5.mp4?rlkey=9pbwdw4owcyr7jyhsd5dg6zjl&st=jxeq7252&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 5' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/f65ey2jlwfo5bfj7at375/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-6.mp4?rlkey=xzib6n1w59o8h2yfrz5lkk43c&st=p787r3nt&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 6' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/m4os8ahjyo1zjilm74g6b/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-7.mp4?rlkey=mh7x14be98l8gbaqmq85lco6d&st=3vpkt5qd&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 7' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/q18bakn195s43naeawunu/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-8.mp4?rlkey=1nwhesz0g5b1y14xqlm6uy6x6&st=2hh7jemb&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 8' },
+          "10": { link:'https://www.dropbox.com/scl/fi/a4sezlsfzzzldagrwj4ka/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-9.mp4?rlkey=lf41awebhiudzq4ytp6guwb3e&st=vq2aa8ik&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 9' },
+          "11": { link:'https://www.dropbox.com/scl/fi/co4q04tbqmh10m5s9h5x6/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-10.mp4?rlkey=g3cg4x0zpj8vb5o4pfqet7kv8&st=llp7cj3u&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 10' },
+          "12": { link:'https://www.dropbox.com/scl/fi/x4y38zf0u1k76y3nf14ub/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-11.mp4?rlkey=tv6g5vt8qlg0j52rz92c9zix8&st=q83fxp8w&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 11' },
+          "13": { link:'https://www.dropbox.com/scl/fi/hiu8nmni53fzi5nx84hgn/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-12.mp4?rlkey=owk6dg9w97mbwe4tea7ncas4d&st=powwz5gp&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 12' },
+          "14": { link:'https://www.dropbox.com/scl/fi/3ivkgpj4j3ajwg00oe75j/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-13.mp4?rlkey=c69j39vduauh27u8mry2z14dw&st=p12dh9rr&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 13' },
+          "15": { link:'https://www.dropbox.com/scl/fi/2ftl9uyaqtlywvp0sbkoz/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-14.mp4?rlkey=y4qura2vwiakty3sx43lqmqvz&st=1u8rql23&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 14' },
+          "16": { link:'https://www.dropbox.com/scl/fi/lic8b8dv5p53xt6rjeig1/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-15.mp4?rlkey=697ayi9jfwivirli4dcuaflyl&st=ecdf4iiq&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 15' },
+          "17": { link:'https://www.dropbox.com/scl/fi/2d3khj9804p7d2nfd37qb/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-16.mp4?rlkey=bawtohtc0cc60kj3nm8vga1do&st=vl89cxiu&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 16' },
+          "18": { link:'https://www.dropbox.com/scl/fi/w6m28s7aqt4d0wcwgubdv/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-17.mp4?rlkey=8tmwkyytqrrtb2u2pqvc9mcry&st=ctkdz5e2&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 17' },
+          "19": { link:'https://www.dropbox.com/scl/fi/fehv6xhvuf8cm7xz89gd6/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-18.mp4?rlkey=em3yufn8ajwrrzk4xg1fx311u&st=vkumpt7o&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 18' },
+          "20": { link:'https://www.dropbox.com/scl/fi/r4yl45qt5jma5ndhjz8h0/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-19.mp4?rlkey=pmujo81o0492cvvngv52qwh9f&st=1j8zb5hm&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 19' },
+          "21": { link:'https://www.dropbox.com/scl/fi/v7fwctzzvnk70cf59ec3v/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-20.mp4?rlkey=zuhg4y73753ef38tcjfo5ts27&st=z2bceb8b&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 20' },
+          "22": { link:'https://www.dropbox.com/scl/fi/0gb23j0ykiic7s715rnss/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-21.mp4?rlkey=yujgd1zh45undvj5nvc3530ya&st=gkqfkpz8&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 21' },
+          "23": { link:'https://www.dropbox.com/scl/fi/caaelj3cn5kcp7m1tdfpa/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-22.mp4?rlkey=ac99x6p9z8uuy71zdbmsy26sn&st=s5po0bsw&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 22' },
+          "24": { link:'https://www.dropbox.com/scl/fi/4la1f9rlg349w6kno25f3/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-23.mp4?rlkey=1kl53mcgollpdmjg0r5w0klc0&st=74uzdihh&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 23' },
+          "25": { link:'https://www.dropbox.com/scl/fi/1n72d0vsqjeq75uwfi9eu/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-24.mp4?rlkey=xc2uoanff1gd5bpj82j84ybws&st=88gvj1qt&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 24' },
+        }
+      },
+      "7": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/cwloo9f61zbq16pk02ymg/Youjo-Senki-T1-Cap-1.mp4?rlkey=ws7dj41kz96o682mgryaexyv8&st=l9fnlr2e&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/wedbnkmetzklli9sl2zeu/Youjo-Senki-T1-Cap-2.mp4?rlkey=jj5h7lfux5pnl7utkbjn31cj1&st=5vx77qxs&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/c7z9dzmv08wdwzn2jpdx6/Youjo-Senki-T1-Cap-3.mp4?rlkey=xnw9uyo6en0j7ofbb4lv14fvs&st=93dcpil2&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/ohkkuvu4bq03tf35iyuu8/Youjo-Senki-T1-Cap-4.mp4?rlkey=1aeehf3c4t4y3xc1kwu4sw6i7&st=zevggehd&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/x51hvj9popylg23jtxv4o/Youjo-Senki-T1-Cap-5.mp4?rlkey=uxtzqpleynxyzs3isccmqrx2a&st=3yty0yat&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/h41ppi21nb31j7bg5wd4y/Youjo-Senki-T1-Cap-6.mp4?rlkey=i3igqmmttmfq4gt3u8mhiagcr&st=wa1v8dwi&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/p5xiwa7q0m84illeananc/Youjo-Senki-T1-Cap-7.mp4?rlkey=n56c9qmnurj8v7n094ywyj5cu&st=8u110tq9&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/vq2n6h53jlswdzn580v8h/Youjo-Senki-T1-Cap-8.mp4?rlkey=gpzgxr75ozy1zgbx56k3xwclx&st=6xiuq3ta&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/bq1a5mxnj4u7j5m0qkpjy/Youjo-Senki-T1-Cap-9.mp4?rlkey=f7afgptopsnfa595hkxh3vs7l&st=hk6wfszm&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/1o2rbohpe7ex1ln9b4fyl/Youjo-Senki-T1-Cap-10.mp4?rlkey=j2xioeeavkgl2qty6rnir72x1&st=ojrirudw&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/zxgjyfdogpmqtsqff2uev/Youjo-Senki-T1-Cap-11.mp4?rlkey=fm79ti0hgij2p2xpd0qtyjyuc&st=v2ow0lnv&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/v816agopxg8uroibqvk7j/Youjo-Senki-T1-Cap-12.mp4?rlkey=6ezog4aqfpsaxl8jfuy3lle83&st=ifdm9i9i&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) T1 Cap 12' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/qosr7biv96np4err6zznk/Youjo-Senki-Pelicula.mp4?rlkey=9gmwjse1yer6wuw679ziwzytn&st=bzx5kstk&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) Pelicula' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/uci3pxlcdmcoxulkqypf0/Youjo-Senki-Ova-1.mp4?rlkey=dkl33xtpjdt4lz7e0iz9n960c&st=i02t9230&raw=1', title:'Saga of Tanya the Evil (Yōjo Senki) OVA SUB' },
+        }
+      },
+      "8": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/k2vm4zq122h3o4td6nzj5/Akame-Ga-Kill-Cap-1.mp4?rlkey=llqu79sz73xspmhiga2a52wd7&st=f3jdcd70&raw=1', title:'Akame Ga Kill T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/tvk04lq9aunx5oyq3p2s4/Akame-Ga-Kill-Cap-2.mp4?rlkey=hq27q4n7xgaac4k3tkptlk2zd&st=v8azpe2j&raw=1', title:'Akame Ga Kill T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/tpcog69ijplu34xqbz8fa/Akame-Ga-Kill-Cap-3.mp4?rlkey=domoycjz43lw3ni7bqzf4x918&st=gy24v0w3&raw=1', title:'Akame Ga Kill T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/w8r5hsiys9hkc1qmavmba/Akame-Ga-Kill-Cap-4.mp4?rlkey=gww3hv9gcwi2xc5brar0oqq2x&st=bia6p65n&raw=1', title:'Akame Ga KillX T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/5cuhdexfi8wctpaz94yyv/Akame-Ga-Kill-Cap-5.mp4?rlkey=vmhgpduf2rzba2t34roequmqf&st=8z348noo&raw=1', title:'Akame Ga Kill T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/p64y5iozoqk5fzzpxptql/Akame-Ga-Kill-Cap-6.mp4?rlkey=efsvyqwhe7ruq9uowzik1us3e&st=ub8opp53&raw=1', title:'Akame Ga Kill T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/3b4jnzxqpe7mzmaxwuek6/Akame-Ga-Kill-Cap-7.mp4?rlkey=e9qupfn0q3a9904zl8jloehqp&st=2nbv1wot&raw=1', title:'Akame Ga Kill T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/vo5ywcdq84ai71azvzagn/Akame-Ga-Kill-Cap-8.mp4?rlkey=9eweipvu5rd92atq1bx5keo0i&st=ltbgk9ll&raw=1', title:'Akame Ga Kill T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/zkbdkpwb6ifapdvse60sc/Akame-Ga-Kill-Cap-9.mp4?rlkey=32lbjch2mb888c62c97rfdw47&st=phkisc55&raw=1', title:'Akame Ga Kill T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/9xh7oq7p6r9s6725sqici/Akame-Ga-Kill-Cap-10.mp4?rlkey=7yf00lni17zi1cu6l4dyftp16&st=pzgs5uum&raw=1', title:'Akame Ga Kill T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/ukp85kxg1pt7yy9jl8mfk/Akame-Ga-Kill-Cap-11.mp4?rlkey=6qcafi0dncy4c7acvy83gtl07&st=pevun8yi&raw=1', title:'Akame Ga Kill T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/g1uy3zmolhfsjr6u8g3t7/Akame-Ga-Kill-Cap-12.mp4?rlkey=eoaao4juf15wlvkkzboipzday&st=iz1k0b5f&raw=1', title:'Akame Ga Kill T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/eseuh94ljvtsf1x9kw8gb/Akame-Ga-Kill-Cap-13.mp4?rlkey=umor2qwd1ervmi9wdt5l3vcn7&st=j57kv5v8&raw=1', title:'Akame Ga Kill T1 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/781f4g9wmxw14irhn4pyx/Akame-Ga-Kill-Cap-14.mp4?rlkey=hw10hmx9oeion03slbhxrwoj2&st=xe290lu1&raw=1', title:'Akame Ga Kill T1 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/iww8qnio7xteozodixnex/Akame-Ga-Kill-Cap-15.mp4?rlkey=p7ekpaesr3vgjjn2w5cfguee9&st=jo87wii7&raw=1', title:'Akame Ga Kill T1 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/ltviiyzvkzu92f0tlv4z0/Akame-Ga-Kill-Cap-16.mp4?rlkey=epp332cvdb3ewhvexxn2bsbzy&st=fmiya04f&raw=1', title:'Akame Ga Kill T1 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/lpfejw19lq7dktdjiz8lm/Akame-Ga-Kill-Cap-17.mp4?rlkey=cme4u6mwnnkbmvpuukly7m5n2&st=1ued0cd5&raw=1', title:'Akame Ga Kill T1 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/77x1acwrccpafxywapfs7/Akame-Ga-Kill-Cap-18.mp4?rlkey=f96j1pt3q6kk45gzt733ki61l&st=55vr58f7&raw=1', title:'Akame Ga Kill T1 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/18ww5epagail8bnee50l1/Akame-Ga-Kill-Cap-19.mp4?rlkey=7msxnm7kod2ckyjys0eibccvd&st=nxuh3zq3&raw=1', title:'Akame Ga Kill T1 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/5unvhjhsepic6z40ezx25/Akame-Ga-Kill-Cap-20.mp4?rlkey=2ckhwf3ujitysnaxhvm2f4yl9&st=kqmu9ckv&raw=1', title:'Akame Ga Kill T1 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/v8nd0jklgk10udbfhdks8/Akame-Ga-Kill-Cap-21.mp4?rlkey=z1w9f68wmkv7ansuz27o6x24k&st=xx4n59sf&raw=1', title:'Akame Ga Kill T1 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/ky9b3js0qa8ly1wjjicgh/Akame-Ga-Kill-Cap-22.mp4?rlkey=nfryqg05vbuaq6erst01fifak&st=hfux5cm9&raw=1', title:'Akame Ga Kill T1 Cap 22' },
+          "23": { link:'https://www.dropbox.com/scl/fi/6wno5wannqk8qjv6mgbjw/Akame-Ga-Kill-Cap-23.mp4?rlkey=1olq7gyc2ssxdar8clbh20c1x&st=f4hh1fzw&raw=1', title:'Akame Ga Kill T1 Cap 23' },
+          "24": { link:'https://www.dropbox.com/scl/fi/rx1jt8jnfo90frm1wkg10/Akame-Ga-Kill-Cap-24.mp4?rlkey=z6wwy8hoqefyew4un390hrzjh&st=kdn9fogv&raw=1', title:'Akame Ga Kill T1 Cap 24' },
+        }
+      },
+      "9": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/4nnxwbnr69oxqgw56cvy7/To-Be-Hero-X-Cap-1.mp4?rlkey=mljhjakzb37wsbo6fvkkc1h6p&st=158wwqv6&raw=1', title:'To Be Hero X T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/txvs6octy0v4e4rxx7fp4/To-Be-Hero-X-Cap-2.mp4?rlkey=ymolgg1z9p7ieow21gq5fhi4t&st=qgvw0ioe&raw=1', title:'To Be Hero X T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/iekclaoahl4v52ddsg6gj/To-Be-Hero-X-Cap-3.mp4?rlkey=6ed7pog3ueqk7jokdtq0rlhwa&st=qneb2oxn&raw=1', title:'To Be Hero X T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/ppxi4tyvbe68ckhoan7z5/To-Be-Hero-X-Cap-4.mp4?rlkey=puslx5cbh6unnq8ceguk9ewlk&st=qv78spxh&raw=1', title:'To Be Hero X T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/rwpttldn34loq7xu1j7iq/To-Be-Hero-X-Cap-5.mp4?rlkey=nhnnlgj828dkq6tderq46k1h2&st=ev2tm4kg&raw=1', title:'To Be Hero X T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/xf0abuzr7mbfdoaycaav4/To-Be-Hero-X-Cap-6.mp4?rlkey=s72bmtirwywy3t7n3dv5bgh5k&st=lizcf7yp&raw=1', title:'To Be Hero X T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/zwnbs0p2x0upxd81vt24u/To-Be-Hero-X-Cap-7.mp4?rlkey=4zmvnpteqwhwvhc3q3rfe8trm&st=1a2ri5mo&raw=1', title:'To Be Hero X T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/hh939amj1gwa615pbwvun/To-Be-Hero-X-Cap-8.mp4?rlkey=11a84musauia4210m15e7vskt&st=6x071x13&raw=1', title:'To Be Hero X T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/m8xx88qsg6e2y6gvfbwf0/To-Be-Hero-X-Cap-9.mp4?rlkey=9z4adh3dpx1fv6pgdwj7dpdgr&st=rbty0qjy&raw=1', title:'To Be Hero X T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/fh7wzm1sa8vawv892yq0a/To-Be-Hero-X-Cap-11.mp4?rlkey=bify75osyy52fdi6m1pwr2tbc&st=lv4hq7ln&raw=1', title:'To Be Hero X T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/4d77c7nyd0kt99gxx2n63/To-Be-Hero-X-Cap-12.mp4?rlkey=l7cc6djwhqncsrh05n8pt1atd&st=luiitfqu&raw=1', title:'To Be Hero X T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/bvujjarjh860988xup9v4/To-Be-Hero-X-Cap-13.mp4?rlkey=bj2o92zhungedp8i96qd8oyci&st=6w6ddc8z&raw=1', title:'To Be Hero X T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/khj045dk72ay8soy95jhx/To-Be-Hero-X-Cap-14.mp4?rlkey=uin6h6xxlpybr4ko67h38w5iq&st=dzbsm2ml&raw=1', title:'To Be Hero X T1 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/6dp9c7j8fzn99qnsyedip/To-Be-Hero-X-Cap-15.mp4?rlkey=mvo9qkahyne054jg9389r05hi&st=c8030fyi&raw=1', title:'To Be Hero X T1 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/kzttk8u7lqezn16liz6bc/To-Be-Hero-X-Cap-15.mp4?rlkey=vsas09r9b96ssypq6spy7gdkl&st=tatagu84&raw=1', title:'To Be Hero X T1 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/npmedyflwrfnvvm2djg9x/To-Be-Hero-X-Cap-16.mp4?rlkey=qm5gzn2x4dr56shttw0ub5gkk&st=3tg3uxz0&raw=1', title:'To Be Hero X T1 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/be9464lebqttv2f8sbsh3/To-Be-Hero-X-Cap-17.mp4?rlkey=n48lpk5poyy1vewymtqmsm87v&st=kxr2qlvy&raw=1', title:'To Be Hero X T1 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/cejhkc4krklbeyt1z2daf/To-Be-Hero-X-Cap-18.mp4?rlkey=iuuan20b3qpugpqwy8bs9z7by&st=iqmdrbdl&raw=1', title:'To Be Hero X T1 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/naldcku7l4sjmhdm6a4j8/To-Be-Hero-X-Cap-19.mp4?rlkey=gmr4rpdbdn7oqj5lme85s7htv&st=cp1skbw0&raw=1', title:'To Be Hero X T1 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/spbtwk5bktqy709vq5u1y/To-Be-Hero-X-Cap-20.mp4?rlkey=hjs520pkn5sm2biuxxn59p62o&st=il41a4rz&raw=1', title:'To Be Hero X T1 Cap 20' },
+          "21": { link:'&raw=1', title:'To Be Hero X T1 Cap 21' },
+          "22": { link:'&raw=1', title:'To Be Hero X T1 Cap 22' },
+          "23": { link:'&raw=1', title:'To Be Hero X T1 Cap 23' },
+          "24": { link:'&raw=1', title:'To Be Hero X T1 Cap 24' },
+        }
+      },
+      "11": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/wx64lxnl8gh9pgp1sl51m/Maou-2099-Capitulo-1.mp4?rlkey=2atk6expy8fu505fg57g8wkpl&st=8s7yjq63&raw=1', title:'Maou 2099 T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/spyz7w0bpu5oj1kei0wpl/Maou-2099-Capitulo-2.mp4?rlkey=u91ikoyduewpmyep41l9u3wsj&st=tw4m24tc&raw=1', title:'Maou 2099 T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/u0e7virs7yntzc6upm1md/Maou-2099-Capitulo-3.mp4?rlkey=2gou62rp6w2xid8pfxie1uqd7&st=8pntq2mx&raw=1', title:'Maou 2099 T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/jvmunzs3zhdqq9hvbxir8/Maou-2099-Capitulo-4.mp4?rlkey=5txbhcev78825qs8m27pbu7bu&st=2aaj4dsy&raw=1', title:'Maou 2099 T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/jofdnfcvfcrvp04py1lx4/Maou-2099-Capitulo-5.mp4?rlkey=1nz4regoswxxqd0vtswpb0mjh&st=lhukytav&raw=1', title:'Maou 2099 T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/b5fl6byy4vmyxr1rb94js/Maou-2099-Capitulo-6.mp4?rlkey=c8l14i8q9l0hbsqe8e5rt0n09&st=vvu959e5&raw=1', title:'Maou 2099 T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/08m9fvjzhef2a94sgec1t/Maou-2099-Capitulo-7.mp4?rlkey=vkhkiiq8wiuod5d3rp2fwv8wp&st=o7cd8x1i&raw=1', title:'Maou 2099 T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/35l63pq3p85alhsw0yh25/Maou-2099-Capitulo-8.mp4?rlkey=ofv5c96yy1wdymqcautl6yksr&st=ha7d3xqb&raw=1', title:'Maou 2099 T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/kuzk1ts5fvawx8ce25la3/Maou-2099-Capitulo-9.mp4?rlkey=caj8829lp63ficyvr33e7doth&st=khyt58xo&raw=1', title:'Maou 2099 T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/8ou4wqeawzjkj2a4o6t7k/Maou-2099-Capitulo-10.mp4?rlkey=iz2q1e0d2qnnaxtj8qk4nqw4e&st=sqr8by8b&raw=1', title:'Maou 2099 T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/8bpnby0qslkalyyayy6ki/Maou-2099-Capitulo-11.mp4?rlkey=jpkiux2mmegmov2w43wo1wekp&st=85lzomyr&raw=1', title:'Maou 2099 T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/knjh9q4zvk2hzdtbfiun7/Maou-2099-Capitulo-12.mp4?rlkey=0f56gfje7ealg1g3bpbistvcl&st=mpenfalc&raw=1', title:'Maou 2099 T1 Cap 12' },
+        }
+      },
+      "12": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/zev8r3fa3crktbjzaunj7/tsue-to-tsurugi-no-wistoria-capitulo-1.mp4?rlkey=67vk0o60azy4tv0pieiih3q96&st=yhuzzn6v&raw=1', title:'Wistoria: Wand and Sword T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/8idhpxnv5dwufik69s96b/tsue-to-tsurugi-no-wistoria-capitulo-2.mp4?rlkey=m8dgfb523e7w0hs9ad4ksvif0&st=ugad7am1&raw=1', title:'Wistoria: Wand and Sword T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/9uee9h943qj7q2e1ecp13/Tsue-to-Tsurugi-no-Wistoria-Cap-3.mp4?rlkey=fia2ibz370mk4nwt3503hs886&st=g3uta009&raw=1', title:'Wistoria: Wand and Sword T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/bl97wjhhb1bz99uzvlev4/Tsue-to-Tsurugi-no-Wistoria-cap-4.mp4?rlkey=p4i4zlohw18yk15v0jwj9urri&st=ma2kvpl6&raw=1', title:'Wistoria: Wand and Sword T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/yt583jrswcytrjydnwdpe/Tsue-to-Tsurugi-no-Wistoria-cap-5.mp4?rlkey=kxv71ubizd0gt0vzmaa6yxn7m&st=0d9fhayo&raw=1', title:'Wistoria: Wand and Sword T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/a79802bnyda5tukze7fzc/Tsue-to-Tsurugi-no-Wistoria-cap-6.mp4?rlkey=6if0l6ul0d00mj0wggr16cwdh&st=7m2hdrja&raw=1', title:'Wistoria: Wand and Sword T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/cpax56hdmbf712ka5f2jv/Tsue-to-Tsurugi-no-Wistoria-cap-7.mp4?rlkey=c1iatfsgn5kf1hrffy50tvvql&st=ign9qdqv&raw=1', title:'Wistoria: Wand and Sword T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/lla02ppxgye21mwxn93hc/Tsue-to-Tsurugi-no-Wistoria-cap-8.mp4?rlkey=v7e5fkznq1uljwbrry60s6kp3&st=bh0vb81r&raw=1', title:'Wistoria: Wand and Sword T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/p4srcnjy7n1fhp0wfpmsu/Tsue-to-Tsurugi-no-Wistoria-cap-9.mp4?rlkey=31uljois7r6n7ui702i0rblmv&st=sy6eesj2&raw=1', title:'Wistoria: Wand and Sword T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/i21z47j0edido2v5nj9er/Tsue-to-Tsurugi-no-Wistoria-cap-10.mp4?rlkey=eezs9sittoiqxof8u255cm3j0&st=9ag3y7t6&raw=1', title:'Wistoria: Wand and Sword T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/e13vgzbwqn435bo626h3n/T1-Cap-11-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=tu56uqz6j7zo2at5rxwqkm625&st=mkp0vmct&raw=1', title:'Wistoria: Wand and Sword T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/rwyg3nemerjiz7vq5rsim/Tsue-to-Tsurugi-no-Wistoria-cap-12.mp4?rlkey=3czuw7yudpub0u3x46wu8gk32&st=d1yx1mte&raw=1', title:'Wistoria: Wand and Sword T1 Cap 12' },
+        }
+      },
+      "13": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/0sq12rbo591vfqx91rn6b/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap1-Espa-ol.mp4?rlkey=ikmn3nla0or117kt9o8abm0vn&st=0yh2mfrw&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/yh48bkxd49yuajpu9w7ga/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap2-Espa-ol.mp4?rlkey=0ysnyxtnxsk07db56rkfwt8gg&st=ugky382j&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/j2bqr2xuxtvh4dvg8i5po/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap3-Espa-ol.mp4?rlkey=8gkwncow3clo8iuxrkxpavg6i&st=ahvxb8qr&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/eqzyhans4ujp87plfzo4e/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap4-Espa-ol.mp4?rlkey=t13qujy0nyka84tdoibo263bj&st=05mbl2p8&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/askjxm2qgruedoh0o91ve/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap5-Espa-ol.mp4?rlkey=8df5hlfetxbd65ouy5omc77s7&st=c5ixrq46&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/ywt5fo8hn51psutw3vzqr/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap6-Espa-ol.mp4?rlkey=i0922purqdg6aqo5ic3bjl47d&st=jl4ns0wr&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/41gi1l483fgx3fvteu0db/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap7-Espa-ol.mp4?rlkey=oh3jnzffd0hbs7xc5jd4v2a2l&st=8rt4vnil&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/ssidp0olcyfbl14h7uvsk/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap8-Espa-ol.mp4?rlkey=n2k9iammxima8n1q65mioz2rp&st=qnquhpt2&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/lolnyavotwwqnwegepxus/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap9-Espa-ol.mp4?rlkey=tvct38918553qtb2k5amaunwt&st=frejuo6k&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/71darsd8ur12n7rfvmch6/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap10-Espa-ol.mp4?rlkey=v5s6qnrszx11tetfxto0sv5yu&st=dqtgtknl&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/o1odyuqd6zw5y8mlzsf7x/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap11-Espa-ol.mp4?rlkey=xbx0m58cm8w7n38nb6rps6tml&st=xa12hp9x&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/5wtx3hsnhlcxlsrimyo47/Izure-Saikyou-no-Renkinjutsushi-Temp1-Cap12-Espa-ol.mp4?rlkey=bl6d2i97904pomila8gixyk21&st=35n90793&raw=1', title:'Izure Saikyou no Renkinjutsushi T1 Cap 12' },
+        }
+      },
+      "14": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/chsmkm94v5xwqrqijcmcu/Cap1-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=m3j82w93lowj422be5z7dxu6p&st=45r1pcja&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/4f2rvxm2d8eqoxcx799rt/Cap-2-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=rumm9j5ynw61lxpxow8wphfvw&st=d9u3sge5&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/0en0srvdisanotcq0rf0h/Cap-3-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=4x779y8rmlz5pozbfurjnyp91&st=s6wk5nrl&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/9hctmuwxcy10i3w59htug/Cap-4-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=pqtmyiiuidn02wgzo4pah45ik&st=4qf63mxj&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/s7p347s2u4vq2g5u6kisc/Cap-5-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=5780e79si3zejvo6kdeppwej4&st=xqs60xjv&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/5lp5g9u9rnam5v4bods03/Cap-6-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=he8fvdgoclaud6ulnj94wx0da&st=n9myk7lz&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/tg4o3rdmwe13sc5cpd4q2/Cap-7-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=mswyz0jvj8k610ndp028yb58w&st=rjsv5ck7&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/w1tnbslssdp6yg1hdu8nd/Cap-8-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=yr1fldxkour0c0cguqrtsngye&st=0uha66le&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/w5uenccilj0zzk7yuymck/Cap-9-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=a2qgk285k5u6go0hvmmv8byle&st=zv5pp5gv&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/zmyksd8zgcuhuzvx5vrku/Cap-10-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=08hgx9esjgupjf9pyp70ay4y0&st=vjwr8wva&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/5j67v7ikjbv0mk11wfnjx/Cap-11-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=pe1bqdpi9ykuh5rql3rige2cm&st=2pfuq7wy&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/y0ir12tmnr2x92z304fsx/Cap-12-Tokidoki-Bosotto-Russia-go-de-Dereru-Tonari-no-Alya-san.mp4?rlkey=df96t8cixtvczvzle0pyyxu23&st=muw3dc0n&raw=1', title:'Alya Sometimes Hides Her Feelings in Russian T1 Cap 12' },
+        }
+      },
+      "15": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/v1b55og1pzpkqdve462qx/T1-Cap-1-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=5gazf3htteac64x92llc63n1b&st=z9c8bdyu&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/muapi036coq4futwa91vn/T1-Cap-2-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=w8kw9twk771ae8n00e1f82goi&st=1mlz9qd6&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/ruyqldm991cehym12b9xr/T1-Cap-3-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=40d39mqgj4dand7bikjryi05t&st=qhtgequg&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/1je8pxhww3d11agu73pkm/T1-Cap-4-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=y5j2jdxcn35ucv0saqtnj4ys6&st=dbjpvte1&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/u9hjjuw7d3ab0am79pbqz/T1-Cap-5-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=1pbqxfgb4k9p5m5rjoceeubzg&st=omkp9hgd&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/tsy25xnqbylvyt9tuzumr/T1-Cap-6-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=aw68q2pju96nmq2u3fy0s6yct&st=7x8k71nd&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/5k5hsbjpx6dmj74lj7kg8/T1-Cap-7-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=f8x0urihm350spn6sse4dgfbu&st=hrt7ur15&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/mwddyveu5fwwvzz0u8nea/T1-Cap-8-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=naha64tyw3ez2phkr1widb8h5&st=o5li66nc&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/08147a8lmjyzngxvvfdov/T1-Cap-9-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=ypbj4y4sczv7x1n514qk1jhqf&st=buyup2ss&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/omlx6zpwb1oija101q675/T1-Cap-10-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=x5iz2p2r6erbxbbqyj6s832x3&st=jnfregr8&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/e13vgzbwqn435bo626h3n/T1-Cap-11-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=tu56uqz6j7zo2at5rxwqkm625&st=qvepzfei&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/g6yappi9y3yrnmwie1f3k/T1-Cap-12-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=ftnjkhc42htb81oz95rn3kii7&st=4lbaeodu&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/d6k7tjsg1d5cdeolkrlry/T1-Cap-13-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=lwv1jbw41vctzm6ybxvmheeuk&st=15z89fmg&raw=1', title:'Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 13' },
+        }
+      },
+      "16": {
+        "1": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/x73hl70asdlzjz0az0vxa/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-1.mp4?rlkey=kv1k876hiux2l5od8gmxgiy1i&st=rsjzfve8&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/31smlu7nqqa1oq4bh7x52/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-2.mp4?rlkey=kfvp4mgd8sh9n2nr5oh40635y&st=32zoaq5d&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/ehztjdu28co0c0i2yzgsf/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-3.mp4?rlkey=skys2ewxixgwjzkfqb0yxbzes&st=zjc4k061&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/dfcx1z9fgoolkntv715zc/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-4.mp4?rlkey=o2a4x0q1h40c97novbdebkf5j&st=4w6b059r&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/ls6yii9mr35cgembzbx8g/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-5.mp4?rlkey=8vy33qowiqnq0m54302yuif7g&st=bmtjj6n8&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/rxrf2k3vcj2l3gooc5qx5/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-6.mp4?rlkey=1c83nv77yx0vayhtisc07l51u&st=tas8i4ft&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/p98u7ewdga0s6k8spz1dj/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-7.mp4?rlkey=qxbuo7bvxxegatf66aa3cou8o&st=xz2qa53w&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/y01z6ldq6i3x8qe168k7s/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-8.mp4?rlkey=i3q8qkgsr99g933n2ecwde82v&st=hyrcdfft&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/cpfljurs23pdtfdzpqkpz/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-9.mp4?rlkey=qdw7sorzck0araskupm1obj29&st=dwhsj8pm&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 9' },
+          "10":  { link:'https://www.dropbox.com/scl/fi/7sk1q63hxktuirkmi7pi9/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-10.mp4?rlkey=e32x8qlev60hhv7iqfwk5rydi&st=jbl77fk0&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 10' },
+          "11":  { link:'https://www.dropbox.com/scl/fi/h88yrartseo98xoa4ffbm/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-11.mp4?rlkey=3qrflwchjarto7eyizk40zrn3&st=r5poaimr&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 11' },
+          "12":  { link:'https://www.dropbox.com/scl/fi/1xtc1w51nv9bpxbhm94ye/Kimi-to-Boku-no-Saigo-no-Senjou-Cap-12.mp4?rlkey=9b97xilnb0nesbd5bdm9nwqdi&st=ajg6rew5&raw=1', title:'Kimi to Boku no Saigo no Senjou T1 Cap 12' },
+        },
+        "2": {
+          "1":  { link:'https://www.dropbox.com/scl/fi/vvxmtqemofkkco9lgrbfr/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-1.mp4?rlkey=2prtxjg22ktev6gbi8x8tub0q&st=tldfypy6&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 1' },
+          "2":  { link:'https://www.dropbox.com/scl/fi/jdgtgrocdxeiz3ifwcfc6/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-2.mp4?rlkey=l2n87scaoyzqm6m3kol8hm5pc&st=vvedupnb&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 2' },
+          "3":  { link:'https://www.dropbox.com/scl/fi/ce6itvlzi4zxh7sx1xkkf/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-3.mp4?rlkey=pviqk3nmhgxjx9h5x97ui75xb&st=r72w8e0y&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 3' },
+          "4":  { link:'https://www.dropbox.com/scl/fi/8hw6fqyiph2hpo7omknrl/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-4.mp4?rlkey=xsgwyzyuzmcb5bftufb0kf8j6&st=c6v7aa2f&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 4' },
+          "5":  { link:'https://www.dropbox.com/scl/fi/fn9vijsgcjxuxk43ush13/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-5.mp4?rlkey=wj5339wzir28lns2sasscaaqm&st=xsudf5fk&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 5' },
+          "6":  { link:'https://www.dropbox.com/scl/fi/08x6xu74csxv56ejw4fd4/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-6.mp4?rlkey=iurijm3rr45d0wvj2v6tcx6y6&st=3nv1h5jz&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 6' },
+          "7":  { link:'https://www.dropbox.com/scl/fi/lf58n6tr5pxfw94vetdt6/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-7.mp4?rlkey=7afdjct87dy4m1dnzjy09jmc6&st=zturrc1i&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 7' },
+          "8":  { link:'https://www.dropbox.com/scl/fi/ojfu92tqirry5au6x70pp/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-8.mp4?rlkey=cuj1sl8q04d0wl7qie3q31ips&st=xucglw38&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 8' },
+          "9":  { link:'https://www.dropbox.com/scl/fi/8q8lbttmue15dns8agd5q/Kimi-to-Boku-no-Saigo-no-Senjou-T2-cap-9.mp4?rlkey=69yi3udijurdpwt30jrm7ps9g&st=pttsqrf8&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 9' },
+          "10":  { link:'https://www.dropbox.com/scl/fi/m3iwiqty8bqzqbz63pvf7/FDownloader.Net_AQNIq852vhqgoNmUmHPduBSIGvHkP_D4j_13E2iONDL2E5iwprz1uxxlER3KpW8i6szXtL24Y-73G4bJfIjf0qxP6eQ78diaEgXzfE6YBe_Q9g_720p_-HD.mp4?rlkey=ew4hy05r2vblhli2jpu3j05oj&st=yamj1027&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 10' },
+          "11":  { link:'https://www.dropbox.com/scl/fi/bap1sngm682z4jn6642pq/Kimi-to-Boku-no-Saigo-no-Senjou-T2-Cap-11.mp4?rlkey=7us5ovym1fpbjl62kablppu4h&st=fx3wum1h&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 11' },
+          "12":  { link:'https://www.dropbox.com/scl/fi/68262ymo1du0e41qfm242/Kimi-to-Boku-no-Saigo-no-Senjou-T2-Cap-12.mp4?rlkey=efmmx106odh9qcqamiim66xd1&st=6jwwq50s&raw=1', title:'Kimi to Boku no Saigo no Senjou T2 Cap 12' }
+        }
+      },
+      "17": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/3g5jiioc6njk3cej30rsp/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-1.mp4?rlkey=yje8x14i5rrtbvbtqkr4dlm72&st=0wvkg08l&raw=1', title:'The Gorilla God\'s Go-To Girl T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/526m3k9ulacrd2nlkxqhs/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-2.mp4?rlkey=jjjrn7ku28y253izn5iuo8bku&st=epk5p5dl&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/16py5k1865rbw8okn3o5r/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-3.mp4?rlkey=9v8rsbobcv3xtvnadvqvhsqe3&st=n7ehp5jt&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/piejqsw6tyiu1lytthbeo/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-4.mp4?rlkey=w9066dp715a9mnjfxucfm15tj&st=oyw852zw&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/hhn2slvfipfpzpuowk0v7/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-5.mp4?rlkey=s3ynvp6ii5a7nknobvt9ra89l&st=mviskprj&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/3fbncv07kehpaw09iz5pf/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-6.mp4?rlkey=31yf022cr9rtcvfe42k73pi1t&st=o0pnejfa&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/73uy7xhm7moiehkc2jkci/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-7.mp4?rlkey=fblzk4ci7rurmouwhze0zj88w&st=cnunafu2&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/9hssvjnttryq2on6ymiu0/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-8.mp4?rlkey=jl38wmi1ujni50hvbpxdhd571&st=oea5iaha&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/9v9zsoq5d2xtmkzjp70lo/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-9.mp4?rlkey=h8pl1f2ru7gyc16pmqhir4ac9&st=dexh7ejh&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/ge7h3ax41vs01u2pnsy9i/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-10.mp4?rlkey=k9asp7613deiu4707qi56gp4w&st=b3upogwj&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/8ffjvne2arroinscb8zui/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-11.mp4?rlkey=dwqs2e2kqwg36arop522so58r&st=ubaqa3bk&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/z12nebz5y6woys4l8zbo1/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-12.mp4?rlkey=zmif5uuycgid9r5hycn8nhtaz&st=k3tphp8u&raw=1', title:'The Gorila God\'s Go- To Girl T1 Cap 12' },
+        }
+      },
+      "19": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/bpbnvjn5coy6p3akmcji8/The-Rising-of-the-Shield-Hero-T1-Cap-1.mp4?rlkey=xdl8pg02zpqr73yypc0f515yg&st=2e8v407s&raw=1', title:'The Rising of the Shield Hero T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/nwvs39fqaun7v89wnne5o/The-Rising-of-the-Shield-Hero-T1-Cap-2.mp4?rlkey=mg9hyolq9plwm5iofgspun8mz&st=je8mxutb&raw=1', title:'The Rising of the Shield Hero T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/1tsbtyppl1x6i3feok3ee/The-Rising-of-the-Shield-Hero-T1-Cap-3.mp4?rlkey=8oclhj0oins4ksipxc88j2td5&st=c8x2qoza&raw=1', title:'The Rising of the Shield Hero T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/scril8so535trsgc0fsbk/The-Rising-of-the-Shield-Hero-T1-Cap-4.mp4?rlkey=god54eoye1n0zgju4j0zq5wcb&st=55m6swmz&raw=1', title:'The Rising of the Shield Hero T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/ccxzzk8cdzt51t0rqel5v/The-Rising-of-the-Shield-Hero-T1-Cap-5.mp4?rlkey=4k69jd2i4ry7yomcv70xvwk0m&st=vr2egby6&raw=1', title:'The Rising of the Shield Hero T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/em1llv5nluli4zwneviko/The-Rising-of-the-Shield-Hero-T1-Cap-6.mp4?rlkey=hcmgln9ey4o3lpf93qu8c1ax7&st=lefo0w7x&raw=1', title:'The Rising of the Shield Hero T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/oyxz1xryhn5cnkdnis8u5/The-Rising-of-the-Shield-Hero-T1-Cap-7.mp4?rlkey=xu2w1p276up00qmwkp9776t5v&st=ec8b7tft&raw=1', title:'The Rising of the Shield Hero T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/310rnoyt7j5w08ulvavei/The-Rising-of-the-Shield-Hero-T1-Cap-8.mp4?rlkey=sbgh23jscp1j4ohfoox2qpcta&st=janmzw8y&raw=1', title:'The Rising of the Shield Hero T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/f9wkw8lkiz1k2e2230zyw/The-Rising-of-the-Shield-Hero-T1-Cap-9.mp4?rlkey=d3e45hdrhsr6lhb1alxmhu637&st=p6v9910r&raw=1', title:'The Rising of the Shield Hero T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/5gtfl6kvjuggyhfe88dh5/The-Rising-of-the-Shield-Hero-T1-Cap-10.mp4?rlkey=o9d4enel89gh1fs10mueagvz4&st=bjmt6d5j&raw=1', title:'The Rising of the Shield Hero T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/c2cj8phftham0m7ou8vwe/The-Rising-of-the-Shield-Hero-T1-Cap-11.mp4?rlkey=6uunhrwz0rzipvl2387sbb5gf&st=rd8555y4&raw=1', title:'The Rising of the Shield Hero T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/zzvjjyxmz8r9disucfjjy/The-Rising-of-the-Shield-Hero-T1-Cap-12.mp4?rlkey=1abjs1icslltsk3ado8cwt9ov&st=f6i0lgr7&raw=1', title:'The Rising of the Shield Hero T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/7b9whn8xzwx3efmtftlhn/The-Rising-of-the-Shield-Hero-T1-Cap-13.mp4?rlkey=18mjlkxtal3t3js3xdpfoe666&st=hqp1sv9d&raw=1', title:'The Rising of the Shield Hero T1 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/vcd47mc7jsbxgh4mha945/The-Rising-of-the-Shield-Hero-T1-Cap-14.mp4?rlkey=qzws2l2osuem3hxm09rndr3sz&st=5oyf70p1&raw=1', title:'The Rising of the Shield Hero T1 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/ko03dco7lh8ui21e12jnf/The-Rising-of-the-Shield-Hero-T1-Cap-15.mp4?rlkey=j9a3urzqht64yebvacys0wukq&st=486fjji6&raw=1', title:'The Rising of the Shield Hero T1 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/md7m63ks024p3zmqwe5e8/The-Rising-of-the-Shield-Hero-T1-Cap-16.mp4?rlkey=vk4jfkhkvrdaxs1k1h1p4bgu2&st=4f463bqd&raw=1', title:'The Rising of the Shield Hero T1 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/em94faaig3ivtrceusw3k/The-Rising-of-the-Shield-Hero-T1-Cap-17.mp4?rlkey=7bb1pcy60j0juh88mggae0pzo&st=ppknzvk0&raw=1', title:'The Rising of the Shield Hero T1 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/nxh24494cts5ktrgb4jfo/The-Rising-of-the-Shield-Hero-T1-Cap-18.mp4?rlkey=7zkcgweg6525nc6cj4elm7ceq&st=0khegi4k&raw=1', title:'The Rising of the Shield Hero T1 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/gsgemm77m3jjmvnscce3a/The-Rising-of-the-Shield-Hero-T1-Cap-19.mp4?rlkey=kdo3s0ejhrvb5cgixx7340f99&st=xg1apu45&raw=1', title:'The Rising of the Shield Hero T1 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/qub9a9p8x6cezz1sr9xbv/The-Rising-of-the-Shield-Hero-T1-Cap-20.mp4?rlkey=6korqeh5hpwv5ta93okty6uc1&st=i80csgn9&raw=1', title:'The Rising of the Shield Hero T1 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/hkmmfyairmpwz2w3gst0k/The-Rising-of-the-Shield-Hero-T1-Cap-21.mp4?rlkey=ilz8cxkdll4ume2ykxizq1mi6&st=e7bdu486&raw=1', title:'The Rising of the Shield Hero T1 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/ur3qi3avs1u6f5ctom01o/The-Rising-of-the-Shield-Hero-T1-Cap-22.mp4?rlkey=06jes9g918gqo2h7ij3eu07qi&st=xsvcaou1&raw=1', title:'The Rising of the Shield Hero T1 Cap 22' },
+          "23": { link:'https://www.dropbox.com/scl/fi/8ffjvne2arroinscb8zui/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-11.mp4?rlkey=dwqs2e2kqwg36arop522so58r&st=ubaqa3bk&raw=1', title:'The Rising of the Shield Hero T1 Cap 23' },
+          "24": { link:'https://www.dropbox.com/scl/fi/z12nebz5y6woys4l8zbo1/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-12.mp4?rlkey=zmif5uuycgid9r5hycn8nhtaz&st=k3tphp8u&raw=1', title:'The Rising of the Shield Hero T1 Cap 24' },
+          "25": { link:'https://www.dropbox.com/scl/fi/z12nebz5y6woys4l8zbo1/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-12.mp4?rlkey=zmif5uuycgid9r5hycn8nhtaz&st=k3tphp8u&raw=1', title:'The Rising of the Shield Hero T1 Cap 25' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/wxsclypfr2vqx5eus91jq/The-Rising-of-the-Shield-Hero-T2-Cap-1.mp4?rlkey=twlwzlt99g2dnam5ktvue2a02&st=9ni9vyap&raw=1', title:'The Rising of the Shield Hero T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/s6dn0ip7v59lfnlwv8nz4/The-Rising-of-the-Shield-Hero-T2-Cap-2.mp4?rlkey=ie1dp22lui2ioxue5kv40w9se&st=31k8kjy6&raw=1', title:'The Rising of the Shield Hero T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/dxvmdz1lb1zjtisg18k7r/The-Rising-of-the-Shield-Hero-T2-Cap-3.mp4?rlkey=5r9541971miqqjpq6i0nohkqv&st=hqsq7ssb&raw=1', title:'The Rising of the Shield Hero T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/3g6434hpbcy4gq5o8u29g/The-Rising-of-the-Shield-Hero-T2-Cap-4.mp4?rlkey=u0i9ju0vepn3g0c2ccurdc4lk&st=2fm31wtd&raw=1', title:'The Rising of the Shield Hero T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/7pvl55utbf48p30d8cd6j/The-Rising-of-the-Shield-Hero-T2-Cap-5.mp4?rlkey=g752bm3tb44r7ppss3v2eg8jo&st=qm71e86t&raw=1', title:'The Rising of the Shield Hero T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/ty8ja2q6mi7f5iciv9ry2/The-Rising-of-the-Shield-Hero-T2-Cap-6.mp4?rlkey=lw8bpak2wf7evlfra6mx3fuf2&st=12sv1c54&raw=1', title:'The Rising of the Shield Hero T2 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/xja9cb4cmxylsn7dlurrp/The-Rising-of-the-Shield-Hero-T2-Cap-7.mp4?rlkey=dn0topwogri25nes5jaj2t284&st=xlxniqis&raw=1', title:'The Rising of the Shield Hero T2 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/uju11eu4lrmkad8u5bmu0/The-Rising-of-the-Shield-Hero-T2-Cap-8.mp4?rlkey=et6x65mk9saud3ybdx65fwezx&st=r7ozgsjs&raw=1', title:'The Rising of the Shield Hero T2 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/gwq9jamgjp4m84fqba1u0/The-Rising-of-the-Shield-Hero-T2-Cap-9.mp4?rlkey=qp05co3dgjhr3s33eum0uxpur&st=smnag0y2&raw=1', title:'The Rising of the Shield Hero T2 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/fm6c6zuuivlbajoi2sd23/The-Rising-of-the-Shield-Hero-T2-Cap-10.mp4?rlkey=f9gxk05dui43mzjeu5m49lksd&st=v09lskcq&raw=1', title:'The Rising of the Shield Hero T2 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/nrwywtrq64xkte4gmeiw0/The-Rising-of-the-Shield-Hero-T2-Cap-11.mp4?rlkey=fr7kbnnoexxvjousb24jy7jjq&st=sg2d7hcf&raw=1', title:'The Rising of the Shield Hero T2 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/xflf298j6lfbhveeix0fg/The-Rising-of-the-Shield-Hero-T2-Cap-12.mp4?rlkey=2pf9z46bmkc45sgce6q86fb2o&st=wc54sh3y&raw=1', title:'The Rising of the Shield Hero T2 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/0jivflw4y62dws8y8zgzm/The-Rising-of-the-Shield-Hero-T2-Cap-13.mp4?rlkey=wnp8eydphipgtw7i3fiyw0spe&st=inadcvvk&raw=1', title:'The Rising of the Shield Hero T2 Cap 13' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/hkc9q9gzg7tptmr2pkil6/The-Rising-of-the-Shield-Hero-T3-Cap-1.mp4?rlkey=2tx72ycsxwve5w9lsr6tn16jd&st=euqs6dis&raw=1', title:'The Rising of the Shield Hero T3 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/g0yg6qpam80v3sg5kepcm/The-Rising-of-the-Shield-Hero-T3-Cap-2.mp4?rlkey=g6lskmxuuj1etr7vnin5wqdzz&st=z4mhh3cy&raw=1', title:'The Rising of the Shield Hero T3 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/2vtboz5a19zeknm2w0rfv/The-Rising-of-the-Shield-Hero-T3-Cap-3.mp4?rlkey=hvq8x09uqen5b10xp35lvx85g&st=8diaf3fs&raw=1', title:'The Rising of the Shield Hero T3 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/og7u79tatlm4v1fi4avmp/The-Rising-of-the-Shield-Hero-T3-Cap-4.mp4?rlkey=cun8v3ihugyve149x40jds45h&st=ry9lcv09&raw=1', title:'The Rising of the Shield Hero T3 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/lzk59i4cl99zwidhed0lw/The-Rising-of-the-Shield-Hero-T3-Cap-5.mp4?rlkey=h4b800gv7tia2t8gnhnhbnwby&st=je2a72fp&raw=1', title:'The Rising of the Shield Hero T3 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/ho4qhnrezus8by3hqehlb/The-Rising-of-the-Shield-Hero-T3-Cap-6.mp4?rlkey=yavkoeqopk99876bdsc6moyof&st=8bh4dman&raw=1', title:'The Rising of the Shield Hero T3 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/ikwntozllu712yu3rfvui/The-Rising-of-the-Shield-Hero-T3-Cap-7.mp4?rlkey=0m2ux7aq29i8iqm0se80ehkys&st=wvh5fne1&raw=1', title:'The Rising of the Shield Hero T3 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/f2gjhiou96iyxtm99xv2e/The-Rising-of-the-Shield-Hero-T3-Cap-8.mp4?rlkey=s3k23ogt9uvjm6o9snh5mz7l8&st=9ih6tkeb&raw=1', title:'The Rising of the Shield Hero T3 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/p8t577l54ag1twq9j1ijp/The-Rising-of-the-Shield-Hero-T3-Cap-9.mp4?rlkey=8xek3zmvhggxcgloq9fcxkxzh&st=ts35c2dz&&raw=1', title:'The Rising of the Shield Hero T3 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/srs4ik16d1gthsunwdb82/The-Rising-of-the-Shield-Hero-T3-Cap-10.mp4?rlkey=jye5v7h1r12xec2n1pocx1qf3&st=skodebwa&raw=1', title:'The Rising of the Shield Hero T3 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/yeqva7asxtnqlmg9n80k9/The-Rising-of-the-Shield-Hero-T3-Cap-11.mp4?rlkey=010z9dgvzw7do4l1vpai14asz&st=mkvyud4j&raw=1', title:'The Rising of the Shield Hero T3 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/kzysz68cq1xc19tph2rkm/The-Rising-of-the-Shield-Hero-T3-Cap-12.mp4?rlkey=qni37tpvj9j1y6h49sgzvhx9d&st=vdii5d56&raw=1', title:'The Rising of the Shield Hero T3 Cap 12' },
+        },
+        "4": {
+          "1": { link:'https://www.dropbox.com/scl/fi/nfqnfvzullxg91n34zsp9/The-Rising-of-the-Shield-Hero-T4-Cap-1.mp4?rlkey=4cs1sc1afz85xcyuummr0e5i6&st=rzm0bq9y&raw=1', title:'The Rising of the Shield Hero T4 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/5kr1lrfwtnj7tw2yon8fi/The-Rising-of-the-Shield-Hero-T4-Cap-2.mp4?rlkey=ws5s1qvdl453e54fxnhdivxjn&st=8dg6dxfu&raw=1', title:'The Rising of the Shield Hero T4 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/4xya4e4v0utdedxszsa31/The-Rising-of-the-Shield-Hero-T4-Cap-3.mp4?rlkey=k4pk6j2al70fs44tzl28egwg7&st=3tpd90zr&raw=1', title:'The Rising of the Shield Hero T4 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/u2x6ks5fmbt6gjiyquy2n/The-Rising-of-the-Shield-Hero-T4-Cap-4.mp4?rlkey=g0l3c87fyk91ut5on2dj4befg&st=qn8yovlm&raw=1', title:'The Rising of the Shield Hero T4 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/1xtfvj0aiy0wojl6uef9p/The-Rising-of-the-Shield-Hero-T4-Cap-5.mp4?rlkey=nh3s8g4ufmi4xf8el4a7adhns&st=ibbwvc1z&raw=1', title:'The Rising of the Shield Hero T4 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/2xmq1nryqor4bzlm6swbp/The-Rising-of-the-Shield-Hero-T4-Cap-6.mp4?rlkey=qsoo5ezdrweqlfgsvr8qnz949&st=z3u9kskj&raw=1', title:'The Rising of the Shield Hero T4 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/ikwntozllu712yu3rfvui/The-Rising-of-the-Shield-Hero-T3-Cap-7.mp4?rlkey=0m2ux7aq29i8iqm0se80ehkys&st=wvh5fne1&raw=1', title:'The Rising of the Shield Hero T4 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/f2gjhiou96iyxtm99xv2e/The-Rising-of-the-Shield-Hero-T3-Cap-8.mp4?rlkey=s3k23ogt9uvjm6o9snh5mz7l8&st=9ih6tkeb&raw=1', title:'The Rising of the Shield Hero T4 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/p8t577l54ag1twq9j1ijp/The-Rising-of-the-Shield-Hero-T3-Cap-9.mp4?rlkey=8xek3zmvhggxcgloq9fcxkxzh&st=ts35c2dz&&raw=1', title:'The Rising of the Shield Hero T4 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/srs4ik16d1gthsunwdb82/The-Rising-of-the-Shield-Hero-T3-Cap-10.mp4?rlkey=jye5v7h1r12xec2n1pocx1qf3&st=skodebwa&raw=1', title:'The Rising of the Shield Hero T4 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/yeqva7asxtnqlmg9n80k9/The-Rising-of-the-Shield-Hero-T3-Cap-11.mp4?rlkey=010z9dgvzw7do4l1vpai14asz&st=mkvyud4j&raw=1', title:'The Rising of the Shield Hero T4 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/kzysz68cq1xc19tph2rkm/The-Rising-of-the-Shield-Hero-T3-Cap-12.mp4?rlkey=qni37tpvj9j1y6h49sgzvhx9d&st=vdii5d56&raw=1', title:'The Rising of the Shield Hero T4 Cap 12' },
+        }
+      },
+      "20": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/pryaf9d40ibfm0volrwtt/Overflow-_Desbord-ndose_Latino_episodio_1_-mandranime.mp4?rlkey=925wnacy08j774mqx5sj1rlo3&st=pqwaxq26&raw=1', title:'Overflow T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/8kddd5lpjo930p8c7fq7w/Overflow_BD_Latino_Sin_Censura_02-mandranime.mp4?rlkey=fjz3czy3s7adt9le0jhz71j99&st=oeofujas&raw=1', title:'Overflow T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/rmwjv5lpxih1h7poqlqcv/Overflow_BD_Latino_Sin_Censura_03-mandranime.mp4?rlkey=2zo0w88wl3apr7vqcvtrwre3u&st=ebx4vtyt&raw=1', title:'Overflow T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/hfwdan4htgdjqzm451t5i/Overflow_BD_Latino_Sin_Censura_04-mandranime.mp4?rlkey=mn15jrrlk6mqdm29or11q16us&st=oh6v3f2y&raw=1', title:'Overflow T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/1v9ef3stvt925i7pi679n/Overflow_BD_Latino_Sin_Censura_05-mandranime.mp4?rlkey=i1k7s1ye4heof3uhc0ig592jn&st=nzk1464d&raw=1', title:'Overflow T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/68h5o9xk3g53frcnwn2uu/Overflow_BD_Latino_Sin_Censura_06-mandranime.mp4?rlkey=xsectj9nk4okh39dfdtif297u&st=ouyqhnvj&raw=1', title:'Overflow T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/d1ss0t3mklmilqamz4pmi/Overflow_BD_Latino_Sin_Censura_07-mandranime.mp4?rlkey=cvtvs2m1ee6zes5u34370jyxo&st=8npc0v8f&raw=1', title:'Overflow T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/ge0z2bif39dy73iuf450e/Overflow_BD_Latino_Sin_Censura_08-mandranime.mp4?rlkey=4y6mqov3x32uhmotmrg6c0m5u&st=pl2xu8e9&raw=1', title:'Overflow T1 Cap 8' },
+        }
+      },
+      "21": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/30a1vej8tqp0o9dbmhmz9/Shiunji-ke-no-Kodomotachi-Cap-1.mp4?rlkey=mpl4kjo8xcq2sf6y0mvq3e8ep&st=6l7h9s8m&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/kyzclrhqye3zvz294g7ka/Shiunji-ke-no-Kodomotachi-Cap-2.mp4?rlkey=7nqc4ephm11qeo85nkd7k035c&st=qcpssduj&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/lrt9uki1ike0168jrjjka/FDownloader.Net_AQPiro8kRg7PucGlDR67z7MzZRFkKQ9wzlFvHeSQvNfat83NIMFt5rgnZU_QAPMCRq1uYpnXRJU3aWT3z5Sgx7oP_720p_-HD.mp4?rlkey=rzt8a0d8n8rsone9um5apvfl2&st=7w2rfv1a&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/fbe09o2p9zkjiwgc94vba/Shiunji-ke-no-Kodomotachi-Cap-4.mp4?rlkey=iinhy7km4d5xdri2zk2yu1yo2&st=0uj4i8f4&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/ozofn5h0c0rm6cmxdx3lj/Shiunji-ke-no-Kodomotachi-Cap-5.mp4?rlkey=gg1dpask4ef4mzy610n4l1us2&st=oso94mra&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/bxkt5quli4eho16se1pxs/Shiunji-ke-no-Kodomotachi-Cap-6.mp4?rlkey=9lmtof27sl6sdpa8xtm9fuupg&st=3zmgs7mk&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/0gs3c2gotdz6a1fvzo4ei/Shiunji-ke-no-Kodomotachi-Cap-7.mp4?rlkey=j6wixvuqqiughxtdcplrvgp3a&st=0mufkwwq&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/uj2nnv78jl2cr7mmyzamu/Shiunji-ke-no-Kodomotachi-Cap-8.mp4?rlkey=ffllfu0izx649tm6ev7dkxtwl&st=9ghr69y4&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/ap4yikofjwk0sj91brqrt/Shiunji-ke-no-Kodomotachi-Cap-9.mp4?rlkey=xhydn94fug79midvba03q18h1&st=prs6mrmi&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/2zry6sjzwwgtwyi5fab0i/FDownloader.Net_AQNjDqdju1FLTzlnjrpnRvzb4ZzS3HDbD9xgnH3Fnqmm2RXafHD-ABzJO4K7sLarWpdHsQW-AGInNOMcmzOmgUyA_720p_-HD.mp4?rlkey=bbyxg1s93vczs4oli47yinzl4&st=7cqn2fis&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/3touk9rvuj49xxaajw2ub/Shiunji-ke-no-Kodomotachi-T1-Cap-11.mp4?rlkey=4zk9q14j4zud86j8rq9cuvwga&st=ggzijfop&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/w5dp3n0wyysvhp6b10tei/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-12.mp4?rlkey=aj1mj2mmcorfbulauk1zz9drc&st=n0tc3dhb&raw=1', title:'Shiunji-ke no Kodomotachi T1 Cap 12' },
+        }
+      },
+      "22": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/kt8t4h9s5le46lojzdg7x/Goblin-Slayer-Cap-1.mp4?rlkey=yosnfcmctnzq022ruk3767kwr&st=9dim2gxb&raw=1', title:'Goblin Slayer T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/dvgehekilcumljtjdduzu/Goblin-Slayer-Cap-2.mp4?rlkey=anulh86qlyox2091kb3bktq7g&st=sla4m24r&raw=1', title:'Goblin Slayer T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/bh182p2s7398e4be7lnhy/Goblin-Slayer-Cap-3.mp4?rlkey=a98ebuazf01acvyg29jyu0e2k&st=1swfxfxh&raw=1', title:'Goblin Slayer T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/1qqahaby8oevdt88rvcf2/Goblin-Slayer-Cap-4.mp4?rlkey=agadby8bme6euvzoaeqkajp5d&st=2pbwu1sn&raw=1', title:'Goblin Slayer T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/feq1d9yfv1a0uee9qfn4u/Goblin-Slayer-Cap-5.mp4?rlkey=i3pzoy98te9jyb40vxj26y175&st=iv99rw7n&raw=1', title:'Goblin Slayer T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/2hp8w21v9v22dhsjx6t78/Goblin-Slayer-Cap-6.mp4?rlkey=h3lav7ebcgahpx3nf87k04rge&st=plhwy0if&raw=1', title:'Goblin Slayer T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/etmztstnpqgpfjnjbk0pv/Goblin-Slayer-Cap-7.mp4?rlkey=ium9r3fpng3pn3740mqno23mp&st=150g083n&raw=1', title:'Goblin Slayer T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/t6jxdoii6pehlbmzgt169/Goblin-Slayer-Cap-8.mp4?rlkey=1x7u3n3ncsuuklg9parxl90pk&st=7np88niy&raw=1', title:'Goblin Slayer T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/k507edkwrachb6fgw5crs/Goblin-Slayer-Cap-9.mp4?rlkey=febzzcdo566kozlf49siz3o0y&st=94k8b6iz&raw=1', title:'Goblin Slayer T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/9ljgr5nablnrbuun1zr01/Goblin-Slayer-Cap-10.mp4?rlkey=uy3tl376eikboyd8eo1eoykr4&st=yiql1825&raw=1', title:'Goblin Slayer T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/jx1yikb38x5gnfmxb3rz7/Goblin-Slayer-Cap-11.mp4?rlkey=rwa81ju3ns6teqlebrcnum9s6&st=jsfdenmp&raw=1', title:'Goblin Slayer T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/q7k5g4uygfog0l5m0r9hh/Goblin-Slayer-Cap-12.mp4?rlkey=zk6dxf4xzzuw84upmhiat47kb&st=scye65jg&raw=1', title:'Goblin Slayer T1 Cap 12' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/051otbpbx8r44fs3qvv7v/Goblin-Slayer-Goblins-CROWN-la-Pel-cula-en-Castellano.mp4?rlkey=7igfrqrsebubwyog7i6mmsz48&st=e7d0kzmj&raw=1', title:'Película: Goblin\'s Crown (Castellano)' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/0hifr5125zqr2p54is252/Goblin-Slayer-T2-Cap-1.mp4?rlkey=ygjo8tbruuz9dus8mcz82dnlq&st=xelny06y&raw=1', title:'Goblin Slayer T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/8sjbmzf2im9j68utg93gc/Goblin-Slayer-T2-Cap-2.mp4?rlkey=rqxevybgb1uyg11l7sxs0mrg5&st=bl7ijwpi&raw=1', title:'Goblin Slayer T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/cnxi1cdlgsn1boie2zx1l/Goblin-Slayer-T2-Cap-3.mp4?rlkey=rs3278v0wlnzybtsrtrlh4hbw&st=ys12uycc&raw=1', title:'Goblin Slayer T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/wrpnu1ksekg8olw4yjrbg/Goblin-Slayer-T2-Cap-4.mp4?rlkey=yn70kvr2hcfvw1npbfd05lje9&st=jw5l3fro&raw=1', title:'Goblin Slayer T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/x2bvffsmd66cenmsd231w/Goblin-Slayer-T2-Cap-5.mp4?rlkey=uf8lnysathvrbikt95zdxd4ye&st=exio23nq&raw=1', title:'Goblin Slayer T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/01qiqnlyu2ilpnr3zsdmd/Goblin-Slayer-T2-Cap-6.mp4?rlkey=eu2yul8zkkqz6e9iva54pqpkz&st=wbg4kk55&raw=1', title:'Goblin Slayer T2 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/ovz45skg3vpw2dzrd3xkl/Goblin-Slayer-T2-Cap-7.mp4?rlkey=dtgo576knd5zn7lyua70ry78y&st=2uu50dpn&raw=1', title:'Goblin Slayer T2 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/f6145pecizsmp6zr1xj86/Goblin-Slayer-T2-Cap-8.mp4?rlkey=vumwkbds6i1m8xlu9v97jdtam&st=jhgi74yb&raw=1', title:'Goblin Slayer T2 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/58q7a1fn3wxj8x1btd1hb/Goblin-Slayer-T2-Cap-9.mp4?rlkey=sfpxczi51qc6vphcvxxwqcs1u&st=w9wkq5a7&raw=1', title:'Goblin Slayer T2 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/jqpptp4knvaosy7gsizz7/Goblin-Slayer-T2-Cap-10.mp4?rlkey=ub024lja53h7iuemfvb88xtfd&st=jiz4y47t&raw=1', title:'Goblin Slayer T2 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/ppxyg4dqcdt842x76cixs/Goblin-Slayer-T2-Cap-11.mp4?rlkey=5cjdaudscddycmfga4witd3da&st=6q597kd9&raw=1', title:'Goblin Slayer T2 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/ty986eh15595zjfdis5l6/Goblin-Slayer-T2-Cap-12.mp4?rlkey=tapgbp8pppb9dlytlsi3qm975&st=zh2b95xv&raw=1', title:'Goblin Slayer T2 Cap 12' },
+        }
+      },
+      "23": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/vhpisc7zz2ay1djxg992w/Kanchigai-no-Atelier-Meister-Cap-1.mp4?rlkey=lrv5cwzbgmqjrf9kg6wosmfg0&st=nlh6pgnc&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/baq6ek1yd8d1r72f3dbbq/Kanchigai-no-Atelier-Meister-Cap-2.mp4?rlkey=zfb5ffj04ze5h8oodrcqutfhd&st=3gr78x03&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/6zbexk3l7w09hzd4vtcl2/Kanchigai-no-Atelier-Meister-Cap-3.mp4?rlkey=g295qy2xcr7hr2p6mzdc88td2&st=bdybu2kd&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/mhsa1534i7k4bitpon0n0/Kanchigai-no-Atelier-Meister-Cap-4.mp4?rlkey=8essfpx4ofrwdmsygwcla4hfo&st=24tjxrve&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/eow5joa9i9zr0ylfdlk5x/Kanchigai-no-Atelier-Meister-Cap-5.mp4?rlkey=nwlqvlb8i6v15iq1myiw61fx6&st=ifraasry&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/h4hd6251qhim6f87qozwp/Kanchigai-no-Atelier-Meister-Cap-6.mp4?rlkey=ti7bn3o0pq54j23qxkgr5l88p&st=y5viaa6x&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/pkynjer9m0f8n2wavuyk8/Kanchigai-no-Atelier-Meister-Cap-7.mp4?rlkey=ei399aij25wgb7826m1k3zqhz&st=h98rzz8b&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/fmqp9bp9zbsywlln3pj0d/Kanchigai-no-Atelier-Meister-Cap-8.mp4?rlkey=m5a2wma88t7mgd392hm00cs0y&st=4b5xe0m9&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/2f2r9d7zevnqc9ubnmdhy/Kanchigai-no-Atelier-Meister-Cap-9.mp4?rlkey=ipu90i1dh32h44h9fsh90wppx&st=xrplwedj&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/49kx0m9cr212cff9qvciu/Kanchigai-no-Atelier-Meister-Cap-10.mp4?rlkey=dy5bccea0pb430gnhs1zgp0s1&st=nxsf3r4k&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/x5mv0qon9ov3ttf5yw02o/Kanchigai-no-Atelier-Meister-Cap-11.mp4?rlkey=j6m8iddgmnvspahegs6uzmnje&st=jrah26aa&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/ascrzt509q3b7879t8jq0/Kanchigai-no-Atelier-Meister-Cap-12.mp4?rlkey=oxm6d30ja5m3lfztbvaa12lc3&st=fth186zp&raw=1', title:'Kanchigai no Atelier Meister T1 Cap 12' },
+        }
+      },
+      "24": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/fwqtnrekatv8s43ybnsij/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-1.mp4?rlkey=c6xr3abxovildtsrlg91nsz48&st=qxmt9xnf&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/ep62tutxb8otzhbxhxg6w/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-2.mp4?rlkey=g6edkuyxhfics7xqfxlq5kvl4&st=o0bvgumc&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/ewjkos995udypz3s9clpq/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-3.mp4?rlkey=jxqbjr2f5dyf3xnix04jqtqey&st=wjh89z72&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/7zg5diz9knov0jpcafwdc/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-4.mp4?rlkey=zgtqonnmb2wn3793lo11t3gib&st=2sx8ilcj&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/w1ue8s4rolj6sowsisacf/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-5.mp4?rlkey=kw2d87lffevd9c9foccy1vwqh&st=66twpdeg&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/4omwo4xzybbwtvhx354vt/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-6.mp4?rlkey=fb3kxmlnq9wj1s4asuixtcv4u&st=n06kamft&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/huurjcuj7la2z61ce8xw9/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-7.mp4?rlkey=ztbm2tpdait6kb3r8q9mk92jo&st=12qzsi8u&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/8j2twx4hyv8n1eoju8udq/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-8.mp4?rlkey=cgaodwu055t89jqmd2byjtsgu&st=5dmgg0xt&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/19iv51hsn9tc0a65osw15/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-9.mp4?rlkey=4mea5eypbwxmkv39oqnihcvpa&st=5iw2eymw&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/s8mujn4if7fbfanhr42g6/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-10.mp4?rlkey=9xxpmpbr06m06ot3eaww8hk3a&st=sip0wy4k&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/npchlsfmg5fda4mjr7jeh/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-11.mp4?rlkey=ukpqg6jnq0jyce2bvexx823sz&st=62ckhm4f&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/frx8aehj6l3co1bwx388o/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-12.mp4?rlkey=i3bbg2nz7zbtkh1a7iew42bkk&st=u3xqwosi&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 12' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/17cump0o2h3jzciiwfsfr/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-13.mp4?rlkey=dm5o9fmucj5kyvzhl9coye744&st=s91a3r68&raw=1', title:'Definitivamente. ¡No me gusta mi hermano para nada! OVA' },
+        }
+      },
+      "25": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/x5ywoyw9yeplpm2olr542/Kaiju-No.-8-T1-Capitulo-1.mp4?rlkey=4i9ez5motbn1rhyhkf4xc4mi8&st=9rxgz9t8&raw=1', title:'Kaiju No. 8 T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/6ytojr4abjo6hzdnnghf0/Kaiju-No.-8-T1-Capitulo-2.mp4?rlkey=ccp8sifdodpa15bnu3kz515x3&st=wx2d3vb7&raw=1', title:'Kaiju No. 8 T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/gs9uy4h46dsubxjzrlrsz/Kaiju-No.-8-T1-Capitulo-3.mp4?rlkey=z1q1coitovkmiztyyanrw6190&st=p60lfxiy&raw=1', title:'Kaiju No. 8 T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/494dwafpf9xcql5fit4mz/Kaiju-No.-8-T1-Capitulo-4.mp4?rlkey=ycc85j9lpsrenioknqeyqumd6&st=ktfyyo2d&raw=1', title:'Kaiju No. 8 T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/z17omdqr30i1grs6ol28z/Kaiju-No.-8-T1-Capitulo-5.mp4?rlkey=0lw07fiiy3gkq9kbeumeb6nx3&st=mc4ydah8&raw=1', title:'Kaiju No. 8 T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/dvzgcsyn7o39mw6gr3y3e/Kaiju-No.-8-T1-Capitulo-6.mp4?rlkey=p0aiv5r1a2c7ktrkuczujym9d&st=26jeyyp6&raw=1', title:'Kaiju No. 8 T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/xvvpzvzdq59vz2otr2mvd/Kaiju-No.-8-T1-Capitulo-7.mp4?rlkey=l3bcb7o1rddopp9d5r3gky2y1&st=8imtdw9a&raw=1', title:'Kaiju No. 8 T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/ri5bklh4f3h5yyatto9v1/Kaiju-No.-8-T1-Capitulo-8.mp4?rlkey=dznwmurjb6so2692zrtubb0i0&st=esr5nfbi&raw=1', title:'Kaiju No. 8 T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/ckbj26wzt82u8ayyn91og/Kaiju-No.-8-T1-Capitulo-9.mp4?rlkey=wvh3uonm9uhxpcionlk76uldz&st=di06vymq&raw=1', title:'Kaiju No. 8 T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/bngh9lzjgmkbf80b715jg/Kaiju-No.-8-T1-Capitulo-10.mp4?rlkey=hnqbr5ahcy6cfziqyrqrmgioq&st=hs6hlywq&raw=1', title:'Kaiju No. 8 T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/rkdkqf7onzphyi7vc6269/Kaiju-No.-8-T1-Capitulo-11.mp4?rlkey=m7rq3rdaa8gyh7y9nyrkllkid&st=joeyg38g&raw=1', title:'Kaiju No. 8 T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/06vqea4hfanhckrandhul/Kaiju-No.-8-T1-Capitulo-12.mp4?rlkey=vd3ke3jxeh1kzbt56te1qnv5s&st=xi1yx3td&raw=1', title:'Kaiju No. 8 T1 Cap 12' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/5hn50c6xouhn8jtud1obz/Kaiju-No.-8-Ova-Hoshina-s-Day-Off.mp4?rlkey=166iwumudtt7yyd32lhjakdb9&st=62u8qimo&raw=1', title:'Kaiju No. 8 Ova : Hoshina\'s Day Off' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/ijattimlnhaeqymvi70h4/Kaiju-No.-8-T2-Cap-1.mp4?rlkey=2o79u8uykwozx851goz8w3oja&st=qcw0jcvc&raw=1', title:'Kaiju No. 8 T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/757hkz06rs8gggwxjrhr3/Kaiju-No.-8-T2-Cap-2.mp4?rlkey=6g1ab5fzufph59ytqn3lzmihf&st=tvawa0uh&raw=1', title:'Kaiju No. 8 T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/zymjj2kffrs0njgpa7rmh/Kaiju-No.-8-T2-Cap-3.mp4?rlkey=f0pcfim6ws8o5v9ztzedtr44m&st=yh8mn3gc&raw=1', title:'Kaiju No. 8 T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/b0s0yt408e1jv8oq8gcgs/Kaiju-No.-8-T2-Cap-4.mp4?rlkey=th0vbzd9bw3a8qnj49557vv3r&st=u29ncg1p&raw=1', title:'Kaiju No. 8 T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/95q9p2afam8wxov8af5d3/Kaiju-No.-8-T2-Cap-5.mp4?rlkey=nbve7du4759k0cn9wc9npiugi&st=ldm6yzyo&raw=1', title:'Kaiju No. 8 T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/dvzgcsyn7o39mw6gr3y3e/Kaiju-No.-8-T1-Capitulo-6.mp4?rlkey=p0aiv5r1a2c7ktrkuczujym9d&st=26jeyyp6&raw=1', title:'Kaiju No. 8 T2 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/xvvpzvzdq59vz2otr2mvd/Kaiju-No.-8-T1-Capitulo-7.mp4?rlkey=l3bcb7o1rddopp9d5r3gky2y1&st=8imtdw9a&raw=1', title:'Kaiju No. 8 T2 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/ri5bklh4f3h5yyatto9v1/Kaiju-No.-8-T1-Capitulo-8.mp4?rlkey=dznwmurjb6so2692zrtubb0i0&st=esr5nfbi&raw=1', title:'Kaiju No. 8 T2 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/ckbj26wzt82u8ayyn91og/Kaiju-No.-8-T1-Capitulo-9.mp4?rlkey=wvh3uonm9uhxpcionlk76uldz&st=di06vymq&raw=1', title:'Kaiju No. 8 T2 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/bngh9lzjgmkbf80b715jg/Kaiju-No.-8-T1-Capitulo-10.mp4?rlkey=hnqbr5ahcy6cfziqyrqrmgioq&st=hs6hlywq&raw=1', title:'Kaiju No. 8 T2 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/rkdkqf7onzphyi7vc6269/Kaiju-No.-8-T1-Capitulo-11.mp4?rlkey=m7rq3rdaa8gyh7y9nyrkllkid&st=joeyg38g&raw=1', title:'Kaiju No. 8 T2 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/06vqea4hfanhckrandhul/Kaiju-No.-8-T1-Capitulo-12.mp4?rlkey=vd3ke3jxeh1kzbt56te1qnv5s&st=xi1yx3td&raw=1', title:'Kaiju No. 8 T2 Cap 12' },
+        }
+      },
+      "26": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/q5np47bjvtu4obyocyvk0/Zootopia-1.mp4?rlkey=lv3ftdnjyshtuln1d4b4u4328&st=qjnn3oa5&raw=1', title:'Zootopia 1' },
+        },
+        "2": {
+          "1": { link:'&raw=1', title:'Zootopia 2' },
+        }
+      },
+      "27": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/vxk1f0vt9pogsbkubrzmt/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-1.mp4?rlkey=8g8ey93p8xzt8zxl15wcjc7z9&st=nqwe0x6o&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/zus25qklytzofa6f3ytjp/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-2.mp4?rlkey=qhmz6dziusug1ez1fcwh1ss84&st=xtr14k08&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/9gark2nkx3ereogpy5v2j/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-3.mp4?rlkey=7hlmu3o2mglirw8vvkme5ouao&st=6cp5x2yx&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/xpqq3qh2c1tnby3p7ac4t/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-4.mp4?rlkey=qdrikeh1j7h2x9k4o3rcnq8f7&st=jvfnezuw&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/uoo0acjgkvamidb51ldxf/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-5.mp4?rlkey=08vf55dply8fitgudwbmikr2s&st=5n1sari8&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/t8glx3ouel1k7cuij3n7o/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-6.mp4?rlkey=w02u3f4360qmrml4rt360ukq9&st=5d3nsnbo&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/0qj682ootccinps3bfltj/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-7.mp4?rlkey=ppu6c2iz4lhol6cedkv7y7lsp&st=23voo8h3&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/6l7t3y46lwt3cq7wcnxty/Clevatess-Majuu-no-Ou-to-Akago-T1-Cap-8.mp4?rlkey=7p5n9wilxb8rje8ext2rfkaxi&st=ub8pj6f2&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 8' },
+          "9": { link:'&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 9' },
+          "10": { link:'&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 10' },
+          "11": { link:'&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 11' },
+          "12": { link:'&raw=1', title:'Clevatess -Majuu no Ou to Akago T1 Cap 12' },
+        }
+      },
+      "28": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/y94fdb1kle4o9jplgx10k/Dr.-Stone-Temporada-1-Capitulo-1.mp4?rlkey=932633f91q02jnhswe28hrodg&st=su7bm8ga&raw=1', title:'Dr. Stone T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/axt59ah12egbo508dqxjt/Dr.-Stone-Temporada-1-Capitulo-2.mp4?rlkey=lap9ucv087t91nfk593bce3ay&st=cprecrqi&raw=1', title:'Dr. Stone T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/0h53fcltntvbetaz5xh22/Dr.-Stone-Temporada-1-Capitulo-3.mp4?rlkey=h7ooudydnn57y88i6ov2p5f41&st=2xra3jve&raw=1', title:'Dr. Stone T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/xswu8vurpgq65v2uuocsf/Dr.-Stone-Temporada-1-Capitulo-4.mp4?rlkey=qvtl1c3ulchzqafom7lyms18o&st=3shcfh4m&raw=1', title:'Dr. Stone T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/fhezdojrss6niect100n1/Dr.-Stone-Temporada-1-Capitulo-5.mp4?rlkey=ub7q8hy7it3k325vhduy9rb65&st=t14teji4&raw=1', title:'Dr. Stone T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/gpvhn73gi1p48zlsvqhir/Dr.-Stone-Temporada-1-Capitulo-6.mp4?rlkey=54eowfbr4s197l3w4rf275fgw&st=7gfbg3ja&raw=1', title:'Dr. Stone T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/uf8hszh2dvc2u3kcqxove/Dr.-Stone-Temporada-1-Capitulo-7.mp4?rlkey=lxf8pl72m0p6pe1esibs647yq&st=t9v63ye8&raw=1', title:'Dr. Stone T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/q1i4xy0dmtis51iv9xg91/Dr.-Stone-Temporada-1-Capitulo-8.mp4?rlkey=4ifld9lms2dsbrvu4mloh5itr&st=iydwjwlf&raw=1', title:'Dr. Stone T1 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/ye3uet2slpe0dd0xjitw1/Dr.-Stone-Temporada-1-Capitulo-9.mp4?rlkey=x4wvhk9p86beqmqo3mu8mzsa7&st=dk2p9w6w&raw=1', title:'Dr. Stone T1 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/6ac1o1zhv63612ocjodds/Dr.-Stone-Temporada-1-Capitulo-10.mp4?rlkey=fd6amyf8we5967oa6fq3n96fw&st=3n0whjc3&raw=1', title:'Dr. Stone T1 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/i1c65msm59mnoha4x82t2/Dr.-Stone-Temporada-1-Capitulo-11.mp4?rlkey=pdp5117231ubidfb8bvio1vmw&st=n3v6y500&raw=1', title:'Dr. Stone T1 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/xy0rmo1ece977z2a10pma/Dr.-Stone-Temporada-1-Capitulo-12.mp4?rlkey=6rdsnil1d5csn9u9nfcmtyhkx&st=9x75u78l&raw=1', title:'Dr. Stone T1 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/8n9qkuu26gvtst1jk15tz/Dr.-Stone-Temporada-1-Capitulo-13.mp4?rlkey=q4jqbk95l867zwk97tqxmtca9&st=q7o4bu8c&raw=1', title:'Dr. Stone T1 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/dz26k4rez7q1kwlso6mfu/Dr.-Stone-Temporada-1-Capitulo-14.mp4?rlkey=kwtg6m8y2lmw8ul3gvb3ggque&st=ysjrzysc&raw=1', title:'Dr. Stone T1 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/nhddotv0up5kfvsuf4v8o/Dr.-Stone-Temporada-1-Capitulo-15.mp4?rlkey=9cdgqu4ri6pbt9z2kt371vhyt&st=gn42b92a&raw=1', title:'Dr. Stone T1 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/xnvbx6kzfjsjxr7crrr1q/Dr.-Stone-Temporada-1-Capitulo-16.mp4?rlkey=wd867ykzsxijd8isa9fydn8gs&st=9vd0dmub&raw=1', title:'Dr. Stone T1 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/1f3u1iweer58r5fgq9re8/Dr.-Stone-Temporada-1-Capitulo-17.mp4?rlkey=cop6iv18ocomlqvsj9emed2oi&st=7ze3dex2&raw=1', title:'Dr. Stone T1 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/mcjjzcch46u8h2l6jvd4p/Dr.-Stone-Temporada-1-Capitulo-18.mp4?rlkey=im25pgdjs1hw1y5uhqksj58vl&st=t2odph9d&raw=1', title:'Dr. Stone T1 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/ekwsvxip7v2x32uywi58b/Dr.-Stone-Temporada-1-Capitulo-19.mp4?rlkey=rcw9qerd7sexm1jszimtv4mgs&st=26ezo6qd&raw=1', title:'Dr. Stone T1 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/2mz9sbbxg1ky21j82zxh2/Dr.-Stone-Temporada-1-Capitulo-20.mp4?rlkey=5q2nvno56xi65ce91t6wczewv&st=orpxa090&raw=1', title:'Dr. Stone T1 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/3xw7yhhpxkax9e33dv4na/Dr.-Stone-Temporada-1-Capitulo-21.mp4?rlkey=t56qlrf30sh0q6gehz328r3yr&st=bqsrqh9k&raw=1', title:'Dr. Stone T1 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/8kini5kxuswlv6rcjnebc/Dr.-Stone-Temporada-1-Capitulo-22.mp4?rlkey=abijpdseywbbzt2gln4a04g9b&st=0zwd60bw&raw=1', title:'Dr. Stone T1 Cap 22' },
+          "23": { link:'https://www.dropbox.com/scl/fi/qdq7halc5nttj7tggyedj/Dr.-Stone-Temporada-1-Capitulo-23.mp4?rlkey=ezgumtuonttrl25c9flcyagn1&st=4pbwdz2w&raw=1', title:'Dr. Stone T1 Cap 23' },
+          "24": { link:'https://www.dropbox.com/scl/fi/tooc5r4b3u57k1ncwa0rg/Dr.-Stone-Temporada-1-Capitulo-24.mp4?rlkey=4496ldc8py9u0yvgrn79wgnc0&st=3p0vmyzw&raw=1', title:'Dr. Stone T1 Cap 24' },
+        },
+        "2": {
+          "1": { link:'https://www.dropbox.com/scl/fi/8b6fhpykah7nc073j7ei5/Dr.-Stone-Temporada-2-Capitulo-1.mp4?rlkey=fjqnje8nyuanlrndgakuw7h9s&st=0eqb18md&raw=1', title:'Dr. Stone T2 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/q6b9b9ttjhuvl1xrkd60r/Dr.-Stone-Temporada-2-Capitulo-2.mp4?rlkey=1xpoyp7kf0k5wy7n58hv7cnjj&st=5lhvd7u8&raw=1', title:'Dr. Stone T2 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/i1syd4f7kwxzgumxto9ua/Dr.-Stone-Temporada-2-Capitulo-3.mp4?rlkey=qk5piax7okz31abixcnoebw8d&st=iekvquhk&raw=1', title:'Dr. Stone T2 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/6zj0sliw295cgncec83m9/Dr.-Stone-Temporada-2-Capitulo-4.mp4?rlkey=9s5s5hcvvbffuypo9rsaaekvi&st=k6513j7i&raw=1', title:'Dr. Stone T2 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/y0ohofzsgit78zvykpjps/Dr.-Stone-Temporada-2-Capitulo-5.mp4?rlkey=n2285tvmcshrnluvb2kiq8c7n&st=26zmzj5k&raw=1', title:'Dr. Stone T2 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/py1qk12vtre3nzbtsu481/Dr.-Stone-Temporada-2-Capitulo-6.mp4?rlkey=fnzdjg57aofar6r467cgi2bnm&st=kkayg9xh&raw=1', title:'Dr. Stone T2 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/0j2ao6yp02t0vyvsgmorg/Dr.-Stone-Temporada-2-Capitulo-7.mp4?rlkey=z422h9m5gq412vji5jvec241l&st=6rqja3cx&raw=1', title:'Dr. Stone T2 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/oqu1csb1vt9fn4rr8rxa8/Dr.-Stone-Temporada-2-Capitulo-8.mp4?rlkey=x8akngkg53h6g80sdd46x2kiu&st=w53go8vd&raw=1', title:'Dr. Stone T2 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/uta0r5t7e5j2s15wjsw4s/Dr.-Stone-Temporada-2-Capitulo-9.mp4?rlkey=pdh5edzlvhpfwmveme9jskgqj&st=jlnikfg7&raw=1', title:'Dr. Stone T2 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/wm0eaf0m6vlpt5z9o6ysf/Dr.-Stone-Temporada-2-Capitulo-10.mp4?rlkey=vullycdyq3mqyzt43xa9x38ik&st=zpptevbb&raw=1', title:'Dr. Stone T2 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/jezm6pt3sfa967aizulaf/Dr.-Stone-Temporada-2-Capitulo-11.mp4?rlkey=6yt45ouuj21ijuh0dikk3be90&st=qcti3ked&raw=1', title:'Dr. Stone T2 Cap 11' },
+        },
+        "3": {
+          "1": { link:'https://www.dropbox.com/scl/fi/6uhqsbjw8qm1f8ilhav0g/Dr.-Stone-Especial-1-Dr.-Stone-Ryusui.mp4?rlkey=8ywkclp41qtg0ivgqhlfeou66&st=y3aqr7lc&raw=1', title:'Dr. Stone Especial 1: Dr. Stone: Ryusui' },
+        },
+        "4": {
+          "1": { link:'https://www.dropbox.com/scl/fi/fr57tvu553owxfk8zyqum/Dr.-Stone-Temporada-3-Capitulo-1.mp4?rlkey=vp2pbj17aiu1y3u7asxttvxca&st=douxu5fb&raw=1', title:'Dr. Stone T3 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/g1gf1tvnvvs2rqiy6gjnx/Dr.-Stone-Temporada-3-Capitulo-2.mp4?rlkey=0dbdq452vbpqsjkt5i8ip0wv2&st=z8kccyod&raw=1', title:'Dr. Stone T3 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/o3tnoe7f4dfhgm2fk41k7/Dr.-Stone-Temporada-3-Capitulo-3.mp4?rlkey=f9f8e0yi4i3tu3r25b584xr1d&st=2pduj648&raw=1', title:'Dr. Stone T3 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/me1hjdm0u1761mz20z02c/Dr.-Stone-Temporada-3-Capitulo-4.mp4?rlkey=u80dz0sl9y7ipl652uic3q2q4&st=bdrr5amo&raw=1', title:'Dr. Stone T3 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/wx5c6sguou4ndg28lvrzg/Dr.-Stone-Temporada-3-Capitulo-5.mp4?rlkey=mljh2p77rl8qze3i2lhyitrn6&st=bvl534fm&raw=1', title:'Dr. Stone T3 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/0lk3ipiwn878e8b2kjvjg/Dr.-Stone-Temporada-3-Capitulo-6.mp4?rlkey=tnykqvq7csnp882gc28tzcmrc&st=34hd4qcd&raw=1', title:'Dr. Stone T3 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/hpwowfqo7e35xvldmp6ep/Dr.-Stone-Temporada-3-Capitulo-7.mp4?rlkey=fsrilglu2rng58mddh1i3p4sd&st=c46vy7u9&raw=1', title:'Dr. Stone T3 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/2u0zpjwhonnrsrl2li0mg/Dr.-Stone-Temporada-3-Capitulo-8.mp4?rlkey=e5hb46v2nailjn7lb7rlkkgg9&st=cngap0yq&raw=1', title:'Dr. Stone T3 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/xqfgqh25964ha38a3qxx9/Dr.-Stone-Temporada-3-Capitulo-9.mp4?rlkey=0or30xsm6jajquvqf1nd7leqg&st=rg6b4wl9&raw=1', title:'Dr. Stone T3 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/xr4bubpmsrvcwxrrx485f/Dr.-Stone-Temporada-3-Capitulo-10.mp4?rlkey=acdehhvowlj8yi2o572xio04z&st=ve2e5i9u&raw=1', title:'Dr. Stone T3 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/tlcfh0wd6tvpuxrm2k1n0/Dr.-Stone-Temporada-3-Capitulo-11.mp4?rlkey=x5cegix5dlz5s4ou3bwdp1dyw&st=jbqcm64l&raw=1', title:'Dr. Stone T3 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/pupuucms7y7gblq3nvxoq/Dr.-Stone-Temporada-3-Capitulo-12.mp4?rlkey=e65ebxe4xwq1jvqk3gsc0cpj6&st=8jedqfux&raw=1', title:'Dr. Stone T3 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/9ujyo9xd1hnwk1l04jlsl/Dr.-Stone-Temporada-3-Capitulo-13.mp4?rlkey=vqqvijy31jb26mzgxxhuzp70f&st=cepafktd&raw=1', title:'Dr. Stone T3 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/ukdp4n43kauggsr7myomt/Dr.-Stone-Temporada-3-Capitulo-14.mp4?rlkey=6e7tmcy56ddn1apuek7pwhj8y&st=lgtt8pjs&raw=1', title:'Dr. Stone T3 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/a2n3pzzoni7ccjmr9ez9o/Dr.-Stone-Temporada-3-Capitulo-15.mp4?rlkey=ewp8lsdebamdgr9l2n07jfooz&st=qd8cs6fn&raw=1', title:'Dr. Stone T3 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/ikz3muur8j0tmrff4bkf2/Dr.-Stone-Temporada-3-Capitulo-16.mp4?rlkey=ndchr83ivahtd2fv7cr2och0a&st=97b5wpb3&raw=1', title:'Dr. Stone T3 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/fgg0ibrhogpinjlbqlfce/Dr.-Stone-Temporada-3-Capitulo-17.mp4?rlkey=hrjzjtmz2dmzldfxg1c9vq0av&st=kcfqf4cw&raw=1', title:'Dr. Stone T3 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/3pyu6d28m8wrv8rkiabph/Dr.-Stone-Temporada-3-Capitulo-18.mp4?rlkey=tpxkpbj83kxeh42o09w361mt3&st=kc1oa1xq&raw=1', title:'Dr. Stone T3 Cap 18' },
+          "19": { link:'https://www.dropbox.com/scl/fi/z10avaflxkak9u8uu7iz2/Dr.-Stone-Temporada-3-Capitulo-19.mp4?rlkey=cp3okwzcwumr0tfvxurpo4nbl&st=0b7y0df2&raw=1', title:'Dr. Stone T3 Cap 19' },
+          "20": { link:'https://www.dropbox.com/scl/fi/c74h8u6oq4nmaco8ffzuo/Dr.-Stone-Temporada-3-Capitulo-20.mp4?rlkey=fq5yljjxt8m247j0ofgl48otp&st=m3slalrx&raw=1', title:'Dr. Stone T3 Cap 20' },
+          "21": { link:'https://www.dropbox.com/scl/fi/9v640opmjd295gj15wqxs/Dr.-Stone-Temporada-3-Capitulo-21.mp4?rlkey=5vbvem6bpx8z0uakcyyomj3id&st=nmgdbd7s&raw=1', title:'Dr. Stone T3 Cap 21' },
+          "22": { link:'https://www.dropbox.com/scl/fi/6yfp0nx7xrbkh83c5jj27/Dr.-Stone-Temporada-3-Capitulo-22.mp4?rlkey=qmkr5mfvfj9z6edkr394hvkr1&st=38kofglf&raw=1', title:'Dr. Stone T3 Cap 22' },
+        },
+        "5": {
+          "1": { link:'https://www.dropbox.com/scl/fi/t6k44f4me7n2syky58067/Dr.-Stone-Temporada-4-Capitulo-1.mp4?rlkey=h3us38696qunlxa07s73nmzfl&st=5br2jk3i&raw=1', title:'Dr. Stone T4 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/eob9e74n46yxtv6gom8x1/Dr.-Stone-Temporada-4-Capitulo-2.mp4?rlkey=rs4h6qxwsabz6fyczg7846det&st=1ynp83e6&raw=1', title:'Dr. Stone T4 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/urjemxvk1fi5lqtre0zby/Dr.-Stone-Temporada-4-Capitulo-3.mp4?rlkey=sooycrmqup5nw7dp171iqw4r1&st=8tz5c3mv&raw=1', title:'Dr. Stone T4 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/6fewioc9x2psq99s76tcm/Dr.-Stone-Temporada-4-Capitulo-4.mp4?rlkey=i2y2jvxpsjx4uzlcg0tr1g4xy&st=jo0egluk&raw=1', title:'Dr. Stone T4 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/z6p1icfcz47v2o4tdo4il/Dr.-Stone-Temporada-4-Capitulo-5.mp4?rlkey=aulpwrj8bbip5shjed34cao7p&st=l02u13ql&raw=1', title:'Dr. Stone T4 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/k5bdboay3ft6n7kn6svf7/Dr.-Stone-Temporada-4-Capitulo-6.mp4?rlkey=c8rymhfz8a70zgc4w038gwvpi&st=9dc8majv&raw=1', title:'Dr. Stone T4 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/lb08veoot6w2b6l07kyr8/Dr.-Stone-Temporada-4-Capitulo-7.mp4?rlkey=j3e6pywnel9gip52u2qkc8x60&st=rr40daq9&raw=1', title:'Dr. Stone T4 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/plpchvyqjmk5aodc4ewx0/Dr.-Stone-Temporada-4-Capitulo-8.mp4?rlkey=jqq91pqmqmbyfqgwyk90aqs71&st=y0c79ld1&raw=1', title:'Dr. Stone T4 Cap 8' },
+          "9": { link:'https://www.dropbox.com/scl/fi/zd29wmdq6poaufvdamf25/Dr.-Stone-Temporada-4-Capitulo-9.mp4?rlkey=x2hxh2aw22gty5raje09inhas&st=3ufty3op&raw=1', title:'Dr. Stone T4 Cap 9' },
+          "10": { link:'https://www.dropbox.com/scl/fi/xv5xykemzk90kcfl9dij0/Dr.-Stone-Temporada-4-Capitulo-10.mp4?rlkey=w0zztn6d7kd9kph2tlx7b5j63&st=gxppzuql&raw=1', title:'Dr. Stone T4 Cap 10' },
+          "11": { link:'https://www.dropbox.com/scl/fi/isg0mu7rd2l4xt6aw4qc5/Dr.-Stone-Temporada-4-Capitulo-11.mp4?rlkey=nsxqvvd6k0ba5y32fjbigowoo&st=w3xa85je&raw=1', title:'Dr. Stone T4 Cap 11' },
+          "12": { link:'https://www.dropbox.com/scl/fi/fnq50t4of0y1m9eu4wewx/Dr.-Stone-Temporada-4-Capitulo-12.mp4?rlkey=emqowfzxq2us7ytjt17fwcfus&st=gkkqfxle&raw=1', title:'Dr. Stone T4 Cap 12' },
+          "13": { link:'https://www.dropbox.com/scl/fi/5k5woforl71tobl8dhw6w/Dr.-Stone-Temporada-4-Capitulo-13.mp4?rlkey=9crbdufdcugw2l3tnnir2z9sv&st=ry3tqhh4&raw=1', title:'Dr. Stone T4 Cap 13' },
+          "14": { link:'https://www.dropbox.com/scl/fi/njbked279ajr6hacg7xor/Dr.-Stone-Temporada-4-Capitulo-14.mp4?rlkey=mspj91gquluum6lrd55r0yjbx&st=25mqalpf&raw=1', title:'Dr. Stone T4 Cap 14' },
+          "15": { link:'https://www.dropbox.com/scl/fi/s009iv5kaxwzfmcqf962y/Dr.-Stone-Temporada-4-Capitulo-15.mp4?rlkey=31tq34s4cp00a52k7c67z4ioh&st=bj8atecv&raw=1', title:'Dr. Stone T4 Cap 15' },
+          "16": { link:'https://www.dropbox.com/scl/fi/rkp66pqhc4xd0c3o2tykb/Dr.-Stone-Temporada-4-Capitulo-16.mp4?rlkey=s4qtyu645uflpsavdt90370og&st=bwrebbpz&raw=1', title:'Dr. Stone T4 Cap 16' },
+          "17": { link:'https://www.dropbox.com/scl/fi/kdm5chgbflv4ne2eh9yhn/Dr.-Stone-Temporada-4-Capitulo-17.mp4?rlkey=g24438qveahtq1rkvi3s5gxd6&st=wvu7l5xr&raw=1', title:'Dr. Stone T4 Cap 17' },
+          "18": { link:'https://www.dropbox.com/scl/fi/yvhscbmobhkm1llpdovmv/Dr.-Stone-Temporada-4-Capitulo-18.mp4?rlkey=frkoj8sj3zd5oamgu1iivho6o&st=8itmbong&raw=1', title:'Dr. Stone T4 Cap 18' },
+          "19": { link:'&raw=1', title:'Dr. Stone T4 Cap 19' },
+          "20": { link:'&raw=1', title:'Dr. Stone T4 Cap 20' },
+          "21": { link:'&raw=1', title:'Dr. Stone T4 Cap 21' },
+          "22": { link:'&raw=1', title:'Dr. Stone T4 Cap 22' },
+        }
+      },
+      "29": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/ikaj0q7avht2n9zxaxpg5/One-Piece-Live-Action-Ep-1.mp4?rlkey=ittfui61n7lha1837cz1e0muj&st=iccuz1aj&raw=1', title:'One Piece (Live Action) T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/vay5g48vnuhp3e9mocjhr/One-Piece-Live-Action-Ep-2.mp4?rlkey=ov7u5s1vrpywujkvb4tyx0ylp&st=l17bcyod&raw=1', title:'One Piece (Live Action) T1 Cap 2' },
+          "3": { link:'https://www.dropbox.com/scl/fi/mz0qe8c3x1cqw5od877ux/One-Piece-Live-Action-Ep-3.mp4?rlkey=5sgopbslj4ma0eg0vdzei5bp4&st=3ws3950e&raw=1', title:'One Piece (Live Action) T1 Cap 3' },
+          "4": { link:'https://www.dropbox.com/scl/fi/j0cxfhhuj5f8xje4xmi4k/One-Piece-Live-Action-Ep-4.mp4?rlkey=sg1ei2h4gzhmgfrcdfx2y1nf4&st=xt8u6uwn&raw=1', title:'One Piece (Live Action) T1 Cap 4' },
+          "5": { link:'https://www.dropbox.com/scl/fi/0jk3bsmsb3s3mp2iqyxkh/One-Piece-Live-Action-Ep-5.mp4?rlkey=t43bhubrinn1bomkye5yu4gl2&st=4cgnzw77&raw=1', title:'One Piece (Live Action) T1 Cap 5' },
+          "6": { link:'https://www.dropbox.com/scl/fi/tlewa13offirzsqi3zq9m/One-Piece-Live-Action-Ep-6.mp4?rlkey=rcztlltztc3v6919s8h42imuz&st=q5t7012l&raw=1', title:'One Piece (Live Action) T1 Cap 6' },
+          "7": { link:'https://www.dropbox.com/scl/fi/woy8palewig7xydkdvds5/One-Piece-Live-Action-Ep-7.mp4?rlkey=j7xa4qdo2fup08bubew4mpfu8&st=ver02bd1&raw=1', title:'One Piece (Live Action) T1 Cap 7' },
+          "8": { link:'https://www.dropbox.com/scl/fi/c7aw1aqf99fhn09dyfq0g/One-Piece-Live-Action-Ep-8.mp4?rlkey=31syrhrql53eud9m14aeoff8e&st=b3v6ge48&raw=1', title:'One Piece (Live Action) T1 Cap 8' },
+        }
+      },
+      "30": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/tlnut3bzb13xfv26bhgcm/Shoujo-Ramune-01-Audio-Latino-1080p-LatinoHentai.mp4?rlkey=8zytsseg2kx0gtne5rk90gtvg&st=50bjf2pi&raw=1', title:'Shoujo Ramune ESPAÑOL T1 Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/wlkyg9ywcpcqhvwlc13hp/shoujoramuness-01.mp4?rlkey=82jdrgrl5q2vraljjzm85llt8&st=sjou2cqk&raw=1', title:'Shoujo Ramune SUB T1 Cap 1' },
+          "3": { link:'https://www.dropbox.com/scl/fi/jraramv6b5uwt4rkubr1a/shoujoramuness-02.mp4?rlkey=r0rf6h8rfy0mwkqkzgz14cqx0&st=mdgk1hsp&raw=1', title:'Shoujo Ramune SUB T1 Cap 2' },
+          "4": { link:'https://www.dropbox.com/scl/fi/728kl0dztz3po9x58a1ct/shoujoramuness-03.mp4?rlkey=9dpcv1r2r6vh07m2reom8dfmb&st=6b2f5o2e&raw=1', title:'Shoujo Ramune SUB T1 Cap 3' },
+          "5": { link:'https://www.dropbox.com/scl/fi/n2iaalss7ez17ib1ceolk/shoujoramuness-04.mp4?rlkey=klvlmhftp91dzfodk99s0fz78&st=5b9pc2bn&raw=1', title:'Shoujo Ramune SUB T1 Cap 4' },
+        }
+      },
+      "37": {
+        "1": {
+          "1": { link:'https://www.dropbox.com/scl/fi/wiu9vhmz4j83rhz6927lj/Shinsei-Kourin-Dacryon-Luna-Cap-1-Sub-Espa-ol.mp4?rlkey=cijr65vftkrtexv3b21tjdbzz&st=5sit9huw&raw=1', title:'Shinsei Kourin Dacryon Luna SUB Cap 1' },
+          "2": { link:'https://www.dropbox.com/scl/fi/26tc29rakiektix54c250/Shinsei-Kourin-Dacryon-Luna-Cap-2-Sub-Espa-ol.mp4?rlkey=jkn6gwjel0000ltimnfmxujok&st=60nwhwo9&raw=1', title:'Shinsei Kourin Dacryon Luna SUB Cap 2' },
+        }
+      },
+
+
+
+
+    };
+    // Guardar posición al volver
+    back.addEventListener('click', () => {
+      sessionStorage.setItem('lastScroll_' + anime, window.scrollY);
+    });
+    back.href = `anime-detail.html?id=${anime}`;
+
+    // Cargar episodio
+    const episode = DB?.[anime]?.[s]?.[e];
+    if (!episode) {
+      alert('Capítulo no encontrado.');
+    } else {
+      const originalLink = episode.link;
+      player.src          = originalLink;
+      titleEl.textContent = episode.title;
+
+      // Enlace de descarga forzada
+      let downloadForced;
+      if (originalLink.includes('raw=1')) {
+        downloadForced = originalLink.replace(/raw=1$/, 'dl=1');
+      } else if (originalLink.includes('?')) {
+        downloadForced = originalLink + '&dl=1';
+      } else {
+        downloadForced = originalLink + '?dl=1';
+      }
+      dlLink.href  = downloadForced;
+      dlLink.title = 'Descargar ' + episode.title;
+    }
+
+  let visibleTimeout, hideTimeout;
+
+  sh.addEventListener('click', () => {
+    const url = `${location.origin + location.pathname}?anime=${anime}&s=${s}&e=${e}`;
+
+    navigator.clipboard.writeText(url).then(() => {
+      // 1) Limpiar timeouts anteriores
+      clearTimeout(visibleTimeout);
+      clearTimeout(hideTimeout);
+
+      // 2) Animación de entrada (popin)
+      toast.style.display   = 'flex';
+      toast.style.animation = 'popin 0.4s forwards';
+
+      // 3) Tras 3s, animación de salida (popout)
+      visibleTimeout = setTimeout(() => {
+        toast.style.animation = 'popout 0.4s forwards';
+
+        // 4) Al acabar popout (0.4s), ocultar
+        hideTimeout = setTimeout(() => {
+          toast.style.display = 'none';
+        }, 400);
+      }, 3000);
+    }).catch(err => {
+      alert('Error al copiar el enlace: ' + err);
+    });
+  });
+
+    // Prev/Next
+    function getNextEpisode(a, season, epi) {
+      const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>x-y), idx = eps.indexOf(epi);
+      if (idx >= 0 && idx < eps.length-1) return { s: season, e: eps[idx+1] };
+      const seasons = Object.keys(seas).sort((x,y)=>x-y), sIdx = seasons.indexOf(season);
+      if (sIdx >= 0 && sIdx < seasons.length-1) {
+        const nextS = seasons[sIdx+1], nextEs = Object.keys(seas[nextS]).sort((x,y)=>x-y);
+        if (nextEs.length) return { s: nextS, e: nextEs[0] };
+      }
+      return null;
+    }
+    function getPrevEpisode(a, season, epi) {
+      const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>x-y), idx = eps.indexOf(epi);
+      if (idx > 0) return { s: season, e: eps[idx-1] };
+      const seasons = Object.keys(seas).sort((x,y)=>x-y), sIdx = seasons.indexOf(season);
+      if (sIdx > 0) {
+        const prevS = seasons[sIdx-1], prevEs = Object.keys(seas[prevS]).sort((x,y)=>x-y);
+        if (prevEs.length) return { s: prevS, e: prevEs[prevEs.length-1] };
+      }
+      return null;
+    }
+    const nxt = getNextEpisode(anime, s, e);
+    if (nxt) {
+      next.style.display = 'inline-block';
+      next.href          = `${location.pathname}?anime=${anime}&s=${nxt.s}&e=${nxt.e}`;
+    }
+    const prv = getPrevEpisode(anime, s, e);
+    if (prv) {
+      prev.style.display = 'inline-block';
+      prev.href          = `${location.pathname}?anime=${anime}&s=${prv.s}&e=${prv.e}`;
+    }
+  </script>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
