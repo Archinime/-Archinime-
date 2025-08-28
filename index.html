@@ -8,6 +8,10 @@
 
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
 
+  <!-- Preload del video y poster para mejorar la percepción de carga -->
+  <link rel="preload" as="video" href="galaxia.mp4" type="video/mp4">
+  <link rel="preload" as="image" href="galaxia-poster.jpg">
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{
@@ -17,27 +21,36 @@
       font-family:sans-serif;
       color:#fff;
     }
-    /* Fondo galaxia */
+
+    /* Fondo galaxia
+       - video debe estar detrás de todo (-2)
+       - overlay ocupa la parte superior (-1) mientras carga y luego se oculta (display:none)
+    */
     #bg-video{
-      position:fixed; 
-      top:0; 
-      left:0;
-      width:100%; 
-      height:100%;
-      object-fit:cover; 
-      z-index:-1;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:-2;                  /* detrás del overlay y demás */
       will-change: opacity, transform;
-    }
-    #overlay{
-      position:fixed; 
-      top:0; 
-      left:0;
-      width:100%; 
-      height:100%;
-      z-index:-1;
-      will-change: background;
+      opacity:0;                   /* oculto hasta que esté listo */
+      transition:opacity .6s ease;
+      background:#000;             /* color de fallback mientras se carga */
+      pointer-events:none;
     }
 
+    #overlay{
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-1;                  /* encima del video al inicio */
+      will-change: background, opacity;
+      background: url('galaxia-poster.jpg') center/cover no-repeat,
+                  linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
+      opacity:1;
+      transition:opacity .6s ease;
+      pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
+    }
 
     /* Botón circular de apoyo */
     #support {
@@ -284,73 +297,129 @@
   </main>
 
   <script>
+    // ---- Manejo del video de fondo: mostrar poster mientras carga y revelar el video al estar listo ----
     window.addEventListener('DOMContentLoaded', () => {
-      const audio = document.getElementById('bg-music');
-      // aseguramos que el audio esté en modo loop (atributo + JS por seguridad)
-      try {
-        audio.loop = true;
-      } catch(e) {
-        console.warn('No se pudo establecer audio.loop programáticamente:', e);
-      }
-      audio.volume = 0.8;
-      audio.play().catch(() => {
-        // políticas de autoplay: reproducir cuando el usuario haga click por primera vez
-        document.addEventListener('click', () => {
-          audio.play();
-        }, { once: true });
-      });
+      const video = document.getElementById('bg-video');
+      const overlay = document.getElementById('overlay');
 
-      // Fallback adicional: si por algún motivo el loop no se respeta, reiniciamos al terminar
-      audio.addEventListener('ended', () => {
-        // reiniciamos y reproducimos
-        try {
-          audio.currentTime = 0;
-          audio.play();
-        } catch (e) {
-          console.warn('No se pudo reiniciar el audio al terminar:', e);
+      // Seguridad: atributos esenciales
+      try { video.preload = video.getAttribute('preload') || 'auto'; } catch(e){ console.warn(e); }
+      video.muted = true;
+      video.playsInline = true;
+
+      // función que revela el video y oculta el overlay (con transición)
+      const revealVideo = () => {
+        // mostrar video
+        video.style.opacity = '1';
+        // ocultar overlay suavemente
+        overlay.style.opacity = '0';
+      };
+
+      // cuando la transición de overlay termine y esté en 0, lo quitamos del flujo (display:none)
+      overlay.addEventListener('transitionend', (ev) => {
+        if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') {
+          overlay.style.display = 'none';
         }
       });
-    });
-    // Abre en nueva pestaña/ventana e intenta volver a enfocar la ventana actual.
-    // Nota: el control exacto del foco depende del navegador y su política de seguridad.
-    function openInNewTab(url) {
-      // Abrir la URL en una nueva pestaña/ventana sin pasar el opener (seguridad)
-      const win = window.open(url, '_blank', 'noopener,noreferrer');
-      // Intentar restablecer foco a la ventana actual (no garantizado en todos los navegadores)
-      try {
-        // Pequeño retraso para que el navegador procese la nueva pestaña
+
+      // Si el navegador indica que puede reproducir sin parar (buffer OK)
+      video.addEventListener('canplaythrough', () => {
         setTimeout(() => {
-          if (typeof window.focus === 'function') {
-            window.focus();
+          revealVideo();
+          // Intentar play (algunos navegadores requieren llamada explícita)
+          video.play().catch(() => {
+            // No hacemos nada, el fallback de abajo pedirá click si es necesario
+          });
+        }, 80);
+      }, { once: true });
+
+      // Fallback: cuando haya datos cargados (menos estricto)
+      video.addEventListener('loadeddata', () => {
+        if (video.readyState >= 2) {
+          setTimeout(() => {
+            revealVideo();
+            video.play().catch(() => {});
+          }, 150);
+        }
+      }, { once: true });
+
+      // Fallback temporal: si después de X ms sigue sin buffer suficiente, mostramos video (aunque overlay puede permanecer visible)
+      setTimeout(() => {
+        // Si no logró canplaythrough, forzamos mostrar el video (mejor que pantalla negra)
+        if (video.readyState < 3) {
+          // mostrar video y dejar overlay (se ocultará si el usuario tiene conexión y pronto puede)
+          try {
+            video.style.opacity = '1';
+            overlay.style.opacity = '0';
+            video.play().catch(() => {
+              // si autoplay falla, dejamos poster visible (display none ya será aplicado si opacity=0 y transitionend dispara)
+            });
+          } catch(e) {
+            console.warn('Fallback de video fallo:', e);
           }
-        }, 100);
-      } catch (e) {
-        // no hacemos nada si falla
-        console.warn('No se pudo forzar el foco (comportamiento del navegador):', e);
-      }
-      // Retornar la referencia por si se necesita
+        }
+      }, 3500);
+
+      // Reintentos: si play fue bloqueado por política, intentaremos reproducir al primer click del usuario
+      video.play().catch(() => {
+        document.addEventListener('click', function tryPlay() {
+          video.play().catch(() => {});
+          // también ocultamos overlay en caso de que el click sea la señal del usuario
+          revealVideo();
+          document.removeEventListener('click', tryPlay);
+        }, { once: true });
+      });
+    });
+
+    // ---- Audio autoplay robusto ----
+    window.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('bg-music');
+      try { audio.loop = true; } catch(e){ console.warn(e); }
+      audio.volume = 0.8;
+      audio.play().catch(() => {
+        // si autoplay es bloqueado, reproducir al primer click
+        document.addEventListener('click', () => { audio.play().catch(()=>{}); }, { once: true });
+      });
+      audio.addEventListener('ended', () => {
+        try { audio.currentTime = 0; audio.play(); } catch (e) { console.warn(e); }
+      });
+    });
+
+    // Abre en nueva pestaña/ventana
+    function openInNewTab(url) {
+      const win = window.open(url, '_blank', 'noopener,noreferrer');
+      try { setTimeout(() => { if (typeof window.focus === 'function') window.focus(); }, 100); } catch(e){ console.warn(e); }
       return win;
     }
+
+    // Normaliza texto (quita tildes y pasa a minúsculas)
+    function normalizeText(s) {
+      return String(s || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+
     const animes = [
       {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Shōnen","Sobrenatural","Comedia","Romance","Comedia oscura"]},
       {id:2, title:"Jujutsu Kaisen", img:"Jujutsu.jpg", rating:4.9, genres:["Shōnen","Sobrenatural","Fantasía oscura","Acción","Nekketsu"]},
       {id:3, title:"Konosuba", img:"https://www.dropbox.com/scl/fi/973zjlsi4a03w1hde7ivd/DrPytSFXgAYg1Z_-1.jpg?rlkey=wr2btn7cf7wp9yyt7id7uy9uy&st=gxhbfwyq&raw=1", rating:4.8, genres:["Aventura","Comedia","Fantasía","Sobrenatural","Isekai","Ecchi","Shōnen"]},
       {id:4, title:"Re:Zero − Empezar vida en otro mundo", img:"rezero.png", rating:4.8, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Thriller psicológico","Terror psicológico","Isekai","Shōnen"]},
       {id:5, title:"Mushoku Tensei", img:"mushoku.jpg", rating:4.8, genres:["Isekai","Ecchi","Romance","Harem","Acción","Aventura","Drama","Fantasía","Seinen"]},
-      {id:6, title:"Tensei Shitara Slime Datta Ken", img:"slime.jpg", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía"]},
-      {id:7, title:"Saga of Tanya the Evil (Yōjo Senki)", img:"tanya1.jpg", rating:4.8, genres:["Acción","Aventura","Fantasía","Militar","Drama","Ciencia ficción","Seinen"]},
-      {id:8, title:"Akame Ga Kill", img:"Akame1.jpg", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Shōnen","Romance","Tragedia"]},
+      {id:6, title:"Tensei Shitara Slime Datta Ken", aliases: ["That Time I Got Reincarnated as a Slime"], img:"slime.jpg", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía"]},
+      {id:7, title:"Saga of Tanya the Evil", aliases: ["Yōjo Senki"], img:"tanya1.jpg", rating:4.8, genres:["Acción","Aventura","Fantasía","Militar","Drama","Ciencia ficción","Seinen"]},
+      {id:8, title:"Akame Ga Kill", aliases: ["Akame ga Kiru"], img:"Akame1.jpg", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Shōnen","Romance","Tragedia"]},
       {id:9, title:"To Be Hero X", img:"hero11.jpg", rating:4.8, genres:["Acción","Comedia","Animación","Fantasía","Superhéroes","Seinen"]},
-      {id:10, title:"Demon Slayer", img:"demon.jpg", rating:4.9, genres:["Acción","Fantasía oscura","Aventura","Shōnen","Sobrenatural","Comedia","Drama"]},
+      {id:10, title:"Demon Slayer", aliases: ["Kimetsu no Yaiba"], img:"demon.jpg", rating:4.9, genres:["Acción","Fantasía oscura","Aventura","Shōnen","Sobrenatural","Comedia","Drama"]},
       {id:11, title:"Maou 2099", img:"https://www.dropbox.com/scl/fi/su8i4y0cynftlnzlldfhj/maou2099-1.jpg?rlkey=4yg0msepo25lpn80kxg9ni3um&st=vdhrcc8y&raw=1", rating:4.7, genres:["Ciencia ficción","Isekai Inverso","Acción","Fantasía","Cyberpunk"]},
       {id:12, title:"Wistoria: Wand and Sword", img:"wistoria.jpg", rating:4.8, genres:["Fantasía","Aventura","Shōnen"]},
-      {id:13, title:"Izure Saikyou no Renkinjutsushi", img:"Izure.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Isekai","Shōnen"]},
-      {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", img:"alia.jpg", rating:4.8, genres:["Comedia","Romance","Romance escolar","Escolar","Josei"]},
-      {id:15, title:"Reborn as a Vending Machine, I Now Wander the Dungeon", img:"jidou.jpg", rating:4.2, genres:["Fantasía","Isekai","Shōnen"]},
-      {id:16, title:"kimi to boku no saigo no senjou", img:"kimi22222.jpg", rating:4.5, genres:["Acción","Fantasía","Romance","Militar","Seinen"]},
-      {id:17, title:"The Gorila God's Go- To Girl", img:"gorila11.jpg", rating:4.5, genres:["Fantasía","Comedia","Escolar","Romance","Shōjo"]},
+      {id:13, title:"Izure Saikyou no Renkinjutsushi", aliases: ["Possibly the Greatest Alchemist of All Time"], img:"Izure.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Isekai","Shōnen"]},
+      {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", aliases: ["Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"], img:"alia.jpg", rating:4.8, genres:["Comedia","Romance","Romance escolar","Escolar","Josei"]},
+      {id:15, title:"Reborn as a Vending Machine, I Now Wander the Dungeon", aliases: ["Jidōhanbaiki ni Umarekawatta Ore wa Meikyū ni Samayō"], img:"jidou.jpg", rating:4.2, genres:["Fantasía","Isekai","Shōnen"]},
+      {id:16, title:"kimi to boku no saigo no senjou", aliases: ["Our Last Crusade or the Rise of a New World"], img:"kimi22222.jpg", rating:4.5, genres:["Acción","Fantasía","Romance","Militar","Seinen"]},
+      {id:17, title:"The Gorilla God's Go- To Girl", aliases: ["Gorilla no Kami Kara Kago Sareta Reijō wa Ōritsu Kishidan de Kawaiigareru"], img:"gorila11.jpg", rating:4.5, genres:["Fantasía","Comedia","Escolar","Romance","Shōjo"]},
       {id:18, title:"Chainsaw Man", img:"chaiw11.jpg", rating:4.9, genres:["Fantasía oscura","Acción","Shōnen","Comedia oscura"]},
-      {id:19, title:"The Rising of the Shield Hero", img:"https://www.dropbox.com/scl/fi/qriw9hu1jsc46jh75xsgw/FqaFeK9XoAMW7_lg-1-1.jpg?rlkey=5516wyvugdk4y8kpflr49y5cr&st=2mq5x24h&raw=1", rating:4.7, genres:["Aventura","Drama","Fantasía","Acción","Seinen","Romance","Isekai"]},
+      {id:19, title:"The Rising of the Shield Hero", aliases: ["Tate no Yuusha no Nariagari","El Héroe del Escudo"], img:"https://www.dropbox.com/scl/fi/qriw9hu1jsc46jh75xsgw/FqaFeK9XoAMW7_lg-1-1.jpg?rlkey=5516wyvugdk4y8kpflr49y5cr&st=2mq5x24h&raw=1", rating:4.7, genres:["Aventura","Drama","Fantasía","Acción","Seinen","Romance","Isekai"]},
       {id:20, title:"Overflow", img:"overflow.jpg", rating:4.6, genres:["Hentai","Escolar","Romance","Harem","Incesto"]},
       {id:21, title:"Shiunji-ke no Kodomotachi", img:"Shiux.jpg", rating:4.6, genres:["Comedia","Romance","Drama","Harem","Slice of Life","Seinen"]},
       {id:22, title:"Goblin Slayer", img:"https://www.dropbox.com/scl/fi/ltdh8xylehw9b4p1gql9l/goblins-1-1.jpg?rlkey=glkiwc6kmlxkyt2htyxvawjaf&st=f4aqlj2g&raw=1", rating:4.7, genres:["Seinen","Fantasía oscura","Horror","Aventura","Fantasía"]},
@@ -362,7 +431,7 @@
       {id:28, title:"Dr. Stone", img:"https://www.dropbox.com/scl/fi/2z36rgoagk82dw2cb0lql/Dr._Stone_29_.jpg?rlkey=mqb5z6o7hj41ricpm6fnsm8hy&st=dh105dpx&raw=1", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Shōnen","Post-apocalíptico"]},
       {id:29, title:"One Piece (Live Action)", img:"https://www.dropbox.com/scl/fi/50vo69ws4i64qv4kxibs7/oneeee.jpg?rlkey=ok8a8nt6bh8g0rzzpqisptfoe&st=psff3vov&raw=1", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama"]},
       {id:30, title:"Shoujo Ramune", img:"https://www.dropbox.com/scl/fi/ok7pcimnqtue7gg30i70x/shoujo.jpg?rlkey=sl1bn5cj5bmxu003jq2q6906d&st=fd15ap5n&raw=1", rating:4.3, genres:["Hentai","Harem","Incesto"]},
-      {id:31, title:"To Your Eternity", img:"https://www.dropbox.com/scl/fi/du5sn8bt3ie6l4odbsjo6/fumetsu-1.jpg?rlkey=jx3a1v76k20ki639pmwe9v9b3&st=rawxrnvg&raw=1", rating:4.8, genres:["Fantasía","Drama","Aventura","Shōnen","Sobrenatural"]},
+      {id:31, title:"To Your Eternity", aliases: ["Fumetsu no Anata e"], img:"https://www.dropbox.com/scl/fi/du5sn8bt3ie6l4odbsjo6/fumetsu-1.jpg?rlkey=jx3a1v76k20ki639pmwe9v9b3&st=rawxrnvg&raw=1", rating:4.8, genres:["Fantasía","Drama","Aventura","Shōnen","Sobrenatural"]},
       {id:32, title:"Tsugunai Subbed", img:"https://www.dropbox.com/scl/fi/hkyj8asfbi0lw4kyuzjvk/71Bk-zdlprL-1.jpg?rlkey=g875hho1bd55nyaqo4p2hh9ek&st=gahfap3z&raw=1", rating:4.8, genres:["Hentai","Harem","Escolar"]},
       {id:37, title:"Shinsei Kourin Dacryon Luna", img:"https://www.dropbox.com/scl/fi/f3ada5jvt69z0si1f82eo/portadah.jpg?rlkey=l6y1gyidiucos6j2g1gjyp7k3&st=82m33282&raw=1", rating:4.0, genres:["Tentáculos","Hentai","Fantasía","Seinen","Fantasía oscura"]},
     ];
@@ -399,21 +468,27 @@
     document.querySelectorAll('.card').forEach(c => observer.observe(c));
   }
 
-  function filtro(){
-    const q   = document.getElementById('search').value.toLowerCase();
-    const g   = document.getElementById('genre-select').value;
-    const cat = document.getElementById('rating-select').value;
-    const filtrados = animes.filter(a => {
-      const byText   = a.title.toLowerCase().startsWith(q);
-      const byGenre  = !g || a.genres.includes(g);
-      let byRating = true;
-      if(cat==='excellent') byRating = a.rating >= 4.8;
-      else if(cat==='good')    byRating = a.rating >= 4.6 && a.rating < 4.8;
-      else if(cat==='regular') byRating = a.rating < 4.6;
-      return byText && byGenre && byRating;
-    });
-    render(filtrados);
-  }
+    function filtro(){
+      const qRaw   = document.getElementById('search').value || '';
+      const q = qRaw.trim();
+      const qn = normalizeText(q);
+      const g   = document.getElementById('genre-select').value;
+      const cat = document.getElementById('rating-select').value;
+
+      const filtrados = animes.filter(a => {
+        // preparar lista de strings buscables: titulo + aliases
+        const titles = [a.title].concat(a.aliases || []);
+        // NORMALIZADO: ahora usamos startsWith (prefijo) para respetar orden de letras
+        const matchesText = !qn || titles.some(t => normalizeText(t).startsWith(qn));
+        const byGenre  = !g || a.genres.includes(g);
+        let byRating = true;
+        if(cat==='excellent') byRating = a.rating >= 4.8;
+        else if(cat==='good')    byRating = a.rating >= 4.6 && a.rating < 4.8;
+        else if(cat==='regular') byRating = a.rating < 4.6;
+        return matchesText && byGenre && byRating;
+      });
+      render(filtrados);
+    }
 
   // Función para barajar (Fisher-Yates)
   function shuffleArray(arr) {
@@ -444,4 +519,4 @@
           .addEventListener('change', filtro);
 </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
