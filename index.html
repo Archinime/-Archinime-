@@ -33,7 +33,7 @@
       object-fit:cover;
       z-index:-2;                  /* detrás del overlay y demás */
       will-change: opacity, transform;
-      opacity:0;                   /* oculto hasta que esté listo */
+      opacity:0;                   /* oculto hasta que esté realmente reproduciéndose */
       transition:opacity .6s ease;
       background:#000;             /* color de fallback mientras se carga */
       pointer-events:none;
@@ -50,6 +50,24 @@
       opacity:1;
       transition:opacity .6s ease;
       pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
+    }
+
+    /* Pequeña indicación (oculta por defecto) si el autoplay está bloqueado */
+    #tap-to-play {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 12;
+      display: none;
+      font-family: sans-serif;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: .6rem 1rem;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      user-select: none;
     }
 
     /* Botón circular de apoyo */
@@ -191,11 +209,14 @@
 </head>
 <body>
 
-  <!-- Vídeo de fondo -->
-<video id="bg-video" autoplay muted loop playsinline>
+  <!-- Vídeo de fondo (agregado poster para que el navegador muestre la imagen hasta que haya primer frame) -->
+  <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline>
     <source src="galaxia.mp4" type="video/mp4">
   </video>
   <div id="overlay"></div>
+
+  <!-- Mensaje oculto que puede usarse cuando autoplay esté bloqueado -->
+  <div id="tap-to-play" role="button" aria-hidden="true">Toca para reproducir</div>
 
   <audio id="bg-music" autoplay>
     <source src="https://www.dropbox.com/scl/fi/k85eln5jkukzgw8auarsh/Yo-y-los-que-tuvieron-etapa-Vocaloid-cuando-suena.mp3?rlkey=kpl5z8pbl6gz3w4ob3b8lx3sl&st=90mh5kmo&raw=1" type="audio/mpeg">
@@ -297,10 +318,11 @@
   </main>
 
   <script>
-    // ---- Manejo del video de fondo: mostrar poster mientras carga y revelar el video al estar listo ----
+    // ---- Manejo del video de fondo: mostrar poster mientras carga y revelar el video solo cuando se esté reproduciendo ----
     window.addEventListener('DOMContentLoaded', () => {
       const video = document.getElementById('bg-video');
       const overlay = document.getElementById('overlay');
+      const tapToPlay = document.getElementById('tap-to-play');
 
       // Seguridad: atributos esenciales
       try { video.preload = video.getAttribute('preload') || 'auto'; } catch(e){ console.warn(e); }
@@ -322,53 +344,45 @@
         }
       });
 
-      // Si el navegador indica que puede reproducir sin parar (buffer OK)
+      // REVELAR solo cuando el video realmente esté reproduciéndose
+      video.addEventListener('playing', () => {
+        // si llega el evento playing sabemos que ya hay frames y audio (si aplica) reproduciéndose
+        revealVideo();
+        // esconder el botón de "tocar" si estaba visible
+        tapToPlay.style.display = 'none';
+      }, { once: true });
+
+      // Intentamos reproducir en cuanto pueda cargarse (pero no ocultamos overlay hasta 'playing')
       video.addEventListener('canplaythrough', () => {
-        setTimeout(() => {
-          revealVideo();
-          // Intentar play (algunos navegadores requieren llamada explícita)
-          video.play().catch(() => {
-            // No hacemos nada, el fallback de abajo pedirá click si es necesario
-          });
-        }, 80);
+        video.play().catch(()=>{ /* autoplay bloqueado: esperamos click */ });
       }, { once: true });
 
-      // Fallback: cuando haya datos cargados (menos estricto)
+      // También intentamos reproducir al menos en 'loadeddata'
       video.addEventListener('loadeddata', () => {
-        if (video.readyState >= 2) {
-          setTimeout(() => {
-            revealVideo();
-            video.play().catch(() => {});
-          }, 150);
-        }
+        video.play().catch(()=>{ /* autoplay bloqueado: esperamos click */ });
       }, { once: true });
 
-      // Fallback temporal: si después de X ms sigue sin buffer suficiente, mostramos video (aunque overlay puede permanecer visible)
+      // Si después de X ms no hemos recibido 'playing', asumimos que el autoplay fue bloqueado:
+      // mostramos una pequeña indicación para que el usuario toque la pantalla (no obligatoria).
+      const AUTOPLAY_TIMEOUT = 4000; // ms (ajustable)
       setTimeout(() => {
-        // Si no logró canplaythrough, forzamos mostrar el video (mejor que pantalla negra)
-        if (video.readyState < 3) {
-          // mostrar video y dejar overlay (se ocultará si el usuario tiene conexión y pronto puede)
-          try {
-            video.style.opacity = '1';
-            overlay.style.opacity = '0';
-            video.play().catch(() => {
-              // si autoplay falla, dejamos poster visible (display none ya será aplicado si opacity=0 y transitionend dispara)
-            });
-          } catch(e) {
-            console.warn('Fallback de video fallo:', e);
-          }
-        }
-      }, 3500);
+        // si aún no está reproduciéndose (no se ha disparado 'playing')
+        if (getComputedStyle(video).opacity === '0') {
+          // mostrar indicación para tocar; no ocultamos overlay
+          tapToPlay.style.display = 'block';
+          tapToPlay.setAttribute('aria-hidden', 'false');
 
-      // Reintentos: si play fue bloqueado por política, intentaremos reproducir al primer click del usuario
-      video.play().catch(() => {
-        document.addEventListener('click', function tryPlay() {
-          video.play().catch(() => {});
-          // también ocultamos overlay en caso de que el click sea la señal del usuario
-          revealVideo();
-          document.removeEventListener('click', tryPlay);
-        }, { once: true });
-      });
+          const tryPlay = () => {
+            video.play().catch(()=>{}); // intentamos reproducir al touch del usuario
+          };
+
+          // intentamos reproducir al click/tap del documento o del botón
+          document.addEventListener('click', tryPlay, { once: true });
+          tapToPlay.addEventListener('click', tryPlay, { once: true });
+        }
+      }, AUTOPLAY_TIMEOUT);
+
+      // Nota: no forzamos ocultar overlay nunca antes de 'playing' — esto evita el parpadeo a negro.
     });
 
     // ---- Audio autoplay robusto ----
