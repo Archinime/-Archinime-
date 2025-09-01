@@ -12,16 +12,30 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%;overflow-x:hidden;font-family:'Segoe UI',sans-serif;color:#fff}
     /* Fondo vídeo con will-change */
+    /* --- Modificado: ahora el video empieza oculto y hay un overlay con el poster hasta 'playing' --- */
     #bg-video{
-      position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;
-      z-index:-2;will-change:opacity,transform;
-      /* Carga diferida del vídeo */
-      preload="none"
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:-2;
+      will-change:opacity,transform;
+      opacity:0;                   /* oculto hasta que esté realmente reproduciéndose */
+      transition:opacity .6s ease;
+      background:#000;             /* color de fallback mientras se carga */
+      pointer-events:none;
     }
+    /* overlay con poster que se oculta al reproducirse el video */
     #overlay{
       position:fixed;top:0;left:0;width:100%;height:100%;
-      z-index:-1;will-change:background;
+      z-index:-1;will-change:background,opacity;
+      background: url('galaxia-poster.jpg') center/cover no-repeat,
+                  linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
+      opacity:1;
+      transition:opacity .6s ease;
+      pointer-events:none;
     }
+
     .container{
       position:relative;z-index:0;
       max-width:800px;margin:80px auto;padding:20px;
@@ -99,9 +113,11 @@
   </style>
 </head>
 <body>
-  <video id="bg-video" autoplay loop muted playsinline>
+  <!-- Vídeo de fondo: tiene poster para que el navegador muestre la imagen hasta que haya primer frame -->
+  <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline>
     <source src="galaxia.mp4" type="video/mp4">
   </video>
+  <!-- overlay con la imagen/poster: se ocultará cuando el video dispare 'playing' -->
   <div id="overlay"></div>
 
   <!-- Audios -->
@@ -136,6 +152,7 @@
   <audio id="onepieceliveaction-ost" loop><source src="https://www.dropbox.com/scl/fi/o1360gju7gld8ay7uxa05/We-Are.-OP.-1-One-Piece.-Traduccion-Al-Espa-ol.mp3?rlkey=0evbf7rq48un13wfa381wh475&st=fxe5vp0h&raw=1" type="audio/mpeg"></audio>
   <audio id="Toyoureternity-ost" loop><source src="https://www.dropbox.com/scl/fi/pb85oa1z2xbqg102rrgkt/To-Your-Eternity-Opening-Hikaru-Utada-Pink-Blood-Sub-Espa-ol-Lyrics-Romaji.mp3?rlkey=k38if490kn1hroj8f1xiw3d31&st=0bp9ge5z&raw=1" type="audio/mpeg"></audio>
   <audio id="Tsugunaisubbed-ost" loop><source src="https://www.dropbox.com/scl/fi/ws43puqypfnbhi9g3rt8j/V-deo-sin-t-tulo-Hecho-con-Clipchamp-4-mp3cut.net.mp3?rlkey=ia1z74fp7swyybdnmkxicoqlj&st=p89beigl&raw=1" type="audio/mpeg"></audio>
+  <audio id="Bluelock-ost" loop><source src="https://www.dropbox.com/scl/fi/d64d6e47hsjz76dbzqjpw/Blue-Lock-OP-Full-Chaos-ga-Kiwamaru-Sub-Espa-ol-Romaji-AMV.mp3?rlkey=9wq86whqlzg7s5ppjm7ozuy1g&st=nf29qvrj&raw=1" type="audio/mpeg"></audio>
   <audio id="Shinsei Kourin-ost" loop><source src="https://www.dropbox.com/scl/fi/x8m4ib42z3wkzav2iljem/Ending-Shinsei-Kourin-Dacryon.mp3?rlkey=xdatk5v3lsmpf82ydscl0i9lc&st=1h30p4qk&raw=1" type="audio/mpeg"></audio>
 
   <!-- CONTENEDOR PRINCIPAL -->
@@ -149,7 +166,56 @@
   <div id="toast" class="toast">✅ El enlace ha sido copiado</div>
 
   <script>
-  const data = {
+    // -----------------------------
+    // Mostrar poster/overlay hasta que el video dispare 'playing'
+    // -----------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      const video = document.getElementById('bg-video');
+      const overlay = document.getElementById('overlay');
+
+      // atributos seguros
+      try { video.preload = video.getAttribute('preload') || 'auto'; } catch(e){ console.warn(e); }
+      video.muted = true;
+      video.playsInline = true;
+
+      const revealVideo = () => {
+        video.style.opacity = '1';
+        overlay.style.opacity = '0';
+      };
+
+      // cuando overlay ya quedó transparente, lo sacamos del flujo
+      overlay.addEventListener('transitionend', (ev) => {
+        if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') {
+          overlay.style.display = 'none';
+        }
+      });
+
+      // ocultar overlay SOLO cuando el video realmente esté reproduciéndose (evita parpadeo)
+      video.addEventListener('playing', () => {
+        revealVideo();
+      }, { once: true });
+
+      // Intentos de play cuando el video haya cargado suficientes frames
+      video.addEventListener('canplaythrough', () => {
+        video.play().catch(()=>{ /* autoplay bloqueado */ });
+      }, { once: true });
+      video.addEventListener('loadeddata', () => {
+        video.play().catch(()=>{ /* autoplay bloqueado */ });
+      }, { once: true });
+
+      // Si después de X ms no se dispara 'playing', reintentamos al primer click/tap
+      const AUTOPLAY_TIMEOUT = 4000;
+      setTimeout(() => {
+        if (getComputedStyle(video).opacity === '0') {
+          // No mostramos botón, pero intentaremos reproducir al primer click del usuario
+          const tryPlay = () => { video.play().catch(()=>{}); };
+          document.addEventListener('click', tryPlay, { once: true });
+        }
+      }, AUTOPLAY_TIMEOUT);
+    });
+
+    // ------------- resto del script original (no modificado) -------------
+    const data = {
     1: {
         title: "DAN DA DAN",
         desc: "Cuando Momo, una estudiante de preparatoria de una familia de médiums espirituales, conoce a su compañero de clase Okarun, un friki del ocultismo, discuten: Momo cree en los fantasmas pero no en los extraterrestres, y Okarun cree en los extraterrestres pero no en los fantasmas. Cuando resulta que ambos fenómenos son reales, en Momo surge un poder oculto y en Okarun el poder de una maldición. Juntos, deberán desafiar a las fuerzas paranormales que amenazan su mundo.",
@@ -273,7 +339,7 @@
       3: {
         title: "¡KonoSuba! ¡Una bendición para este maravilloso mundo!",
         desc: "Kazuma Satou es un chico de preparatoria otaku y hikikomori que no suele salir de casa, pero cuando lo hace, un fatídico (y ridículo) accidente acaba con su vida. En el otro mundo aparece una diosa ante él y le propone comenzar de nuevo su vida en un mundo de magia y espada, pero las condiciones son un tanto peculiares, así que acabará comenzando de cero como aventurero y acompañado de una diosa.",
-        cover: "konosaubaportada.jpg",
+        cover: "konosubaportada.jpg",
         seasons: [
           {
             num: 1,
@@ -1808,6 +1874,72 @@
           }
         ]
       },
+      33: {
+        title: "Blue Lock",
+        desc: "Yoichi es un joven al que acaban de eliminar junto a su equipo. De pronto recibe una carta donde lo convocan para participar en un extraño experimento sobre fútbol.",
+        cover: "Bluelockportada.jpg",
+        seasons: [
+          {
+            num: 1,
+            cover: "https://www.dropbox.com/scl/fi/jbppp4s21shy7wqcnyvkv/Bluelockt1.jpg?rlkey=skkirad9x3515lrdlfcahkdkk&st=78pu5jgc&raw=1",
+            eps: [
+              { title: "Blue Lock T1 Cap 1"},
+              { title: "Blue Lock T1 Cap 2"},
+              { title: "Blue Lock T1 Cap 3"},
+              { title: "Blue Lock T1 Cap 4"},
+              { title: "Blue Lock T1 Cap 5"},
+              { title: "Blue Lock T1 Cap 6"},
+              { title: "Blue Lock T1 Cap 7"},
+              { title: "Blue Lock T1 Cap 8"},
+              { title: "Blue Lock T1 Cap 9"},
+              { title: "Blue Lock T1 Cap 10"},
+              { title: "Blue Lock T1 Cap 11"},
+              { title: "Blue Lock T1 Cap 12"},
+              { title: "Blue Lock T1 Cap 13"},
+              { title: "Blue Lock T1 Cap 14"},
+              { title: "Blue Lock T1 Cap 15"},
+              { title: "Blue Lock T1 Cap 16"},
+              { title: "Blue Lock T1 Cap 17"},
+              { title: "Blue Lock T1 Cap 18"},
+              { title: "Blue Lock T1 Cap 19"},
+              { title: "Blue Lock T1 Cap 20"},
+              { title: "Blue Lock T1 Cap 21"},
+              { title: "Blue Lock T1 Cap 22"},
+              { title: "Blue Lock T1 Cap 23"},
+              { title: "Blue Lock T1 Cap 24"},
+            ]
+          },
+          {
+            num: 2,
+	    name: "Película 1",
+            cover: "https://www.dropbox.com/scl/fi/7p8e03u8m0yibymxbx8sx/Bluelockpelicula-1.jpg?rlkey=uk3kjkm10szyqq1ioraz9hyru&st=kj51wwxm&raw=1",
+            eps: [
+              { title: "Blue Lock. La Película: Episodio Nagi"},
+            ]
+          },
+          {
+            num: 3,
+	    name: "Temporada 2",
+            cover: "https://www.dropbox.com/scl/fi/mct6vsfmcmmq40o6rdknw/bluelockt2.jpeg?rlkey=hkqqa2r015turmekuxfcc8ygv&st=5m7ne332&raw=1",
+            eps: [
+              { title: "Blue Lock T2 Cap 1"},
+              { title: "Blue Lock T2 Cap 2"},
+              { title: "Blue Lock T2 Cap 3"},
+              { title: "Blue Lock T2 Cap 4"},
+              { title: "Blue Lock T2 Cap 5"},
+              { title: "Blue Lock T2 Cap 6"},
+              { title: "Blue Lock T2 Cap 7"},
+              { title: "Blue Lock T2 Cap 8"},
+              { title: "Blue Lock T2 Cap 9"},
+              { title: "Blue Lock T2 Cap 10"},
+              { title: "Blue Lock T2 Cap 11"},
+              { title: "Blue Lock T2 Cap 12"},
+              { title: "Blue Lock T2 Cap 13"},
+              { title: "Blue Lock T2 Cap 14"},
+            ]
+          }
+        ]
+      },
       37: {
         title: "Shinsei Kourin Dacryon Luna",
         desc: "En el club de periodismo de la Escuela Privada Etoile, Runa, Reina y Miyu activan la aplicación Angel Maker, lo que desencadena una tragedia. Se convierten en chicas mágicas y luchan contra monstruos deformes, pero un día son capturadas y violadas por ellos. Erika, la chica mágica, las rescata, pero les advierte que si siguen luchando atraerán más ataques. Resulta que la aplicación ha sido maldecida por ángeles caídos. Erika lucha contra ellos, pero su corazón se corrompe.",
@@ -1888,12 +2020,12 @@
 
     // 5) Pausar todos los audios y reproducir OST al primer clic
     (function setupAudio(){
-      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Tsugunaisubbed-ost','Shinsei Kourin-ost']
+      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Shinsei Kourin-ost']
         .map(id => document.getElementById(id))
         .filter(el => el);
       audios.forEach(a => { a.pause(); a.currentTime = 0; });
 
-      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',37:'Shinsei Kourin-ost'};
+      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',37:'Shinsei Kourin-ost'};
       if (playMap[id]) {
         document.addEventListener('click', ()=>{
           const a = document.getElementById(playMap[id]);

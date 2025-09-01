@@ -52,24 +52,6 @@
       pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
     }
 
-    /* Pequeña indicación (oculta por defecto) si el autoplay está bloqueado */
-    #tap-to-play {
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 12;
-      display: none;
-      font-family: sans-serif;
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      padding: .6rem 1rem;
-      border-radius: 999px;
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      user-select: none;
-    }
-
     /* Botón circular de apoyo */
     #support {
       position: fixed; bottom:1rem; right:1rem;
@@ -215,9 +197,6 @@
   </video>
   <div id="overlay"></div>
 
-  <!-- Mensaje oculto que puede usarse cuando autoplay esté bloqueado -->
-  <div id="tap-to-play" role="button" aria-hidden="true">Toca para reproducir</div>
-
   <audio id="bg-music" autoplay>
     <source src="https://www.dropbox.com/scl/fi/k85eln5jkukzgw8auarsh/Yo-y-los-que-tuvieron-etapa-Vocaloid-cuando-suena.mp3?rlkey=kpl5z8pbl6gz3w4ob3b8lx3sl&st=90mh5kmo&raw=1" type="audio/mpeg">
     Tu navegador no soporta el audio.
@@ -293,6 +272,7 @@
 <option>Slice of Life</option>
 <option>Sobrenatural</option>
 <option>Superhéroes</option>
+<option>Survival Game</option>
 <option>Tentáculos</option>
 <option>Terror</option>
 <option>Terror psicológico</option>
@@ -348,8 +328,6 @@
       video.addEventListener('playing', () => {
         // si llega el evento playing sabemos que ya hay frames y audio (si aplica) reproduciéndose
         revealVideo();
-        // esconder el botón de "tocar" si estaba visible
-        tapToPlay.style.display = 'none';
       }, { once: true });
 
       // Intentamos reproducir en cuanto pueda cargarse (pero no ocultamos overlay hasta 'playing')
@@ -363,22 +341,16 @@
       }, { once: true });
 
       // Si después de X ms no hemos recibido 'playing', asumimos que el autoplay fue bloqueado:
-      // mostramos una pequeña indicación para que el usuario toque la pantalla (no obligatoria).
+      // intentamos reproducir al primer click del usuario (sin mostrar botón visual).
       const AUTOPLAY_TIMEOUT = 4000; // ms (ajustable)
       setTimeout(() => {
         // si aún no está reproduciéndose (no se ha disparado 'playing')
         if (getComputedStyle(video).opacity === '0') {
-          // mostrar indicación para tocar; no ocultamos overlay
-          tapToPlay.style.display = 'block';
-          tapToPlay.setAttribute('aria-hidden', 'false');
-
           const tryPlay = () => {
-            video.play().catch(()=>{}); // intentamos reproducir al touch del usuario
+            video.play().catch(()=>{});
           };
-
-          // intentamos reproducir al click/tap del documento o del botón
+          // intentamos reproducir al click/tap del documento
           document.addEventListener('click', tryPlay, { once: true });
-          tapToPlay.addEventListener('click', tryPlay, { once: true });
         }
       }, AUTOPLAY_TIMEOUT);
 
@@ -447,6 +419,7 @@
       {id:30, title:"Shoujo Ramune", img:"shoujoramuneportada.jpg", rating:4.3, genres:["Hentai","Harem","Incesto"]},
       {id:31, title:"To Your Eternity", aliases: ["Fumetsu no Anata e"], img:"fumetsuportada.jpg", rating:4.8, genres:["Fantasía","Drama","Aventura","Shōnen","Sobrenatural"]},
       {id:32, title:"Tsugunai Subbed", img:"Tsugunai Subbed portada.jpg", rating:4.8, genres:["Hentai","Harem","Escolar"]},
+      {id:33, title:"Blue Lock", aliases: ["Yoichi Isagi"], img:"Bluelockportada.jpg", rating:4.8, genres:["Thriller","Psicológico","Shōnen","Deportivo","Survival Game"]},
       {id:37, title:"Shinsei Kourin Dacryon Luna", img:"Shinsei Kourin Dacryon Luna portada.jpg", rating:4.0, genres:["Tentáculos","Hentai","Fantasía","Seinen","Fantasía oscura"]},
     ];
 
