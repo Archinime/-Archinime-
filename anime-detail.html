@@ -138,6 +138,7 @@
   <audio id="ki-ost" loop><source src="https://www.dropbox.com/scl/fi/f6ndrktnbc4ytwkagoztm/Lyrics-AMV-Kimisen-OP-Full-Against.-Kaori-Ishihara.mp3?rlkey=rcpatwiczklgamqzd4lz0yciy&st=3d5g1hid&raw=1" type="audio/mpeg"></audio>
   <audio id="gorila-ost" loop><source src="https://www.dropbox.com/scl/fi/2nhe4m6a0gi5h0etmn85k/The-Gorilla-Gods-Go-To-Girl-illuminate-Nakamura-Shuugo-KanRomPer.mp3?rlkey=l4ybmcpn2m0cs53t5zsz3gzfs&st=7qhapwx8&raw=1" type="audio/mpeg"></audio>
   <audio id="wi-ost" loop><source src="https://www.dropbox.com/scl/fi/7agg8plmd2or8wf2dh8op/Wistoria-Wand-and-Sword-Opening-Fire-and-Fear.mp3?rlkey=gwmbtv257uv8tgbm3ocntmqyo&st=4otix8h3&raw=1" type="audio/mpeg"></audio>
+  <audio id="chainsaw-ost" loop><source src="https://www.dropbox.com/scl/fi/gwbsb3xj6r0iztedxonac/Chainsaw-Blood-Vaundy-Ending-1-Chainsaw-Man-Subtitulado-al-Espa-ol-Romaji.mp3?rlkey=jxdvr3lqe1mjofrvnejqoh51x&st=d0fged1m&raw=1" type="audio/mpeg"></audio>
   <audio id="heroescudo-ost" loop><source src="https://www.dropbox.com/scl/fi/y3z7i485lh1ulukkgf5al/MADKID-RISE-The-Rising-of-the-Shield-Hero-Opening-Theme.mp3?rlkey=f3hqusbdwoptmclw791ink1wb&st=2e19zffs&raw=1" type="audio/mpeg"></audio>
   <audio id="ov-ost" loop><source src="https://www.dropbox.com/scl/fi/oc430yju092ojpzr1pagj/Hinooka-Rei-Uzuho-Overflow-Ending-Full-Sub.-Espa-ol-Romaji.mp3?rlkey=lztgexhh754gv0vbt8k6cmnkv&st=ro6svsmq&raw=1" type="audio/mpeg"></audio>
   <audio id="shi-ost" loop><source src="https://www.dropbox.com/scl/fi/x2vj0xspavosqj0a5pfla/Shiunji-ke-no-Kodomo-tachi-Opening-Full-Honey-Lemon-Sub.-Espa-ol.mp3?rlkey=g4wr62353xnd7w6y3hhg6b2yc&st=jkzhp0ov&raw=1" type="audio/mpeg"></audio>
@@ -1251,11 +1252,11 @@
       18: {
         title: "Chainsaw Man",
         desc: "Denji es un adolescente que vive con un demonio motosierra llamado Pochita. Para pagar la deuda que le dejó su padre tras su muerte, ha tenido que ganarse el pan como puede matar demonios y vender sus cadáveres a la mafia, aunque su vida siempre ha sido miserable. Cuando una traición provoca la muerte de Denji, Pochita hace un contrato con él y Denji revive como Chainsaw Man, un ser humano con el corazón de un demonio.",
-        cover: "https://www.dropbox.com/scl/fi/00lym6rgkw0zzitbd00ei/chaiw11.jpg?rlkey=m4eo2vds9l8ok98qtnuvmfvu8&st=p9bb1wcu&raw=1",
+        cover: "chaiwportada.jpg",
         seasons: [
           {
             num: 1,
-            cover: "denji1.jpg",
+            cover: "chaiw11.jpg",
             eps: [
               { title: "Chainsaw Man T1 Cap 1"},
               { title: "Chainsaw Man T1 Cap 2"},
@@ -1742,6 +1743,8 @@
               { title: "Dr. Stone T4 Cap 20"},
               { title: "Dr. Stone T4 Cap 21"},
               { title: "Dr. Stone T4 Cap 22"},
+              { title: "Dr. Stone T4 Cap 23"},
+              { title: "Dr. Stone T4 Cap 24"},
             ]
           }
         ]
@@ -2028,12 +2031,12 @@
 
     // 5) Pausar todos los audios y reproducir OST al primer clic
     (function setupAudio(){
-      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Shinsei Kourin-ost']
+      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','chainsaw-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Shinsei Kourin-ost']
         .map(id => document.getElementById(id))
         .filter(el => el);
       audios.forEach(a => { a.pause(); a.currentTime = 0; });
 
-      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',37:'Shinsei Kourin-ost'};
+      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',18:'chainsaw-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',37:'Shinsei Kourin-ost'};
       if (playMap[id]) {
         document.addEventListener('click', ()=>{
           const a = document.getElementById(playMap[id]);
