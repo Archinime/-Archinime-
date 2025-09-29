@@ -156,6 +156,7 @@
   <audio id="Bluelock-ost" loop><source src="https://www.dropbox.com/scl/fi/d64d6e47hsjz76dbzqjpw/Blue-Lock-OP-Full-Chaos-ga-Kiwamaru-Sub-Espa-ol-Romaji-AMV.mp3?rlkey=9wq86whqlzg7s5ppjm7ozuy1g&st=nf29qvrj&raw=1" type="audio/mpeg"></audio>
   <audio id="Magicmaker-ost" loop><source src="https://www.dropbox.com/scl/fi/vtcdygdvrnj4xgzormyud/Magic-Maker-Isekai-Mahou-no-Tsukurikata-ending-full-Yoake-no-Uta-by-Humbreaders.mp3?rlkey=6zn9ewcnml2kc2qllbg2leaxs&st=eqc2nmbh&raw=1" type="audio/mpeg"></audio>
   <audio id="Newsaga-ost" loop><source src="https://www.dropbox.com/scl/fi/8ezp3jfg96bx0jrc91vga/New-Saga-Ending-Her-with-KanRomEn.mp3?rlkey=pyq7sm8e5m674gzm934l3sbd0&st=0rte7ldq&raw=1" type="audio/mpeg"></audio>
+  <audio id="Gachiakuta-ost" loop><source src="https://www.dropbox.com/scl/fi/lidme0k67thymht7t9hyg/Gachiakuta-Ending-FULL-TOMOSHIBI-by-DUSTCELL-Lyrics.mp3?rlkey=2bmd4am4ypka2v518s0cgsrhv&st=fvtfgi35&raw=1" type="audio/mpeg"></audio>
   <audio id="Shinsei Kourin-ost" loop><source src="https://www.dropbox.com/scl/fi/x8m4ib42z3wkzav2iljem/Ending-Shinsei-Kourin-Dacryon.mp3?rlkey=xdatk5v3lsmpf82ydscl0i9lc&st=1h30p4qk&raw=1" type="audio/mpeg"></audio>
 
   <!-- CONTENEDOR PRINCIPAL -->
@@ -2019,6 +2020,43 @@
           }
         ]
       },
+      36: {
+        title: "Gachiakuta",
+        desc: "En una ciudad flotante donde los ricos se deshacen de su basura y de las personas, a Ludo lo acusan de asesinato y lo arrojan al Abismo, un infierno habitado por las bestias de la basura. Para sobrevivir, deberá hacer uso de un nuevo poder y unirse a los Limpiadores. El objetivo de Ludo no es solo acabar con los monstruos, sino también con aquellos que lo arrojaron al Infierno.",
+        cover: "Gachiakuta.jpg",
+        seasons: [
+          {
+            num: 1,
+            cover: "https://www.dropbox.com/scl/fi/xlkbrayxyel3kiyepr1r2/Gachiakuta1.jpg?rlkey=q5g6jlo0cv4e5z7znj70vtyor&st=uh2bwp30&raw=1",
+            eps: [
+              { title: "Gachiakuta T1 Cap 1"},
+              { title: "Gachiakuta T1 Cap 2"},
+              { title: "Gachiakuta T1 Cap 3"},
+              { title: "Gachiakuta T1 Cap 4"},
+              { title: "Gachiakuta T1 Cap 5"},
+              { title: "Gachiakuta T1 Cap 6"},
+              { title: "Gachiakuta T1 Cap 7"},
+              { title: "Gachiakuta T1 Cap 8"},
+              { title: "Gachiakuta T1 Cap 9"},
+              { title: "Gachiakuta T1 Cap 10"},
+              { title: "Gachiakuta T1 Cap 11"},
+              { title: "Gachiakuta T1 Cap 12"},
+              { title: "Gachiakuta T1 Cap 13"},
+              { title: "Gachiakuta T1 Cap 14"},
+              { title: "Gachiakuta T1 Cap 15"},
+              { title: "Gachiakuta T1 Cap 16"},
+              { title: "Gachiakuta T1 Cap 17"},
+              { title: "Gachiakuta T1 Cap 18"},
+              { title: "Gachiakuta T1 Cap 19"},
+              { title: "Gachiakuta T1 Cap 20"},
+              { title: "Gachiakuta T1 Cap 21"},
+              { title: "Gachiakuta T1 Cap 22"},
+              { title: "Gachiakuta T1 Cap 23"},
+              { title: "Gachiakuta T1 Cap 24"},
+            ]
+          }
+        ]
+      },
       37: {
         title: "Shinsei Kourin Dacryon Luna",
         desc: "En el club de periodismo de la Escuela Privada Etoile, Runa, Reina y Miyu activan la aplicación Angel Maker, lo que desencadena una tragedia. Se convierten en chicas mágicas y luchan contra monstruos deformes, pero un día son capturadas y violadas por ellos. Erika, la chica mágica, las rescata, pero les advierte que si siguen luchando atraerán más ataques. Resulta que la aplicación ha sido maldecida por ángeles caídos. Erika lucha contra ellos, pero su corazón se corrompe.",
@@ -2099,12 +2137,12 @@
 
     // 5) Pausar todos los audios y reproducir OST al primer clic
     (function setupAudio(){
-      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','chainsaw-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Magicmaker-ost','Newsaga-ost','Shinsei Kourin-ost']
+      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','chainsaw-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Magicmaker-ost','Newsaga-ost','Gachiakuta-ost','Shinsei Kourin-ost']
         .map(id => document.getElementById(id))
         .filter(el => el);
       audios.forEach(a => { a.pause(); a.currentTime = 0; });
 
-      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',18:'chainsaw-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',34:'Magicmaker-ost',35:'Newsaga-ost',37:'Shinsei Kourin-ost'};
+      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',18:'chainsaw-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',34:'Magicmaker-ost',35:'Newsaga-ost',36:'Gachiakuta-ost',37:'Shinsei Kourin-ost'};
       if (playMap[id]) {
         document.addEventListener('click', ()=>{
           const a = document.getElementById(playMap[id]);
