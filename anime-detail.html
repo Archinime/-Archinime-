@@ -158,6 +158,8 @@
   <audio id="Newsaga-ost" loop><source src="https://www.dropbox.com/scl/fi/8ezp3jfg96bx0jrc91vga/New-Saga-Ending-Her-with-KanRomEn.mp3?rlkey=pyq7sm8e5m674gzm934l3sbd0&st=0rte7ldq&raw=1" type="audio/mpeg"></audio>
   <audio id="Gachiakuta-ost" loop><source src="https://www.dropbox.com/scl/fi/lidme0k67thymht7t9hyg/Gachiakuta-Ending-FULL-TOMOSHIBI-by-DUSTCELL-Lyrics.mp3?rlkey=2bmd4am4ypka2v518s0cgsrhv&st=fvtfgi35&raw=1" type="audio/mpeg"></audio>
   <audio id="Shinsei Kourin-ost" loop><source src="https://www.dropbox.com/scl/fi/x8m4ib42z3wkzav2iljem/Ending-Shinsei-Kourin-Dacryon.mp3?rlkey=xdatk5v3lsmpf82ydscl0i9lc&st=1h30p4qk&raw=1" type="audio/mpeg"></audio>
+  <audio id="Kamitachi-ost" loop><source src="https://www.dropbox.com/scl/fi/368qrxasxdvt2fqcvm6h6/Kami-Tachi-ni-Hirowareta-Otoko-OP-Azusa-Tadokoro-Yasashii-Sekai-Sub-Espa-ol-Romaji-English.mp3?rlkey=qcn4qt0txld3ge8lzcs46t15x&st=wq1yu1y8&raw=1" type="audio/mpeg"></audio>
+  <audio id="Oredake-ost" loop><source src="https://www.dropbox.com/scl/fi/xmqp2paia6h97fkwa7h6b/Pyramid-Daigyakuten-by-Spira-Spica-Ore-dake-Haireru-Kakushi-Dungeon-Opening.mp3?rlkey=3s0aeay9delzf6gavjj4bjxih&st=ued84mx7&raw=1" type="audio/mpeg"></audio>
 
   <!-- CONTENEDOR PRINCIPAL -->
   <div class="container">
@@ -2072,8 +2074,56 @@
           }
         ]
       },
-
-
+      37: {
+        title: "Kami-tachi ni Hirowareta Otoko",
+        desc: "Ryoma no había tenido suerte en su vida previa. Pero tres deidades deciden darle una segunda oportunidad en un mundo de fantasía y magia.",
+        cover: "Gachiakuta.jpg",
+        seasons: [
+          {
+            num: 1,
+            cover: "https://www.dropbox.com/scl/fi/pj52xk7ed29w5geipwj5a/kamitachi1.jpg?rlkey=ktl75d2p09k4m0nd9nij39rkv&st=kj1aaaue&raw=1",
+            eps: [
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 1"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 2"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 3"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 4"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 5"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 6"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 7"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 8"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 9"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 10"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 11"},
+              { title: "Kami-tachi ni Hirowareta Otoko T1 Cap 12"},
+            ]
+          }
+        ]
+      },
+      38: {
+        title: "Ore dake Haireru Kakushi Dungeon",
+        desc: "Mazmorra Oculta es un lugar legendario repleto de tesoros y objetos muy poco comunes. Nor, el tercer hijo de una ahora en decencia familia noble y que ha perdido el único trabajo que tenía, tiene la suerte de escuchar hablar de esta mazmorra. Es entonces cuando adquiere una habilidad que le permite crear, usar y editar habilidades... y para poder usarla debe acumular puntos cumpliendo tareas como comer cosas deliciosas o dedicarse a hacer cosas eróticas a miembros del sexo opuesto.",
+        cover: "Gachiakuta.jpg",
+        seasons: [
+          {
+            num: 1,
+            cover: "https://www.dropbox.com/scl/fi/aou6bhbyss0r0ho2qr5iv/oredake1.jpg?rlkey=bpvxuzex7egs4keohqpg4qzfx&st=7uxvmh43&raw=1",
+            eps: [
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 1"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 2"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 3"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 4"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 5"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 6"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 7"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 8"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 9"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 10"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 11"},
+              { title: "Ore dake Haireru Kakushi Dungeon T1 Cap 12"},
+            ]
+          }
+        ]
+      },
 
     };
 
@@ -2137,12 +2187,12 @@
 
     // 5) Pausar todos los audios y reproducir OST al primer clic
     (function setupAudio(){
-      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','chainsaw-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Magicmaker-ost','Newsaga-ost','Gachiakuta-ost','Shinsei Kourin-ost']
+      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','chainsaw-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Magicmaker-ost','Newsaga-ost','Gachiakuta-ost','Shinsei Kourin-ost','Kamitachi-ost','Oredake-ost',]
         .map(id => document.getElementById(id))
         .filter(el => el);
       audios.forEach(a => { a.pause(); a.currentTime = 0; });
 
-      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',18:'chainsaw-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',34:'Magicmaker-ost',35:'Newsaga-ost',36:'Gachiakuta-ost',37:'Shinsei Kourin-ost'};
+      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',18:'chainsaw-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',34:'Magicmaker-ost',35:'Newsaga-ost',36:'Gachiakuta-ost',37:'Shinsei Kourin-ost',38:'Kamitachi-ost',39:'Oredake-ost'};
       if (playMap[id]) {
         document.addEventListener('click', ()=>{
           const a = document.getElementById(playMap[id]);
