@@ -94,6 +94,56 @@
       background:rgba(0,255,255,0.2);color:#000;transform:translateX(5px);
     }
 
+    /* --- NUEVOS ESTILOS: chips de géneros naranjas, brillo y efectos --- */
+    .genres-wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px}
+    .genre-chip{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:8px 12px;font-size:0.9rem;font-weight:700;border-radius:999px;
+      border:2px solid rgba(255,140,0,0.95); /* borde naranja fuerte */
+      background: linear-gradient(180deg, rgba(255,165,64,0.14), rgba(255,140,0,0.08));
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(255,140,0,0.08), inset 0 -2px 6px rgba(255,255,255,0.02);
+      cursor:pointer; transition: transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s, filter .18s;
+      position:relative; overflow:hidden;
+      backdrop-filter: blur(2px);
+    }
+    .genre-chip:hover{
+      transform: translateY(-6px) scale(1.03) rotate(-0.6deg);
+      box-shadow: 0 14px 30px rgba(255,140,0,0.14), inset 0 -2px 8px rgba(255,255,255,0.03);
+      filter: saturate(1.08);
+    }
+    /* micro-pop cuando se pulsa (cliqueo rápido) */
+    .genre-chip.popped{transform: scale(0.95) translateY(-2px); box-shadow: 0 6px 20px rgba(255,140,0,0.18);}
+
+    /* brillo deslizante usando pseudo-elemento */
+    .genre-chip::before{
+      content:"";position:absolute;left:-40%;top:0;width:40%;height:100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.0) 0, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.0) 100%);
+      transform: skewX(-18deg) translateX(-100%);
+      transition: transform .9s cubic-bezier(.2,.9,.3,1);
+      pointer-events:none;
+    }
+    .genre-chip:hover::before{ transform: skewX(-18deg) translateX(240%); transition-duration:0.9s; }
+
+    /* pequeño badge de copia en el borde superior derecho del chip (aparece al click) */
+    .genre-chip .copied-badge{
+      position:absolute;right:-6px;top:-6px;background:#fff;color:#000;padding:4px 6px;border-radius:999px;font-size:0.7rem;font-weight:800;opacity:0;transform:translateY(-6px) scale(.88);
+      transition:all .32s;
+      box-shadow:0 6px 12px rgba(0,0,0,0.25);
+    }
+    .genre-chip.show-badge .copied-badge{ opacity:1; transform:translateY(2px) scale(1); }
+    /* Responsividad */
+    @media (max-width:520px){
+      .genre-chip{padding:6px 10px;font-size:0.85rem}
+      h1{font-size:1.6rem}
+    }
+
+    /* Responsividad */
+    @media (max-width:520px){
+      .genre-chip{padding:6px 10px;font-size:0.85rem}
+      h1{font-size:1.6rem}
+    }
+
     /* Toast (igual que antes) */
     .toast {
       position: fixed;bottom:30px;left:50%;
@@ -131,6 +181,7 @@
   <audio id="jj-ost" loop><source src="https://www.dropbox.com/scl/fi/o6tz1ztrrqt14fqdlhwjc/TV-2-OP-OP-King-Gnu-SPECIALZ-11-56-MBSTBS-28.mp3?rlkey=0720x38jv8mey8ux361mdt17e&st=8nwdxvhq&raw=1" type="audio/mpeg"></audio>
   <audio id="akame-ost" loop><source src="https://www.dropbox.com/scl/fi/zk69qocarilx6zuwto65x/akame-ga-kill-Opening-1-Full.mp3?rlkey=t474skov33gnlo751s88ehgip&st=aq8dksxr&raw=1" type="audio/mpeg"></audio>
   <audio id="Demonslayer-ost" loop><source src="https://www.dropbox.com/scl/fi/x5fkwig7j4tsb1s1fybqp/Kimetsu-No-Yaiba-OP.1-Gurenge-Sub.-Espa-ol-Romaji-AMV.mp3?rlkey=14qprvf10rzoblirr4c0o0cyt&st=mnh4fsql&raw=1" type="audio/mpeg"></audio>
+  <audio id="Demonslayer2-ost" loop><source src="https://www.dropbox.com/scl/fi/suitir3qj3yb67nb0y4c8/Demon-Slayer-T4-Cap-8-online-video-cutter.com-1.mp3?rlkey=klxtyy3z77fvrhfgoycrip29b&st=lbjqdgqo&raw=1" type="audio/mpeg"></audio>
   <audio id="herox-ost" loop><source src="https://www.dropbox.com/scl/fi/qco7a2km0hx8b6pdor0sf/TO-BE-HERO-X-Ending-FULL-KONTINUUM-by-SennaRin-Lyrics.mp3?rlkey=ba7b47vkvcs7pfjh84fv33ann&st=r7dzkw7i&raw=1" type="audio/mpeg"></audio>
   <audio id="maou2099-ost" loop><source src="https://www.dropbox.com/scl/fi/4lt2eo48s332etw2tv1sn/Maou-2099-Opening-Full-Shiyui-Hollow.mp3?rlkey=alnrpw2xm1qpqxlwgxmv1jb18&st=pc8iwkyl&raw=1" type="audio/mpeg"></audio>
   <audio id="al-ost" loop><source src="https://www.dropbox.com/scl/fi/tuaxm8zttc83ymbn4bv2w/Alya-Sometimes-Hides-Her-Feelings-in-Russian-Opening-Ichiban-Kagayaku-Hoshi.mp3?rlkey=v2uqxurdgbojls9urj300h0z1&st=1mw6vpvg&raw=1" type="audio/mpeg"></audio>
@@ -149,6 +200,7 @@
   <audio id="zootopia-ost" loop><source src="https://www.dropbox.com/scl/fi/zjal6ttu1l7ez7n7p2bof/Zootopia-Try-Everything-By-Shakira-Music-Video.mp3?rlkey=28azkjp04guy7jetuzyq02azv&st=ukr6ey7f&raw=1" type="audio/mpeg"></audio>
   <audio id="Clevatess-ost" loop><source src="https://www.dropbox.com/scl/fi/qzr41ai3hfsj02xr8sntz/ending-online-audio-converter.com.mp3?rlkey=5upvk1zx8vmzjmyq9vowb460y&st=nvfwm6yh&raw=1" type="audio/mpeg"></audio>
   <audio id="drstone-ost" loop><source src="https://www.dropbox.com/scl/fi/s1ptrhwxkpuexhnb30cf8/Dr.-Stone-Good-Morning-World-Burnout-Syndromes-AMV-sub-espa-ol.mp3?rlkey=rk75fn8wl2u5m6fa0r5616dih&st=ocriop50&&raw=1" type="audio/mpeg"></audio>
+  <audio id="drstone2-ost" loop><source src="https://www.dropbox.com/scl/fi/jf2ul6r06q8s0yy2o0ioo/ending4-doctor-stone.mp3?rlkey=le85vxcdzoddstwxpa78flmxv&st=up7k00to&raw=1" type="audio/mpeg"></audio>
   <audio id="sr-ost" loop><source src="https://www.dropbox.com/scl/fi/1o7env4rkr3ol8gfdnumr/Shoujo-Ramune-Anime-Opening-OVA-OP.mp3?rlkey=xqiqtoj22rmc8znm9k8p5pfdw&st=wjprsjpj&raw=1" type="audio/mpeg"></audio>
   <audio id="onepieceliveaction-ost" loop><source src="https://www.dropbox.com/scl/fi/o1360gju7gld8ay7uxa05/We-Are.-OP.-1-One-Piece.-Traduccion-Al-Espa-ol.mp3?rlkey=0evbf7rq48un13wfa381wh475&st=fxe5vp0h&raw=1" type="audio/mpeg"></audio>
   <audio id="Toyoureternity-ost" loop><source src="https://www.dropbox.com/scl/fi/pb85oa1z2xbqg102rrgkt/To-Your-Eternity-Opening-Hikaru-Utada-Pink-Blood-Sub-Espa-ol-Lyrics-Romaji.mp3?rlkey=k38if490kn1hroj8f1xiw3d31&st=0bp9ge5z&raw=1" type="audio/mpeg"></audio>
@@ -2150,7 +2202,6 @@
     const params = new URLSearchParams(location.search);
     const id = Number(params.get('id') || params.get('anime'));
 
-    // 3) Renderizado
     (function render(){
       const c = document.getElementById('contenido');
       const a = data[id];
@@ -2159,14 +2210,15 @@
         return;
       }
       let html = `
-        <div class="anime-cover">
-          <img src="${a.cover}" alt="Portada ${a.title}">
-        </div>
+        <div class="anime-cover"><img src="${a.cover}" alt="Portada ${a.title}"></div>
         <h1>${a.title}</h1>
+
+        <!-- CONTENEDOR DONDE SE RENDERIZARÁN LOS GÉNEROS (se llena con JS) -->
+        <div class="genres-wrap" id="genres-container" aria-hidden="false"></div>
+
         <p class="desc">${a.desc}</p>
       `;
       a.seasons.forEach(s => {
-        // Aquí usamos s.name en lugar de label o variable global
         const titleLabel = s.name ? s.name : `Temporada ${s.num}`;
         html += `
           <details>
@@ -2187,7 +2239,86 @@
         `;
       });
       c.innerHTML = html;
+
+      // Después de insertar el HTML, rellenamos los géneros (función abajo)
+      populateGenresForAnime(id);
     })();
+
+    function renderGenres(genres){
+      const cont = document.getElementById('genres-container');
+      if(!cont) return;
+      if(!genres || !genres.length){ cont.innerHTML = ''; return; }
+      cont.innerHTML = genres.map(g => `
+        <button class="genre-chip" data-genre="${escapeHtml(g)}">
+          ${escapeHtml(g)}
+          <span class="copied-badge">✓</span>
+        </button>
+      `).join('');
+      // listeners (interacción)
+      cont.querySelectorAll('.genre-chip').forEach(btn => {
+        btn.addEventListener('click', async (ev) => {
+          const genre = btn.dataset.genre;
+          // copia al portapapeles y muestra micro-feedback (badge + pop)
+          try { await navigator.clipboard.writeText(genre); } catch(e){ /* ignore */ }
+          btn.classList.add('popped','show-badge');
+          setTimeout(() => btn.classList.remove('popped'), 350);
+          setTimeout(() => btn.classList.remove('show-badge'), 1200);
+          showToast(`Género copiado: ${genre}`);
+        });
+        // tecla Enter / Space también dispara la acción (accesibilidad)
+        btn.addEventListener('keydown', (k) => { if(k.key==='Enter' || k.key===' ') btn.click(); });
+      });
+    }
+
+    // intenta leer géneros
+    function populateGenresForAnime(animeId){
+      // 1) preferir si el propio data incluye genres
+      const local = (data[animeId] && data[animeId].genres) ? data[animeId].genres : null;
+      if(local && local.length){ renderGenres(local); return; }
+
+      // 2) intentar parsear index.txt (o index.html) para extraer const animes = [...]
+      // ruta probada: 'index.txt' y 'index.html' (intentar ambas)
+      const tries = ['index.txt','index.html'];
+      let tried = 0;
+      function tryNext(){
+        if(tried >= tries.length){ renderGenres([]); return; }
+        const url = tries[tried++];
+
+        fetch(url).then(r => r.text()).then(text => {
+          // localizar la declaración "const animes = [ ... ]"
+          const m = text.match(/const\s+animes\s*=\s*(\[[\s\S]*?\])\s*;/m);
+          if(!m){ tryNext(); return; }
+          try {
+            // Evaluar solo el array literal recuperado (más seguro que eval directo de todo el archivo)
+            const arrayLiteral = m[1];
+            // convertir a JS: usamos Function para evaluar la sintaxis JS (no JSON)
+            const arr = (new Function('return ' + arrayLiteral))();
+            // buscar por id (algunos items en index tienen {id:1,...})
+            const item = arr.find(it => Number(it.id) === Number(animeId) || Number(it.id) === animeId);
+            if(item && item.genres && item.genres.length){ renderGenres(item.genres); return; }
+            // si el index usa objetos sin "id" numérico, intentar encontrar por title similar
+            const matchByTitle = arr.find(it => it.title && data[animeId] && normalizeText(it.title) === normalizeText(data[animeId].title));
+            if(matchByTitle && matchByTitle.genres && matchByTitle.genres.length){ renderGenres(matchByTitle.genres); return; }
+            // fallback: no encontrado
+            renderGenres([]);
+          } catch(e){
+            console.warn('Error parseando index para géneros', e);
+            tryNext();
+          }
+        }).catch(()=>{ tryNext(); });
+      }
+      tryNext();
+    }
+
+    // UTIL: normalize text (coincidencias)
+    function normalizeText(s){
+      return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+    }
+
+    // UTIL: escape HTML muy simple para evitar inyecciones en los chips
+    function escapeHtml(str){
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
 
     // 4) Compartir usando el botón junto a volver
     document.getElementById('share-detail').addEventListener('click', () => {
@@ -2203,26 +2334,75 @@
       });
     });
 
-    // 5) Pausar todos los audios y reproducir OST al primer clic
     (function setupAudio(){
-      const audios = ['dd-ost','jj-ost','kb-music','rz-ost','mt-ost','ts-ost','st-ost','wi-ost','iz-ost','akame-ost','herox-ost','Demonslayer-ost','maou2099-ost','al-ost','ra-ost','ki-ost','gorila-ost','chainsaw-ost','heroescudo-ost','ov-ost','shi-ost','goblinslayer-ost','aliester-ost','oni-ost','kaiju8-ost','zootopia-ost','Clevatess-ost','drstone-ost','onepieceliveaction-ost','sr-ost','Toyoureternity-ost','Bluelock-ost','Magicmaker-ost','Newsaga-ost','Gachiakuta-ost','Shinsei Kourin-ost','Kamitachi-ost','Oredake-ost',]
-        .map(id => document.getElementById(id))
-        .filter(el => el);
-      audios.forEach(a => { a.pause(); a.currentTime = 0; });
+      // playMap ahora puede contener arrays (varias pistas) o strings (una pista).
+      const playMap = {
+        1: ['dd-ost'],             // ejemplo: anime 1 tiene 2 músicas, se elegirá aleatoriamente
+        2: ['jj-ost'],
+        3: ['kb-music'],
+        4: ['rz-ost'],
+        5: ['mt-ost'],
+        6: ['ts-ost'],
+        7: ['st-ost'],
+        8: ['akame-ost'],
+        9: ['herox-ost'],
+        10: ['Demonslayer-ost','Demonslayer2-ost'],
+        11: ['maou2099-ost'],
+        12: ['wi-ost'],
+        13: ['iz-ost'],
+        14: ['al-ost'],
+        15: ['ra-ost'],
+        16: ['ki-ost'],
+        17: ['gorila-ost'],
+        18: ['chainsaw-ost'],
+        19: ['heroescudo-ost'],
+        20: ['ov-ost'],
+        21: ['shi-ost'],
+        22: ['goblinslayer-ost'],
+        23: ['aliester-ost'],
+        24: ['oni-ost'],
+        25: ['kaiju8-ost'],
+        26: ['zootopia-ost'],
+        27: ['Clevatess-ost'],
+        28: ['drstone-ost','drstone2-ost'],
+        29: ['onepieceliveaction-ost'],
+        30: ['sr-ost'],
+        31: ['Toyoureternity-ost'],
+        32: ['Tsugunaisubbed-ost'],
+        33: ['Bluelock-ost'],
+        34: ['Magicmaker-ost'],
+        35: ['Newsaga-ost'],
+        36: ['Gachiakuta-ost'],
+        37: ['Shinsei Kourin-ost'],
+        38: ['Kamitachi-ost'],
+        39: ['Oredake-ost']
+      };
 
-      const playMap = {1:'dd-ost',2:'jj-ost',3:'kb-music',4:'rz-ost',5:'mt-ost',6:'ts-ost',7:'st-ost',8:'akame-ost',9:'herox-ost',10:'Demonslayer-ost',11:'maou2099-ost',12:'wi-ost',13:'iz-ost',14:'al-ost',15:'ra-ost',16:'ki-ost',17:'gorila-ost',18:'chainsaw-ost',19:'heroescudo-ost',20:'ov-ost',21:'shi-ost',22:'goblinslayer-ost',23:'aliester-ost',24:'oni-ost',25:'kaiju8-ost',26:'zootopia-ost',27:'Clevatess-ost',28:'drstone-ost',29:'onepieceliveaction-ost',30:'sr-ost',31:'Toyoureternity-ost',32:'Tsugunaisubbed-ost',33:'Bluelock-ost',34:'Magicmaker-ost',35:'Newsaga-ost',36:'Gachiakuta-ost',37:'Shinsei Kourin-ost',38:'Kamitachi-ost',39:'Oredake-ost'};
+      // (Opcional) Si quieres añadir más pistas a un anime, pon arrays con más ids:
+      // e.g. playMap[4] = ['rz-ost','otra-pista-id'];
+
+      // no pausamos ni reseteamos nada aquí (tal como pediste)
+      // Pre-capturamos todos los ids de audio válidos del mapa para cualquier uso posterior
+      const allIds = Array.from(new Set(Object.values(playMap).flat()));
+      const audioElements = allIds.map(i => document.getElementById(i)).filter(Boolean);
+
+      // Solo si hay una entrada para el anime actual, agregamos el listener del primer click
       if (playMap[id]) {
-        document.addEventListener('click', ()=>{
-          const a = document.getElementById(playMap[id]);
+        document.addEventListener('click', ()=> {
+          // elegir aleatoriamente una de las pistas (playMap[id] puede ser array o string)
+          const choices = Array.isArray(playMap[id]) ? playMap[id] : [playMap[id]];
+          const chosenId = choices[Math.floor(Math.random() * choices.length)];
+          const a = document.getElementById(chosenId);
           if (a) {
-            a.volume = 0.5;
-            a.play().catch(()=>{});
+            // volumen por defecto (puedes cambiar si lo deseas)
+            try { a.volume = 0.5; } catch(e){}
+            // reproducir desde el inicio para asegurar comportamiento consistente
+            try { a.currentTime = 0; } catch(e){}
+            a.play().catch(()=>{}); // no mostramos mensajes, simplemente intentamos reproducir
           }
         }, { once:true });
       }
     })();
-
   </script>
 </body>
-
 </html>
