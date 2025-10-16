@@ -904,7 +904,7 @@
           "12": { link:'https://www.dropbox.com/scl/fi/ccez45htv7zwxcsrbi4k1/Chainsaw-Man-T1-Cap-12.mp4?rlkey=ok47yk3smkdh2vcc3le118cyh&st=1m3leanw&raw=1', title:'Chainsaw Man T1 Cap 12' },
         },
         "2": {
-          "1": { link:'https://www.dropbox.com/scl/fi/zxt1lctmz1m4cjpw8gyzj/Chainsaw-Man-Movie-Reze-hen-SUB-ESPA-OL-HD.mp4?rlkey=bqvnapssv0yhlktycrffxzlcd&st=ghqvpwu0&raw=1', title:'Chainsaw Man Movie: Reze-hen 【SUB ESPAÑOL】【HD】' },
+          "1": { link:'https://drive.google.com/file/d/1Az4viJUS4RcO495opdxvAS_QWjy2vgot/preview', title:'Chainsaw Man Movie: Reze-hen 【SUB ESPAÑOL】【HD】' },
         }
       },
       "19": {
@@ -1538,93 +1538,172 @@
 
 
     };
-    // Guardar posición al volver
-    back.addEventListener('click', () => {
-      sessionStorage.setItem('lastScroll_' + anime, window.scrollY);
-    });
-    back.href = `anime-detail.html?id=${anime}`;
+function getDriveFileId(url) {
+  if (!url || typeof url !== 'string') return null;
+  // /d/FILEID/...
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (m && m[1]) return m[1];
+  // id=FILEID
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m && m[1]) return m[1];
+  // direct /file/d/.../preview
+  m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m && m[1]) return m[1];
+  return null;
+}
 
-    // Cargar episodio
-    const episode = DB?.[anime]?.[s]?.[e];
-    if (!episode) {
-      alert('Próximamente.');
-    } else {
-      const originalLink = episode.link;
-      player.src          = originalLink;
-      titleEl.textContent = episode.title;
+/* Inserta iframe para Drive (si procede) */
+function insertDriveIframe(fileId) {
+  // elimina iframe previo si existe
+  const prevIframe = document.getElementById('drive-iframe');
+  if (prevIframe) prevIframe.remove();
 
-      // Enlace de descarga forzada
-      let downloadForced;
-      if (originalLink.includes('raw=1')) {
-        downloadForced = originalLink.replace(/raw=1$/, 'dl=1');
-      } else if (originalLink.includes('?')) {
-        downloadForced = originalLink + '&dl=1';
-      } else {
-        downloadForced = originalLink + '?dl=1';
-      }
-      dlLink.href  = downloadForced;
-      dlLink.title = 'Descargar ' + episode.title;
-    }
+  const iframe = document.createElement('iframe');
+  iframe.id = 'drive-iframe';
+  iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
+  iframe.width = '100%';
+  iframe.height = Math.min(window.innerHeight * 0.6, 720);
+  iframe.frameBorder = 0;
+  iframe.allow = 'autoplay; encrypted-media; fullscreen';
+  iframe.style.borderRadius = '6px';
+  // insertar justo después del <video> player
+  player.parentNode.insertBefore(iframe, player.nextSibling);
+}
 
-  let visibleTimeout, hideTimeout;
+/* Limpia cualquier iframe o src previo */
+function resetPlayerView() {
+  const prevIframe = document.getElementById('drive-iframe');
+  if (prevIframe) prevIframe.remove();
+  player.style.display = '';
+  player.pause();
+  player.removeAttribute('src');
+  // limpiar fuentes internas del elemento (si las tuviera)
+  while (player.firstChild) player.removeChild(player.firstChild);
+}
 
-  sh.addEventListener('click', () => {
-    const url = `${location.origin + location.pathname}?anime=${anime}&s=${s}&e=${e}`;
+/* Descarga forzada para distintos hosts (Dropbox raw / ?raw=1 -> dl=1, Drive -> uc?export=download&id=) */
+function buildForcedDownloadLink(originalLink) {
+  if (!originalLink) return '#';
+  // si es Drive
+  const driveId = getDriveFileId(originalLink);
+  if (driveId) return `https://drive.google.com/uc?export=download&id=${driveId}`;
 
-    navigator.clipboard.writeText(url).then(() => {
-      // 1) Limpiar timeouts anteriores
-      clearTimeout(visibleTimeout);
-      clearTimeout(hideTimeout);
+  // si ya contiene raw=1 (dropbox)
+  if (originalLink.includes('raw=1')) {
+    return originalLink.replace(/raw=1$/, 'dl=1');
+  }
+  // si contiene ? params
+  if (originalLink.includes('?')) {
+    return originalLink + '&dl=1';
+  }
+  return originalLink + '?dl=1';
+}
 
-      // 2) Animación de entrada (popin)
-      toast.style.display   = 'flex';
-      toast.style.animation = 'popin 0.4s forwards';
-
-      // 3) Tras 3s, animación de salida (popout)
-      visibleTimeout = setTimeout(() => {
-        toast.style.animation = 'popout 0.4s forwards';
-
-        // 4) Al acabar popout (0.4s), ocultar
-        hideTimeout = setTimeout(() => {
-          toast.style.display = 'none';
-        }, 400);
-      }, 3000);
-    }).catch(err => {
-      alert('Error al copiar el enlace: ' + err);
-    });
+/* Manejo del share/toast */
+let visibleTimeout, hideTimeout;
+sh.addEventListener('click', () => {
+  const url = `${location.origin + location.pathname}?anime=${anime}&s=${s}&e=${e}`;
+  navigator.clipboard.writeText(url).then(() => {
+    clearTimeout(visibleTimeout);
+    clearTimeout(hideTimeout);
+    toast.style.display   = 'flex';
+    toast.style.animation = 'popin 0.4s forwards';
+    visibleTimeout = setTimeout(() => {
+      toast.style.animation = 'popout 0.4s forwards';
+      hideTimeout = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 400);
+    }, 3000);
+  }).catch(err => {
+    alert('Error al copiar el enlace: ' + err);
   });
+});
 
-    // Prev/Next
-    function getNextEpisode(a, season, epi) {
-      const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>x-y), idx = eps.indexOf(epi);
-      if (idx >= 0 && idx < eps.length-1) return { s: season, e: eps[idx+1] };
-      const seasons = Object.keys(seas).sort((x,y)=>x-y), sIdx = seasons.indexOf(season);
-      if (sIdx >= 0 && sIdx < seasons.length-1) {
-        const nextS = seasons[sIdx+1], nextEs = Object.keys(seas[nextS]).sort((x,y)=>x-y);
-        if (nextEs.length) return { s: nextS, e: nextEs[0] };
-      }
-      return null;
+/* Prev/Next helpers (dejé tu lógica intacta, solo la uso abajo) */
+function getNextEpisode(a, season, epi) {
+  const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>x-y), idx = eps.indexOf(epi);
+  if (idx >= 0 && idx < eps.length-1) return { s: season, e: eps[idx+1] };
+  const seasons = Object.keys(seas).sort((x,y)=>x-y), sIdx = seasons.indexOf(season);
+  if (sIdx >= 0 && sIdx < seasons.length-1) {
+    const nextS = seasons[sIdx+1], nextEs = Object.keys(seas[nextS]).sort((x,y)=>x-y);
+    if (nextEs.length) return { s: nextS, e: nextEs[0] };
+  }
+  return null;
+}
+function getPrevEpisode(a, season, epi) {
+  const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>x-y), idx = eps.indexOf(epi);
+  if (idx > 0) return { s: season, e: eps[idx-1] };
+  const seasons = Object.keys(seas).sort((x,y)=>x-y), sIdx = seasons.indexOf(season);
+  if (sIdx > 0) {
+    const prevS = seasons[sIdx-1], prevEs = Object.keys(seas[prevS]).sort((x,y)=>x-y);
+    if (prevEs.length) return { s: prevS, e: prevEs[prevEs.length-1] };
+  }
+  return null;
+}
+
+/* --- Cargar episodio --- */
+const episode = DB?.[anime]?.[s]?.[e];
+if (!episode) {
+  alert('Próximamente.');
+} else {
+  const originalLink = episode.link;
+  titleEl.textContent = episode.title;
+
+  // reset visual
+  resetPlayerView();
+
+  // Si es Drive -> insertar iframe embebido
+  const driveId = getDriveFileId(originalLink);
+  if (driveId) {
+    // ocultar el <video> y mostrar iframe
+    player.style.display = 'none';
+    insertDriveIframe(driveId);
+
+    // descargar por Drive (usamos uc?export=download)
+    dlLink.href = `https://drive.google.com/uc?export=download&id=${driveId}`;
+    // forzamos nombre si posible
+    dlLink.setAttribute('title', 'Descargar ' + episode.title);
+    dlLink.removeAttribute('download'); // descarga externa depende del navegador/Drive
+  } else {
+    // comportamiento normal con <video>
+    player.style.display = '';
+    player.src = originalLink;
+    player.setAttribute('controls', '');
+    player.setAttribute('playsinline', '');
+    player.load();
+
+    // descargar (forzada si es dropbox/raw)
+    const forced = buildForcedDownloadLink(originalLink);
+    dlLink.href = forced;
+    // asignar atributo download con un nombre seguro
+    try {
+      const safeName = (episode.title || 'video').replace(/[^a-z0-9\.\-_\s]/gi, '_') + '.mp4';
+      dlLink.setAttribute('download', safeName);
+    } catch (err) {
+      dlLink.removeAttribute('download');
     }
-    function getPrevEpisode(a, season, epi) {
-      const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>x-y), idx = eps.indexOf(epi);
-      if (idx > 0) return { s: season, e: eps[idx-1] };
-      const seasons = Object.keys(seas).sort((x,y)=>x-y), sIdx = seasons.indexOf(season);
-      if (sIdx > 0) {
-        const prevS = seasons[sIdx-1], prevEs = Object.keys(seas[prevS]).sort((x,y)=>x-y);
-        if (prevEs.length) return { s: prevS, e: prevEs[prevEs.length-1] };
-      }
-      return null;
-    }
-    const nxt = getNextEpisode(anime, s, e);
-    if (nxt) {
-      next.style.display = 'inline-block';
-      next.href          = `${location.pathname}?anime=${anime}&s=${nxt.s}&e=${nxt.e}`;
-    }
-    const prv = getPrevEpisode(anime, s, e);
-    if (prv) {
-      prev.style.display = 'inline-block';
-      prev.href          = `${location.pathname}?anime=${anime}&s=${prv.s}&e=${prv.e}`;
-    }
+    dlLink.title = 'Descargar ' + episode.title;
+  }
+
+  // Enlace de regresar
+  back.href = `anime-detail.html?id=${anime}`;
+
+  // Prev / Next
+  const nxt = getNextEpisode(anime, s, e);
+  if (nxt) {
+    next.style.display = 'inline-block';
+    next.href          = `${location.pathname}?anime=${anime}&s=${nxt.s}&e=${nxt.e}`;
+  } else {
+    next.style.display = 'none';
+  }
+  const prv = getPrevEpisode(anime, s, e);
+  if (prv) {
+    prev.style.display = 'inline-block';
+    prev.href          = `${location.pathname}?anime=${anime}&s=${prv.s}&e=${prv.e}`;
+  } else {
+    prev.style.display = 'none';
+  }
+}
   </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
