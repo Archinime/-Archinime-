@@ -1547,7 +1547,7 @@
           "9": { link:'https://www.dropbox.com/scl/fi/g1w8slqvrlx0mk7nqvoup/Los-diarios-de-la-boticaria-T1-Cap-9.mp4?rlkey=4kr44e04sfb2oyvlag3ulxmml&st=5updlm5e&raw=1', title:'Los Diarios de la Boticaria T1 Cap 9' },
           "10": { link:'https://www.dropbox.com/scl/fi/y7e87ddpeno0fm598j6e1/Los-diarios-de-la-boticaria-T1-Cap-10.mp4?rlkey=hyxufcm4asdy722mcl6illqhd&st=jfe1d18o&raw=1', title:'Los Diarios de la Boticaria T1 Cap 10' },
           "11": { link:'https://www.dropbox.com/scl/fi/qbkv9u1urbr3efx6vvons/Los-diarios-de-la-boticaria-T1-Cap-11.mp4?rlkey=0y21ko2t51s1rbda15h3gsj38&st=s6799x6v&raw=1', title:'Los Diarios de la Boticaria T1 Cap 11' },
-          "12": { link:'https://www.dropbox.com/scl/fi/c6mz7bkzr79r6sl5u9nth/Los-diarios-de-la-boticaria-T1-Cap-12.mp4?rlkey=abkj84vrcn7c6zpc5zk8d3wkl&st=z93dm1bb&raw=1', title:'Los Diarios de la Boticaria T1 Cap 12' }
+          "12": { link:'https://www.dropbox.com/scl/fi/c6mz7bkzr79r6sl5u9nth/Los-diarios-de-la-boticaria-T1-Cap-12.mp4?rlkey=abkj84vrcn7c6zpc5zk8d3wkl&st=z93dm1bb&raw=1', title:'Los Diarios de la Boticaria T1 Cap 12' },
           "13": { link:'https://www.dropbox.com/scl/fi/nlamhnkgf4d2b9rw0isan/Los-diarios-de-la-boticaria-T1-Cap-13.mp4?rlkey=7iwdjz08cqrt4zgp7t015qlpb&st=iezrstdq&raw=1', title:'Los Diarios de la Boticaria T1 Cap 13' },
           "14": { link:'https://www.dropbox.com/scl/fi/okgkvw1pcmlr4vb5hd1zm/Los-diarios-de-la-boticaria-T1-Cap-14.mp4?rlkey=tga5g7rol2dp3rj068kv6hihu&st=jpzpnrig&raw=1', title:'Los Diarios de la Boticaria T1 Cap 14' },
           "15": { link:'https://www.dropbox.com/scl/fi/gjqtkezwgbo23zp2wqj9a/Los-diarios-de-la-boticaria-T1-Cap-15.mp4?rlkey=8z098rfgg9hw6h57yjr5ml288&st=fvry3r89&raw=1', title:'Los Diarios de la Boticaria T1 Cap 15' },
@@ -1573,7 +1573,7 @@
           "9": { link:'https://www.dropbox.com/scl/fi/9ne7xy08jn31j3rdsktmn/Los-diarios-de-la-boticaria-T2-Cap-9.mp4?rlkey=xjne7inkmekwqfm8jzslvl2uq&st=grj8y8m2&raw=1', title:'Los Diarios de la Boticaria T2 Cap 9' },
           "10": { link:'https://www.dropbox.com/scl/fi/e75pw0qpjpy7550f1gypq/Los-diarios-de-la-boticaria-T2-Cap-10.mp4?rlkey=knbi8ie3b6hwld8botk7zj78c&st=uv3ah4ch&raw=1', title:'Los Diarios de la Boticaria T2 Cap 10' },
           "11": { link:'https://www.dropbox.com/scl/fi/nk0jj3guweeq3mlvi2ycb/Los-diarios-de-la-boticaria-T2-Cap-11.mp4?rlkey=rpbfqqfxdffprr5wzpv1wbsa8&st=z9t5xqc5&raw=1', title:'Los Diarios de la Boticaria T2 Cap 11' },
-          "12": { link:'https://www.dropbox.com/scl/fi/u14yptw82f6z98olgg2tg/Los-diarios-de-la-boticaria-T2-Cap-12.mp4?rlkey=k6jkuvocif963e7spx8t7i59p&st=j87k7s53&raw=1', title:'Los Diarios de la Boticaria T2 Cap 12' }
+          "12": { link:'https://www.dropbox.com/scl/fi/u14yptw82f6z98olgg2tg/Los-diarios-de-la-boticaria-T2-Cap-12.mp4?rlkey=k6jkuvocif963e7spx8t7i59p&st=j87k7s53&raw=1', title:'Los Diarios de la Boticaria T2 Cap 12' },
           "13": { link:'https://www.dropbox.com/scl/fi/02cwa21ggpakl6y65au13/Los-diarios-de-la-boticaria-T2-Cap-13.mp4?rlkey=12xdgd39rz7rifaqt49n00r66&st=ueaqav46&raw=1', title:'Los Diarios de la Boticaria T2 Cap 13' },
           "14": { link:'https://www.dropbox.com/scl/fi/t9232k82mwphz2zm4kjnv/Los-diarios-de-la-boticaria-T2-Cap-14.mp4?rlkey=91idjjpymtksvucaiy7ktn2lz&st=s2ppmjug&raw=1', title:'Los Diarios de la Boticaria T2 Cap 14' },
           "15": { link:'https://www.dropbox.com/scl/fi/2cd5neu5o9boj232devzu/Los-diarios-de-la-boticaria-T2-Cap-15.mp4?rlkey=lvkl9yklh3p9jgcjawhkit9sj&st=zfov3y5a&raw=1', title:'Los Diarios de la Boticaria T2 Cap 15' },
@@ -1589,9 +1589,13 @@
         }
       },
 
-
-
     };
+    // Guardar posición al volver
+    back.addEventListener('click', () => {
+      sessionStorage.setItem('lastScroll_' + anime, window.scrollY);
+    });
+    back.href = `anime-detail.html?id=${anime}`;
+
 function getDriveFileId(url) {
   if (!url || typeof url !== 'string') return null;
   // /d/FILEID/...
