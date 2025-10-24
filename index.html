@@ -155,6 +155,127 @@
       padding:2px 6px; border-radius:4px; font-size:.85rem;
     }
 
+    /* ------------------ RESULTS: barra colorida, iluminada e interactiva ------------------ */
+    .results-wrapper {
+      margin-left: auto; display:flex; align-items:center; gap:0.6rem;
+      position:relative; z-index:12;
+    }
+    .results-badge {
+      display:flex; align-items:center; gap:.6rem; padding:.5rem .9rem;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(255,0,150,0.12), rgba(0,200,255,0.12));
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 18px rgba(255,0,150,0.06) inset;
+      backdrop-filter: blur(6px);
+      cursor:pointer; transition: transform .18s ease, box-shadow .18s ease;
+      user-select:none;
+    }
+    .results-badge:hover{ transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 44px rgba(0,0,0,0.6); }
+    .badge-glow {
+      width:12px; height:12px; border-radius:50%;
+      background: linear-gradient(45deg,#ff007a,#ffd700,#00fff7);
+      box-shadow: 0 0 18px #ff007a, 0 0 34px #ffd700, 0 0 70px #00fff7;
+      animation: pulseGlow 2.4s infinite;
+      flex:0 0 auto;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(.9); opacity:.9; }
+      50% { transform: scale(1.18); opacity:1; }
+      100% { transform: scale(.9); opacity:.9; }
+    }
+
+    .results-text { display:flex; flex-direction:column; line-height:1; text-align:left; }
+    .results-text .label {
+      font-size:0.78rem; opacity:0.95; font-weight:800;
+      text-transform:uppercase; letter-spacing:0.06em; color:#f8f8f8;
+    }
+    .results-text .count {
+      font-size:1rem; font-weight:900;
+      background:linear-gradient(90deg,#ffffff 0%, #ffd700 50%, #00fff7 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    }
+
+    .results-panel {
+      position:absolute; right:0; top:calc(100% + .6rem);
+      min-width:260px; max-width:360px; background:rgba(2,2,6,0.9);
+      border-radius:10px; padding:.8rem; box-shadow:0 20px 50px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+      transform-origin: top right;
+      opacity:0; visibility:hidden; transform: translateY(-6px) scale(.98);
+      transition:opacity .18s ease, transform .18s ease, visibility .18s;
+      z-index:13;
+    }
+    .results-panel.open { opacity:1; visibility:visible; transform: translateY(0) scale(1); }
+    .results-panel h4 { margin-bottom:.4rem; font-size:0.95rem; }
+    .filter-line { display:flex; justify-content:space-between; gap:.6rem; margin:.35rem 0; align-items:center; }
+    .small-tag { background:rgba(255,255,255,0.04); padding:.28rem .6rem; border-radius:6px; font-size:.84rem; }
+
+    .clear-btn {
+      margin-top:.6rem; display:inline-block; padding:.55rem .7rem; border-radius:10px;
+      background:linear-gradient(90deg,#ff476e,#8b5cf6); color:#fff; border:none; cursor:pointer;
+      box-shadow:0 12px 40px rgba(139,92,246,0.12); font-weight:800;
+      transition:transform .12s ease;
+    }
+    .clear-btn:hover{ transform:translateY(-3px); }
+
+    /* ------------------ NO-RESULTS estilado, colorido e interactivo ------------------ */
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 2.6rem;
+      border-radius: 14px;
+      display:flex;
+      gap:1.25rem;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)),
+        radial-gradient(1200px 400px at -10% 10%, rgba(0,255,255,0.04), transparent 10%),
+        radial-gradient(900px 300px at 110% 90%, rgba(255,0,150,0.03), transparent 10%);
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+      text-align:center;
+      transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
+    }
+    .no-results:hover{ transform:translateY(-6px); box-shadow:0 28px 80px rgba(0,0,0,0.66); }
+
+    .no-results .title {
+      font-size:1.45rem; font-weight:900;
+      background: linear-gradient(90deg,#fff 0%, #ffd700 50%, #00fff7 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow: 0 6px 26px rgba(0,0,0,0.6);
+      margin-bottom:0.35rem;
+    }
+    .no-results .subtitle {
+      font-size:1rem; color:rgba(255,255,255,0.86);
+      max-width:780px; line-height:1.4; margin-bottom:1rem;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+    }
+
+    .no-results .sparkles {
+      display:flex; gap:0.5rem; align-items:center;
+    }
+    .btn-reset {
+      padding:.6rem .9rem; border-radius:10px; border:none; font-weight:800;
+      background:linear-gradient(90deg,#00fff7,#8b5cf6); color:#04111a; cursor:pointer;
+      box-shadow:0 14px 46px rgba(0,255,247,0.06); transition: transform .12s ease;
+    }
+    .btn-reset:hover{ transform:translateY(-3px); }
+
+    /* shimmer (brillo) en el mensaje */
+    .shimmer {
+      position:relative; overflow:hidden; display:inline-block;
+    }
+    .shimmer:after {
+      content:""; position:absolute; left:-120%; top:0; height:100%; width:120%;
+      background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0) 100%);
+      transform:skewX(-18deg);
+      animation: shimmerMove 2.6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes shimmerMove { to { left:120%; } }
+
     /* —————— Media query para móviles (≤600px) —————— */
     @media (max-width: 600px) {
       header {
@@ -225,64 +346,72 @@
 
     <select id="genre-select" onchange="filtro()">
       <option value="">Todos los géneros</option>
-<option>Acción</option>
-<option>Animación</option>
-<option>Aventura</option>
-<option>Ciencia ficción</option>
-<option>Cocina</option>
-<option>Comedia</option>
-<option>Comedia oscura</option>
-<option>Cosplay</option>
-<option>Crimen</option>
-<option>Cyberpunk</option>
-<option>Deportivo</option>
-<option>Dibujo Animado</option>
-<option>Divulgación Científica</option>
-<option>Drama</option>
-<option>Ecchi</option>
-<option>Escolar</option>
-<option>Fantasía</option>
-<option>Fantasía oscura</option>
-<option>Familiar</option>
-<option>Gore</option>
-<option>Harem</option>
-<option>Hentai</option>
-<option>Histórico</option>
-<option>Horror</option>
-<option>Incesto</option>
-<option>Infantil</option>
-<option>Isekai</option>
-<option>Isekai Inverso</option>
-<option>Josei</option>
-<option>Kaiju</option>
-<option>Kodomo</option>
-<option>Mahō Shōjo</option>
-<option>Mecha</option>
-<option>Militar</option>
-<option>Misterio</option>
-<option>Musical</option>
-<option>Nekketsu</option>
-<option>Parodia</option>
-<option>Post-apocalíptico</option>
-<option>Psicológico</option>
-<option>Reverse Harem</option>
-<option>Romance</option>
-<option>Romance escolar</option>
-<option>Seinen</option>
-<option>Shōjo</option>
-<option>Shōnen</option>
-<option>Slice of Life</option>
-<option>Sobrenatural</option>
-<option>Superhéroes</option>
-<option>Survival Game</option>
-<option>Tentáculos</option>
-<option>Terror</option>
-<option>Terror psicológico</option>
-<option>Thriller</option>
-<option>Thriller psicológico</option>
-<option>Tragedia</option>
-<option>Yaoi</option>
-<option>Yuri</option>
+      <option>Acción</option>
+      <option>Animación</option>
+      <option>Aventura</option>
+      <option>Ciencia ficción</option>
+      <option>Cocina</option>
+      <option>Comedia</option>
+      <option>Comedia oscura</option>
+      <option>Cosplay</option>
+      <option>Crimen</option>
+      <option>Cyberpunk</option>
+      <option>Deportivo</option>
+      <option>Dibujo Animado</option>
+      <option>Divulgación Científica</option>
+      <option>Drama</option>
+      <option>Ecchi</option>
+      <option>Escolar</option>
+      <option>Fantasía</option>
+      <option>Fantasía oscura</option>
+      <option>Familiar</option>
+      <option>Gore</option>
+      <option>Harem</option>
+      <option>Hentai</option>
+      <option>Histórico</option>
+      <option>Horror</option>
+      <option>Incesto</option>
+      <option>Infantil</option>
+      <option>Isekai</option>
+      <option>Isekai Inverso</option>
+      <option>Kaiju</option>
+      <option>Mahō Shōjo</option>
+      <option>Mecha</option>
+      <option>Militar</option>
+      <option>Misterio</option>
+      <option>Musical</option>
+      <option>Nekketsu</option>
+      <option>Parodia</option>
+      <option>Post-apocalíptico</option>
+      <option>Psicológico</option>
+      <option>Reverse Harem</option>
+      <option>Romance</option>
+      <option>Romance escolar</option>
+      <option>Slice of Life</option>
+      <option>Sobrenatural</option>
+      <option>Superhéroes</option>
+      <option>Survival Game</option>
+      <option>Tentáculos</option>
+      <option>Terror</option>
+      <option>Terror psicológico</option>
+      <option>Thriller</option>
+      <option>Thriller psicológico</option>
+      <option>Tragedia</option>
+      <option>Yaoi</option>
+      <option>Yuri</option>
+    </select>
+
+
+    <!-- NUEVO: Select para Demografías -->
+    <select id="demographic-select" onchange="filtro()">
+      <option value="">Todas las demografías</option>
+      <option>Gekiga</option>
+      <option>Josei</option>
+      <option>Kodomo</option>
+      <option>Seijin</option>
+      <option>Seinen</option>
+      <option>Shōjo</option>
+      <option>Shōnen</option>
     </select>
 
     <select id="rating-select" onchange="filtro()">
@@ -293,6 +422,40 @@
     </select>
 
     <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()">
+
+    <!-- ---------- RESULTADOS: barra a un costado (arriba) ---------- -->
+    <div class="results-wrapper" id="results-wrapper" aria-live="polite">
+      <div class="results-badge" id="results-badge" role="button" aria-expanded="false" tabindex="0"
+           title="Mostrar filtros aplicados">
+        <span class="badge-glow" aria-hidden="true"></span>
+        <div class="results-text">
+          <div class="label">Resultados</div>
+          <div class="count" id="results-count">0</div>
+        </div>
+      </div>
+
+      <div class="results-panel" id="results-panel" aria-hidden="true">
+        <h4>Filtros aplicados</h4>
+        <div class="filter-line">
+          <div>Busqueda</div>
+          <div id="panel-query" class="small-tag">—</div>
+        </div>
+        <div class="filter-line">
+          <div>Género</div>
+          <div id="panel-genre" class="small-tag">—</div>
+        </div>
+        <div class="filter-line">
+          <div>Demografía</div>
+          <div id="panel-demo" class="small-tag">—</div>
+        </div>
+        <div class="filter-line">
+          <div>Valoración</div>
+          <div id="panel-rating" class="small-tag">—</div>
+        </div>
+
+        <button class="clear-btn" id="clear-filters">Limpiar filtros</button>
+      </div>
+    </div>
   </header>
 
   <main class="container">
@@ -389,137 +552,212 @@
     }
 
     const animes = [
-      {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Shōnen","Sobrenatural","Comedia","Romance","Comedia oscura"]},
-      {id:2, title:"Jujutsu Kaisen", img:"Jujutsu.jpg", rating:4.9, genres:["Shōnen","Sobrenatural","Fantasía oscura","Acción","Nekketsu"]},
+      {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Sobrenatural","Comedia","Romance","Comedia oscura","Shōnen"]},
+      {id:2, title:"Jujutsu Kaisen", img:"Jujutsu.jpg", rating:4.9, genres:["Sobrenatural","Fantasía oscura","Acción","Nekketsu","Shōnen"]},
       {id:3, title:"Konosuba", img:"konosubaportada.jpg", rating:4.8, genres:["Aventura","Comedia","Fantasía","Sobrenatural","Isekai","Ecchi","Shōnen"]},
       {id:4, title:"Re:Zero − Empezar vida en otro mundo", img:"rezero.png", rating:4.8, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Thriller psicológico","Terror psicológico","Isekai","Shōnen"]},
       {id:5, title:"Mushoku Tensei", img:"mushoku.jpg", rating:4.8, genres:["Isekai","Ecchi","Romance","Harem","Acción","Aventura","Drama","Fantasía","Seinen"]},
-      {id:6, title:"Tensei Shitara Slime Datta Ken", aliases: ["That Time I Got Reincarnated as a Slime"], img:"slime.jpg", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía"]},
+      {id:6, title:"Tensei Shitara Slime Datta Ken", aliases: ["That Time I Got Reincarnated as a Slime"], img:"slime.jpg", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía","Shōnen"]},
       {id:7, title:"Saga of Tanya the Evil", aliases: ["Yōjo Senki"], img:"tanya1.jpg", rating:4.8, genres:["Acción","Aventura","Fantasía","Militar","Drama","Ciencia ficción","Seinen"]},
-      {id:8, title:"Akame Ga Kill", aliases: ["Akame ga Kiru"], img:"Akame1.jpg", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Shōnen","Romance","Tragedia"]},
+      {id:8, title:"Akame Ga Kill", aliases: ["Akame ga Kiru"], img:"Akame1.jpg", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Tragedia","Shōnen"]},
       {id:9, title:"To Be Hero X", img:"hero11.jpg", rating:4.8, genres:["Acción","Comedia","Animación","Fantasía","Superhéroes","Seinen"]},
-      {id:10, title:"Demon Slayer", aliases: ["Kimetsu no Yaiba"], img:"demon.jpg", rating:4.9, genres:["Acción","Fantasía oscura","Aventura","Shōnen","Sobrenatural","Drama"]},
-      {id:11, title:"Maou 2099", img:"maou2099portada.jpg", rating:4.7, genres:["Ciencia ficción","Isekai Inverso","Acción","Fantasía","Cyberpunk"]},
+      {id:10, title:"Demon Slayer", aliases: ["Kimetsu no Yaiba"], img:"demon.jpg", rating:4.9, genres:["Acción","Fantasía oscura","Aventura","Sobrenatural","Drama","Shōnen"]},
+      {id:11, title:"Maou 2099", img:"maou2099portada.jpg", rating:4.7, genres:["Ciencia ficción","Isekai Inverso","Acción","Fantasía","Cyberpunk","Shōnen"]},
       {id:12, title:"Wistoria: Wand and Sword", img:"wistoria.jpg", rating:4.8, genres:["Fantasía","Aventura","Shōnen"]},
       {id:13, title:"Izure Saikyou no Renkinjutsushi", aliases: ["Possibly the Greatest Alchemist of All Time"], img:"Izure.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Isekai","Shōnen"]},
       {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", aliases: ["Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"], img:"alia.jpg", rating:4.8, genres:["Comedia","Romance","Romance escolar","Escolar","Josei"]},
       {id:15, title:"Reborn as a Vending Machine, I Now Wander the Dungeon", aliases: ["Jidōhanbaiki ni Umarekawatta Ore wa Meikyū ni Samayō"], img:"jidou.jpg", rating:4.1, genres:["Fantasía","Isekai","Shōnen"]},
       {id:16, title:"kimi to boku no saigo no senjou", aliases: ["Our Last Crusade or the Rise of a New World"], img:"kimi22222.jpg", rating:4.5, genres:["Acción","Fantasía","Romance","Militar","Seinen"]},
       {id:17, title:"The Gorilla God's Go- To Girl", aliases: ["Gorilla no Kami Kara Kago Sareta Reijō wa Ōritsu Kishidan de Kawaiigareru"], img:"gorila11.jpg", rating:4.5, genres:["Fantasía","Comedia","Escolar","Romance","Shōjo"]},
-      {id:18, title:"Chainsaw Man", img:"chaiportada.jpg", rating:4.9, genres:["Fantasía oscura","Acción","Shōnen","Comedia oscura"]},
-      {id:19, title:"The Rising of the Shield Hero", aliases: ["Tate no Yuusha no Nariagari","El Héroe del Escudo"], img:"heroedelescudoportada.jpg", rating:4.7, genres:["Aventura","Drama","Fantasía","Acción","Seinen","Romance","Isekai"]},
-      {id:20, title:"Overflow", img:"overflow.jpg", rating:4.6, genres:["Hentai","Escolar","Romance","Harem","Incesto"]},
+      {id:18, title:"Chainsaw Man", img:"chaiportada.jpg", rating:4.9, genres:["Fantasía oscura","Acción","Comedia oscura","Shōnen"]},
+      {id:19, title:"The Rising of the Shield Hero", aliases: ["Tate no Yuusha no Nariagari","El Héroe del Escudo"], img:"heroedelescudoportada.jpg", rating:4.7, genres:["Aventura","Drama","Fantasía","Acción","Romance","Isekai","Seinen"]},
+      {id:20, title:"Overflow", img:"overflow.jpg", rating:4.6, genres:["Hentai","Escolar","Romance","Harem","Incesto","Seijin"]},
       {id:21, title:"Shiunji-ke no Kodomotachi", img:"Shiux.jpg", rating:4.6, genres:["Comedia","Romance","Drama","Harem","Slice of Life","Seinen"]},
-      {id:22, title:"Goblin Slayer", img:"goblinslayerportada.jpg", rating:4.7, genres:["Seinen","Fantasía oscura","Horror","Aventura","Fantasía"]},
+      {id:22, title:"Goblin Slayer", img:"goblinslayerportada.jpg", rating:4.7, genres:["Fantasía oscura","Horror","Aventura","Fantasía","Seinen"]},
       {id:23, title:"Kanchigai no Atelier Meister", img:"atelier1.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Acción","Shōnen"]},
-      {id:24, title:"Definitivamente. ¡No me gusta mi hermano para nada!", img:"Oni.jpg", rating:4.1, genres:["Seinen","Comedia","Romance","Slice of Life","Harem","Ecchi"]},
-      {id:25, title:"Kaiju No. 8", img:"kaijuportada.jpg", rating:4.9, genres:["Shōnen","Sobrenatural","Fantasía oscura","Acción","Ciencia ficción","Aventura","Comedia","Kaiju"]},
-      {id:26, title:"Zootopia", img:"zootopiaportada.jpg", rating:4.7, genres:["Aventura","Comedia","Crimen","Infantil","Familiar","Misterio","Animación","Dibujo Animado"]},
-      {id:27, title:"Clevatess -Majuu no Ou to Akago", img:"Clevatessportada.jpg", rating:4.8, genres:["Acción","Fantasía","Drama"]},
-      {id:28, title:"Dr. Stone", img:"Dr._Stoneportada.jpg", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Shōnen","Post-apocalíptico"]},
-      {id:29, title:"One Piece (Live Action)", img:"onepieceportada.jpg", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama"]},
-      {id:30, title:"Shoujo Ramune", img:"shoujoramuneportada.jpg", rating:4.3, genres:["Hentai","Harem","Incesto"]},
-      {id:31, title:"To Your Eternity", aliases: ["Fumetsu no Anata e"], img:"fumetsuportada.jpg", rating:4.8, genres:["Fantasía","Drama","Aventura","Shōnen","Sobrenatural"]},
-      {id:32, title:"Tsugunai Subbed", img:"TsugunaiSubbed.jpg", rating:4.8, genres:["Hentai","Harem","Escolar"]},
-      {id:33, title:"Blue Lock", aliases: ["Yoichi Isagi"], img:"Bluelockportada.jpg", rating:4.8, genres:["Thriller","Psicológico","Shōnen","Deportivo","Survival Game"]},
+      {id:24, title:"Definitivamente. ¡No me gusta mi hermano para nada!", img:"Oni.jpg", rating:4.1, genres:["Comedia","Romance","Slice of Life","Harem","Ecchi","Seinen"]},
+      {id:25, title:"Kaiju No. 8", img:"kaijuportada.jpg", rating:4.9, genres:["Sobrenatural","Fantasía oscura","Acción","Ciencia ficción","Aventura","Comedia","Kaiju","Shōnen"]},
+      {id:26, title:"Zootopia", img:"zootopiaportada.jpg", rating:4.7, genres:["Aventura","Comedia","Crimen","Infantil","Familiar","Misterio","Animación","Dibujo Animado","Kodomo"]},
+      {id:27, title:"Clevatess -Majuu no Ou to Akago", img:"Clevatessportada.jpg", rating:4.8, genres:["Acción","Fantasía","Drama","Seinen"]},
+      {id:28, title:"Dr. Stone", img:"Dr._Stoneportada.jpg", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Post-apocalíptico","Shōnen"]},
+      {id:29, title:"One Piece (Live Action)", img:"onepieceportada.jpg", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama","Shōnen"]},
+      {id:30, title:"Shoujo Ramune", img:"shoujoramuneportada.jpg", rating:4.3, genres:["Hentai","Harem","Incesto","Seijin"]},
+      {id:31, title:"To Your Eternity", aliases: ["Fumetsu no Anata e"], img:"fumetsuportada.jpg", rating:4.8, genres:["Fantasía","Drama","Aventura","Sobrenatural","Shōnen"]},
+      {id:32, title:"Tsugunai Subbed", img:"TsugunaiSubbed.jpg", rating:4.8, genres:["Hentai","Harem","Escolar","Seijin"]},
+      {id:33, title:"Blue Lock", aliases: ["Yoichi Isagi"], img:"Bluelockportada.jpg", rating:4.8, genres:["Thriller","Psicológico","Deportivo","Survival Game","Shōnen"]},
       {id:34, title:"Magic Maker: Isekai Mahou no Tsukurikata", aliases: ["Magic Maker: How to Make Magic in Another World"], img:"magic maker.jpg", rating:4.4, genres:["Fantasía","Isekai","Aventura","Slice of Life","Shōnen"]},
       {id:35, title:"Tsuyokute New Saga", aliases: ["New Saga"], img:"New Saga.jpg", rating:4.5, genres:["Fantasía","Isekai","Aventura","Comedia","Acción","Drama","Slice of Life","Shōnen"]},
-      {id:36, title:"Gachiakuta", img:"Gachiakuta.jpg", rating:4.9, genres:["Fantasía","Aventura","Acción","Shōnen","Fantasía oscura"]},
-      {id:37, title:"Shinsei Kourin Dacryon Luna", img:"Shinsei Kourin Dacryon Luna portada.jpg", rating:4.0, genres:["Tentáculos","Hentai","Fantasía","Seinen","Fantasía oscura"]},
+      {id:36, title:"Gachiakuta", img:"Gachiakuta.jpg", rating:4.9, genres:["Fantasía","Aventura","Acción","Fantasía oscura","Shōnen"]},
+      {id:37, title:"Shinsei Kourin Dacryon Luna", img:"Shinsei Kourin Dacryon Luna portada.jpg", rating:4.0, genres:["Tentáculos","Hentai","Fantasía","Fantasía oscura","Seijin"]},
       {id:38, title:"Kami-tachi ni Hirowareta Otoko", aliases: ["By the Grace of the Gods"], img:"Kamitachi.jpg", rating:4.7, genres:["Fantasía","Aventura","Slice of Life","Isekai","Shōnen"]},
       {id:39, title:"Ore dake Haireru Kakushi Dungeon", aliases: ["The Hidden Dungeon Only I Can Enter"], img:"oredake.jpg", rating:4.5, genres:["Fantasía","Comedia","Harem","Ecchi","Acción","Romance","Shōnen"]},
-      {id:40, title:"One Punch-Man", aliases: ["One-Punch Man"], img:"onepunch.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Seinen","Ciencia ficción","Superhéroes"]},
+      {id:40, title:"One Punch-Man", aliases: ["One-Punch Man"], img:"onepunch.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Ciencia ficción","Superhéroes","Seinen"]},
       {id:41, title:"Mashle", aliases: ["Mash Burnedead"], img:"mashle1.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Aventura","Shōnen"]},
       {id:42, title:"Los Diarios de la Boticaria", aliases: ["Kusuriya no Hitorigoto","The Apothecary Diaries"], img:"maomaot1.jpg", rating:4.9, genres:["Drama","Misterio","Romance","Shōjo"]},
-      {id:43, title:"Maplestar", img:"pm.png", rating:5.0, genres:["Hentai","Animación"]},
+      {id:43, title:"Maplestar", img:"pm.png", rating:5.0, genres:["Hentai","Animación","Seijin"]},
       {id:44, title:"Uzumaki", img:"uzumakii.jpg", rating:4.2, genres:["Horror","Seinen"]},
-      {id:45, title:"Tondemo Skill de Isekai Hourou Meshi", aliases: ["Campfire Cooking in Another World with My Absurd Skills"], img:"todemo.jpg", rating:4.9, genres:["Comedia","Fantasía","Shōnen","Slice of Life","Comida","Aventura"]},
-      {id:46, title:"My Dress-Up Darling", aliases: ["Sono Bisque Doll wa Koi wo Suru"], img:"muneca.jpg", rating:4.9, genres:["Comedia","Romance","Seinen","Slice of Life","Escolar","Cosplay"]},
+      {id:45, title:"Tondemo Skill de Isekai Hourou Meshi", aliases: ["Campfire Cooking in Another World with My Absurd Skills"], img:"todemo.jpg", rating:4.9, genres:["Comedia","Fantasía","Slice of Life","Cocina","Aventura","Shōnen"]},
+      {id:46, title:"My Dress-Up Darling", aliases: ["Sono Bisque Doll wa Koi wo Suru"], img:"muneca.jpg", rating:4.9, genres:["Comedia","Romance","Slice of Life","Escolar","Cosplay","Seinen"]},
 
     ];
 
 
-  function debounce(fn, wait) {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => fn(...args), wait);
-    };
-  }
-  const debouncedFiltro = debounce(filtro, 200);
+    function render(list) {
+      const grid = document.getElementById('grid');
+      if (!list || list.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results" role="status" aria-live="polite">
+            <div class="title shimmer">¡Ups! No se encontraron resultados que coincidan con la búsqueda.</div>
+            <div class="subtitle">¿No lo encuentras? 🤔 Puede que lo hayas escrito con un error ✏️ o que todavía no lo haya subido ⏳. Si quieres que lo agregue, deja el título en los comentarios de mi canal de YouTube 🎥 o en mi TikTok 🎵. ¡Gracias por ayudarme a mejorar la colección! 🙏💜</div>
+            <div class="sparkles">
+              <button class="btn-reset" id="btn-reset">Entiendo 👌</button>
+            </div>
+          </div>
+        `;
+        // enlazar el botón limpiar dentro del mensaje
+        const btn = document.getElementById('btn-reset');
+        if (btn) btn.addEventListener('click', () => {
+          document.getElementById('search').value = '';
+          document.getElementById('genre-select').value = '';
+          document.getElementById('demographic-select').value = '';
+          document.getElementById('rating-select').value = '';
+          filtro();
+          document.getElementById('search').focus();
+        });
+        return;
+      }
 
-  function render(list) {
-    const grid = document.getElementById('grid');
-    grid.innerHTML = list.map(a => `
-      <div class="card" onclick="location='anime-detail.html?id=${a.id}'">
-        <img src="${a.img}" alt="${a.title}">
-        <div class="info">
-          <strong>${a.title}</strong>
-          <span>⭐ ${a.rating.toFixed(1)}</span>
+      grid.innerHTML = list.map(a => `
+        <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
+          <img src="${a.img}" alt="${a.title}">
+          <div class="info">
+            <strong>${a.title}</strong>
+            <span>⭐ ${a.rating.toFixed(1)}</span>
+          </div>
         </div>
-      </div>
-    `).join('');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, {threshold:0.2});
-    document.querySelectorAll('.card').forEach(c => observer.observe(c));
-  }
+      `).join('');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, {threshold:0.2});
+      document.querySelectorAll('.card').forEach(c => observer.observe(c));
+    }
+
+    // Actualiza el contador visible en header
+    function updateResultsCount(count) {
+      const el = document.getElementById('results-count');
+      if (el) el.textContent = count;
+    }
+
+    /* ---------- DEBOUNCE (tu versión) ---------- */
+    function debounce(fn, wait) {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn(...args), wait);
+      };
+    }
+    const debouncedFiltro = debounce(filtro, 200);
+
+    /* ---------- FILTRO (adaptado: startsWith + orden alfabético y contador) ---------- */
+    function getBestTitleForSort(a) {
+      // Devuelve la mejor cadena normalizada entre title y aliases para ordenar
+      const titles = [a.title].concat(a.aliases || []);
+      const norm = titles.map(t => normalizeText(t));
+      // Elegimos la forma más "corta" lexicográficamente para estabilidad
+      norm.sort();
+      return norm[0];
+    }
 
     function filtro(){
       const qRaw   = document.getElementById('search').value || '';
       const q = qRaw.trim();
       const qn = normalizeText(q);
       const g   = document.getElementById('genre-select').value;
+      const d   = document.getElementById('demographic-select').value;
       const cat = document.getElementById('rating-select').value;
 
+      // Filtrado: startsWith en título/alias (prefijo), ignorando tildes
       const filtrados = animes.filter(a => {
-        // preparar lista de strings buscables: titulo + aliases
         const titles = [a.title].concat(a.aliases || []);
-        // NORMALIZADO: ahora usamos startsWith (prefijo) para respetar orden de letras
         const matchesText = !qn || titles.some(t => normalizeText(t).startsWith(qn));
         const byGenre  = !g || a.genres.includes(g);
+        const byDemo   = !d || a.genres.includes(d);
         let byRating = true;
         if(cat==='excellent') byRating = a.rating >= 4.8;
         else if(cat==='good')    byRating = a.rating >= 4.6 && a.rating < 4.8;
         else if(cat==='regular') byRating = a.rating < 4.6;
-        return matchesText && byGenre && byRating;
+        return matchesText && byGenre && byDemo && byRating;
       });
-      render(filtrados);
+
+      // Orden: primero los que empiecen por la query, luego orden alfabético por el título (normalizado)
+      let resultList = filtrados.slice();
+
+      if (qn) {
+        resultList.sort((A, B) => {
+          const titlesA = [A.title].concat(A.aliases || []).map(t => normalizeText(t));
+          const titlesB = [B.title].concat(B.aliases || []).map(t => normalizeText(t));
+          const aStarts = titlesA.some(t => t.startsWith(qn));
+          const bStarts = titlesB.some(t => t.startsWith(qn));
+          if (aStarts !== bStarts) return aStarts ? -1 : 1;
+          // si ambos empiezan o ninguno empieza: ordenar alfabéticamente por la mejor forma normalizada
+          const na = getBestTitleForSort(A);
+          const nb = getBestTitleForSort(B);
+          if (na < nb) return -1;
+          if (na > nb) return 1;
+          return 0;
+        });
+      } else {
+        // Si no hay query: ordenar alfabéticamente por título normalizado (opcional; si prefieres mantener shuffle, quita esto)
+        resultList.sort((A,B) => {
+          const na = normalizeText(A.title);
+          const nb = normalizeText(B.title);
+          if (na < nb) return -1;
+          if (na > nb) return 1;
+          return 0;
+        });
+      }
+
+      // Renderizar y actualizar contador
+      render(resultList);
+      updateResultsCount(resultList.length);
     }
 
-  // Función para barajar (Fisher-Yates)
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+    // Función para barajar (Fisher-Yates)
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
     }
-  }
 
-  // Barajar el arreglo al cargar la página para que cada carga tenga un orden distinto
-  shuffleArray(animes);
+    // Barajar el arreglo al cargar la página (se mantiene el comportamiento inicial)
+    shuffleArray(animes);
 
-  // Render inicial
-  render(animes);
+    // Render inicial y establecer contador inicial
+    render(animes);
+    updateResultsCount(animes.length);
 
-  // —————————— Cambiar header al hacer scroll ——————————
-  window.addEventListener('scroll', () => {
-    document.querySelector('header')
-      .classList.toggle('scrolled', window.scrollY > 50);
-  });
+    // Scroll header change
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
 
-  // —————————— Enlazar búsqueda al debounce ——————————
-  document.getElementById('search')
-          .addEventListener('input', debouncedFiltro);
-  document.getElementById('genre-select')
-          .addEventListener('change', filtro);
-  document.getElementById('rating-select')
-          .addEventListener('change', filtro);
-</script>
+    // Enlazar búsqueda & selects
+    if (document.getElementById('search')) {
+      document.getElementById('search').addEventListener('input', debouncedFiltro);
+      document.getElementById('search').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); filtro(); }
+      });
+    }
+    document.getElementById('genre-select').addEventListener('change', filtro);
+    document.getElementById('rating-select').addEventListener('change', filtro);
+    document.getElementById('demographic-select').addEventListener('change', filtro);
+
+  </script>
 </body>
-
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+</html>
