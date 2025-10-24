@@ -2649,60 +2649,66 @@
 
     // 2) Leer parámetro id
     const params = new URLSearchParams(location.search);
-    const id = params.get('id') || '1';
+    const id = Number(params.get('id') || params.get('anime'));
 
-    // Render principal: construye HTML dentro de #contenido
-function renderDetail(animeId) {
-  const info = data[animeId];
-  const container = document.getElementById('contenido');
-  if(!info){ container.innerHTML = '<h1>Anime no encontrado</h1>'; return; }
-
-  // construir: cover primero, luego título, luego descripción
-  let html = '';
-  // cover
-  if (info.cover) {
-    html += `<div class="anime-cover"><img src="${info.cover}" alt="${escapeHtml(info.title)}"></div>`;
-  }
-  // título (ahora debajo de la imagen)
-  html += `<h1>${escapeHtml(info.title)}</h1>`;
-  // descripción
-  html += `<p class="desc">${escapeHtml(info.desc || '')}</p>`;
-
-  // chips de géneros (se intentará poblar después si faltan)
-  html += `<div class="genres-wrap" id="genres-wrap"></div>`;
-
-  // seasons
-  if(info.seasons && info.seasons.length){
-    info.seasons.forEach(s => {
-      html += `<details><summary>Temporada ${s.num}${s.name? ' - '+escapeHtml(s.name):''}</summary>`;
-      html += `<div class="season-content">`;
-      if(s.cover) html += `<img src="${s.cover}" alt="Temporada ${s.num}">`;
-      if(s.eps && s.eps.length){
-        html += `<ul class="video-list">`;
-        s.eps.forEach(ep => html += `<li><a href="#">${escapeHtml(ep.title)}</a></li>`);
-        html += `</ul>`;
+    (function render(){
+      const c = document.getElementById('contenido');
+      const a = data[id];
+      if (!a) {
+        c.innerHTML = '<p class="prox">Próximamente.</p>';
+        return;
       }
-      html += `</div></details>`;
-    });
-  }
+      let html = `
+        <div class="anime-cover"><img src="${a.cover}" alt="Portada ${a.title}"></div>
+        <h1>${a.title}</h1>
 
-  container.innerHTML = html;
+        <!-- CONTENEDOR DONDE SE RENDERIZARÁN LOS GÉNEROS (se llena con JS) -->
+        <div class="genres-wrap" id="genres-container" aria-hidden="false"></div>
 
-  // populate genres (si existen en data, se usan; si no, se intenta extraer de index.txt)
-  populateGenresForAnime(animeId);
-}
+        <p class="desc">${a.desc}</p>
+      `;
+      a.seasons.forEach(s => {
+        const titleLabel = s.name ? s.name : `Temporada ${s.num}`;
+        html += `
+          <details>
+            <summary>${titleLabel}</summary>
+            <div class="season-content">
+              <img src="${s.cover}" alt="${titleLabel}">
+              <ul class="video-list">
+                ${s.eps.map((ep,i) => `
+                  <li>
+                    <a href="video-player.html?anime=${id}&s=${s.num}&e=${i+1}">
+                      ${ep.title}
+                    </a>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </details>
+        `;
+      });
+      c.innerHTML = html;
 
-    // Render chips de géneros en #genres-wrap
+      // Después de insertar el HTML, rellenamos los géneros (función abajo)
+      populateGenresForAnime(id);
+    })();
+
     function renderGenres(genres){
-      const wrap = document.getElementById('genres-wrap');
-      if(!wrap) return;
-      if(!genres || !genres.length){ wrap.innerHTML = '<p style="text-align:center;color:#ccc">Sin géneros registrados</p>'; return; }
-      wrap.innerHTML = genres.map(g => `<button class="genre-chip" type="button" tabindex="0">${escapeHtml(g)}<span class="copied-badge">COPIED</span></button>`).join('');
-      // añadir comportamiento de copia al click
-      wrap.querySelectorAll('.genre-chip').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const genre = btn.textContent.replace('COPIED','').trim();
-          try{ navigator.clipboard.writeText(genre); } catch(e){ /* ignore */ }
+      const cont = document.getElementById('genres-container');
+      if(!cont) return;
+      if(!genres || !genres.length){ cont.innerHTML = ''; return; }
+      cont.innerHTML = genres.map(g => `
+        <button class="genre-chip" data-genre="${escapeHtml(g)}">
+          ${escapeHtml(g)}
+          <span class="copied-badge">✓</span>
+        </button>
+      `).join('');
+      // listeners (interacción)
+      cont.querySelectorAll('.genre-chip').forEach(btn => {
+        btn.addEventListener('click', async (ev) => {
+          const genre = btn.dataset.genre;
+          // copia al portapapeles y muestra micro-feedback (badge + pop)
+          try { await navigator.clipboard.writeText(genre); } catch(e){ /* ignore */ }
           btn.classList.add('popped','show-badge');
           setTimeout(() => btn.classList.remove('popped'), 350);
           setTimeout(() => btn.classList.remove('show-badge'), 1200);
@@ -2713,25 +2719,13 @@ function renderDetail(animeId) {
       });
     }
 
-    function showToast(msg){
-      const t = document.getElementById('toast');
-      if(!t) return;
-      t.textContent = '✅ ' + msg;
-      t.style.display = 'flex';
-      t.style.animation = 'toast-in 0.4s ease-out forwards';
-      setTimeout(()=>{
-        t.style.animation = 'toast-out 0.7s ease-in forwards';
-        setTimeout(()=>{ t.style.display='none'; }, 700);
-      }, 1800);
-    }
-
     // intenta leer géneros
     function populateGenresForAnime(animeId){
       // 1) preferir si el propio data incluye genres
       const local = (data[animeId] && data[animeId].genres) ? data[animeId].genres : null;
       if(local && local.length){ renderGenres(local); return; }
 
-      // 2) intentar parsear index.txt (o index.html) para extraer const animes = [.]
+      // 2) intentar parsear index.txt (o index.html) para extraer const animes = [...]
       // ruta probada: 'index.txt' y 'index.html' (intentar ambas)
       const tries = ['index.txt','index.html'];
       let tried = 0;
@@ -2740,7 +2734,7 @@ function renderDetail(animeId) {
         const url = tries[tried++];
 
         fetch(url).then(r => r.text()).then(text => {
-          // localizar la declaración "const animes = [ . ]"
+          // localizar la declaración "const animes = [ ... ]"
           const m = text.match(/const\s+animes\s*=\s*(\[[\s\S]*?\])\s*;/m);
           if(!m){ tryNext(); return; }
           try {
@@ -2748,7 +2742,7 @@ function renderDetail(animeId) {
             const arrayLiteral = m[1];
             // convertir a JS: usamos Function para evaluar la sintaxis JS (no JSON)
             const arr = (new Function('return ' + arrayLiteral))();
-            // buscar por id (algunos items en index tienen {id:1,})
+            // buscar por id (algunos items en index tienen {id:1,...})
             const item = arr.find(it => Number(it.id) === Number(animeId) || Number(it.id) === animeId);
             if(item && item.genres && item.genres.length){ renderGenres(item.genres); return; }
             // si el index usa objetos sin "id" numérico, intentar encontrar por title similar
@@ -2862,10 +2856,6 @@ function renderDetail(animeId) {
         }, { once:true });
       }
     })();
-
-    // finalmente, render del detalle
-    renderDetail(id);
-
   </script>
 </body>
 </html>
