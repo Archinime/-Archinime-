@@ -313,15 +313,12 @@
   .results-text .count{ font-size:0.88rem; }
 
   /* grid más compacto para mostrar más miniaturas en pantalla */
-  .grid{
-    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-    gap:0.8rem;
+  .grid {
+    gap: 0.6rem;
+    grid-template-columns: repeat(3, 1fr); /* 3 por fila en móvil también */
   }
-  .card img{ height:180px; object-fit:cover; }
-
-  /* reduce logo size */
-  header h1{ font-size:1.35rem; }
-  header h1 img#logo{ width:34px; height:34px; }
+  .card { aspect-ratio: 2 / 3; } /* mantiene proporción */
+  .card img { object-fit: contain; }
 }
 
 /* ajuste extra para pantallas muy pequeñas (≤420px) */
