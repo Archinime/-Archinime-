@@ -277,30 +277,62 @@
     @keyframes shimmerMove { to { left:120%; } }
 
     /* —————— Media query para móviles (≤600px) —————— */
-    @media (max-width: 600px) {
-      header {
-        flex-wrap: wrap;
-        padding: 0.5rem 1rem;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-      header select, header input#search,
-      #genre-select, #rating-select {
-        flex: 1 1 100%;
-        max-width: 100%;
-        padding: 0.4rem;
-        font-size: 0.9rem;
-      }
-      #support {
-        display: flex; flex-direction: column; align-items: center;
-      }
-      #tiktok-btn, #youtube-btn {
-        width: 50px; height: 50px; margin: 0.3rem 0;
-      }
-      #support-text {
-        font-size: 0.75rem; text-align: center;
-      }
-    }
+@media (max-width: 780px) {
+  header {
+    padding: 0.6rem 0.9rem;
+    gap: 0.5rem;
+  }
+
+  /* En pantallas pequeñas: dos controles por fila
+     Aplicamos los estilos a todos los hijos del header excepto el h1,
+     así no hace falta cambiar el markup y la versión de escritorio queda igual.
+  */
+  header > :not(h1) {
+    box-sizing: border-box;
+  }
+  header > :not(h1) {
+    flex: 0 0 calc(50% - 0.45rem);
+    max-width: calc(50% - 0.45rem);
+  }
+
+  /* reduce padding y tamaño de los inputs/selects para que entren 2 */
+  header select, header input {
+    padding: 0.42rem .6rem;
+    font-size: 0.86rem;
+    border-radius:6px;
+  }
+  #search{ width:100%; min-width:0; }
+
+  /* resultados (badge) más compacta y forzar a ocupar la mitad si queremos */
+  .results-wrapper {
+    flex: 0 0 calc(50% - 0.45rem);
+    justify-content:flex-end;
+  }
+  .results-badge { padding:.36rem .5rem; font-size:0.82rem; }
+  .results-text .label{ font-size:0.62rem; }
+  .results-text .count{ font-size:0.88rem; }
+
+  /* grid más compacto para mostrar más miniaturas en pantalla */
+  .grid{
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+    gap:0.8rem;
+  }
+  .card img{ height:180px; object-fit:cover; }
+
+  /* reduce logo size */
+  header h1{ font-size:1.35rem; }
+  header h1 img#logo{ width:34px; height:34px; }
+}
+
+/* ajuste extra para pantallas muy pequeñas (≤420px) */
+@media (max-width: 420px) {
+  header > :not(h1) {
+    flex: 0 0 calc(50% - 0.35rem);
+    max-width: calc(50% - 0.35rem);
+  }
+  .card img { height:160px; }
+  .results-panel { right: 0; left: auto; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
+}
 
     /* Animación del gradiente para el título (Archinime) */
     @keyframes gradientMove {
@@ -354,7 +386,6 @@
       <option>Comedia</option>
       <option>Comedia oscura</option>
       <option>Cosplay</option>
-      <option>Crimen</option>
       <option>Cyberpunk</option>
       <option>Deportivo</option>
       <option>Dibujo Animado</option>
@@ -382,6 +413,7 @@
       <option>Musical</option>
       <option>Nekketsu</option>
       <option>Parodia</option>
+      <option>Policial</option>
       <option>Post-apocalíptico</option>
       <option>Psicológico</option>
       <option>Reverse Harem</option>
@@ -577,7 +609,7 @@
       {id:23, title:"Kanchigai no Atelier Meister", img:"atelier1.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Acción","Shōnen"]},
       {id:24, title:"Definitivamente. ¡No me gusta mi hermano para nada!", img:"Oni.jpg", rating:4.1, genres:["Comedia","Romance","Slice of Life","Harem","Ecchi","Seinen"]},
       {id:25, title:"Kaiju No. 8", img:"kaijuportada.jpg", rating:4.9, genres:["Sobrenatural","Fantasía oscura","Acción","Ciencia ficción","Aventura","Comedia","Kaiju","Shōnen"]},
-      {id:26, title:"Zootopia", img:"zootopiaportada.jpg", rating:4.7, genres:["Aventura","Comedia","Crimen","Infantil","Familiar","Misterio","Animación","Dibujo Animado","Kodomo"]},
+      {id:26, title:"Zootopia", img:"zootopiaportada.jpg", rating:4.7, genres:["Aventura","Comedia","Policial","Infantil","Familiar","Misterio","Animación","Dibujo Animado","Kodomo"]},
       {id:27, title:"Clevatess -Majuu no Ou to Akago", img:"Clevatessportada.jpg", rating:4.8, genres:["Acción","Fantasía","Drama","Seinen"]},
       {id:28, title:"Dr. Stone", img:"Dr._Stoneportada.jpg", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Post-apocalíptico","Shōnen"]},
       {id:29, title:"One Piece (Live Action)", img:"onepieceportada.jpg", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama","Shōnen"]},
@@ -598,6 +630,7 @@
       {id:44, title:"Uzumaki", img:"uzumakii.jpg", rating:4.2, genres:["Horror","Seinen"]},
       {id:45, title:"Tondemo Skill de Isekai Hourou Meshi", aliases: ["Campfire Cooking in Another World with My Absurd Skills"], img:"todemo.jpg", rating:4.9, genres:["Comedia","Fantasía","Slice of Life","Cocina","Aventura","Shōnen"]},
       {id:46, title:"My Dress-Up Darling", aliases: ["Sono Bisque Doll wa Koi wo Suru"], img:"muneca.jpg", rating:4.9, genres:["Comedia","Romance","Slice of Life","Escolar","Cosplay","Seinen"]},
+      {id:47, title:"Hazbin Hotel", aliases: ["Hotel Hazbin"], img:"hhzz.jpg", rating:4.8, genres:["Comedia","Musical","Drama","Animación","Policial","Seijin"]},
 
     ];
 
