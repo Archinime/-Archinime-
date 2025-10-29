@@ -325,13 +325,11 @@
 }
 
 /* ajuste extra para pantallas muy pequeñas (≤420px) */
-@media (max-width: 420px) {
-  header > :not(h1) {
-    flex: 0 0 calc(50% - 0.35rem);
-    max-width: calc(50% - 0.35rem);
+@media (max-width: 780px) {
+  .card img {
+    height: 180px;     /* o 160px si prefieres más compacto */
+    object-fit: contain;
   }
-  .card img { height:160px; }
-  .results-panel { right: 0; left: auto; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
 }
 
     /* Animación del gradiente para el título (Archinime) */
