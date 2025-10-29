@@ -283,6 +283,21 @@
     gap: 0.5rem;
     align-items: center;
   }
+header h1 {
+  margin-right: 0.6rem; /* prueba 0.6rem, sube a 0.9rem si quieres más separación */
+}
+
+/* Asegura que el wrapper de resultados no quede pegado al borde */
+.results-wrapper {
+  margin-left: 0.35rem; /* espacio extra entre controles y el badge */
+  padding-left: 0;      /* prevenir desplazamientos no deseados */
+}
+
+/* Ajuste fino para pantallas muy pequeñas */
+@media (max-width: 420px) {
+  header h1 { margin-right: 0.45rem; }
+  .results-wrapper { margin-left: 0.18rem; }
+}
 
   /* Reordenamos: queremos que el título y el botón de resultados queden juntos en la primera fila,
      y que los selects / input se envuelvan debajo. Para no tocar el HTML, usamos order y flex. */
@@ -296,41 +311,45 @@
   }
 
   /* Colocamos la results-wrapper justo después del título */
-.results-wrapper {
-  order: 1;
-  flex: 0 0 auto;
-  margin-left: auto;      /* empuja el badge al extremo derecho del header */
-  margin-right: 0;
-  padding-left: 0.6rem;   /* separación extra del título */
-  justify-content:flex-end;
-  align-items:center;
-}
+  .results-wrapper {
+    order: 1;
+    flex: 0 0 auto;            /* ocupa el ancho que necesite junto al título */
+    margin-left: 0;
+    margin-right: .6rem;
+    justify-content:flex-start;
+    align-items:center;
+    gap:.5rem;
+  }
 
-/* un margin-right en el título para que nunca quede pegado */
-header h1 {
-  margin-right: 0.6rem;
-}
+  /* El resto de controles (selects, input) van después y pueden ocupar dos por fila */
+  header > :not(h1):not(.results-wrapper) {
+    box-sizing: border-box;
+    order: 2;
+    flex: 0 0 calc(50% - 0.45rem);
+    max-width: calc(50% - 0.45rem);
+  }
 
-/* controles más pequeños en móvil para que no ocupen tanto y no "empujen" */
-header select, header input {
-  padding: 0.34rem .5rem;
-  font-size: 0.84rem;
-  border-radius:6px;
-  min-height:36px;
-  max-height:40px;
-}
+  /* reduce padding y tamaño de los inputs/selects para que entren 2 */
+  header select, header input {
+    padding: 0.42rem .6rem;
+    font-size: 0.86rem;
+    border-radius:6px;
+  }
+  #search{ width:100%; min-width:0; }
 
-/* intentamos que las opciones nativas se vean más compactas en navegadores que respeten CSS */
-header select option {
-  padding: .32rem .5rem;
-  font-size: 0.95rem;
-  line-height:1.15;
-}
+  /* Ajustes específicos para la apariencia del badge en móvil (más compacto)
+     y para que no empuje al título si hay poco espacio. */
+  .results-badge { padding:.32rem .6rem; font-size:0.78rem; }
+  .results-text .label{ font-size:0.6rem; }
+  .results-text .count{ font-size:0.86rem; line-height:1; }
 
-/* grid y tarjetas: mantenemos tu 3 por fila pero con separación cómoda */
-.grid { gap: 0.6rem; grid-template-columns: repeat(3, 1fr); }
-.card { aspect-ratio: 2 / 3; }
-.card img { object-fit: contain; }
+  /* grid más compacto para mostrar más miniaturas en pantalla */
+  .grid {
+    gap: 0.6rem;
+    grid-template-columns: repeat(3, 1fr); /* 3 por fila en móvil también */
+  }
+  .card { aspect-ratio: 2 / 3; } /* mantiene proporción */
+  .card img { object-fit: contain; }
 
   /* Aseguramos que el panel de filtros se posicione al lado del badge (no fuera de pantalla) */
   .results-panel {
@@ -822,83 +841,7 @@ header select option {
     document.getElementById('genre-select').addEventListener('change', filtro);
     document.getElementById('rating-select').addEventListener('change', filtro);
     document.getElementById('demographic-select').addEventListener('change', filtro);
-/* --------- Popup de opciones compacto para selects en móvil --------- */
-(function(){
-  function isMobileWidth(){ return window.matchMedia('(max-width: 780px)').matches; }
-  if (!isMobileWidth()) return;
 
-  const selects = Array.from(document.querySelectorAll('header select'));
-  let currentPopup = null;
-
-  function closePopup() {
-    if (currentPopup) { currentPopup.remove(); currentPopup = null; }
-    document.removeEventListener('click', onDocClick);
-  }
-  function onDocClick(e) {
-    if (currentPopup && !currentPopup.contains(e.target) && !e.target.matches('header select')) closePopup();
-  }
-
-  selects.forEach(sel => {
-    // click handler: mostramos nuestro popup compacto
-    sel.addEventListener('click', function(e){
-      // intentamos prevenir el desplegable nativo; en algunos navegadores esto no lo evitará
-      e.preventDefault();
-      e.stopPropagation();
-
-      // cerrar si ya hay uno
-      if (currentPopup) { closePopup(); }
-
-      // crear popup
-      const popup = document.createElement('div');
-      popup.className = 'mobile-select-popup';
-
-      // generar opciones
-      Array.from(sel.options).forEach(opt => {
-        const div = document.createElement('div');
-        div.className = 'opt';
-        div.textContent = opt.textContent;
-        div.dataset.value = opt.value;
-        if (opt.selected) div.style.fontWeight = '700';
-        div.addEventListener('click', function(){
-          sel.value = this.dataset.value;
-          // disparar change
-          const evt = new Event('change', { bubbles: true });
-          sel.dispatchEvent(evt);
-          // función filtro si existe
-          if (typeof filtro === 'function') filtro();
-          closePopup();
-        });
-        popup.appendChild(div);
-      });
-
-      document.body.appendChild(popup);
-      currentPopup = popup;
-
-      // posicionar popup: preferimos debajo del select; ajustamos si sale de la pantalla
-      const rect = sel.getBoundingClientRect();
-      const popupRect = popup.getBoundingClientRect();
-      let top = rect.bottom + window.scrollY + 6;
-      let left = rect.left + window.scrollX;
-      // evitar overflow derecho
-      if (left + popupRect.width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - popupRect.width - 8);
-      // si no cabe abajo, colocarlo encima
-      if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
-        top = rect.top + window.scrollY - popupRect.height - 6;
-      }
-      popup.style.left = left + 'px';
-      popup.style.top = top + 'px';
-
-      // cerrar al click fuera (defer para no cerrarlo inmediatamente)
-      setTimeout(() => document.addEventListener('click', onDocClick), 10);
-    }, { passive: false });
-  });
-
-  // cerrar al rotar/resize
-  window.addEventListener('orientationchange', closePopup);
-  window.addEventListener('resize', () => {
-    if (!isMobileWidth()) closePopup();
-  });
-})();
   </script>
 </body>
 </html>
