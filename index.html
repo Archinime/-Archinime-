@@ -276,21 +276,40 @@
     }
     @keyframes shimmerMove { to { left:120%; } }
 
-    /* —————— Media query para móviles (≤600px) —————— */
+    /* —————— Media query para móviles (≤780px) —————— */
 @media (max-width: 780px) {
   header {
     padding: 0.6rem 0.9rem;
     gap: 0.5rem;
+    align-items: center;
   }
 
-  /* En pantallas pequeñas: dos controles por fila
-     Aplicamos los estilos a todos los hijos del header excepto el h1,
-     así no hace falta cambiar el markup y la versión de escritorio queda igual.
-  */
-  header > :not(h1) {
+  /* Reordenamos: queremos que el título y el botón de resultados queden juntos en la primera fila,
+     y que los selects / input se envuelvan debajo. Para no tocar el HTML, usamos order y flex. */
+
+  /* Forzar que el título no se reduzca y quede en la primera fila */
+  header h1{
     box-sizing: border-box;
+    flex: 0 0 auto;
+    order: 0;
+    white-space: nowrap;
   }
-  header > :not(h1) {
+
+  /* Colocamos la results-wrapper justo después del título */
+  .results-wrapper {
+    order: 1;
+    flex: 0 0 auto;            /* ocupa el ancho que necesite junto al título */
+    margin-left: 0;
+    margin-right: .6rem;
+    justify-content:flex-start;
+    align-items:center;
+    gap:.5rem;
+  }
+
+  /* El resto de controles (selects, input) van después y pueden ocupar dos por fila */
+  header > :not(h1):not(.results-wrapper) {
+    box-sizing: border-box;
+    order: 2;
     flex: 0 0 calc(50% - 0.45rem);
     max-width: calc(50% - 0.45rem);
   }
@@ -303,14 +322,11 @@
   }
   #search{ width:100%; min-width:0; }
 
-  /* resultados (badge) más compacta y forzar a ocupar la mitad si queremos */
-  .results-wrapper {
-    flex: 0 0 calc(50% - 0.45rem);
-    justify-content:flex-end;
-  }
-  .results-badge { padding:.36rem .5rem; font-size:0.82rem; }
-  .results-text .label{ font-size:0.62rem; }
-  .results-text .count{ font-size:0.88rem; }
+  /* Ajustes específicos para la apariencia del badge en móvil (más compacto)
+     y para que no empuje al título si hay poco espacio. */
+  .results-badge { padding:.32rem .6rem; font-size:0.78rem; }
+  .results-text .label{ font-size:0.6rem; }
+  .results-text .count{ font-size:0.86rem; line-height:1; }
 
   /* grid más compacto para mostrar más miniaturas en pantalla */
   .grid {
@@ -319,14 +335,33 @@
   }
   .card { aspect-ratio: 2 / 3; } /* mantiene proporción */
   .card img { object-fit: contain; }
+
+  /* Aseguramos que el panel de filtros se posicione al lado del badge (no fuera de pantalla) */
+  .results-panel {
+    right: auto;
+    left: 0;
+    top: calc(100% + .4rem);
+    min-width: 220px;
+    max-width: 320px;
+  }
 }
 
 /* ajuste extra para pantallas muy pequeñas (≤420px) */
 @media (max-width: 420px) {
+  header > :not(h1):not(.results-wrapper) {
+    flex: 0 0 calc(50% - 0.35rem);
+    max-width: calc(50% - 0.35rem);
+  }
   .card img {
     height: 160px;
     object-fit: contain;
   }
+  /* en pantallas muy pequeñas, reducimos aún más el badge para que quepa junto al título */
+  .results-badge { padding:.28rem .46rem; font-size:0.72rem; gap:.4rem; }
+  .results-text .label{ font-size:0.56rem; }
+  .results-text .count{ font-size:0.82rem; }
+  /* Si la pantalla es extremadamente angosta, el panel volverá a alinearse a la derecha */
+  .results-panel { left: auto; right: 0; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
 }
 
     /* Animación del gradiente para el título (Archinime) */
