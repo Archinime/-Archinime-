@@ -22,17 +22,20 @@
       color:#fff;
     }
 
-    /* Fondo galaxia */
+    /* Fondo galaxia
+       - video debe estar detrás de todo (-2)
+       - overlay ocupa la parte superior (-1) mientras carga y luego se oculta (display:none)
+    */
     #bg-video{
       position:fixed;
       top:0; left:0;
       width:100%; height:100%;
       object-fit:cover;
-      z-index:-2;
+      z-index:-2;                  /* detrás del overlay y demás */
       will-change: opacity, transform;
-      opacity:0;
+      opacity:0;                   /* oculto hasta que esté realmente reproduciéndose */
       transition:opacity .6s ease;
-      background:#000;
+      background:#000;             /* color de fallback mientras se carga */
       pointer-events:none;
     }
 
@@ -40,13 +43,13 @@
       position:fixed;
       top:0; left:0;
       width:100%; height:100%;
-      z-index:-1;
+      z-index:-1;                  /* encima del video al inicio */
       will-change: background, opacity;
       background: url('galaxia-poster.jpg') center/cover no-repeat,
                   linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
       opacity:1;
       transition:opacity .6s ease;
-      pointer-events:none;
+      pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
     }
 
     /* Botón circular de apoyo */
@@ -75,24 +78,28 @@
       display:flex; align-items:center; gap:1rem;
       background:rgba(0,0,0,0.7); backdrop-filter:blur(5px);
       z-index:10; transition:background .3s;
+      /* permitimos que otros elementos puedan envolver, pero protegeremos el título */
       flex-wrap:wrap;
     }
     header.scrolled{background:rgba(0,0,0,0.95);}
+    /* Título + logo: forzar que se mantengan en la misma línea siempre */
     header h1{
-      cursor:pointer;
+      cursor:pointer; 
       font-size:1.8rem;
       font-weight: 800;
+
       background: linear-gradient(135deg, #00fff7, #ff00cc, #ffd700);
       background-size:300% 300%;
-      -webkit-background-clip:text;
+      -webkit-background-clip:text; 
       background-clip:text;
       -webkit-text-fill-color:transparent;
       display:flex; align-items:center; gap:.6rem;
-      flex:0 0 auto;
-      white-space:nowrap;
+      flex:0 0 auto;             /* evita que el h1 se reduzca/encole o salte a otra línea */
+      white-space:nowrap;        /* evita el quiebre de línea entre logo y texto */
       animation: gradientMove 6s ease infinite, fadeIn 2s ease-in-out;
     }
 
+    /* Logo pequeño al lado del título */
     header h1 img#logo {
       width:42px;
       height:42px;
@@ -102,7 +109,14 @@
       display:block;
       flex:0 0 auto;
     }
-
+    header h1 img#logo {
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      border-radius:6px;
+      background:transparent;
+      display:block;
+    }
     header select, header input{
       padding:.5rem 1rem; border:none; border-radius:5px;
       font-size:1rem; transition:box-shadow .3s;
@@ -141,7 +155,7 @@
       padding:2px 6px; border-radius:4px; font-size:.85rem;
     }
 
-    /* RESULTS */
+    /* ------------------ RESULTS: barra colorida, iluminada e interactiva ------------------ */
     .results-wrapper {
       margin-left: auto; display:flex; align-items:center; gap:0.6rem;
       position:relative; z-index:12;
@@ -205,7 +219,7 @@
     }
     .clear-btn:hover{ transform:translateY(-3px); }
 
-    /* no-results styles omitted (kept) */
+    /* ------------------ NO-RESULTS estilado, colorido e interactivo ------------------ */
     .no-results {
       grid-column: 1 / -1;
       padding: 2.6rem;
@@ -225,34 +239,69 @@
       transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
     }
     .no-results:hover{ transform:translateY(-6px); box-shadow:0 28px 80px rgba(0,0,0,0.66); }
-    .no-results .title { font-size:1.45rem; font-weight:900; margin-bottom:0.35rem; }
-    .no-results .subtitle { font-size:1rem; color:rgba(255,255,255,0.86); max-width:780px; line-height:1.4; margin-bottom:1rem; }
 
-    /* --- Popup compacto para selects (fuera del @media) --- */
-    .mobile-select-popup {
-      position: absolute;
-      z-index: 1200;
-      background: rgba(2,2,6,0.98);
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:8px;
-      box-shadow:0 20px 50px rgba(0,0,0,0.6);
-      max-height: 200px;
-      min-width: 140px;
-      overflow:auto;
-      padding: 0.25rem;
-      font-size: 0.92rem;
+    .no-results .title {
+      font-size:1.45rem; font-weight:900;
+      background: linear-gradient(90deg,#fff 0%, #ffd700 50%, #00fff7 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow: 0 6px 26px rgba(0,0,0,0.6);
+      margin-bottom:0.35rem;
     }
-    .mobile-select-popup .opt {
-      padding: .28rem .45rem;
-      border-radius:6px;
-      margin: .08rem 0;
-      font-size:0.92rem;
-      line-height:1.05;
-      cursor:pointer;
+    .no-results .subtitle {
+      font-size:1rem; color:rgba(255,255,255,0.86);
+      max-width:780px; line-height:1.4; margin-bottom:1rem;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.45);
     }
-    .mobile-select-popup .opt[aria-selected="true"],
-    .mobile-select-popup .opt.selected { font-weight:700; }
-    .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.03); }
+
+    .no-results .sparkles {
+      display:flex; gap:0.5rem; align-items:center;
+    }
+    .btn-reset {
+      padding:.6rem .9rem; border-radius:10px; border:none; font-weight:800;
+      background:linear-gradient(90deg,#00fff7,#8b5cf6); color:#04111a; cursor:pointer;
+      box-shadow:0 14px 46px rgba(0,255,247,0.06); transition: transform .12s ease;
+    }
+    .btn-reset:hover{ transform:translateY(-3px); }
+
+    /* shimmer (brillo) en el mensaje */
+    .shimmer {
+      position:relative; overflow:hidden; display:inline-block;
+    }
+    .shimmer:after {
+      content:""; position:absolute; left:-120%; top:0; height:100%; width:120%;
+      background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0) 100%);
+      transform:skewX(-18deg);
+      animation: shimmerMove 2.6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes shimmerMove { to { left:120%; } }
+/* --- Popup compacto para selects (fuera del @media, en el mismo <style>) --- */
+.mobile-select-popup {
+  position: absolute;
+  z-index: 1200;
+  background: rgba(2,2,6,0.98);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:8px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+  max-height: 200px;     /* más compacto: no ocupa toda la pantalla */
+  min-width: 140px;
+  overflow:auto;
+  padding: 0.25rem;
+  font-size: 0.92rem;
+}
+
+/* Opciones dentro del popup más compactas */
+.mobile-select-popup .opt {
+  padding: .28rem .45rem;
+  border-radius:6px;
+  margin: .08rem 0;
+  font-size:0.92rem;
+  line-height:1.05;
+  cursor:pointer;
+}
+.mobile-select-popup .opt[aria-selected="true"],
+.mobile-select-popup .opt.selected { font-weight:700; }
+.mobile-select-popup .opt:hover { background: rgba(255,255,255,0.03); }
 
     /* —————— Media query para móviles (≤780px) —————— */
 @media (max-width: 780px) {
@@ -261,14 +310,24 @@
     gap: 0.5rem;
     align-items: center;
   }
+header h1 {
+  margin-right: 0.6rem; /* prueba 0.6rem, sube a 0.9rem si quieres más separación */
+}
 
-  header h1 {
-    margin-right: 0.6rem;
-  }
-  .results-wrapper {
-    margin-left: 0.35rem;
-    padding-left: 0;
-  }
+/* Asegura que el wrapper de resultados no quede pegado al borde */
+.results-wrapper {
+  margin-left: 0.35rem; /* espacio extra entre controles y el badge */
+  padding-left: 0;      /* prevenir desplazamientos no deseados */
+}
+
+/* Ajuste fino para pantallas muy pequeñas */
+@media (max-width: 420px) {
+  header h1 { margin-right: 0.45rem; }
+  .results-wrapper { margin-left: 0.18rem; }
+}
+
+  /* Reordenamos: queremos que el título y el botón de resultados queden juntos en la primera fila,
+     y que los selects / input se envuelvan debajo. Para no tocar el HTML, usamos order y flex. */
 
   /* Forzar que el título no se reduzca y quede en la primera fila */
   header h1{
@@ -281,7 +340,7 @@
   /* Colocamos la results-wrapper justo después del título */
   .results-wrapper {
     order: 1;
-    flex: 0 0 auto;
+    flex: 0 0 auto;            /* ocupa el ancho que necesite junto al título */
     margin-left: 0;
     margin-right: .6rem;
     justify-content:flex-start;
@@ -289,7 +348,7 @@
     gap:.5rem;
   }
 
-  /* Controles ocupando dos por fila */
+  /* El resto de controles (selects, input) van después y pueden ocupar dos por fila */
   header > :not(h1):not(.results-wrapper) {
     box-sizing: border-box;
     order: 2;
@@ -297,45 +356,29 @@
     max-width: calc(50% - 0.45rem);
   }
 
-  /* selects e inputs más compactos en móvil */
+  /* reduce padding y tamaño de los inputs/selects para que entren 2 */
   header select, header input {
-    padding: 0.28rem .45rem;
-    font-size: 0.82rem;
-    border-radius:6px;
-    min-height:34px;
-    max-height:38px;
-    line-height:1.05;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  header select option {
-    padding: .22rem .4rem;
+    padding: 0.42rem .6rem;
     font-size: 0.86rem;
-    line-height:1.1;
+    border-radius:6px;
   }
-  header select {
-    background-image: linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.15) 50%),
-                      linear-gradient(135deg, rgba(0,0,0,0.15) 50%, transparent 50%),
-                      linear-gradient(to right, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
-    background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px), 100% 0;
-    background-size: 6px 6px, 6px 6px, 1px 1.5em;
-    background-repeat: no-repeat;
-    padding-right: 2.1rem;
-  }
-
   #search{ width:100%; min-width:0; }
 
+  /* Ajustes específicos para la apariencia del badge en móvil (más compacto)
+     y para que no empuje al título si hay poco espacio. */
   .results-badge { padding:.32rem .6rem; font-size:0.78rem; }
   .results-text .label{ font-size:0.6rem; }
   .results-text .count{ font-size:0.86rem; line-height:1; }
 
+  /* grid más compacto para mostrar más miniaturas en pantalla */
   .grid {
     gap: 0.6rem;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* 3 por fila en móvil también */
   }
-  .card { aspect-ratio: 2 / 3; }
+  .card { aspect-ratio: 2 / 3; } /* mantiene proporción */
   .card img { object-fit: contain; }
 
+  /* Aseguramos que el panel de filtros se posicione al lado del badge (no fuera de pantalla) */
   .results-panel {
     right: auto;
     left: 0;
@@ -355,21 +398,31 @@
     height: 160px;
     object-fit: contain;
   }
+  /* en pantallas muy pequeñas, reducimos aún más el badge para que quepa junto al título */
   .results-badge { padding:.28rem .46rem; font-size:0.72rem; gap:.4rem; }
   .results-text .label{ font-size:0.56rem; }
   .results-text .count{ font-size:0.82rem; }
+  /* Si la pantalla es extremadamente angosta, el panel volverá a alinearse a la derecha */
   .results-panel { left: auto; right: 0; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
 }
 
+    /* Animación del gradiente para el título (Archinime) */
     @keyframes gradientMove {
       0%   { background-position: 0% 50%; }
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+@media (max-width: 780px) {
+  .container{
+    margin: 1rem auto 1rem;   /* espacio superior aún menor en móviles */
+    padding: 0 0.9rem;
+  }
+
   </style>
 </head>
 <body>
 
+  <!-- Vídeo de fondo (agregado poster para que el navegador muestre la imagen hasta que haya primer frame) -->
   <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline>
     <source src="https://www.dropbox.com/scl/fi/ex4qhvjtx54blr92d0saj/yyyy.mp4?rlkey=ip9vhlhlsl1ye7el3onl1u2ug&st=f8o90thc&raw=1" type="video/mp4">
   </video>
@@ -380,6 +433,7 @@
     Tu navegador no soporta el audio.
   </audio>
 
+  <!-- Botones circulares de apoyo (ahora usan JS para abrir en nueva ventana/pestaña) -->
   <div id="support">
     <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña"
             onclick="openInNewTab('https://www.youtube.com/@Archinime-k2g')">
@@ -457,6 +511,8 @@
       <option>Yuri</option>
     </select>
 
+
+    <!-- NUEVO: Select para Demografías -->
     <select id="demographic-select" onchange="filtro()">
       <option value="">Todas las demografías</option>
       <option>Gekiga</option>
@@ -477,6 +533,7 @@
 
     <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()">
 
+    <!-- ---------- RESULTADOS: barra a un costado (arriba) ---------- -->
     <div class="results-wrapper" id="results-wrapper" aria-live="polite">
       <div class="results-badge" id="results-badge" role="button" aria-expanded="false" tabindex="0"
            title="Mostrar filtros aplicados">
@@ -516,32 +573,63 @@
   </main>
 
   <script>
-    // ---- Manejo del video de fondo ----
+    // ---- Manejo del video de fondo: mostrar poster mientras carga y revelar el video solo cuando se esté reproduciendo ----
     window.addEventListener('DOMContentLoaded', () => {
       const video = document.getElementById('bg-video');
       const overlay = document.getElementById('overlay');
+      const tapToPlay = document.getElementById('tap-to-play');
+
+      // Seguridad: atributos esenciales
       try { video.preload = video.getAttribute('preload') || 'auto'; } catch(e){ console.warn(e); }
       video.muted = true;
       video.playsInline = true;
+
+      // función que revela el video y oculta el overlay (con transición)
       const revealVideo = () => {
+        // mostrar video
         video.style.opacity = '1';
+        // ocultar overlay suavemente
         overlay.style.opacity = '0';
       };
+
+      // cuando la transición de overlay termine y esté en 0, lo quitamos del flujo (display:none)
       overlay.addEventListener('transitionend', (ev) => {
         if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') {
           overlay.style.display = 'none';
         }
       });
-      video.addEventListener('playing', () => { revealVideo(); }, { once: true });
-      video.addEventListener('canplaythrough', () => { video.play().catch(()=>{}); }, { once: true });
-      video.addEventListener('loadeddata', () => { video.play().catch(()=>{}); }, { once: true });
-      const AUTOPLAY_TIMEOUT = 4000;
+
+      // REVELAR solo cuando el video realmente esté reproduciéndose
+      video.addEventListener('playing', () => {
+        // si llega el evento playing sabemos que ya hay frames y audio (si aplica) reproduciéndose
+        revealVideo();
+      }, { once: true });
+
+      // Intentamos reproducir en cuanto pueda cargarse (pero no ocultamos overlay hasta 'playing')
+      video.addEventListener('canplaythrough', () => {
+        video.play().catch(()=>{ /* autoplay bloqueado: esperamos click */ });
+      }, { once: true });
+
+      // También intentamos reproducir al menos en 'loadeddata'
+      video.addEventListener('loadeddata', () => {
+        video.play().catch(()=>{ /* autoplay bloqueado: esperamos click */ });
+      }, { once: true });
+
+      // Si después de X ms no hemos recibido 'playing', asumimos que el autoplay fue bloqueado:
+      // intentamos reproducir al primer click del usuario (sin mostrar botón visual).
+      const AUTOPLAY_TIMEOUT = 4000; // ms (ajustable)
       setTimeout(() => {
+        // si aún no está reproduciéndose (no se ha disparado 'playing')
         if (getComputedStyle(video).opacity === '0') {
-          const tryPlay = () => { video.play().catch(()=>{}); };
+          const tryPlay = () => {
+            video.play().catch(()=>{});
+          };
+          // intentamos reproducir al click/tap del documento
           document.addEventListener('click', tryPlay, { once: true });
         }
       }, AUTOPLAY_TIMEOUT);
+
+      // Nota: no forzamos ocultar overlay nunca antes de 'playing' — esto evita el parpadeo a negro.
     });
 
     // ---- Audio autoplay robusto ----
@@ -550,6 +638,7 @@
       try { audio.loop = true; } catch(e){ console.warn(e); }
       audio.volume = 0.8;
       audio.play().catch(() => {
+        // si autoplay es bloqueado, reproducir al primer click
         document.addEventListener('click', () => { audio.play().catch(()=>{}); }, { once: true });
       });
       audio.addEventListener('ended', () => {
@@ -557,12 +646,14 @@
       });
     });
 
+    // Abre en nueva pestaña/ventana
     function openInNewTab(url) {
       const win = window.open(url, '_blank', 'noopener,noreferrer');
       try { setTimeout(() => { if (typeof window.focus === 'function') window.focus(); }, 100); } catch(e){ console.warn(e); }
       return win;
     }
 
+    // Normaliza texto (quita tildes y pasa a minúsculas)
     function normalizeText(s) {
       return String(s || '')
         .normalize('NFD')
@@ -618,7 +709,9 @@
       {id:45, title:"Tondemo Skill de Isekai Hourou Meshi", aliases: ["Campfire Cooking in Another World with My Absurd Skills"], img:"todemo.jpg", rating:4.9, genres:["Comedia","Fantasía","Slice of Life","Cocina","Aventura","Shōnen"]},
       {id:46, title:"My Dress-Up Darling", aliases: ["Sono Bisque Doll wa Koi wo Suru"], img:"muneca.jpg", rating:4.9, genres:["Comedia","Romance","Slice of Life","Escolar","Cosplay","Seinen"]},
       {id:47, title:"Hazbin Hotel", aliases: ["Hotel Hazbin"], img:"hhzz.jpg", rating:4.8, genres:["Comedia","Musical","Drama","Animación","Policial","Seijin"]},
+
     ];
+
 
     function render(list) {
       const grid = document.getElementById('grid');
@@ -632,6 +725,7 @@
             </div>
           </div>
         `;
+        // enlazar el botón limpiar dentro del mensaje
         const btn = document.getElementById('btn-reset');
         if (btn) btn.addEventListener('click', () => {
           document.getElementById('search').value = '';
@@ -664,11 +758,13 @@
       document.querySelectorAll('.card').forEach(c => observer.observe(c));
     }
 
+    // Actualiza el contador visible en header
     function updateResultsCount(count) {
       const el = document.getElementById('results-count');
       if (el) el.textContent = count;
     }
 
+    /* ---------- DEBOUNCE (tu versión) ---------- */
     function debounce(fn, wait) {
       let timeout;
       return (...args) => {
@@ -678,9 +774,12 @@
     }
     const debouncedFiltro = debounce(filtro, 200);
 
+    /* ---------- FILTRO (adaptado: startsWith + orden alfabético y contador) ---------- */
     function getBestTitleForSort(a) {
+      // Devuelve la mejor cadena normalizada entre title y aliases para ordenar
       const titles = [a.title].concat(a.aliases || []);
       const norm = titles.map(t => normalizeText(t));
+      // Elegimos la forma más "corta" lexicográficamente para estabilidad
       norm.sort();
       return norm[0];
     }
@@ -693,6 +792,7 @@
       const d   = document.getElementById('demographic-select').value;
       const cat = document.getElementById('rating-select').value;
 
+      // Filtrado: startsWith en título/alias (prefijo), ignorando tildes
       const filtrados = animes.filter(a => {
         const titles = [a.title].concat(a.aliases || []);
         const matchesText = !qn || titles.some(t => normalizeText(t).startsWith(qn));
@@ -705,6 +805,7 @@
         return matchesText && byGenre && byDemo && byRating;
       });
 
+      // Orden: primero los que empiecen por la query, luego orden alfabético por el título (normalizado)
       let resultList = filtrados.slice();
 
       if (qn) {
@@ -714,6 +815,7 @@
           const aStarts = titlesA.some(t => t.startsWith(qn));
           const bStarts = titlesB.some(t => t.startsWith(qn));
           if (aStarts !== bStarts) return aStarts ? -1 : 1;
+          // si ambos empiezan o ninguno empieza: ordenar alfabéticamente por la mejor forma normalizada
           const na = getBestTitleForSort(A);
           const nb = getBestTitleForSort(B);
           if (na < nb) return -1;
@@ -721,6 +823,7 @@
           return 0;
         });
       } else {
+        // Si no hay query: ordenar alfabéticamente por título normalizado (opcional; si prefieres mantener shuffle, quita esto)
         resultList.sort((A,B) => {
           const na = normalizeText(A.title);
           const nb = normalizeText(B.title);
@@ -730,10 +833,12 @@
         });
       }
 
+      // Renderizar y actualizar contador
       render(resultList);
       updateResultsCount(resultList.length);
     }
 
+    // Función para barajar (Fisher-Yates)
     function shuffleArray(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -741,14 +846,19 @@
       }
     }
 
+    // Barajar el arreglo al cargar la página (se mantiene el comportamiento inicial)
     shuffleArray(animes);
+
+    // Render inicial y establecer contador inicial
     render(animes);
     updateResultsCount(animes.length);
 
+    // Scroll header change
     window.addEventListener('scroll', () => {
       document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
     });
 
+    // Enlazar búsqueda & selects
     if (document.getElementById('search')) {
       document.getElementById('search').addEventListener('input', debouncedFiltro);
       document.getElementById('search').addEventListener('keydown', (e) => {
@@ -759,153 +869,108 @@
     document.getElementById('rating-select').addEventListener('change', filtro);
     document.getElementById('demographic-select').addEventListener('change', filtro);
 
-    /* --- Popup compacto para selects en móvil: toggle + detección por área --- */
-(function () {
-  function onReady(fn){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+/* --- Popup compacto para selects en móvil: versión mejorada --- */
+(function(){
+  function isMobileWidth(){ return window.matchMedia('(max-width: 780px)').matches; }
+  // solo activamos en móvil
+  if (!isMobileWidth()) return;
 
-  onReady(() => {
-    const MOBILE_QUERY = '(max-width: 780px)';
-    function isMobileWidth(){ return window.matchMedia(MOBILE_QUERY).matches; }
+  const selects = Array.from(document.querySelectorAll('header select'));
+  let currentPopup = null;
+  let currentTrigger = null;
 
-    const selects = Array.from(document.querySelectorAll('header select'));
-    if (!selects.length) return;
+  function closePopup() {
+    if (currentPopup) { currentPopup.remove(); currentPopup = null; currentTrigger = null; }
+    document.removeEventListener('pointerdown', onDocPointerDown, true);
+    document.removeEventListener('touchstart', onDocPointerDown, true);
+  }
+  function onDocPointerDown(e) {
+    if (!currentPopup) return;
+    if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
+    closePopup();
+  }
 
-    let currentPopup = null;
-    let currentTrigger = null;
+  function openPopupForSelect(sel) {
+    closePopup();
+    const popup = document.createElement('div');
+    popup.className = 'mobile-select-popup';
+    popup.setAttribute('role','listbox');
 
-    function closePopup() {
-      if (!currentPopup) return;
-      if (currentTrigger) currentTrigger.setAttribute('aria-expanded', 'false');
-      currentPopup.remove();
-      currentPopup = null;
-      currentTrigger = null;
-      document.removeEventListener('pointerdown', onDocPointerDown, true);
-      document.removeEventListener('touchstart', onDocPointerDown, true);
-      document.removeEventListener('keydown', onKeyDown, true);
-    }
-
-    function onDocPointerDown(e){
-      if (!currentPopup) return;
-      if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
-      closePopup();
-    }
-
-    function onKeyDown(e){
-      if (!currentPopup) return;
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        e.preventDefault();
+    Array.from(sel.options).forEach((opt, idx) => {
+      const div = document.createElement('div');
+      div.className = 'opt';
+      div.textContent = opt.textContent;
+      div.dataset.value = opt.value;
+      div.setAttribute('role','option');
+      if (opt.selected) div.setAttribute('aria-selected','true');
+      div.addEventListener('click', function(e){
+        sel.value = this.dataset.value;
+        // dispatch change
+        const evt = new Event('change', { bubbles: true });
+        sel.dispatchEvent(evt);
+        if (typeof filtro === 'function') filtro();
         closePopup();
-      }
-    }
-
-    function openPopupForSelect(sel){
-      if (currentPopup && currentTrigger === sel) { closePopup(); return; }
-      closePopup();
-
-      const popup = document.createElement('div');
-      popup.className = 'mobile-select-popup';
-      popup.setAttribute('role', 'listbox');
-      popup.tabIndex = -1;
-
-      Array.from(sel.options).forEach(opt => {
-        const div = document.createElement('div');
-        div.className = 'opt';
-        div.textContent = opt.textContent;
-        div.dataset.value = opt.value;
-        div.setAttribute('role','option');
-        if (opt.selected) div.setAttribute('aria-selected','true');
-        div.addEventListener('click', e => {
-          sel.value = div.dataset.value;
-          sel.dispatchEvent(new Event('change', { bubbles: true }));
-          if (typeof filtro === 'function') filtro();
-          closePopup();
-          e.stopPropagation();
-        });
-        popup.appendChild(div);
-      });
-
-      document.body.appendChild(popup);
-      currentPopup = popup;
-      currentTrigger = sel;
-      sel.setAttribute('aria-expanded', 'true');
-
-      const rect = sel.getBoundingClientRect();
-      const width = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
-      popup.style.minWidth = width + 'px';
-
-      const popupRect = popup.getBoundingClientRect();
-      let top = rect.bottom + window.scrollY + 6;
-      let left = rect.left + window.scrollX;
-      if (left + width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - width - 8);
-      if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
-        top = rect.top + window.scrollY - popupRect.height - 6;
-      }
-      popup.style.left = left + 'px';
-      popup.style.top = top + 'px';
-
-      popup.focus();
-      setTimeout(() => {
-        document.addEventListener('pointerdown', onDocPointerDown, true);
-        document.addEventListener('touchstart', onDocPointerDown, true);
-        document.addEventListener('keydown', onKeyDown, true);
-      }, 10);
-    }
-
-    function selectAtPoint(x, y) {
-      for (let sel of selects) {
-        const r = sel.getBoundingClientRect();
-        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return sel;
-      }
-      return null;
-    }
-
-    const headerEl = document.querySelector('header');
-    if (headerEl) {
-      headerEl.addEventListener('pointerdown', function(e){
-        if (!isMobileWidth()) return;
-        const selDirect = e.target.closest('select');
-        if (selDirect) {
-          try { e.preventDefault(); } catch(err){}
-          e.stopPropagation();
-          if (currentPopup && currentTrigger === selDirect) closePopup();
-          else openPopupForSelect(selDirect);
-          return;
-        }
-        const selByPoint = selectAtPoint(e.clientX, e.clientY);
-        if (selByPoint) {
-          try { e.preventDefault(); } catch(err){}
-          e.stopPropagation();
-          if (currentPopup && currentTrigger === selByPoint) closePopup();
-          else openPopupForSelect(selByPoint);
-          return;
-        }
-      }, { passive: false });
-    }
-
-    selects.forEach(sel => {
-      if (!sel.hasAttribute('aria-expanded')) sel.setAttribute('aria-expanded', 'false');
-
-      const downHandler = function(e){
-        if (!isMobileWidth()) return;
-        try { e.preventDefault(); } catch(err){}
         e.stopPropagation();
-        if (currentPopup && currentTrigger === sel) closePopup();
-        else openPopupForSelect(sel);
-      };
-      sel.addEventListener('pointerdown', downHandler, { passive: false });
-      sel.addEventListener('touchstart', downHandler, { passive: false });
-      sel.addEventListener('click', function(e){
-        if (!isMobileWidth()) return;
-        e.preventDefault(); e.stopPropagation();
-        if (currentPopup && currentTrigger === sel) closePopup();
-        else openPopupForSelect(sel);
-      }, { passive: false });
+      });
+      popup.appendChild(div);
     });
 
-    window.addEventListener('orientationchange', closePopup);
-    window.addEventListener('resize', () => { if (!isMobileWidth()) closePopup(); });
+    document.body.appendChild(popup);
+    currentPopup = popup;
+    currentTrigger = sel;
 
-  }); // DOM ready
+    // posicionar popup
+    const rect = sel.getBoundingClientRect();
+    // forzamos width similar al select pero no mayor que el viewport
+    const preferredWidth = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
+    popup.style.minWidth = preferredWidth + 'px';
+
+    // calcular top/left con ajuste para no salirse
+    const popupRect = popup.getBoundingClientRect();
+    let top = rect.bottom + window.scrollY + 6;
+    let left = rect.left + window.scrollX;
+    // si no cabe a la derecha, ajusta
+    if (left + preferredWidth > window.innerWidth - 8) left = Math.max(8, window.innerWidth - preferredWidth - 8);
+    // si no cabe abajo, pon encima
+    if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
+      top = rect.top + window.scrollY - popupRect.height - 6;
+    }
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+
+    // cerrar al click/tap fuera
+    setTimeout(() => {
+      document.addEventListener('pointerdown', onDocPointerDown, true);
+      document.addEventListener('touchstart', onDocPointerDown, true);
+    }, 10);
+  }
+
+  // attach handlers: use pointerdown/touchstart to try to prevent native pickers
+  selects.forEach(sel => {
+    // ensure the select is non-passive interactive
+    const handler = function(e){
+      // if user long-presses to pick native, some browsers may ignore preventDefault.
+      e.preventDefault();
+      e.stopPropagation();
+      openPopupForSelect(sel);
+    };
+    sel.addEventListener('pointerdown', handler, { passive: false });
+    sel.addEventListener('touchstart', handler, { passive: false });
+    // fallback: also support click for desktops that simulate mobile
+    sel.addEventListener('click', function(e){
+      // only open our popup on mobile widths
+      if (isMobileWidth()) {
+        e.preventDefault(); e.stopPropagation();
+        openPopupForSelect(sel);
+      }
+    }, { passive: false });
+  });
+
+  // cerrar al rotar/resize o salir de móvil
+  window.addEventListener('orientationchange', closePopup);
+  window.addEventListener('resize', () => {
+    if (!isMobileWidth()) closePopup();
+  });
 })();
   </script>
 </body>
