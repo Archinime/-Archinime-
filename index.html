@@ -869,143 +869,136 @@ header h1 {
     document.getElementById('rating-select').addEventListener('change', filtro);
     document.getElementById('demographic-select').addEventListener('change', filtro);
 /* --- Popup compacto para selects en móvil: versión mejorada --- */
-(function(){
-  function isMobileWidth(){ return window.matchMedia('(max-width: 780px)').matches; }
-  if (!isMobileWidth()) return;
+(function () {
+  // Esperar DOM
+  function onReady(fn){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
-  const selects = Array.from(document.querySelectorAll('header select'));
-  let currentPopup = null;
-  let currentTrigger = null;
+  onReady(() => {
+    const MOBILE_QUERY = '(max-width: 780px)';
+    function isMobileWidth(){ return window.matchMedia(MOBILE_QUERY).matches; }
 
-  function closePopup() {
-    if (currentPopup) {
-      // actualizar atributos accesibles del select que abrió el popup
+    const selects = Array.from(document.querySelectorAll('header select'));
+    if (!selects.length) return; // nada que hacer
+
+    let currentPopup = null;
+    let currentTrigger = null;
+
+    function closePopup() {
+      if (!currentPopup) return;
       if (currentTrigger) currentTrigger.setAttribute('aria-expanded', 'false');
       currentPopup.remove();
       currentPopup = null;
       currentTrigger = null;
+      document.removeEventListener('pointerdown', onDocPointerDown, true);
+      document.removeEventListener('touchstart', onDocPointerDown, true);
+      document.removeEventListener('keydown', onKeyDown, true);
     }
-    document.removeEventListener('pointerdown', onDocPointerDown, true);
-    document.removeEventListener('touchstart', onDocPointerDown, true);
-    document.removeEventListener('keydown', onKeyDown, true);
-  }
 
-  function onDocPointerDown(e) {
-    if (!currentPopup) return;
-    // si clicaste dentro del popup o en el select que lo abrió, no cerramos aquí
-    if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
-    closePopup();
-  }
-
-  function onKeyDown(e) {
-    if (!currentPopup) return;
-    if (e.key === 'Escape' || e.key === 'Esc') {
-      e.preventDefault();
+    function onDocPointerDown(e){
+      if (!currentPopup) return;
+      if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
       closePopup();
     }
-  }
 
-  function openPopupForSelect(sel) {
-    // si ya está abierto para este mismo select: toggle (cierra)
-    if (currentPopup && currentTrigger === sel) {
-      closePopup();
-      return;
-    }
-    // cerrar cualquier popup previo
-    closePopup();
-
-    const popup = document.createElement('div');
-    popup.className = 'mobile-select-popup';
-    popup.setAttribute('role','listbox');
-    popup.tabIndex = -1;
-
-    Array.from(sel.options).forEach((opt) => {
-      const div = document.createElement('div');
-      div.className = 'opt';
-      div.textContent = opt.textContent;
-      div.dataset.value = opt.value;
-      div.setAttribute('role','option');
-      if (opt.selected) div.setAttribute('aria-selected','true');
-      div.addEventListener('click', function(e){
-        sel.value = this.dataset.value;
-        const evt = new Event('change', { bubbles: true });
-        sel.dispatchEvent(evt);
-        if (typeof filtro === 'function') filtro();
+    function onKeyDown(e){
+      if (!currentPopup) return;
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        e.preventDefault();
         closePopup();
-        e.stopPropagation();
-      });
-      popup.appendChild(div);
-    });
-
-    document.body.appendChild(popup);
-    currentPopup = popup;
-    currentTrigger = sel;
-
-    // aria
-    sel.setAttribute('aria-expanded', 'true');
-
-    // posicionar popup
-    const rect = sel.getBoundingClientRect();
-    const preferredWidth = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
-    popup.style.minWidth = preferredWidth + 'px';
-
-    // esperar a que el DOM calcule dimensiones del popup
-    const popupRect = popup.getBoundingClientRect();
-    let top = rect.bottom + window.scrollY + 6;
-    let left = rect.left + window.scrollX;
-
-    if (left + preferredWidth > window.innerWidth - 8) left = Math.max(8, window.innerWidth - preferredWidth - 8);
-    if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
-      top = rect.top + window.scrollY - popupRect.height - 6;
-    }
-    popup.style.left = left + 'px';
-    popup.style.top = top + 'px';
-
-    // focus para accesibilidad / soporte teclado
-    popup.focus();
-
-    // listeners para cerrar al tocar fuera y con teclado
-    setTimeout(() => {
-      document.addEventListener('pointerdown', onDocPointerDown, true);
-      document.addEventListener('touchstart', onDocPointerDown, true);
-      document.addEventListener('keydown', onKeyDown, true);
-    }, 10);
-  }
-
-  // attach handlers: use pointerdown/touchstart to try to prevent native pickers
-  selects.forEach(sel => {
-    // asegurar aria-expanded por defecto
-    if (!sel.hasAttribute('aria-expanded')) sel.setAttribute('aria-expanded', 'false');
-
-    const handler = function(e){
-      // intentamos prevenir el desplegable nativo; en algunos navegadores esto no lo evitará
-      e.preventDefault();
-      e.stopPropagation();
-      // toggle: si este select ya abrió el popup, se cierra
-      if (currentPopup && currentTrigger === sel) {
-        closePopup();
-      } else {
-        openPopupForSelect(sel);
       }
-    };
-    sel.addEventListener('pointerdown', handler, { passive: false });
-    sel.addEventListener('touchstart', handler, { passive: false });
+    }
 
-    // fallback: click (por si el navegador no envía pointer/touch)
-    sel.addEventListener('click', function(e){
-      if (isMobileWidth()) {
+    function openPopupForSelect(sel){
+      // toggle: si ya está abierto para este select, cerrar
+      if (currentPopup && currentTrigger === sel) { closePopup(); return; }
+
+      // cerrar cualquier otro
+      closePopup();
+
+      const popup = document.createElement('div');
+      popup.className = 'mobile-select-popup';
+      popup.setAttribute('role', 'listbox');
+      popup.tabIndex = -1;
+
+      Array.from(sel.options).forEach(opt => {
+        const div = document.createElement('div');
+        div.className = 'opt';
+        div.textContent = opt.textContent;
+        div.dataset.value = opt.value;
+        div.setAttribute('role','option');
+        if (opt.selected) div.setAttribute('aria-selected','true');
+        div.addEventListener('click', e => {
+          sel.value = div.dataset.value;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+          if (typeof filtro === 'function') filtro();
+          closePopup();
+          e.stopPropagation();
+        });
+        popup.appendChild(div);
+      });
+
+      document.body.appendChild(popup);
+      currentPopup = popup;
+      currentTrigger = sel;
+      sel.setAttribute('aria-expanded', 'true');
+
+      // posicionar popup con anchura parecida al select (no mayor que viewport)
+      const rect = sel.getBoundingClientRect();
+      const width = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
+      popup.style.minWidth = width + 'px';
+
+      // calcular top/left después de render
+      const popupRect = popup.getBoundingClientRect();
+      let top = rect.bottom + window.scrollY + 6;
+      let left = rect.left + window.scrollX;
+      if (left + width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - width - 8);
+      if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
+        top = rect.top + window.scrollY - popupRect.height - 6;
+      }
+      popup.style.left = left + 'px';
+      popup.style.top = top + 'px';
+
+      // focus y listeners para cerrar
+      popup.focus();
+      setTimeout(() => {
+        document.addEventListener('pointerdown', onDocPointerDown, true);
+        document.addEventListener('touchstart', onDocPointerDown, true);
+        document.addEventListener('keydown', onKeyDown, true);
+      }, 10);
+    }
+
+    // Handler attach — usamos pointerdown/touchstart para intentar prevenir el picker nativo
+    selects.forEach(sel => {
+      if (!sel.hasAttribute('aria-expanded')) sel.setAttribute('aria-expanded', 'false');
+
+      const downHandler = function(e){
+        // abrir/close solo en móvil
+        if (!isMobileWidth()) return;
+        // evitar que el picker nativo se abra (algunos navegadores lo ignoran)
+        try { e.preventDefault(); } catch(err){}
+        e.stopPropagation();
+
+        if (currentPopup && currentTrigger === sel) closePopup();
+        else openPopupForSelect(sel);
+      };
+      // pointerdown y touchstart para máxima compatibilidad; con passive:false para poder preventDefault
+      sel.addEventListener('pointerdown', downHandler, { passive: false });
+      sel.addEventListener('touchstart', downHandler, { passive: false });
+
+      // fallback click (si pointer/touch no llegó)
+      sel.addEventListener('click', function(e){
+        if (!isMobileWidth()) return; 
         e.preventDefault(); e.stopPropagation();
         if (currentPopup && currentTrigger === sel) closePopup();
         else openPopupForSelect(sel);
-      }
-    }, { passive: false });
-  });
+      }, { passive: false });
+    });
 
-  // cerrar al rotar/resize o salir de móvil
-  window.addEventListener('orientationchange', closePopup);
-  window.addEventListener('resize', () => {
-    if (!isMobileWidth()) closePopup();
-  });
+    // cerrar al rotar/resize o salir de móvil
+    window.addEventListener('orientationchange', closePopup);
+    window.addEventListener('resize', () => { if (!isMobileWidth()) closePopup(); });
+
+  }); // DOM ready
 })();
   </script>
 </body>
