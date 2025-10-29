@@ -871,7 +871,6 @@ header h1 {
 /* --- Popup compacto para selects en móvil: versión mejorada --- */
 (function(){
   function isMobileWidth(){ return window.matchMedia('(max-width: 780px)').matches; }
-  // solo activamos en móvil
   if (!isMobileWidth()) return;
 
   const selects = Array.from(document.querySelectorAll('header select'));
@@ -879,23 +878,48 @@ header h1 {
   let currentTrigger = null;
 
   function closePopup() {
-    if (currentPopup) { currentPopup.remove(); currentPopup = null; currentTrigger = null; }
+    if (currentPopup) {
+      // actualizar atributos accesibles del select que abrió el popup
+      if (currentTrigger) currentTrigger.setAttribute('aria-expanded', 'false');
+      currentPopup.remove();
+      currentPopup = null;
+      currentTrigger = null;
+    }
     document.removeEventListener('pointerdown', onDocPointerDown, true);
     document.removeEventListener('touchstart', onDocPointerDown, true);
+    document.removeEventListener('keydown', onKeyDown, true);
   }
+
   function onDocPointerDown(e) {
     if (!currentPopup) return;
+    // si clicaste dentro del popup o en el select que lo abrió, no cerramos aquí
     if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
     closePopup();
   }
 
+  function onKeyDown(e) {
+    if (!currentPopup) return;
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      e.preventDefault();
+      closePopup();
+    }
+  }
+
   function openPopupForSelect(sel) {
+    // si ya está abierto para este mismo select: toggle (cierra)
+    if (currentPopup && currentTrigger === sel) {
+      closePopup();
+      return;
+    }
+    // cerrar cualquier popup previo
     closePopup();
+
     const popup = document.createElement('div');
     popup.className = 'mobile-select-popup';
     popup.setAttribute('role','listbox');
+    popup.tabIndex = -1;
 
-    Array.from(sel.options).forEach((opt, idx) => {
+    Array.from(sel.options).forEach((opt) => {
       const div = document.createElement('div');
       div.className = 'opt';
       div.textContent = opt.textContent;
@@ -904,7 +928,6 @@ header h1 {
       if (opt.selected) div.setAttribute('aria-selected','true');
       div.addEventListener('click', function(e){
         sel.value = this.dataset.value;
-        // dispatch change
         const evt = new Event('change', { bubbles: true });
         sel.dispatchEvent(evt);
         if (typeof filtro === 'function') filtro();
@@ -918,49 +941,62 @@ header h1 {
     currentPopup = popup;
     currentTrigger = sel;
 
+    // aria
+    sel.setAttribute('aria-expanded', 'true');
+
     // posicionar popup
     const rect = sel.getBoundingClientRect();
-    // forzamos width similar al select pero no mayor que el viewport
     const preferredWidth = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
     popup.style.minWidth = preferredWidth + 'px';
 
-    // calcular top/left con ajuste para no salirse
+    // esperar a que el DOM calcule dimensiones del popup
     const popupRect = popup.getBoundingClientRect();
     let top = rect.bottom + window.scrollY + 6;
     let left = rect.left + window.scrollX;
-    // si no cabe a la derecha, ajusta
+
     if (left + preferredWidth > window.innerWidth - 8) left = Math.max(8, window.innerWidth - preferredWidth - 8);
-    // si no cabe abajo, pon encima
     if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
       top = rect.top + window.scrollY - popupRect.height - 6;
     }
     popup.style.left = left + 'px';
     popup.style.top = top + 'px';
 
-    // cerrar al click/tap fuera
+    // focus para accesibilidad / soporte teclado
+    popup.focus();
+
+    // listeners para cerrar al tocar fuera y con teclado
     setTimeout(() => {
       document.addEventListener('pointerdown', onDocPointerDown, true);
       document.addEventListener('touchstart', onDocPointerDown, true);
+      document.addEventListener('keydown', onKeyDown, true);
     }, 10);
   }
 
   // attach handlers: use pointerdown/touchstart to try to prevent native pickers
   selects.forEach(sel => {
-    // ensure the select is non-passive interactive
+    // asegurar aria-expanded por defecto
+    if (!sel.hasAttribute('aria-expanded')) sel.setAttribute('aria-expanded', 'false');
+
     const handler = function(e){
-      // if user long-presses to pick native, some browsers may ignore preventDefault.
+      // intentamos prevenir el desplegable nativo; en algunos navegadores esto no lo evitará
       e.preventDefault();
       e.stopPropagation();
-      openPopupForSelect(sel);
+      // toggle: si este select ya abrió el popup, se cierra
+      if (currentPopup && currentTrigger === sel) {
+        closePopup();
+      } else {
+        openPopupForSelect(sel);
+      }
     };
     sel.addEventListener('pointerdown', handler, { passive: false });
     sel.addEventListener('touchstart', handler, { passive: false });
-    // fallback: also support click for desktops that simulate mobile
+
+    // fallback: click (por si el navegador no envía pointer/touch)
     sel.addEventListener('click', function(e){
-      // only open our popup on mobile widths
       if (isMobileWidth()) {
         e.preventDefault(); e.stopPropagation();
-        openPopupForSelect(sel);
+        if (currentPopup && currentTrigger === sel) closePopup();
+        else openPopupForSelect(sel);
       }
     }, { passive: false });
   });
