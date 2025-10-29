@@ -967,27 +967,58 @@ header h1 {
       }, 10);
     }
 
-    // Handler attach — usamos pointerdown/touchstart para intentar prevenir el picker nativo
+    // helper: devuelve el <select> cuya área contiene el punto (x,y), o null
+    function selectAtPoint(x, y) {
+      for (let sel of selects) {
+        const r = sel.getBoundingClientRect();
+        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return sel;
+      }
+      return null;
+    }
+
+    // Handler principal: escuchamos en el header para captar toques incluso "en el borde"
+    const headerEl = document.querySelector('header');
+    if (headerEl) {
+      headerEl.addEventListener('pointerdown', function(e){
+        if (!isMobileWidth()) return;
+        // si el objetivo es un select real (o está dentro de uno), lo manejamos
+        const selDirect = e.target.closest('select');
+        if (selDirect) {
+          // prevenir picker nativo cuando sea posible
+          try { e.preventDefault(); } catch(err){}
+          e.stopPropagation();
+          if (currentPopup && currentTrigger === selDirect) closePopup();
+          else openPopupForSelect(selDirect);
+          return;
+        }
+        // si no tocó exactamente un <select>, comprobamos si el punto cae dentro del rect de algún select
+        const selByPoint = selectAtPoint(e.clientX, e.clientY);
+        if (selByPoint) {
+          try { e.preventDefault(); } catch(err){}
+          e.stopPropagation();
+          if (currentPopup && currentTrigger === selByPoint) closePopup();
+          else openPopupForSelect(selByPoint);
+          return;
+        }
+        // si no coincide con ningún select: no interferimos
+      }, { passive: false });
+    }
+
+    // También mantenemos listeners por select como fallback (para máxima compatibilidad)
     selects.forEach(sel => {
       if (!sel.hasAttribute('aria-expanded')) sel.setAttribute('aria-expanded', 'false');
 
       const downHandler = function(e){
-        // abrir/close solo en móvil
         if (!isMobileWidth()) return;
-        // evitar que el picker nativo se abra (algunos navegadores lo ignoran)
         try { e.preventDefault(); } catch(err){}
         e.stopPropagation();
-
         if (currentPopup && currentTrigger === sel) closePopup();
         else openPopupForSelect(sel);
       };
-      // pointerdown y touchstart para máxima compatibilidad; con passive:false para poder preventDefault
       sel.addEventListener('pointerdown', downHandler, { passive: false });
       sel.addEventListener('touchstart', downHandler, { passive: false });
-
-      // fallback click (si pointer/touch no llegó)
       sel.addEventListener('click', function(e){
-        if (!isMobileWidth()) return; 
+        if (!isMobileWidth()) return;
         e.preventDefault(); e.stopPropagation();
         if (currentPopup && currentTrigger === sel) closePopup();
         else openPopupForSelect(sel);
