@@ -868,168 +868,109 @@ header h1 {
     document.getElementById('genre-select').addEventListener('change', filtro);
     document.getElementById('rating-select').addEventListener('change', filtro);
     document.getElementById('demographic-select').addEventListener('change', filtro);
+
 /* --- Popup compacto para selects en móvil: versión mejorada --- */
-(function () {
-  // Esperar DOM
-  function onReady(fn){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+(function(){
+  function isMobileWidth(){ return window.matchMedia('(max-width: 780px)').matches; }
+  // solo activamos en móvil
+  if (!isMobileWidth()) return;
 
-  onReady(() => {
-    const MOBILE_QUERY = '(max-width: 780px)';
-    function isMobileWidth(){ return window.matchMedia(MOBILE_QUERY).matches; }
+  const selects = Array.from(document.querySelectorAll('header select'));
+  let currentPopup = null;
+  let currentTrigger = null;
 
-    const selects = Array.from(document.querySelectorAll('header select'));
-    if (!selects.length) return; // nada que hacer
+  function closePopup() {
+    if (currentPopup) { currentPopup.remove(); currentPopup = null; currentTrigger = null; }
+    document.removeEventListener('pointerdown', onDocPointerDown, true);
+    document.removeEventListener('touchstart', onDocPointerDown, true);
+  }
+  function onDocPointerDown(e) {
+    if (!currentPopup) return;
+    if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
+    closePopup();
+  }
 
-    let currentPopup = null;
-    let currentTrigger = null;
+  function openPopupForSelect(sel) {
+    closePopup();
+    const popup = document.createElement('div');
+    popup.className = 'mobile-select-popup';
+    popup.setAttribute('role','listbox');
 
-    function closePopup() {
-      if (!currentPopup) return;
-      if (currentTrigger) currentTrigger.setAttribute('aria-expanded', 'false');
-      currentPopup.remove();
-      currentPopup = null;
-      currentTrigger = null;
-      document.removeEventListener('pointerdown', onDocPointerDown, true);
-      document.removeEventListener('touchstart', onDocPointerDown, true);
-      document.removeEventListener('keydown', onKeyDown, true);
-    }
-
-    function onDocPointerDown(e){
-      if (!currentPopup) return;
-      if (currentPopup.contains(e.target) || (currentTrigger && currentTrigger.contains(e.target))) return;
-      closePopup();
-    }
-
-    function onKeyDown(e){
-      if (!currentPopup) return;
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        e.preventDefault();
+    Array.from(sel.options).forEach((opt, idx) => {
+      const div = document.createElement('div');
+      div.className = 'opt';
+      div.textContent = opt.textContent;
+      div.dataset.value = opt.value;
+      div.setAttribute('role','option');
+      if (opt.selected) div.setAttribute('aria-selected','true');
+      div.addEventListener('click', function(e){
+        sel.value = this.dataset.value;
+        // dispatch change
+        const evt = new Event('change', { bubbles: true });
+        sel.dispatchEvent(evt);
+        if (typeof filtro === 'function') filtro();
         closePopup();
-      }
-    }
-
-    function openPopupForSelect(sel){
-      // toggle: si ya está abierto para este select, cerrar
-      if (currentPopup && currentTrigger === sel) { closePopup(); return; }
-
-      // cerrar cualquier otro
-      closePopup();
-
-      const popup = document.createElement('div');
-      popup.className = 'mobile-select-popup';
-      popup.setAttribute('role', 'listbox');
-      popup.tabIndex = -1;
-
-      Array.from(sel.options).forEach(opt => {
-        const div = document.createElement('div');
-        div.className = 'opt';
-        div.textContent = opt.textContent;
-        div.dataset.value = opt.value;
-        div.setAttribute('role','option');
-        if (opt.selected) div.setAttribute('aria-selected','true');
-        div.addEventListener('click', e => {
-          sel.value = div.dataset.value;
-          sel.dispatchEvent(new Event('change', { bubbles: true }));
-          if (typeof filtro === 'function') filtro();
-          closePopup();
-          e.stopPropagation();
-        });
-        popup.appendChild(div);
-      });
-
-      document.body.appendChild(popup);
-      currentPopup = popup;
-      currentTrigger = sel;
-      sel.setAttribute('aria-expanded', 'true');
-
-      // posicionar popup con anchura parecida al select (no mayor que viewport)
-      const rect = sel.getBoundingClientRect();
-      const width = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
-      popup.style.minWidth = width + 'px';
-
-      // calcular top/left después de render
-      const popupRect = popup.getBoundingClientRect();
-      let top = rect.bottom + window.scrollY + 6;
-      let left = rect.left + window.scrollX;
-      if (left + width > window.innerWidth - 8) left = Math.max(8, window.innerWidth - width - 8);
-      if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
-        top = rect.top + window.scrollY - popupRect.height - 6;
-      }
-      popup.style.left = left + 'px';
-      popup.style.top = top + 'px';
-
-      // focus y listeners para cerrar
-      popup.focus();
-      setTimeout(() => {
-        document.addEventListener('pointerdown', onDocPointerDown, true);
-        document.addEventListener('touchstart', onDocPointerDown, true);
-        document.addEventListener('keydown', onKeyDown, true);
-      }, 10);
-    }
-
-    // helper: devuelve el <select> cuya área contiene el punto (x,y), o null
-    function selectAtPoint(x, y) {
-      for (let sel of selects) {
-        const r = sel.getBoundingClientRect();
-        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return sel;
-      }
-      return null;
-    }
-
-    // Handler principal: escuchamos en el header para captar toques incluso "en el borde"
-    const headerEl = document.querySelector('header');
-    if (headerEl) {
-      headerEl.addEventListener('pointerdown', function(e){
-        if (!isMobileWidth()) return;
-        // si el objetivo es un select real (o está dentro de uno), lo manejamos
-        const selDirect = e.target.closest('select');
-        if (selDirect) {
-          // prevenir picker nativo cuando sea posible
-          try { e.preventDefault(); } catch(err){}
-          e.stopPropagation();
-          if (currentPopup && currentTrigger === selDirect) closePopup();
-          else openPopupForSelect(selDirect);
-          return;
-        }
-        // si no tocó exactamente un <select>, comprobamos si el punto cae dentro del rect de algún select
-        const selByPoint = selectAtPoint(e.clientX, e.clientY);
-        if (selByPoint) {
-          try { e.preventDefault(); } catch(err){}
-          e.stopPropagation();
-          if (currentPopup && currentTrigger === selByPoint) closePopup();
-          else openPopupForSelect(selByPoint);
-          return;
-        }
-        // si no coincide con ningún select: no interferimos
-      }, { passive: false });
-    }
-
-    // También mantenemos listeners por select como fallback (para máxima compatibilidad)
-    selects.forEach(sel => {
-      if (!sel.hasAttribute('aria-expanded')) sel.setAttribute('aria-expanded', 'false');
-
-      const downHandler = function(e){
-        if (!isMobileWidth()) return;
-        try { e.preventDefault(); } catch(err){}
         e.stopPropagation();
-        if (currentPopup && currentTrigger === sel) closePopup();
-        else openPopupForSelect(sel);
-      };
-      sel.addEventListener('pointerdown', downHandler, { passive: false });
-      sel.addEventListener('touchstart', downHandler, { passive: false });
-      sel.addEventListener('click', function(e){
-        if (!isMobileWidth()) return;
-        e.preventDefault(); e.stopPropagation();
-        if (currentPopup && currentTrigger === sel) closePopup();
-        else openPopupForSelect(sel);
-      }, { passive: false });
+      });
+      popup.appendChild(div);
     });
 
-    // cerrar al rotar/resize o salir de móvil
-    window.addEventListener('orientationchange', closePopup);
-    window.addEventListener('resize', () => { if (!isMobileWidth()) closePopup(); });
+    document.body.appendChild(popup);
+    currentPopup = popup;
+    currentTrigger = sel;
 
-  }); // DOM ready
+    // posicionar popup
+    const rect = sel.getBoundingClientRect();
+    // forzamos width similar al select pero no mayor que el viewport
+    const preferredWidth = Math.min(Math.max(rect.width, 140), window.innerWidth - 16);
+    popup.style.minWidth = preferredWidth + 'px';
+
+    // calcular top/left con ajuste para no salirse
+    const popupRect = popup.getBoundingClientRect();
+    let top = rect.bottom + window.scrollY + 6;
+    let left = rect.left + window.scrollX;
+    // si no cabe a la derecha, ajusta
+    if (left + preferredWidth > window.innerWidth - 8) left = Math.max(8, window.innerWidth - preferredWidth - 8);
+    // si no cabe abajo, pon encima
+    if (top + popupRect.height > window.innerHeight + window.scrollY - 8) {
+      top = rect.top + window.scrollY - popupRect.height - 6;
+    }
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+
+    // cerrar al click/tap fuera
+    setTimeout(() => {
+      document.addEventListener('pointerdown', onDocPointerDown, true);
+      document.addEventListener('touchstart', onDocPointerDown, true);
+    }, 10);
+  }
+
+  // attach handlers: use pointerdown/touchstart to try to prevent native pickers
+  selects.forEach(sel => {
+    // ensure the select is non-passive interactive
+    const handler = function(e){
+      // if user long-presses to pick native, some browsers may ignore preventDefault.
+      e.preventDefault();
+      e.stopPropagation();
+      openPopupForSelect(sel);
+    };
+    sel.addEventListener('pointerdown', handler, { passive: false });
+    sel.addEventListener('touchstart', handler, { passive: false });
+    // fallback: also support click for desktops that simulate mobile
+    sel.addEventListener('click', function(e){
+      // only open our popup on mobile widths
+      if (isMobileWidth()) {
+        e.preventDefault(); e.stopPropagation();
+        openPopupForSelect(sel);
+      }
+    }, { passive: false });
+  });
+
+  // cerrar al rotar/resize o salir de móvil
+  window.addEventListener('orientationchange', closePopup);
+  window.addEventListener('resize', () => {
+    if (!isMobileWidth()) closePopup();
+  });
 })();
   </script>
 </body>
