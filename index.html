@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Archinime — combinado (fg fijo)</title>
+  <title>Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <link rel="preload" as="video" href="yyyy.mp4" type="video/mp4">
   <link rel="preload" as="image" href="galaxia-poster.jpg">
@@ -42,7 +42,25 @@
       transition:opacity .6s ease;
       pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
     }
-
+    /* Botón circular de apoyo */
+    #support {
+      position: fixed; bottom:1rem; right:1rem;
+      text-align:center; z-index:11;
+    }
+    #tiktok-btn, #youtube-btn {
+      width:60px; height:60px; border:none;
+      border-radius:50%; background:#fff;
+      padding:0; cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,0.5);
+      transition:transform .2s; overflow:hidden;
+    }
+    #tiktok-btn:hover, #youtube-btn:hover { transform:scale(1.1); }
+    #tiktok-btn img, #youtube-btn img { width:100%;height:100%;object-fit:cover; }
+    #support-text{
+      margin-top:.4rem; font-size:.9rem;
+      color:#0ff; text-shadow:1px 1px 2px #000;
+      font-weight:bold; white-space:nowrap;
+    }
     header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:10; flex-wrap:wrap;}
     header h1{ cursor:pointer; font-size:1.8rem; font-weight:800; display:flex; align-items:center; gap:.6rem; flex:0 0 auto; white-space:nowrap; -webkit-text-fill-color:transparent; background:linear-gradient(135deg,#00fff7,#ff00cc,#ffd700); background-clip:text;}
     header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; }
@@ -381,12 +399,27 @@
   <!-- CAMBIO: dejamos el elemento audio vacío; JS se encargará de seleccionar pistas aleatorias -->
   <audio id="bg-music" autoplay></audio>
 
-  <!-- Header con controles de búsqueda/filtros -->
+  <!-- Botones circulares de apoyo (ahora usan JS para abrir en nueva ventana/pestaña) -->
+  <div id="support">
+    <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña"
+            onclick="openInNewTab('https://www.youtube.com/@Archinime-k2g')">
+      <img src="youtube.jpg" alt="YouTube">
+    </button>
+
+    <button id="tiktok-btn" type="button" aria-label="Abrir TikTok en nueva pestaña"
+            onclick="openInNewTab('https://www.tiktok.com/@archinime?_t=ZS-8zGoKE4IqLw&_r=1')">
+      <img src="tiktok.jpg" alt="TikTok">
+    </button>
+
+    <div id="support-text">Sugiéreme un anime 👆</div>
+  </div>
+
   <header>
     <h1 onclick="location.reload()">
       <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime">
       Archinime
     </h1>
+
 
     <select id="genre-select" onchange="filtro()">
       <option value="">Todos los géneros</option>
