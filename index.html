@@ -42,97 +42,31 @@
       transition:opacity .6s ease;
       pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
     }
-
-    /* -----------------------------
-       Botones de apoyo (YouTube / TikTok)
-       MOVIDOS: ahora en esquina superior derecha (desktop y móvil).
-       Texto "Sugiéreme un anime" ocultado visualmente (se mantiene en DOM).
-       ----------------------------- */
+    /* Botón circular de apoyo */
     #support {
-      position: fixed;
-      top: 10px;                 /* arriba */
-      right: 12px;               /* a la derecha */
-      bottom: auto;              /* quitar bottom original */
-      text-align:center;
-      z-index:20;                /* encima de header */
-      display:flex;
-      gap:0.5rem;
-      align-items:center;
-      pointer-events:auto;
-      /* pequeño fondo para mejor contraste sin tocar las barras */
-      padding: 4px;
-      border-radius: 12px;
-      background: rgba(0,0,0,0.12);
-      backdrop-filter: blur(4px);
+      position: fixed; bottom:1rem; right:1rem;
+      text-align:center; z-index:11;
     }
-    /* botones circulares: tamaño adaptado */
     #tiktok-btn, #youtube-btn {
-      width:56px; height:56px; border:none;
+      width:60px; height:60px; border:none;
       border-radius:50%; background:#fff;
       padding:0; cursor:pointer;
       box-shadow:0 2px 8px rgba(0,0,0,0.5);
-      transition:transform .16s, width .12s, height .12s;
-      overflow:hidden;
-      display:inline-flex; align-items:center; justify-content:center;
+      transition:transform .2s; overflow:hidden;
     }
-    #tiktok-btn:hover, #youtube-btn:hover { transform:scale(1.06); }
-    #tiktok-btn img, #youtube-btn img { width:100%;height:100%;object-fit:cover; display:block; }
-
-    /* ocultamos el texto pero lo dejamos en DOM para no eliminar nada importante */
-    #support-text { display: none !important; }
-
-    /* tamaño más compacto en pantallas pequeñas */
-    @media (max-width: 420px) {
-      #support { top:8px; right:8px; gap:0.35rem; padding:3px; }
-      #tiktok-btn, #youtube-btn { width:44px; height:44px; }
+    #tiktok-btn:hover, #youtube-btn:hover { transform:scale(1.1); }
+    #tiktok-btn img, #youtube-btn img { width:100%;height:100%;object-fit:cover; }
+    #support-text{
+      margin-top:.4rem; font-size:.9rem;
+      color:#0ff; text-shadow:1px 1px 2px #000;
+      font-weight:bold; white-space:nowrap;
     }
-
     header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:10; flex-wrap:wrap;}
     header h1{ cursor:pointer; font-size:1.8rem; font-weight:800; display:flex; align-items:center; gap:.6rem; flex:0 0 auto; white-space:nowrap; -webkit-text-fill-color:transparent; background:linear-gradient(135deg,#00fff7,#ff00cc,#ffd700); background-clip:text;}
     header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; }
 
-    /* ESTILOS DE SELECT / OPCIONES
-       Reducimos el tamaño de las opciones visuales (rectángulos) y de los selects.
-       Esto afecta tanto a selects nativos como al popup móvil (.mobile-select-popup).
-       (Algunos navegadores limitan cuánto se puede estilizar <option> nativo, pero
-        estas reglas ayudan en la mayoría de UAs y se aplica con más control al popup móvil.)
-    */
-    header select, header input{ padding:.45rem .8rem; border:none; border-radius:5px; font-size:0.92rem; background:rgba(255,255,255,0.95); color:#000; }
+    header select, header input{ padding:.5rem 1rem; border:none; border-radius:5px; font-size:1rem; background:rgba(255,255,255,0.9); color:#000; }
 
-    /* Estilos para opciones nativas (se respetará donde el navegador lo permita) */
-    header select option {
-      padding: .18rem .45rem;
-      font-size: 0.85rem;
-      line-height: 1.05;
-    }
-
-    /* Popup de selects (custom mobile popup) — aún más compacto */
-    .mobile-select-popup {
-      position: absolute;
-      z-index: 1200;
-      background: rgba(2,2,6,0.98);
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:8px;
-      box-shadow:0 20px 50px rgba(0,0,0,0.6);
-      max-height: 160px;     /* ya reducido */
-      min-width: 140px;
-      overflow:auto;
-      padding: 0.18rem;
-      font-size: 0.88rem;
-    }
-    .mobile-select-popup .opt {
-      padding: .18rem .34rem;   /* reducido */
-      border-radius:6px;
-      margin: .06rem 0;
-      font-size:0.8rem;         /* texto más pequeño */
-      line-height:1.05;
-      cursor:pointer;
-    }
-    .mobile-select-popup .opt[aria-selected="true"],
-    .mobile-select-popup .opt.selected { font-weight:700; }
-    .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.03); }
-
-    /* CONTINÚAN EL RESTO DE ESTILOS ORIGINALES (sin cambios lógicos) */
     .container{ max-width:1200px; margin:6rem auto 2rem; padding:0 2rem; z-index:6; position:relative; }
     .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.5rem; }
     .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .6s ease; opacity:0; transform:translateY(30px); }
@@ -188,21 +122,20 @@
       /* --- REDUCIR selects / inputs sólo en móviles --- */
       header select, header input {
         padding: .35rem .6rem;
-        font-size: .88rem;
+        font-size: .92rem;
       }
       /* popup de selects más compacto */
       .mobile-select-popup {
-        max-height: 140px;
-        font-size: 0.84rem;
+        max-height: 160px;
+        font-size: 0.86rem;
       }
       .mobile-select-popup .opt {
-        padding: .16rem .3rem;
-        font-size: 0.78rem;
+        padding: .22rem .35rem;
+        font-size: 0.82rem;
       }
       /* badge compacto en móvil */
       .results-badge { padding:.36rem .6rem; font-size:0.84rem; gap:.4rem; }
     }
-
     /* Header */
     header{
       position:sticky; top:0; padding:1rem 2rem;
@@ -212,17 +145,16 @@
       /* permitimos que otros elementos puedan envolver, pero protegeremos el título */
       flex-wrap:wrap;
     }
-
     header.scrolled{background:rgba(0,0,0,0.95);}
     /* Título + logo: forzar que se mantengan en la misma línea siempre */
     header h1{
-      cursor:pointer;
+      cursor:pointer; 
       font-size:1.8rem;
       font-weight: 800;
 
       background: linear-gradient(135deg, #00fff7, #ff00cc, #ffd700);
       background-size:300% 300%;
-      -webkit-background-clip:text;
+      -webkit-background-clip:text; 
       background-clip:text;
       -webkit-text-fill-color:transparent;
       display:flex; align-items:center; gap:.6rem;
@@ -232,6 +164,15 @@
     }
 
     /* Logo pequeño al lado del título */
+    header h1 img#logo {
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      border-radius:6px;
+      background:transparent;
+      display:block;
+      flex:0 0 auto;
+    }
     header h1 img#logo {
       width:42px;
       height:42px;
@@ -398,6 +339,73 @@
       pointer-events:none;
     }
     @keyframes shimmerMove { to { left:120%; } }
+/* --- Popup compacto para selects (fuera del @media, en el mismo <style>) --- */
+.mobile-select-popup {
+  position: absolute;
+  z-index: 1200;
+  background: rgba(2,2,6,0.98);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:8px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+  max-height: 200px;     /* más compacto: no ocupa toda la pantalla */
+  min-width: 140px;
+  overflow:auto;
+  padding: 0.25rem;
+  font-size: 0.92rem;
+}
+
+/* Opciones dentro del popup más compactas */
+.mobile-select-popup .opt {
+  padding: .28rem .45rem;
+  border-radius:6px;
+  margin: .08rem 0;
+  font-size:0.92rem;
+  line-height:1.05;
+  cursor:pointer;
+}
+.mobile-select-popup .opt[aria-selected="true"],
+.mobile-select-popup .opt.selected { font-weight:700; }
+.mobile-select-popup .opt:hover { background: rgba(255,255,255,0.03); }
+
+    /* —————— Media query para móviles (≤780px) —————— */
+@media (max-width: 780px) {
+  header {
+    padding: 0.6rem 0.9rem;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .results-wrapper { margin-left: 0.35rem; }
+  .grid { gap: 0.6rem; grid-template-columns: repeat(3, 1fr); }
+  .card { aspect-ratio: 2 / 3; }
+  .card img { object-fit: contain; }
+  .results-panel { right: auto; left: 0; top: calc(100% + .4rem); min-width: 220px; max-width: 320px; }
+}
+
+/* ajuste extra para pantallas muy pequeñas (≤420px) */
+@media (max-width: 420px) {
+  header > :not(h1):not(.results-wrapper) {
+    flex: 0 0 calc(50% - 0.35rem);
+    max-width: calc(50% - 0.35rem);
+  }
+  .card img {
+    height: 160px;
+    object-fit: contain;
+  }
+  /* en pantallas muy pequeñas, reducimos aún más el badge para que quepa junto al título */
+  .results-badge { padding:.28rem .46rem; font-size:0.72rem; gap:.4rem; }
+  .results-text .label{ font-size:0.56rem; }
+  .results-text .count{ font-size:0.82rem; }
+  /* Si la pantalla es extremadamente angosta, el panel volverá a alinearse a la derecha */
+  .results-panel { left: auto; right: 0; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
+
+  /* reduces aún más selects/inputs en pantallas muy pequeñas */
+  header select, header input {
+    padding: .24rem .4rem;
+    font-size: .82rem;
+  }
+  .mobile-select-popup { max-height: 140px; font-size: 0.82rem; }
+  .mobile-select-popup .opt { padding: .18rem .3rem; font-size: 0.78rem; }
+}
 
     /* Animación del gradiente para el título (Archinime) */
     @keyframes gradientMove {
@@ -405,15 +413,13 @@
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+@media (max-width: 780px) {
+  .container{
+    margin: 1rem auto 1rem;   /* espacio superior aún menor en móviles */
+    padding: 0 0.9rem;
+  }
 
-    @media (max-width: 780px) {
-      .container{
-        margin: 1rem auto 1rem;   /* espacio superior aún menor en móviles */
-        padding: 0 0.9rem;
-      }
-    }
   </style>
-
   <style>
     /* === CAMBIO: esconder visualmente la UI de "filtros aplicados" sin borrar HTML/JS === */
     #results-wrapper { display: none !important; }
@@ -431,7 +437,7 @@
   <!-- CAMBIO: dejamos el elemento audio vacío; JS se encargará de seleccionar pistas aleatorias -->
   <audio id="bg-music" autoplay></audio>
 
-  <!-- Botones circulares de apoyo (ahora posicionados arriba a la derecha) -->
+  <!-- Botones circulares de apoyo (ahora usan JS para abrir en nueva ventana/pestaña) -->
   <div id="support">
     <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña"
             onclick="openInNewTab('https://www.youtube.com/@Archinime-k2g')">
@@ -443,8 +449,7 @@
       <img src="tiktok.jpg" alt="TikTok">
     </button>
 
-    <!-- texto ocultado visualmente -->
-    <div id="support-text" aria-hidden="true">Sugiéreme un anime 👆</div>
+    <div id="support-text">Sugiéreme un anime 👆</div>
   </div>
 
   <header>
@@ -452,6 +457,7 @@
       <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime">
       Archinime
     </h1>
+
 
     <select id="genre-select" onchange="filtro()">
       <option value="">Todos los géneros</option>
@@ -903,13 +909,9 @@
       let maxH = Math.min(window.innerHeight * 0.4, 640);
 
       if (isMobileScreen()) {
-        // >>> MODIFICACIÓN: reducir el tamaño del clip 'rem' en móvil (antes se hacía más grande)
-        if (infoObj && (infoObj.id === 'rem')) {
-          // REM: más pequeño en móvil
-          maxW = Math.min(window.innerWidth * 0.42, 260);
-          maxH = Math.min(window.innerHeight * 0.42, 220);
-        } else if (infoObj && (infoObj.id === 'hola')) {
-          // mantener comportamiento anterior para 'hola'
+        // >>> CAMBIO: en móvil hacemos que 'hola' y 'rem' sean más grandes y del mismo tamaño
+        if (infoObj && (infoObj.id === 'hola' || infoObj.id === 'rem')) {
+          // aumenta el ratio en móvil para ambos (hola y rem iguales)
           maxW = Math.min(window.innerWidth * 0.62, 380);
           maxH = Math.min(window.innerHeight * 0.62, 520);
         } else {
@@ -988,7 +990,7 @@
       const processed = applyChromaKey(frame, settings);
       offCtx.putImageData(processed, 0, 0);
       drawProcessedToScreen();
-      animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
+      animationId = requestAnimationFrame(()=>processLoop(video, infoObj));
     }
 
     function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter'); }
@@ -1141,8 +1143,9 @@
 
         // === NUEVO: posicionar aleatoriamente a izquierda o derecha ===
         placeRandomSide(infoObj);
+        // =============================================================
 
-        // ajustar tamaño (incluye cambio para 'rem' en móvil)
+        // ajustar tamaño (incluye aumento ligero en mobile para 'hola' y 'rem')
         adjustContainerToVideo(fgVideo, infoObj);
 
         // canvas primario (chroma) visible
