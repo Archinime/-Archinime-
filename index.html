@@ -366,7 +366,20 @@
 
 /* ajuste extra para pantallas muy pequeñas (≤420px) */
 @media (max-width: 420px) {
-  .card img { height: 160px; object-fit: contain; }
+  header > :not(h1):not(.results-wrapper) {
+    flex: 0 0 calc(50% - 0.35rem);
+    max-width: calc(50% - 0.35rem);
+  }
+  .card img {
+    height: 160px;
+    object-fit: contain;
+  }
+  /* en pantallas muy pequeñas, reducimos aún más el badge para que quepa junto al título */
+  .results-badge { padding:.28rem .46rem; font-size:0.72rem; gap:.4rem; }
+  .results-text .label{ font-size:0.56rem; }
+  .results-text .count{ font-size:0.82rem; }
+  /* Si la pantalla es extremadamente angosta, el panel volverá a alinearse a la derecha */
+  .results-panel { left: auto; right: 0; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
 }
 
     /* Animación del gradiente para el título (Archinime) */
