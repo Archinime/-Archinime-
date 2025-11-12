@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Archinime — combinado (fg fijo)</title>
+  <title>Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <link rel="preload" as="video" href="yyyy.mp4" type="video/mp4">
   <link rel="preload" as="image" href="galaxia-poster.jpg">
@@ -16,58 +16,67 @@
       overflow-y:auto;
       font-family:sans-serif;
       color:#fff;
-      background:#000;
     }
 
-    /* Fondo galaxia */
+    /* -------------------------
+       REDUCCIÓN DE rem SOLO PARA MÓVILES
+       (configura la base de rem aquí; no cambia nada en desktop)
+    --------------------------*/
+    @media (max-width: 780px) {
+      /* reduce rem base para móviles (ej: 1rem = 14px) */
+      html { font-size: 14px; }
+    }
+    @media (max-width: 420px) {
+      /* ajuste adicional para pantallas muy pequeñas (ej: 1rem = 13px) */
+      html { font-size: 13px; }
+    }
+
+    /* Fondo galaxia (poster + vídeo) */
     #bg-video{
-      position:fixed; top:0; left:0;
+      position:fixed;
+      top:0; left:0;
       width:100%; height:100%;
-      object-fit:cover; z-index:-2;
-      opacity:0; transition:opacity .6s ease;
-      background:#000; pointer-events:none;
+      object-fit:cover;
+      z-index:-2;                  /* detrás del overlay y demás */
+      will-change: opacity, transform;
+      opacity:0;                   /* oculto hasta que esté realmente reproduciéndose */
+      transition:opacity .6s ease;
+      background:#000;             /* color de fallback mientras se carga */
+      pointer-events:none;
     }
     #overlay{
-      position:fixed; top:0; left:0; width:100%; height:100%;
-      z-index:-1; background: url('galaxia-poster.jpg') center/cover no-repeat,
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-1;                  /* encima del video al inicio */
+      will-change: background, opacity;
+      background: url('galaxia-poster.jpg') center/cover no-repeat,
                   linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
-      opacity:1; transition:opacity .6s ease; pointer-events:none;
+      opacity:1;
+      transition:opacity .6s ease;
+      pointer-events:none;         /* no bloquear clicks que necesiten autoplay */
     }
-
-    /* Soporte (YouTube/TikTok) - ahora arriba en escritorio y junto al título en móvil */
+    /* Botón circular de apoyo */
     #support {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      display:flex;
-      gap:0.5rem;
-      align-items:center;
-      z-index:14;
-      pointer-events:auto;
+      position: fixed; bottom:1rem; right:1rem;
+      text-align:center; z-index:11;
     }
     #tiktok-btn, #youtube-btn {
-      width:56px; height:56px; border:none;
+      width:60px; height:60px; border:none;
       border-radius:50%; background:#fff;
       padding:0; cursor:pointer;
-      box-shadow:0 6px 18px rgba(0,0,0,0.45);
-      transition:transform .18s ease;
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,0.5);
+      transition:transform .2s; overflow:hidden;
     }
-    #tiktok-btn img, #youtube-btn img { width:100%; height:100%; object-fit:cover; display:block; }
-
-    /* ocultamos el texto de soporte (lo pediste eliminado) — lo removí del HTML */
-    /* #support-text removed */
-
-    header{
-      position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem;
-      background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:12; flex-wrap:wrap;
+    #tiktok-btn:hover, #youtube-btn:hover { transform:scale(1.1); }
+    #tiktok-btn img, #youtube-btn img { width:100%;height:100%;object-fit:cover; }
+    #support-text{
+      margin-top:.4rem; font-size:.9rem;
+      color:#0ff; text-shadow:1px 1px 2px #000;
+      font-weight:bold; white-space:nowrap;
     }
-    header h1{
-      cursor:pointer; font-size:1.8rem; font-weight:800; display:flex; align-items:center; gap:.6rem;
-      -webkit-text-fill-color:transparent; background:linear-gradient(135deg,#00fff7,#ff00cc,#ffd700); background-clip:text;
-      flex:0 0 auto; white-space:nowrap;
-    }
+    header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:10; flex-wrap:wrap;}
+    header h1{ cursor:pointer; font-size:1.8rem; font-weight:800; display:flex; align-items:center; gap:.6rem; flex:0 0 auto; white-space:nowrap; -webkit-text-fill-color:transparent; background:linear-gradient(135deg,#00fff7,#ff00cc,#ffd700); background-clip:text;}
     header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; }
 
     header select, header input{ padding:.5rem 1rem; border:none; border-radius:5px; font-size:1rem; background:rgba(255,255,255,0.9); color:#000; }
@@ -83,80 +92,368 @@
 
     .results-wrapper { margin-left:auto; display:flex; align-items:center; gap:.6rem; position:relative; z-index:12; }
     .results-badge{ display:flex; align-items:center; gap:.6rem; padding:.5rem .9rem; border-radius:999px; background:linear-gradient(90deg, rgba(255,0,150,0.12), rgba(0,200,255,0.12)); border:1px solid rgba(255,255,255,0.06); cursor:pointer; }
+    .results-panel{ position:absolute; right:0; top:calc(100% + .6rem); min-width:260px; max-width:360px; background:rgba(2,2,6,0.9); border-radius:10px; padding:.8rem; box-shadow:0 20px 50px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); opacity:0; visibility:hidden; transform: translateY(-6px) scale(.98); transition:opacity .18s, transform .18s, visibility .18s; z-index:13; }
+    .results-panel.open { opacity:1; visibility:visible; transform: translateY(0) scale(1); }
 
-    /* FG Container */
-    #fgContainer { position:fixed; z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center; right:20px; bottom:20px; min-width:120px; min-height:80px; max-width:360px; max-height:640px; border-radius:10px; overflow:hidden; background:transparent; }
-    #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo { width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
-    canvas.firework-canvas { position:absolute; left:0; top:0; width:100%; height:100%; z-index:10; pointer-events:none; }
+    .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column;
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)),
+                  radial-gradient(1200px 400px at -10% 10%, rgba(0,255,255,0.04), transparent 10%),
+                  radial-gradient(900px 300px at 110% 90%, rgba(255,0,150,0.03), transparent 10%);
+      border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center;
+    }
 
-    /* Play overlay */
+    /* ---------- Foreground: contenedor fijo (no se mueve al hacer scroll) ---------- */
+    #fgContainer {
+      position:fixed; z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center;
+      right:20px; bottom:20px; /* ubicación fija: siempre en la esquina inferior derecha (por defecto) */
+      transform: translateY(0); opacity:1;
+      overflow:hidden; min-width:120px; min-height:80px; max-width:360px; max-height:640px; background:transparent;
+      border-radius:10px;
+    }
+    /* ajuste móvil */
+    @media (max-width:420px){
+      #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; }
+    }
+    /* canvas e video frontal (canvas preferido) */
+    #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; background:transparent; border-radius:8px; }
+    canvas#fgCanvas{ display:block; z-index:2; } /* preferimos canvas si chroma disponible */
+    video#fgVideo{ display:block; z-index:1; }
+
+    /* canvas para fuegos artificiales: encima del canvas de chroma */
+    #fgContainer canvas.firework-canvas {
+      position:absolute; left:0; top:0; width:100%; height:100%;
+      z-index:10; pointer-events:none;
+    }
+
     .play-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9; pointer-events:auto; display:none; }
     .play-btn{ background: rgba(0,0,0,0.7); color:#fff; border:2px solid #fff; padding:14px 22px; border-radius:12px; font-size:18px; cursor:pointer; }
 
-    /* compact popup for custom selects (if used) */
-    .mobile-select-popup {
-      position: absolute; z-index:1200; background: rgba(2,2,6,0.98);
-      border:1px solid rgba(255,255,255,0.04); border-radius:8px; box-shadow:0 20px 50px rgba(0,0,0,0.6);
-      max-height: 160px; min-width: 140px; overflow:auto; padding: 0.2rem; font-size: 0.92rem;
-    }
-    .mobile-select-popup .opt { padding: .22rem .36rem; border-radius:6px; margin:.06rem 0; font-size:0.86rem; line-height:1.05; cursor:pointer; }
-
-    /* responsive mobile tweaks (<=780px) */
-    @media (max-width: 780px) {
-      header { padding:0.6rem 0.9rem; gap:0.5rem; align-items:center; }
+    @media (max-width:780px){
       .container{ margin:1rem auto 1rem; padding:0 0.9rem; }
+      .grid{ gap:0.6rem; grid-template-columns:repeat(3,1fr);}
+      .card{ aspect-ratio:2/3; }
 
-      /* make selects & inputs smaller on mobile (applies to native select, and complements mobile-select-popup) */
+      /* --- REDUCIR selects / inputs sólo en móviles --- */
       header select, header input {
-        padding: 0.36rem .6rem;
-        font-size: 0.86rem;
-        border-radius:6px;
+        padding: .35rem .6rem;
+        font-size: .92rem;
       }
-
-      /* attempt to make native option font smaller (not supported in all browsers) */
-      header select option {
+      /* popup de selects más compacto */
+      .mobile-select-popup {
+        max-height: 160px;
         font-size: 0.86rem;
-        padding: 0.18rem 0.25rem;
       }
+      .mobile-select-popup .opt {
+        padding: .22rem .35rem;
+        font-size: 0.82rem;
+      }
+      /* badge compacto en móvil */
+      .results-badge { padding:.36rem .6rem; font-size:0.84rem; gap:.4rem; }
+    }
+    /* Header */
+    header{
+      position:sticky; top:0; padding:1rem 2rem;
+      display:flex; align-items:center; gap:1rem;
+      background:rgba(0,0,0,0.7); backdrop-filter:blur(5px);
+      z-index:10; transition:background .3s;
+      /* permitimos que otros elementos puedan envolver, pero protegeremos el título */
+      flex-wrap:wrap;
+    }
+    header.scrolled{background:rgba(0,0,0,0.95);}
+    /* Título + logo: forzar que se mantengan en la misma línea siempre */
+    header h1{
+      cursor:pointer; 
+      font-size:1.8rem;
+      font-weight: 800;
 
-      /* badge more compact */
-      .results-badge { padding:.32rem .6rem; font-size:0.78rem; gap:.45rem; }
-
-      /* move support buttons to be visually next to the header on small screens:
-         they remain fixed but sit near the top so they appear beside the title */
-      #support { top: 10px; right: 12px; }
-
-      /* slightly larger fg for certain clips was already implemented in JS; we keep it */
+      background: linear-gradient(135deg, #00fff7, #ff00cc, #ffd700);
+      background-size:300% 300%;
+      -webkit-background-clip:text; 
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      display:flex; align-items:center; gap:.6rem;
+      flex:0 0 auto;             /* evita que el h1 se reduzca/encole o salte a otra línea */
+      white-space:nowrap;        /* evita el quiebre de línea entre logo y texto */
+      animation: gradientMove 6s ease infinite, fadeIn 2s ease-in-out;
     }
 
-    /* extra-small screens */
+    /* Logo pequeño al lado del título */
+    header h1 img#logo {
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      border-radius:6px;
+      background:transparent;
+      display:block;
+      flex:0 0 auto;
+    }
+    header h1 img#logo {
+      width:42px;
+      height:42px;
+      object-fit:contain;
+      border-radius:6px;
+      background:transparent;
+      display:block;
+    }
+    header select, header input{
+      padding:.5rem 1rem; border:none; border-radius:5px;
+      font-size:1rem; transition:box-shadow .3s;
+      background:rgba(255,255,255,0.9); color:#000;
+    }
+    header select:focus, header input:focus{
+      box-shadow:0 0 8px #0ff;
+    }
+    #search{width:200px;}
+    .container{max-width:1200px;margin:6rem auto 2rem;padding:0 2rem;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.5rem;}
+    .card{
+      opacity:0; transform:translateY(30px);
+      transition:all .6s ease-out; cursor:pointer;
+      border-radius:10px; overflow:hidden; position:relative;
+      will-change: opacity, transform;
+    }
+    .card.visible{opacity:1;transform:translateY(0);}
+    .card img{
+      width:100%; display:block;
+      filter:brightness(100%);
+      transition:transform .4s,filter .4s;
+    }
+    .card:hover img{
+      transform:scale(1.05); filter:brightness(75%);
+    }
+    .info{
+      position:absolute; bottom:0; left:0; right:0;
+      background:rgba(0,0,0,0.7); padding:.75rem;
+      transform:translateY(100%); transition:transform .3s;
+    }
+    .card:hover .info{transform:translateY(0);}
+    .info strong{display:block;font-size:1.05rem;margin-bottom:.25rem;}
+    .info span{
+      background:#0ff; color:#000;
+      padding:2px 6px; border-radius:4px; font-size:.85rem;
+    }
+
+    /* ------------------ RESULTS: barra colorida, iluminada e interactiva ------------------ */
+    .results-wrapper {
+      margin-left: auto; display:flex; align-items:center; gap:0.6rem;
+      position:relative; z-index:12;
+    }
+    .results-badge {
+      display:flex; align-items:center; gap:.6rem; padding:.5rem .9rem;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(255,0,150,0.12), rgba(0,200,255,0.12));
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 18px rgba(255,0,150,0.06) inset;
+      backdrop-filter: blur(6px);
+      cursor:pointer; transition: transform .18s ease, box-shadow .18s ease;
+      user-select:none;
+    }
+    .results-badge:hover{ transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 44px rgba(0,0,0,0.6); }
+    .badge-glow {
+      width:12px; height:12px; border-radius:50%;
+      background: linear-gradient(45deg,#ff007a,#ffd700,#00fff7);
+      box-shadow: 0 0 18px #ff007a, 0 0 34px #ffd700, 0 0 70px #00fff7;
+      animation: pulseGlow 2.4s infinite;
+      flex:0 0 auto;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(.9); opacity:.9; }
+      50% { transform: scale(1.18); opacity:1; }
+      100% { transform: scale(.9); opacity:.9; }
+    }
+
+    .results-text { display:flex; flex-direction:column; line-height:1; text-align:left; }
+    .results-text .label {
+      font-size:0.78rem; opacity:0.95; font-weight:800;
+      text-transform:uppercase; letter-spacing:0.06em; color:#f8f8f8;
+    }
+    .results-text .count {
+      font-size:1rem; font-weight:900;
+      background:linear-gradient(90deg,#ffffff 0%, #ffd700 50%, #00fff7 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    }
+
+    .results-panel {
+      position:absolute; right:0; top:calc(100% + .6rem);
+      min-width:260px; max-width:360px; background:rgba(2,2,6,0.9);
+      border-radius:10px; padding:.8rem; box-shadow:0 20px 50px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+      transform-origin: top right;
+      opacity:0; visibility:hidden; transform: translateY(-6px) scale(.98);
+      transition:opacity .18s ease, transform .18s ease, visibility .18s;
+      z-index:13;
+    }
+    .results-panel.open { opacity:1; visibility:visible; transform: translateY(0) scale(1); }
+    .results-panel h4 { margin-bottom:.4rem; font-size:0.95rem; }
+    .filter-line { display:flex; justify-content:space-between; gap:.6rem; margin:.35rem 0; align-items:center; }
+    .small-tag { background:rgba(255,255,255,0.04); padding:.28rem .6rem; border-radius:6px; font-size:.84rem; }
+
+    .clear-btn {
+      margin-top:.6rem; display:inline-block; padding:.55rem .7rem; border-radius:10px;
+      background:linear-gradient(90deg,#ff476e,#8b5cf6); color:#fff; border:none; cursor:pointer;
+      box-shadow:0 12px 40px rgba(139,92,246,0.12); font-weight:800;
+      transition:transform .12s ease;
+    }
+    .clear-btn:hover{ transform:translateY(-3px); }
+
+    /* ------------------ NO-RESULTS estilado, colorido e interactivo ------------------ */
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 2.6rem;
+      border-radius: 14px;
+      display:flex;
+      gap:1.25rem;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)),
+        radial-gradient(1200px 400px at -10% 10%, rgba(0,255,255,0.04), transparent 10%),
+        radial-gradient(900px 300px at 110% 90%, rgba(255,0,150,0.03), transparent 10%);
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+      text-align:center;
+      transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
+    }
+    .no-results:hover{ transform:translateY(-6px); box-shadow:0 28px 80px rgba(0,0,0,0.66); }
+
+    .no-results .title {
+      font-size:1.45rem; font-weight:900;
+      background: linear-gradient(90deg,#fff 0%, #ffd700 50%, #00fff7 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow: 0 6px 26px rgba(0,0,0,0.6);
+      margin-bottom:0.35rem;
+    }
+    .no-results .subtitle {
+      font-size:1rem; color:rgba(255,255,255,0.86);
+      max-width:780px; line-height:1.4; margin-bottom:1rem;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+    }
+
+    .no-results .sparkles {
+      display:flex; gap:0.5rem; align-items:center;
+    }
+    .btn-reset {
+      padding:.6rem .9rem; border-radius:10px; border:none; font-weight:800;
+      background:linear-gradient(90deg,#00fff7,#8b5cf6); color:#04111a; cursor:pointer;
+      box-shadow:0 14px 46px rgba(0,255,247,0.06); transition: transform .12s ease;
+    }
+    .btn-reset:hover{ transform:translateY(-3px); }
+
+    /* shimmer (brillo) en el mensaje */
+    .shimmer {
+      position:relative; overflow:hidden; display:inline-block;
+    }
+    .shimmer:after {
+      content:""; position:absolute; left:-120%; top:0; height:100%; width:120%;
+      background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0) 100%);
+      transform:skewX(-18deg);
+      animation: shimmerMove 2.6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes shimmerMove { to { left:120%; } }
+    /* --- Popup compacto para selects (fuera del @media, en el mismo <style>) --- */
+    .mobile-select-popup {
+      position: absolute;
+      z-index: 1200;
+      background: rgba(2,2,6,0.98);
+      border:1px solid rgba(255,255,255,0.04);
+      border-radius:8px;
+      box-shadow:0 20px 50px rgba(0,0,0,0.6);
+      max-height: 200px;     /* más compacto: no ocupa toda la pantalla */
+      min-width: 140px;
+      overflow:auto;
+      padding: 0.25rem;
+      font-size: 0.92rem;
+    }
+
+    /* Opciones dentro del popup más compactas */
+    .mobile-select-popup .opt {
+      padding: .28rem .45rem;
+      border-radius:6px;
+      margin: .08rem 0;
+      font-size:0.92rem;
+      line-height:1.05;
+      cursor:pointer;
+    }
+    .mobile-select-popup .opt[aria-selected="true"],
+    .mobile-select-popup .opt.selected { font-weight:700; }
+    .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.03); }
+
+    /* —————— Media query para móviles (≤780px) —————— */
+    @media (max-width: 780px) {
+      header {
+        padding: 0.6rem 0.9rem;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .results-wrapper { margin-left: 0.35rem; }
+      .grid { gap: 0.6rem; grid-template-columns: repeat(3, 1fr); }
+      .card { aspect-ratio: 2 / 3; }
+      .card img { object-fit: contain; }
+      .results-panel { right: auto; left: 0; top: calc(100% + .4rem); min-width: 220px; max-width: 320px; }
+    }
+
+    /* ajuste extra para pantallas muy pequeñas (≤420px) */
     @media (max-width: 420px) {
-      header > :not(h1):not(.results-wrapper) { flex:0 0 calc(50% - 0.35rem); max-width: calc(50% - 0.35rem); }
-      header select, header input { padding: .24rem .4rem; font-size: .82rem; }
-      header select option { font-size: 0.82rem; }
-      .mobile-select-popup { max-height: 140px; font-size: 0.82rem; }
-      .mobile-select-popup .opt { padding: .16rem .28rem; font-size: 0.78rem; }
-      #support { top: 8px; right: 8px; }
+      header > :not(h1):not(.results-wrapper) {
+        flex: 0 0 calc(50% - 0.35rem);
+        max-width: calc(50% - 0.35rem);
+      }
+      .card img {
+        height: 160px;
+        object-fit: contain;
+      }
+      /* en pantallas muy pequeñas, reducimos aún más el badge para que quepa junto al título */
       .results-badge { padding:.28rem .46rem; font-size:0.72rem; gap:.4rem; }
+      .results-text .label{ font-size:0.56rem; }
+      .results-text .count{ font-size:0.82rem; }
+      /* Si la pantalla es extremadamente angosta, el panel volverá a alinearse a la derecha */
+      .results-panel { left: auto; right: 0; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
+
+      /* reduces aún más selects/inputs en pantallas muy pequeñas */
+      header select, header input {
+        padding: .24rem .4rem;
+        font-size: .82rem;
+      }
+      .mobile-select-popup { max-height: 140px; font-size: 0.82rem; }
+      .mobile-select-popup .opt { padding: .18rem .3rem; font-size: 0.78rem; }
     }
 
-    /* keep other styles intact... (rest of styles from original preserved) */
+    /* Animación del gradiente para el título (Archinime) */
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @media (max-width: 780px) {
+      .container{
+        margin: 1rem auto 1rem;   /* espacio superior aún menor en móviles */
+        padding: 0 0.9rem;
+      }
+    }
+
+  </style>
+  <style>
+    /* === CAMBIO: esconder visualmente la UI de "filtros aplicados" sin borrar HTML/JS === */
+    #results-wrapper { display: none !important; }
   </style>
 </head>
 <body>
 
-  <!-- Vídeo de fondo -->
-  <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline preload="auto" crossorigin="anonymous">
-    <source src="https://www.dropbox.com/scl/fi/g7jmt1inbplxbwgh5q19l/yyyy.mp4?rlkey=lilw3dbar3xtovu8d37uxfo1s&raw=1" type="video/mp4">
+  <!-- Vídeo de fondo: usa yyyy.mp4 (relativo) y poster galaxia-poster.jpg -->
+  <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline preload="auto">
+    <source src="https://www.dropbox.com/scl/fi/g7jmt1inbplxbwgh5q19l/yyyy.mp4?rlkey=lilw3dbar3xtovu8d37uxfo1s&st=7l0juzp5&raw=1" type="video/mp4">
     Tu navegador no soporta vídeo.
   </video>
   <div id="overlay" aria-hidden="true"></div>
 
-  <!-- Música -->
+  <!-- CAMBIO: dejamos el elemento audio vacío; JS se encargará de seleccionar pistas aleatorias -->
   <audio id="bg-music" autoplay></audio>
 
-  <!-- Soporte: botones YouTube + TikTok (texto eliminado) -->
-  <div id="support" aria-hidden="false">
+  <!-- Botones circulares de apoyo (ahora usan JS para abrir en nueva ventana/pestaña) -->
+  <div id="support">
     <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña"
             onclick="openInNewTab('https://www.youtube.com/@Archinime-k2g')">
       <img src="youtube.jpg" alt="YouTube">
@@ -166,9 +463,10 @@
             onclick="openInNewTab('https://www.tiktok.com/@archinime?_t=ZS-8zGoKE4IqLw&_r=1')">
       <img src="tiktok.jpg" alt="TikTok">
     </button>
+
+    <div id="support-text">Sugiéreme un anime 👆</div>
   </div>
 
-  <!-- Header -->
   <header>
     <h1 onclick="location.reload()">
       <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime">
@@ -177,21 +475,70 @@
 
     <select id="genre-select" onchange="filtro()">
       <option value="">Todos los géneros</option>
-      <!-- (tus opciones mantienen su contenido) -->
       <option>Acción</option>
       <option>Animación</option>
       <option>Aventura</option>
       <option>Ciencia ficción</option>
+      <option>Cocina</option>
       <option>Comedia</option>
+      <option>Comedia oscura</option>
+      <option>Cosplay</option>
+      <option>Cyberpunk</option>
+      <option>Deportivo</option>
+      <option>Dibujo Animado</option>
+      <option>Divulgación Científica</option>
+      <option>Drama</option>
+      <option>Ecchi</option>
+      <option>Espionaje</option>
+      <option>Escolar</option>
+      <option>Fantasía</option>
+      <option>Fantasía oscura</option>
+      <option>Familiar</option>
+      <option>Gore</option>
+      <option>Harem</option>
+      <option>Hentai</option>
+      <option>Histórico</option>
+      <option>Horror</option>
+      <option>Incesto</option>
+      <option>Infantil</option>
+      <option>Isekai</option>
+      <option>Isekai Inverso</option>
+      <option>Kaiju</option>
+      <option>Mahō Shōjo</option>
+      <option>Mecha</option>
+      <option>Militar</option>
+      <option>Misterio</option>
+      <option>Musical</option>
+      <option>Nekketsu</option>
+      <option>Parodia</option>
+      <option>Policial</option>
+      <option>Post-apocalíptico</option>
+      <option>Psicológico</option>
+      <option>Reverse Harem</option>
       <option>Romance</option>
-      <option>Shōnen</option>
-      <!-- ...resto de opciones tal como las tenías -->
+      <option>Romance escolar</option>
+      <option>Slice of Life</option>
+      <option>Sobrenatural</option>
+      <option>Steampunk</option>
+      <option>Superhéroes</option>
+      <option>Survival Game</option>
+      <option>Tentáculos</option>
+      <option>Terror</option>
+      <option>Terror psicológico</option>
+      <option>Thriller</option>
+      <option>Thriller psicológico</option>
+      <option>Tragedia</option>
+      <option>Yaoi</option>
+      <option>Yuri</option>
     </select>
 
     <select id="demographic-select" onchange="filtro()">
       <option value="">Todas las demografías</option>
-      <option>Seinen</option>
+      <option>Gekiga</option>
+      <option>Josei</option>
+      <option>Kodomo</option>
       <option>Seijin</option>
+      <option>Seinen</option>
       <option>Shōjo</option>
       <option>Shōnen</option>
     </select>
@@ -200,7 +547,7 @@
       <option value="">⭐ Todas</option>
       <option value="excellent">⭐ Excelente (4.8–5.0)</option>
       <option value="good">⭐ Buena (4.6–4.7)</option>
-      <option value="regular">⭐ Regular (&lt;4.6)</option>
+      <option value="regular">⭐ Regular (&lt;4.5)</option>
     </select>
 
     <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()">
@@ -243,12 +590,12 @@
     <div class="grid" id="grid"></div>
   </main>
 
-  <!-- Contenedor frontal -->
+  <!-- ---------- Contenedor frontal + canvas (chroma key) - FIJO en pantalla ---------- -->
   <div class="stage" aria-hidden="true">
     <div id="fgContainer" aria-label="Vídeo frontal">
       <canvas id="fgCanvas"></canvas>
       <video id="fgVideo" muted loop playsinline></video>
-      <!-- firework canvas se crea en JS y se superpone -->
+      <!-- el canvas de fuegos artificiales se crea dinámicamente en JS y se pone encima -->
     </div>
 
     <div class="play-overlay" id="playOverlay" style="display:none;">
@@ -258,7 +605,7 @@
 
   <script>
     /* ----------------------------
-       Helpers y lógica (preservada)
+       LOGICA GENERAL (conservada)
        ---------------------------- */
     function openInNewTab(url) {
       const win = window.open(url, '_blank', 'noopener,noreferrer');
@@ -266,14 +613,69 @@
       return win;
     }
     function normalizeText(s) {
-      return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      return String(s || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
     }
 
-    /* ---- datos y render (no toqué) ---- */
+    /* ----------------------------
+       Datos de animes y render
+       (copiados tal cual de tu archivo)
+       ---------------------------- */
     const animes = [
       {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Sobrenatural","Comedia","Romance","Comedia oscura","Shōnen"]},
       {id:2, title:"Jujutsu Kaisen", img:"Jujutsu.jpg", rating:4.9, genres:["Sobrenatural","Fantasía oscura","Acción","Nekketsu","Shōnen"]},
-      /* ... resto de tu lista ... */
+      {id:3, title:"Konosuba", img:"konosubaportada.jpg", rating:4.8, genres:["Aventura","Comedia","Fantasía","Sobrenatural","Isekai","Ecchi","Shōnen"]},
+      {id:4, title:"Re:Zero − Empezar vida en otro mundo", img:"rezero.png", rating:4.8, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Thriller psicológico","Terror psicológico","Isekai","Shōnen"]},
+      {id:5, title:"Mushoku Tensei", img:"mushoku.jpg", rating:4.8, genres:["Isekai","Ecchi","Romance","Harem","Acción","Aventura","Drama","Fantasía","Seinen"]},
+      {id:6, title:"Tensei Shitara Slime Datta Ken", aliases: ["That Time I Got Reincarnated as a Slime"], img:"slime.jpg", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía","Shōnen"]},
+      {id:7, title:"Saga of Tanya the Evil", aliases: ["Yōjo Senki"], img:"tanya1.jpg", rating:4.8, genres:["Acción","Aventura","Fantasía","Militar","Drama","Ciencia ficción","Seinen"]},
+      {id:8, title:"Akame Ga Kill", aliases: ["Akame ga Kiru"], img:"Akame1.jpg", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Tragedia","Shōnen"]},
+      {id:9, title:"To Be Hero X", img:"hero11.jpg", rating:4.8, genres:["Acción","Comedia","Animación","Fantasía","Superhéroes","Seinen"]},
+      {id:10, title:"Demon Slayer", aliases: ["Kimetsu no Yaiba"], img:"demon.jpg", rating:4.9, genres:["Acción","Fantasía oscura","Aventura","Sobrenatural","Drama","Shōnen"]},
+      {id:11, title:"Maou 2099", img:"maou2099portada.jpg", rating:4.7, genres:["Ciencia ficción","Isekai Inverso","Acción","Fantasía","Cyberpunk","Shōnen"]},
+      {id:12, title:"Wistoria: Wand and Sword", img:"wistoria.jpg", rating:4.8, genres:["Fantasía","Aventura","Shōnen"]},
+      {id:13, title:"Izure Saikyou no Renkinjutsushi", aliases: ["Possibly the Greatest Alchemist of All Time"], img:"Izure.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Isekai","Shōnen"]},
+      {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", aliases: ["Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"], img:"alia.jpg", rating:4.8, genres:["Comedia","Romance","Romance escolar","Escolar","Josei"]},
+      {id:15, title:"Reborn as a Vending Machine, I Now Wander the Dungeon", aliases: ["Jidōhanbaiki ni Umarekawatta Ore wa Meikyū ni Samayō"], img:"jidou.jpg", rating:4.1, genres:["Fantasía","Isekai","Shōnen"]},
+      {id:16, title:"kimi to boku no saigo no senjou", aliases: ["Our Last Crusade or the Rise of a New World"], img:"kimi22222.jpg", rating:4.5, genres:["Acción","Fantasía","Romance","Militar","Seinen"]},
+      {id:17, title:"The Gorilla God's Go- To Girl", aliases: ["Gorilla no Kami Kara Kago Sareta Reijō wa Ōritsu Kishidan de Kawaiigareru"], img:"gorila11.jpg", rating:4.5, genres:["Fantasía","Comedia","Escolar","Romance","Shōjo"]},
+      {id:18, title:"Chainsaw Man", img:"chaiportada.jpg", rating:4.9, genres:["Fantasía oscura","Acción","Comedia oscura","Shōnen"]},
+      {id:19, title:"The Rising of the Shield Hero", aliases: ["Tate no Yuusha no Nariagari","El Héroe del Escudo"], img:"heroedelescudoportada.jpg", rating:4.7, genres:["Aventura","Drama","Fantasía","Acción","Romance","Isekai","Seinen"]},
+      {id:20, title:"Overflow", img:"overflow.jpg", rating:4.6, genres:["Hentai","Escolar","Romance","Harem","Incesto","Seijin"]},
+      {id:21, title:"Shiunji-ke no Kodomotachi", img:"Shiux.jpg", rating:4.6, genres:["Comedia","Romance","Drama","Harem","Slice of Life","Seinen"]},
+      {id:22, title:"Goblin Slayer", img:"goblinslayerportada.jpg", rating:4.7, genres:["Fantasía oscura","Horror","Aventura","Fantasía","Seinen"]},
+      {id:23, title:"Kanchigai no Atelier Meister", img:"atelier1.jpg", rating:4.6, genres:["Aventura","Comedia","Fantasía","Acción","Shōnen"]},
+      {id:24, title:"Definitivamente. ¡No me gusta mi hermano para nada!", img:"Oni.jpg", rating:4.1, genres:["Comedia","Romance","Slice of Life","Harem","Ecchi","Seinen"]},
+      {id:25, title:"Kaiju No. 8", img:"kaijuportada.jpg", rating:4.9, genres:["Sobrenatural","Fantasía oscura","Acción","Ciencia ficción","Aventura","Comedia","Kaiju","Shōnen"]},
+      {id:26, title:"Zootopia", img:"zootopiaportada.jpg", rating:4.7, genres:["Aventura","Comedia","Policial","Infantil","Familiar","Misterio","Animación","Dibujo Animado","Kodomo"]},
+      {id:27, title:"Clevatess -Majuu no Ou to Akago", img:"Clevatessportada.jpg", rating:4.8, genres:["Acción","Fantasía","Drama","Seinen"]},
+      {id:28, title:"Dr. Stone", img:"Dr._Stoneportada.jpg", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Post-apocalíptico","Shōnen"]},
+      {id:29, title:"One Piece (Live Action)", img:"onepieceportada.jpg", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama","Shōnen"]},
+      {id:30, title:"Shoujo Ramune", img:"shoujoramuneportada.jpg", rating:4.3, genres:["Hentai","Harem","Incesto","Seijin"]},
+      {id:31, title:"To Your Eternity", aliases: ["Fumetsu no Anata e"], img:"fumetsuportada.jpg", rating:4.8, genres:["Fantasía","Drama","Aventura","Sobrenatural","Shōnen"]},
+      {id:32, title:"Tsugunai Subbed", img:"TsugunaiSubbed.jpg", rating:4.8, genres:["Hentai","Harem","Escolar","Seijin"]},
+      {id:33, title:"Blue Lock", aliases: ["Yoichi Isagi"], img:"Bluelockportada.jpg", rating:4.8, genres:["Thriller","Psicológico","Deportivo","Survival Game","Shōnen"]},
+      {id:34, title:"Magic Maker: Isekai Mahou no Tsukurikata", aliases: ["Magic Maker: How to Make Magic in Another World"], img:"magic maker.jpg", rating:4.4, genres:["Fantasía","Isekai","Aventura","Slice of Life","Shōnen"]},
+      {id:35, title:"Tsuyokute New Saga", aliases: ["New Saga"], img:"New Saga.jpg", rating:4.5, genres:["Fantasía","Isekai","Aventura","Comedia","Acción","Drama","Slice of Life","Shōnen"]},
+      {id:36, title:"Gachiakuta", img:"Gachiakuta.jpg", rating:4.9, genres:["Fantasía","Aventura","Acción","Fantasía oscura","Shōnen"]},
+      {id:37, title:"Shinsei Kourin Dacryon Luna", img:"Shinsei Kourin Dacryon Luna portada.jpg", rating:4.0, genres:["Tentáculos","Hentai","Fantasía","Fantasía oscura","Seijin"]},
+      {id:38, title:"Kami-tachi ni Hirowareta Otoko", aliases: ["By the Grace of the Gods"], img:"Kamitachi.jpg", rating:4.7, genres:["Fantasía","Aventura","Slice of Life","Isekai","Shōnen"]},
+      {id:39, title:"Ore dake Haireru Kakushi Dungeon", aliases: ["The Hidden Dungeon Only I Can Enter"], img:"oredake.jpg", rating:4.5, genres:["Fantasía","Comedia","Harem","Ecchi","Acción","Romance","Shōnen"]},
+      {id:40, title:"One Punch-Man", aliases: ["One-Punch Man"], img:"onepunch.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Ciencia ficción","Superhéroes","Seinen"]},
+      {id:41, title:"Mashle", aliases: ["Mash Burnedead"], img:"mashle1.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Aventura","Shōnen"]},
+      {id:42, title:"Los Diarios de la Boticaria", aliases: ["Kusuriya no Hitorigoto","The Apothecary Diaries"], img:"maomaot1.jpg", rating:4.9, genres:["Drama","Misterio","Romance","Shōjo"]},
+      {id:43, title:"Maplestar", img:"pm.png", rating:5.0, genres:["Hentai","Animación","Seijin"]},
+      {id:44, title:"Uzumaki", img:"uzumakii.jpg", rating:4.2, genres:["Horror","Seinen"]},
+      {id:45, title:"Tondemo Skill de Isekai Hourou Meshi", aliases: ["Campfire Cooking in Another World with My Absurd Skills"], img:"todemo.jpg", rating:4.9, genres:["Comedia","Fantasía","Slice of Life","Cocina","Aventura","Shōnen","Isekai"]},
+      {id:46, title:"My Dress-Up Darling", aliases: ["Sono Bisque Doll wa Koi wo Suru"], img:"muneca.jpg", rating:4.9, genres:["Comedia","Romance","Slice of Life","Escolar","Cosplay","Seinen"]},
+      {id:47, title:"Hazbin Hotel", aliases: ["Hotel Hazbin"], img:"hhzz.jpg", rating:4.8, genres:["Comedia","Musical","Drama","Animación","Policial","Seijin"]},
+      {id:48, title:"The Eminence in Shadow", aliases: ["Kage no Jitsuryokusha ni Naritakute!"], img:"shadow.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Isekai","Harem","Steampunk","Shōnen"]},
+      {id:49, title:"Spy × Family", img:"spy.jpg", rating:4.9, genres:["Comedia","Drama","Fantasía","Familiar","Espionaje","Shōnen"]},
+      {id:50, title:"Black Clover", img:"portbla.jpg", rating:4.8, genres:["Comedia","Acción","Fantasía","Aventura","Shōnen"]},
+      {id:51, title:"My Hero Academia", aliases: ["Boku no Hero"], img:"sgsgsdseg.jpg", rating:4.7, genres:["Superhéroes","Ciencia ficción","Comedia","Drama","Acción","Fantasía","Escolar","Aventura","Shōnen"]},
+      {id:52, title:"Kakkou no Linazuke", aliases: ["A Couple of Cuckoos"], img:"pordf.jpg", rating:4.5, genres:["Romance","Comedia","Escolar","Harem","Shōnen"]},
     ];
 
     function render(list) {
@@ -282,9 +684,12 @@
         grid.innerHTML = `
           <div class="no-results" role="status" aria-live="polite">
             <div class="title shimmer">¡Ups! No se encontraron resultados que coincidan con la búsqueda.</div>
-            <div class="subtitle">¿No lo encuentras? 🤔 Puede que lo hayas escrito con un error ✏️ o que todavía no lo haya subido ⏳.</div>
-            <div class="sparkles"><button class="btn-reset" id="btn-reset">Entiendo 👌</button></div>
-          </div>`;
+            <div class="subtitle">¿No lo encuentras? 🤔 Puede que lo hayas escrito con un error ✏️ o que todavía no lo haya subido ⏳. Si quieres que lo agregue, deja el título en los comentarios de mi canal de YouTube 🎥 o en mi TikTok 🎵. ¡Gracias por ayudarme a mejorar la colección! 🙏💜</div>
+            <div class="sparkles">
+              <button class="btn-reset" id="btn-reset">Entiendo 👌</button>
+            </div>
+          </div>
+        `;
         const btn = document.getElementById('btn-reset');
         if (btn) btn.addEventListener('click', () => {
           document.getElementById('search').value = '';
@@ -300,7 +705,8 @@
         <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
           <img src="${a.img}" alt="${a.title}">
           <div class="info"><strong>${a.title}</strong><span>⭐ ${a.rating ? (a.rating.toFixed? a.rating.toFixed(1): a.rating) : '—'}</span></div>
-        </div>`).join('');
+        </div>
+      `).join('');
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
       }, {threshold:0.2});
@@ -351,7 +757,7 @@
       updateResultsCount(resultList.length);
     }
 
-    // init render
+    // inicial
     render(animes);
     updateResultsCount(animes.length);
 
@@ -371,7 +777,7 @@
     });
 
     /* ----------------------------
-       Fondo y audio (música aleatoria) - sin pausar al cambiar clips
+       Fondo y audio (música ahora varias pistas aleatorias)
        ---------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       const video = document.getElementById('bg-video');
@@ -381,32 +787,59 @@
       video.muted = true;
       video.playsInline = true;
 
-      const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
+      const revealVideo = () => {
+        video.style.opacity = '1';
+        overlay.style.opacity = '0';
+      };
 
       overlay.addEventListener('transitionend', (ev) => {
-        if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none';
+        if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') {
+          overlay.style.display = 'none';
+        }
       });
 
-      video.addEventListener('playing', () => revealVideo(), { once: true });
-      video.addEventListener('canplaythrough', () => video.play().catch(()=>{}), { once: true });
-      video.addEventListener('loadeddata', () => video.play().catch(()=>{}), { once: true });
+      video.addEventListener('playing', () => {
+        revealVideo();
+      }, { once: true });
+
+      video.addEventListener('canplaythrough', () => {
+        video.play().catch(()=>{});
+      }, { once: true });
+
+      video.addEventListener('loadeddata', () => {
+        video.play().catch(()=>{});
+      }, { once: true });
 
       const AUTOPLAY_TIMEOUT = 4000;
       setTimeout(() => {
         if (getComputedStyle(video).opacity === '0') {
-          document.addEventListener('click', () => { video.play().catch(()=>{}); }, { once: true });
+          const tryPlay = () => { video.play().catch(()=>{}); };
+          document.addEventListener('click', tryPlay, { once: true });
         }
       }, AUTOPLAY_TIMEOUT);
     });
 
-    /* música: pistas aleatorias (reemplaza rutas por las tuyas) */
+    /* ----------------------------
+       Música de fondo: varias pistas -> suenan aleatoriamente (ejemplos)
+       Cambia las rutas en 'musicList' por tus MP3/URLs.
+       ---------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('bg-music');
+
+      // === EJEMPLOS: reemplaza estos strings por tus URLs o rutas ===
       const musicList = [
         'Nightcore - When You Leave (Numa Numa).mp3',
         'Nightcore  - How Do You Do (Remix) ✕.mp3',
-        'Caramella Girls - Caramelldansen HD Version (Swedish Original) Official.mp3'
+        'Nightcore  Sweet Little Bumblebee (lyric video).mp3',
+        'Nightcore - PLAY x Unity x Faded  Alan Walker (Mashup  Switching Vocals) Lyrics.mp3',
+        'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
+        'Nightcore - Battlecry (Heart of Courage) (Lyrics).mp3',
+        'Nightcore - Monster [NMV].mp3',
+        'Caramella Girls - Caramelldansen HD Version (Swedish Original) Official.mp3',
+        'Yo y los que tuvieron etapa Vocaloid cuando suena 😼✨.mp3',
       ];
+      // =============================================================
+
       let currentMusicIndex = -1;
       function pickRandomMusic(exclude){
          if(!musicList || musicList.length===0) return null;
@@ -417,13 +850,20 @@
       }
       function playRandomMusic(){
          const idx = pickRandomMusic(currentMusicIndex);
-         if(idx==null) return;
+         if(idx==null){ return; }
          currentMusicIndex = idx;
          audio.src = musicList[idx];
-         audio.load(); audio.volume = 0.75;
-         audio.play().catch(()=>{ document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once:true }); });
+         audio.load();
+         audio.volume = 0.75;
+         audio.play().catch(()=> {
+            // si autoplay bloqueado, reproducir al primer click
+            document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true });
+         });
       }
-      audio.addEventListener('ended', ()=> { setTimeout(()=>{ playRandomMusic(); }, 250); });
+      audio.addEventListener('ended', ()=>{ // cuando una pista termina, selecciona otra aleatoria
+         setTimeout(()=>{ playRandomMusic(); }, 250);
+      });
+      // iniciar reproducción con una pista aleatoria
       playRandomMusic();
     });
 
@@ -461,28 +901,40 @@
       return candidates[Math.floor(Math.random()*candidates.length)];
     }
 
-    /* Ajustes de tamaño (reducción de 'rem' sólo en móvil) */
+    // === NUEVO: coloca aleatoriamente el contenedor FG a la izquierda o a la derecha ===
+    function placeRandomSide(infoObj){
+      const side = Math.random() < 0.5 ? 'left' : 'right';
+      const margin = isMobileScreen() ? '12px' : '20px';
+      if (side === 'left') {
+        fgContainer.style.left = margin;
+        fgContainer.style.right = '';
+      } else {
+        fgContainer.style.right = margin;
+        fgContainer.style.left = '';
+      }
+      // si quieres que algunos clips (ej: 'hola') siempre estén pegados al fondo, lo manejamos en playVideoClip
+    }
+    // ============================================================================
+
     function adjustContainerToVideo(video, infoObj){
       const vw = video.videoWidth || 16; const vh = video.videoHeight || 9;
-      // tamaños base
+      // ajustes por defecto
       let maxW = Math.min(window.innerWidth * 0.32, 360);
       let maxH = Math.min(window.innerHeight * 0.4, 640);
 
       if (isMobileScreen()) {
-        // reducción especial: en móvil hacemos a 'rem' más pequeño
-        if (infoObj && infoObj.id === 'rem') {
-          maxW = Math.min(window.innerWidth * 0.45, 320); // reducido
-          maxH = Math.min(window.innerHeight * 0.45, 420);
-        } else if (infoObj && infoObj.id === 'hola') {
-          // un poco más grande en móvil para 'hola' (tal como pediste antes)
-          maxW = Math.min(window.innerWidth * 0.52, 340);
-          maxH = Math.min(window.innerHeight * 0.52, 480);
+        // >>> CAMBIO: en móvil hacemos que 'hola' y 'rem' sean más grandes y del mismo tamaño
+        if (infoObj && (infoObj.id === 'hola' || infoObj.id === 'rem')) {
+          // aumenta el ratio en móvil para ambos (hola y rem iguales)
+          maxW = Math.min(window.innerWidth * 0.62, 380);
+          maxH = Math.min(window.innerHeight * 0.62, 520);
         } else {
+          // otros clips siguen siendo más pequeños en móvil
           maxW = Math.min(window.innerWidth * 0.45, 260);
           maxH = Math.min(window.innerHeight * 0.45, 420);
         }
       } else {
-        // escritorio normal
+        // escritorio: normal
         maxW = Math.min(window.innerWidth * 0.32, 360);
         maxH = Math.min(window.innerHeight * 0.4, 640);
       }
@@ -494,11 +946,8 @@
       const cap = 1280;
       off.width = Math.min(video.videoWidth || displayW * 2, cap);
       off.height = Math.min(video.videoHeight || displayH * 2, cap);
-      // update fire canvas later in resize handler
-      resizeFireCanvas();
     }
 
-    /* Chroma functions (preservadas) */
     function applyChromaKey(imageData, settings){
       const data = imageData.data; const len = data.length;
       const thresh = settings.threshold; const minDiff = settings.diff; const soften = settings.soft;
@@ -520,6 +969,7 @@
       }
       return imageData;
     }
+
     function drawProcessedToScreen(){
       const cw = fgCanvas.width, ch = fgCanvas.height;
       const vw = off.width, vh = off.height;
@@ -567,8 +1017,9 @@
     }
 
     /* ----------------------------
-       FUEGOS ARTIFICIALES
+       FUEGOS ARTIFICIALES (canvas, partículas)
        ---------------------------- */
+    // creamos canvas overlay para partículas
     const fireCanvas = document.createElement('canvas');
     fireCanvas.className = 'firework-canvas';
     fgContainer.appendChild(fireCanvas);
@@ -583,11 +1034,13 @@
       fctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
     }
     window.addEventListener('resize', resizeFireCanvas);
+    // tamaño inicial
     setTimeout(resizeFireCanvas, 120);
 
     function random(min, max){ return Math.random()*(max-min)+min; }
 
     function explodeParticlesAt(x, y, colors, count=60, duration=650){
+      // x,y in pixels relative to fireCanvas (CSS px)
       const particles = [];
       for (let i=0;i<count;i++){
         const angle = random(0, Math.PI*2);
@@ -607,18 +1060,20 @@
         function frame(now){
           const t = now - start;
           fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+          const k = 1 - (t / (duration+120));
           for (let p of particles){
             p.age = t;
             const lifeRatio = Math.max(0, 1 - p.age / p.life);
             p.x += p.vx;
             p.y += p.vy;
-            p.vy += 0.18;
+            p.vy += 0.18; // gravedad
             const alpha = Math.max(0, Math.min(1, lifeRatio));
             fctx.globalAlpha = alpha;
             fctx.beginPath();
             fctx.fillStyle = p.color;
             fctx.arc(p.x, p.y, p.radius * (0.6 + lifeRatio * 0.8), 0, Math.PI*2);
             fctx.fill();
+            // brillo radial
             fctx.globalAlpha = alpha * 0.22;
             fctx.beginPath();
             fctx.fillStyle = p.color;
@@ -626,8 +1081,12 @@
             fctx.fill();
           }
           fctx.globalAlpha = 1;
-          if (t < duration) requestAnimationFrame(frame);
-          else { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); resolve(); }
+          if (t < duration){
+            requestAnimationFrame(frame);
+          } else {
+            fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+            resolve();
+          }
         }
         requestAnimationFrame(frame);
       });
@@ -636,18 +1095,37 @@
     async function doFireworkThenHide(){
       if (isAnimatingExplosion) return;
       isAnimatingExplosion = true;
-      try { fgVideo.pause(); } catch(e){}
+      // pausa el video frontal para que no interfiera visualmente
+      try { fgVideo.pause(); } catch(e){/*ignore*/}
+
+      // calcula centro visible del fgContainer (en CSS px)
       const rect = fgContainer.getBoundingClientRect();
       const cx = rect.width / 2;
       const cy = rect.height / 2;
-      resizeFireCanvas();
+
+      resizeFireCanvas(); // aseguramos tamaño actual
+
+      // elegir paleta: tomamos algunos colores vivos
       const palette = ['#ffcc00','#ff4d4d','#ffd700','#00fff7','#ff6ad5','#ff7f50','#8b5cf6'];
+
+      // pequeño parpadeo / escala del contenedor para efecto explosión
       fgContainer.style.transition = 'transform .25s ease-out, opacity .25s ease';
-      fgContainer.style.transform = 'scale(0.96)'; fgContainer.style.opacity = '0.85';
+      fgContainer.style.transform = 'scale(0.96)';
+      fgContainer.style.opacity = '0.85';
+
+      // ejecuta partículas
       await explodeParticlesAt(cx, cy, palette, 80, 700);
-      fgContainer.style.opacity = '0'; fgContainer.style.transform = 'scale(.8) translateY(10px)';
+
+      // dejar desaparecer el contenedor con fade
+      fgContainer.style.opacity = '0';
+      fgContainer.style.transform = 'scale(.8) translateY(10px)';
+      // esperar un momento (match con la animación)
       await new Promise(r => setTimeout(r, 220));
-      fgContainer.style.display = 'none'; fgContainer.style.transform = ''; fgContainer.style.opacity = '';
+
+      // ocultar completamente y resetear transform (para siguiente clip)
+      fgContainer.style.display = 'none';
+      fgContainer.style.transform = ''; // limpio
+      fgContainer.style.opacity = '';
       isAnimatingExplosion = false;
     }
 
@@ -658,22 +1136,42 @@
       if (!infoObj) return;
       currentVideoObj = infoObj;
       usingChroma = true;
+      // limpiar objectURL anterior si existiera
       if (lastObjectUrl) { try { URL.revokeObjectURL(lastObjectUrl); } catch(e){}; lastObjectUrl = null; }
-      fgVideo.src = infoObj.src; fgVideo.load();
 
+      // asignamos src directo; mantendremos fallback si hay CORS al dibujar
+      fgVideo.src = infoObj.src;
+      fgVideo.load();
+
+      // cuando haya metadata cargada
       const onMeta = () => {
         fgVideo.removeEventListener('loadedmetadata', onMeta);
+        // si es el clip 'hola' lo pegamos al fondo (sin espacio)
+        if (infoObj.id === 'hola') {
+          // pegado al final de la página:
+          fgContainer.style.bottom = '0px';
+        } else {
+          // valor por defecto con pequeño margen
+          fgContainer.style.bottom = '20px';
+        }
 
-        // 'hola' pegado al fondo (sin espacio); otros clips usan margen
-        if (infoObj.id === 'hola') fgContainer.style.bottom = '0px';
-        else fgContainer.style.bottom = '20px';
+        // === NUEVO: posicionar aleatoriamente a izquierda o derecha ===
+        placeRandomSide(infoObj);
+        // =============================================================
 
-        // ajustar tamaño (incluye reducción para 'rem' en móvil)
+        // ajustar tamaño (incluye aumento ligero en mobile para 'hola' y 'rem')
         adjustContainerToVideo(fgVideo, infoObj);
 
-        fgCanvas.style.display = 'block'; fgVideo.style.display = 'none';
-        fgVideo.play().catch(()=>{});
+        // canvas primario (chroma) visible
+        fgCanvas.style.display = 'block';
+        fgVideo.style.display = 'none';
+
+        // reproducimos sin pausar la música en ningún caso
+        fgVideo.play().catch(()=>{ /* si autoplay bloqueado, se mostrará el overlay */ });
         bgVideo.play().catch(()=>{});
+        // no pausamos bgMusic (solicitud del usuario)
+
+        // iniciar loop de procesado (si chroma disponible)
         if (!animationId && usingChroma) animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
         showContainer();
       };
@@ -681,42 +1179,64 @@
       fgVideo.addEventListener('loadedmetadata', onMeta);
 
       fgVideo.onerror = (e) => {
-        usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
+        // fallback: mostrar vídeo normal sin chroma
+        usingChroma = false;
+        fgCanvas.style.display = 'none';
+        fgVideo.style.display = 'block';
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
       };
 
       fgVideo.onended = () => {
+        // programamos siguiente clip
         scheduleNextVideo(3, infoObj.id);
       };
     }
 
-    // click on FG -> fireworks + next clip
+    // Click en el contenedor: ahora dispara la explosión y avanza al siguiente clip
     fgContainer.addEventListener('click', async (ev)=>{
+      // prevenir doble click mientras animando
       if (isAnimatingExplosion) return;
       if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null; }
+      // Stop the chroma processing to avoid drawing artifacts during animation
       usingChroma = false;
       if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+      // ejecuta efecto de fuegos artificiales y luego schedule next
       await doFireworkThenHide();
+      // seleccionamos siguiente clip y lo reproducimos rápido
       const currentId = currentVideoObj ? currentVideoObj.id : null;
       const next = pickRandomVideo(currentId);
-      setTimeout(()=> { playVideoClip(next); }, 420);
+      // pequeño delay para que la transición no choque
+      setTimeout(()=> {
+        playVideoClip(next);
+      }, 420);
     });
 
-    document.getElementById('playBtn')?.addEventListener('click', ()=>{
+    document.getElementById('playBtn').addEventListener('click', ()=>{
       document.getElementById('playOverlay').style.display = 'none';
       bgVideo.play().catch(()=>{}); fgVideo.play().catch(()=>{});
+      // intentar iniciar música si estaba bloqueada
       try { bgMusic.play().catch(()=>{}); } catch(e){}
     });
 
     function init(){
       fgContainer.style.display = 'none'; fgCanvas.style.display = 'none'; fgVideo.style.display = 'none';
+      // iniciar con un clip aleatorio
       const first = pickRandomVideo(null);
       if (!first) return;
       playVideoClip(first);
-      window.addEventListener('resize', ()=>{ resizeFireCanvas(); if (currentVideoObj && fgVideo.videoWidth && fgVideo.videoHeight) adjustContainerToVideo(fgVideo, currentVideoObj); });
+
+      // Resize handler
+      window.addEventListener('resize', ()=>{
+        resizeFireCanvas();
+        if (currentVideoObj && fgVideo.videoWidth && fgVideo.videoHeight) {
+          adjustContainerToVideo(fgVideo, currentVideoObj);
+        }
+      });
     }
+
     init();
 
+    // limpiar objectURL al salir por si se crea alguno en el futuro
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
 
   </script>
