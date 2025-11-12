@@ -118,6 +118,23 @@
       .container{ margin:1rem auto 1rem; padding:0 0.9rem; }
       .grid{ gap:0.6rem; grid-template-columns:repeat(3,1fr);}
       .card{ aspect-ratio:2/3; }
+
+      /* --- REDUCIR selects / inputs sólo en móviles --- */
+      header select, header input {
+        padding: .35rem .6rem;
+        font-size: .92rem;
+      }
+      /* popup de selects más compacto */
+      .mobile-select-popup {
+        max-height: 160px;
+        font-size: 0.86rem;
+      }
+      .mobile-select-popup .opt {
+        padding: .22rem .35rem;
+        font-size: 0.82rem;
+      }
+      /* badge compacto en móvil */
+      .results-badge { padding:.36rem .6rem; font-size:0.84rem; gap:.4rem; }
     }
     /* Header */
     header{
@@ -380,6 +397,14 @@
   .results-text .count{ font-size:0.82rem; }
   /* Si la pantalla es extremadamente angosta, el panel volverá a alinearse a la derecha */
   .results-panel { left: auto; right: 0; top: calc(100% + .35rem); min-width:200px; max-width:260px; }
+
+  /* reduces aún más selects/inputs en pantallas muy pequeñas */
+  header select, header input {
+    padding: .24rem .4rem;
+    font-size: .82rem;
+  }
+  .mobile-select-popup { max-height: 140px; font-size: 0.82rem; }
+  .mobile-select-popup .opt { padding: .18rem .3rem; font-size: 0.78rem; }
 }
 
     /* Animación del gradiente para el título (Archinime) */
@@ -879,15 +904,18 @@
 
     function adjustContainerToVideo(video, infoObj){
       const vw = video.videoWidth || 16; const vh = video.videoHeight || 9;
-      // para 'hola' en móvil hacemos un poco más grande
+      // ajustes por defecto
       let maxW = Math.min(window.innerWidth * 0.32, 360);
       let maxH = Math.min(window.innerHeight * 0.4, 640);
+
       if (isMobileScreen()) {
-        // para hola subir un 12% en móvil
-        if (infoObj && infoObj.id === 'hola') {
-          maxW = Math.min(window.innerWidth * 0.52, 320);  // un poco más ancho en móvil
-          maxH = Math.min(window.innerHeight * 0.52, 480);
+        // >>> CAMBIO: en móvil hacemos que 'hola' y 'rem' sean más grandes y del mismo tamaño
+        if (infoObj && (infoObj.id === 'hola' || infoObj.id === 'rem')) {
+          // aumenta el ratio en móvil para ambos (hola y rem iguales)
+          maxW = Math.min(window.innerWidth * 0.62, 380);
+          maxH = Math.min(window.innerHeight * 0.62, 520);
         } else {
+          // otros clips siguen siendo más pequeños en móvil
           maxW = Math.min(window.innerWidth * 0.45, 260);
           maxH = Math.min(window.innerHeight * 0.45, 420);
         }
@@ -896,6 +924,7 @@
         maxW = Math.min(window.innerWidth * 0.32, 360);
         maxH = Math.min(window.innerHeight * 0.4, 640);
       }
+
       const scale = Math.min(maxW / vw, maxH / vh, 1.0);
       const displayW = Math.max(120, Math.round(vw * scale)); const displayH = Math.max(80, Math.round(vh * scale));
       fgContainer.style.width = displayW + 'px'; fgContainer.style.height = displayH + 'px';
@@ -1116,7 +1145,7 @@
         placeRandomSide(infoObj);
         // =============================================================
 
-        // ajustar tamaño (incluye aumento ligero en mobile para 'hola')
+        // ajustar tamaño (incluye aumento ligero en mobile para 'hola' y 'rem')
         adjustContainerToVideo(fgVideo, infoObj);
 
         // canvas primario (chroma) visible
