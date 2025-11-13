@@ -233,7 +233,7 @@
 
   <script>
     /* ----------------------------
-       FUNCIONES Y DATOS (lógica conservada, con optimizaciones)
+       UTILIDADES
        ---------------------------- */
     function openInNewTab(url) {
       const win = window.open(url, '_blank', 'noopener,noreferrer');
@@ -241,6 +241,16 @@
       return win;
     }
     function normalizeText(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+    function shuffleArray(arr){
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function isTabletScreen(){ return window.matchMedia && window.matchMedia('(min-width:768px) and (max-width:1024px)').matches; }
+    function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
 
     /* ----------------------------
        Datos de animes (igual que antes)
@@ -299,7 +309,6 @@
       {id:51, title:"My Hero Academia", aliases: ["Boku no Hero"], img:"sgsgsdseg.jpg", rating:4.7, genres:["Superhéroes","Ciencia ficción","Comedia","Drama","Acción","Fantasía","Escolar","Aventura","Shōnen"]},
       {id:52, title:"Kakkou no Linazuke", aliases: ["A Couple of Cuckoos"], img:"pordf.jpg", rating:4.5, genres:["Romance","Comedia","Escolar","Harem","Shōnen"]},
     ];
-
 
     /* ----------------------------
        Renderizado: conservador pero mejorando carga de imágenes
@@ -367,6 +376,7 @@
       });
 
       let resultList = filtrados.slice();
+      // Si hay búsqueda, priorizamos matches como antes
       if (qn) {
         resultList.sort((A,B)=>{
           const titlesA = [A.title].concat(A.aliases||[]).map(t=>normalizeText(t));
@@ -378,15 +388,22 @@
           return na < nb ? -1 : na > nb ? 1 : 0;
         });
       } else {
-        resultList.sort((A,B)=> normalizeText(A.title) < normalizeText(B.title) ? -1 : normalizeText(A.title) > normalizeText(B.title) ? 1 : 0);
+        // Si NO hay búsqueda ni filtros, mostramos en orden ALEATORIO (tu pedido)
+        const noFiltersActive = !g && !d && !cat;
+        if (noFiltersActive) {
+          resultList = shuffleArray(resultList);
+        } else {
+          // mantener orden por título si hay filtros pero no búsqueda
+          resultList.sort((A,B)=> normalizeText(A.title) < normalizeText(B.title) ? -1 : normalizeText(A.title) > normalizeText(B.title) ? 1 : 0);
+        }
       }
 
       render(resultList);
       updateResultsCount(resultList.length);
     }
 
-    // inicial
-    render(animes);
+    // inicial: renderizamos en orden aleatorio por defecto
+    render(shuffleArray(animes));
     updateResultsCount(animes.length);
 
     document.getElementById('search').addEventListener('input', debouncedFiltro);
@@ -401,26 +418,23 @@
     /* ----------------------------
        Mobile custom popup for selects (compact)
        ---------------------------- */
-    function isMobileScreen(){ return window.matchMedia && window.matchMedia('(max-width:780px)').matches; }
-
     (function setupMobileSelectPopups(){
       const selects = ['genre-select','demographic-select','rating-select'].map(id=>document.getElementById(id)).filter(Boolean);
       let activePopup = null;
       function closePopup(){ if (activePopup && activePopup.popup) { activePopup.popup.remove(); activePopup = null; } }
       function onOutsideClick(e){ if (!activePopup) return; if (!activePopup.popup.contains(e.target) && e.target !== activePopup.el) closePopup(); }
       window.addEventListener('resize', closePopup, {passive:true});
-      // scroll listener as passive+capture to reduce layout thrash
       document.addEventListener('scroll', closePopup, {passive:true, capture:true});
       document.addEventListener('click', onOutsideClick);
 
       selects.forEach(sel => {
         sel.addEventListener('touchstart', function(ev){
-          if (!isMobileScreen()) return;
+          if (!isMobileScreenSmall()) return;
           ev.preventDefault();
           openMobilePopupFor(sel);
         }, {passive:false});
         sel.addEventListener('mousedown', function(ev){
-          if (!isMobileScreen()) return;
+          if (!isMobileScreenSmall()) return;
           ev.preventDefault();
           openMobilePopupFor(sel);
         });
@@ -540,8 +554,6 @@
       { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.18, diff: 0, soft: 100  } }
     ];
 
-    function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
-
     function pickRandomVideo(excludeId){
       if (!videoList || videoList.length === 0) return null;
       if (videoList.length === 1) return videoList[0];
@@ -562,6 +574,7 @@
       let maxW = Math.min(window.innerWidth * 0.32, 360);
       let maxH = Math.min(window.innerHeight * 0.4, 640);
 
+      // Ajustes especiales para móvil pequeño (mantener)
       if (isMobileScreenSmall()) {
         if (infoObj && infoObj.id === 'rem') {
           maxW = Math.min(window.innerWidth * 0.30, 180);
@@ -573,6 +586,10 @@
           maxW = Math.min(window.innerWidth * 0.45, 260);
           maxH = Math.min(window.innerHeight * 0.45, 420);
         }
+      } else if (isTabletScreen() && infoObj && infoObj.id === 'hola') {
+        // --- NUEVO: reducción específica para tablet al reproducir "hola"
+        maxW = Math.min(window.innerWidth * 0.22, 240);
+        maxH = Math.min(window.innerHeight * 0.30, 300);
       } else {
         maxW = Math.min(window.innerWidth * 0.32, 360);
         maxH = Math.min(window.innerHeight * 0.4, 640);
