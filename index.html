@@ -20,12 +20,12 @@
 
     /* título y logo */
     header h1{
-      cursor:pointer; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:800;
+      cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:800;
       background: linear-gradient(135deg, #00fff7, #ff00cc, #ffd700);
       -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
       white-space:nowrap; flex:0 0 auto; animation: gradientMove 6s ease infinite;
     }
-    header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; }
+    header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; cursor:pointer; }
 
     /* Social inline next to title - ahora CIRCULAR */
     .social-inline { display:flex; align-items:center; gap:.5rem; margin-left:.4rem; flex:0 0 auto; }
@@ -91,6 +91,14 @@
       .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
     }
 
+    /* show 3 cards per row on mobile phones (<= 767px) */
+    @media (max-width:767px) {
+      .container { padding: 0 1rem; margin-top:5.2rem; }
+      .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
+      .card { min-height: 0; }
+      .card img { height: auto; }
+    }
+
     @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
     .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s; }
@@ -113,16 +121,16 @@
   <audio id="bg-music" autoplay></audio>
 
   <header>
-    <h1 onclick="location.reload()">
-      <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime">
+    <h1>
+      <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime" onclick="location.reload()" title="Recargar página">
       Archinime
       <span class="social-inline" id="social-inline" title="Síguenos">
-        <!-- Usa srcset si tienes versiones @2x/@3x -->
-        <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña" onclick="openInNewTab('https://www.youtube.com/@Archinime-k2g')">
-          <img src="youtube.jpg" 
+        <!-- Botones: abrimos en nueva pestaña y evitamos que la pulsación burbujee al header -->
+        <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.youtube.com/@Archinime-k2g'); })(event)">
+          <img src="youtube.jpg" alt="YouTube" loading="lazy" decoding="async">
         </button>
-        <button id="tiktok-btn" type="button" aria-label="Abrir TikTok en nueva pestaña" onclick="openInNewTab('https://www.tiktok.com/@archinime?_t=ZS-8zGoKE4IqLw&_r=1')">
-          <img src="tiktok.jpg" 
+        <button id="tiktok-btn" type="button" aria-label="Abrir TikTok en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.tiktok.com/@archinime?_t=ZS-8zGoKE4IqLw&_r=1'); })(event)">
+          <img src="tiktok.jpg" alt="TikTok" loading="lazy" decoding="async">
         </button>
       </span>
     </h1>
@@ -131,6 +139,7 @@
     <div class="controls" id="controls">
       <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
+        <!-- ... tus opciones ... -->
         <option>Acción</option>
         <option>Animación</option>
         <option>Aventura</option>
@@ -232,14 +241,24 @@
 
   <script>
     /* ----------------------------
-       FUNCIONES Y DATOS (lógica conservada)
+       FUNCIONES Y DATOS (lógica conservada, con optimizaciones)
        ---------------------------- */
     function openInNewTab(url) {
       const win = window.open(url, '_blank', 'noopener,noreferrer');
-      try { setTimeout(() => { if (typeof window.focus === 'function') window.focus(); }, 100); } catch(e){ console.warn(e); }
+      try { setTimeout(() => { if (typeof window.focus === 'function') win && win.focus(); }, 100); } catch(e){ console.warn(e); }
       return win;
     }
     function normalizeText(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+
+    /* --- Añadí sólo esta función para mostrar en orden aleatorio --- */
+    function shuffleArray(arr){
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
 
     /* ----------------------------
        Datos de animes (igual que antes)
@@ -300,6 +319,9 @@
     ];
 
 
+    /* ----------------------------
+       Renderizado: conservador pero mejorando carga de imágenes
+       ---------------------------- */
     function render(list) {
       const grid = document.getElementById('grid');
       if (!list || list.length === 0) {
@@ -321,12 +343,16 @@
         });
         return;
       }
+
+      // Usamos atributos de carga diferida para evitar picos de memoria/CPU
       grid.innerHTML = list.map(a => `
         <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
-          <img src="${a.img}" alt="${a.title}">
+          <img src="${a.img}" alt="${a.title}" loading="lazy" decoding="async">
           <div class="info"><strong>${a.title}</strong><span>⭐ ${a.rating ? (a.rating.toFixed? a.rating.toFixed(1): a.rating) : '—'}</span></div>
         </div>
       `).join('');
+
+      // IntersectionObserver para animar aparición (tiene impacto mínimo)
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
       }, {threshold:0.2});
@@ -377,8 +403,8 @@
       updateResultsCount(resultList.length);
     }
 
-    // inicial
-    render(animes);
+    // inicial -> ahora en orden ALEATORIO
+    render(shuffleArray(animes));
     updateResultsCount(animes.length);
 
     document.getElementById('search').addEventListener('input', debouncedFiltro);
@@ -391,7 +417,7 @@
     if (demoEl) demoEl.addEventListener('change', filtro);
 
     /* ----------------------------
-       Mobile custom popup for selects (compact options)
+       Mobile custom popup for selects (compact)
        ---------------------------- */
     function isMobileScreen(){ return window.matchMedia && window.matchMedia('(max-width:780px)').matches; }
 
@@ -400,8 +426,9 @@
       let activePopup = null;
       function closePopup(){ if (activePopup && activePopup.popup) { activePopup.popup.remove(); activePopup = null; } }
       function onOutsideClick(e){ if (!activePopup) return; if (!activePopup.popup.contains(e.target) && e.target !== activePopup.el) closePopup(); }
-      window.addEventListener('resize', closePopup);
-      document.addEventListener('scroll', closePopup, true);
+      window.addEventListener('resize', closePopup, {passive:true});
+      // scroll listener as passive+capture to reduce layout thrash
+      document.addEventListener('scroll', closePopup, {passive:true, capture:true});
       document.addEventListener('click', onOutsideClick);
 
       selects.forEach(sel => {
@@ -507,7 +534,7 @@
     });
 
     /* ----------------------------
-       Chroma + FG logic + fuegos artificiales (completo)
+       Chroma + FG logic + fuegos artificiales (mejoras de rendimiento)
        ---------------------------- */
     const fgContainer = document.getElementById('fgContainer');
     const fgCanvas = document.getElementById('fgCanvas');
@@ -524,6 +551,7 @@
     let currentVideoObj = null;
     let lastObjectUrl = null;
     let isAnimatingExplosion = false;
+    let visibilityPaused = false;
 
     const videoList = [
       { id: 'hola', src: 'hola.mp4', preset: { threshold: 0.25, diff: 0, soft: 100 } },
@@ -613,7 +641,7 @@
     }
 
     function processLoop(video, infoObj){
-      if (!usingChroma) return;
+      if (!usingChroma || visibilityPaused) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
       if (video.paused || video.ended) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
       if (video.videoWidth && video.videoHeight && (off.width !== Math.min(video.videoWidth,1280) || off.height !== Math.min(video.videoHeight,1280))) {
         off.width = Math.min(video.videoWidth,1280); off.height = Math.min(video.videoHeight,1280);
@@ -674,7 +702,7 @@
         fctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
       }
     }
-    window.addEventListener('resize', resizeFireCanvas);
+    window.addEventListener('resize', resizeFireCanvas, {passive:true});
     setTimeout(resizeFireCanvas, 120);
 
     function random(min, max){ return Math.random()*(max-min)+min; }
@@ -780,7 +808,7 @@
         fgVideo.style.display = 'none';
         fgVideo.play().catch(()=>{});
         bgVideo.play().catch(()=>{});
-        if (!animationId && usingChroma) animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
+        if (!animationId && usingChroma && !visibilityPaused) animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
         showContainer();
       };
 
@@ -816,24 +844,45 @@
       try { bgMusic.play().catch(()=>{}); } catch(e){}
     });
 
+    // Throttled resize para evitar trabajo repetido
+    let resizeRaf = null;
+    window.addEventListener('resize', ()=> {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(()=> {
+        resizeFireCanvas();
+        if (currentVideoObj && fgVideo.videoWidth && fgVideo.videoHeight) {
+          adjustContainerToVideo(fgVideo, currentVideoObj);
+        }
+        resizeRaf = null;
+      });
+    }, {passive:true});
+
+    // Pausar procesamiento pesado cuando pestaña no visible para evitar lag
+    document.addEventListener('visibilitychange', ()=> {
+      if (document.hidden) {
+        visibilityPaused = true;
+        if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+        // dejamos los vídeos en segundo plano (opción: pausar si quieres)
+      } else {
+        visibilityPaused = false;
+        if (usingChroma && fgVideo && !animationId) {
+          animationId = requestAnimationFrame(()=>processLoop(fgVideo, currentVideoObj));
+        }
+      }
+    }, {passive:true});
+
     function init(){
       fgContainer.style.display = 'none'; fgCanvas.style.display = 'none'; fgVideo.style.display = 'none';
       const first = pickRandomVideo(null);
       if (!first) return;
       playVideoClip(first);
-
-      window.addEventListener('resize', ()=>{
-        resizeFireCanvas();
-        if (currentVideoObj && fgVideo.videoWidth && fgVideo.videoHeight) {
-          adjustContainerToVideo(fgVideo, currentVideoObj);
-        }
-      });
     }
 
     init();
 
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
 
+    /* FIN del script */
   </script>
 </body>
 </html>
