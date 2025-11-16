@@ -59,7 +59,7 @@
     #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
 
     /* mobile-select-popup styles (compact) */
-    .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; }
+    .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
     .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
     .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
     .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.04); }
@@ -125,7 +125,6 @@
       <img id="logo" src="Logo_Archinime.png" alt="Logo Archinime" onclick="location.reload()" title="Recargar página">
       Archinime
       <span class="social-inline" id="social-inline" title="Síguenos">
-        <!-- Botones: abrimos en nueva pestaña y evitamos que la pulsación burbujee al header -->
         <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.youtube.com/@Archinime-k2g'); })(event)">
           <img src="youtube.jpg" alt="YouTube" loading="lazy" decoding="async">
         </button>
@@ -139,7 +138,6 @@
     <div class="controls" id="controls">
       <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
-        <!-- ... tus opciones ... -->
         <option>Acción</option>
         <option>Animación</option>
         <option>Aventura</option>
@@ -218,8 +216,6 @@
       <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()" aria-label="Buscar anime">
     </div>
 
-    <!-- NOTA: botón de resultados eliminado según tu petición -->
-
   </header>
 
   <main class="container">
@@ -231,7 +227,6 @@
     <div id="fgContainer" aria-label="Vídeo frontal">
       <canvas id="fgCanvas"></canvas>
       <video id="fgVideo" muted loop playsinline></video>
-      <!-- canvas para fuegos artificiales se añade dinámicamente en JS -->
     </div>
 
     <div class="play-overlay" id="playOverlay" style="display:none;">
@@ -250,7 +245,6 @@
     }
     function normalizeText(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
 
-    /* --- Añadí sólo esta función para mostrar en orden aleatorio --- */
     function shuffleArray(arr){
       const a = arr.slice();
       for (let i = a.length - 1; i > 0; i--) {
@@ -261,7 +255,7 @@
     }
 
     /* ----------------------------
-       Datos de animes (igual que antes)
+       Datos de animes
        ---------------------------- */
     const animes = [
       {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Sobrenatural","Comedia","Romance","Comedia oscura","Shōnen"]},
@@ -318,9 +312,8 @@
       {id:52, title:"Kakkou no Linazuke", aliases: ["A Couple of Cuckoos"], img:"pordf.jpg", rating:4.5, genres:["Romance","Comedia","Escolar","Harem","Shōnen"]},
     ];
 
-
     /* ----------------------------
-       Renderizado: conservador pero mejorando carga de imágenes
+       Renderizado
        ---------------------------- */
     function render(list) {
       const grid = document.getElementById('grid');
@@ -344,7 +337,6 @@
         return;
       }
 
-      // Usamos atributos de carga diferida para evitar picos de memoria/CPU
       grid.innerHTML = list.map(a => `
         <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
           <img src="${a.img}" alt="${a.title}" loading="lazy" decoding="async">
@@ -352,7 +344,6 @@
         </div>
       `).join('');
 
-      // IntersectionObserver para animar aparición (tiene impacto mínimo)
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
       }, {threshold:0.2});
@@ -417,29 +408,76 @@
     if (demoEl) demoEl.addEventListener('change', filtro);
 
     /* ----------------------------
-       Mobile custom popup for selects (compact)
+       Mobile custom popup for selects (fix: no se cierra al hacer scroll)
+       - Toggle al pulsar misma barra
+       - No cerrar por scroll de la página
+       - Reposiciona popup mientras la página se desplaza (para mantenerlo bajo el select)
+       - Mantiene scroll interno del popup sin cerrarlo
        ---------------------------- */
     function isMobileScreen(){ return window.matchMedia && window.matchMedia('(max-width:780px)').matches; }
 
     (function setupMobileSelectPopups(){
       const selects = ['genre-select','demographic-select','rating-select'].map(id=>document.getElementById(id)).filter(Boolean);
       let activePopup = null;
-      function closePopup(){ if (activePopup && activePopup.popup) { activePopup.popup.remove(); activePopup = null; } }
-      function onOutsideClick(e){ if (!activePopup) return; if (!activePopup.popup.contains(e.target) && e.target !== activePopup.el) closePopup(); }
-      window.addEventListener('resize', closePopup, {passive:true});
-      // scroll listener as passive+capture to reduce layout thrash
-      document.addEventListener('scroll', closePopup, {passive:true, capture:true});
+      let popupInteracting = false;
+      let rafIdForReposition = null;
+
+      function closePopup(){
+        if (activePopup && activePopup.popup) {
+          try { activePopup.popup.remove(); } catch(e){}
+          // limpiar bandera de interacción
+          popupInteracting = false;
+          // permitir scroll si lo habíamos bloqueado (no lo hacemos por defecto)
+          document.body.style.touchAction = '';
+          activePopup = null;
+        }
+      }
+
+      function onOutsideClick(e){
+        if (!activePopup) return;
+        if (!activePopup.popup.contains(e.target) && e.target !== activePopup.el) closePopup();
+      }
+
+      // Reposiciona popup para que siga bajo el select cuando el usuario hace scroll o resize
+      function repositionActivePopup(){
+        if (!activePopup) return;
+        if (rafIdForReposition) cancelAnimationFrame(rafIdForReposition);
+        rafIdForReposition = requestAnimationFrame(()=> {
+          try {
+            const selectEl = activePopup.el;
+            const popup = activePopup.popup;
+            const rect = selectEl.getBoundingClientRect();
+            const popupRect = popup.getBoundingClientRect();
+            let top = rect.bottom + 6;
+            let left = rect.left;
+            if (left + popupRect.width > window.innerWidth - 8) { left = Math.max(8, window.innerWidth - popupRect.width - 8); }
+            if (top + popupRect.height > window.innerHeight - 8) {
+              top = rect.top - popupRect.height - 6;
+              if (top < 8) top = 8;
+            }
+            popup.style.left = left + 'px';
+            popup.style.top = top + 'px';
+          } catch(err){ /* no romper si algo falla */ }
+        });
+      }
+
+      window.addEventListener('resize', ()=> { if (activePopup) repositionActivePopup(); }, {passive:true});
+      // escuchamos scroll y reposicionamos, NO cerramos
+      window.addEventListener('scroll', ()=> { if (activePopup) repositionActivePopup(); }, {passive:true});
+
       document.addEventListener('click', onOutsideClick);
 
       selects.forEach(sel => {
         sel.addEventListener('touchstart', function(ev){
           if (!isMobileScreen()) return;
           ev.preventDefault();
+          if (activePopup && activePopup.el === sel) { closePopup(); return; }
           openMobilePopupFor(sel);
         }, {passive:false});
         sel.addEventListener('mousedown', function(ev){
           if (!isMobileScreen()) return;
           ev.preventDefault();
+          if (activePopup && activePopup.el === sel) { closePopup(); return; }
           openMobilePopupFor(sel);
         });
       });
@@ -468,21 +506,81 @@
           popup.appendChild(item);
         });
 
+        // manejar interacción dentro del popup
+        popup.addEventListener('touchstart', ()=> { popupInteracting = true; });
+        popup.addEventListener('pointerdown', ()=> { popupInteracting = true; });
+        popup.addEventListener('touchend', ()=> { setTimeout(()=> { popupInteracting = false; }, 180); });
+        popup.addEventListener('pointerup', ()=> { setTimeout(()=> { popupInteracting = false; }, 100); });
+
+        // estilo y posicionamiento inicial (usamos fixed y luego reposicionamos en scroll/resize)
         document.body.appendChild(popup);
-        const popupRect = popup.getBoundingClientRect();
-        let top = rect.bottom + 6;
-        let left = rect.left;
-        if (left + popupRect.width > window.innerWidth - 8) { left = Math.max(8, window.innerWidth - popupRect.width - 8); }
-        if (top + popupRect.height > window.innerHeight - 8) {
-          top = rect.top - popupRect.height - 6;
-          if (top < 8) top = 8;
-        }
         popup.style.position = 'fixed';
-        popup.style.left = left + 'px';
-        popup.style.top = top + 'px';
+
+        // pequeña función para colocar el popup respetando la pantalla
+        function place() {
+          const popupRect = popup.getBoundingClientRect();
+          let top = rect.bottom + 6;
+          let left = rect.left;
+          if (left + popupRect.width > window.innerWidth - 8) { left = Math.max(8, window.innerWidth - popupRect.width - 8); }
+          if (top + popupRect.height > window.innerHeight - 8) {
+            top = rect.top - popupRect.height - 6;
+            if (top < 8) top = 8;
+          }
+          popup.style.left = left + 'px';
+          popup.style.top = top + 'px';
+        }
+
+        // Esperamos a que el popup esté en DOM y tenga tamaño para posicionarlo correctamente
+        setTimeout(()=> { place(); }, 20);
+
+        // Guardamos referencia activa
         activePopup = { el: selectEl, popup };
+
+        // Forzamos una reposición al abrir (por si el usuario abre y luego hace scroll rápidamente)
+        setTimeout(()=> { repositionActivePopup(); }, 80);
       }
     })();
+
+
+    /* ----------------------------
+       Ajuste dinámico del espacio entre header y la grid en móviles
+       ---------------------------- */
+    function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
+
+    function adjustMobileSpacing(){
+      try {
+        const container = document.querySelector('.container');
+        const header = document.querySelector('header');
+        const grid = document.querySelector('.grid');
+        if (!container || !header || !grid) return;
+        if (!isMobileScreenSmall()) {
+          container.style.marginTop = '';
+          return;
+        }
+        const headerH = Math.ceil(header.getBoundingClientRect().height);
+        const gridCS = getComputedStyle(grid);
+        let gap = gridCS.gap || gridCS.rowGap || '0.9rem';
+        let gapPx = 0;
+        if (typeof gap === 'string') {
+          gap = gap.trim();
+          if (gap.endsWith('rem')) gapPx = parseFloat(gap) * parseFloat(getComputedStyle(document.documentElement).fontSize || '16');
+          else if (gap.endsWith('px')) gapPx = parseFloat(gap);
+          else gapPx = parseFloat(gap) || 14;
+        } else {
+          gapPx = Number(gap) || 14;
+        }
+        container.style.marginTop = (headerH + Math.round(gapPx)) + 'px';
+      } catch(e){
+        console.warn('adjustMobileSpacing error', e);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', ()=> {
+      adjustMobileSpacing();
+      setTimeout(adjustMobileSpacing, 180);
+    });
+    window.addEventListener('resize', ()=> { adjustMobileSpacing(); }, {passive:true});
+
 
     /* ----------------------------
        Fondo y audio
@@ -558,8 +656,6 @@
       { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.18, diff: 0, soft: 100  } }
     ];
 
-    function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
-
     function pickRandomVideo(excludeId){
       if (!videoList || videoList.length === 0) return null;
       if (videoList.length === 1) return videoList[0];
@@ -570,7 +666,7 @@
 
     function placeRandomSide(infoObj){
       const side = Math.random() < 0.5 ? 'left' : 'right';
-      const margin = isMobileScreenSmall() ? '12px' : '20px';
+      const margin = window.matchMedia('(max-width:767px)').matches ? '12px' : '20px';
       if (side === 'left') { fgContainer.style.left = margin; fgContainer.style.right = ''; }
       else { fgContainer.style.right = margin; fgContainer.style.left = ''; }
     }
@@ -580,7 +676,7 @@
       let maxW = Math.min(window.innerWidth * 0.32, 360);
       let maxH = Math.min(window.innerHeight * 0.4, 640);
 
-      if (isMobileScreenSmall()) {
+      if (window.matchMedia('(max-width:767px)').matches) {
         if (infoObj && infoObj.id === 'rem') {
           maxW = Math.min(window.innerWidth * 0.30, 180);
           maxH = Math.min(window.innerHeight * 0.30, 200);
@@ -760,26 +856,19 @@
     async function doFireworkThenHide(){
       if (isAnimatingExplosion) return;
       isAnimatingExplosion = true;
-      try { fgVideo.pause(); } catch(e){/*ignore*/}
-
+      try { fgVideo.pause(); } catch(e){}
       const rect = fgContainer.getBoundingClientRect();
       const cx = rect.width / 2;
       const cy = rect.height / 2;
-
       resizeFireCanvas();
-
       const palette = ['#ffcc00','#ff4d4d','#ffd700','#00fff7','#ff6ad5','#ff7f50','#8b5cf6'];
-
       fgContainer.style.transition = 'transform .25s ease-out, opacity .25s ease';
       fgContainer.style.transform = 'scale(0.96)';
       fgContainer.style.opacity = '0.85';
-
       await explodeParticlesAt(cx, cy, palette, 80, 700);
-
       fgContainer.style.opacity = '0';
       fgContainer.style.transform = 'scale(.8) translateY(10px)';
       await new Promise(r => setTimeout(r, 220));
-
       fgContainer.style.display = 'none';
       fgContainer.style.transform = '';
       fgContainer.style.opacity = '';
@@ -862,7 +951,6 @@
       if (document.hidden) {
         visibilityPaused = true;
         if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
-        // dejamos los vídeos en segundo plano (opción: pausar si quieres)
       } else {
         visibilityPaused = false;
         if (usingChroma && fgVideo && !animationId) {
