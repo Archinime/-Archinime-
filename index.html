@@ -16,6 +16,7 @@
     #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
     #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-poster.jpg') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
 
+    /* HEADER */
     header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:20; transition:background .3s; flex-wrap:wrap; }
 
     /* título y logo */
@@ -66,7 +67,7 @@
 
     /* compact select appearance for small mobile screens: 2 per line */
     @media (max-width:780px) {
-      header { padding:0.6rem 0.9rem; gap:0.5rem; align-items:center; }
+      /* mantiene layout de controles en 2 columnas pero no reduce header demasiado */
       .controls {
         width:100%;
         display:grid;
@@ -81,22 +82,35 @@
       .social-inline img { width:68%; height:68%; }
     }
 
-    /* extra small phones */
-    @media (max-width:420px) {
-      .controls { grid-template-columns: repeat(2, 1fr); gap:.35rem; }
-      .controls select, .controls input { font-size:0.82rem; padding:.24rem .4rem; border-radius:6px; }
-      .social-inline button { width:34px; height:34px; }
-      .social-inline img { width:70%; height:70%; }
-      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
-      .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
-    }
-
-    /* show 3 cards per row on mobile phones (<= 767px) */
+    /* Ajustes más agresivos para pantallas <= 767px (móviles): reducir header y tamaños */
     @media (max-width:767px) {
+      header { padding:0.36rem 0.6rem; gap:0.35rem; align-items:center; }
+      header h1 { font-size:1.15rem; gap:0.45rem; }
+      header h1 img#logo { width:34px; height:34px; border-radius:6px; }
+      .controls { gap:0.35rem; }
+      .controls select, .controls input { font-size:0.88rem; padding:.28rem .44rem; border-radius:7px; }
+      #search { font-size:0.88rem; padding:.28rem .44rem; }
+      .social-inline button { width:34px; height:34px; }
+      .social-inline img { width:64%; height:64%; }
+      /* grid más compacta para móviles */
       .container { padding: 0 1rem; margin-top:5.2rem; }
       .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
-      .card { min-height: 0; }
-      .card img { height: auto; }
+    }
+
+    /* extra small phones: reducir aún más */
+    @media (max-width:420px) {
+      header { padding:0.28rem 0.48rem; gap:0.28rem; }
+      header h1 { font-size:1rem; gap:0.36rem; }
+      header h1 img#logo { width:30px; height:30px; }
+      .controls { grid-template-columns: repeat(2, 1fr); gap:.28rem; }
+      .controls select, .controls input { font-size:0.8rem; padding:.22rem .36rem; border-radius:6px; }
+      #search { font-size:0.8rem; padding:.22rem .36rem; }
+      .social-inline button { width:30px; height:30px; }
+      .social-inline img { width:62%; height:62%; }
+      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
+      .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.78rem; }
+      .container { padding: 0 0.8rem; margin-top:4.6rem; }
+      .grid { gap:0.7rem; grid-template-columns: repeat(3, 1fr); }
     }
 
     @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -544,6 +558,7 @@
 
     /* ----------------------------
        Ajuste dinámico del espacio entre header y la grid en móviles
+       (ahora el header es más compacto; el cálculo deja el mismo 'gap' entre header y grid)
        ---------------------------- */
     function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
 
@@ -554,6 +569,7 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
+          // dejar el comportamiento por defecto en escritorio
           container.style.marginTop = '';
           return;
         }
@@ -569,6 +585,9 @@
         } else {
           gapPx = Number(gap) || 14;
         }
+        // Si quieres que el espacio entre header y grid sea exactamente igual al gap de la grid,
+        // puedes usar: container.style.marginTop = Math.round(headerH + gapPx) + 'px';
+        // Con el header ya reducido arriba, eso deja un espacio visual pequeño entre header y animes.
         container.style.marginTop = (headerH + Math.round(gapPx)) + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
