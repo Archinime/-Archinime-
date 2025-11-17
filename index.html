@@ -44,7 +44,7 @@
     #search { width:220px; min-width:120px; }
 
     /* layout principal */
-    .container{ max-width:1200px; margin:3.2rem auto 2rem; padding:0 2rem; z-index:6; position:relative; } /* <- margin-top reducido en CSS para mobile más abajo */
+    .container{ max-width:1200px; margin:6rem auto 2rem; padding:0 2rem; z-index:6; position:relative; }
     .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.5rem; }
     .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .6s ease; opacity:0; transform:translateY(30px); }
     .card.visible{ opacity:1; transform:translateY(0); }
@@ -93,15 +93,10 @@
 
     /* show 3 cards per row on mobile phones (<= 767px) */
     @media (max-width:767px) {
-      .container { padding: 0 1rem; margin-top:0.6rem; } /* <- margin-top móvil reducido aún más */
+      .container { padding: 0 1rem; margin-top:5.2rem; }
       .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
       .card { min-height: 0; }
       .card img { height: auto; }
-    }
-
-    /* muy pequeño */
-    @media (max-width:420px) {
-      .container { margin-top:0.45rem; } /* <- extra pequeño: aún menos espacio */
     }
 
     @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
@@ -549,10 +544,8 @@
 
     /* ----------------------------
        Ajuste dinámico del espacio entre header y la grid en móviles
-       - Ahora más agresivo en móviles y extra-pequeños
        ---------------------------- */
     function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
-    function isExtraSmall(){ return window.matchMedia && window.matchMedia('(max-width:420px)').matches; }
 
     function adjustMobileSpacing(){
       try {
@@ -561,7 +554,6 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
-          // dejar comportamiento por defecto fuera de móviles pequeños
           container.style.marginTop = '';
           return;
         }
@@ -577,13 +569,7 @@
         } else {
           gapPx = Number(gap) || 14;
         }
-
-        // Reducimos el espacio extra: más agresivo en móviles, aún más en pantallas muy pequeñas
-        let shrink;
-        if (isExtraSmall()) shrink = 36;     // extra pequeño (<=420px): máximo "subida"
-        else shrink = 28;                    // móviles (<=767px)
-        const mt = Math.max(6, headerH + Math.round(gapPx) - shrink); // no menos de 6px para evitar solapado
-        container.style.marginTop = mt + 'px';
+        container.style.marginTop = (headerH + Math.round(gapPx)) + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
       }
