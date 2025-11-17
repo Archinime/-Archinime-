@@ -44,7 +44,7 @@
     #search { width:220px; min-width:120px; }
 
     /* layout principal */
-    .container{ max-width:1200px; margin:6rem auto 2rem; padding:0 2rem; z-index:6; position:relative; }
+    .container{ max-width:1200px; margin:3.2rem auto 2rem; padding:0 2rem; z-index:6; position:relative; } /* <- margin-top reducido */
     .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.5rem; }
     .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .6s ease; opacity:0; transform:translateY(30px); }
     .card.visible{ opacity:1; transform:translateY(0); }
@@ -93,7 +93,7 @@
 
     /* show 3 cards per row on mobile phones (<= 767px) */
     @media (max-width:767px) {
-      .container { padding: 0 1rem; margin-top:5.2rem; }
+      .container { padding: 0 1rem; margin-top:3.2rem; } /* <- margin-top móvil reducido */
       .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
       .card { min-height: 0; }
       .card img { height: auto; }
@@ -554,6 +554,7 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
+          // dejar comportamiento por defecto fuera de móviles pequeños
           container.style.marginTop = '';
           return;
         }
@@ -569,7 +570,12 @@
         } else {
           gapPx = Number(gap) || 14;
         }
-        container.style.marginTop = (headerH + Math.round(gapPx)) + 'px';
+
+        // Reducimos un poco el espacio extra para que las tarjetas queden más pegadas arriba en móviles
+        const shrink = 12; // píxeles a reducir del espacio extra (ajusta si quieres menos/más)
+        let mt = headerH + Math.round(gapPx) - shrink;
+        if (mt < headerH) mt = headerH; // no solapar el header
+        container.style.marginTop = mt + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
       }
