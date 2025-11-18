@@ -89,11 +89,12 @@
       .social-inline img { width:70%; height:70%; }
       .mobile-select-popup { max-height:160px; font-size:0.84rem; }
       .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
+      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
     }
 
     /* show 3 cards per row on mobile phones (<= 767px) */
     @media (max-width:767px) {
-      .container { padding: 0 1rem; margin-top:5.2rem; }
+      .container { padding: 0 1rem; margin-top: 0; } /* dejo que el JS calcule y ponga solo lo necesario */
       .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
       .card { min-height: 0; }
       .card img { height: auto; }
@@ -409,10 +410,6 @@
 
     /* ----------------------------
        Mobile custom popup for selects (fix: no se cierra al hacer scroll)
-       - Toggle al pulsar misma barra
-       - No cerrar por scroll de la página
-       - Reposiciona popup mientras la página se desplaza (para mantenerlo bajo el select)
-       - Mantiene scroll interno del popup sin cerrarlo
        ---------------------------- */
     function isMobileScreen(){ return window.matchMedia && window.matchMedia('(max-width:780px)').matches; }
 
@@ -544,6 +541,7 @@
 
     /* ----------------------------
        Ajuste dinámico del espacio entre header y la grid en móviles
+       - Ahora reduce notablemente el gap en móviles para pegar la primera fila al header
        ---------------------------- */
     function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
 
@@ -554,22 +552,20 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
+          // restaurar comportamiento por defecto en pantallas grandes
           container.style.marginTop = '';
           return;
         }
+        // altura del header (necesaria para evitar solapamiento con position:sticky)
         const headerH = Math.ceil(header.getBoundingClientRect().height);
-        const gridCS = getComputedStyle(grid);
-        let gap = gridCS.gap || gridCS.rowGap || '0.9rem';
-        let gapPx = 0;
-        if (typeof gap === 'string') {
-          gap = gap.trim();
-          if (gap.endsWith('rem')) gapPx = parseFloat(gap) * parseFloat(getComputedStyle(document.documentElement).fontSize || '16');
-          else if (gap.endsWith('px')) gapPx = parseFloat(gap);
-          else gapPx = parseFloat(gap) || 14;
-        } else {
-          gapPx = Number(gap) || 14;
-        }
-        container.style.marginTop = (headerH + Math.round(gapPx)) + 'px';
+
+        // queremos que la distancia entre header y primera fila sea muy pequeña en móviles:
+        // por seguridad añadimos 4px en pantallas <=420px y 6px en <=767px
+        const smallPhone = window.matchMedia && window.matchMedia('(max-width:420px)').matches;
+        const extraGap = smallPhone ? 4 : 6;
+
+        // aplicamos margin-top igual a la altura del header + pequeño gap
+        container.style.marginTop = (headerH + extraGap) + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
       }
@@ -759,7 +755,7 @@
       const processed = applyChromaKey(frame, settings);
       offCtx.putImageData(processed, 0, 0);
       drawProcessedToScreen();
-      animationId = requestAnimationFrame(()=>processLoop(video, infoObj));
+      animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
     }
 
     function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter'); }
