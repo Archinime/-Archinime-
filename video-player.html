@@ -2148,8 +2148,10 @@
       if (q) return q[1];
       return null;
     }
+
+    // Mostrar preview de Drive con iframe. Al mostrar iframe ocultamos el <video> para que no deje espacio.
     function insertDrivePreview(fileId) {
-      resetPlayerView();
+      resetPlayerView(); // esto quitará cualquier iframe previo y ocultará el video
       const iframe = document.createElement('iframe');
       iframe.id = 'drive-iframe';
       iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
@@ -2159,10 +2161,14 @@
       iframe.allow = 'autoplay; encrypted-media; fullscreen';
       iframe.style.borderRadius = '6px';
       iframe.style.opacity = '0';
+      // insertamos el iframe (después del <video>) — el <video> ya está oculto por resetPlayerView()
       player.parentNode.insertBefore(iframe, player.nextSibling);
+      // asegurar que el video no ocupe espacio
+      player.style.display = 'none';
       // aparecer suave
       setTimeout(()=> iframe.style.opacity = '1', 50);
     }
+
     function buildForcedDownloadLink(originalLink) {
       if (!originalLink) return '#';
       const driveId = getDriveFileId(originalLink);
@@ -2207,7 +2213,9 @@
       } catch (err) {}
       player.removeAttribute('src');
       while (player.firstChild) player.removeChild(player.firstChild);
+      // ocultar visualmente el vídeo para que no deje espacio cuando se muestre un iframe
       player.style.opacity = '0';
+      player.style.display = 'none';
     }
 
     function showPlayerError(msg) {
@@ -2236,7 +2244,7 @@
         return;
       }
 
-      // limpiar vista previa previa
+      // limpiar vista previa previa (elimina iframe si existe y oculta el video)
       resetPlayerView();
 
       // oculta error si había alguno
@@ -2254,6 +2262,11 @@
         opt2Btn.classList.toggle('active', opts.label === 'Opción 2');
         return;
       }
+
+      // Si llegamos aquí, es una fuente de video (mp4 u otra directa).
+      // Asegurarnos de mostrar el <video> (y quitar display:none).
+      player.style.display = '';
+      player.style.opacity = '0'; // hasta que cargue y dispare events
 
       // crear <source> dentro del <video>
       const src = document.createElement('source');
@@ -2513,4 +2526,4 @@
 
   </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
