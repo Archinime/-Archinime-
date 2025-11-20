@@ -2481,29 +2481,33 @@
     tryLoadFromDirectQuery();
     loadEpisodeFromQuery();
 
-    /* ---------- Botón volver funcional (restaura y navega hacia atrás con fallback) ---------- */
-    back.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      // quitar modo exclusivo y restaurar reproductor normal antes de salir
-      exclusiveMode = false;
-      if (episode && episode.link) {
-        // restaura la fuente principal visible (no autoplay for smooth nav)
-        setPlayerSource(episode.link, { autoplay:false, label:'Opción 1', exclusive:false });
-      } else {
-        // limpiar cualquier iframe si no hay episodio
-        resetPlayerView();
-      }
-      // navegar hacia atrás o salta a home si no hay historial/referrer
-      if (document.referrer && document.referrer !== location.href) {
-        // ir al referrer -> suele ser la lista anterior
-        location.href = document.referrer;
-      } else if (history.length > 1) {
-        history.back();
-      } else {
-        // fallback a raíz del sitio (ajusta si tu índice está en otra ruta)
-        location.href = '/';
-      }
-    });
+    /* --- Enlace de regresar: comportamiento robusto --- */
+    (function setupBackButton(){
+      if (!back) return;
+      const baseDetail = 'anime-detail.html';
+      const fallbackParams = new URLSearchParams();
+      if (anime) fallbackParams.set('id', anime);
+      if (typeof s !== 'undefined' && s) fallbackParams.set('s', s);
+      if (typeof e !== 'undefined' && e) fallbackParams.set('e', e);
+      back.setAttribute('href', `${baseDetail}?${fallbackParams.toString()}`);
+
+      back.addEventListener('click', function(ev){
+        try {
+          const ref = document.referrer ? new URL(document.referrer) : null;
+          if (ref && ref.origin === location.origin && /anime-detail(\.html)?$/.test(ref.pathname)) {
+            ev.preventDefault();
+            history.back();
+            return;
+          }
+        } catch (err) {}
+        ev.preventDefault();
+        const params = new URLSearchParams();
+        if (anime) params.set('id', anime);
+        if (typeof s !== 'undefined' && s) params.set('s', s);
+        if (typeof e !== 'undefined' && e) params.set('e', e);
+        location.href = `${baseDetail}?${params.toString()}`;
+      });
+    })();
 
     // Restauración segura si el usuario usa prev/next
     prev.addEventListener('click', () => { exclusiveMode = false; });
