@@ -28,7 +28,7 @@
 
     .container {
       position: relative; z-index: 0;
-      max-width: 800px;
+      max-width: 980px;
       margin: 80px auto;
       padding: 20px;
       background: rgba(0,0,0,0.7);
@@ -38,7 +38,7 @@
 
     h1.chapter-title {
       margin-bottom: 15px;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       text-align: center;
       color: #0ff;
     }
@@ -59,14 +59,30 @@
       width: 100%;
     }
 
+    /* media-container: el rectángulo que comparten iframe/video/loader */
+    .media-container {
+      position: relative;
+      width: 100%;
+      border-radius: 6px;
+      background: #000;
+      overflow: hidden;
+      display: block;
+    }
+
+    /* removemos alturas fijas en CSS: las asignamos en px desde JS */
     video#player, iframe#drive-iframe {
       width: 100%;
-      max-height: 60vh;
+      height: 100%;
       border-radius: 6px;
       background: #000;
       display: block;
       transition: opacity 0.35s ease;
       opacity: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
+      border: none;
     }
 
     .player-error {
@@ -83,7 +99,7 @@
       border-radius: 6px;
       background: rgba(0,0,0,0.7);
       color: #ffdddd;
-      z-index: 30;
+      z-index: 120;
       pointer-events: none;
       border: 1px solid rgba(255,0,0,0.25);
       font-weight: bold;
@@ -150,7 +166,7 @@
       font-weight: bold;
       box-shadow: 0 4px 15px rgba(0,255,255,0.4);
       pointer-events: none;
-      z-index: 100;
+      z-index: 200;
     }
 
     @keyframes popin {
@@ -179,6 +195,8 @@
       text-decoration: none;
       font-weight: bold;
       transition: background .3s, transform .2s;
+      cursor: pointer; /* <-- FIX: asegura que la manito aparezca al pasar el cursor */
+      user-select: none;
     }
     .nav-chapters a:hover {
       background: rgba(0,255,255,0.2);
@@ -188,10 +206,94 @@
 
     .nav-chapters a#next { margin-left: auto; }
 
+    /* ----------------- LOADER (AHORA DENTRO DE media-container, inset:0) ----------------- */
+    .loading-overlay {
+      position: absolute;
+      inset: 0; /* ocupa exactamente el mismo rect que video/iframe */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+      border-radius: 6px;
+      z-index: 1000; /* por encima del media */
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px) scale(.995);
+      transition: opacity .2s ease, transform .25s ease;
+      will-change: opacity, transform;
+      overflow: hidden;
+    }
+    .loading-overlay.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto; /* bloquea interacción con el media mientras carga */
+    }
+
+    /* loader dentro del mismo contenedor (100% del media-container) */
+    .loader-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+
+    /* el video de carga ocupará el 100% del area (pero con object-fit: contain para verse completo) */
+    #loader-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #000;
+      z-index: 1002;
+    }
+
+    .loader-frame {
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 1003;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .loading-caption {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1005;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #e8ffff;
+      user-select: none;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(170,250,255,0.06);
+    }
+
+    .dots { display: inline-flex; gap: 5px; align-items: center; margin-left: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(180deg,#aafaff,#00ffc2); opacity:0.25; animation: dotPulse 1s infinite; }
+    .dot:nth-child(1){animation-delay:0s}.dot:nth-child(2){animation-delay:0.15s}.dot:nth-child(3){animation-delay:0.3s}
+    @keyframes dotPulse {0%{opacity:0.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-6px)}80%{opacity:0.35;transform:translateY(0)}100%{opacity:0.25;transform:translateY(0)}}
+
+    /* responsive tweaks */
+    @media (max-width: 900px) {
+      .container { max-width: 100%; margin: 40px 12px; padding: 12px; }
+      .loading-caption { font-size: 0.85rem; padding: 6px 10px; bottom: 10px; }
+    }
     @media (max-width: 600px) {
-      .container { margin: 40px 1rem; padding: 1rem; }
-      video#player { max-height: 40vh; }
-      iframe#drive-iframe { max-height: 40vh; }
+      /* ajustes de mobile si quieres más tarde */
     }
   </style>
 </head>
@@ -206,12 +308,39 @@
     <a id="back" class="back">← Volver</a>
 
     <div class="player-wrap" id="player-wrap">
-      <video id="player" controls autoplay playsinline></video>
-      <div id="player-error" class="player-error" role="alert">
-        <div>
-          <div id="player-error-text">Error al cargar el video.</div>
+      <!-- Contenedor compartido: vídeo, iframe y loader ocupan exactamente esta caja -->
+      <div class="media-container" id="media-container">
+        <!-- IMPORTANTE: quitamos 'muted' para que los mp4 (Dropbox) conserven audio -->
+        <video id="player" controls autoplay playsinline></video>
+
+        <!-- LOADING OVERLAY: inset:0 dentro de media-container -->
+        <div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+          <div class="loader-inner" id="loader-inner">
+            <video id="loader-video" autoplay loop muted playsinline preload="auto">
+              <source src="run1.mp4" type="video/mp4">
+            </video>
+            <div class="loader-frame" aria-hidden="true"></div>
+          </div>
+
+          <div class="loading-caption" role="status" aria-live="polite">
+            Cargando
+            <span class="dots" aria-hidden="true">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Audio del loader: se reproduce en bucle mientras el overlay esté visible -->
+        <audio id="loader-audio" loop preload="auto" aria-hidden="true">
+          <source src="onichan1.mp3" type="audio/mpeg">
+        </audio>
+
+        <div id="player-error" class="player-error" role="alert">
           <div>
-            <button id="player-error-retry">Reintentar</button>
+            <div id="player-error-text">Error al cargar el video.</div>
+            <div>
+              <button id="player-error-retry">Reintentar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -220,7 +349,6 @@
     <div class="actions" id="actions">
       <a id="opt1" data-opt="opt1">Opción 1</a>
       <a id="opt2" data-opt="opt2" style="display:none;">Opción 2</a>
-
       <a id="download" download>⤓ Descargar</a>
       <a id="share">🔗 Compartir</a>
     </div>
@@ -236,30 +364,34 @@
   <script>
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-    const qs      = new URLSearchParams(location.search),
-          anime   = qs.get('anime'),
-          s       = qs.get('s'),
-          e       = qs.get('e');
+    const qs = new URLSearchParams(location.search),
+          anime = qs.get('anime'),
+          s = qs.get('s'),
+          e = qs.get('e');
 
-    const back    = document.getElementById('back'),
-          player  = document.getElementById('player'),
+    const back = document.getElementById('back'),
+          player = document.getElementById('player'),
           playerWrap = document.getElementById('player-wrap'),
-          dlLink  = document.getElementById('download'),
-          sh      = document.getElementById('share'),
-          toast   = document.getElementById('toast'),
+          mediaContainer = document.getElementById('media-container'),
+          dlLink = document.getElementById('download'),
+          sh = document.getElementById('share'),
+          toast = document.getElementById('toast'),
           titleEl = document.getElementById('chapter-title'),
-          prev    = document.getElementById('prev'),
-          next    = document.getElementById('next'),
+          prev = document.getElementById('prev'),
+          next = document.getElementById('next'),
           opt1Btn = document.getElementById('opt1'),
           opt2Btn = document.getElementById('opt2'),
           playerError = document.getElementById('player-error'),
           playerErrorText = document.getElementById('player-error-text'),
           playerRetryBtn = document.getElementById('player-error-retry'),
-          containerEl = document.getElementById('container');
+          loadingOverlay = document.getElementById('loading-overlay'),
+          loaderVideo = document.getElementById('loader-video'),
+          loaderInner = document.getElementById('loader-inner'),
+          loaderAudio = document.getElementById('loader-audio');
 
     /* -------------------------------------------------------------
-       DB (tu lista original se mantiene intacta; la dejé en su sitio en tu archivo real)
-       ------------------------------------------------------------- */
+       DB: conservada íntegra en tu archivo original (no la borré).
+    ------------------------------------------------------------- */
     const DB = {
       "1": {
         "1": {
@@ -2161,7 +2293,122 @@
 
     };
 
-    /* ---------- Helpers ---------- */
+    /* ------------------ Altura/size consistente para media-container ------------------ */
+    function computePlayerAreaHeight() {
+      return Math.round(Math.min(window.innerHeight * 0.68, 900));
+    }
+
+    function applyPlayerAreaSize() {
+      const h = computePlayerAreaHeight();
+      if (mediaContainer) mediaContainer.style.height = h + 'px';
+      const iframe = document.getElementById('drive-iframe');
+      if (iframe) iframe.style.height = h + 'px';
+      if (player) player.style.height = h + 'px';
+    }
+
+    /* =================== Helpers para el loader (dentro del media-container) =================== */
+    function tryPlayAudio(aud) {
+      if (!aud) return;
+      try {
+        const p = aud.play();
+        if (p && p.catch) p.catch(()=>{/* autoplay bloqueado o interacción necesaria */});
+      } catch (err) {}
+    }
+    function tryPauseAudio(aud) {
+      if (!aud) return;
+      try { aud.pause(); aud.currentTime = 0; } catch (err) {}
+    }
+
+    /**
+     * showLoader(opts)
+     * - opts = { video: true|false, overlay: true|false }
+     * - por defecto muestra video + overlay (compatibilidad con llamadas anteriores: showLoader() -> video:true, overlay:true)
+     *
+     * Cambio clave: si overlay === false entonces NO se mostrará el overlay ni la animación ni el audio.
+     */
+    function showLoader(opts = { video: true, overlay: true }) {
+      if (!loadingOverlay || !mediaContainer) return;
+      applyPlayerAreaSize();
+
+      const useVideo = (typeof opts.video === 'undefined') ? true : !!opts.video;
+      const useOverlay = (typeof opts.overlay === 'undefined') ? true : !!opts.overlay;
+
+      if (!useOverlay) {
+        // No mostrar overlay en absoluto (caso Drive preview)
+        loadingOverlay.classList.remove('show');
+        loadingOverlay.setAttribute('aria-hidden', 'true');
+
+        // Asegurar video/audio de loader detenidos y ocultos
+        if (loaderVideo) {
+          try { loaderVideo.pause(); loaderVideo.currentTime = 0; } catch (err) {}
+          loaderVideo.style.display = 'none';
+        }
+        tryPauseAudio(loaderAudio);
+
+        // restaurar z-index para player/iframe en caso de que se hayan modificado
+        const iframe = document.getElementById('drive-iframe');
+        if (iframe) iframe.style.zIndex = '';
+        player.style.zIndex = '';
+        return;
+      }
+
+      // Si llegamos aquí, overlay sí será mostrado
+      loadingOverlay.classList.add('show');
+      loadingOverlay.setAttribute('aria-hidden', 'false');
+
+      // bajar z-index de player/iframe para que loader (z-index alto) quede visible
+      const iframe = document.getElementById('drive-iframe');
+      if (iframe) iframe.style.zIndex = '10';
+      player.style.zIndex = '10';
+
+      if (loaderVideo) {
+        if (useVideo) {
+          // mostrar y reproducir el video de carga
+          loaderVideo.style.display = 'block';
+          try {
+            loaderVideo.currentTime = 0;
+            const p = loaderVideo.play();
+            if (p && p.catch) p.catch(()=>{/* autoplay bloqueado, frame mostrado */});
+          } catch (err) {}
+          tryPlayAudio(loaderAudio);
+        } else {
+          // OCULTAR video de carga y pausar audio (caso en que queremos overlay pero sin video)
+          loaderVideo.style.display = 'none';
+          tryPauseAudio(loaderAudio);
+        }
+      } else {
+        // si no existe loaderVideo, aseguramos audio detenido
+        tryPauseAudio(loaderAudio);
+      }
+    }
+
+    function hideLoader() {
+      if (!loadingOverlay) return;
+      loadingOverlay.classList.remove('show');
+      loadingOverlay.setAttribute('aria-hidden', 'true');
+      try {
+        if (loaderVideo) {
+          loaderVideo.pause();
+          loaderVideo.currentTime = 0;
+          // restaurar display para próximas cargas (si fue ocultado antes)
+          loaderVideo.style.display = 'block';
+        }
+      } catch (err) {}
+      // pausar y reiniciar audio
+      tryPauseAudio(loaderAudio);
+
+      // restaurar z-index si hay iframe
+      const iframe = document.getElementById('drive-iframe');
+      if (iframe) iframe.style.zIndex = '';
+      player.style.zIndex = '';
+    }
+
+    // recalcular al cambiar tamaño
+    window.addEventListener('resize', () => {
+      applyPlayerAreaSize();
+    });
+
+    /* ------------------------------------------------------------- */
     function getDriveFileId(url) {
       if (!url) return null;
       const m = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
@@ -2184,23 +2431,7 @@
       return originalLink + '?dl=1';
     }
 
-    /* Toast */
-    let visibleTimeout, hideTimeout;
-    function showToast(msg, ms = 2500) {
-      clearTimeout(visibleTimeout);
-      clearTimeout(hideTimeout);
-      toast.textContent = msg;
-      toast.style.display   = 'flex';
-      toast.style.animation = 'popin 0.35s forwards';
-      visibleTimeout = setTimeout(() => {
-        toast.style.animation = 'popout 0.3s forwards';
-        hideTimeout = setTimeout(() => {
-          toast.style.display = 'none';
-        }, 300);
-      }, ms);
-    }
-
-    /* ---------- Manejo del reproductor y fuentes (mantener UI, solo quitar la otra fuente) ---------- */
+    /* ------------------ Player view helpers ------------------ */
     let currentSource = null;
     let tried = { opt1:false, opt2:false };
     let episode = null;
@@ -2212,10 +2443,8 @@
     }
 
     function clearVideoSources() {
-      // quitar todos los <source> hijos
       const sources = Array.from(player.querySelectorAll('source'));
       sources.forEach(s => s.remove());
-      // quitar src si lo hubiera
       try { player.pause(); } catch {}
       player.removeAttribute('src');
       try { player.load(); } catch {}
@@ -2223,36 +2452,50 @@
     }
 
     function resetPlayerView() {
-      // elimina iframe anterior y deja el <video> visible (lo restauramos)
       removeExistingDriveIframe();
       hidePlayerError();
-      // dejar el elemento <video> visible (por si antes estaba oculto)
+      if (player.parentElement !== mediaContainer) {
+        mediaContainer.appendChild(player);
+      }
       player.style.display = 'block';
       clearVideoSources();
     }
 
     function insertDrivePreview(fileId) {
-      // limpiar antes
       resetPlayerView();
-      // ocultar <video> para que NO ocupe espacio y evitar la suma de alturas
       player.style.display = 'none';
+
       const iframe = document.createElement('iframe');
       iframe.id = 'drive-iframe';
       iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
       iframe.width = '100%';
-      iframe.height = Math.min(window.innerHeight * 0.6, 720);
+      iframe.height = computePlayerAreaHeight();
       iframe.frameBorder = 0;
       iframe.allow = 'autoplay; encrypted-media; fullscreen';
       iframe.style.borderRadius = '6px';
       iframe.style.opacity = '0';
-      playerWrap.appendChild(iframe);
+      iframe.style.position = 'absolute';
+      iframe.style.left = '0';
+      iframe.style.top = '0';
+      iframe.style.zIndex = '10';
+      mediaContainer.appendChild(iframe);
       setTimeout(()=> iframe.style.opacity = '1', 50);
+
+      // LLAMADA MODIFICADA: no mostrar overlay ni video/audio de carga para previews de Drive
+      showLoader({ video: false, overlay: false });
+
+      // como no mostramos overlay, no necesitamos hideLoader al load, pero por seguridad ocultamos cualquier resto
+      iframe.addEventListener('load', () => {
+        // asegurar que overlay está oculto
+        hideLoader();
+      });
     }
 
     function showPlayerError(msg) {
       playerErrorText.textContent = msg || 'Error al cargar el video.';
       playerError.classList.add('show');
       player.style.opacity = '0.25';
+      hideLoader();
     }
     function hidePlayerError() {
       playerError.classList.remove('show');
@@ -2261,9 +2504,8 @@
 
     /**
      * setPlayerSource: carga SOLO la fuente seleccionada.
-     * - NO desmonta la UI.
-     * - Si la fuente es Drive -> inserta iframe único y oculta el <video>.
-     * - Si la fuente es mp4 -> limpia todas las fuentes anteriores, muestra el <video> y añade solo la nueva.
+     * - Si la fuente es Drive -> inserta iframe dentro de media-container.
+     * - Si la fuente es mp4 -> usa <video> dentro de media-container y le asigna la altura común.
      */
     function setPlayerSource(url, opts = { autoplay: true, label: 'Opción', exclusive: false }) {
       if (!url) {
@@ -2273,10 +2515,11 @@
 
       exclusiveMode = !!opts.exclusive;
 
-      // limpiamos cualquier media previa (manteniendo UI)
       resetPlayerView();
 
-      // Si es Google Drive -> iframe
+      // por defecto muestra overlay+video para mp4/directos
+      showLoader(); // por defecto {video:true, overlay:true}
+
       const driveId = getDriveFileId(url);
       if (driveId) {
         insertDrivePreview(driveId);
@@ -2287,32 +2530,42 @@
         return;
       }
 
-      // si no es drive, aseguramos que <video> sea visible y limpiamos previos
+      // mp4 (Dropbox / URL directo)
       player.style.display = 'block';
       clearVideoSources();
 
-      // añadimos UNA sola <source> al <video>
+      // fijar la altura del media-container y del <video>
+      applyPlayerAreaSize();
+
       const src = document.createElement('source');
       src.src = url;
       src.type = 'video/mp4';
       player.appendChild(src);
 
-      // Actualizar link de descarga
       dlLink.href = buildForcedDownloadLink(url);
       currentSource = url;
 
-      // intentar autoplay
-      try {
-        const p = player.play();
-        if (p && p.catch) p.catch(()=>{/* autoplay bloqueado */});
-      } catch (err) {}
-
       opt1Btn.classList.toggle('active', opts.label === 'Opción 1');
       opt2Btn.classList.toggle('active', opts.label === 'Opción 2');
+
+      try {
+        const p = player.load();
+        if (opts.autoplay) {
+          const playPromise = player.play();
+          if (playPromise && playPromise.catch) playPromise.catch(()=>{/* autoplay bloqueado */});
+        }
+      } catch (err) {}
+
+      const failTimer = setTimeout(()=> {
+        if (player.readyState < 3) {
+
+        }
+      }, 12000);
     }
 
-    /* ---------- Manejador de errores y fallback (respeta exclusiveMode) ---------- */
+    /* ---------- Manejador de errores y fallback ---------- */
     function handlePlaybackError() {
+      hideLoader();
       if (!episode) {
         showPlayerError('Error de reproducción.');
         return;
@@ -2346,16 +2599,19 @@
       showPlayerError('Error de reproducción. No se pudo cargar el video desde las fuentes disponibles.');
     }
 
+    // Eventos del player: ocultar loader cuando ya pueda reproducir
     player.addEventListener('error', () => {
       setTimeout(handlePlaybackError, 300);
     });
     player.addEventListener('canplay', () => {
       hidePlayerError();
       player.style.opacity = '1';
+      setTimeout(hideLoader, 180);
     });
     player.addEventListener('loadeddata', () => {
       player.style.opacity = '1';
       hidePlayerError();
+      setTimeout(hideLoader, 180);
     });
 
     playerRetryBtn.addEventListener('click', () => {
@@ -2391,6 +2647,21 @@
       return null;
     }
 
+    function showToast(msg, ms = 2500) {
+      let visibleTimeout, hideTimeout;
+      clearTimeout(visibleTimeout);
+      clearTimeout(hideTimeout);
+      toast.textContent = msg;
+      toast.style.display   = 'flex';
+      toast.style.animation = 'popin 0.35s forwards';
+      visibleTimeout = setTimeout(() => {
+        toast.style.animation = 'popout 0.3s forwards';
+        hideTimeout = setTimeout(() => {
+          toast.style.display = 'none';
+        }, 300);
+      }, ms);
+    }
+
     function loadEpisodeFromQuery() {
       if (!anime || !s || !e) {
         titleEl.textContent = 'Capítulo no especificado';
@@ -2408,79 +2679,59 @@
       const l1 = episode.link || null;
       const l2 = episode.link2 || episode.alt || null;
 
+      // configurar botones y enlaces
       if (l1) {
-        opt1Btn.style.display = '';
-        opt1Btn.classList.remove('disabled');
-        tried = { opt1:false, opt2:false };
-        // por defecto cargamos Opción 1 SIN modo exclusivo
-        setPlayerSource(l1, { autoplay:true, label:'Opción 1', exclusive:false });
+        opt1Btn.style.display = 'inline-block';
+        opt1Btn.onclick = () => {
+          tried = { opt1:false, opt2:false };
+          setPlayerSource(l1, { autoplay:true, label:'Opción 1' });
+        };
       } else {
         opt1Btn.style.display = 'none';
       }
 
       if (l2) {
-        opt2Btn.style.display = '';
-        opt2Btn.classList.remove('disabled');
+        opt2Btn.style.display = 'inline-block';
+        opt2Btn.onclick = () => {
+          tried = { opt1:false, opt2:false };
+          setPlayerSource(l2, { autoplay:true, label:'Opción 2' });
+        };
       } else {
         opt2Btn.style.display = 'none';
-        opt2Btn.classList.add('disabled');
       }
 
-      const nxt = getNextEpisode(anime, s, e);
-      const prv = getPrevEpisode(anime, s, e);
-      if (nxt) { next.style.display = ''; next.href = `${location.pathname}?anime=${anime}&s=${nxt.s}&e=${nxt.e}`; } else next.style.display = 'none';
-      if (prv) { prev.style.display = ''; prev.href = `${location.pathname}?anime=${anime}&s=${prv.s}&e=${prv.e}`; } else prev.style.display = 'none';
+      // download / share
+      dlLink.onclick = (ev) => { /* download se setea en setPlayerSource */ };
+      sh.onclick = () => {
+        const url = currentSource || l1 || l2;
+        if (!url) { showToast('No hay enlace para compartir'); return; }
+        navigator.clipboard?.writeText(url).then(()=>showToast('✅ El enlace ha sido copiado')).catch(()=>showToast('No se pudo copiar'));
+      };
+
+      // nav
+      const nextEp = getNextEpisode(anime, s, e);
+      if (nextEp) {
+        next.style.display = 'inline-block';
+        next.onclick = () => {
+          location.search = `?anime=${anime}&s=${nextEp.s}&e=${nextEp.e}`;
+        };
+      } else next.style.display = 'none';
+
+      const prevEp = getPrevEpisode(anime, s, e);
+      if (prevEp) {
+        prev.style.display = 'inline-block';
+        prev.onclick = () => {
+          location.search = `?anime=${anime}&s=${prevEp.s}&e=${prevEp.e}`;
+        };
+      } else prev.style.display = 'none';
+
+      // finalmente cargar la primera opción disponible
+      if (l1) {
+        setPlayerSource(l1, { autoplay:true, label:'Opción 1' });
+      } else if (l2) {
+        setPlayerSource(l2, { autoplay:true, label:'Opción 2' });
+      }
     }
-
-    function tryLoadFromDirectQuery() {
-      const url1 = qs.get('url1');
-      if (url1) {
-        tried = { opt1:false, opt2:false };
-        setPlayerSource(url1, { autoplay:true, label:'Opción 1', exclusive:false });
-      }
-    }
-
-    /* ---------- Eventos botones Opción 1 / Opción 2 ---------- */
-    opt1Btn.addEventListener('click', () => {
-      if (opt1Btn.classList.contains('disabled')) return;
-      if (!episode || !episode.link) { showToast('No hay enlace 1'); return; }
-      tried = { opt1:false, opt2:false };
-      // cargar solo la fuente 1; UI se mantiene
-      setPlayerSource(episode.link, { autoplay:true, label:'Opción 1', exclusive:true });
-      showToast('Reproduciendo Opción 1 — la otra fuente se ha quitado');
-    });
-
-    opt2Btn.addEventListener('click', () => {
-      if (opt2Btn.classList.contains('disabled')) return;
-      const l2 = episode ? (episode.link2 || episode.alt || null) : null;
-      if (!l2) { showToast('No hay enlace 2'); return; }
-      tried = { opt1:false, opt2:false };
-      // cargar solo la fuente 2 (Drive o mp4); UI se mantiene
-      setPlayerSource(l2, { autoplay:true, label:'Opción 2', exclusive:true });
-      showToast('Reproduciendo Opción 2 — la otra fuente se ha quitado');
-    });
-
-    /* Share / copiar URL */
-    sh.addEventListener('click', () => {
-      const url = `${location.origin + location.pathname}?anime=${anime}&s=${s}&e=${e}`;
-      navigator.clipboard.writeText(url).then(() => {
-        showToast('✅ El enlace ha sido copiado');
-      }).catch(err => {
-        alert('Error al copiar el enlace: ' + err);
-      });
-    });
-
-    dlLink.addEventListener('click', (ev) => {
-      if (!currentSource || currentSource === '#') {
-        ev.preventDefault();
-        showToast('No hay enlace para descargar');
-      }
-    });
-
-    /* ---------- Inicializar carga ---------- */
-    tryLoadFromDirectQuery();
-    loadEpisodeFromQuery();
-
     /* --- Enlace de regresar: comportamiento robusto --- */
     (function setupBackButton(){
       if (!back) return;
@@ -2508,11 +2759,10 @@
         location.href = `${baseDetail}?${params.toString()}`;
       });
     })();
-
-    // Restauración segura si el usuario usa prev/next
-    prev.addEventListener('click', () => { exclusiveMode = false; });
-    next.addEventListener('click', () => { exclusiveMode = false; });
+    // iniciar
+    applyPlayerAreaSize();
+    loadEpisodeFromQuery();
 
   </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+</html>
