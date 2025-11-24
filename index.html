@@ -642,6 +642,8 @@
 
     /* ----------------------------
        Ajuste dinámico del espacio entre header y la grid en móviles
+       - He reducido el gap en móviles para que la primera fila quede más pegada al header.
+       - Solo afecta pantallas <= 767px; en escritorio/tabla restaura el comportamiento por defecto.
        ---------------------------- */
     function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
 
@@ -652,12 +654,21 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
+          // restaurar comportamiento por defecto en pantallas grandes
           container.style.marginTop = '';
           return;
         }
+        // altura del header (necesaria para evitar solapamiento con position:sticky)
         const headerH = Math.ceil(header.getBoundingClientRect().height);
+
+        // ===== CAMBIO REALIZADO =====
+        // Antes: smallPhone ? 4 : 6
+        // Ahora: reducimos mucho para móviles (prácticamente 0 en pantallas muy pequeñas,
+        // y 2px en la mayoría de móviles). Esto pega la primera fila al header sin solaparlo.
         const smallPhone = window.matchMedia && window.matchMedia('(max-width:420px)').matches;
-        const extraGap = smallPhone ? 4 : 6;
+        const extraGap = smallPhone ? 0 : 2;
+
+        // aplicamos margin-top igual a la altura del header + pequeño gap
         container.style.marginTop = (headerH + extraGap) + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
@@ -1140,115 +1151,64 @@
           ctx.moveTo(0,0);
           ctx.lineTo(0, -size);
           ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(0, -size*0.9, Math.max(0.6, size*0.15), 0, Math.PI*2);
-          ctx.fill();
           ctx.rotate(Math.PI/3);
         }
-        ctx.beginPath();
-        ctx.arc(0,0, Math.max(0.8, size*0.12), 0, Math.PI*2);
-        ctx.fill();
         ctx.restore();
       }
 
-      let lastTime = performance.now();
-      let running = true;
-
-      function step(now){
-        if (!running) return;
-        const dt = Math.min(50, now - lastTime);
-        lastTime = now;
+      function tick(now){
+        if (!w || !h) { requestAnimationFrame(tick); return; }
         ctx.clearRect(0,0,w,h);
-
         for (let p of particles){
-          p.x += p.vx * (dt/16);
-          p.y += p.vy * (dt/16);
-          p.rotation += p.spin * (dt/16);
-          p.x += Math.sin(now/800 + p.rotation) * (p.swing * 0.02);
-
-          if (p.y > h + 12 || p.x < -30 || p.x > w + 30) {
+          p.x += p.vx + Math.sin(p.rotation * 0.6) * 0.3;
+          p.y += p.vy;
+          p.rotation += p.spin;
+          p.vx *= 0.999;
+          p.vy = Math.min(3.6, p.vy + 0.0012);
+          if (p.y > h + 40) {
             p.x = Math.random() * w;
-            p.y = -8 - Math.random() * 40;
+            p.y = -20 - Math.random() * 80;
             p.vx = (Math.random() - 0.5) * 0.4 + windBase * (Math.random() - 0.5);
             p.vy = 0.4 + Math.random() * 1.1;
-            p.rotation = Math.random() * Math.PI * 2;
           }
           drawSnowflake(p.x, p.y, p.size, p.rotation, p.opacity);
         }
-        requestAnimationFrame(step);
+        requestAnimationFrame(tick);
       }
 
-      document.addEventListener('visibilitychange', ()=> {
-        if (document.hidden) running = false;
-        else { running = true; lastTime = performance.now(); requestAnimationFrame(step); }
-      });
-
-      window.addEventListener('resize', ()=> { resize(); initParticles(); }, {passive:true});
-      resize();
-      initParticles();
-      requestAnimationFrame(step);
+      window.addEventListener('resize', ()=>{ resize(); initParticles(); }, {passive:true});
+      resize(); initParticles(); requestAnimationFrame(tick);
     })();
 
     /* ----------------------------
-       Estrella fugaz (JS) - se crea y anima de vez en cuando
+       Estrella fugaz periódica
        ---------------------------- */
-    (function shootingStarController(){
+    (function shootingStar(){
       const template = document.getElementById('star-template');
       if (!template) return;
-      const container = document.getElementById('decorations');
-      function spawnOne(){
+      function createOne(){
         const clone = template.cloneNode(true);
         clone.style.display = 'block';
-        clone.id = '';
-        clone.classList.add('shooting-star');
-        const startY = Math.random() * (window.innerHeight * 0.22) + (window.innerHeight * 0.06);
-        const startX = -40;
-        const endX = window.innerWidth + 60;
-        const travelY = startY - (Math.random() * (window.innerHeight * 0.12) + 30);
-        container.appendChild(clone);
-        clone.style.left = startX + 'px';
-        clone.style.top = startY + 'px';
-        clone.style.opacity = '0';
-
+        clone.classList.remove('decor-hidden-mobile');
+        clone.style.position = 'fixed';
+        clone.style.zIndex = 36;
+        const x = Math.random() * (window.innerWidth * 0.6) + 20;
+        const y = Math.random() * (window.innerHeight * 0.35) + 10;
+        const angle = Math.random() * 30 - 10;
+        clone.style.left = x + 'px';
+        clone.style.top = y + 'px';
+        clone.style.transform = `translate(-50%,-50%) rotate(${angle}deg)`;
+        document.getElementById('decorations').appendChild(clone);
         const tail = clone.querySelector('.shooting-tail');
-        if (tail) {
-          tail.style.fill = 'url(#tailGrad)';
-        }
-
-        const duration = 900 + Math.random()*600;
-        const start = performance.now();
-        function animate(now){
-          const t = Math.min(1, (now - start) / duration);
-          const ease = 1 - Math.pow(1 - t, 3);
-          const x = startX + (endX - startX) * ease;
-          const y = startY + (travelY - startY) * ease;
-          clone.style.left = x + 'px';
-          clone.style.top = y + 'px';
-          clone.style.opacity = (t < 0.08 ? t/0.08 : 1 - Math.max(0, (t-0.8)/0.2) );
-          const tailEl = clone.querySelector('.shooting-tail');
-          if (tailEl) {
-            const tailLen = 140 * (1 - t*0.85);
-            tailEl.setAttribute('width', tailLen);
-            tailEl.style.width = tailLen + 'px';
-          }
-          if (t < 1) requestAnimationFrame(animate);
-          else {
-            clone.style.transition = 'opacity .35s linear';
-            clone.style.opacity = '0';
-            setTimeout(()=> { clone.remove(); }, 380);
-          }
-        }
-        requestAnimationFrame(animate);
+        if (tail) tail.style.width = '160px';
+        clone.animate([
+          { opacity: 0, transform: `translate(-50%,-50%) rotate(${angle}deg) translateX(-80px)` },
+          { opacity: 1, transform: `translate(-50%,-50%) rotate(${angle}deg) translateX(0px)` },
+          { opacity: 0, transform: `translate(-50%,-50%) rotate(${angle}deg) translateX(160px)` }
+        ], { duration: 1200 + Math.random()*900, easing: 'cubic-bezier(.2,.9,.2,1)' });
+        setTimeout(()=> { try{ clone.remove(); }catch(e){} }, 2200);
       }
-
-      function loopSpawn(){
-        const delay = 7000 + Math.random()*7000;
-        setTimeout(()=> {
-          if (!document.hidden) spawnOne();
-          loopSpawn();
-        }, delay);
-      }
-      loopSpawn();
+      setInterval(()=> { if (Math.random() < 0.6) createOne(); }, 4200 + Math.random()*2200);
     })();
 
   </script>
