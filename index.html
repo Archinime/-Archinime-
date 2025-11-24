@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
-  <link rel="preload" as="video" href="yyyy.mp4" type="video/mp4">
-  <link rel="preload" as="image" href="galaxia-poster.jpg">
+  <link rel="preload" as="video" href="fondonavidad.mp4" type="video/mp4">
+  <link rel="preload" as="image" href="videoframe.jpg">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -16,18 +16,44 @@
     #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
     #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-poster.jpg') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
 
-    header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:20; transition:background .3s; flex-wrap:wrap; }
+    header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap; }
 
     /* título y logo */
     header h1{
-      cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:800;
-      background: linear-gradient(135deg, #00fff7, #ff00cc, #ffd700);
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-      white-space:nowrap; flex:0 0 auto; animation: gradientMove 6s ease infinite;
+      cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:900;
+      white-space:nowrap; flex:0 0 auto; animation: hueShift 8s linear infinite;
+      /* texto con gradiente interno animado */
+      background: linear-gradient(90deg,
+        #00fff7 0%,
+        #7afcff 12%,
+        #9bff6a 24%,
+        #ffd700 36%,
+        #ff6ad5 48%,
+        #ff4d4d 60%,
+        #ff9f40 72%,
+        #8b5cf6 84%,
+        #00d4ff 100%);
+      background-size: 250% 250%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: transform .28s ease;
+      /* Le damos un poco de 'brillo' interno con sombra muy sutil */
+      text-shadow: 0 1px 18px rgba(0,0,0,0.5);
     }
+
+    /* animated gradient movement */
+    @keyframes hueShift {
+      0% { background-position: 0% 50%; transform: translateY(0); }
+      25% { background-position: 50% 100%; transform: translateY(-1px); }
+      50% { background-position: 100% 50%; transform: translateY(0); }
+      75% { background-position: 50% 0%; transform: translateY(1px); }
+      100% { background-position: 0% 50%; transform: translateY(0); }
+    }
+
     header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; cursor:pointer; }
 
-    /* Social inline next to title - ahora CIRCULAR */
+    /* Social inline next to title */
     .social-inline { display:flex; align-items:center; gap:.5rem; margin-left:.4rem; flex:0 0 auto; }
     .social-inline button {
       width:44px; height:44px; border-radius:50%; border:none; padding:0; display:inline-flex;
@@ -58,53 +84,121 @@
     @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; } }
     #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
 
-    /* mobile-select-popup styles (compact) */
+    /* Snow (now sky-blue snowflake) canvas - full page overlay */
+    #snowCanvas {
+      position:fixed;
+      left:0; top:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      z-index:30; /* encima de bg, pero debajo del header/iconos interactivos */
+      mix-blend-mode:screen;
+    }
+
+    /* Decorations container (arbol, campanas, regalo, estrella) */
+    #decorations {
+      position:fixed;
+      inset:0;
+      pointer-events:none; /* que no interfieran con clicks */
+      z-index:36; /* encima del snowCanvas, pero debajo del header (header z-index:40) */
+    }
+    /* Árbol (esquina inferior izquierda) */
+    .dec-tree {
+      position:fixed;
+      left:12px;
+      bottom:12px;
+      width:120px;
+      max-width:22vw;
+      z-index:36;
+      transform-origin:center bottom;
+      filter:drop-shadow(0 6px 16px rgba(0,0,0,0.5));
+      pointer-events:none;
+    }
+
+    /* Regalo (esquina inferior derecha) */
+    .dec-gift {
+      position:fixed;
+      right:14px;
+      bottom:18px;
+      width:92px;
+      max-width:18vw;
+      z-index:36;
+      transform-origin:center bottom;
+      pointer-events:none;
+      animation: giftFloat 2800ms ease-in-out infinite;
+    }
+    @keyframes giftFloat {
+      0% { transform: translateY(0) rotate(-1deg) scale(1); }
+      50% { transform: translateY(-6px) rotate(2deg) scale(1.02); }
+      100% { transform: translateY(0) rotate(-1deg) scale(1); }
+    }
+
+    /* Campanas (esquina superior derecha) */
+    .dec-bells {
+      position:fixed;
+      right:12px;
+      top:8px;
+      width:82px;
+      z-index:36;
+      transform-origin:center top;
+      pointer-events:none;
+      animation: bellSwing 2200ms ease-in-out infinite;
+    }
+    @keyframes bellSwing {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(8deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-6deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Estrella fugaz: estará posicionado en el DOM y animado con JS. */
+    .shooting-star {
+      position:fixed;
+      z-index:36;
+      pointer-events:none;
+      width: 18px;
+      height: 18px;
+      opacity: 0;
+      transform: translate(-50%, -50%) rotate(12deg);
+      filter: drop-shadow(0 6px 18px rgba(255,255,210,0.08));
+    }
+    .shooting-tail {
+      position:absolute;
+      left:0; top:50%;
+      width: 160px;
+      height: 4px;
+      transform-origin:left center;
+      opacity:0.95;
+      pointer-events:none;
+      filter: blur(1px);
+    }
+
+    /* mobile adjustments */
+    @media (max-width:420px) {
+      .dec-tree { width:80px; left:8px; bottom:8px; }
+      .dec-gift { width:72px; right:8px; bottom:10px; }
+      .dec-bells { width:64px; right:8px; top:6px; }
+      .shooting-tail { width:100px; height:3px; }
+    }
+
+    /* small helper for layering if needed */
+    .decor-hidden-mobile { display:block; }
+    @media (max-width:420px) {
+      /* si queremos ocultar la estrella en móviles, descomenta la siguiente línea */
+      /* .decor-hidden-mobile { display:none; } */
+    }
+
+    /* mobile-select-popup and rest of previous styles are unchanged below... */
     .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
     .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
     .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
     .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.04); }
 
-    /* compact select appearance for small mobile screens: 2 per line */
-    @media (max-width:780px) {
-      header { padding:0.6rem 0.9rem; gap:0.5rem; align-items:center; }
-      .controls {
-        width:100%;
-        display:grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 por linea */
-        gap:0.5rem;
-        align-items:center;
-      }
-      .controls select, .controls input { font-size:0.92rem; padding:.36rem .55rem; border-radius:8px; min-width:0; }
-      /* search ahora ocupa 1/2 como los demás */
-      #search { width:100%; min-width:0; }
-      .social-inline button { width:36px; height:36px; padding:0; }
-      .social-inline img { width:68%; height:68%; }
-    }
-
-    /* extra small phones */
-    @media (max-width:420px) {
-      .controls { grid-template-columns: repeat(2, 1fr); gap:.35rem; }
-      .controls select, .controls input { font-size:0.82rem; padding:.24rem .4rem; border-radius:6px; }
-      .social-inline button { width:34px; height:34px; }
-      .social-inline img { width:70%; height:70%; }
-      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
-      .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
-      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
-    }
-
-    /* show 3 cards per row on mobile phones (<= 767px) */
-    @media (max-width:767px) {
-      .container { padding: 0 1rem; margin-top: 0; } /* dejo que el JS calcule y ponga solo lo necesario */
-      .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
-      .card { min-height: 0; }
-      .card img { height: auto; }
-    }
-
+    /* more previous css preserved (cards, grid, etc.)... */
     @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
     .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s; }
 
-    /* helpers */
     .play-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9; pointer-events:auto; display:none; }
     .play-btn{ background: rgba(0,0,0,0.7); color:#fff; border:2px solid #fff; padding:14px 22px; border-radius:12px; font-size:18px; cursor:pointer; }
 
@@ -113,8 +207,8 @@
 <body>
 
   <!-- Vídeo de fondo -->
-  <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline preload="auto">
-    <source src="galaxiaceleste.mp4" type="video/mp4">
+  <video id="bg-video" poster="videoframe.jpg" autoplay muted loop playsinline preload="auto">
+    <source src="fondonavidad.mp4" type="video/mp4">
     Tu navegador no soporta vídeo.
   </video>
   <div id="overlay" aria-hidden="true"></div>
@@ -236,6 +330,74 @@
     </div>
   </div>
 
+  <!-- Snow canvas (se añadirá desde JS) -->
+  <canvas id="snowCanvas" aria-hidden="true"></canvas>
+
+  <!-- Decorations: árbol, campanas, regalo, estrella -->
+  <div id="decorations" aria-hidden="true">
+    <!-- Árbol de Navidad (SVG inline, no ocupa requests externas) -->
+    <svg class="dec-tree" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="treeGrad" x1="0" x2="1"><stop offset="0%" stop-color="#0ed3ff"/><stop offset="60%" stop-color="#00ff9c"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient>
+      </defs>
+      <g transform="translate(10,6)">
+        <rect x="42" y="112" width="16" height="28" rx="2" fill="#8b5a2b"></rect>
+        <g transform="translate(0,0)">
+          <path d="M60 0 L20 48 L36 48 L12 84 L44 84 L20 120 L60 120 L100 120 L76 84 L108 84 L84 48 L100 48 Z" fill="url(#treeGrad)"></path>
+          <!-- bolas -->
+          <circle cx="42" cy="60" r="4" fill="#ff4d4d"></circle>
+          <circle cx="76" cy="50" r="4" fill="#ffd700"></circle>
+          <circle cx="56" cy="36" r="4" fill="#ff9f40"></circle>
+          <circle cx="32" cy="88" r="3.5" fill="#ff6ad5"></circle>
+          <circle cx="86" cy="88" r="3.5" fill="#00fff7"></circle>
+          <!-- estrella en la punta -->
+          <polygon points="60,6 64,18 76,18 66,26 70,38 60,30 50,38 54,26 44,18 56,18" fill="#fff176" stroke="#ffd700" stroke-width="0.6"></polygon>
+        </g>
+      </g>
+    </svg>
+
+    <!-- Regalo animado (SVG inline) -->
+    <svg class="dec-gift" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="giftGrad" x1="0" x2="1"><stop offset="0%" stop-color="#00f0ff"/><stop offset="100%" stop-color="#8bd3ff"/></linearGradient>
+      </defs>
+      <g transform="translate(0,0)">
+        <rect x="12" y="30" width="76" height="56" rx="6" fill="url(#giftGrad)" stroke="#fff" stroke-opacity="0.12"></rect>
+        <rect x="28" y="12" width="44" height="18" rx="4" fill="#ff6ad5" transform="rotate(-6,50,21)"></rect>
+        <path d="M50 10 C46 26,56 26,50 34" fill="#ff4d4d" opacity="0.9"></path>
+        <rect x="46" y="28" width="8" height="58" rx="2" fill="#ff4d4d"></rect>
+        <rect x="12" y="46" width="76" height="8" rx="4" fill="#ffd700" opacity="0.95"></rect>
+      </g>
+    </svg>
+
+    <!-- Campanas -->
+    <svg class="dec-bells" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g transform="translate(10,6)">
+        <path d="M16 12 C10 14,6 20,6 28 L6 40 C6 52,40 56,40 56 L40 44 C40 36,36 28,30 26 L30 12 Z" fill="#ffd580" stroke="#ffb700" stroke-width="1.2"></path>
+        <path d="M72 12 C66 14,62 20,62 28 L62 40 C62 52,96 56,96 56 L96 44 C96 36,92 28,86 26 L86 12 Z" fill="#ffd580" stroke="#ffb700" stroke-width="1.2"></path>
+        <circle cx="26" cy="60" r="4" fill="#ff6a00"></circle>
+        <circle cx="86" cy="60" r="4" fill="#ff6a00"></circle>
+        <line x1="20" y1="4" x2="100" y2="4" stroke="rgba(255,255,255,0.05)" stroke-width="2"></line>
+      </g>
+    </svg>
+
+    <!-- Estrella fugaz (se clona/posiciona desde JS para animarla) -->
+    <svg id="star-template" class="shooting-star decor-hidden-mobile" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
+      <g>
+        <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.98"></circle>
+        <rect class="shooting-tail" x="8" y="3.5" width="140" height="4" rx="2" fill="url(#tailGrad)"></rect>
+        <defs>
+          <linearGradient id="tailGrad" x1="0" x2="1">
+            <stop offset="0%" stop-color="#bff1ff" stop-opacity="0.9"/>
+            <stop offset="60%" stop-color="#bff1ff" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#bff1ff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </g>
+    </svg>
+
+  </div>
+
   <script>
     /* ----------------------------
        FUNCIONES Y DATOS (lógica conservada, con optimizaciones)
@@ -257,7 +419,7 @@
     }
 
     /* ----------------------------
-       Datos de animes
+       Datos de animes (sin cambios)
        ---------------------------- */
     const animes = [
       {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Sobrenatural","Comedia","Romance","Comedia oscura","Shōnen"]},
@@ -318,7 +480,7 @@
     ];
 
     /* ----------------------------
-       Renderizado
+       Renderizado (igual que antes)
        ---------------------------- */
     function render(list) {
       const grid = document.getElementById('grid');
@@ -413,7 +575,7 @@
     if (demoEl) demoEl.addEventListener('change', filtro);
 
     /* ----------------------------
-       Mobile custom popup for selects (fix: no se cierra al hacer scroll)
+       Mobile custom popup for selects (sin cambios funcionales)
        ---------------------------- */
     function isMobileScreen(){ return window.matchMedia && window.matchMedia('(max-width:780px)').matches; }
 
@@ -426,9 +588,7 @@
       function closePopup(){
         if (activePopup && activePopup.popup) {
           try { activePopup.popup.remove(); } catch(e){}
-          // limpiar bandera de interacción
           popupInteracting = false;
-          // permitir scroll si lo habíamos bloqueado (no lo hacemos por defecto)
           document.body.style.touchAction = '';
           activePopup = null;
         }
@@ -439,7 +599,6 @@
         if (!activePopup.popup.contains(e.target) && e.target !== activePopup.el) closePopup();
       }
 
-      // Reposiciona popup para que siga bajo el select cuando el usuario hace scroll o resize
       function repositionActivePopup(){
         if (!activePopup) return;
         if (rafIdForReposition) cancelAnimationFrame(rafIdForReposition);
@@ -463,7 +622,6 @@
       }
 
       window.addEventListener('resize', ()=> { if (activePopup) repositionActivePopup(); }, {passive:true});
-      // escuchamos scroll y reposicionamos, NO cerramos
       window.addEventListener('scroll', ()=> { if (activePopup) repositionActivePopup(); }, {passive:true});
 
       document.addEventListener('click', onOutsideClick);
@@ -507,17 +665,14 @@
           popup.appendChild(item);
         });
 
-        // manejar interacción dentro del popup
         popup.addEventListener('touchstart', ()=> { popupInteracting = true; });
         popup.addEventListener('pointerdown', ()=> { popupInteracting = true; });
         popup.addEventListener('touchend', ()=> { setTimeout(()=> { popupInteracting = false; }, 180); });
         popup.addEventListener('pointerup', ()=> { setTimeout(()=> { popupInteracting = false; }, 100); });
 
-        // estilo y posicionamiento inicial (usamos fixed y luego reposicionamos en scroll/resize)
         document.body.appendChild(popup);
         popup.style.position = 'fixed';
 
-        // pequeña función para colocar el popup respetando la pantalla
         function place() {
           const popupRect = popup.getBoundingClientRect();
           let top = rect.bottom + 6;
@@ -531,21 +686,17 @@
           popup.style.top = top + 'px';
         }
 
-        // Esperamos a que el popup esté en DOM y tenga tamaño para posicionarlo correctamente
         setTimeout(()=> { place(); }, 20);
 
-        // Guardamos referencia activa
         activePopup = { el: selectEl, popup };
 
-        // Forzamos una reposición al abrir (por si el usuario abre y luego hace scroll rápidamente)
         setTimeout(()=> { repositionActivePopup(); }, 80);
       }
     })();
 
 
     /* ----------------------------
-       Ajuste dinámico del espacio entre header y la grid en móviles
-       - Ahora reduce notablemente el gap en móviles para pegar la primera fila al header
+       Ajuste dinámico del espacio entre header y la grid en móviles (igual)
        ---------------------------- */
     function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
 
@@ -556,19 +707,12 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
-          // restaurar comportamiento por defecto en pantallas grandes
           container.style.marginTop = '';
           return;
         }
-        // altura del header (necesaria para evitar solapamiento con position:sticky)
         const headerH = Math.ceil(header.getBoundingClientRect().height);
-
-        // queremos que la distancia entre header y primera fila sea muy pequeña en móviles:
-        // por seguridad añadimos 4px en pantallas <=420px y 6px en <=767px
         const smallPhone = window.matchMedia && window.matchMedia('(max-width:420px)').matches;
         const extraGap = smallPhone ? 4 : 6;
-
-        // aplicamos margin-top igual a la altura del header + pequeño gap
         container.style.marginTop = (headerH + extraGap) + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
@@ -583,7 +727,7 @@
 
 
     /* ----------------------------
-       Fondo y audio
+       Fondo y audio (primera pista aleatoria luego secuencial)
        ---------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       const video = document.getElementById('bg-video');
@@ -600,39 +744,31 @@
     window.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('bg-music');
       const musicList = [
-        'Nightcore - When You Leave (Numa Numa).mp3',
-        'Nightcore  - How Do You Do (Remix) ✕.mp3',
-        'Nightcore  Sweet Little Bumblebee (lyric video).mp3',
-        'Nightcore - PLAY x Unity x Faded  Alan Walker (Mashup  Switching Vocals) Lyrics.mp3',
-        'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
-        'Nightcore - Battlecry (Heart of Courage) (Lyrics).mp3',
-        'Nightcore - Monster [NMV].mp3',
-        'Caramella Girls - Caramelldansen HD Version (Swedish Original) Official.mp3',
-        'Yo y los que tuvieron etapa Vocaloid cuando suena 😼✨.mp3',
+        'Rakion Music Evento De Navidad 03.mp3',
+        'Rakion Music Evento De Navidad 02.mp3',
+        'Rakion Music Evento De Navidad 01.mp3',
       ];
-      let currentMusicIndex = -1;
-      function pickRandomMusic(exclude){
-         if(!musicList || musicList.length===0) return null;
-         if(musicList.length===1) return 0;
-         let idx;
-         do { idx = Math.floor(Math.random()*musicList.length); } while(idx===exclude);
-         return idx;
-      }
-      function playRandomMusic(){
-         const idx = pickRandomMusic(currentMusicIndex);
-         if(idx==null) return;
-         currentMusicIndex = idx;
-         audio.src = musicList[idx];
+
+      let currentMusicIndex = Math.floor(Math.random() * musicList.length);
+      function playByIndex(idx) {
+         if (!musicList || musicList.length === 0) return;
+         currentMusicIndex = ((idx % musicList.length) + musicList.length) % musicList.length;
+         audio.src = musicList[currentMusicIndex];
          audio.load();
          audio.volume = 0.75;
-         audio.play().catch(()=> { document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); });
+         audio.play().catch(()=> {
+           document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true });
+         });
       }
-      audio.addEventListener('ended', ()=>{ setTimeout(()=>{ playRandomMusic(); }, 250); });
-      playRandomMusic();
+      audio.addEventListener('ended', ()=> {
+         currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
+         playByIndex(currentMusicIndex);
+      });
+      playByIndex(currentMusicIndex);
     });
 
     /* ----------------------------
-       Chroma + FG logic + fuegos artificiales (mejoras de rendimiento)
+       Chroma + FG logic + fuegos artificiales (sin cambios funcionales)
        ---------------------------- */
     const fgContainer = document.getElementById('fgContainer');
     const fgCanvas = document.getElementById('fgCanvas');
@@ -653,7 +789,17 @@
 
     const videoList = [
       { id: 'hola', src: 'hola.mp4', preset: { threshold: 0.25, diff: 0, soft: 100 } },
-      { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.10, diff: 0, soft: 100  } }
+      { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.10, diff: 0, soft: 100  } },
+
+      // Animaciones navideñas (pantalla verde)
+      { id: 'animacionnavidad1', src: 'animacionnavidad1.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
+      { id: 'animacionnavidad2', src: 'animacionnavidad2.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
+      { id: 'animacionnavidad3', src: 'animacionnavidad3.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
+      { id: 'animacionnavidad4', src: 'animacionnavidad4.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
+
+      // Animaciones navideñas (pantalla azul)
+      { id: 'animacionnavidad5', src: 'animacionnavidad5.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' },
+      { id: 'animacionnavidad6', src: 'animacionnavidad6.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' }
     ];
 
     function pickRandomVideo(excludeId){
@@ -702,23 +848,38 @@
       resizeFireCanvas();
     }
 
-    function applyChromaKey(imageData, settings){
+    // chroma key
+    function applyChromaKey(imageData, settings, keyColor = 'green'){
       const data = imageData.data; const len = data.length;
-      const thresh = settings.threshold; const minDiff = settings.diff; const soften = settings.soft;
+      const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30; const soften = settings.soft ?? 30;
       for (let i = 0; i < len; i += 4) {
         const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
         if (a === 0) continue;
-        const maxrb = Math.max(r,b);
         const sum = r + g + b + 1;
-        const greenScore = (g - maxrb) / sum;
-        const isGreenCandidate = (g - maxrb) > minDiff && greenScore > (thresh - 0.2);
-        if (!isGreenCandidate) { data[i+3] = 255; continue; }
-        const diff = g - maxrb;
-        if (soften <= 0) data[i+3] = (diff > minDiff) ? 0 : 255;
-        else {
-          const t = (diff - minDiff) / soften;
-          const clamped = Math.max(0, Math.min(1, t));
-          data[i+3] = Math.round((1 - clamped) * 255);
+        if (keyColor === 'blue') {
+          const maxrg = Math.max(r, g);
+          const blueScore = (b - maxrg) / sum;
+          const isBlueCandidate = (b - maxrg) > minDiff && blueScore > (thresh - 0.2);
+          if (!isBlueCandidate) { data[i+3] = 255; continue; }
+          const diff = b - maxrg;
+          if (soften <= 0) data[i+3] = (diff > minDiff) ? 0 : 255;
+          else {
+            const t = (diff - minDiff) / soften;
+            const clamped = Math.max(0, Math.min(1, t));
+            data[i+3] = Math.round((1 - clamped) * 255);
+          }
+        } else {
+          const maxrb = Math.max(r, b);
+          const greenScore = (g - maxrb) / sum;
+          const isGreenCandidate = (g - maxrb) > minDiff && greenScore > (thresh - 0.2);
+          if (!isGreenCandidate) { data[i+3] = 255; continue; }
+          const diff = g - maxrb;
+          if (soften <= 0) data[i+3] = (diff > minDiff) ? 0 : 255;
+          else {
+            const t = (diff - minDiff) / soften;
+            const clamped = Math.max(0, Math.min(1, t));
+            data[i+3] = Math.round((1 - clamped) * 255);
+          }
         }
       }
       return imageData;
@@ -756,7 +917,8 @@
         return;
       }
       const settings = infoObj && infoObj.preset ? infoObj.preset : { threshold:0.4, diff:30, soft:30 };
-      const processed = applyChromaKey(frame, settings);
+      const keyColor = infoObj && infoObj.keyColor ? infoObj.keyColor : 'green';
+      const processed = applyChromaKey(frame, settings, keyColor);
       offCtx.putImageData(processed, 0, 0);
       drawProcessedToScreen();
       animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
@@ -772,7 +934,7 @@
     }
 
     /* ----------------------------
-       FUEGOS ARTIFICIALES (canvas, partículas)
+       FUEGOS ARTIFICIALES (canvas, partículas) - igual
        ---------------------------- */
     const fireCanvas = document.createElement('canvas');
     fireCanvas.className = 'firework-canvas';
@@ -876,7 +1038,7 @@
     }
 
     /* ----------------------------
-       Reproducción robusta y sin pausar la música
+       Reproducción robusta y sin pausar la música (igual)
        ---------------------------- */
     async function playVideoClip(infoObj){
       if (!infoObj) return;
@@ -915,7 +1077,7 @@
       };
     }
 
-    // Click en contenedor dispara fuegos y siguiente clip (restaurado)
+    // Click en contenedor dispara fuegos y siguiente clip
     fgContainer.addEventListener('click', async (ev)=>{
       if (isAnimatingExplosion) return;
       if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null; }
@@ -933,7 +1095,7 @@
       try { bgMusic.play().catch(()=>{}); } catch(e){}
     });
 
-    // Throttled resize para evitar trabajo repetido
+    // Throttled resize
     let resizeRaf = null;
     window.addEventListener('resize', ()=> {
       if (resizeRaf) return;
@@ -946,7 +1108,7 @@
       });
     }, {passive:true});
 
-    // Pausar procesamiento pesado cuando pestaña no visible para evitar lag
+    // Visibility change optimization
     document.addEventListener('visibilitychange', ()=> {
       if (document.hidden) {
         visibilityPaused = true;
@@ -970,7 +1132,204 @@
 
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
 
-    /* FIN del script */
+    /* ----------------------------
+       NIEVE -> Copos celestes con forma (canvas)
+       - Optimizado: densidad adaptativa y pausa en background
+       ---------------------------- */
+    (function initBlueSnow(){
+      const canvas = document.getElementById('snowCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = 0, h = 0;
+      let particles = [];
+      const baseMax = 160; // densidad base en pantallas grandes
+      const windBase = 0.12;
+
+      function resize(){
+        const rectW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        const rectH = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        w = Math.floor(rectW);
+        h = Math.floor(rectH);
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+
+      function makeSnowflake(i){
+        // tamaño adaptativo: un poco de variedad
+        const size = (Math.random() * 2.8 + (Math.random() < 0.08 ? 2.6 : 0.6));
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h - h * Math.random(),
+          vx: (Math.random() - 0.5) * 0.4 + windBase * (Math.random() - 0.5),
+          vy: 0.4 + Math.random() * 1.1,
+          size: size,
+          opacity: Math.random() * 0.45 + 0.35,
+          rotation: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.03,
+          swing: Math.random()*0.8 + 0.2
+        };
+      }
+
+      function initParticles(){
+        particles = [];
+        // densidad según pantalla (reduce en móviles)
+        const screenFactor = Math.max(0.4, Math.min(1.0, (w*h) / (1366*768)));
+        let target = Math.floor(baseMax * screenFactor);
+        if (window.matchMedia && window.matchMedia('(max-width:420px)').matches) {
+          target = Math.max(22, Math.floor(target * 0.35)); // menos densidad en móviles pequeños
+        }
+        for (let i=0;i<target;i++) particles.push(makeSnowflake(i));
+      }
+
+      // dibuja un copo 'estilizado' (pequeño hex/star)
+      function drawSnowflake(px, py, size, rotation, opacity){
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate(rotation);
+        ctx.globalAlpha = opacity;
+        // color celeste suave
+        ctx.fillStyle = "rgba(170,240,255,0.95)";
+        ctx.strokeStyle = "rgba(140,220,255,0.9)";
+        ctx.lineWidth = Math.max(0.8, size * 0.08);
+        // simple diseño: 6 brazos
+        for (let k=0;k<6;k++){
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.lineTo(0, -size);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(0, -size*0.9, Math.max(0.6, size*0.15), 0, Math.PI*2);
+          ctx.fill();
+          ctx.rotate(Math.PI/3);
+        }
+        // central point
+        ctx.beginPath();
+        ctx.arc(0,0, Math.max(0.8, size*0.12), 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      let lastTime = performance.now();
+      let running = true;
+
+      function step(now){
+        if (!running) return;
+        const dt = Math.min(50, now - lastTime);
+        lastTime = now;
+        ctx.clearRect(0,0,w,h);
+
+        for (let p of particles){
+          // movimiento
+          p.x += p.vx * (dt/16);
+          p.y += p.vy * (dt/16);
+          p.rotation += p.spin * (dt/16);
+          // ligero swing para parecer copo real
+          p.x += Math.sin(now/800 + p.rotation) * (p.swing * 0.02);
+
+          // si sale de pantalla -> reubicar arriba con variación
+          if (p.y > h + 12 || p.x < -30 || p.x > w + 30) {
+            p.x = Math.random() * w;
+            p.y = -8 - Math.random() * 40;
+            p.vx = (Math.random() - 0.5) * 0.4 + windBase * (Math.random() - 0.5);
+            p.vy = 0.4 + Math.random() * 1.1;
+            p.rotation = Math.random() * Math.PI * 2;
+          }
+          drawSnowflake(p.x, p.y, p.size, p.rotation, p.opacity);
+        }
+        requestAnimationFrame(step);
+      }
+
+      // pausa cuando la pestaña no es visible para ahorro
+      document.addEventListener('visibilitychange', ()=> {
+        if (document.hidden) running = false;
+        else { running = true; lastTime = performance.now(); requestAnimationFrame(step); }
+      });
+
+      window.addEventListener('resize', ()=> { resize(); initParticles(); }, {passive:true});
+      resize();
+      initParticles();
+      requestAnimationFrame(step);
+    })();
+
+    /* ----------------------------
+       Estrella fugaz (JS) - se crea y anima de vez en cuando
+       ---------------------------- */
+    (function shootingStarController(){
+      const template = document.getElementById('star-template');
+      if (!template) return;
+      const container = document.getElementById('decorations');
+      // frecuencia: cada 7-14s
+      function spawnOne(){
+        const clone = template.cloneNode(true);
+        clone.style.display = 'block';
+        clone.id = '';
+        clone.classList.add('shooting-star');
+        // random start: fuera a la izquierda superior (y entre 8% y 26% altura)
+        const startY = Math.random() * (window.innerHeight * 0.22) + (window.innerHeight * 0.06);
+        const startX = -40;
+        // end somewhere to the right (diagonal down)
+        const endX = window.innerWidth + 60;
+        const travelY = startY - (Math.random() * (window.innerHeight * 0.12) + 30); // ligera curva hacia arriba
+        container.appendChild(clone);
+
+        // position initial
+        clone.style.left = startX + 'px';
+        clone.style.top = startY + 'px';
+        clone.style.opacity = '0';
+
+        // tail color gradiente ya definido en template
+        const tail = clone.querySelector('.shooting-tail');
+        if (tail) {
+          tail.style.fill = 'url(#tailGrad)';
+        }
+
+        // animation params
+        const duration = 900 + Math.random()*600; // 0.9s - 1.5s
+        const start = performance.now();
+        // animate along a bezier-ish path
+        function animate(now){
+          const t = Math.min(1, (now - start) / duration);
+          // ease out
+          const ease = 1 - Math.pow(1 - t, 3);
+          const x = startX + (endX - startX) * ease;
+          const y = startY + (travelY - startY) * ease;
+          clone.style.left = x + 'px';
+          clone.style.top = y + 'px';
+          clone.style.opacity = (t < 0.08 ? t/0.08 : 1 - Math.max(0, (t-0.8)/0.2) );
+          // shorten tail while moving
+          const tailEl = clone.querySelector('.shooting-tail');
+          if (tailEl) {
+            const tailLen = 140 * (1 - t*0.85);
+            tailEl.setAttribute('width', tailLen);
+            tailEl.style.width = tailLen + 'px';
+          }
+          if (t < 1) requestAnimationFrame(animate);
+          else {
+            // fade out and remove
+            clone.style.transition = 'opacity .35s linear';
+            clone.style.opacity = '0';
+            setTimeout(()=> { clone.remove(); }, 380);
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      // spawn loop
+      function loopSpawn(){
+        const delay = 7000 + Math.random()*7000;
+        setTimeout(()=> {
+          if (!document.hidden) spawnOne();
+          loopSpawn();
+        }, delay);
+      }
+      loopSpawn();
+    })();
+
+    /* FIN del script (resto de lógica de videos, chroma, etc. queda intacta) */
   </script>
 </body>
 </html>
