@@ -12,17 +12,16 @@
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{height:100%;overflow-x:hidden; overflow-y:auto; font-family:sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
-    /* Fondo galaxia (poster + vídeo) */
+    /* Fondo */
     #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
     #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-poster.jpg') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
 
     header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap; }
 
-    /* título y logo */
+    /* título y logo con gradiente animado */
     header h1{
       cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:900;
       white-space:nowrap; flex:0 0 auto; animation: hueShift 8s linear infinite;
-      /* texto con gradiente interno animado */
       background: linear-gradient(90deg,
         #00fff7 0%,
         #7afcff 12%,
@@ -37,12 +36,8 @@
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      transition: transform .28s ease;
-      /* Le damos un poco de 'brillo' interno con sombra muy sutil */
       text-shadow: 0 1px 18px rgba(0,0,0,0.5);
     }
-
-    /* animated gradient movement */
     @keyframes hueShift {
       0% { background-position: 0% 50%; transform: translateY(0); }
       25% { background-position: 50% 100%; transform: translateY(-1px); }
@@ -50,7 +45,6 @@
       75% { background-position: 50% 0%; transform: translateY(1px); }
       100% { background-position: 0% 50%; transform: translateY(0); }
     }
-
     header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; cursor:pointer; }
 
     /* Social inline next to title */
@@ -66,6 +60,7 @@
     .controls { display:flex; align-items:center; gap:0.6rem; margin-left:1rem; flex-wrap:wrap; }
     .controls select, .controls input {
       padding:.5rem .9rem; border:none; border-radius:8px; font-size:1rem; background:rgba(255,255,255,0.95); color:#000; min-width:150px; -webkit-appearance:none; appearance:none;
+      box-sizing:border-box;
     }
     #search { width:220px; min-width:120px; }
 
@@ -84,52 +79,22 @@
     @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; } }
     #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
 
-    /* Snow (now sky-blue snowflake) canvas - full page overlay */
+    /* Snow (copos celestes) canvas */
     #snowCanvas {
       position:fixed;
       left:0; top:0;
       width:100%; height:100%;
       pointer-events:none;
-      z-index:30; /* encima de bg, pero debajo del header/iconos interactivos */
+      z-index:30;
       mix-blend-mode:screen;
     }
 
-    /* Decorations container (arbol, campanas, regalo, estrella) */
+    /* Decorations container (campanas, estrella) */
     #decorations {
       position:fixed;
       inset:0;
-      pointer-events:none; /* que no interfieran con clicks */
-      z-index:36; /* encima del snowCanvas, pero debajo del header (header z-index:40) */
-    }
-    /* Árbol (esquina inferior izquierda) */
-    .dec-tree {
-      position:fixed;
-      left:12px;
-      bottom:12px;
-      width:120px;
-      max-width:22vw;
-      z-index:36;
-      transform-origin:center bottom;
-      filter:drop-shadow(0 6px 16px rgba(0,0,0,0.5));
       pointer-events:none;
-    }
-
-    /* Regalo (esquina inferior derecha) */
-    .dec-gift {
-      position:fixed;
-      right:14px;
-      bottom:18px;
-      width:92px;
-      max-width:18vw;
       z-index:36;
-      transform-origin:center bottom;
-      pointer-events:none;
-      animation: giftFloat 2800ms ease-in-out infinite;
-    }
-    @keyframes giftFloat {
-      0% { transform: translateY(0) rotate(-1deg) scale(1); }
-      50% { transform: translateY(-6px) rotate(2deg) scale(1.02); }
-      100% { transform: translateY(0) rotate(-1deg) scale(1); }
     }
 
     /* Campanas (esquina superior derecha) */
@@ -151,7 +116,7 @@
       100% { transform: rotate(0deg); }
     }
 
-    /* Estrella fugaz: estará posicionado en el DOM y animado con JS. */
+    /* Estrella fugaz (se animará con JS) */
     .shooting-star {
       position:fixed;
       z-index:36;
@@ -173,29 +138,47 @@
       filter: blur(1px);
     }
 
-    /* mobile adjustments */
-    @media (max-width:420px) {
-      .dec-tree { width:80px; left:8px; bottom:8px; }
-      .dec-gift { width:72px; right:8px; bottom:10px; }
-      .dec-bells { width:64px; right:8px; top:6px; }
-      .shooting-tail { width:100px; height:3px; }
-    }
-
-    /* small helper for layering if needed */
-    .decor-hidden-mobile { display:block; }
-    @media (max-width:420px) {
-      /* si queremos ocultar la estrella en móviles, descomenta la siguiente línea */
-      /* .decor-hidden-mobile { display:none; } */
-    }
-
-    /* mobile-select-popup and rest of previous styles are unchanged below... */
+    /* mobile-select-popup and rest */
     .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
     .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
     .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
     .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.04); }
 
-    /* more previous css preserved (cards, grid, etc.)... */
     @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+    /* compact mobile logic: 2 controls per line, small header */
+    @media (max-width:780px) {
+      header { padding:0.6rem 0.9rem; gap:0.5rem; align-items:center; }
+      .controls {
+        width:100%;
+        display:grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 por linea en móviles/tablet */
+        gap:0.5rem;
+        align-items:center;
+      }
+      .controls select, .controls input { font-size:0.92rem; padding:.36rem .55rem; border-radius:8px; min-width:0; }
+      #search { width:100%; min-width:0; }
+      .social-inline button { width:36px; height:36px; padding:0; }
+      .social-inline img { width:68%; height:68%; }
+    }
+
+    /* extra small phones */
+    @media (max-width:420px) {
+      .controls { grid-template-columns: repeat(2, 1fr); gap:.35rem; }
+      .controls select, .controls input { font-size:0.82rem; padding:.24rem .4rem; border-radius:6px; }
+      .social-inline button { width:34px; height:34px; }
+      .social-inline img { width:70%; height:70%; }
+      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
+      .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
+    }
+
+    /* show 3 cards per row on mobile phones (<= 767px) */
+    @media (max-width:767px) {
+      .container { padding: 0 1rem; margin-top: 0; }
+      .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
+      .card { min-height: 0; }
+      .card img { height: auto; }
+    }
 
     .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s; }
 
@@ -233,6 +216,7 @@
     <div class="controls" id="controls">
       <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
+        <!-- ... opciones ... (misma lista extensa que tenías) -->
         <option>Acción</option>
         <option>Animación</option>
         <option>Aventura</option>
@@ -330,46 +314,11 @@
     </div>
   </div>
 
-  <!-- Snow canvas (se añadirá desde JS) -->
+  <!-- Snow canvas (copos celestes) -->
   <canvas id="snowCanvas" aria-hidden="true"></canvas>
 
-  <!-- Decorations: árbol, campanas, regalo, estrella -->
+  <!-- Decorations: solo campanas y estrella (árbol y regalo removidos) -->
   <div id="decorations" aria-hidden="true">
-    <!-- Árbol de Navidad (SVG inline, no ocupa requests externas) -->
-    <svg class="dec-tree" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="treeGrad" x1="0" x2="1"><stop offset="0%" stop-color="#0ed3ff"/><stop offset="60%" stop-color="#00ff9c"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient>
-      </defs>
-      <g transform="translate(10,6)">
-        <rect x="42" y="112" width="16" height="28" rx="2" fill="#8b5a2b"></rect>
-        <g transform="translate(0,0)">
-          <path d="M60 0 L20 48 L36 48 L12 84 L44 84 L20 120 L60 120 L100 120 L76 84 L108 84 L84 48 L100 48 Z" fill="url(#treeGrad)"></path>
-          <!-- bolas -->
-          <circle cx="42" cy="60" r="4" fill="#ff4d4d"></circle>
-          <circle cx="76" cy="50" r="4" fill="#ffd700"></circle>
-          <circle cx="56" cy="36" r="4" fill="#ff9f40"></circle>
-          <circle cx="32" cy="88" r="3.5" fill="#ff6ad5"></circle>
-          <circle cx="86" cy="88" r="3.5" fill="#00fff7"></circle>
-          <!-- estrella en la punta -->
-          <polygon points="60,6 64,18 76,18 66,26 70,38 60,30 50,38 54,26 44,18 56,18" fill="#fff176" stroke="#ffd700" stroke-width="0.6"></polygon>
-        </g>
-      </g>
-    </svg>
-
-    <!-- Regalo animado (SVG inline) -->
-    <svg class="dec-gift" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="giftGrad" x1="0" x2="1"><stop offset="0%" stop-color="#00f0ff"/><stop offset="100%" stop-color="#8bd3ff"/></linearGradient>
-      </defs>
-      <g transform="translate(0,0)">
-        <rect x="12" y="30" width="76" height="56" rx="6" fill="url(#giftGrad)" stroke="#fff" stroke-opacity="0.12"></rect>
-        <rect x="28" y="12" width="44" height="18" rx="4" fill="#ff6ad5" transform="rotate(-6,50,21)"></rect>
-        <path d="M50 10 C46 26,56 26,50 34" fill="#ff4d4d" opacity="0.9"></path>
-        <rect x="46" y="28" width="8" height="58" rx="2" fill="#ff4d4d"></rect>
-        <rect x="12" y="46" width="76" height="8" rx="4" fill="#ffd700" opacity="0.95"></rect>
-      </g>
-    </svg>
-
     <!-- Campanas -->
     <svg class="dec-bells" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g transform="translate(10,6)">
@@ -381,7 +330,7 @@
       </g>
     </svg>
 
-    <!-- Estrella fugaz (se clona/posiciona desde JS para animarla) -->
+    <!-- Estrella fugaz (template) -->
     <svg id="star-template" class="shooting-star decor-hidden-mobile" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
       <g>
         <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.98"></circle>
@@ -400,7 +349,7 @@
 
   <script>
     /* ----------------------------
-       FUNCIONES Y DATOS (lógica conservada, con optimizaciones)
+       UTILIDADES
        ---------------------------- */
     function openInNewTab(url) {
       const win = window.open(url, '_blank', 'noopener,noreferrer');
@@ -408,7 +357,6 @@
       return win;
     }
     function normalizeText(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
-
     function shuffleArray(arr){
       const a = arr.slice();
       for (let i = a.length - 1; i > 0; i--) {
@@ -419,7 +367,7 @@
     }
 
     /* ----------------------------
-       Datos de animes (sin cambios)
+       Datos de animes (mismo listado)
        ---------------------------- */
     const animes = [
       {id:1, title:"DAN DA DAN", img:"dan.jpg", rating:4.9, genres:["Acción","Sobrenatural","Comedia","Romance","Comedia oscura","Shōnen"]},
@@ -480,7 +428,7 @@
     ];
 
     /* ----------------------------
-       Renderizado (igual que antes)
+       Renderizado grid
        ---------------------------- */
     function render(list) {
       const grid = document.getElementById('grid');
@@ -520,7 +468,6 @@
     function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
     function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
     const debouncedFiltro = debounce(filtro, 200);
-
     function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []); const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
 
     function filtro(){
@@ -561,24 +508,20 @@
       updateResultsCount(resultList.length);
     }
 
-    // inicial -> ahora en orden ALEATORIO
+    // inicial -> orden aleatorio
     render(shuffleArray(animes));
     updateResultsCount(animes.length);
 
     document.getElementById('search').addEventListener('input', debouncedFiltro);
     document.getElementById('search').addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); filtro(); } });
-    const genreEl = document.getElementById('genre-select');
-    if (genreEl) genreEl.addEventListener('change', filtro);
-    const ratingEl = document.getElementById('rating-select');
-    if (ratingEl) ratingEl.addEventListener('change', filtro);
-    const demoEl = document.getElementById('demographic-select');
-    if (demoEl) demoEl.addEventListener('change', filtro);
+    ['genre-select','rating-select','demographic-select'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.addEventListener('change', filtro);
+    });
 
     /* ----------------------------
-       Mobile custom popup for selects (sin cambios funcionales)
+       Mobile custom popup for selects (mejor manejo de scroll)
        ---------------------------- */
     function isMobileScreen(){ return window.matchMedia && window.matchMedia('(max-width:780px)').matches; }
-
     (function setupMobileSelectPopups(){
       const selects = ['genre-select','demographic-select','rating-select'].map(id=>document.getElementById(id)).filter(Boolean);
       let activePopup = null;
@@ -623,7 +566,6 @@
 
       window.addEventListener('resize', ()=> { if (activePopup) repositionActivePopup(); }, {passive:true});
       window.addEventListener('scroll', ()=> { if (activePopup) repositionActivePopup(); }, {passive:true});
-
       document.addEventListener('click', onOutsideClick);
 
       selects.forEach(sel => {
@@ -687,16 +629,13 @@
         }
 
         setTimeout(()=> { place(); }, 20);
-
         activePopup = { el: selectEl, popup };
-
         setTimeout(()=> { repositionActivePopup(); }, 80);
       }
     })();
 
-
     /* ----------------------------
-       Ajuste dinámico del espacio entre header y la grid en móviles (igual)
+       Ajuste dinámico del espacio entre header y la grid en móviles
        ---------------------------- */
     function isMobileScreenSmall(){ return window.matchMedia && window.matchMedia('(max-width:767px)').matches; }
 
@@ -720,11 +659,9 @@
     }
 
     window.addEventListener('DOMContentLoaded', ()=> {
-      adjustMobileSpacing();
-      setTimeout(adjustMobileSpacing, 180);
+      adjustMobileSpacing(); setTimeout(adjustMobileSpacing, 180);
     });
     window.addEventListener('resize', ()=> { adjustMobileSpacing(); }, {passive:true});
-
 
     /* ----------------------------
        Fondo y audio (primera pista aleatoria luego secuencial)
@@ -743,12 +680,14 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('bg-music');
+      // Lista de música (puedes cambiar nombres de archivos según tu carpeta)
       const musicList = [
         'Rakion Music Evento De Navidad 03.mp3',
         'Rakion Music Evento De Navidad 02.mp3',
         'Rakion Music Evento De Navidad 01.mp3',
       ];
 
+      // Empezar en índice aleatorio y luego avanzar secuencialmente
       let currentMusicIndex = Math.floor(Math.random() * musicList.length);
       function playByIndex(idx) {
          if (!musicList || musicList.length === 0) return;
@@ -768,7 +707,7 @@
     });
 
     /* ----------------------------
-       Chroma + FG logic + fuegos artificiales (sin cambios funcionales)
+       Chroma + FG logic (soporta verdes y azules) y lista de videos (incluye animacionnavidad1..6)
        ---------------------------- */
     const fgContainer = document.getElementById('fgContainer');
     const fgCanvas = document.getElementById('fgCanvas');
@@ -848,7 +787,7 @@
       resizeFireCanvas();
     }
 
-    // chroma key
+    // admite clave verde y azul
     function applyChromaKey(imageData, settings, keyColor = 'green'){
       const data = imageData.data; const len = data.length;
       const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30; const soften = settings.soft ?? 30;
@@ -934,7 +873,7 @@
     }
 
     /* ----------------------------
-       FUEGOS ARTIFICIALES (canvas, partículas) - igual
+       Fuegos artificiales (canvas)
        ---------------------------- */
     const fireCanvas = document.createElement('canvas');
     fireCanvas.className = 'firework-canvas';
@@ -1038,7 +977,7 @@
     }
 
     /* ----------------------------
-       Reproducción robusta y sin pausar la música (igual)
+       Reproducción robusta y sin pausar la música
        ---------------------------- */
     async function playVideoClip(infoObj){
       if (!infoObj) return;
@@ -1108,7 +1047,7 @@
       });
     }, {passive:true});
 
-    // Visibility change optimization
+    // Pausar procesamiento pesado cuando pestaña no visible
     document.addEventListener('visibilitychange', ()=> {
       if (document.hidden) {
         visibilityPaused = true;
@@ -1134,7 +1073,6 @@
 
     /* ----------------------------
        NIEVE -> Copos celestes con forma (canvas)
-       - Optimizado: densidad adaptativa y pausa en background
        ---------------------------- */
     (function initBlueSnow(){
       const canvas = document.getElementById('snowCanvas');
@@ -1142,7 +1080,7 @@
       const ctx = canvas.getContext('2d');
       let w = 0, h = 0;
       let particles = [];
-      const baseMax = 160; // densidad base en pantallas grandes
+      const baseMax = 160; // densidad base
       const windBase = 0.12;
 
       function resize(){
@@ -1159,7 +1097,6 @@
       }
 
       function makeSnowflake(i){
-        // tamaño adaptativo: un poco de variedad
         const size = (Math.random() * 2.8 + (Math.random() < 0.08 ? 2.6 : 0.6));
         return {
           x: Math.random() * w,
@@ -1176,26 +1113,22 @@
 
       function initParticles(){
         particles = [];
-        // densidad según pantalla (reduce en móviles)
         const screenFactor = Math.max(0.4, Math.min(1.0, (w*h) / (1366*768)));
         let target = Math.floor(baseMax * screenFactor);
         if (window.matchMedia && window.matchMedia('(max-width:420px)').matches) {
-          target = Math.max(22, Math.floor(target * 0.35)); // menos densidad en móviles pequeños
+          target = Math.max(22, Math.floor(target * 0.35));
         }
         for (let i=0;i<target;i++) particles.push(makeSnowflake(i));
       }
 
-      // dibuja un copo 'estilizado' (pequeño hex/star)
       function drawSnowflake(px, py, size, rotation, opacity){
         ctx.save();
         ctx.translate(px, py);
         ctx.rotate(rotation);
         ctx.globalAlpha = opacity;
-        // color celeste suave
         ctx.fillStyle = "rgba(170,240,255,0.95)";
         ctx.strokeStyle = "rgba(140,220,255,0.9)";
         ctx.lineWidth = Math.max(0.8, size * 0.08);
-        // simple diseño: 6 brazos
         for (let k=0;k<6;k++){
           ctx.beginPath();
           ctx.moveTo(0,0);
@@ -1206,7 +1139,6 @@
           ctx.fill();
           ctx.rotate(Math.PI/3);
         }
-        // central point
         ctx.beginPath();
         ctx.arc(0,0, Math.max(0.8, size*0.12), 0, Math.PI*2);
         ctx.fill();
@@ -1223,14 +1155,11 @@
         ctx.clearRect(0,0,w,h);
 
         for (let p of particles){
-          // movimiento
           p.x += p.vx * (dt/16);
           p.y += p.vy * (dt/16);
           p.rotation += p.spin * (dt/16);
-          // ligero swing para parecer copo real
           p.x += Math.sin(now/800 + p.rotation) * (p.swing * 0.02);
 
-          // si sale de pantalla -> reubicar arriba con variación
           if (p.y > h + 12 || p.x < -30 || p.x > w + 30) {
             p.x = Math.random() * w;
             p.y = -8 - Math.random() * 40;
@@ -1243,7 +1172,6 @@
         requestAnimationFrame(step);
       }
 
-      // pausa cuando la pestaña no es visible para ahorro
       document.addEventListener('visibilitychange', ()=> {
         if (document.hidden) running = false;
         else { running = true; lastTime = performance.now(); requestAnimationFrame(step); }
@@ -1262,45 +1190,35 @@
       const template = document.getElementById('star-template');
       if (!template) return;
       const container = document.getElementById('decorations');
-      // frecuencia: cada 7-14s
       function spawnOne(){
         const clone = template.cloneNode(true);
         clone.style.display = 'block';
         clone.id = '';
         clone.classList.add('shooting-star');
-        // random start: fuera a la izquierda superior (y entre 8% y 26% altura)
         const startY = Math.random() * (window.innerHeight * 0.22) + (window.innerHeight * 0.06);
         const startX = -40;
-        // end somewhere to the right (diagonal down)
         const endX = window.innerWidth + 60;
-        const travelY = startY - (Math.random() * (window.innerHeight * 0.12) + 30); // ligera curva hacia arriba
+        const travelY = startY - (Math.random() * (window.innerHeight * 0.12) + 30);
         container.appendChild(clone);
-
-        // position initial
         clone.style.left = startX + 'px';
         clone.style.top = startY + 'px';
         clone.style.opacity = '0';
 
-        // tail color gradiente ya definido en template
         const tail = clone.querySelector('.shooting-tail');
         if (tail) {
           tail.style.fill = 'url(#tailGrad)';
         }
 
-        // animation params
-        const duration = 900 + Math.random()*600; // 0.9s - 1.5s
+        const duration = 900 + Math.random()*600;
         const start = performance.now();
-        // animate along a bezier-ish path
         function animate(now){
           const t = Math.min(1, (now - start) / duration);
-          // ease out
           const ease = 1 - Math.pow(1 - t, 3);
           const x = startX + (endX - startX) * ease;
           const y = startY + (travelY - startY) * ease;
           clone.style.left = x + 'px';
           clone.style.top = y + 'px';
           clone.style.opacity = (t < 0.08 ? t/0.08 : 1 - Math.max(0, (t-0.8)/0.2) );
-          // shorten tail while moving
           const tailEl = clone.querySelector('.shooting-tail');
           if (tailEl) {
             const tailLen = 140 * (1 - t*0.85);
@@ -1309,7 +1227,6 @@
           }
           if (t < 1) requestAnimationFrame(animate);
           else {
-            // fade out and remove
             clone.style.transition = 'opacity .35s linear';
             clone.style.opacity = '0';
             setTimeout(()=> { clone.remove(); }, 380);
@@ -1318,7 +1235,6 @@
         requestAnimationFrame(animate);
       }
 
-      // spawn loop
       function loopSpawn(){
         const delay = 7000 + Math.random()*7000;
         setTimeout(()=> {
@@ -1329,7 +1245,6 @@
       loopSpawn();
     })();
 
-    /* FIN del script (resto de lógica de videos, chroma, etc. queda intacta) */
   </script>
 </body>
 </html>
