@@ -9,15 +9,6 @@
   <link rel="preload" as="image" href="videoframe.jpg">
 
   <style>
-    /* ---------------------------
-       Variables globales y reset
-       --------------------------- */
-    :root {
-      --header-approx-height: 72px; /* ajusta si tu header cambia de tamaño */
-      --header-mobile-extra-gap: 0.6rem;
-      --container-desktop-margin-top: 8rem; /* aumenté 6rem -> 8rem */
-    }
-
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{height:100%;overflow-x:hidden; overflow-y:auto; font-family:sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
@@ -25,11 +16,7 @@
     #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
     #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-poster.jpg') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
 
-    /* Header: sticky + altura mínima para consistencia */
-    header{
-      position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap;
-      min-height: var(--header-approx-height); /* garantiza altura esperada */
-    }
+    header{ position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap; }
 
     /* título y logo con gradiente animado */
     header h1{
@@ -77,14 +64,9 @@
     }
     #search { width:220px; min-width:120px; }
 
-    /* layout principal
-       - Mantengo margin por compatibilidad, pero lo subo
-       - Además añado padding-top a main para reservar espacio al header sticky
-    */
-    .container{ max-width:1200px; margin: var(--container-desktop-margin-top) auto 2rem; padding:0 2rem; z-index:6; position:relative; }
-    main.container { padding-top: calc(var(--header-approx-height) + 0.75rem); } /* separación garantizada */
-
-    .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.5rem; margin-top:1.2rem; } /* gap entre header y grid */
+    /* layout principal */
+    .container{ max-width:1200px; margin:6rem auto 2rem; padding:0 2rem; z-index:6; position:relative; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.5rem; }
     .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .6s ease; opacity:0; transform:translateY(30px); }
     .card.visible{ opacity:1; transform:translateY(0); }
     .card img{ width:100%; display:block; transition:transform .4s,filter .4s; }
@@ -178,9 +160,6 @@
       #search { width:100%; min-width:0; }
       .social-inline button { width:36px; height:36px; padding:0; }
       .social-inline img { width:68%; height:68%; }
-
-      /* en móviles usamos un margen superior calculado para asegurar separación */
-      .container { padding: 0 1rem; margin-top: calc(var(--header-approx-height) + var(--header-mobile-extra-gap)); }
     }
 
     /* extra small phones */
@@ -195,7 +174,7 @@
 
     /* show 3 cards per row on mobile phones (<= 767px) */
     @media (max-width:767px) {
-      .container { padding: 0 1rem; /* margin-top ahora controlado por JS y la regla en max-width:780px */ }
+      .container { padding: 0 1rem; margin-top: 0; }
       .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
       .card { min-height: 0; }
       .card img { height: auto; }
@@ -673,14 +652,12 @@
         const grid = document.querySelector('.grid');
         if (!container || !header || !grid) return;
         if (!isMobileScreenSmall()) {
-          // dejamos que el CSS de escritorio gestione el espacio
           container.style.marginTop = '';
           return;
         }
         const headerH = Math.ceil(header.getBoundingClientRect().height);
         const smallPhone = window.matchMedia && window.matchMedia('(max-width:420px)').matches;
-        const extraGap = smallPhone ? 6 : 9; // pequeños ajustes: píxeles
-        // establecemos un margin-top dinámico: altura del header + extraGap px
+        const extraGap = smallPhone ? 4 : 6;
         container.style.marginTop = (headerH + extraGap) + 'px';
       } catch(e){
         console.warn('adjustMobileSpacing error', e);
@@ -715,7 +692,6 @@
         'Rakion Music Evento De Navidad 02.mp3',
         'Rakion Music Evento De Navidad 01.mp3',
       ];
-
 
       // Empezar en índice aleatorio y luego avanzar secuencialmente
       let currentMusicIndex = Math.floor(Math.random() * musicList.length);
