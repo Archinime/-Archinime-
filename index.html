@@ -1,4 +1,3 @@
-<!-- Fuente original del usuario: /mnt/data/prueaba3.txt -->
 <!doctype html>
 <html lang="es">
 <head>
@@ -15,7 +14,7 @@
        --------------------------- */
     :root {
       --header-approx-height: 72px; /* ajusta si tu header cambia de tamaño */
-      --global-extra-gap: -12px; /* valor por defecto para desktop (se sobrescribe por JS) */
+      --global-extra-gap: -6px; /* valor por defecto (JS puede sobrescribir) */
     }
 
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -176,8 +175,13 @@
       .social-inline button { width:34px; height:34px; padding:0; }
       .social-inline img { width:66%; height:66%; }
 
-      /* No forzar 0px desde CSS: dejaremos que JS ponga la separación pequeña (4px) en móviles */
-      .grid { margin-top: 0; gap:0.6rem; }
+      /* >>> MÓVILES: eliminar TODO el espacio entre header y contenido */
+      .container {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+      }
+      main.container { padding-top: 0 !important; }
+      .grid { margin-top: 0 !important; gap:0.6rem !important; }
     }
 
     /* extra small phones */
@@ -190,12 +194,15 @@
       .mobile-select-popup { max-height:160px; font-size:0.84rem; }
       .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
 
-      .grid { margin-top: 0; gap:0.5rem; grid-template-columns: repeat(3, 1fr); }
+      /* >>> TELÉFONOS PEQUEÑOS: forzar 0px */
+      .container { margin-top: 0 !important; padding-top: 0 !important; }
+      main.container { padding-top: 0 !important; }
+      .grid { margin-top: 0 !important; gap:0.5rem !important; grid-template-columns: repeat(3, 1fr); }
     }
 
     /* show 3 cards per row on mobile phones (<= 767px) */
     @media (max-width:767px) {
-      .container { padding: 0 1rem; /* margin-top controlado por JS */ }
+      .container { padding: 0 1rem; /* margin-top controlado por JS o reglas anteriores */ }
       .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
       .card { min-height: 0; }
       .card img { height: auto; }
@@ -662,9 +669,8 @@
     })();
 
     /* ----------------------------
-       AJUSTE DINÁMICO DEL ESPACIO ENTRE HEADER Y GRID
-       - Móviles: un poquito (4px)
-       - Desktop: más compacto (-12px)
+       AJUSTE DINÁMICO DEL ESPACIO ENTRE HEADER Y GRID (TODAS LAS PANTALLAS)
+       - Para móviles fuerza 0px; para escritorio aplica un gap muy pequeño (negativo) para quedar compacto.
        ---------------------------- */
 
     function adjustSpacingForAllScreens(){
@@ -676,26 +682,21 @@
         // altura real del header
         const headerH = Math.ceil(header.getBoundingClientRect().height || parseInt(getComputedStyle(header).minHeight || 72));
 
-        // Si es móvil (<= 780px) pondremos "poquito muy poquito" -> 4px extra
+        // Para móviles: eliminar TODO el espacio (0px)
         if (window.innerWidth <= 780) {
-          const extraGapMobile = 4; // muy, muy poquito espacio en móviles
-          const finalValueMobile = (headerH + extraGapMobile) + 'px';
-          container.style.marginTop = finalValueMobile;
-          container.style.paddingTop = finalValueMobile;
-          // reducir ligeramente el gap de la grid en móviles para mantener compactidad
+          container.style.marginTop = '0px';
+          container.style.paddingTop = '0px';
+          // también reducir margen de la grid por si acaso
           const grid = document.querySelector('.grid');
           if (grid) { grid.style.marginTop = '0px'; grid.style.gap = '0.6rem'; }
           return;
         }
 
-        // Desktop / tablet: empujar más (más compacto)
-        const extraGapDesktop = -12; // empuja 12px hacia arriba
-        const finalValueDesktop = (headerH + extraGapDesktop) + 'px';
-        container.style.marginTop = finalValueDesktop;
-        container.style.paddingTop = finalValueDesktop;
-        // refinar grid margin si hay un pequeño offset
-        const grid = document.querySelector('.grid');
-        if (grid) { grid.style.marginTop = '0.2rem'; grid.style.gap = '1.2rem'; }
+        // Para escritorio/tablet aplicar pequeño ajuste negativo (muy compacto)
+        const extraGap = -6; // aún muy pequeño para empujar 6px hacia arriba y quedar compacto
+        const finalValue = (headerH + extraGap) + 'px';
+        container.style.marginTop = finalValue;
+        container.style.paddingTop = finalValue;
 
       } catch(e){
         console.warn('adjustSpacingForAllScreens error', e);
@@ -706,9 +707,7 @@
     window.addEventListener('DOMContentLoaded', ()=> {
       adjustSpacingForAllScreens();
       // segundo ajuste por si fonts o imágenes cambian layout
-      setTimeout(adjustSpacingForAllScreens, 180);
-      // y un ajuste más tarde por si hay elementos asíncronos (fonts)
-      setTimeout(adjustSpacingForAllScreens, 900);
+      setTimeout(adjustSpacingForAllScreens, 160);
     });
     window.addEventListener('resize', ()=> { adjustSpacingForAllScreens(); }, {passive:true});
 
