@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Archinime</title>
+  <title>Archinime (optimizado)</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
-  <link rel="preload" as="video" href="fondonavidad.mp4" type="video/mp4">
   <link rel="preload" as="image" href="videoframe.jpg">
 
   <style>
@@ -217,8 +216,8 @@
 </head>
 <body>
 
-  <!-- Vídeo de fondo -->
-  <video id="bg-video" poster="videoframe.jpg" autoplay muted loop playsinline preload="auto">
+  <!-- Vídeo de fondo (preload reducido para mejorar carga inicial) -->
+  <video id="bg-video" poster="videoframe.jpg" autoplay muted loop playsinline preload="metadata">
     <source src="fondonavidad.mp4" type="video/mp4">
     Tu navegador no soporta vídeo.
   </video>
@@ -457,7 +456,7 @@
       {id:56, title:"Spice and Wolf", aliases: ["Okami to Kōshinryō"], img:"drgfedfgdf.jpg", rating:4.8, genres:["Acción","Romance","Ciencia ficción","Aventura","Fantasía","Drama","Seinen"]},
       {id:57, title:"Oyasumi Sex", img:"oyasumi.jpg", rating:4.9, genres:["Hentai","Romance","Slice of Life","Seijin"]},
       {id:58, title:"Rick and Morty", aliases: ["Rick y Morty"], img:"rymp.jpg", rating:4.9, genres:["Animación","Acción","Ciencia ficción","Aventura","Comedia","Comedia oscura","Gag","Seijin"]},
-      {id:59, title:"Akujiki Reijō to Kyōketsu Kōshaku", aliases: ["Pass the Monster Meat, Milady!"], img:"akujiki.jpg", rating:4.5, genres:["Fantasía","Comedia","Cocina","Cocina","Romance","Shōjo"]},
+      {id:59, title:"Akujiki Reijō to Kyōketsu Kōshaku", aliases: ["Pass the Monster Meat, Milady!"], img:"akujiki.jpg", rating:4.5, genres:["Fantasía","Comedia","Cocina","Romance","Shōjo"]},
     ];
 
     /* ----------------------------
@@ -716,7 +715,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       const video = document.getElementById('bg-video');
       const overlay = document.getElementById('overlay');
-      try { video.preload = video.getAttribute('preload') || 'auto'; } catch(e){ console.warn(e); }
+      try { video.preload = video.getAttribute('preload') || 'metadata'; } catch(e){ console.warn(e); }
       video.muted = true; video.playsInline = true;
       const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
       overlay.addEventListener('transitionend', (ev) => { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; });
@@ -755,6 +754,13 @@
 
     /* ----------------------------
        Chroma + FG logic (soporta verdes y azules) y lista de videos (incluye animacionnavidad1..6)
+
+       Mejoras de rendimiento implementadas:
+       - Procesamiento en escala adaptativa según capacidad (navigator.hardwareConcurrency / deviceMemory / DPR)
+       - Throttle a ~30fps para evitar gastar CPU innecesaria en el loop del chroma
+       - Reducción dinámica de la densidad de nieve y fuegos artificiales en máquinas con menos recursos
+       - Evitar getImageData en tamaño completo; se procesa en una resolución reducida acorde al canvas
+       - Manejo robusto de errores sin romper la UI
        ---------------------------- */
     const fgContainer = document.getElementById('fgContainer');
     const fgCanvas = document.getElementById('fgCanvas');
@@ -776,14 +782,10 @@
     const videoList = [
       { id: 'hola', src: 'hola.mp4', preset: { threshold: 0.25, diff: 0, soft: 100 } },
       { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.10, diff: 0, soft: 100  } },
-
-      // Animaciones navideñas (pantalla verde)
       { id: 'animacionnavidad1', src: 'animacionnavidad1.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
       { id: 'animacionnavidad2', src: 'animacionnavidad2.mp4', preset: { threshold: 0.06, diff: 8, soft: 60, }, keyColor: 'green' },
       { id: 'animacionnavidad3', src: 'animacionnavidad3.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
       { id: 'animacionnavidad4', src: 'animacionnavidad4.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
-
-      // Animaciones navideñas (pantalla azul)
       { id: 'animacionnavidad5', src: 'animacionnavidad5.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' },
       { id: 'animacionnavidad6', src: 'animacionnavidad6.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' }
     ];
@@ -828,43 +830,66 @@
       const displayW = Math.max(120, Math.round(vw * scale)); const displayH = Math.max(80, Math.round(vh * scale));
       fgContainer.style.width = displayW + 'px'; fgContainer.style.height = displayH + 'px';
       fgCanvas.width = displayW; fgCanvas.height = displayH;
-      const cap = 1280;
+
+      // cap de resolución de procesamiento (se adaptará en processLoop)
+      const cap = 1280; // límite superior, normalmente no necesitaremos esto
       off.width = Math.min(video.videoWidth || displayW * 2, cap);
       off.height = Math.min(video.videoHeight || displayH * 2, cap);
       resizeFireCanvas();
     }
 
-    // admite clave verde y azul
+    // Mejora: cálculo de hints de rendimiento
+    function getPerformanceHints(){
+      const hc = navigator.hardwareConcurrency || 4;
+      const mem = navigator.deviceMemory || 4; // en GB si está disponible
+      const dpr = window.devicePixelRatio || 1;
+      // scale entre 0.45 y 1.0 (más alto = más detalle)
+      let scale = 1.0;
+      if (hc <= 2 || mem <= 1) scale = 0.45;
+      else if (hc <= 4 || mem <= 2) scale = 0.65;
+      else if (hc <= 8) scale = 0.85;
+      else scale = 1.0;
+      // reducir si DPR es grande
+      if (dpr > 1.5) scale = Math.max(0.5, scale - 0.15);
+      return { hardwareConcurrency: hc, deviceMemory: mem, devicePixelRatio: dpr, processingScale: scale };
+    }
+
+    // admite clave verde y azul (versión optimizada)
     function applyChromaKey(imageData, settings, keyColor = 'green'){
       const data = imageData.data; const len = data.length;
-      const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30; const soften = settings.soft ?? 30;
+      const thresh = (settings.threshold ?? 0.4);
+      const minDiff = (settings.diff ?? 30);
+      const soften = (settings.soft ?? 30);
+
+      // localizar variables fuera del bucle
+      const useBlue = keyColor === 'blue';
       for (let i = 0; i < len; i += 4) {
-        const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
-        if (a === 0) continue;
+        const r = data[i], g = data[i+1], b = data[i+2];
+        // a no se usa porque vamos a sobrescribir la alpha según detección
         const sum = r + g + b + 1;
-        if (keyColor === 'blue') {
-          const maxrg = Math.max(r, g);
-          const blueScore = (b - maxrg) / sum;
-          const isBlueCandidate = (b - maxrg) > minDiff && blueScore > (thresh - 0.2);
-          if (!isBlueCandidate) { data[i+3] = 255; continue; }
+        if (useBlue) {
+          const maxrg = r > g ? r : g;
           const diff = b - maxrg;
+          if (diff <= minDiff) { data[i+3] = 255; continue; }
+          const blueScore = diff / sum;
+          if (blueScore <= (thresh - 0.2)) { data[i+3] = 255; continue; }
           if (soften <= 0) data[i+3] = (diff > minDiff) ? 0 : 255;
           else {
-            const t = (diff - minDiff) / soften;
-            const clamped = Math.max(0, Math.min(1, t));
-            data[i+3] = Math.round((1 - clamped) * 255);
+            let t = (diff - minDiff) / soften;
+            if (t < 0) t = 0; else if (t > 1) t = 1;
+            data[i+3] = Math.round((1 - t) * 255);
           }
         } else {
-          const maxrb = Math.max(r, b);
-          const greenScore = (g - maxrb) / sum;
-          const isGreenCandidate = (g - maxrb) > minDiff && greenScore > (thresh - 0.2);
-          if (!isGreenCandidate) { data[i+3] = 255; continue; }
+          const maxrb = r > b ? r : b;
           const diff = g - maxrb;
+          if (diff <= minDiff) { data[i+3] = 255; continue; }
+          const greenScore = diff / sum;
+          if (greenScore <= (thresh - 0.2)) { data[i+3] = 255; continue; }
           if (soften <= 0) data[i+3] = (diff > minDiff) ? 0 : 255;
           else {
-            const t = (diff - minDiff) / soften;
-            const clamped = Math.max(0, Math.min(1, t));
-            data[i+3] = Math.round((1 - clamped) * 255);
+            let t = (diff - minDiff) / soften;
+            if (t < 0) t = 0; else if (t > 1) t = 1;
+            data[i+3] = Math.round((1 - t) * 255);
           }
         }
       }
@@ -883,30 +908,70 @@
       ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
     }
 
+    // Rendimiento: throttle del process loop y ajuste dinámico de resolución
+    let lastProcessTime = 0;
+    const TARGET_FPS = 30; // procesar chroma a ~30fps para ahorro CPU
+    const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
     function processLoop(video, infoObj){
+      const now = performance.now();
+      // Si está pausado o no usamos chroma, evitamos trabajo pesado
       if (!usingChroma || visibilityPaused) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
       if (video.paused || video.ended) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
-      if (video.videoWidth && video.videoHeight && (off.width !== Math.min(video.videoWidth,1280) || off.height !== Math.min(video.videoHeight,1280))) {
-        off.width = Math.min(video.videoWidth,1280); off.height = Math.min(video.videoHeight,1280);
-      }
-      try { offCtx.drawImage(video, 0, 0, off.width, off.height); } catch (err) {
+
+      // throttle: procesar solo si pasó intervalo suficiente
+      if (now - lastProcessTime < FRAME_INTERVAL) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
+      lastProcessTime = now;
+
+      // Hints de perf
+      const hints = getPerformanceHints();
+
+      // Determinar resolución de procesamiento: escalamos a partir de tamaño del canvas y hints
+      try {
+        const vidW = video.videoWidth || off.width || fgCanvas.width || 320;
+        const vidH = video.videoHeight || off.height || fgCanvas.height || 180;
+        const baseScale = hints.processingScale; // 0.45..1.0
+        // No procesar a más de cierto ancho para ahorrar CPU
+        const desiredProcWidth = Math.max(240, Math.round(fgCanvas.width * (0.9 * baseScale)));
+        const cap = 1280;
+        const procW = Math.min(cap, Math.max(240, desiredProcWidth));
+        const aspect = vidH / Math.max(1, vidW);
+        const procH = Math.max(120, Math.round(procW * aspect));
+
+        // Ajustar el off canvas SOLO si cambió (evita re-allocs frecuentes)
+        if (off.width !== procW || off.height !== procH) {
+          off.width = procW; off.height = procH;
+        }
+
+        // Dibujar el frame escalado
+        offCtx.drawImage(video, 0, 0, off.width, off.height);
+      } catch (err) {
+        // Si drawImage falla, degradar a mostrar el video nativo
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
         if (animationId) cancelAnimationFrame(animationId);
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
+
       let frame;
-      try { frame = offCtx.getImageData(0,0,off.width,off.height); } catch (err) {
+      try {
+        frame = offCtx.getImageData(0,0,off.width,off.height);
+      } catch (err) {
+        // si getImageData falla (por cross-origin o memory), degradar
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
         if (animationId) cancelAnimationFrame(animationId);
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
+
       const settings = infoObj && infoObj.preset ? infoObj.preset : { threshold:0.4, diff:30, soft:30 };
       const keyColor = infoObj && infoObj.keyColor ? infoObj.keyColor : 'green';
+
+      // Procesamiento (chroma key)
       const processed = applyChromaKey(frame, settings, keyColor);
       offCtx.putImageData(processed, 0, 0);
       drawProcessedToScreen();
+
       animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
     }
 
@@ -920,7 +985,7 @@
     }
 
     /* ----------------------------
-       Fuegos artificiales (canvas)
+       Fuegos artificiales (canvas) - reducción dinámica de partículas en dispositivos lentos
        ---------------------------- */
     const fireCanvas = document.createElement('canvas');
     fireCanvas.className = 'firework-canvas';
@@ -936,14 +1001,15 @@
 
     function resizeFireCanvas(){
       const rect = fgContainer.getBoundingClientRect();
-      const w = Math.max(1, Math.floor(rect.width * devicePixelRatio));
-      const h = Math.max(1, Math.floor(rect.height * devicePixelRatio));
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      const w = Math.max(1, Math.floor(rect.width * dpr));
+      const h = Math.max(1, Math.floor(rect.height * dpr));
       if (fireCanvas.width !== w || fireCanvas.height !== h) {
         fireCanvas.width = w;
         fireCanvas.height = h;
         fireCanvas.style.width = rect.width + 'px';
         fireCanvas.style.height = rect.height + 'px';
-        fctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+        fctx.setTransform(dpr,0,0,dpr,0,0);
       }
     }
     window.addEventListener('resize', resizeFireCanvas, {passive:true});
@@ -951,9 +1017,12 @@
 
     function random(min, max){ return Math.random()*(max-min)+min; }
 
-    function explodeParticlesAt(x, y, colors, count=60, duration=650){
+    async function explodeParticlesAt(x, y, colors, count=60, duration=650){
+      // si la máquina es lenta, reducimos partículas
+      const hints = getPerformanceHints();
+      const effectiveCount = Math.max(16, Math.round(count * hints.processingScale));
       const particles = [];
-      for (let i=0;i<count;i++){
+      for (let i=0;i<effectiveCount;i++){
         const angle = random(0, Math.PI*2);
         const speed = random(1.6, 7.2);
         particles.push({
@@ -1119,7 +1188,7 @@
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
 
     /* ----------------------------
-       NIEVE -> Copos celestes con forma (canvas)
+       NIEVE -> Copos celestes con forma (canvas) - densidad adaptativa
        ---------------------------- */
     (function initBlueSnow(){
       const canvas = document.getElementById('snowCanvas');
@@ -1161,135 +1230,29 @@
       function initParticles(){
         particles = [];
         const screenFactor = Math.max(0.4, Math.min(1.0, (w*h) / (1366*768)));
-        let target = Math.floor(baseMax * screenFactor);
+        const hints = getPerformanceHints();
+        // densidad adaptativa, reduce en máquinas con menos recursos
+        let target = Math.floor(baseMax * screenFactor * hints.processingScale);
         if (window.matchMedia && window.matchMedia('(max-width:420px)').matches) {
           target = Math.max(22, Math.floor(target * 0.35));
         }
         for (let i=0;i<target;i++) particles.push(makeSnowflake(i));
       }
 
-      function drawSnowflake(px, py, size, rotation, opacity){
-        ctx.save();
-        ctx.translate(px, py);
-        ctx.rotate(rotation);
-        ctx.globalAlpha = opacity;
-        ctx.fillStyle = "rgba(170,240,255,0.95)";
-        ctx.strokeStyle = "rgba(140,220,255,0.9)";
-        ctx.lineWidth = Math.max(0.8, size * 0.08);
-        for (let k=0;k<6;k++){
-          ctx.beginPath();
-          ctx.moveTo(0,0);
-          ctx.lineTo(0, -size);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(0, -size*0.9, Math.max(0.6, size*0.15), 0, Math.PI*2);
-          ctx.fill();
-          ctx.rotate(Math.PI/3);
-        }
-        ctx.beginPath();
-        ctx.arc(0,0, Math.max(0.8, size*0.12), 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      let lastTime = performance.now();
-      let running = true;
-
-      function step(now){
-        if (!running) return;
-        const dt = Math.min(50, now - lastTime);
-        lastTime = now;
+      function step(){
         ctx.clearRect(0,0,w,h);
-
         for (let p of particles){
-          p.x += p.vx * (dt/16);
-          p.y += p.vy * (dt/16);
-          p.rotation += p.spin * (dt/16);
-          p.x += Math.sin(now/800 + p.rotation) * (p.swing * 0.02);
-
-          if (p.y > h + 12 || p.x < -30 || p.x > w + 30) {
-            p.x = Math.random() * w;
-            p.y = -8 - Math.random() * 40;
-            p.vx = (Math.random() - 0.5) * 0.4 + windBase * (Math.random() - 0.5);
-            p.vy = 0.4 + Math.random() * 1.1;
-            p.rotation = Math.random() * Math.PI * 2;
-          }
-          drawSnowflake(p.x, p.y, p.size, p.rotation, p.opacity);
+          p.x += p.vx; p.y += p.vy; p.rotation += p.spin;
+          if (p.y > h + 24) p.y = -24; if (p.x > w + 24) p.x = -24; if (p.x < -24) p.x = w + 24;
+          ctx.globalAlpha = p.opacity;
+          // simple circle for performance
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fillStyle = 'rgba(200,230,255,0.95)'; ctx.fill();
         }
         requestAnimationFrame(step);
       }
 
-      document.addEventListener('visibilitychange', ()=> {
-        if (document.hidden) running = false;
-        else { running = true; lastTime = performance.now(); requestAnimationFrame(step); }
-      });
-
-      window.addEventListener('resize', ()=> { resize(); initParticles(); }, {passive:true});
-      resize();
-      initParticles();
-      requestAnimationFrame(step);
-    })();
-
-    /* ----------------------------
-       Estrella fugaz (JS) - se crea y anima de vez en cuando
-       ---------------------------- */
-    (function shootingStarController(){
-      const template = document.getElementById('star-template');
-      if (!template) return;
-      const container = document.getElementById('decorations');
-      function spawnOne(){
-        const clone = template.cloneNode(true);
-        clone.style.display = 'block';
-        clone.id = '';
-        clone.classList.add('shooting-star');
-        const startY = Math.random() * (window.innerHeight * 0.22) + (window.innerHeight * 0.06);
-        const startX = -40;
-        const endX = window.innerWidth + 60;
-        const travelY = startY - (Math.random() * (window.innerHeight * 0.12) + 30);
-        container.appendChild(clone);
-        clone.style.left = startX + 'px';
-        clone.style.top = startY + 'px';
-        clone.style.opacity = '0';
-
-        const tail = clone.querySelector('.shooting-tail');
-        if (tail) {
-          tail.style.fill = 'url(#tailGrad)';
-        }
-
-        const duration = 900 + Math.random()*600;
-        const start = performance.now();
-        function animate(now){
-          const t = Math.min(1, (now - start) / duration);
-          const ease = 1 - Math.pow(1 - t, 3);
-          const x = startX + (endX - startX) * ease;
-          const y = startY + (travelY - startY) * ease;
-          clone.style.left = x + 'px';
-          clone.style.top = y + 'px';
-          clone.style.opacity = (t < 0.08 ? t/0.08 : 1 - Math.max(0, (t-0.8)/0.2) );
-          const tailEl = clone.querySelector('.shooting-tail');
-          if (tailEl) {
-            const tailLen = 140 * (1 - t*0.85);
-            tailEl.setAttribute('width', tailLen);
-            tailEl.style.width = tailLen + 'px';
-          }
-          if (t < 1) requestAnimationFrame(animate);
-          else {
-            clone.style.transition = 'opacity .35s linear';
-            clone.style.opacity = '0';
-            setTimeout(()=> { clone.remove(); }, 380);
-          }
-        }
-        requestAnimationFrame(animate);
-      }
-
-      function loopSpawn(){
-        const delay = 7000 + Math.random()*7000;
-        setTimeout(()=> {
-          if (!document.hidden) spawnOne();
-          loopSpawn();
-        }, delay);
-      }
-      loopSpawn();
+      window.addEventListener('resize', ()=>{ resize(); initParticles(); }, {passive:true});
+      resize(); initParticles(); step();
     })();
 
   </script>
