@@ -81,8 +81,8 @@
 
     .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.2rem; margin-top:0.3rem; } /* gap reducido entre header y grid */
     /* Eliminamos la ocultación inicial para que las tarjetas y las imágenes se muestren todas a la vez */
-    .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .2s ease; opacity:1; transform:translateY(0); }
-    .card img{ width:100%; display:block; transition:transform .4s,filter .4s; }
+    .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .2s ease; opacity:1; transform:translateY(0); will-change: transform; }
+    .card img{ width:100%; display:block; transition:transform .4s,filter .4s; will-change: transform; }
     .card:hover img{ transform:scale(1.05); filter:brightness(75%); }
     .info{ position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7); padding:.75rem; transform:translateY(100%); transition:transform .3s; }
     .card:hover .info{ transform:translateY(0); }
@@ -447,8 +447,8 @@
         grid.innerHTML = `
           <div class="no-results" role="status" aria-live="polite">
             <div class="title shimmer">¡Ups! No se encontraron resultados que coincidan con la búsqueda.</div>
-            <div class="subtitle">¿No lo encuentras? 🤔 Puede que lo hayas escrito con un error ✏️ o que todavía no lo haya subido ⏳.</div>
-            <div class="sparkles"><button class="btn-reset" id="btn-reset">Entiendo 👌</button></div>
+            <div class="subtitle">¿No lo encuentras? Puede que lo hayas escrito con un error o que todavía no lo haya subido.</div>
+            <div class="sparkles"><button class="btn-reset" id="btn-reset">Entiendo</button></div>
           </div>
         `;
         const btn = document.getElementById('btn-reset');
@@ -463,19 +463,13 @@
         return;
       }
 
-      // En lugar de usar "loading=lazy" y un IntersectionObserver que revela una por una,
-      // renderizamos las tarjetas con imágenes normales para que el navegador cargue según su comportamiento predeterminado
+      // Render sencillo (sin intersection observer) para que el navegador gestione la carga
       grid.innerHTML = list.map(a => `
         <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
           <img src="${a.img}" alt="${a.title}">
           <div class="info"><strong>${a.title}</strong><span>⭐ ${a.rating ? (a.rating.toFixed? a.rating.toFixed(1): a.rating) : '—'}</span></div>
         </div>
       `).join('');
-
-      // Eliminamos el IntersectionObserver para que las tarjetas no dependan de una clase .visible
-      // Si quieres forzar que todas las imágenes se descarguen de inmediato puedes añadir:
-      // document.querySelectorAll('#grid img').forEach(img => img.loading = 'eager');
-      // Pero en la mayoría de navegadores modernos, si no pones loading="lazy" el navegador descargará según su heurística.
     }
 
     function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
@@ -532,25 +526,52 @@
     ['genre-select','rating-select','demographic-select'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', filtro); });
 
     /* ----------------------------
+       Helpers de rendimiento
+       ---------------------------- */
+    function getPerformanceHints() {
+      // Devuelve una estructura que usamos para adaptar densidades y fps.
+      let cores = navigator.hardwareConcurrency || 4;
+      let deviceMem = navigator.deviceMemory || 4; // GB (si no existe, asumimos 4GB)
+      let prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // processingScale: 1.0 = alto rendimiento, 0.6 = medio, 0.4 = bajo
+      let processingScale = 1.0;
+      if (cores >= 8 && deviceMem >= 8) processingScale = 1.0;
+      else if (cores >= 4 && deviceMem >= 4) processingScale = 0.85;
+      else if (cores >= 2 && deviceMem >= 2) processingScale = 0.6;
+      else processingScale = 0.45;
+      // si usuario prefiere reducción de movimiento, fuerza modo ligero
+      if (prefersReducedMotion) processingScale = Math.min(processingScale, 0.55);
+      return { cores, deviceMem, processingScale, prefersReducedMotion };
+    }
+
+    /* ----------------------------
        Resto de lógica (fondo, chroma, nieve, etc.)
-       He conservado intactas las funcionalidades principales salvo la lógica de lazy-load y observer
-       para que no pierdas nada importante.
+       Con optimizaciones para reducir carga en CPU/GPU
        ---------------------------- */
 
     window.addEventListener('DOMContentLoaded', () => {
       const video = document.getElementById('bg-video');
       const overlay = document.getElementById('overlay');
-      try { video.preload = video.getAttribute('preload') || 'metadata'; } catch(e){ console.warn(e); }
-      video.muted = true; video.playsInline = true;
-      const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
-      overlay.addEventListener('transitionend', (ev) => { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; });
-      video.addEventListener('playing', () => { revealVideo(); }, { once: true });
-      video.addEventListener('canplaythrough', () => { video.play().catch(()=>{}); }, { once: true });
-      video.addEventListener('loadeddata', () => { video.play().catch(()=>{}); }, { once: true });
+      const hints = getPerformanceHints();
+
+      // Si el dispositivo es de bajo rendimiento o prefiere menos movimiento, no reproducir video de fondo automáticamente
+      if (hints.processingScale < 0.55 || hints.prefersReducedMotion) {
+        // mostrar poster y ocultar playback para ahorrar CPU
+        try { video.pause(); video.style.display = 'none'; overlay.style.opacity = '1'; } catch(e){}
+      } else {
+        try { video.preload = video.getAttribute('preload') || 'metadata'; } catch(e){ console.warn(e); }
+        video.muted = true; video.playsInline = true;
+        const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
+        overlay.addEventListener('transitionend', (ev) => { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; });
+        video.addEventListener('playing', () => { revealVideo(); }, { once: true });
+        video.addEventListener('canplaythrough', () => { video.play().catch(()=>{}); }, { once: true });
+        video.addEventListener('loadeddata', () => { video.play().catch(()=>{}); }, { once: true });
+      }
     });
 
     window.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('bg-music');
+      const hints = getPerformanceHints();
       const musicList = [
         'Rakion Music Evento De Navidad 03.mp3',
         'Rakion Music Evento De Navidad 02.mp3',
@@ -563,19 +584,21 @@
          audio.src = musicList[currentMusicIndex];
          audio.load();
          audio.volume = 0.75;
-         audio.play().catch(()=> { document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); });
+         // En dispositivos de bajo rendimiento, no forzamos la reproducción
+         if (hints.processingScale >= 0.6) {
+           audio.play().catch(()=> { document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); });
+         }
       }
       audio.addEventListener('ended', ()=> { currentMusicIndex = (currentMusicIndex + 1) % musicList.length; playByIndex(currentMusicIndex); });
       playByIndex(currentMusicIndex);
     });
 
     // función utilitaria para abrir en nueva pestaña sin problemas
-    function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus(); }catch(e){}
-    }
-
+    function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus(); }catch(e){} }
 
     /* ----------------------------
-       Chroma + FG logic (soporta verdes y azules) y lista de videos (incluye animacionnavidad1..6)
+       Chroma + FG logic (soporta verdes y azules)
+       Optimizado: procesado a FPS limitado y resolución reducida si hace falta
        ---------------------------- */
     const fgContainer = document.getElementById('fgContainer');
     const fgCanvas = document.getElementById('fgCanvas');
@@ -585,14 +608,15 @@
     const ctx = fgCanvas.getContext ? fgCanvas.getContext('2d', { alpha: true }) : null;
 
     let off = document.createElement('canvas');
-    let offCtx = off.getContext('2d');
-    let animationId = null;
+    let offCtx = off.getContext ? off.getContext('2d') : null;
+    let chromaIntervalId = null;
+    let chromaFps = 24; // valor por defecto, se ajusta abajo
     let usingChroma = true;
-    let scheduledTimer = null;
+    let visibilityPaused = false;
     let currentVideoObj = null;
     let lastObjectUrl = null;
     let isAnimatingExplosion = false;
-    let visibilityPaused = false;
+    let scheduledTimer = null;
 
     const videoList = [
       { id: 'hola', src: 'hola.mp4', preset: { threshold: 0.25, diff: 0, soft: 100 } },
@@ -625,7 +649,9 @@
     }
 
     function adjustContainerToVideo(video, infoObj){
+      // Ajuste con límites: reducir off canvas si equipo es modesto
       const vw = video.videoWidth || 16; const vh = video.videoHeight || 9;
+      const hints = getPerformanceHints();
       let maxW = Math.min(window.innerWidth * 0.32, 360);
       let maxH = Math.min(window.innerHeight * 0.4, 640);
 
@@ -649,13 +675,18 @@
       const displayW = Math.max(120, Math.round(vw * scale)); const displayH = Math.max(80, Math.round(vh * scale));
       fgContainer.style.width = displayW + 'px'; fgContainer.style.height = displayH + 'px';
       fgCanvas.width = displayW; fgCanvas.height = displayH;
-      const cap = 1280;
-      off.width = Math.min(video.videoWidth || displayW * 2, cap);
-      off.height = Math.min(video.videoHeight || displayH * 2, cap);
+
+      // Ajustar canvas de procesado (off) en función del rendimiento: cap menor para equipos modestos
+      const capHigh = 1280;
+      const capMed = 720;
+      const hintsScale = getPerformanceHints().processingScale;
+      const chosenCap = hintsScale >= 0.85 ? capHigh : hintsScale >= 0.6 ? capMed : 480;
+      off.width = Math.min(video.videoWidth || displayW * 2, chosenCap);
+      off.height = Math.min(video.videoHeight || displayH * 2, chosenCap);
       resizeFireCanvas();
     }
 
-    // admite clave verde y azul
+    // admite clave verde y azul (sin cambios lógicos, pero optimizado en uso)
     function applyChromaKey(imageData, settings, keyColor = 'green'){
       const data = imageData.data; const len = data.length;
       const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30; const soften = settings.soft ?? 30;
@@ -704,22 +735,20 @@
       ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
     }
 
-    function processLoop(video, infoObj){
-      if (!usingChroma || visibilityPaused) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
-      if (video.paused || video.ended) { animationId = requestAnimationFrame(()=>processLoop(video, infoObj)); return; }
-      if (video.videoWidth && video.videoHeight && (off.width !== Math.min(video.videoWidth,1280) || off.height !== Math.min(video.videoHeight,1280))) {
-        off.width = Math.min(video.videoWidth,1280); off.height = Math.min(video.videoHeight,1280);
-      }
+    // Procesado por intervalo (FPS limitado) para evitar saturar CPU en movimiento del ratón
+    function processFrame(video, infoObj){
+      if (!usingChroma || visibilityPaused) return;
+      if (video.paused || video.ended) return;
+      if (!offCtx) return;
+      // Normalizamos off canvas a dimensiones razonables (ya ajustado en adjustContainerToVideo)
       try { offCtx.drawImage(video, 0, 0, off.width, off.height); } catch (err) {
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
-        if (animationId) cancelAnimationFrame(animationId);
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
       let frame;
       try { frame = offCtx.getImageData(0,0,off.width,off.height); } catch (err) {
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
-        if (animationId) cancelAnimationFrame(animationId);
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
@@ -728,7 +757,19 @@
       const processed = applyChromaKey(frame, settings, keyColor);
       offCtx.putImageData(processed, 0, 0);
       drawProcessedToScreen();
-      animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
+    }
+
+    function startChromaIntervalIfNeeded(infoObj){
+      const hints = getPerformanceHints();
+      // Ajuste de fps basado en capacidad
+      chromaFps = hints.processingScale >= 0.85 ? 30 : hints.processingScale >= 0.6 ? 20 : 12;
+      stopChromaInterval();
+      if (!usingChroma || visibilityPaused) return;
+      chromaIntervalId = setInterval(()=>{ processFrame(fgVideo, infoObj); }, Math.round(1000 / chromaFps));
+    }
+
+    function stopChromaInterval(){
+      if (chromaIntervalId) { clearInterval(chromaIntervalId); chromaIntervalId = null; }
     }
 
     function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter'); }
@@ -742,6 +783,7 @@
 
     /* ----------------------------
        Fuegos artificiales (canvas)
+       Optimización: número de partículas adaptativo
        ---------------------------- */
     const fireCanvas = document.createElement('canvas');
     fireCanvas.className = 'firework-canvas';
@@ -757,14 +799,15 @@
 
     function resizeFireCanvas(){
       const rect = fgContainer.getBoundingClientRect();
-      const w = Math.max(1, Math.floor(rect.width * devicePixelRatio));
-      const h = Math.max(1, Math.floor(rect.height * devicePixelRatio));
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      const w = Math.max(1, Math.floor(rect.width * dpr));
+      const h = Math.max(1, Math.floor(rect.height * dpr));
       if (fireCanvas.width !== w || fireCanvas.height !== h) {
         fireCanvas.width = w;
         fireCanvas.height = h;
         fireCanvas.style.width = rect.width + 'px';
         fireCanvas.style.height = rect.height + 'px';
-        fctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+        fctx.setTransform(dpr,0,0,dpr,0,0);
       }
     }
     window.addEventListener('resize', resizeFireCanvas, {passive:true});
@@ -773,8 +816,13 @@
     function random(min, max){ return Math.random()*(max-min)+min; }
 
     function explodeParticlesAt(x, y, colors, count=60, duration=650){
+      const hints = getPerformanceHints();
+      // reducir particulas en dispositivos bajos
+      let effectiveCount = count;
+      if (hints.processingScale < 0.6) effectiveCount = Math.max(18, Math.round(count * 0.45));
+      else if (hints.processingScale < 0.85) effectiveCount = Math.max(30, Math.round(count * 0.7));
       const particles = [];
-      for (let i=0;i<count;i++){
+      for (let i=0;i<effectiveCount;i++){
         const angle = random(0, Math.PI*2);
         const speed = random(1.6, 7.2);
         particles.push({
@@ -866,7 +914,8 @@
         fgVideo.style.display = 'none';
         fgVideo.play().catch(()=>{});
         bgVideo.play().catch(()=>{});
-        if (!animationId && usingChroma && !visibilityPaused) animationId = requestAnimationFrame(()=>processLoop(fgVideo, infoObj));
+        // iniciar chroma con intervalo apropiado
+        startChromaIntervalIfNeeded(infoObj);
         showContainer();
       };
 
@@ -889,7 +938,7 @@
       if (isAnimatingExplosion) return;
       if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null; }
       usingChroma = false;
-      if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+      stopChromaInterval();
       await doFireworkThenHide();
       const currentId = currentVideoObj ? currentVideoObj.id : null;
       const next = pickRandomVideo(currentId);
@@ -900,9 +949,11 @@
       document.getElementById('playOverlay').style.display = 'none';
       bgVideo.play().catch(()=>{}); fgVideo.play().catch(()=>{});
       try { bgMusic.play().catch(()=>{}); } catch(e){}
+      // si reiniciamos reproducción, arrancamos chroma si corresponde
+      if (currentVideoObj) startChromaIntervalIfNeeded(currentVideoObj);
     });
 
-    // Throttled resize
+    // Throttled resize (ya era RAF pero confirmamos)
     let resizeRaf = null;
     window.addEventListener('resize', ()=> {
       if (resizeRaf) return;
@@ -919,11 +970,11 @@
     document.addEventListener('visibilitychange', ()=> {
       if (document.hidden) {
         visibilityPaused = true;
-        if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+        stopChromaInterval();
       } else {
         visibilityPaused = false;
-        if (usingChroma && fgVideo && !animationId) {
-          animationId = requestAnimationFrame(()=>processLoop(fgVideo, currentVideoObj));
+        if (usingChroma && fgVideo && !chromaIntervalId) {
+          startChromaIntervalIfNeeded(currentVideoObj);
         }
       }
     }, {passive:true});
@@ -940,7 +991,7 @@
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
 
     /* ----------------------------
-       NIEVE -> Copos celestes con forma (canvas) - densidad adaptativa
+       NIEVE -> Copos celestes con forma (canvas) - densidad adaptativa y fps limitado
        ---------------------------- */
     (function initBlueSnow(){
       const canvas = document.getElementById('snowCanvas');
@@ -950,6 +1001,8 @@
       let particles = [];
       const baseMax = 160; // densidad base
       const windBase = 0.12;
+      let lastStepTime = 0;
+      const targetFps = 25; // fps máximo para la animación de nieve
 
       function resize(){
         const rectW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -991,7 +1044,17 @@
         for (let i=0;i<target;i++) particles.push(makeSnowflake(i));
       }
 
-      function step(){
+      function step(now){
+        // limitar FPS de la nieve
+        if (!now) now = performance.now();
+        const delta = now - (lastStepTime || 0);
+        const minDelta = 1000 / targetFps;
+        if (delta < minDelta) {
+          requestAnimationFrame(step);
+          return;
+        }
+        lastStepTime = now;
+
         ctx.clearRect(0,0,w,h);
         for (let p of particles){
           p.x += p.vx; p.y += p.vy; p.rotation += p.spin;
@@ -1004,7 +1067,7 @@
       }
 
       window.addEventListener('resize', ()=>{ resize(); initParticles(); }, {passive:true});
-      resize(); initParticles(); step();
+      resize(); initParticles(); requestAnimationFrame(step);
     })();
 
   </script>
