@@ -29,7 +29,7 @@
     #overlay{
       position:fixed;top:0;left:0;width:100%;height:100%;
       z-index:-1;will-change:background,opacity;
-      background: url('galaxia-poster.jpg') center/cover no-repeat,
+      background: url('galaxia-poster.avif') center/cover no-repeat,
                   linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
       opacity:1;
       transition:opacity .6s ease;
@@ -164,7 +164,7 @@
 </head>
 <body>
   <!-- Vídeo de fondo: tiene poster para que el navegador muestre la imagen hasta que haya primer frame -->
-  <video id="bg-video" poster="galaxia-poster.jpg" autoplay muted loop playsinline>
+  <video id="bg-video" poster="galaxia-poster.avif" autoplay muted loop playsinline>
     <source src="galaxiaceleste.mp4" type="video/mp4">
   </video>
   <!-- overlay con la imagen/poster: se ocultará cuando el video dispare 'playing' -->
@@ -239,6 +239,7 @@
   <audio id="saigonihitotsu-ost" loop><source src="saigonihitotsu.mp3" type="audio/mpeg"></audio>
   <audio id="syn-ost" loop><source src="syn.mp3" type="audio/mpeg"></audio>
   <audio id="record-ost" loop><source src="record.mp3" type="audio/mpeg"></audio>
+  <audio id="gih-ost" loop><source src="https://www.dropbox.com/scl/fi/ks7rvqfmw6lnyisdz07de/dfgdfg.mp3?rlkey=w76qkjl9t2yer2u9xwf8041v8&st=189sbps1&raw=1" type="audio/mpeg"></audio>
 
   <!-- CONTENEDOR PRINCIPAL -->
   <div class="container">
@@ -2593,6 +2594,14 @@
             eps: [
               { title: "The Rising of the Shield Hero - Maplestar"},
             ]
+          },
+          {
+            num: 15,
+	    name: "Demon Slayer",
+            cover: "inosukexnetsuko.avif",
+            eps: [
+              { title: "Demon Slayer"},
+            ]
           }
         ]
       },
@@ -3696,6 +3705,41 @@
           }
         ]
       },
+      63: {
+        title: "Genshin Impact Hentai",
+        desc: "Mira Los mejores videos, películas y cortos Genshin Impact Hentai, aquí en Archinime.",
+        cover: "gih.avif",
+        seasons: [
+          {
+            num: 1,
+	    name: "Videos",
+            cover: "gih1.avif",
+            eps: [
+              { title: "Video 1"},
+              { title: "Video 2"},
+              { title: "Video 3"},
+              { title: "Video 4"},
+              { title: "Video 5"},
+              { title: "Video 6"},
+              { title: "Video 7"},
+              { title: "Video 8"},
+              { title: "Video 9"},
+              { title: "Video 10"},
+              { title: "Video 11"},
+              { title: "Video 12"},
+              { title: "Video 13"},
+              { title: "Video 14"},
+              { title: "Video 15"},
+              { title: "Video 16"},
+              { title: "Video 17"},
+              { title: "Video 18"},
+              { title: "Video 19"},
+              { title: "Video 20"},
+            ]
+          }
+        ]
+      },
+
 
 
 
@@ -3910,6 +3954,7 @@
         60: ['saigonihitotsu-ost'],
         61: ['syn-ost'],
         62: ['record-ost'],
+        63: ['gih-ost'],
       };
 
       // no pausamos ni reseteamos nada aquí (tal como pediste)
