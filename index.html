@@ -92,41 +92,12 @@
     @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; } }
     #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
 
-    /* Snow (copos celestes) canvas */
-    #snowCanvas {
-      position:fixed;
-      left:0; top:0;
-      width:100%; height:100%;
-      pointer-events:none;
-      z-index:30;
-      mix-blend-mode:screen;
-    }
-
-    /* Decorations container (campanas, estrella) */
+    /* Decorations container (sin campanas) */
     #decorations {
       position:fixed;
       inset:0;
       pointer-events:none;
       z-index:36;
-    }
-
-    /* Campanas (esquina superior derecha) */
-    .dec-bells {
-      position:fixed;
-      right:12px;
-      top:8px;
-      width:82px;
-      z-index:36;
-      transform-origin:center top;
-      pointer-events:none;
-      animation: bellSwing 2200ms ease-in-out infinite;
-    }
-    @keyframes bellSwing {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(8deg); }
-      50% { transform: rotate(0deg); }
-      75% { transform: rotate(-6deg); }
-      100% { transform: rotate(0deg); }
     }
 
     /* Estrella fugaz (se animará con JS) */
@@ -347,22 +318,8 @@
     </div>
   </div>
 
-  <!-- Snow canvas (copos celestes) -->
-  <canvas id="snowCanvas" aria-hidden="true"></canvas>
-
-  <!-- Decorations: solo campanas y estrella (árbol y regalo removidos) -->
+  <!-- Decorations: estrella (se mantiene el template) -->
   <div id="decorations" aria-hidden="true">
-    <!-- Campanas -->
-    <svg class="dec-bells" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <g transform="translate(10,6)">
-        <path d="M16 12 C10 14,6 20,6 28 L6 40 C6 52,40 56,40 56 L40 44 C40 36,36 28,30 26 L30 12 Z" fill="#ffd580" stroke="#ffb700" stroke-width="1.2"></path>
-        <path d="M72 12 C66 14,62 20,62 28 L62 40 C62 52,96 56,96 56 L96 44 C96 36,92 28,86 26 L86 12 Z" fill="#ffd580" stroke="#ffb700" stroke-width="1.2"></path>
-        <circle cx="26" cy="60" r="4" fill="#ff6a00"></circle>
-        <circle cx="86" cy="60" r="4" fill="#ff6a00"></circle>
-        <line x1="20" y1="4" x2="100" y2="4" stroke="rgba(255,255,255,0.05)" stroke-width="2"></line>
-      </g>
-    </svg>
-
     <!-- Estrella fugaz (template) -->
     <svg id="star-template" class="shooting-star decor-hidden-mobile" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
       <g>
@@ -561,7 +518,7 @@ function normalizeText(s){
     }
 
     /* ----------------------------
-       Resto de lógica (fondo, chroma, nieve, etc.)
+       Resto de lógica (fondo, chroma, etc.)
        Con optimizaciones para reducir carga en CPU/GPU
        ---------------------------- */
 
@@ -664,13 +621,29 @@ function normalizeText(s){
       else { fgContainer.style.right = margin; fgContainer.style.left = ''; }
     }
 
+    // Ajuste y drawProcessedToScreen (versión que respeta devicePixelRatio)
+    function drawProcessedToScreen(){
+      if (!ctx || !fgCanvas) return;
+      const cw = fgCanvas.clientWidth || parseInt(fgCanvas.style.width) || fgCanvas.width;
+      const ch = fgCanvas.clientHeight || parseInt(fgCanvas.style.height) || fgCanvas.height;
+      const vw = off.width || 1;
+      const vh = off.height || 1;
+      ctx.clearRect(0, 0, cw, ch);
+      if (vw === 0 || vh === 0 || cw === 0 || ch === 0) return;
+      const scale = Math.min(cw / vw, ch / vh);
+      const dw = Math.round(vw * scale);
+      const dh = Math.round(vh * scale);
+      const dx = Math.round((cw - dw) / 2);
+      const dy = Math.round((ch - dh) / 2);
+      ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
+    }
+
     function adjustContainerToVideo(video, infoObj){
-      // Ajuste con límites: reducir off canvas si equipo es modesto
-      const vw = video.videoWidth || 16; const vh = video.videoHeight || 9;
+      const vw = video.videoWidth || 16;
+      const vh = video.videoHeight || 9;
       const hints = getPerformanceHints();
       let maxW = Math.min(window.innerWidth * 0.32, 360);
       let maxH = Math.min(window.innerHeight * 0.4, 640);
-
       if (window.matchMedia('(max-width:767px)').matches) {
         if (infoObj && infoObj.id === 'rem') {
           maxW = Math.min(window.innerWidth * 0.30, 180);
@@ -687,22 +660,43 @@ function normalizeText(s){
         maxH = Math.min(window.innerHeight * 0.4, 640);
       }
 
-      const scale = Math.min(maxW / vw, maxH / vh, 1.0);
-      const displayW = Math.max(120, Math.round(vw * scale)); const displayH = Math.max(80, Math.round(vh * scale));
-      fgContainer.style.width = displayW + 'px'; fgContainer.style.height = displayH + 'px';
-      fgCanvas.width = displayW; fgCanvas.height = displayH;
+      const displayScale = Math.min(maxW / vw, maxH / vh, 1.0);
+      const displayW = Math.max(120, Math.round(vw * displayScale));
+      const displayH = Math.max(80, Math.round(vh * displayScale));
+      fgContainer.style.width = displayW + 'px';
+      fgContainer.style.height = displayH + 'px';
 
-      // Ajustar canvas de procesado (off) en función del rendimiento: cap menor para equipos modestos
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      fgCanvas.width = Math.round(displayW * dpr);
+      fgCanvas.height = Math.round(displayH * dpr);
+      fgCanvas.style.width = displayW + 'px';
+      fgCanvas.style.height = displayH + 'px';
+      if (ctx && typeof ctx.setTransform === 'function') {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
       const capHigh = 1280;
       const capMed = 720;
-      const hintsScale = getPerformanceHints().processingScale;
+      const hintsScale = hints.processingScale;
       const chosenCap = hintsScale >= 0.85 ? capHigh : hintsScale >= 0.6 ? capMed : 480;
-      off.width = Math.min(video.videoWidth || displayW * 2, chosenCap);
-      off.height = Math.min(video.videoHeight || displayH * 2, chosenCap);
+
+      const sourceW = vw;
+      const sourceH = vh;
+      const sourceRatio = sourceW / sourceH || (16/9);
+
+      let offW = Math.min(sourceW, chosenCap);
+      let offH = Math.round(offW / sourceRatio);
+      if (offH > chosenCap) {
+        offH = chosenCap;
+        offW = Math.round(offH * sourceRatio);
+      }
+      off.width = Math.max(16, offW);
+      off.height = Math.max(16, offH);
+
       resizeFireCanvas();
     }
 
-    // admite clave verde y azul (sin cambios lógicos, pero optimizado en uso)
+    // admite clave verde y azul
     function applyChromaKey(imageData, settings, keyColor = 'green'){
       const data = imageData.data; const len = data.length;
       const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30; const soften = settings.soft ?? 30;
@@ -739,117 +733,11 @@ function normalizeText(s){
       return imageData;
     }
 
-// ------------------ REEMPLAZAR drawProcessedToScreen ------------------
-function drawProcessedToScreen(){
-  // ctx puede estar transformado por devicePixelRatio; usamos coordenadas CSS para calcular el scale
-  if (!ctx || !fgCanvas) return;
-
-  // Usamos clientWidth/clientHeight (CSS pixels) para los cálculos de escala/centrado
-  const cw = fgCanvas.clientWidth || parseInt(fgCanvas.style.width) || fgCanvas.width;
-  const ch = fgCanvas.clientHeight || parseInt(fgCanvas.style.height) || fgCanvas.height;
-  const vw = off.width || 1;
-  const vh = off.height || 1;
-
-  // Limpiamos canvas (coordenadas del contexto están ya en CSS px si setTransform se aplicó)
-  // IMPORTANTE: no usar fgCanvas.width/height aquí (son pixels internos), usamos clientWidth/clientHeight
-  ctx.clearRect(0, 0, cw, ch);
-
-  if (vw === 0 || vh === 0 || cw === 0 || ch === 0) return;
-
-  // Mantener aspect ratio del contenido (off) dentro del canvas visible
-  const scale = Math.min(cw / vw, ch / vh);
-  const dw = Math.round(vw * scale);
-  const dh = Math.round(vh * scale);
-  const dx = Math.round((cw - dw) / 2);
-  const dy = Math.round((ch - dh) / 2);
-
-  // drawImage acepta source w/h en px del off-canvas; destination dx/dy/dw/dh en unidades del contexto (CSS px)
-  ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
-}
-
-// ------------------ REEMPLAZAR adjustContainerToVideo ------------------
-function adjustContainerToVideo(video, infoObj){
-  // Ajuste con límites: reducir off canvas si equipo es modesto
-  const vw = video.videoWidth || 16;
-  const vh = video.videoHeight || 9;
-  const hints = getPerformanceHints();
-
-  // límites del contenedor en CSS px
-  let maxW = Math.min(window.innerWidth * 0.32, 360);
-  let maxH = Math.min(window.innerHeight * 0.4, 640);
-
-  if (window.matchMedia('(max-width:767px)').matches) {
-    if (infoObj && infoObj.id === 'rem') {
-      maxW = Math.min(window.innerWidth * 0.30, 180);
-      maxH = Math.min(window.innerHeight * 0.30, 200);
-    } else if (infoObj && infoObj.id === 'hola') {
-      maxW = Math.min(window.innerWidth * 0.62, 380);
-      maxH = Math.min(window.innerHeight * 0.62, 520);
-    } else {
-      maxW = Math.min(window.innerWidth * 0.45, 260);
-      maxH = Math.min(window.innerHeight * 0.45, 420);
-    }
-  } else {
-    maxW = Math.min(window.innerWidth * 0.32, 360);
-    maxH = Math.min(window.innerHeight * 0.4, 640);
-  }
-
-  // Calculamos el tamaño de display manteniendo la relación de aspecto del vídeo
-  const displayScale = Math.min(maxW / vw, maxH / vh, 1.0);
-  const displayW = Math.max(120, Math.round(vw * displayScale));
-  const displayH = Math.max(80, Math.round(vh * displayScale));
-
-  // Aplicar tamaño al contenedor (CSS px)
-  fgContainer.style.width = displayW + 'px';
-  fgContainer.style.height = displayH + 'px';
-
-  // Ajustar fgCanvas para manejar devicePixelRatio (así las coordenadas del ctx quedan en CSS px)
-  const dpr = Math.max(1, window.devicePixelRatio || 1);
-  // Seteamos tamaño interno en device pixels y tamaño CSS en px
-  fgCanvas.width = Math.round(displayW * dpr);
-  fgCanvas.height = Math.round(displayH * dpr);
-  fgCanvas.style.width = displayW + 'px';
-  fgCanvas.style.height = displayH + 'px';
-  // Transformamos el contexto para que 1 unidad en ctx == 1 CSS px
-  if (ctx && typeof ctx.setTransform === 'function') {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  // Ajustar canvas de procesado (off) en función del rendimiento: cap menor para equipos modestos
-  const capHigh = 1280;
-  const capMed = 720;
-  const hintsScale = hints.processingScale;
-  const chosenCap = hintsScale >= 0.85 ? capHigh : hintsScale >= 0.6 ? capMed : 480;
-
-  // Para evitar distorsión, escalamos el off-canvas **preservando la relación de aspecto** del vídeo
-  const sourceW = vw;
-  const sourceH = vh;
-  const sourceRatio = sourceW / sourceH || (16/9);
-
-  // Empezamos con offW = min(sourceW, chosenCap) y calculamos offH proporcional
-  let offW = Math.min(sourceW, chosenCap);
-  let offH = Math.round(offW / sourceRatio);
-
-  // Si offH supera chosenCap, recalc con offH = chosenCap y offW proporcional
-  if (offH > chosenCap) {
-    offH = chosenCap;
-    offW = Math.round(offH * sourceRatio);
-  }
-
-  // Asegurar valores mínimos válidos
-  off.width = Math.max(16, offW);
-  off.height = Math.max(16, offH);
-
-  // Redimensionar canvas de fuegos (usa tamaño del contenedor que acabamos de fijar)
-  resizeFireCanvas();
-}
-
     // Procesado por intervalo (FPS limitado) para evitar saturar CPU en movimiento del ratón
     function processFrame(video, infoObj){
       if (!usingChroma || visibilityPaused) return;
       if (video.paused || video.ended) return;
       if (!offCtx) return;
-      // Normalizamos off canvas a dimensiones razonables (ya ajustado en adjustContainerToVideo)
       try { offCtx.drawImage(video, 0, 0, off.width, off.height); } catch (err) {
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
@@ -870,7 +758,6 @@ function adjustContainerToVideo(video, infoObj){
 
     function startChromaIntervalIfNeeded(infoObj){
       const hints = getPerformanceHints();
-      // Ajuste de fps basado en capacidad
       chromaFps = hints.processingScale >= 0.85 ? 30 : hints.processingScale >= 0.6 ? 20 : 12;
       stopChromaInterval();
       if (!usingChroma || visibilityPaused) return;
@@ -1136,40 +1023,29 @@ async function doFireworkThenHide(){
     }
 
     // Click en contenedor dispara fuegos y siguiente clip
-// --------------------- REEMPLAZAR listener de click en fgContainer ---------------------
-fgContainer.addEventListener('click', async (ev) => {
-  // Si ya se está animando, ignoramos clicks
-  if (isAnimatingExplosion) return;
-
-  // limpiamos cualquier timer pendiente
-  if (scheduledTimer) { clearTimeout(scheduledTimer); scheduledTimer = null; }
-
-  // paramos chroma (si estaba corriendo)
-  usingChroma = false;
-  stopChromaInterval();
-
-  // activamos el fuego; en PCs lentos esto está protegido internamente
-  try {
-    await doFireworkThenHide();
-  } catch (err) {
-    console.warn('Error during fireworks click flow:', err);
-  }
-
-  // continuamos con la próxima animación (pequeña demora para que se estabilice el DOM)
-  const currentId = currentVideoObj ? currentVideoObj.id : null;
-  const next = pickRandomVideo(currentId);
-  setTimeout(() => { playVideoClip(next); }, 420);
-});
+    fgContainer.addEventListener('click', async (ev) => {
+      if (isAnimatingExplosion) return;
+      if (scheduledTimer) { clearTimeout(scheduledTimer); scheduledTimer = null; }
+      usingChroma = false;
+      stopChromaInterval();
+      try {
+        await doFireworkThenHide();
+      } catch (err) {
+        console.warn('Error during fireworks click flow:', err);
+      }
+      const currentId = currentVideoObj ? currentVideoObj.id : null;
+      const next = pickRandomVideo(currentId);
+      setTimeout(() => { playVideoClip(next); }, 420);
+    });
 
     document.getElementById('playBtn').addEventListener('click', ()=>{
       document.getElementById('playOverlay').style.display = 'none';
       bgVideo.play().catch(()=>{}); fgVideo.play().catch(()=>{});
       try { bgMusic.play().catch(()=>{}); } catch(e){}
-      // si reiniciamos reproducción, arrancamos chroma si corresponde
       if (currentVideoObj) startChromaIntervalIfNeeded(currentVideoObj);
     });
 
-    // Throttled resize (ya era RAF pero confirmamos)
+    // Throttled resize
     let resizeRaf = null;
     window.addEventListener('resize', ()=> {
       if (resizeRaf) return;
@@ -1205,86 +1081,6 @@ fgContainer.addEventListener('click', async (ev) => {
     init();
 
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
-
-    /* ----------------------------
-       NIEVE -> Copos celestes con forma (canvas) - densidad adaptativa y fps limitado
-       ---------------------------- */
-    (function initBlueSnow(){
-      const canvas = document.getElementById('snowCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let w = 0, h = 0;
-      let particles = [];
-      const baseMax = 160; // densidad base
-      const windBase = 0.12;
-      let lastStepTime = 0;
-      const targetFps = 25; // fps máximo para la animación de nieve
-
-      function resize(){
-        const rectW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-        const rectH = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        const dpr = Math.max(1, window.devicePixelRatio || 1);
-        w = Math.floor(rectW);
-        h = Math.floor(rectH);
-        canvas.width = Math.floor(w * dpr);
-        canvas.height = Math.floor(h * dpr);
-        canvas.style.width = w + 'px';
-        canvas.style.height = h + 'px';
-        ctx.setTransform(dpr,0,0,dpr,0,0);
-      }
-
-      function makeSnowflake(i){
-        const size = (Math.random() * 2.8 + (Math.random() < 0.08 ? 2.6 : 0.6));
-        return {
-          x: Math.random() * w,
-          y: Math.random() * h - h * Math.random(),
-          vx: (Math.random() - 0.5) * 0.4 + windBase * (Math.random() - 0.5),
-          vy: 0.4 + Math.random() * 1.1,
-          size: size,
-          opacity: Math.random() * 0.45 + 0.35,
-          rotation: Math.random() * Math.PI * 2,
-          spin: (Math.random() - 0.5) * 0.03,
-          swing: Math.random()*0.8 + 0.2
-        };
-      }
-
-      function initParticles(){
-        particles = [];
-        const screenFactor = Math.max(0.4, Math.min(1.0, (w*h) / (1366*768)));
-        const hints = getPerformanceHints();
-        // densidad adaptativa, reduce en máquinas con menos recursos
-        let target = Math.floor(baseMax * screenFactor * hints.processingScale);
-        if (window.matchMedia && window.matchMedia('(max-width:420px)').matches) {
-          target = Math.max(22, Math.floor(target * 0.35));
-        }
-        for (let i=0;i<target;i++) particles.push(makeSnowflake(i));
-      }
-
-      function step(now){
-        // limitar FPS de la nieve
-        if (!now) now = performance.now();
-        const delta = now - (lastStepTime || 0);
-        const minDelta = 1000 / targetFps;
-        if (delta < minDelta) {
-          requestAnimationFrame(step);
-          return;
-        }
-        lastStepTime = now;
-
-        ctx.clearRect(0,0,w,h);
-        for (let p of particles){
-          p.x += p.vx; p.y += p.vy; p.rotation += p.spin;
-          if (p.y > h + 24) p.y = -24; if (p.x > w + 24) p.x = -24; if (p.x < -24) p.x = w + 24;
-          ctx.globalAlpha = p.opacity;
-          // simple circle for performance
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fillStyle = 'rgba(200,230,255,0.95)'; ctx.fill();
-        }
-        requestAnimationFrame(step);
-      }
-
-      window.addEventListener('resize', ()=>{ resize(); initParticles(); }, {passive:true});
-      resize(); initParticles(); requestAnimationFrame(step);
-    })();
 
   </script>
 </body>
