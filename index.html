@@ -1081,9 +1081,11 @@ async function doFireworkThenHide(){
     }, {passive:true});
 
     /* ----------------------------
-       POPUP MÓVIL PARA SELECTS (reduce la lista en móviles)
-       - Sólo se activa si la pantalla es pequeña (<= 780px).
-       - No toca comportamiento de escritorio.
+       POPUP MÓVIL PARA SELECTS (MEJORADO)
+       - Se activa solo en pantallas <= 780px
+       - Abre con click/tap, permite scroll interno sin cerrarse
+       - Cierra si tocas fuera o haces scroll fuera / resize
+       - Soporta navegación con teclado dentro del popup
        ---------------------------- */
     (function mobileSelectPopups() {
       const mobileQ = () => window.matchMedia('(max-width:780px)').matches;
@@ -1092,6 +1094,7 @@ async function doFireworkThenHide(){
       let outsideListener = null;
       let resizeListener = null;
       let scrollListener = null;
+
       function closePopup() {
         if (activePopup) {
           try { activePopup.remove(); } catch(e){}
@@ -1103,11 +1106,13 @@ async function doFireworkThenHide(){
       }
 
       function createPopupFor(selectEl) {
-        selectEl.addEventListener('pointerdown', function onPointerDown(e){
-          if (!mobileQ()) return; // sólo mobile
+        // Usamos click (no pointerdown) para evitar interferir con el scrolling táctil
+        selectEl.addEventListener('click', function onClick(e){
+          if (!mobileQ()) return; // solo mobile
           // Evitamos el menú nativo
           e.preventDefault();
           e.stopPropagation();
+          // Si ya hay un popup abierto, cerramos y volvemos a abrir para refrescar posición
           openPopupFor(selectEl);
         });
 
@@ -1164,17 +1169,23 @@ async function doFireworkThenHide(){
           d.setAttribute('tabindex','0');
           if (opt.selected) d.setAttribute('aria-selected','true');
           d.textContent = opt.textContent || opt.innerText || opt.value;
+
           d.addEventListener('click', (ev) => {
             ev.stopPropagation();
             // asignamos valor al select y disparamos change
             try {
               selectEl.value = opt.value;
+              // también actualizamos el atributo selected en las opciones HTML para consistencia
+              Array.from(selectEl.options).forEach(o => o.selected = (o.value === opt.value));
               const evCh = new Event('change', { bubbles: true });
               selectEl.dispatchEvent(evCh);
             } catch(e){}
             closePopup();
+            // dejamos el foco sobre el select para que el usuario pueda reabrir si quiere
+            try { selectEl.focus(); } catch(e){}
           });
-          // permitir selección con teclado
+
+          // permitir selección con teclado dentro del popup
           d.addEventListener('keydown', (ev) => {
             if (ev.key === 'Enter' || ev.key === ' ') {
               ev.preventDefault();
@@ -1192,17 +1203,17 @@ async function doFireworkThenHide(){
               try { selectEl.focus(); } catch(e){}
             }
           });
+
           popup.appendChild(d);
         });
 
-        // Append y enfoque en la opción seleccionada si existe
+        // append y enfoque en la opción seleccionada si existe
         document.body.appendChild(popup);
         activePopup = popup;
-        // focus a option seleccionada o al primero
         const selected = popup.querySelector('.opt[aria-selected="true"]') || popup.querySelector('.opt');
         if (selected) { selected.focus(); popup.scrollTop = Math.max(0, selected.offsetTop - 8); }
 
-        // cerrar si click fuera
+        // cerrar si click fuera (pero no cerrar cuando se hace click dentro del popup o sobre el select)
         outsideListener = function outsideHandler(ev){
           if (!activePopup) return;
           if (ev.target === selectEl || activePopup.contains(ev.target)) return;
@@ -1210,11 +1221,26 @@ async function doFireworkThenHide(){
         };
         document.addEventListener('pointerdown', outsideListener, true);
 
-        // cerrar en resize o scroll
+        // cerrar en resize
         resizeListener = () => closePopup();
         window.addEventListener('resize', resizeListener);
-        scrollListener = () => closePopup();
+
+        // cerrar si hay scroll fuera del popup (IMPORTANTE: NO cerramos si el evento de scroll viene del propio popup)
+        scrollListener = function scrollHandler(ev) {
+          if (!activePopup) return;
+          // ev.target puede ser el elemento que se está desplazando
+          if (activePopup.contains(ev.target) || ev.target === selectEl) {
+            // scroll dentro del popup o sobre el select -> no cerrar
+            return;
+          }
+          // cualquier otro scroll (p. ej. del body/otras áreas) cierra el popup
+          closePopup();
+        };
         window.addEventListener('scroll', scrollListener, true);
+
+        // evitar que el scroll del body "salte" al abrir popup en iOS cuando el popup se muestra cerca del borde:
+        // (no forzamos bloqueo del body, solo ajustamos posición si hiciera falta)
+        // (si en el futuro quieres bloquear el fondo, lo podemos hacer con overflow:hidden en body)
       }
 
       // Inicialización: crear popup behaviour sólo si existan selects
@@ -1222,7 +1248,7 @@ async function doFireworkThenHide(){
         try {
           SELECT_IDS.forEach(id => {
             const el = document.getElementById(id);
-            if (el) createPopupFor(el);
+            if(el) createPopupFor(el);
           });
         } catch(e) {
           console.warn('mobileSelectPopups init error', e);
@@ -1231,7 +1257,6 @@ async function doFireworkThenHide(){
 
       // Reinit en cambio de tamaño para soportar cuando se redimensiona entre mobile/desktop
       window.addEventListener('resize', function(){
-        // cerramos cualquier popup abierto si cambiaron las reglas
         if (!mobileQ()) closePopup();
       }, { passive:true });
 
