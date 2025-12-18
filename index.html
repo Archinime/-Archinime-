@@ -14,6 +14,9 @@
     :root {
       --header-approx-height: 72px; /* ajusta si tu header cambia de tamaño */
       --global-extra-gap: -6px; /* valor por defecto (JS puede sobrescribir) */
+      --neon-celeste-1: rgba(0, 230, 255, 1);
+      --neon-celeste-2: rgba(120, 220, 255, 1);
+      --neon-glow: rgba(0, 210, 255, 0.18);
     }
 
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -124,9 +127,93 @@
 
     /* mobile-select-popup and rest */
     .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
-    .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
+    .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; position:relative; z-index:2; background:transparent; outline: none; }
+
     .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
     .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.04); }
+
+    /* ======= Efecto marco celeste, giratorio y fotoluminiscente ======= */
+    /* Pseudoelementos que crean el anillo giratorio (aparecen detrás del contenido de la opción) */
+    .mobile-select-popup .opt::before,
+    .mobile-select-popup .opt::after {
+      content: "";
+      position: absolute;
+      left: -8px;
+      right: -8px;
+      top: -6px;
+      bottom: -6px;
+      border-radius: 10px;
+      pointer-events: none;
+      z-index: 1; /* detrás del texto que está en z-index:2 */
+      transform-origin: 50% 50%;
+      transition: opacity .16s ease, transform .2s ease;
+      opacity: 0;
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+
+    /* difuso (halo) */
+    .mobile-select-popup .opt::before {
+      background: conic-gradient(from 0deg, var(--neon-celeste-1), var(--neon-celeste-2), rgba(140,240,255,0.95), var(--neon-celeste-1));
+      filter: blur(8px);
+      opacity: 0;
+      transform: rotate(0deg) scale(1);
+      transition: opacity .18s ease, transform .5s cubic-bezier(.2,.9,.2,1);
+      box-shadow: 0 6px 30px var(--neon-glow);
+    }
+
+    /* anillo fino y más definifo (gira) */
+    .mobile-select-popup .opt::after {
+      background: conic-gradient(from 0deg, rgba(0,240,255,1) 0%, rgba(140,220,255,1) 30%, rgba(0,200,255,1) 60%, rgba(0,240,255,1) 100%);
+      filter: blur(0.8px);
+      opacity: 0;
+      transform: rotate(0deg);
+      /* crear apariencia de borde fino: usamos clip-path para dejar el centro "transparente" */
+      clip-path: polygon(0% 0%,100% 0%,100% 100%,0% 100%); /* fallback */
+    }
+
+    /* cuando está seleccionado / enfocado / hovered: mostramos y animamos */
+    .mobile-select-popup .opt[aria-selected="true"]::before,
+    .mobile-select-popup .opt:focus::before,
+    .mobile-select-popup .opt:hover::before {
+      opacity: 1;
+      animation: ringSlowRotate 4.5s linear infinite;
+    }
+    .mobile-select-popup .opt[aria-selected="true"]::after,
+    .mobile-select-popup .opt:focus::after,
+    .mobile-select-popup .opt:hover::after {
+      opacity: 1;
+      animation: ringFastRotate 2s linear infinite;
+      box-shadow: 0 0 8px rgba(0,220,255,0.9), 0 0 18px rgba(140,220,255,0.45);
+    }
+
+    /* agregar un pequeño rebote sutil cuando aparece (no intrusivo) */
+    .mobile-select-popup .opt[aria-selected="true"],
+    .mobile-select-popup .opt:focus,
+    .mobile-select-popup .opt:hover {
+      transform: translateY(-1px);
+      z-index: 3; /* poner encima del anillo para que el texto sea legible */
+    }
+
+    @keyframes ringSlowRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes ringFastRotate {
+      from { transform: rotate(360deg); }
+      to   { transform: rotate(0deg); }
+    }
+
+    /* respetar prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .mobile-select-popup .opt::before,
+      .mobile-select-popup .opt::after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+    /* ======= fin marco celeste ======= */
 
     /* Forzamos tamaño más reducido para móviles pequeños (reduce la altura del popup) */
     @media (max-width:780px) {
