@@ -483,7 +483,15 @@
     function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
     function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
     const debouncedFiltro = debounce(filtro, 200);
-    function normalizeText(s){ return (s||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); }
+function normalizeText(s){
+  // normalizamos a NFD y quitamos marcas combinantes (\p{M}) — más compatible que \p{Diacritic}
+  try {
+    return (s||'').toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
+  } catch(e) {
+    // fallback si normalize o regex Unicode no está soportado
+    return (s||'').toLowerCase().replace(/[\u0300-\u036f]/g, '');
+  }
+}
     function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []); const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
 
     function filtro(){
@@ -916,82 +924,171 @@ function adjustContainerToVideo(video, infoObj){
 
     function random(min, max){ return Math.random()*(max-min)+min; }
 
-    function explodeParticlesAt(x, y, colors, count=60, duration=650){
-      const hints = getPerformanceHints();
-      // reducir particulas en dispositivos bajos
-      let effectiveCount = count;
-      if (hints.processingScale < 0.6) effectiveCount = Math.max(18, Math.round(count * 0.45));
-      else if (hints.processingScale < 0.85) effectiveCount = Math.max(30, Math.round(count * 0.7));
-      const particles = [];
-      for (let i=0;i<effectiveCount;i++){
-        const angle = random(0, Math.PI*2);
-        const speed = random(1.6, 7.2);
-        particles.push({
-          x, y,
-          vx: Math.cos(angle) * speed * random(0.6,1.2),
-          vy: Math.sin(angle) * speed * random(0.6,1.2) - random(0.8,2.6),
-          life: random(duration*0.7, duration*1.05),
-          age: 0,
-          radius: random(2,5),
-          color: colors[Math.floor(Math.random()*colors.length)]
-        });
+function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
+  const hints = getPerformanceHints();
+
+  // área relativa del contenedor (para escalar el número de partículas)
+  const rect = fgContainer.getBoundingClientRect();
+  const areaFactor = Math.min(2.2, Math.max(0.45, (rect.width * rect.height) / (360 * 640)));
+
+  // Decide cantidades según capacidad
+  let effectiveCount = Math.round(count * areaFactor);
+  if (hints.processingScale < 0.45) effectiveCount = Math.max(12, Math.round(effectiveCount * 0.30));
+  else if (hints.processingScale < 0.6) effectiveCount = Math.max(18, Math.round(effectiveCount * 0.45));
+  else if (hints.processingScale < 0.85) effectiveCount = Math.max(28, Math.round(effectiveCount * 0.7));
+  // never too many
+  effectiveCount = Math.min(220, effectiveCount);
+
+  // Target FPS para el efecto (menor en dispositivos más lentos)
+  const targetFps = hints.processingScale >= 0.85 ? 50 : hints.processingScale >= 0.6 ? 36 : 24;
+  const frameInterval = 1000 / targetFps;
+
+  const particles = [];
+  function rnd(min, max){ return Math.random()*(max-min)+min; }
+
+  for (let i = 0; i < effectiveCount; i++) {
+    const angle = rnd(0, Math.PI*2);
+    const speed = rnd(1.2, 6.0);
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed * rnd(0.6, 1.2),
+      vy: Math.sin(angle) * speed * rnd(0.6, 1.2) - rnd(0.6, 2.2),
+      life: rnd(duration*0.65, duration*1.05),
+      age: 0,
+      radius: rnd(1.6, 5.2),
+      color: colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+
+  // Seguridad: si algo falla, resolvemos pasado el tiempo máximo + margen
+  const safeTimeoutMs = Math.round(duration + 400);
+  const start = performance.now();
+
+  return new Promise(resolve => {
+    let lastFrameTime = 0;
+    let finished = false;
+    const safeTimer = setTimeout(() => {
+      if (!finished) {
+        finished = true;
+        try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+        resolve();
       }
-      const start = performance.now();
-      return new Promise(resolve => {
-        function frame(now){
-          const t = now - start;
-          fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
-          for (let p of particles){
-            p.age = t;
-            const lifeRatio = Math.max(0, 1 - p.age / p.life);
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.18;
-            const alpha = Math.max(0, Math.min(1, lifeRatio));
-            fctx.globalAlpha = alpha;
-            fctx.beginPath();
-            fctx.fillStyle = p.color;
-            fctx.arc(p.x, p.y, p.radius * (0.6 + lifeRatio * 0.8), 0, Math.PI*2);
-            fctx.fill();
-            fctx.globalAlpha = alpha * 0.22;
-            fctx.beginPath();
-            fctx.fillStyle = p.color;
-            fctx.arc(p.x, p.y, (p.radius*6) * (0.2 + (1-lifeRatio)*0.9), 0, Math.PI*2);
-            fctx.fill();
-          }
-          fctx.globalAlpha = 1;
-          if (t < duration){
-            requestAnimationFrame(frame);
-          } else {
-            fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
-            resolve();
-          }
+    }, safeTimeoutMs);
+
+    function frame(now){
+      try {
+        if (finished) return;
+        // throttle by fps
+        if (!lastFrameTime) lastFrameTime = now;
+        const dt = now - lastFrameTime;
+        if (dt < frameInterval) {
+          requestAnimationFrame(frame);
+          return;
         }
-        requestAnimationFrame(frame);
-      });
+        lastFrameTime = now;
+
+        const t = now - start;
+        fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+
+        // dibujo sencillo pero eficiente: dos arcos por partícula (core + glow)
+        for (let p of particles) {
+          p.age = t;
+          const lifeRatio = Math.max(0, 1 - p.age / p.life);
+          // Integración de movimiento con pequeñas sub-actualizaciones para suavizar y evitar saltos
+          p.x += p.vx * (dt/16.67);
+          p.y += p.vy * (dt/16.67);
+          p.vy += 0.16 * (dt/16.67); // gravedad ajustada por dt
+
+          const alpha = Math.max(0, Math.min(1, lifeRatio));
+          // core
+          fctx.globalAlpha = alpha;
+          fctx.beginPath();
+          fctx.fillStyle = p.color;
+          fctx.arc(p.x, p.y, p.radius * (0.6 + lifeRatio * 0.8), 0, Math.PI*2);
+          fctx.fill();
+          // halo (más barato: un pequeño círculo con baja alpha)
+          fctx.globalAlpha = Math.max(0, alpha * 0.22);
+          fctx.beginPath();
+          fctx.fillStyle = p.color;
+          fctx.arc(p.x, p.y, (p.radius * 5) * (0.22 + (1 - lifeRatio) * 0.9), 0, Math.PI*2);
+          fctx.fill();
+        }
+
+        fctx.globalAlpha = 1;
+
+        if (t < duration) {
+          requestAnimationFrame(frame);
+        } else {
+          finished = true;
+          clearTimeout(safeTimer);
+          try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+          resolve();
+        }
+      } catch (err) {
+        // en caso de error inesperado, limpiamos y resolvemos para evitar bloqueo
+        finished = true;
+        clearTimeout(safeTimer);
+        try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+        resolve();
+      }
     }
 
-    async function doFireworkThenHide(){
-      if (isAnimatingExplosion) return;
-      isAnimatingExplosion = true;
-      try { fgVideo.pause(); } catch(e){}
-      const rect = fgContainer.getBoundingClientRect();
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-      resizeFireCanvas();
-      const palette = ['#ffcc00','#ff4d4d','#ffd700','#00fff7','#ff6ad5','#ff7f50','#8b5cf6'];
-      fgContainer.style.transition = 'transform .25s ease-out, opacity .25s ease';
-      fgContainer.style.transform = 'scale(0.96)';
-      fgContainer.style.opacity = '0.85';
-      await explodeParticlesAt(cx, cy, palette, 80, 700);
-      fgContainer.style.opacity = '0';
-      fgContainer.style.transform = 'scale(.8) translateY(10px)';
-      await new Promise(r => setTimeout(r, 220));
-      fgContainer.style.display = 'none';
-      fgContainer.style.transform = '';
-      fgContainer.style.opacity = '';
-      isAnimatingExplosion = false;
+    // kick off
+    try {
+      requestAnimationFrame(frame);
+    } catch (err) {
+      clearTimeout(safeTimer);
+      try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+      resolve();
     }
+  });
+}
+
+async function doFireworkThenHide(){
+  if (isAnimatingExplosion) return;
+  isAnimatingExplosion = true;
+  try {
+    // permitimos que el navegador pinte antes de empezar (evita bloqueo UI inmediato)
+    await new Promise(r => setTimeout(r, 8));
+
+    try { fgVideo.pause(); } catch(e){}
+    const rect = fgContainer.getBoundingClientRect();
+    // centra en el medio visible (usamos CSS px)
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+
+    // garantizamos que el canvas de fuegos tenga tamaño correcto (puede ser costoso)
+    // pero lo hacemos sólo si ha cambiado el bounding rect
+    resizeFireCanvas();
+
+    // paleta y transiciones (igual que antes)
+    const palette = ['#ffcc00','#ff4d4d','#ffd700','#00fff7','#ff6ad5','#ff7f50','#8b5cf6'];
+    // pequeña animación de entrada
+    fgContainer.style.transition = 'transform .25s ease-out, opacity .25s ease';
+    fgContainer.style.transform = 'scale(0.96)';
+    fgContainer.style.opacity = '0.85';
+
+    // explotamos (esperamos la promesa) con parámetros seguros
+    await explodeParticlesAt(cx, cy, palette, 80, 700);
+
+    // animación de salida
+    fgContainer.style.opacity = '0';
+    fgContainer.style.transform = 'scale(.8) translateY(10px)';
+
+    // damos un pequeño margen para la transición visual
+    await new Promise(r => setTimeout(r, 220));
+
+    // ocultamos y restauramos estilos para la próxima animación
+    fgContainer.style.display = 'none';
+    fgContainer.style.transform = '';
+    fgContainer.style.opacity = '';
+  } catch (err) {
+    // no dejamos el flag activo aunque algo salga mal
+    console.warn('doFireworkThenHide error:', err);
+  } finally {
+    isAnimatingExplosion = false;
+  }
+}
 
     /* ----------------------------
        Reproducción robusta y sin pausar la música
@@ -1035,16 +1132,30 @@ function adjustContainerToVideo(video, infoObj){
     }
 
     // Click en contenedor dispara fuegos y siguiente clip
-    fgContainer.addEventListener('click', async (ev)=>{
-      if (isAnimatingExplosion) return;
-      if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null; }
-      usingChroma = false;
-      stopChromaInterval();
-      await doFireworkThenHide();
-      const currentId = currentVideoObj ? currentVideoObj.id : null;
-      const next = pickRandomVideo(currentId);
-      setTimeout(()=> { playVideoClip(next); }, 420);
-    });
+// --------------------- REEMPLAZAR listener de click en fgContainer ---------------------
+fgContainer.addEventListener('click', async (ev) => {
+  // Si ya se está animando, ignoramos clicks
+  if (isAnimatingExplosion) return;
+
+  // limpiamos cualquier timer pendiente
+  if (scheduledTimer) { clearTimeout(scheduledTimer); scheduledTimer = null; }
+
+  // paramos chroma (si estaba corriendo)
+  usingChroma = false;
+  stopChromaInterval();
+
+  // activamos el fuego; en PCs lentos esto está protegido internamente
+  try {
+    await doFireworkThenHide();
+  } catch (err) {
+    console.warn('Error during fireworks click flow:', err);
+  }
+
+  // continuamos con la próxima animación (pequeña demora para que se estabilice el DOM)
+  const currentId = currentVideoObj ? currentVideoObj.id : null;
+  const next = pickRandomVideo(currentId);
+  setTimeout(() => { playVideoClip(next); }, 420);
+});
 
     document.getElementById('playBtn').addEventListener('click', ()=>{
       document.getElementById('playOverlay').style.display = 'none';
