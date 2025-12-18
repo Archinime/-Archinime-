@@ -731,17 +731,110 @@
       return imageData;
     }
 
-    function drawProcessedToScreen(){
-      if (!ctx) return;
-      const cw = fgCanvas.width, ch = fgCanvas.height;
-      const vw = off.width, vh = off.height;
-      ctx.clearRect(0,0,cw,ch);
-      if (vw === 0 || vh === 0) return;
-      const scale = Math.min(cw / vw, ch / vh);
-      const dw = Math.round(vw * scale); const dh = Math.round(vh * scale);
-      const dx = Math.round((cw - dw) / 2); const dy = Math.round((ch - dh) / 2);
-      ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
+// ------------------ REEMPLAZAR drawProcessedToScreen ------------------
+function drawProcessedToScreen(){
+  // ctx puede estar transformado por devicePixelRatio; usamos coordenadas CSS para calcular el scale
+  if (!ctx || !fgCanvas) return;
+
+  // Usamos clientWidth/clientHeight (CSS pixels) para los cálculos de escala/centrado
+  const cw = fgCanvas.clientWidth || parseInt(fgCanvas.style.width) || fgCanvas.width;
+  const ch = fgCanvas.clientHeight || parseInt(fgCanvas.style.height) || fgCanvas.height;
+  const vw = off.width || 1;
+  const vh = off.height || 1;
+
+  // Limpiamos canvas (coordenadas del contexto están ya en CSS px si setTransform se aplicó)
+  // IMPORTANTE: no usar fgCanvas.width/height aquí (son pixels internos), usamos clientWidth/clientHeight
+  ctx.clearRect(0, 0, cw, ch);
+
+  if (vw === 0 || vh === 0 || cw === 0 || ch === 0) return;
+
+  // Mantener aspect ratio del contenido (off) dentro del canvas visible
+  const scale = Math.min(cw / vw, ch / vh);
+  const dw = Math.round(vw * scale);
+  const dh = Math.round(vh * scale);
+  const dx = Math.round((cw - dw) / 2);
+  const dy = Math.round((ch - dh) / 2);
+
+  // drawImage acepta source w/h en px del off-canvas; destination dx/dy/dw/dh en unidades del contexto (CSS px)
+  ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
+}
+
+// ------------------ REEMPLAZAR adjustContainerToVideo ------------------
+function adjustContainerToVideo(video, infoObj){
+  // Ajuste con límites: reducir off canvas si equipo es modesto
+  const vw = video.videoWidth || 16;
+  const vh = video.videoHeight || 9;
+  const hints = getPerformanceHints();
+
+  // límites del contenedor en CSS px
+  let maxW = Math.min(window.innerWidth * 0.32, 360);
+  let maxH = Math.min(window.innerHeight * 0.4, 640);
+
+  if (window.matchMedia('(max-width:767px)').matches) {
+    if (infoObj && infoObj.id === 'rem') {
+      maxW = Math.min(window.innerWidth * 0.30, 180);
+      maxH = Math.min(window.innerHeight * 0.30, 200);
+    } else if (infoObj && infoObj.id === 'hola') {
+      maxW = Math.min(window.innerWidth * 0.62, 380);
+      maxH = Math.min(window.innerHeight * 0.62, 520);
+    } else {
+      maxW = Math.min(window.innerWidth * 0.45, 260);
+      maxH = Math.min(window.innerHeight * 0.45, 420);
     }
+  } else {
+    maxW = Math.min(window.innerWidth * 0.32, 360);
+    maxH = Math.min(window.innerHeight * 0.4, 640);
+  }
+
+  // Calculamos el tamaño de display manteniendo la relación de aspecto del vídeo
+  const displayScale = Math.min(maxW / vw, maxH / vh, 1.0);
+  const displayW = Math.max(120, Math.round(vw * displayScale));
+  const displayH = Math.max(80, Math.round(vh * displayScale));
+
+  // Aplicar tamaño al contenedor (CSS px)
+  fgContainer.style.width = displayW + 'px';
+  fgContainer.style.height = displayH + 'px';
+
+  // Ajustar fgCanvas para manejar devicePixelRatio (así las coordenadas del ctx quedan en CSS px)
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  // Seteamos tamaño interno en device pixels y tamaño CSS en px
+  fgCanvas.width = Math.round(displayW * dpr);
+  fgCanvas.height = Math.round(displayH * dpr);
+  fgCanvas.style.width = displayW + 'px';
+  fgCanvas.style.height = displayH + 'px';
+  // Transformamos el contexto para que 1 unidad en ctx == 1 CSS px
+  if (ctx && typeof ctx.setTransform === 'function') {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // Ajustar canvas de procesado (off) en función del rendimiento: cap menor para equipos modestos
+  const capHigh = 1280;
+  const capMed = 720;
+  const hintsScale = hints.processingScale;
+  const chosenCap = hintsScale >= 0.85 ? capHigh : hintsScale >= 0.6 ? capMed : 480;
+
+  // Para evitar distorsión, escalamos el off-canvas **preservando la relación de aspecto** del vídeo
+  const sourceW = vw;
+  const sourceH = vh;
+  const sourceRatio = sourceW / sourceH || (16/9);
+
+  // Empezamos con offW = min(sourceW, chosenCap) y calculamos offH proporcional
+  let offW = Math.min(sourceW, chosenCap);
+  let offH = Math.round(offW / sourceRatio);
+
+  // Si offH supera chosenCap, recalc con offH = chosenCap y offW proporcional
+  if (offH > chosenCap) {
+    offH = chosenCap;
+    offW = Math.round(offH * sourceRatio);
+  }
+
+  // Asegurar valores mínimos válidos
+  off.width = Math.max(16, offW);
+  off.height = Math.max(16, offH);
+
+  // Redimensionar canvas de fuegos (usa tamaño del contenedor que acabamos de fijar)
+  resizeFireCanvas();
+}
 
     // Procesado por intervalo (FPS limitado) para evitar saturar CPU en movimiento del ratón
     function processFrame(video, infoObj){
