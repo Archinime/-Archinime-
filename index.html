@@ -894,17 +894,21 @@ function adjustContainerToVideo(video, infoObj){
        Fuegos artificiales (canvas)
        Optimización: número de partículas adaptativo
        ---------------------------- */
-    const fireCanvas = document.createElement('canvas');
-    fireCanvas.className = 'firework-canvas';
-    fireCanvas.style.position = 'absolute';
-    fireCanvas.style.left = '0';
-    fireCanvas.style.top = '0';
-    fireCanvas.style.width = '100%';
-    fireCanvas.style.height = '100%';
-    fireCanvas.style.zIndex = '9999';
-    fireCanvas.style.pointerEvents = 'none';
-    fgContainer.appendChild(fireCanvas);
-    const fctx = fireCanvas.getContext('2d');
+const fireCanvas = document.createElement('canvas');
+fireCanvas.className = 'firework-canvas';
+fireCanvas.style.position = 'absolute';
+fireCanvas.style.left = '0';
+fireCanvas.style.top = '0';
+fireCanvas.style.width = '100%';
+fireCanvas.style.height = '100%';
+fireCanvas.style.zIndex = '9999';
+fireCanvas.style.pointerEvents = 'none';
+if (fgContainer) {
+  fgContainer.appendChild(fireCanvas);
+} else {
+  console.warn('fgContainer no existe al crear fireCanvas — creando canvas sin appendChild.');
+}
+const fctx = fireCanvas.getContext ? fireCanvas.getContext('2d') : null;
 
     function resizeFireCanvas(){
       const rect = fgContainer.getBoundingClientRect();
