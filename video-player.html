@@ -6,54 +6,61 @@
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <style>
-    /* Estilos generales oscuros */
+    /* Estilos generales */
     body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
   
+    /* Fondo de video fijo */
     #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
 
-    /* Overlay (Imagen de carga) */
-    #overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      /* Fondo compuesto: imagen + gradiente */
-      background: url('galaxia-morado1.avif') center/cover no-repeat,
-                  linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
-      opacity: 1; /* Empieza visible */
-      transition: opacity 0.8s ease; /* Transición suave al desaparecer */
-      pointer-events: none;
-    }
-    
     .container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; }
     
-    .back-btn { display: inline-block; color: #0ff; text-decoration: none; margin-bottom: 15px; font-weight: bold; }
+    .back-btn { display: inline-block; color: #0ff; text-decoration: none; margin-bottom: 15px; font-weight: bold; font-size: 1.1rem; }
   
+    /* Contenedor del reproductor responsivo */
     .player-wrapper { 
-        position: relative; padding-bottom: 56.25%; height: 0; 
-        background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,255,0.2);
+        position: relative; 
+        padding-bottom: 56.25%; /* Ratio 16:9 */
+        height: 0; 
+        background: #000; 
+        border-radius: 8px; 
+        overflow: hidden; 
+        box-shadow: 0 0 20px rgba(0,255,255,0.2);
+        border: 1px solid #333;
     }
+    
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; 
     }
 
     h1 { color: #00fff7; font-size: 1.4rem; margin-top: 15px; }
 
+    /* Botones de control */
     .controls { margin-top: 20px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
   
     .btn { 
-        padding: 10px 20px; background: rgba(255,255,255,0.1); border: 1px solid #0ff; 
+        padding: 12px 25px; 
+        background: rgba(255,255,255,0.1); 
+        border: 1px solid #0ff; 
         color: #fff;
-        text-decoration: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
+        text-decoration: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        transition: 0.3s;
+        font-weight: bold;
     }
     .btn:hover { background: #0ff; color: #000; }
+    
+    /* Clase para ocultar botones invisibles pero mantener espacio si fuera necesario (aunque aquí usamos display none via JS o visibilidad) */
     .btn-hidden { visibility: hidden; pointer-events: none; }
 
+    /* Botones de opciones (Servidores) */
     .options { margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
     .opt-btn { 
-        font-size: 0.9rem; padding: 5px 10px; border: 1px solid #555; background: #222; color: #ccc; cursor: pointer; }
+        font-size: 0.9rem; padding: 8px 15px; border: 1px solid #555; background: #222; color: #ccc; cursor: pointer; border-radius: 4px;
+    }
     .opt-btn.active { border-color: #0ff; color: #fff; background: #333; }
 
-    /* Comentarios Simulados / Zona */
+    /* Zona de comentarios */
     .comments-section { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
     .comments-placeholder { color: #888; text-align: center; font-style: italic; }
   </style>
@@ -72,7 +79,7 @@
 
     <div class="options" id="serverOptions"></div>
 
-    <h1 id="epTitle">Cargando episodio...</h1>
+    <h1 id="epTitle">Cargando...</h1>
 
     <div class="controls">
       <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
@@ -83,13 +90,15 @@
     <div class="comments-section">
       <h3>Comentarios</h3>
       <div class="comments-placeholder">
-        La sección de comentarios estará disponible pronto.
+        Cargando sistema de comentarios...
       </div>
     </div>
   </div>
 
   <script>
-    // === BASE DE DATOS (Solo los 3 primeros animes como pediste) ===
+    // ==========================================
+    // BASE DE DATOS (Animes 1, 2 y 3)
+    // ==========================================
     const DB = {
       "1": {
         "1": {
@@ -2634,8 +2643,9 @@
 
 
     };
-
-// === LÓGICA DEL REPRODUCTOR MEJORADA ===
+// ==========================================
+    // LOGICA DEL REPRODUCTOR
+    // ==========================================
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
@@ -2653,7 +2663,7 @@
         // Cargar video (Prioridad Opción 1)
         loadVideo(epData.link || epData.link2);
 
-        // Configurar botón de descarga (ajuste para Drive /view)
+        // Configurar botón de descarga
         const dlBtn = document.getElementById('downloadBtn');
         const activeLink = epData.link || epData.link2;
         dlBtn.href = activeLink.includes('drive.google.com') ? activeLink.replace('/preview', '/view') : activeLink;
@@ -2671,7 +2681,6 @@
                 document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 loadVideo(url);
-                // Actualizar botón de descarga al cambiar servidor
                 dlBtn.href = url.includes('drive.google.com') ? url.replace('/preview', '/view') : url;
             };
             optContainer.appendChild(btn);
@@ -2703,12 +2712,12 @@
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
     }
 
-    // Función para obtener todos los episodios ordenados de todas las temporadas
+    // Función auxiliar para obtener todos los episodios ordenados
     function getAllEpisodes(animeId) {
         if (!DB[animeId]) return [];
         let list = [];
         
-        // Ordenar las claves de temporadas numéricamente (1, 2, 3...)
+        // Ordenar temporadas numéricamente
         const seasonKeys = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
 
         seasonKeys.forEach(sKey => {
@@ -2723,25 +2732,37 @@
         return list;
     }
 
+    // === SOLUCIÓN TABLETS/MÓVILES ===
     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
-        container.innerHTML = ''; // Limpiar
+        container.innerHTML = ''; // Limpiar contenedor
 
         if (url.includes('drive.google.com')) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
-            // ATRIBUTOS PARA COMPATIBILIDAD CON TABLETS Y MÓVILES
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            iframe.loading = "eager"; // Cargar rápido
+            
+            // ATRIBUTOS CLAVE PARA QUE FUNCIONE EN TABLET/MÓVIL
             iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
-            // sandbox a veces ayuda, pero a veces bloquea drive. Lo dejamos sin sandbox estricto por compatibilidad de Drive,
-            // pero nos aseguramos que el allow esté completo.
-            iframe.setAttribute('referrerpolicy', 'no-referrer'); 
+            
+            // ESTO EVITA EL BLOQUEO DE COOKIES DE TERCEROS EN SAFARI/CHROME MOBILE
+            iframe.setAttribute('referrerpolicy', 'no-referrer');
+            
+            // IMPORTANTE: NO AGREGAR SANDBOX AQUÍ. Drive detecta el sandbox en móviles y bloquea el video.
+            
             container.appendChild(iframe);
         } else {
-            // Asumimos MP4 directo (Dropbox, etc)
+            // Para Dropbox u otros MP4 directos
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
             video.autoplay = true;
+            video.playsInline = true; // Necesario para iOS
+            video.style.width = '100%';
+            video.style.height = '100%';
             container.appendChild(video);
         }
     }
