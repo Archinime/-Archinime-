@@ -10,6 +10,18 @@
     body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
     
     #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
+
+    /* Overlay (Imagen de carga) */
+    #overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      /* Fondo compuesto: imagen + gradiente */
+      background: url('galaxia-morado1.avif') center/cover no-repeat,
+                  linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
+      opacity: 1; /* Empieza visible */
+      transition: opacity 0.8s ease; /* Transición suave al desaparecer */
+      pointer-events: none;
+    }
     
     .container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; }
     
@@ -44,7 +56,7 @@
 </head>
 <body>
 
-  <video id="bg-video" autoplay loop muted>
+  <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
     <source src="galaxia.mp4" type="video/mp4">
   </video>
 
@@ -2645,8 +2657,8 @@
 
         // Botones de Opciones (Servidores)
         const optContainer = document.getElementById('serverOptions');
-        if(epData.link) createOptionBtn("Opción 1 (Drive)", epData.link);
-        if(epData.link2) createOptionBtn("Opción 2 (Dropbox)", epData.link2);
+        if(epData.link) createOptionBtn("Opción 1", epData.link);
+        if(epData.link2) createOptionBtn("Opción 2", epData.link2);
 
         function createOptionBtn(label, url) {
             const btn = document.createElement('button');
