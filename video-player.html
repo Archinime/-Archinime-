@@ -6,17 +6,36 @@
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <style>
-    /* Estilos generales */
+    /* === ESTILOS GENERALES === */
     body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
   
-    /* Fondo de video fijo */
-    #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
+    /* Fondo de Video por defecto (Visible en PC y Móviles) */
+    #bg-video { 
+        position: fixed; 
+        top: 0; left: 0; 
+        width: 100%; height: 100%; 
+        object-fit: cover; 
+        z-index: -1; 
+        opacity: 0.3; 
+    }
+
+    /* === REGLA ESPECÍFICA PARA TABLETS === */
+    /* Se activa solo si la pantalla mide entre 600px y 1024px (Rango Tablet) */
+    @media only screen and (min-width: 600px) and (max-width: 1024px) {
+        #bg-video { 
+            display: none !important; /* Oculta el video a la fuerza */
+        }
+        body {
+            /* Pone la imagen estática de fondo */
+            background: url('galaxia-morado1.avif') center center / cover no-repeat fixed;
+        }
+    }
 
     .container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; }
     
     .back-btn { display: inline-block; color: #0ff; text-decoration: none; margin-bottom: 15px; font-weight: bold; font-size: 1.1rem; }
   
-    /* Contenedor del reproductor responsivo */
+    /* Contenedor del reproductor */
     .player-wrapper { 
         position: relative; 
         padding-bottom: 56.25%; /* Ratio 16:9 */
@@ -50,7 +69,6 @@
     }
     .btn:hover { background: #0ff; color: #000; }
     
-    /* Clase para ocultar botones invisibles pero mantener espacio si fuera necesario (aunque aquí usamos display none via JS o visibilidad) */
     .btn-hidden { visibility: hidden; pointer-events: none; }
 
     /* Botones de opciones (Servidores) */
@@ -60,7 +78,6 @@
     }
     .opt-btn.active { border-color: #0ff; color: #fff; background: #333; }
 
-    /* Zona de comentarios */
     .comments-section { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
     .comments-placeholder { color: #888; text-align: center; font-style: italic; }
   </style>
@@ -90,7 +107,7 @@
     <div class="comments-section">
       <h3>Comentarios</h3>
       <div class="comments-placeholder">
-        Cargando sistema de comentarios...
+        Sección de comentarios próximamente.
       </div>
     </div>
   </div>
@@ -2739,19 +2756,19 @@
 
         if (url.includes('drive.google.com')) {
             const iframe = document.createElement('iframe');
-            iframe.src = url;
+            // Cambiamos /view por /preview para asegurar compatibilidad
+            iframe.src = url.replace('/view', '/preview');
+            
             iframe.style.width = '100%';
             iframe.style.height = '100%';
             iframe.style.border = 'none';
-            iframe.loading = "eager"; // Cargar rápido
+            iframe.loading = "eager"; 
             
-            // ATRIBUTOS CLAVE PARA QUE FUNCIONE EN TABLET/MÓVIL
+            // ATRIBUTOS CLAVE PARA EVITAR ERRORES EN DISPOSITIVOS
             iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
             
-            // ESTO EVITA EL BLOQUEO DE COOKIES DE TERCEROS EN SAFARI/CHROME MOBILE
+            // Esto ayuda a que el navegador no bloquee cookies de terceros en el iframe
             iframe.setAttribute('referrerpolicy', 'no-referrer');
-            
-            // IMPORTANTE: NO AGREGAR SANDBOX AQUÍ. Drive detecta el sandbox en móviles y bloquea el video.
             
             container.appendChild(iframe);
         } else {
