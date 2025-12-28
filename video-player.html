@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -5,55 +6,49 @@
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <style>
-    /* Estilos generales oscuros */
+    /* --- ESTILOS GENERALES (PC Y CELULAR) --- */
     body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
-  
     #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
 
-    /* Overlay (Imagen de carga) */
     #overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      /* Fondo compuesto: imagen + gradiente */
-      background: url('galaxia-morado1.avif') center/cover no-repeat,
-                  linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
-      opacity: 1; /* Empieza visible */
-      transition: opacity 0.8s ease; /* Transición suave al desaparecer */
-      pointer-events: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+      background: url('galaxia-morado1.avif') center/cover no-repeat;
     }
     
     .container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; }
-    
     .back-btn { display: inline-block; color: #0ff; text-decoration: none; margin-bottom: 15px; font-weight: bold; }
-  
     .player-wrapper { 
         position: relative; padding-bottom: 56.25%; height: 0; 
         background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,255,0.2);
     }
-    .player-wrapper iframe, .player-wrapper video { 
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; 
-    }
-
+    .player-wrapper iframe, .player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
     h1 { color: #00fff7; font-size: 1.4rem; margin-top: 15px; }
-
     .controls { margin-top: 20px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-  
     .btn { 
         padding: 10px 20px; background: rgba(255,255,255,0.1); border: 1px solid #0ff; 
-        color: #fff;
-        text-decoration: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
+        color: #fff; text-decoration: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
     }
     .btn:hover { background: #0ff; color: #000; }
-    
-    /* Clase para ocultar botones si no hay anterior/siguiente real */
     .btn-hidden { visibility: hidden; }
-
     .options { margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
     .opt-btn { font-size: 0.9rem; padding: 5px 10px; border: 1px solid #555; background: #222; color: #ccc; cursor: pointer; }
     .opt-btn.active { border-color: #0ff; color: #fff; background: #333; }
 
-    /* Comentarios Simulados / Zona */
+    /* --- CAMBIOS SOLO PARA TABLETS (768px a 1024px) --- */
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+      #bg-video {
+        display: none !important; /* Elimina el video de fondo */
+      }
+      #overlay {
+        z-index: -1; /* Pone la imagen de fondo detrás de todo */
+        opacity: 1;  /* Asegura que se vea la imagen del poster */
+      }
+      body {
+        background: none; /* Evita conflictos de color */
+      }
+    }
+
+    /* Comentarios Simulados */
     .comments-section { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
     .comments-placeholder { color: #888; text-align: center; font-style: italic; }
   </style>
@@ -64,14 +59,14 @@
     <source src="galaxia.mp4" type="video/mp4">
   </video>
 
+  <div id="overlay"></div>
+
   <div class="container">
     <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
 
-    <div class="player-wrapper" id="playerContainer">
-        </div>
+    <div class="player-wrapper" id="playerContainer"></div>
 
-    <div class="options" id="serverOptions">
-        </div>
+    <div class="options" id="serverOptions"></div>
 
     <h1 id="epTitle">Cargando episodio...</h1>
 
@@ -83,14 +78,11 @@
 
     <div class="comments-section">
         <h3>Comentarios</h3>
-        <div class="comments-placeholder">
-            La sección de comentarios estará disponible pronto.
-        </div>
+        <div class="comments-placeholder">La sección de comentarios estará disponible pronto.</div>
     </div>
   </div>
 
   <script>
-    // BASE DE DATOS (SOLO LOS 3 PRIMEROS ANIMES COMO SOLICITADO)
     const DB = {
       "1": {
         "1": {
@@ -2636,79 +2628,51 @@
 
     };
 
-// LÓGICA DEL REPRODUCTOR MEJORADA (Lista Lineal / Flattened List)
-    const params = new URLSearchParams(location.search);
+const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
-
     const epData = DB[animeId]?.[season]?.[episode];
 
-    // Configurar botón volver
     document.getElementById('backLink').href = `anime-detail.html?id=${animeId}`;
 
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
-
-        // Cargar video (Prioridad Opción 1)
         loadVideo(epData.link || epData.link2);
-
-        // Configurar botones de descarga
+        
         const dlBtn = document.getElementById('downloadBtn');
-        dlBtn.href = (epData.link || epData.link2).replace('/preview', '/view'); // Ajuste simple para drive
+        dlBtn.href = (epData.link || epData.link2).replace('/preview', '/view');
 
-        // Botones de Opciones (Servidores)
-        const optContainer = document.getElementById('serverOptions');
         if(epData.link) createOptionBtn("Opción 1", epData.link);
         if(epData.link2) createOptionBtn("Opción 2", epData.link2);
 
-        // --- NUEVA LÓGICA DE NAVEGACIÓN ENTRE TEMPORADAS/PELÍCULAS ---
-        // 1. Crear una lista plana de todos los episodios disponibles para este anime
+        // Lógica de navegación unificada
         let flatList = [];
-        
         if (DB[animeId]) {
-            // Ordenar las llaves de temporada numéricamente (1, 2, 3, 4, 5...)
             const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
-            
             seasons.forEach(sKey => {
-                // Ordenar las llaves de episodio numéricamente
                 const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
-                
                 episodes.forEach(eKey => {
-                    flatList.push({
-                        s: sKey,
-                        e: eKey
-                    });
+                    flatList.push({ s: sKey, e: eKey });
                 });
             });
         }
 
-        // 2. Encontrar el índice del episodio actual en la lista plana
-        // Usamos string comparison para s y e por si vienen como strings del URL
         const currentIndex = flatList.findIndex(item => item.s === season && item.e === episode);
-
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
-        // 3. Configurar botón Anterior
         if (currentIndex > 0) {
-            // Existe un elemento anterior en la lista (aunque sea de la temporada anterior)
             const prevItem = flatList[currentIndex - 1];
             prevBtn.classList.remove('btn-hidden');
             prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
         }
-
-        // 4. Configurar botón Siguiente
         if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
-            // Existe un elemento siguiente en la lista (aunque sea de la temporada siguiente)
             const nextItem = flatList[currentIndex + 1];
             nextBtn.classList.remove('btn-hidden');
             nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
         }
-
-    } else {
-        document.getElementById('epTitle').innerText = "Episodio no encontrado.";
     }
 
     function createOptionBtn(label, url) {
@@ -2726,15 +2690,13 @@
 
     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
-        container.innerHTML = ''; // Limpiar
-
+        container.innerHTML = '';
         if (url.includes('drive.google.com')) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
             iframe.allow = "autoplay; fullscreen";
             container.appendChild(iframe);
         } else {
-            // Asumimos MP4 directo (Dropbox, etc)
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
