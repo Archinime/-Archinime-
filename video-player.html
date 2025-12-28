@@ -8,12 +8,13 @@
   <style>
     /* Estilos generales oscuros */
     body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
-    
+  
     #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
 
     /* Overlay (Imagen de carga) */
     #overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
       z-index: -1;
       /* Fondo compuesto: imagen + gradiente */
       background: url('galaxia-morado1.avif') center/cover no-repeat,
@@ -26,7 +27,7 @@
     .container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; }
     
     .back-btn { display: inline-block; color: #0ff; text-decoration: none; margin-bottom: 15px; font-weight: bold; }
-    
+  
     .player-wrapper { 
         position: relative; padding-bottom: 56.25%; height: 0; 
         background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,255,0.2);
@@ -38,15 +39,18 @@
     h1 { color: #00fff7; font-size: 1.4rem; margin-top: 15px; }
 
     .controls { margin-top: 20px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  
     .btn { 
         padding: 10px 20px; background: rgba(255,255,255,0.1); border: 1px solid #0ff; 
-        color: #fff; text-decoration: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
+        color: #fff;
+        text-decoration: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
     }
     .btn:hover { background: #0ff; color: #000; }
-    .btn-hidden { visibility: hidden; }
+    .btn-hidden { visibility: hidden; pointer-events: none; }
 
     .options { margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
-    .opt-btn { font-size: 0.9rem; padding: 5px 10px; border: 1px solid #555; background: #222; color: #ccc; cursor: pointer; }
+    .opt-btn { 
+        font-size: 0.9rem; padding: 5px 10px; border: 1px solid #555; background: #222; color: #ccc; cursor: pointer; }
     .opt-btn.active { border-color: #0ff; color: #fff; background: #333; }
 
     /* Comentarios Simulados / Zona */
@@ -66,28 +70,26 @@
     <div class="player-wrapper" id="playerContainer">
         </div>
 
-    <div class="options" id="serverOptions">
-        </div>
+    <div class="options" id="serverOptions"></div>
 
     <h1 id="epTitle">Cargando episodio...</h1>
 
     <div class="controls">
-        <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank">⬇ Descargar</a>
-        <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
+      <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
+      <a id="downloadBtn" class="btn" href="#" target="_blank">⬇ Descargar</a>
+      <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
     <div class="comments-section">
-        <h3>Comentarios</h3>
-        <div class="comments-placeholder">
-            La sección de comentarios estará disponible pronto.
-        </div>
+      <h3>Comentarios</h3>
+      <div class="comments-placeholder">
+        La sección de comentarios estará disponible pronto.
+      </div>
     </div>
   </div>
 
   <script>
-    // PEGA AQUÍ TU OBJETO 'const DB = { ... }' COMPLETO
-    // El objeto gigante con todos los links de Drive/Dropbox
+    // === BASE DE DATOS (Solo los 3 primeros animes como pediste) ===
     const DB = {
       "1": {
         "1": {
@@ -2633,16 +2635,16 @@
 
     };
 
-// Lógica del reproductor
+// === LÓGICA DEL REPRODUCTOR MEJORADA ===
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
 
-    const epData = DB[animeId]?.[season]?.[episode];
-
     // Configurar botón volver
     document.getElementById('backLink').href = `anime-detail.html?id=${animeId}`;
+
+    const epData = DB[animeId]?.[season]?.[episode];
 
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
@@ -2651,9 +2653,10 @@
         // Cargar video (Prioridad Opción 1)
         loadVideo(epData.link || epData.link2);
 
-        // Configurar botones de descarga
+        // Configurar botón de descarga (ajuste para Drive /view)
         const dlBtn = document.getElementById('downloadBtn');
-        dlBtn.href = (epData.link || epData.link2).replace('/preview', '/view'); // Ajuste simple para drive
+        const activeLink = epData.link || epData.link2;
+        dlBtn.href = activeLink.includes('drive.google.com') ? activeLink.replace('/preview', '/view') : activeLink;
 
         // Botones de Opciones (Servidores)
         const optContainer = document.getElementById('serverOptions');
@@ -2668,28 +2671,56 @@
                 document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 loadVideo(url);
+                // Actualizar botón de descarga al cambiar servidor
+                dlBtn.href = url.includes('drive.google.com') ? url.replace('/preview', '/view') : url;
             };
             optContainer.appendChild(btn);
         }
 
-        // Navegación (Anterior / Siguiente)
-        const prevEp = DB[animeId]?.[season]?.[String(Number(episode) - 1)];
-        const nextEp = DB[animeId]?.[season]?.[String(Number(episode) + 1)];
+        // === NAVEGACIÓN INTELIGENTE ENTRE TEMPORADAS ===
+        const allEpisodes = getAllEpisodes(animeId);
+        // Buscar el índice del episodio actual en la lista completa
+        const currentIndex = allEpisodes.findIndex(ep => ep.s === season && ep.e === episode);
 
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
-        if (prevEp) {
+        // Configurar botón Anterior
+        if (currentIndex > 0) {
+            const prevEp = allEpisodes[currentIndex - 1];
             prevBtn.classList.remove('btn-hidden');
-            prevBtn.href = `?anime=${animeId}&s=${season}&e=${Number(episode)-1}`;
+            prevBtn.href = `?anime=${animeId}&s=${prevEp.s}&e=${prevEp.e}`;
         }
-        if (nextEp) {
+
+        // Configurar botón Siguiente
+        if (currentIndex < allEpisodes.length - 1) {
+            const nextEp = allEpisodes[currentIndex + 1];
             nextBtn.classList.remove('btn-hidden');
-            nextBtn.href = `?anime=${animeId}&s=${season}&e=${Number(episode)+1}`;
+            nextBtn.href = `?anime=${animeId}&s=${nextEp.s}&e=${nextEp.e}`;
         }
 
     } else {
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
+    }
+
+    // Función para obtener todos los episodios ordenados de todas las temporadas
+    function getAllEpisodes(animeId) {
+        if (!DB[animeId]) return [];
+        let list = [];
+        
+        // Ordenar las claves de temporadas numéricamente (1, 2, 3...)
+        const seasonKeys = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
+
+        seasonKeys.forEach(sKey => {
+            const seasonData = DB[animeId][sKey];
+            // Ordenar episodios numéricamente
+            const epKeys = Object.keys(seasonData).sort((a, b) => Number(a) - Number(b));
+            
+            epKeys.forEach(eKey => {
+                list.push({ s: sKey, e: eKey });
+            });
+        });
+        return list;
     }
 
     function loadVideo(url) {
@@ -2699,7 +2730,11 @@
         if (url.includes('drive.google.com')) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
-            iframe.allow = "autoplay; fullscreen";
+            // ATRIBUTOS PARA COMPATIBILIDAD CON TABLETS Y MÓVILES
+            iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
+            // sandbox a veces ayuda, pero a veces bloquea drive. Lo dejamos sin sandbox estricto por compatibilidad de Drive,
+            // pero nos aseguramos que el allow esté completo.
+            iframe.setAttribute('referrerpolicy', 'no-referrer'); 
             container.appendChild(iframe);
         } else {
             // Asumimos MP4 directo (Dropbox, etc)
