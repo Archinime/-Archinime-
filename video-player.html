@@ -30,26 +30,22 @@
         min-height: 100vh;
     }
    
-    /* --- FONDO DE VIDEO (CORREGIDO: COLOR ORIGINAL) --- */
+    /* --- FONDO DE VIDEO --- */
     #bg-video { 
         position: fixed; 
         top: 0; left: 0; 
         width: 100%; height: 100%; 
-        object-fit: cover; 
+        object-fit: cover;
         z-index: -10; 
-        
-        /* IMPORTANTE: Opacidad al 1 para que se vea el color real */
         opacity: 1; 
     }
 
     /* --- OVERLAY LIGERO --- */
-    /* Solo oscurecemos un poco los bordes para que el centro brille */
     #overlay {
       position: fixed; 
       top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      /* Degradado muy sutil solo en esquinas, centro transparente */
       background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.6) 100%);
       pointer-events: none;
     }
@@ -61,13 +57,11 @@
         padding: 30px; 
         position: relative; 
         z-index: 10;
-        
-        /* Vidrio esmerilado para leer bien sobre el video brillante */
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         border-radius: 20px;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(12px); /* Desenfoca lo que está DETRÁS del contenedor */
+        backdrop-filter: blur(12px);
     }
     
     /* BOTÓN VOLVER */
@@ -96,7 +90,7 @@
         padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
         background: #000; 
-        border-radius: 16px; 
+        border-radius: 16px;
         overflow: hidden; 
         box-shadow: 0 0 30px rgba(0,0,0,0.8);
         z-index: 50; 
@@ -123,6 +117,7 @@
         transition: transform 0.2s; font-weight: bold; text-decoration: none;
         display: flex; align-items: center; gap: 10px;
     }
+   
     .tablet-play-btn:active { transform: scale(0.95); }
 
     /* TEXTOS */
@@ -137,10 +132,10 @@
     /* CONTROLES */
     .controls { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
     
-.btn { 
-    padding: 12px 30px; 
-    background: rgba(0, 255, 255, 0.1); 
-    border: 1px solid var(--primary-color);
+    .btn { 
+        padding: 12px 30px; 
+        background: rgba(0, 255, 255, 0.1); 
+        border: 1px solid var(--primary-color);
         color: #fff; 
         text-decoration: none; 
         border-radius: 50px; 
@@ -149,18 +144,19 @@
         font-weight: 600; 
         font-size: 0.9rem;
     }
-/* Estilo específico para el botón de descargar en Rosado */
-#downloadBtn {
-    background: rgba(255, 20, 147, 0.2); /* Fondo rosado sutil */
-    border: 1px solid #ff1493;          /* Borde rosado fuerte (DeepPink) */
-    color: #ffffff;
-}
+    /* Estilo específico para el botón de descargar en Rosado */
+    #downloadBtn {
+        background: rgba(255, 20, 147, 0.2);
+        border: 1px solid #ff1493;
+        color: #ffffff;
+    }
 
-#downloadBtn:hover {
-    background: #ff1493;                /* Fondo sólido al pasar el mouse */
-    color: #fff;
-    box-shadow: 0 0 20px #ff1493;       /* Brillo rosado neón */
-}
+    #downloadBtn:hover {
+        background: #ff1493;
+        color: #fff;
+        box-shadow: 0 0 20px #ff1493;
+    }
+   
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
@@ -168,7 +164,7 @@
     }
     .btn-hidden { display: none; }
     
-/* Opciones de Servidor */
+    /* Opciones de Servidor */
     .options { 
         margin-top: 25px; 
         display: flex; 
@@ -187,6 +183,7 @@
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
     }
+   
     .opt-btn:hover {
         background: #333;
         color: #fff;
@@ -205,17 +202,16 @@
         border-top: 1px solid rgba(255,255,255,0.1); 
         padding-top: 30px; 
     }
+   
     .comments-section h3 {
         color: var(--primary-color);
         margin-bottom: 20px;
+        text-align: center;
     }
-    .comments-placeholder { 
-        color: #888;
-        text-align: center; 
-        font-style: italic; 
-        padding: 20px;
-        background: rgba(0,0,0,0.3);
-        border-radius: 10px;
+    
+    /* Utterances container adjustment */
+    .utterances {
+        max-width: 100%;
     }
 
     /* Responsive */
@@ -235,10 +231,11 @@
   <div id="overlay"></div>
 
   <div class="container">
-    <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
+  
+   <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
 
     <div class="player-wrapper" id="playerContainer">
-        </div>
+    </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -252,13 +249,19 @@
 
     <div class="comments-section">
         <h3>Comentarios</h3>
-        <div class="comments-placeholder">Zona de comentarios disponible pronto.</div>
+        <script src="https://utteranc.es/client.js"
+            repo="Archinime/Comentarios"
+            issue-term="url"
+            theme="icy-dark"
+            crossorigin="anonymous"
+            async>
+        </script>
     </div>
   </div>
 
   <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (3 Primeros animes)
+    // 1. BASE DE DATOS (Solo los 3 primeros animes como solicitado)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2799,7 +2802,7 @@
     };
 
 // -----------------------------------------------------------
-    // 2. LÓGICA (Intacta, se encarga de crear el reproductor)
+    // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
     // -----------------------------------------------------------
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
 
@@ -2810,7 +2813,11 @@
     
     const epData = DB[animeId]?.[season]?.[episode];
 
-    document.getElementById('backLink').href = `anime-detail.html?id=${animeId}`;
+    // Asignar link de volver
+    const backLink = document.getElementById('backLink');
+    if (backLink) {
+        backLink.href = `anime-detail.html?id=${animeId}`;
+    }
 
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
@@ -2868,7 +2875,7 @@
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; // Limpiar
         
-        const isDrive = url.includes('drive.google.com');
+        const isDrive = url && url.includes('drive.google.com');
         
         if (isMobileDevice && isDrive) {
             container.innerHTML = `
@@ -2895,7 +2902,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
-            // Reproductor nativo (aquí es donde se carga el MP4/Dropbox)
+            // Reproductor nativo (Dropbox/MP4 directo)
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
