@@ -72,17 +72,17 @@
     
     /* BOTÓN VOLVER */
     .back-btn { 
-        display: inline-flex; 
-        align-items: center;
-        color: var(--primary-color); 
-        text-decoration: none; 
-        margin-bottom: 20px; 
-        font-weight: 600; 
-        padding: 8px 20px;
-        background: rgba(0, 0, 0, 0.4); 
-        border-radius: 50px;
-        transition: 0.3s;
-        border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color:#0ff;text-decoration:none;font-weight:bold;font-size:0.9rem;
+      transition:all .3s;cursor:pointer;
+      background: rgba(0, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+        margin-bottom: 20px;
     }
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.2);
@@ -137,10 +137,10 @@
     /* CONTROLES */
     .controls { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
     
-    .btn { 
-        padding: 12px 30px; 
-        background: rgba(0, 255, 255, 0.1); 
-        border: 1px solid var(--primary-color);
+.btn { 
+    padding: 12px 30px; 
+    background: rgba(0, 255, 255, 0.1); 
+    border: 1px solid var(--primary-color);
         color: #fff; 
         text-decoration: none; 
         border-radius: 50px; 
@@ -149,6 +149,18 @@
         font-weight: 600; 
         font-size: 0.9rem;
     }
+/* Estilo específico para el botón de descargar en Rosado */
+#downloadBtn {
+    background: rgba(255, 20, 147, 0.2); /* Fondo rosado sutil */
+    border: 1px solid #ff1493;          /* Borde rosado fuerte (DeepPink) */
+    color: #ffffff;
+}
+
+#downloadBtn:hover {
+    background: #ff1493;                /* Fondo sólido al pasar el mouse */
+    color: #fff;
+    box-shadow: 0 0 20px #ff1493;       /* Brillo rosado neón */
+}
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
