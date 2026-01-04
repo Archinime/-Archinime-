@@ -8,95 +8,89 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- VARIABLES BASADAS EN TU ANIME-DETAIL --- */
+    /* --- VARIABLES --- */
     :root {
-        --primary: #00f2ff;       /* Cian Neón Brillante */
-        --secondary: #9d00ff;     /* Morado Intenso */
-        --text-main: #ffffff;
-        --text-dim: #b3b3b3;
-        
-        /* Fondo semitransparente más claro para quitar la oscuridad */
-        --glass-bg: rgba(20, 20, 35, 0.65); 
+        --primary-color: #00fff7;  /* Cian Neón */
+        --secondary-color: #7b2cbf; /* Morado */
+        --glass-bg: rgba(16, 16, 28, 0.65); /* Fondo semitransparente para el contenedor */
         --glass-border: rgba(255, 255, 255, 0.15);
-        --glow-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+        --text-color: #ffffff;
     }
 
     /* --- ESTILOS GENERALES --- */
     body { 
         margin: 0; 
-        background: #000; 
-        color: var(--text-main); 
+        background: #000; /* Fondo negro de respaldo */
+        color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
         overflow-x: hidden;
         min-height: 100vh;
     }
    
-    /* VIDEO DE FONDO */
+    /* --- FONDO DE VIDEO (CORREGIDO: COLOR ORIGINAL) --- */
     #bg-video { 
         position: fixed; 
         top: 0; left: 0; 
         width: 100%; height: 100%; 
         object-fit: cover; 
-        z-index: -2; 
-        /* Sin opacidad forzada, dejamos que se vea brillante */
+        z-index: -10; 
+        
+        /* IMPORTANTE: Opacidad al 1 para que se vea el color real */
+        opacity: 1; 
     }
 
-    /* OVERLAY MEJORADO: Menos oscuro, degradado elegante */
+    /* --- OVERLAY LIGERO --- */
+    /* Solo oscurecemos un poco los bordes para que el centro brille */
     #overlay {
       position: fixed; 
       top: 0; left: 0; 
       width: 100%; height: 100%; 
-      z-index: -1;
-      /* Degradado de arriba a abajo: Transparente arriba -> Oscuro abajo */
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(5,5,10,0.8) 100%);
+      z-index: -5;
+      /* Degradado muy sutil solo en esquinas, centro transparente */
+      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.6) 100%);
       pointer-events: none;
-      backdrop-filter: blur(3px); /* Un desenfoque muy leve para suavizar el video */
     }
     
-    /* CONTENEDOR PRINCIPAL: Estilo Cristal */
+    /* --- CONTENEDOR PRINCIPAL (EFECTO VIDRIO) --- */
     .container { 
         max-width: 1100px; 
         margin: 40px auto; 
-        padding: 35px; 
+        padding: 30px; 
         position: relative; 
         z-index: 10;
         
+        /* Vidrio esmerilado para leer bien sobre el video brillante */
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        
-        /* Sombra con brillo (Glow) para que resalte */
-        box-shadow: 0 15px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.03);
-        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px); /* Desenfoca lo que está DETRÁS del contenedor */
     }
     
     /* BOTÓN VOLVER */
     .back-btn { 
         display: inline-flex; 
         align-items: center;
-        gap: 8px;
-        color: var(--text-main); 
+        color: var(--primary-color); 
         text-decoration: none; 
-        margin-bottom: 25px; 
-        font-weight: 500; 
-        font-size: 0.95rem;
-        padding: 8px 16px;
-        background: rgba(255,255,255,0.05); 
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.1);
-        transition: all 0.3s ease;
+        margin-bottom: 20px; 
+        font-weight: 600; 
+        padding: 8px 20px;
+        background: rgba(0, 0, 0, 0.4); 
+        border-radius: 50px;
+        transition: 0.3s;
+        border: 1px solid transparent;
     }
     .back-btn:hover {
-        background: rgba(0, 242, 255, 0.15);
-        border-color: var(--primary);
-        color: var(--primary);
-        transform: translateX(-3px);
+        background: rgba(0, 255, 247, 0.2);
+        border-color: var(--primary-color);
+        transform: translateX(-5px);
     }
     
-    /* REPRODUCTOR DE VIDEO (WRAPPER) */
+    /* REPRODUCTOR */
     .player-wrapper { 
         position: relative; 
         padding-bottom: 56.25%; /* 16:9 */
@@ -104,155 +98,87 @@
         background: #000; 
         border-radius: 16px; 
         overflow: hidden; 
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
-        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
         z-index: 50; 
+        border: 1px solid rgba(255,255,255,0.1);
     }
     
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
 
-    /* MODO TABLET / BOTÓN PLAY */
+    /* BOTÓN ESPECIAL PARA MÓVIL/TABLET */
     .tablet-play-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column;
         align-items: center; justify-content: center;
-        background: radial-gradient(circle, rgba(20,20,30,0.9) 0%, rgba(0,0,0,1) 100%);
+        background: radial-gradient(circle, rgba(20,20,20,0.9) 0%, rgba(0,0,0,1) 100%);
         z-index: 60;
     }
     
     .tablet-play-btn {
-        background: linear-gradient(135deg, var(--primary), #00c3ff); 
-        color: #000; border: none;
-        padding: 16px 40px; font-size: 1.1rem; border-radius: 50px;
-        cursor: pointer; 
-        box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
-        transition: transform 0.2s, box-shadow 0.2s; 
-        font-weight: 700; text-decoration: none;
+        background: #008cff; color: white; border: none;
+        padding: 15px 35px; font-size: 1.2rem; border-radius: 50px;
+        cursor: pointer; box-shadow: 0 0 20px rgba(0, 140, 255, 0.6);
+        transition: transform 0.2s; font-weight: bold; text-decoration: none;
         display: flex; align-items: center; gap: 10px;
     }
     .tablet-play-btn:active { transform: scale(0.95); }
-    .tablet-play-btn:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
 
-    /* TÍTULO DEL EPISODIO */
+    /* TEXTOS */
     h1 { 
         color: #fff; 
         font-size: 1.6rem; 
         margin-top: 25px; 
-        margin-bottom: 10px;
         text-align: center; 
-        font-weight: 700;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        text-shadow: 0 0 10px rgba(0,0,0,0.8);
     }
     
-    /* BOTONES DE CONTROL (Anterior, Siguiente, Descargar) */
-    .controls { 
-        margin-top: 30px; 
-        display: flex; 
-        justify-content: center; 
-        gap: 15px; 
-        flex-wrap: wrap; 
-    }
+    /* CONTROLES */
+    .controls { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
     
     .btn { 
-        padding: 12px 28px; 
-        background: rgba(255,255,255,0.05); 
-        border: 1px solid rgba(255,255,255,0.2);
-        color: var(--text-main); 
+        padding: 12px 30px; 
+        background: rgba(0, 255, 255, 0.1); 
+        border: 1px solid var(--primary-color);
+        color: #fff; 
         text-decoration: none; 
-        border-radius: 12px; 
+        border-radius: 50px; 
         cursor: pointer; 
-        transition: all 0.3s ease;
+        transition: 0.3s;
         font-weight: 600; 
         font-size: 0.9rem;
-        display: inline-flex;
-        align-items: center;
-        backdrop-filter: blur(5px);
     }
-    
     .btn:hover { 
-        background: var(--primary); 
+        background: var(--primary-color); 
         color: #000;
-        border-color: var(--primary);
-        box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
-        transform: translateY(-2px);
+        box-shadow: 0 0 15px var(--primary-color);
     }
-
-    #downloadBtn {
-        /* Gradiente morado brillante para destacar la descarga */
-        background: linear-gradient(135deg, #7b2cbf, #b5179e);
-        border: none;
-        box-shadow: 0 4px 15px rgba(123, 44, 191, 0.3);
-    }
-    #downloadBtn:hover {
-        background: linear-gradient(135deg, #9d4edd, #f72585);
-        color: #fff;
-        box-shadow: 0 4px 25px rgba(181, 23, 158, 0.5);
-    }
-
     .btn-hidden { display: none; }
     
     /* OPCIONES DE SERVIDOR */
-    .options { 
-        margin-top: 25px; 
-        display: flex; 
-        gap: 12px;
-        justify-content: center; 
-        flex-wrap: wrap; 
-    }
+    .options { margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .opt-btn { 
-        font-size: 0.85rem; 
-        padding: 8px 18px; 
-        border: 1px solid rgba(255,255,255,0.15); 
-        background: rgba(0,0,0,0.3); 
-        color: var(--text-dim); 
-        cursor: pointer; 
-        border-radius: 8px;
-        transition: all 0.3s;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
+        font-size: 0.9rem; padding: 8px 16px; border: 1px solid #555; 
+        background: rgba(0,0,0,0.6); color: #ccc; 
+        cursor: pointer; border-radius: 6px;
+        transition: 0.3s;
     }
-    .opt-btn:hover {
-        background: rgba(255,255,255,0.1);
-        color: #fff;
-        border-color: rgba(255,255,255,0.5);
-    }
+    .opt-btn:hover { background: rgba(255,255,255,0.1); color: white; }
     .opt-btn.active { 
-        border-color: var(--primary); 
-        color: #000; 
-        background: var(--primary); 
-        font-weight: 700;
-        box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        border-color: var(--primary-color); 
+        color: #fff; 
+        background: rgba(0, 255, 255, 0.2); 
     }
 
     /* COMENTARIOS */
-    .comments-section { 
-        margin-top: 50px; 
-        border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 30px; 
-    }
-    .comments-section h3 {
-        color: var(--primary);
-        margin-bottom: 20px;
-        font-size: 1.2rem;
-    }
-    .comments-placeholder { 
-        color: var(--text-dim);
-        text-align: center; 
-        font-style: italic; 
-        padding: 30px;
-        background: rgba(0,0,0,0.2);
-        border-radius: 12px;
-        border: 1px dashed rgba(255,255,255,0.1);
-    }
+    .comments-section { margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; }
+    .comments-placeholder { color: #aaa; text-align: center; font-style: italic; }
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-        .container { margin: 15px; padding: 20px; border-radius: 16px; }
+        .container { margin: 10px; padding: 15px; }
         h1 { font-size: 1.2rem; }
-        .btn { padding: 10px 20px; font-size: 0.85rem; width: 100%; justify-content: center; }
-        .controls { gap: 10px; }
     }
   </style>
 </head>
@@ -265,10 +191,7 @@
   <div id="overlay"></div>
 
   <div class="container">
-    <a href="#" id="backLink" class="back-btn">
-       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-       Volver al Anime
-    </a>
+    <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
 
     <div class="player-wrapper" id="playerContainer">
         </div>
@@ -279,9 +202,7 @@
 
     <div class="controls">
         <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank" download>
-            ⬇ Descargar
-        </a>
+        <a id="downloadBtn" class="btn" href="#" target="_blank" download>⬇ Descargar</a>
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
@@ -293,7 +214,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (Solo los 3 animes solicitados)
+    // 1. BASE DE DATOS (3 Primeros animes)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2834,7 +2755,7 @@
     };
 
 // -----------------------------------------------------------
-    // 2. LÓGICA (Intacta)
+    // 2. LÓGICA (Intacta, se encarga de crear el reproductor)
     // -----------------------------------------------------------
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
 
@@ -2843,7 +2764,6 @@
     const season = params.get('s');
     const episode = params.get('e');
     
-    // Obtención segura de datos
     const epData = DB[animeId]?.[season]?.[episode];
 
     document.getElementById('backLink').href = `anime-detail.html?id=${animeId}`;
@@ -2931,6 +2851,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
+            // Reproductor nativo (aquí es donde se carga el MP4/Dropbox)
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
