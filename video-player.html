@@ -9,7 +9,6 @@
     /* --- ESTILOS GENERALES --- */
     body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
     
-    /* Fondo de video (con pointer-events: none para no bloquear toques) */
     #bg-video { 
         position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
         object-fit: cover; z-index: -2; opacity: 0.3; 
@@ -35,7 +34,6 @@
         background: rgba(0,0,0,0.5); border-radius: 8px;
     }
     
-    /* --- REPRODUCTOR (Z-Index alto para Tablets) --- */
     .player-wrapper { 
         position: relative; 
         padding-bottom: 56.25%; /* 16:9 */
@@ -44,14 +42,30 @@
         border-radius: 12px; 
         overflow: hidden; 
         box-shadow: 0 0 30px rgba(0,255,255,0.15);
-        z-index: 50; /* Muy alto para asegurar clicabilidad */
-        -webkit-transform: translate3d(0,0,0); /* Aceleración iPad */
+        z-index: 50; 
     }
     
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
-        z-index: 51;
     }
+
+    /* Estilo especial para el Botón de Tablet dentro del reproductor */
+    .tablet-play-container {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        background: radial-gradient(circle, rgba(20,20,20,0.9) 0%, rgba(0,0,0,1) 100%);
+        z-index: 60;
+    }
+    
+    .tablet-play-btn {
+        background: #008cff; color: white; border: none;
+        padding: 15px 30px; font-size: 1.2rem; border-radius: 50px;
+        cursor: pointer; box-shadow: 0 0 20px rgba(0, 140, 255, 0.6);
+        transition: transform 0.2s; font-weight: bold; text-decoration: none;
+        display: flex; align-items: center; gap: 10px;
+    }
+    .tablet-play-btn:active { transform: scale(0.95); }
 
     h1 { color: #00fff7; font-size: 1.3rem; margin-top: 20px; text-align: center; }
     
@@ -62,7 +76,7 @@
         color: #fff; text-decoration: none; border-radius: 25px; cursor: pointer; transition: 0.2s;
         font-weight: bold; font-size: 0.9rem;
     }
-    .btn:hover, .btn:active { background: #0ff; color: #000; }
+    .btn:hover { background: #0ff; color: #000; }
     .btn-hidden { display: none; }
     
     .options { margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -72,24 +86,8 @@
     }
     .opt-btn.active { border-color: #0ff; color: #fff; background: rgba(0, 255, 255, 0.15); }
 
-    /* Mensaje de error / fallback */
-    .error-msg {
-        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        text-align: center; width: 90%; color: #ff5555;
-        z-index: 40; /* Debajo del video, visible si falla */
-    }
-    .open-external-btn {
-        margin-top: 10px; padding: 8px 16px; background: #333; color: #fff; 
-        border: 1px solid #fff; border-radius: 4px; cursor: pointer;
-    }
-
     .comments-section { margin-top: 50px; border-top: 1px solid #333; padding-top: 20px; }
     .comments-placeholder { color: #666; text-align: center; font-style: italic; }
-
-    /* Ajuste para tablets */
-    @media (hover: none) and (pointer: coarse) {
-        .player-wrapper iframe { pointer-events: auto !important; }
-    }
   </style>
 </head>
 <body>
@@ -112,19 +110,19 @@
 
     <div class="controls">
         <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank">⬇ Descargar / Ver Externo</a>
+        <a id="downloadBtn" class="btn" href="#" target="_blank" download>⬇ Descargar</a>
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
     <div class="comments-section">
         <h3>Comentarios</h3>
-        <div class="comments-placeholder">Zona de comentarios en construcción.</div>
+        <div class="comments-placeholder">Zona de comentarios disponible pronto.</div>
     </div>
   </div>
 
   <script>
     // -----------------------------------------------------------
-    // BASE DE DATOS (3 Primeros animes + Estructura lista)
+    // 1. BASE DE DATOS (3 Primeros animes)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2665,66 +2663,73 @@
     };
 
 // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR OPTIMIZADA PARA TABLETS
+    // 2. DETECCIÓN DE TABLET / MÓVIL
     // -----------------------------------------------------------
+    // Detectamos si es un dispositivo táctil (Android, iPhone, iPad, Tablet)
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
+    
+    // Obtención segura de datos
     const epData = DB[animeId]?.[season]?.[episode];
 
-    // Detección de dispositivo táctil/móvil
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
-
-    // Botón de regreso
     document.getElementById('backLink').href = `anime-detail.html?id=${animeId}`;
 
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
 
-        // Configurar botón de descarga / ver externo
-        const dlBtn = document.getElementById('downloadBtn');
-        const externalLink = (epData.link || epData.link2).replace('/preview', '/view');
-        dlBtn.href = externalLink;
-
-        // --- LÓGICA DE SELECCIÓN AUTOMÁTICA DE SERVIDOR ---
-        // Si estamos en tablet/móvil y existe link2 (Dropbox/MP4), úsalo por defecto.
-        // Dropbox/MP4 usa el reproductor nativo del dispositivo y nunca falla.
-        // Google Drive en iframe falla mucho en tablets por las cookies de terceros.
-        let defaultUrl = epData.link; // Por defecto Drive (PC)
-        let defaultOption = 1;
-
-        if (isMobile && epData.link2) {
-            defaultUrl = epData.link2;
-            defaultOption = 2;
-        } else if (!epData.link && epData.link2) {
-            defaultUrl = epData.link2;
-            defaultOption = 2;
-        }
-
-        // Crear botones de opciones
-        if(epData.link) createOptionBtn("Opción 1 (Drive)", epData.link, 1 === defaultOption);
-        if(epData.link2) createOptionBtn("Opción 2 (Nativo)", epData.link2, 2 === defaultOption);
-
         // Cargar video inicial
-        loadVideo(defaultUrl);
+        loadVideo(epData.link || epData.link2);
 
-        // Navegación (Anterior / Siguiente)
+        // Generar botones de servidores
+        if(epData.link) createOptionBtn("Opción 1 (Drive)", epData.link, true);
+        if(epData.link2) createOptionBtn("Opción 2 (Nativo)", epData.link2, false);
+
+        // --- LÓGICA DE DESCARGA DIRECTA ---
+        updateDownloadButton(epData.link || epData.link2);
+
+        // Navegación
         setupNavigation();
     } else {
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
     }
 
+    // Función para convertir link de drive PREVIEW a DOWNLOAD
+    function generateDirectDownloadLink(url) {
+        if (!url) return "#";
+        if (url.includes("drive.google.com")) {
+            // Extraer ID
+            const match = url.match(/\/d\/(.+?)\//);
+            if (match && match[1]) {
+                const id = match[1];
+                // Formato de exportación directa
+                return `https://drive.google.com/uc?export=download&id=${id}`;
+            }
+        }
+        // Para Dropbox u otros, devolver el link directo
+        return url.replace('?dl=0', '?dl=1');
+    }
+
+    function updateDownloadButton(url) {
+        const dlBtn = document.getElementById('downloadBtn');
+        const directLink = generateDirectDownloadLink(url);
+        dlBtn.href = directLink;
+    }
+
     function createOptionBtn(label, url, isActive) {
         const optContainer = document.getElementById('serverOptions');
         const btn = document.createElement('button');
-        btn.className = 'opt-btn' + (isActive ? ' active' : '');
+        btn.className = 'opt-btn' + (isActive && optContainer.children.length === 0 ? ' active' : '');
         btn.innerText = label;
         btn.onclick = () => {
             document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             loadVideo(url);
+            updateDownloadButton(url); // Actualizar botón de descarga al cambiar server
         };
         optContainer.appendChild(btn);
     }
@@ -2733,55 +2738,44 @@
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; // Limpiar
         
-        // Determinar tipo de video
         const isDrive = url.includes('drive.google.com');
 
+        // --- LÓGICA CRÍTICA PARA TABLET ---
+        // Si es Tablet/Móvil Y es un link de Drive -> Mostrar botón de apertura directa
+        if (isMobileDevice && isDrive) {
+            container.innerHTML = `
+                <div class="tablet-play-container">
+                    <p style="margin-bottom:15px; color:#ccc; text-align:center; width:80%;">
+                        Modo Tablet detectado: Pulsa para abrir el video
+                    </p>
+                    <a href="${url}" class="tablet-play-btn" target="_self">
+                        ▶ Reproducir Video
+                    </a>
+                </div>
+            `;
+            return; // Detenemos aquí, no creamos iframe
+        }
+
+        // Si es PC o no es Drive (es Dropbox/MP4), cargamos normal
         if (isDrive) {
-            // --- IFRAME GOOGLE DRIVE OPTIMIZADO PARA TABLET ---
             const iframe = document.createElement('iframe');
             iframe.src = url;
-            
-            // IMPORTANTE: NO USAR SANDBOX PARA DRIVE. 
-            // Drive necesita ejecutar scripts complejos que 'sandbox' suele romper en iOS.
-            // iframe.removeAttribute('sandbox'); 
-
-            iframe.setAttribute("frameborder", "0");
-            iframe.setAttribute("allow", "autoplay; encrypted-media; fullscreen; picture-in-picture");
-            // Ayuda a que Drive cargue sin enviar info de referencia que a veces bloquea
-            iframe.setAttribute("referrerpolicy", "no-referrer"); 
-            iframe.setAttribute("loading", "eager"); // Carga inmediata
-            
-            // Botón de rescate por si falla el iframe (Círculo de carga infinito)
-            const fallbackDiv = document.createElement('div');
-            fallbackDiv.className = 'error-msg';
-            fallbackDiv.innerHTML = `
-                <p style="font-size:0.8rem; opacity:0.7">¿El video no carga?</p>
-                <button class="open-external-btn" onclick="window.open('${url.replace('/preview','/view')}', '_blank')">
-                    ▶ Ver en ventana externa
-                </button>
-            `;
-            // Ponemos el botón de error detrás del iframe (z-index menor), si el iframe carga tapa esto.
-            // Si el iframe falla visualmente, a veces se ve esto, o el usuario puede usar el botón de descarga.
-            
+            iframe.setAttribute("allow", "autoplay; fullscreen");
+            iframe.setAttribute("allowfullscreen", "true");
+            iframe.style.position = "absolute";
+            iframe.style.top = "0"; iframe.style.left = "0";
+            iframe.style.width = "100%"; iframe.style.height = "100%";
+            iframe.style.border = "none";
             container.appendChild(iframe);
-            container.appendChild(fallbackDiv);
-
         } else {
-            // --- REPRODUCTOR NATIVO (Dropbox/MP4) ---
-            // Esta es la mejor opción para Tablets/Celulares
+            // Reproductor nativo (Dropbox/MP4) funciona en todo
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
-            video.autoplay = false; // Autoplay suele estar bloqueado en móviles
-            video.preload = "metadata";
-            video.setAttribute("playsinline", "true"); // CRÍTICO para iOS: evita que se ponga fullscreen solo
+            video.autoplay = false; 
+            video.playsInline = true; // Vital para iOS
             video.style.width = "100%";
             video.style.height = "100%";
-            
-            video.onerror = () => {
-                container.innerHTML = '<div style="color:red; padding:20px; text-align:center">Error cargando el video nativo. Prueba la Opción 1.</div>';
-            };
-            
             container.appendChild(video);
         }
     }
@@ -2790,7 +2784,6 @@
         try {
             if (DB[animeId]) {
                 let flatList = [];
-                // Aplanar la estructura de temporadas/episodios para navegar fácil
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
@@ -2800,19 +2793,20 @@
                 });
 
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
-                
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
 
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
+                    prevBtn.style.display = 'inline-block';
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
                 if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
                     const nextItem = flatList[currentIndex + 1];
                     nextBtn.classList.remove('btn-hidden');
+                    nextBtn.style.display = 'inline-block';
                     nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
                 }
             }
