@@ -15,9 +15,10 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.65); /* Fondo semitransparente para el contenedor */
+        --glass-bg: rgba(16, 16, 28, 0.75); /* Fondo un poco más sólido para legibilidad */
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
+        --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
     }
 
     /* --- ESTILOS GENERALES --- */
@@ -46,14 +47,14 @@
       top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.6) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.7) 100%);
       pointer-events: none;
     }
     
     /* --- CONTENEDOR PRINCIPAL (EFECTO VIDRIO) --- */
     .container { 
         max-width: 1100px; 
-        margin: 40px auto; 
+        margin: 40px auto;
         padding: 30px; 
         position: relative; 
         z-index: 10;
@@ -82,8 +83,9 @@
         background: rgba(0, 255, 247, 0.2);
         border-color: var(--primary-color);
         transform: translateX(-5px);
+        box-shadow: 0 0 10px rgba(0, 255, 247, 0.3);
     }
-    
+   
     /* REPRODUCTOR */
     .player-wrapper { 
         position: relative; 
@@ -93,7 +95,7 @@
         border-radius: 16px;
         overflow: hidden; 
         box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        z-index: 50; 
+        z-index: 50;
         border: 1px solid rgba(255,255,255,0.1);
     }
     
@@ -105,7 +107,8 @@
     .tablet-play-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column;
-        align-items: center; justify-content: center;
+        align-items: center;
+        justify-content: center;
         background: radial-gradient(circle, rgba(20,20,20,0.9) 0%, rgba(0,0,0,1) 100%);
         z-index: 60;
     }
@@ -124,7 +127,7 @@
     h1 { 
         color: #fff; 
         font-size: 1.6rem; 
-        margin-top: 25px; 
+        margin-top: 25px;
         text-align: center; 
         text-shadow: 0 0 10px rgba(0,0,0,0.8);
     }
@@ -141,7 +144,7 @@
         border-radius: 50px; 
         cursor: pointer; 
         transition: 0.3s;
-        font-weight: 600; 
+        font-weight: 600;
         font-size: 0.9rem;
     }
     /* Estilo específico para el botón de descargar en Rosado */
@@ -196,20 +199,47 @@
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
     }
 
-    /* Comentarios */
+    /* --- NUEVO DISEÑO DE COMENTARIOS --- */
     .comments-section { 
-        margin-top: 60px; 
+        margin-top: 50px; 
         border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 30px; 
+        padding-top: 40px; 
     }
-   
-    .comments-section h3 {
-        color: var(--primary-color);
+
+    .comments-box {
+        background: rgba(0, 0, 0, 0.4); /* Fondo más oscuro para la caja */
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid rgba(0, 255, 247, 0.15); /* Borde sutil cian */
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .comments-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         margin-bottom: 20px;
-        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary-color);
+        width: fit-content;
+    }
+
+    .comments-header h3 {
+        color: #fff;
+        margin: 0;
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 0 0 8px var(--primary-color);
+    }
+
+    .comment-icon {
+        font-size: 1.4rem;
+        color: var(--primary-color);
+        filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
-    /* Utterances container adjustment */
+    /* Ajuste para el iframe de utterances */
     .utterances {
         max-width: 100%;
     }
@@ -219,6 +249,8 @@
         .container { margin: 10px; padding: 15px; }
         h1 { font-size: 1.1rem; }
         .btn { padding: 10px 20px; font-size: 0.85rem; }
+        .comments-box { padding: 15px; }
+        .comments-header h3 { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -234,8 +266,7 @@
   
    <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
 
-    <div class="player-wrapper" id="playerContainer">
-    </div>
+    <div class="player-wrapper" id="playerContainer"></div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -248,15 +279,21 @@
     </div>
 
     <div class="comments-section">
-        <h3>Comentarios</h3>
-        <script src="https://utteranc.es/client.js"
-            repo="Archinime/Comentarios"
-            issue-term="url"
-            theme="icy-dark"
-            crossorigin="anonymous"
-            async>
-        </script>
+        <div class="comments-box">
+            <div class="comments-header">
+                <span class="comment-icon">💬</span>
+                <h3>Zona de Comentarios</h3>
+            </div>
+            <script src="https://utteranc.es/client.js"
+                repo="Archinime/Comentarios"
+                issue-term="url"
+                theme="blue-dark"
+                crossorigin="anonymous"
+                async>
+            </script>
+        </div>
     </div>
+
   </div>
 
   <script>
@@ -2810,7 +2847,6 @@
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
-    
     const epData = DB[animeId]?.[season]?.[episode];
 
     // Asignar link de volver
