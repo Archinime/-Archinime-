@@ -5,43 +5,107 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* --- ESTILOS GENERALES --- */
-    body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
-    
-    #bg-video { 
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-        object-fit: cover; z-index: -2; opacity: 0.3; 
-        pointer-events: none;
+    /* --- VARIABLES BASADAS EN TU ANIME-DETAIL --- */
+    :root {
+        --primary: #00f2ff;       /* Cian Neón Brillante */
+        --secondary: #9d00ff;     /* Morado Intenso */
+        --text-main: #ffffff;
+        --text-dim: #b3b3b3;
+        
+        /* Fondo semitransparente más claro para quitar la oscuridad */
+        --glass-bg: rgba(20, 20, 35, 0.65); 
+        --glass-border: rgba(255, 255, 255, 0.15);
+        --glow-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
     }
 
+    /* --- ESTILOS GENERALES --- */
+    body { 
+        margin: 0; 
+        background: #000; 
+        color: var(--text-main); 
+        font-family: 'Poppins', sans-serif; 
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+   
+    /* VIDEO DE FONDO */
+    #bg-video { 
+        position: fixed; 
+        top: 0; left: 0; 
+        width: 100%; height: 100%; 
+        object-fit: cover; 
+        z-index: -2; 
+        /* Sin opacidad forzada, dejamos que se vea brillante */
+    }
+
+    /* OVERLAY MEJORADO: Menos oscuro, degradado elegante */
     #overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%; 
       z-index: -1;
-      background: url('galaxia-morado1.avif') center/cover no-repeat;
+      /* Degradado de arriba a abajo: Transparente arriba -> Oscuro abajo */
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(5,5,10,0.8) 100%);
       pointer-events: none;
+      backdrop-filter: blur(3px); /* Un desenfoque muy leve para suavizar el video */
     }
     
+    /* CONTENEDOR PRINCIPAL: Estilo Cristal */
     .container { 
-        max-width: 1000px; margin: 20px auto; padding: 15px; 
+        max-width: 1100px; 
+        margin: 40px auto; 
+        padding: 35px; 
         position: relative; 
         z-index: 10;
+        
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        
+        /* Sombra con brillo (Glow) para que resalte */
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.03);
+        backdrop-filter: blur(12px);
     }
     
+    /* BOTÓN VOLVER */
     .back-btn { 
-        display: inline-block; color: #0ff; text-decoration: none; 
-        margin-bottom: 15px; font-weight: bold; padding: 10px;
-        background: rgba(0,0,0,0.5); border-radius: 8px;
+        display: inline-flex; 
+        align-items: center;
+        gap: 8px;
+        color: var(--text-main); 
+        text-decoration: none; 
+        margin-bottom: 25px; 
+        font-weight: 500; 
+        font-size: 0.95rem;
+        padding: 8px 16px;
+        background: rgba(255,255,255,0.05); 
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+        background: rgba(0, 242, 255, 0.15);
+        border-color: var(--primary);
+        color: var(--primary);
+        transform: translateX(-3px);
     }
     
+    /* REPRODUCTOR DE VIDEO (WRAPPER) */
     .player-wrapper { 
         position: relative; 
         padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
         background: #000; 
-        border-radius: 12px; 
+        border-radius: 16px; 
         overflow: hidden; 
-        box-shadow: 0 0 30px rgba(0,255,255,0.15);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255,255,255,0.1);
         z-index: 50; 
     }
     
@@ -49,45 +113,147 @@
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
 
-    /* Estilo especial para el Botón de Tablet dentro del reproductor */
+    /* MODO TABLET / BOTÓN PLAY */
     .tablet-play-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column;
         align-items: center; justify-content: center;
-        background: radial-gradient(circle, rgba(20,20,20,0.9) 0%, rgba(0,0,0,1) 100%);
+        background: radial-gradient(circle, rgba(20,20,30,0.9) 0%, rgba(0,0,0,1) 100%);
         z-index: 60;
     }
     
     .tablet-play-btn {
-        background: #008cff; color: white; border: none;
-        padding: 15px 30px; font-size: 1.2rem; border-radius: 50px;
-        cursor: pointer; box-shadow: 0 0 20px rgba(0, 140, 255, 0.6);
-        transition: transform 0.2s; font-weight: bold; text-decoration: none;
+        background: linear-gradient(135deg, var(--primary), #00c3ff); 
+        color: #000; border: none;
+        padding: 16px 40px; font-size: 1.1rem; border-radius: 50px;
+        cursor: pointer; 
+        box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+        transition: transform 0.2s, box-shadow 0.2s; 
+        font-weight: 700; text-decoration: none;
         display: flex; align-items: center; gap: 10px;
     }
     .tablet-play-btn:active { transform: scale(0.95); }
+    .tablet-play-btn:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
 
-    h1 { color: #00fff7; font-size: 1.3rem; margin-top: 20px; text-align: center; }
+    /* TÍTULO DEL EPISODIO */
+    h1 { 
+        color: #fff; 
+        font-size: 1.6rem; 
+        margin-top: 25px; 
+        margin-bottom: 10px;
+        text-align: center; 
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
     
-    .controls { margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    /* BOTONES DE CONTROL (Anterior, Siguiente, Descargar) */
+    .controls { 
+        margin-top: 30px; 
+        display: flex; 
+        justify-content: center; 
+        gap: 15px; 
+        flex-wrap: wrap; 
+    }
     
     .btn { 
-        padding: 12px 25px; background: rgba(0, 255, 255, 0.1); border: 1px solid #0ff; 
-        color: #fff; text-decoration: none; border-radius: 25px; cursor: pointer; transition: 0.2s;
-        font-weight: bold; font-size: 0.9rem;
+        padding: 12px 28px; 
+        background: rgba(255,255,255,0.05); 
+        border: 1px solid rgba(255,255,255,0.2);
+        color: var(--text-main); 
+        text-decoration: none; 
+        border-radius: 12px; 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+        font-weight: 600; 
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        backdrop-filter: blur(5px);
     }
-    .btn:hover { background: #0ff; color: #000; }
+    
+    .btn:hover { 
+        background: var(--primary); 
+        color: #000;
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    #downloadBtn {
+        /* Gradiente morado brillante para destacar la descarga */
+        background: linear-gradient(135deg, #7b2cbf, #b5179e);
+        border: none;
+        box-shadow: 0 4px 15px rgba(123, 44, 191, 0.3);
+    }
+    #downloadBtn:hover {
+        background: linear-gradient(135deg, #9d4edd, #f72585);
+        color: #fff;
+        box-shadow: 0 4px 25px rgba(181, 23, 158, 0.5);
+    }
+
     .btn-hidden { display: none; }
     
-    .options { margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .opt-btn { 
-        font-size: 0.9rem; padding: 8px 16px; border: 1px solid #444; 
-        background: #1a1a1a; color: #aaa; cursor: pointer; border-radius: 4px;
+    /* OPCIONES DE SERVIDOR */
+    .options { 
+        margin-top: 25px; 
+        display: flex; 
+        gap: 12px;
+        justify-content: center; 
+        flex-wrap: wrap; 
     }
-    .opt-btn.active { border-color: #0ff; color: #fff; background: rgba(0, 255, 255, 0.15); }
+    .opt-btn { 
+        font-size: 0.85rem; 
+        padding: 8px 18px; 
+        border: 1px solid rgba(255,255,255,0.15); 
+        background: rgba(0,0,0,0.3); 
+        color: var(--text-dim); 
+        cursor: pointer; 
+        border-radius: 8px;
+        transition: all 0.3s;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
+    .opt-btn:hover {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border-color: rgba(255,255,255,0.5);
+    }
+    .opt-btn.active { 
+        border-color: var(--primary); 
+        color: #000; 
+        background: var(--primary); 
+        font-weight: 700;
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+    }
 
-    .comments-section { margin-top: 50px; border-top: 1px solid #333; padding-top: 20px; }
-    .comments-placeholder { color: #666; text-align: center; font-style: italic; }
+    /* COMENTARIOS */
+    .comments-section { 
+        margin-top: 50px; 
+        border-top: 1px solid rgba(255,255,255,0.1); 
+        padding-top: 30px; 
+    }
+    .comments-section h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+    .comments-placeholder { 
+        color: var(--text-dim);
+        text-align: center; 
+        font-style: italic; 
+        padding: 30px;
+        background: rgba(0,0,0,0.2);
+        border-radius: 12px;
+        border: 1px dashed rgba(255,255,255,0.1);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .container { margin: 15px; padding: 20px; border-radius: 16px; }
+        h1 { font-size: 1.2rem; }
+        .btn { padding: 10px 20px; font-size: 0.85rem; width: 100%; justify-content: center; }
+        .controls { gap: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -99,7 +265,10 @@
   <div id="overlay"></div>
 
   <div class="container">
-    <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
+    <a href="#" id="backLink" class="back-btn">
+       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+       Volver al Anime
+    </a>
 
     <div class="player-wrapper" id="playerContainer">
         </div>
@@ -110,7 +279,9 @@
 
     <div class="controls">
         <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank" download>⬇ Descargar</a>
+        <a id="downloadBtn" class="btn" href="#" target="_blank" download>
+            ⬇ Descargar
+        </a>
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
@@ -122,7 +293,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (3 Primeros animes)
+    // 1. BASE DE DATOS (Solo los 3 animes solicitados)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2663,9 +2834,8 @@
     };
 
 // -----------------------------------------------------------
-    // 2. DETECCIÓN DE TABLET / MÓVIL
+    // 2. LÓGICA (Intacta)
     // -----------------------------------------------------------
-    // Detectamos si es un dispositivo táctil (Android, iPhone, iPad, Tablet)
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
 
     const params = new URLSearchParams(location.search);
@@ -2689,7 +2859,7 @@
         if(epData.link) createOptionBtn("Opción 1", epData.link, true);
         if(epData.link2) createOptionBtn("Opción 2", epData.link2, false);
 
-        // --- LÓGICA DE DESCARGA DIRECTA ---
+        // Actualizar botón de descarga inicial
         updateDownloadButton(epData.link || epData.link2);
 
         // Navegación
@@ -2698,19 +2868,15 @@
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
     }
 
-    // Función para convertir link de drive PREVIEW a DOWNLOAD
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
         if (url.includes("drive.google.com")) {
-            // Extraer ID
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
                 const id = match[1];
-                // Formato de exportación directa
                 return `https://drive.google.com/uc?export=download&id=${id}`;
             }
         }
-        // Para Dropbox u otros, devolver el link directo
         return url.replace('?dl=0', '?dl=1');
     }
 
@@ -2729,7 +2895,7 @@
             document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             loadVideo(url);
-            updateDownloadButton(url); // Actualizar botón de descarga al cambiar server
+            updateDownloadButton(url);
         };
         optContainer.appendChild(btn);
     }
@@ -2739,9 +2905,7 @@
         container.innerHTML = ''; // Limpiar
         
         const isDrive = url.includes('drive.google.com');
-
-        // --- LÓGICA CRÍTICA PARA TABLET ---
-        // Si es Tablet/Móvil Y es un link de Drive -> Mostrar botón de apertura directa
+        
         if (isMobileDevice && isDrive) {
             container.innerHTML = `
                 <div class="tablet-play-container">
@@ -2753,10 +2917,9 @@
                     </a>
                 </div>
             `;
-            return; // Detenemos aquí, no creamos iframe
+            return;
         }
 
-        // Si es PC o no es Drive (es Dropbox/MP4), cargamos normal
         if (isDrive) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
@@ -2768,12 +2931,11 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
-            // Reproductor nativo (Dropbox/MP4) funciona en todo
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
             video.autoplay = false; 
-            video.playsInline = true; // Vital para iOS
+            video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
             container.appendChild(video);
@@ -2799,14 +2961,14 @@
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
-                    prevBtn.style.display = 'inline-block';
+                    prevBtn.style.display = 'inline-flex'; 
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
                 if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
                     const nextItem = flatList[currentIndex + 1];
                     nextBtn.classList.remove('btn-hidden');
-                    nextBtn.style.display = 'inline-block';
+                    nextBtn.style.display = 'inline-flex'; 
                     nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
                 }
             }
