@@ -21,7 +21,7 @@
 
     /* Fondo */
     #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
-    #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-poster.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
+    #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-morado1.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
 
     /* Header: sticky + altura mínima para consistencia */
     header{
@@ -197,8 +197,8 @@
 <body>
 
   <!-- Vídeo de fondo (preload reducido para mejorar carga inicial) -->
-  <video id="bg-video" poster="videoframe.jpg" autoplay muted loop playsinline preload="metadata">
-    <source src="fondonavidad.mp4" type="video/mp4">
+  <video id="bg-video" poster="galaxia-morado1.avif" autoplay muted loop playsinline preload="metadata">
+    <source src="galaxia.mp4" type="video/mp4">
     Tu navegador no soporta vídeo.
   </video>
   <div id="overlay" aria-hidden="true"></div>
@@ -269,7 +269,6 @@
         <option>Reverse Harem</option>
         <option>Road Movie</option>
         <option>Romance</option>
-        <option>Romance escolar</option>
         <option>RPG</option>
         <option>Slice of Life</option>
         <option>Sobrenatural</option>
@@ -349,7 +348,7 @@
       {id:3, title:"Konosuba", img:"konosubaportada.avif", rating:4.8, genres:["Aventura","Comedia","Fantasía","Sobrenatural","Isekai","Ecchi","Shōnen"]},
       {id:4, title:"Re:Zero − Empezar vida en otro mundo", img:"rezero.avif", rating:4.8, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Thriller psicológico","Terror psicológico","Isekai","Shōnen"]},
       {id:5, title:"Mushoku Tensei", img:"mushoku.avif", rating:4.8, genres:["Isekai","Ecchi","Romance","Harem","Acción","Aventura","Drama","Fantasía","Seinen"]},
-      {id:6, title:"Tensei Shitara Slime Datta Ken", aliases: ["That Time I Got Reincarnated as a Slime"], img:"slime.avif", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía","Shōnen"]},
+      {id:6, title:"Tensei Shitara Slime Datta Ken", aliases: ["That Time I Got Reincarnated as a Slime"], img:"slime.avif", rating:4.9, genres:["Comedia","Isekai","Acción","Aventura","Fantasía","Slice of Life","Shōnen"]},
       {id:7, title:"Saga of Tanya the Evil", aliases: ["Yōjo Senki"], img:"tanya1.avif", rating:4.8, genres:["Acción","Aventura","Fantasía","Militar","Drama","Ciencia ficción","Seinen"]},
       {id:8, title:"Akame Ga Kill", aliases: ["Akame ga Kiru"], img:"Akame1.avif", rating:4.6, genres:["Acción","Aventura","Drama","Fantasía oscura","Romance","Tragedia","Shōnen"]},
       {id:9, title:"To Be Hero X", img:"hero11.avif", rating:4.8, genres:["Acción","Comedia","Animación","Fantasía","Superhéroes","Seinen"]},
@@ -357,7 +356,7 @@
       {id:11, title:"Maou 2099", img:"maou2099portada.avif", rating:4.7, genres:["Ciencia ficción","Isekai Inverso","Acción","Fantasía","Cyberpunk","Shōnen"]},
       {id:12, title:"Wistoria: Wand and Sword", img:"wistoria.avif", rating:4.8, genres:["Fantasía","Aventura","Shōnen"]},
       {id:13, title:"Izure Saikyou no Renkinjutsushi", aliases: ["Possibly the Greatest Alchemist of All Time"], img:"Izure.avif", rating:4.6, genres:["Aventura","Comedia","Fantasía","Isekai","Shōnen"]},
-      {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", aliases: ["Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"], img:"alia.avif", rating:4.8, genres:["Comedia","Romance","Romance escolar","Escolar","Josei"]},
+      {id:14, title:"Alya Sometimes Hides Her Feelings in Russian", aliases: ["Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"], img:"alia.avif", rating:4.8, genres:["Comedia","Romance","Escolar","Josei"]},
       {id:15, title:"Reborn as a Vending Machine, I Now Wander the Dungeon", aliases: ["Jidōhanbaiki ni Umarekawatta Ore wa Meikyū ni Samayō"], img:"jidou.avif", rating:4.1, genres:["Fantasía","Isekai","Shōnen"]},
       {id:16, title:"kimi to boku no saigo no senjou", aliases: ["Our Last Crusade or the Rise of a New World"], img:"kimi22222.avif", rating:4.5, genres:["Acción","Fantasía","Romance","Militar","Seinen"]},
       {id:17, title:"The Gorilla God's Go- To Girl", aliases: ["Gorilla no Kami Kara Kago Sareta Reijō wa Ōritsu Kishidan de Kawaiigareru"], img:"gorila11.avif", rating:4.5, genres:["Fantasía","Comedia","Escolar","Romance","Shōjo"]},
@@ -371,7 +370,7 @@
       {id:25, title:"Kaiju No. 8", img:"kaijuportada.avif", rating:4.9, genres:["Sobrenatural","Fantasía oscura","Acción","Ciencia ficción","Aventura","Comedia","Kaiju","Shōnen"]},
       {id:26, title:"Zootopia", img:"zootopiaportada.avif", rating:4.7, genres:["Aventura","Comedia","Policial","Infantil","Familiar","Misterio","Animación","Dibujo Animado","Kodomo"]},
       {id:27, title:"Clevatess -Majuu no Ou to Akago", img:"Clevatessportada.avif", rating:4.8, genres:["Acción","Fantasía","Drama","Seinen"]},
-      {id:28, title:"Dr. Stone", img:"Dr._Stoneportada.avif", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Post-apocalíptico","Shōnen"]},
+      {id:28, title:"Dr. Stone", img:"Dr._Stoneportada.avif", rating:4.8, genres:["Ciencia ficción","Aventura","Comedia","Divulgación Científica","Post-apocalíptico","Shōnen"]},
       {id:29, title:"One Piece (Live Action)", img:"onepieceportada.avif", rating:4.8, genres:["Aventura","Comedia","Acción","Fantasía","Drama","Shōnen"]},
       {id:30, title:"Shoujo Ramune", img:"shoujoramuneportada.avif", rating:4.3, genres:["Hentai","Harem","Incesto","Seijin"]},
       {id:31, title:"To Your Eternity", aliases: ["Fumetsu no Anata e"], img:"fumetsuportada.avif", rating:4.8, genres:["Fantasía","Drama","Aventura","Sobrenatural","Shōnen"]},
@@ -560,9 +559,15 @@ function normalizeText(s){
       const audio = document.getElementById('bg-music');
       const hints = getPerformanceHints();
       const musicList = [
-        'Rakion Music Evento De Navidad 03.mp3',
-        'Rakion Music Evento De Navidad 02.mp3',
-        'Rakion Music Evento De Navidad 01.mp3',
+        'Nightcore - How Do You Do (Remix) ✕.mp3',
+        'Nightcore - Battlecry (Heart of Courage) (Lyrics).mp3',
+        'Nightcore - Monster [NMV].mp3',
+        'Nightcore - PLAY x Unity x Faded  Alan Walker (Mashup  Switching Vocals) Lyrics.mp3',
+        'Nightcore - Sweet Little Bumblebee (lyric video).mp3',
+        'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
+        'Nightcore - When You Leave (Numa Numa).mp3',
+        'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
+        'Nightcore - Yo y los que tuvieron etapa Vocaloid cuando suena 😼✨.mp3',
       ];
       let currentMusicIndex = Math.floor(Math.random() * musicList.length);
       function playByIndex(idx) {
