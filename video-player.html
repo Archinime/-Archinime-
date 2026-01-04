@@ -3,86 +3,395 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Reproductor - Archinime</title>
+  <title></title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <style>
-    /* --- ESTILOS GENERALES (PC Y CELULAR) --- */
-    body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
-    #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.3; }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #fff;
+    }
 
+    #bg-video {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: -2;
+    }
     #overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-      background: url('galaxia-morado1.avif') center/cover no-repeat;
-    }
-    
-    .container { max-width: 1000px; margin: 40px auto; padding: 20px; position: relative; }
-    .back-btn { display: inline-block; color: #0ff; text-decoration: none; margin-bottom: 15px; font-weight: bold; }
-    .player-wrapper { 
-        position: relative; padding-bottom: 56.25%; height: 0; 
-        background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,255,0.2);
-    }
-    .player-wrapper iframe, .player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-    h1 { color: #00fff7; font-size: 1.4rem; margin-top: 15px; }
-    .controls { margin-top: 20px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-    .btn { 
-        padding: 10px 20px; background: rgba(255,255,255,0.1); border: 1px solid #0ff; 
-        color: #fff; text-decoration: none; border-radius: 5px; cursor: pointer; transition: 0.3s;
-    }
-    .btn:hover { background: #0ff; color: #000; }
-    .btn-hidden { visibility: hidden; }
-    .options { margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
-    .opt-btn { font-size: 0.9rem; padding: 5px 10px; border: 1px solid #555; background: #222; color: #ccc; cursor: pointer; }
-    .opt-btn.active { border-color: #0ff; color: #fff; background: #333; }
-
-    /* --- CAMBIOS SOLO PARA TABLETS (768px a 1024px) --- */
-    @media only screen and (min-width: 768px) and (max-width: 1024px) {
-      #bg-video {
-        display: none !important; /* Elimina el video de fondo */
-      }
-      #overlay {
-        z-index: -1; /* Pone la imagen de fondo detrás de todo */
-        opacity: 1;  /* Asegura que se vea la imagen del poster */
-      }
-      body {
-        background: none; /* Evita conflictos de color */
-      }
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); z-index: -1;
     }
 
-    /* Comentarios Simulados */
-    .comments-section { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }
-    .comments-placeholder { color: #888; text-align: center; font-style: italic; }
+    .container {
+      position: relative; z-index: 0;
+      max-width: 980px;
+      margin: 80px auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    h1.chapter-title {
+      margin-bottom: 15px;
+      font-size: 1.6rem;
+      text-align: center;
+      color: #0ff;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color .3s;
+      cursor: pointer;
+    }
+    .back:hover { color: #08c; }
+
+    .player-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    /* media-container: el rectángulo que comparten iframe/video/loader */
+    .media-container {
+      position: relative;
+      width: 100%;
+      border-radius: 6px;
+      background: #000;
+      overflow: hidden;
+      display: block;
+    }
+
+    /* removemos alturas fijas en CSS: las asignamos en px desde JS */
+    video#player, iframe#drive-iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      background: #000;
+      display: block;
+      transition: opacity 0.35s ease;
+      opacity: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
+      border: none;
+    }
+
+    .player-error {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.7);
+      color: #ffdddd;
+      z-index: 120;
+      pointer-events: none;
+      border: 1px solid rgba(255,0,0,0.25);
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .player-error.show { display: flex; pointer-events: auto; }
+
+    .player-error button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .actions {
+      margin-top: 15px;
+      display: flex; flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .actions a {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      transition: background .3s, transform .2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .actions a:hover {
+      background: rgba(0,255,255,0.2);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 6px 2px rgba(0,255,255,0.35); transform: translateY(0); }
+      50% { box-shadow: 0 0 18px 6px rgba(0,255,255,0.55); transform: translateY(-2px); }
+      100% { box-shadow: 0 0 6px 2px rgba(0,255,255,0.35); transform: translateY(0); }
+    }
+    .actions a.active {
+      color: #000;
+      background: linear-gradient(90deg,#aafaff,#00ffc2);
+      animation: pulse 1.6s infinite;
+      box-shadow: 0 0 12px 6px rgba(0,255,255,0.45);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: #0ff;
+      color: #000;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,255,255,0.4);
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    @keyframes popin {
+      from { transform:translateX(-50%) scale(0.5) translateY(20px); opacity:0; }
+      to   { transform:translateX(-50%) scale(1)   translateY(0);    opacity:1; }
+    }
+    .toast-in { animation-duration: 0.6s; }
+
+    @keyframes popout {
+      from { transform:translateX(-50%) scale(1)   translateY(0);    opacity:1; }
+      to   { transform:translateX(-50%) scale(0.5) translateY(-20px); opacity:0; }
+    }
+    .toast-out { animation-duration: 0.7s; }
+
+    .nav-chapters {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-chapters a {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background .3s, transform .2s;
+      cursor: pointer; /* <-- FIX: asegura que la manito aparezca al pasar el cursor */
+      user-select: none;
+    }
+    .nav-chapters a:hover {
+      background: rgba(0,255,255,0.2);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    .nav-chapters a#next { margin-left: auto; }
+
+    /* ----------------- LOADER (AHORA DENTRO DE media-container, inset:0) ----------------- */
+    .loading-overlay {
+      position: absolute;
+      inset: 0; /* ocupa exactamente el mismo rect que video/iframe */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+      border-radius: 6px;
+      z-index: 1000; /* por encima del media */
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px) scale(.995);
+      transition: opacity .2s ease, transform .25s ease;
+      will-change: opacity, transform;
+      overflow: hidden;
+    }
+    .loading-overlay.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto; /* bloquea interacción con el media mientras carga */
+    }
+
+    /* loader dentro del mismo contenedor (100% del media-container) */
+    .loader-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+
+    /* el video de carga ocupará el 100% del area (pero con object-fit: contain para verse completo) */
+    #loader-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #000;
+      z-index: 1002;
+    }
+
+    .loader-frame {
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 1003;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .loading-caption {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1005;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #e8ffff;
+      user-select: none;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(170,250,255,0.06);
+    }
+
+    .dots { display: inline-flex; gap: 5px; align-items: center; margin-left: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(180deg,#aafaff,#00ffc2); opacity:0.25; animation: dotPulse 1s infinite; }
+    .dot:nth-child(1){animation-delay:0s}.dot:nth-child(2){animation-delay:0.15s}.dot:nth-child(3){animation-delay:0.3s}
+    @keyframes dotPulse {0%{opacity:0.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-6px)}80%{opacity:0.35;transform:translateY(0)}100%{opacity:0.25;transform:translateY(0)}}
+
+    /* responsive tweaks */
+    @media (max-width: 900px) {
+      .container { max-width: 100%; margin: 40px 12px; padding: 12px; }
+      .loading-caption { font-size: 0.85rem; padding: 6px 10px; bottom: 10px; }
+    }
+    @media (max-width: 600px) {
+      /* ajustes de mobile si quieres más tarde */
+    }
   </style>
 </head>
 <body>
-
-  <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
-    <source src="galaxia.mp4" type="video/mp4">
+  <video id="bg-video" autoplay loop muted playsinline>
+    <source src="https://www.dropbox.com/scl/fi/ckoormrj6fgd6zcw0xgwq/galaxia.mp4?raw=1" type="video/mp4">
   </video>
-
   <div id="overlay"></div>
 
-  <div class="container">
-    <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
+  <div class="container" id="container">
+    <h1 class="chapter-title" id="chapter-title"></h1>
+    <a id="back" class="back">← Volver</a>
 
-    <div class="player-wrapper" id="playerContainer"></div>
+    <div class="player-wrap" id="player-wrap">
+      <!-- Contenedor compartido: vídeo, iframe y loader ocupan exactamente esta caja -->
+      <div class="media-container" id="media-container">
+        <!-- IMPORTANTE: quitamos 'muted' para que los mp4 (Dropbox) conserven audio -->
+        <video id="player" controls autoplay playsinline></video>
 
-    <div class="options" id="serverOptions"></div>
+        <!-- LOADING OVERLAY: inset:0 dentro de media-container -->
+        <div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+          <div class="loader-inner" id="loader-inner">
+            <video id="loader-video" autoplay loop muted playsinline preload="auto">
+              <source src="run1.mp4" type="video/mp4">
+            </video>
+            <div class="loader-frame" aria-hidden="true"></div>
+          </div>
 
-    <h1 id="epTitle">Cargando episodio...</h1>
+          <div class="loading-caption" role="status" aria-live="polite">
+            Cargando
+            <span class="dots" aria-hidden="true">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </span>
+          </div>
+        </div>
 
-    <div class="controls">
-        <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank">⬇ Descargar</a>
-        <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
+        <!-- Audio del loader: se reproduce en bucle mientras el overlay esté visible -->
+        <audio id="loader-audio" loop preload="auto" aria-hidden="true">
+          <source src="onichan1.mp3" type="audio/mpeg">
+        </audio>
+
+        <div id="player-error" class="player-error" role="alert">
+          <div>
+            <div id="player-error-text">Error al cargar el video.</div>
+            <div>
+              <button id="player-error-retry">Reintentar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="comments-section">
-        <h3>Comentarios</h3>
-        <div class="comments-placeholder">La sección de comentarios estará disponible pronto.</div>
+    <div class="actions" id="actions">
+      <a id="opt1" data-opt="opt1">Opción 1</a>
+      <a id="opt2" data-opt="opt2" style="display:none;">Opción 2</a>
+      <a id="download" download>⤓ Descargar</a>
+      <a id="share">🔗 Compartir</a>
+    </div>
+
+    <div class="nav-chapters" id="nav-chapters">
+      <a id="prev" style="display:none;">⏮ Capítulo anterior</a>
+      <a id="next" style="display:none;">⏭ Siguiente capítulo</a>
     </div>
   </div>
 
+  <div id="toast" class="toast">✅ El enlace ha sido copiado</div>
+
   <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    const qs = new URLSearchParams(location.search),
+          anime = qs.get('anime'),
+          s = qs.get('s'),
+          e = qs.get('e');
+
+    const back = document.getElementById('back'),
+          player = document.getElementById('player'),
+          playerWrap = document.getElementById('player-wrap'),
+          mediaContainer = document.getElementById('media-container'),
+          dlLink = document.getElementById('download'),
+          sh = document.getElementById('share'),
+          toast = document.getElementById('toast'),
+          titleEl = document.getElementById('chapter-title'),
+          prev = document.getElementById('prev'),
+          next = document.getElementById('next'),
+          opt1Btn = document.getElementById('opt1'),
+          opt2Btn = document.getElementById('opt2'),
+          playerError = document.getElementById('player-error'),
+          playerErrorText = document.getElementById('player-error-text'),
+          playerRetryBtn = document.getElementById('player-error-retry'),
+          loadingOverlay = document.getElementById('loading-overlay'),
+          loaderVideo = document.getElementById('loader-video'),
+          loaderInner = document.getElementById('loader-inner'),
+          loaderAudio = document.getElementById('loader-audio');
+
+    /* -------------------------------------------------------------
+       DB: conservada íntegra en tu archivo original (no la borré).
+    ------------------------------------------------------------- */
     const DB = {
       "1": {
         "1": {
@@ -408,23 +717,15 @@
         },
         "4": {
           "1": { link:'https://drive.google.com/file/d/1OLe6G49k_NzKOkuzyGOtQf-10QvnH_oc/preview', link2:'https://www.dropbox.com/scl/fi/qe68tplarmtxdk0rdgo7v/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-3.mp4?rlkey=swantjta9zwj59tfvuwa8gfie&st=scx8f532&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 3' },
+          "2": { link:'https://drive.google.com/file/d/1TDojIN_T7V_Y6ki7onU1WQii13XJOMlN/preview', link2:'https://www.dropbox.com/scl/fi/h9haq0noqzt42uzchukyp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-4.mp4?rlkey=niv26dx2iiuduetxn2q32r2ns&st=3q847623&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 4' },
+          "3": { link:'https://drive.google.com/file/d/1gSGUZXCp7jAYM_6CLUBfBQ3F6VhC0gKZ/preview', link2:'https://www.dropbox.com/scl/fi/c1m3ykx8rzhag5sqvqdb3/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-5.mp4?rlkey=vj1p96f27j5ojxu8lskfp8yo5&st=fmmaj72k&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 5' },
         },
         "5": {
-          "1": { link:'https://drive.google.com/file/d/1TDojIN_T7V_Y6ki7onU1WQii13XJOMlN/preview', link2:'https://www.dropbox.com/scl/fi/h9haq0noqzt42uzchukyp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-4.mp4?rlkey=niv26dx2iiuduetxn2q32r2ns&st=3q847623&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 4' },
+          "1": { link:'https://drive.google.com/file/d/1DAOXIRNPIVf5Hk0F7NUA8nKr7Hvr_BNm/preview', link2:'https://www.dropbox.com/scl/fi/wn1mj5866g19ru1oeflst/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-1.mp4?rlkey=qeve4wwo9h92jdt51dr12may6&st=vffdbn2n&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 1' },
+          "2": { link:'https://drive.google.com/file/d/1LVFc56_oCP4oQfJYEyZ2mKozJzvcGYXz/preview', link2:'https://www.dropbox.com/scl/fi/ofego48zdjtnhh17guu81/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-3.mp4?rlkey=ol4r0bsb3ir6d3da1f0pwlxcs&st=vc231rrf&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 2' },
+          "3": { link:'https://drive.google.com/file/d/199mFTTI00pn3wn1OkT01RsUryA7Yhe0n/preview', link2:'https://www.dropbox.com/scl/fi/uybxp5xjjwx99ob2bb8ux/FDownloader.Net_AQOhjAIXNx3QiC6NQpKOxF6_qlOyAG1m_ua6kqDvbZXXc-yn26Qb0Sgp1r10GbmemSNKzhEN-6LhJhZQp8s3QFjsLfvvPsfhWE7NtbdlTuV7N4EyTWJN4DhcGXIQRpysOo8Bs1yiNw_720p_-HD.mp4?rlkey=6x2yal7i0h8ut1gdofw231pwa&st=y13ci5lv&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 3' },
         },
         "6": {
-          "1": { link:'https://drive.google.com/file/d/1gSGUZXCp7jAYM_6CLUBfBQ3F6VhC0gKZ/preview', link2:'https://www.dropbox.com/scl/fi/c1m3ykx8rzhag5sqvqdb3/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-5.mp4?rlkey=vj1p96f27j5ojxu8lskfp8yo5&st=fmmaj72k&raw=1', title:'Tensei Shitara Slime Datta Ken OVA 5' },
-        },
-        "7": {
-          "1": { link:'https://drive.google.com/file/d/1DAOXIRNPIVf5Hk0F7NUA8nKr7Hvr_BNm/preview', link2:'https://www.dropbox.com/scl/fi/wn1mj5866g19ru1oeflst/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-1.mp4?rlkey=qeve4wwo9h92jdt51dr12may6&st=vffdbn2n&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 1' },
-        },
-        "8": {
-          "1": { link:'https://drive.google.com/file/d/1LVFc56_oCP4oQfJYEyZ2mKozJzvcGYXz/preview', link2:'https://www.dropbox.com/scl/fi/ofego48zdjtnhh17guu81/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-3.mp4?rlkey=ol4r0bsb3ir6d3da1f0pwlxcs&st=vc231rrf&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 2' },
-        },
-        "9": {
-          "1": { link:'https://drive.google.com/file/d/199mFTTI00pn3wn1OkT01RsUryA7Yhe0n/preview', link2:'https://www.dropbox.com/scl/fi/uybxp5xjjwx99ob2bb8ux/FDownloader.Net_AQOhjAIXNx3QiC6NQpKOxF6_qlOyAG1m_ua6kqDvbZXXc-yn26Qb0Sgp1r10GbmemSNKzhEN-6LhJhZQp8s3QFjsLfvvPsfhWE7NtbdlTuV7N4EyTWJN4DhcGXIQRpysOo8Bs1yiNw_720p_-HD.mp4?rlkey=6x2yal7i0h8ut1gdofw231pwa&st=y13ci5lv&raw=1', title:'Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 3' },
-        },
-        "10": {
           "1": { link:'https://drive.google.com/file/d/1HIkFIX-Icpt-dVz47PTQud8v7uipzV5Q/preview', link2:'https://www.dropbox.com/scl/fi/1xrcdui64y7a3bjmw9z9e/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-1.mp4?rlkey=2gekwanefsudfm8rv9vjrh5qb&st=kwhutwym&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 1' },
           "2": { link:'https://drive.google.com/file/d/1lxeZyVCNUpkcjj6z9yxc73Cq2-ZYQd8d/preview', link2:'https://www.dropbox.com/scl/fi/6bfo3d4qcmj6lrq1um8b8/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-2.mp4?rlkey=v0nibj1sqtdmhnhkqcsqp9knz&st=c8wn9gg3&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 2' },
           "3": { link:'https://drive.google.com/file/d/16mVEtH6eGkD8JSUlhvmT-gbXm-0NQs81/preview', link2:'https://www.dropbox.com/scl/fi/git43h8dvs7wwxkbbvxsz/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-3.mp4?rlkey=kj4g50ipiuf4093b2icvzq025&st=q6w0k207&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 3' },
@@ -438,7 +739,7 @@
           "11": { link:'https://drive.google.com/file/d/1Y-WGghDFYrO7CS3jU7WyCfXUPE776OdY/preview', link2:'https://www.dropbox.com/scl/fi/mn9vmddoweo1bf3yd715q/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-11.mp4?rlkey=peixn7mjh9qc3yc7adsnknx6l&st=d0l0inzy&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 11' },
           "12": { link:'https://drive.google.com/file/d/1kBbspc8xIPA1QevIAJy-T42dB824Y5i8/preview', link2:'https://www.dropbox.com/scl/fi/vjbhsoxhitcdgbujzo9rm/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-12.mp4?rlkey=fgi9gn0an7jittqb68lqyv8l6&st=en0ppejy&raw=1', title:'Tensura Nikki Tensei shitara Slime Datta Ken Cap 12' },
         },
-        "11": {
+        "7": {
           "1": { link:'https://drive.google.com/file/d/1YBLh6shTfgXdNG3Q0lM3_CePf1Vx916j/preview', link2:'https://www.dropbox.com/scl/fi/jz5hsw8llga7bgzsgeby0/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-1.mp4?rlkey=23j042475e3xhcogn23xcg1g5&st=92eb4iqa&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 1' },
           "2": { link:'https://drive.google.com/file/d/1Ls_cIaXHHUggplOK8TSEvYHgUIM1LImS/preview', link2:'https://www.dropbox.com/scl/fi/q4ucsuyiyeafz98oqcix7/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-2.mp4?rlkey=9thrgmgh23p6h0xj6h28feoya&st=s4b2fteo&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 2' },
           "3": { link:'https://drive.google.com/file/d/1NaSGLn55jNVW0o1hab695qbNIzmQWK9r/preview', link2:'https://www.dropbox.com/scl/fi/tggrxjealnpqz1sblf25b/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-3.mp4?rlkey=emr6lo7d1euye8maeplmxblg3&st=6tr37ma4&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 3' },
@@ -464,10 +765,10 @@
           "23": { link:'https://drive.google.com/file/d/14AXW4wpnNzoL6Mjh6tma96qpO4DM12cm/preview', link2:'https://www.dropbox.com/scl/fi/i2xmfueynvv3skfa8180p/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-23.mp4?rlkey=11byqgo3sr5cnqqrjr76qg759&st=svlpi5wt&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 23' },
           "24": { link:'https://drive.google.com/file/d/1cW3jstUnOplsNHrKYfX3XII280e0YL-t/preview', link2:'https://www.dropbox.com/scl/fi/ccq7b0pcnoflx5q9zi8f6/Tensei-Shitara-Slime-Datta-Ken-T2-Cap-24.mp4?rlkey=z298tlgob7v86rqq69k50ticd&st=o9gmm9j4&raw=1', title:'Tensei Shitara Slime Datta Ken T2 Cap 24' },
         },
-        "12": {
+        "8": {
           "1": { link:'https://drive.google.com/file/d/1G6OdJPIg7dQlXKSGvIs5DmzjRcxgyDKM/preview', link2:'https://www.dropbox.com/scl/fi/m6566spuq1ogelsnd4fiz/Tensei-Shitara-Slime-Datta-Ken-T3-PELICULA-EL-VINCULO-ESCARLATA.mp4?rlkey=52hl9araz4b7gdhdldvr4y3cg&st=drxxxh1g&raw=1', title:'Tensei Shitara Slime Datta Ken  Pelicula 1 \"El Vinculo Escarlata\"' },
         },
-        "13": {
+        "9": {
           "1":  { link:'https://drive.google.com/file/d/11N1Zk3xn01alDztlXLKcUg9tRdgZMFeq/preview', link2:'https://www.dropbox.com/scl/fi/7xe3tnmoguj7muqpqjfwj/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-0.mp4?rlkey=jjs6qbwdy7ylsjm3tx5a3hvhf&st=pd3qlj1x&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 0' },
           "2":  { link:'https://drive.google.com/file/d/1H_QKZDtt1s0V4TQgT0osuqp4SityLeyN/preview', link2:'https://www.dropbox.com/scl/fi/19q7cn1v2kcb9chs6d7uz/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-1.mp4?rlkey=ogbzz286t6dowd3ra8v8l922k&st=5rfp7sl2&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 1' },
           "3":  { link:'https://drive.google.com/file/d/11odoatocdnseJlNEupu0HUrJnBlcJz-u/preview', link2:'https://www.dropbox.com/scl/fi/iz5kzp5yanxme21jpvcf8/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-2.mp4?rlkey=r9py4fr3gg35hi5q4iyhu83q8&st=tsv15jyw&raw=1', title:'Tensei Shitara Slime Datta Ken T3 Cap 2' },
@@ -2627,83 +2928,476 @@
 
 
     };
-
-const params = new URLSearchParams(location.search);
-    const animeId = params.get('anime');
-    const season = params.get('s');
-    const episode = params.get('e');
-    const epData = DB[animeId]?.[season]?.[episode];
-
-    document.getElementById('backLink').href = `anime-detail.html?id=${animeId}`;
-
-    if (epData) {
-        document.title = `Ver ${epData.title} - Archinime`;
-        document.getElementById('epTitle').innerText = epData.title;
-        loadVideo(epData.link || epData.link2);
-        
-        const dlBtn = document.getElementById('downloadBtn');
-        dlBtn.href = (epData.link || epData.link2).replace('/preview', '/view');
-
-        if(epData.link) createOptionBtn("Opción 1", epData.link);
-        if(epData.link2) createOptionBtn("Opción 2", epData.link2);
-
-        // Lógica de navegación unificada
-        let flatList = [];
-        if (DB[animeId]) {
-            const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
-            seasons.forEach(sKey => {
-                const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
-                episodes.forEach(eKey => {
-                    flatList.push({ s: sKey, e: eKey });
-                });
-            });
-        }
-
-        const currentIndex = flatList.findIndex(item => item.s === season && item.e === episode);
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        if (currentIndex > 0) {
-            const prevItem = flatList[currentIndex - 1];
-            prevBtn.classList.remove('btn-hidden');
-            prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
-        }
-        if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
-            const nextItem = flatList[currentIndex + 1];
-            nextBtn.classList.remove('btn-hidden');
-            nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
-        }
+    /* ------------------ Altura/size consistente para media-container ------------------ */
+    function computePlayerAreaHeight() {
+      return Math.round(Math.min(window.innerHeight * 0.68, 900));
     }
 
-    function createOptionBtn(label, url) {
-        const optContainer = document.getElementById('serverOptions');
-        const btn = document.createElement('button');
-        btn.className = 'opt-btn';
-        btn.innerText = label;
-        btn.onclick = () => {
-            document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            loadVideo(url);
-        };
-        optContainer.appendChild(btn);
+    function applyPlayerAreaSize() {
+      const h = computePlayerAreaHeight();
+      if (mediaContainer) mediaContainer.style.height = h + 'px';
+      const iframe = document.getElementById('drive-iframe');
+      if (iframe) iframe.style.height = h + 'px';
+      if (player) player.style.height = h + 'px';
     }
 
-    function loadVideo(url) {
-        const container = document.getElementById('playerContainer');
-        container.innerHTML = '';
-        if (url.includes('drive.google.com')) {
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.allow = "autoplay; fullscreen";
-            container.appendChild(iframe);
+    /* =================== Helpers para el loader (dentro del media-container) =================== */
+    function tryPlayAudio(aud) {
+      if (!aud) return;
+      try {
+        const p = aud.play();
+        if (p && p.catch) p.catch(()=>{/* autoplay bloqueado o interacción necesaria */});
+      } catch (err) {}
+    }
+    function tryPauseAudio(aud) {
+      if (!aud) return;
+      try { aud.pause(); aud.currentTime = 0; } catch (err) {}
+    }
+
+    /**
+     * showLoader(opts)
+     * - opts = { video: true|false, overlay: true|false }
+     * - por defecto muestra video + overlay (compatibilidad con llamadas anteriores: showLoader() -> video:true, overlay:true)
+     *
+     * Cambio clave: si overlay === false entonces NO se mostrará el overlay ni la animación ni el audio.
+     */
+    function showLoader(opts = { video: true, overlay: true }) {
+      if (!loadingOverlay || !mediaContainer) return;
+      applyPlayerAreaSize();
+
+      const useVideo = (typeof opts.video === 'undefined') ? true : !!opts.video;
+      const useOverlay = (typeof opts.overlay === 'undefined') ? true : !!opts.overlay;
+
+      if (!useOverlay) {
+        // No mostrar overlay en absoluto (caso Drive preview)
+        loadingOverlay.classList.remove('show');
+        loadingOverlay.setAttribute('aria-hidden', 'true');
+
+        // Asegurar video/audio de loader detenidos y ocultos
+        if (loaderVideo) {
+          try { loaderVideo.pause(); loaderVideo.currentTime = 0; } catch (err) {}
+          loaderVideo.style.display = 'none';
+        }
+        tryPauseAudio(loaderAudio);
+
+        // restaurar z-index para player/iframe en caso de que se hayan modificado
+        const iframe = document.getElementById('drive-iframe');
+        if (iframe) iframe.style.zIndex = '';
+        player.style.zIndex = '';
+        return;
+      }
+
+      // Si llegamos aquí, overlay sí será mostrado
+      loadingOverlay.classList.add('show');
+      loadingOverlay.setAttribute('aria-hidden', 'false');
+
+      // bajar z-index de player/iframe para que loader (z-index alto) quede visible
+      const iframe = document.getElementById('drive-iframe');
+      if (iframe) iframe.style.zIndex = '10';
+      player.style.zIndex = '10';
+
+      if (loaderVideo) {
+        if (useVideo) {
+          // mostrar y reproducir el video de carga
+          loaderVideo.style.display = 'block';
+          try {
+            loaderVideo.currentTime = 0;
+            const p = loaderVideo.play();
+            if (p && p.catch) p.catch(()=>{/* autoplay bloqueado, frame mostrado */});
+          } catch (err) {}
+          tryPlayAudio(loaderAudio);
         } else {
-            const video = document.createElement('video');
-            video.src = url;
-            video.controls = true;
-            video.autoplay = true;
-            container.appendChild(video);
+          // OCULTAR video de carga y pausar audio (caso en que queremos overlay pero sin video)
+          loaderVideo.style.display = 'none';
+          tryPauseAudio(loaderAudio);
         }
+      } else {
+        // si no existe loaderVideo, aseguramos audio detenido
+        tryPauseAudio(loaderAudio);
+      }
     }
+
+    function hideLoader() {
+      if (!loadingOverlay) return;
+      loadingOverlay.classList.remove('show');
+      loadingOverlay.setAttribute('aria-hidden', 'true');
+      try {
+        if (loaderVideo) {
+          loaderVideo.pause();
+          loaderVideo.currentTime = 0;
+          // restaurar display para próximas cargas (si fue ocultado antes)
+          loaderVideo.style.display = 'block';
+        }
+      } catch (err) {}
+      // pausar y reiniciar audio
+      tryPauseAudio(loaderAudio);
+
+      // restaurar z-index si hay iframe
+      const iframe = document.getElementById('drive-iframe');
+      if (iframe) iframe.style.zIndex = '';
+      player.style.zIndex = '';
+    }
+
+    // recalcular al cambiar tamaño
+    window.addEventListener('resize', () => {
+      applyPlayerAreaSize();
+    });
+
+    /* ------------------------------------------------------------- */
+    function getDriveFileId(url) {
+      if (!url) return null;
+      const m = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
+      if (m) return m[1];
+      const q = url.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+      if (q) return q[1];
+      return null;
+    }
+
+    function buildForcedDownloadLink(originalLink) {
+      if (!originalLink) return '#';
+      const driveId = getDriveFileId(originalLink);
+      if (driveId) return `https://drive.google.com/uc?export=download&id=${driveId}`;
+      if (originalLink.includes('raw=1')) {
+        return originalLink.replace(/raw=1$/, 'dl=1');
+      }
+      if (originalLink.includes('?')) {
+        return originalLink + '&dl=1';
+      }
+      return originalLink + '?dl=1';
+    }
+
+    /* ------------------ Player view helpers ------------------ */
+    let currentSource = null;
+    let tried = { opt1:false, opt2:false };
+    let episode = null;
+    let exclusiveMode = false;
+
+    function removeExistingDriveIframe() {
+      const prevIframe = document.getElementById('drive-iframe');
+      if (prevIframe) prevIframe.remove();
+    }
+
+    function clearVideoSources() {
+      const sources = Array.from(player.querySelectorAll('source'));
+      sources.forEach(s => s.remove());
+      try { player.pause(); } catch {}
+      player.removeAttribute('src');
+      try { player.load(); } catch {}
+      player.style.opacity = '0';
+    }
+
+    function resetPlayerView() {
+      removeExistingDriveIframe();
+      hidePlayerError();
+      if (player.parentElement !== mediaContainer) {
+        mediaContainer.appendChild(player);
+      }
+      player.style.display = 'block';
+      clearVideoSources();
+    }
+
+    function insertDrivePreview(fileId) {
+      resetPlayerView();
+      player.style.display = 'none';
+
+      const iframe = document.createElement('iframe');
+      iframe.id = 'drive-iframe';
+      iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
+      iframe.width = '100%';
+      iframe.height = computePlayerAreaHeight();
+      iframe.frameBorder = 0;
+      iframe.allow = 'autoplay; encrypted-media; fullscreen';
+      iframe.style.borderRadius = '6px';
+      iframe.style.opacity = '0';
+      iframe.style.position = 'absolute';
+      iframe.style.left = '0';
+      iframe.style.top = '0';
+      iframe.style.zIndex = '10';
+      mediaContainer.appendChild(iframe);
+      setTimeout(()=> iframe.style.opacity = '1', 50);
+
+      // LLAMADA MODIFICADA: no mostrar overlay ni video/audio de carga para previews de Drive
+      showLoader({ video: false, overlay: false });
+
+      // como no mostramos overlay, no necesitamos hideLoader al load, pero por seguridad ocultamos cualquier resto
+      iframe.addEventListener('load', () => {
+        // asegurar que overlay está oculto
+        hideLoader();
+      });
+    }
+
+    function showPlayerError(msg) {
+      playerErrorText.textContent = msg || 'Error al cargar el video.';
+      playerError.classList.add('show');
+      player.style.opacity = '0.25';
+      hideLoader();
+    }
+    function hidePlayerError() {
+      playerError.classList.remove('show');
+      player.style.opacity = '1';
+    }
+
+    /**
+     * setPlayerSource: carga SOLO la fuente seleccionada.
+     * - Si la fuente es Drive -> inserta iframe dentro de media-container.
+     * - Si la fuente es mp4 -> usa <video> dentro de media-container y le asigna la altura común.
+     */
+    function setPlayerSource(url, opts = { autoplay: true, label: 'Opción', exclusive: false }) {
+      if (!url) {
+        showToast('No hay enlace disponible para esta opción');
+        return;
+      }
+
+      exclusiveMode = !!opts.exclusive;
+
+      resetPlayerView();
+
+      // por defecto muestra overlay+video para mp4/directos
+      showLoader(); // por defecto {video:true, overlay:true}
+
+      const driveId = getDriveFileId(url);
+      if (driveId) {
+        insertDrivePreview(driveId);
+        dlLink.href = buildForcedDownloadLink(url);
+        currentSource = url;
+        opt1Btn.classList.toggle('active', opts.label === 'Opción 1');
+        opt2Btn.classList.toggle('active', opts.label === 'Opción 2');
+        return;
+      }
+
+      // mp4 (Dropbox / URL directo)
+      player.style.display = 'block';
+      clearVideoSources();
+
+      // fijar la altura del media-container y del <video>
+      applyPlayerAreaSize();
+
+      const src = document.createElement('source');
+      src.src = url;
+      src.type = 'video/mp4';
+      player.appendChild(src);
+
+      dlLink.href = buildForcedDownloadLink(url);
+      currentSource = url;
+
+      opt1Btn.classList.toggle('active', opts.label === 'Opción 1');
+      opt2Btn.classList.toggle('active', opts.label === 'Opción 2');
+
+      try {
+        const p = player.load();
+        if (opts.autoplay) {
+          const playPromise = player.play();
+          if (playPromise && playPromise.catch) playPromise.catch(()=>{/* autoplay bloqueado */});
+        }
+      } catch (err) {}
+
+      const failTimer = setTimeout(()=> {
+        if (player.readyState < 3) {
+          showToast('Uy… esto está tardando demasiado en cargar 🐢💤. Mejor pruebe otra opción.');
+        }
+      }, 12000);
+    }
+
+    /* ---------- Manejador de errores y fallback ---------- */
+    function handlePlaybackError() {
+      hideLoader();
+      if (!episode) {
+        showPlayerError('Error de reproducción.');
+        return;
+      }
+      const l1 = episode.link || null;
+      const l2 = episode.link2 || episode.alt || null;
+
+      if (exclusiveMode) {
+        showToast('Error de reproducción en modo exclusivo. No se cambiará de opción.', 3500);
+        showPlayerError('Error de reproducción. Modo exclusivo activo — no se hará fallback.');
+        return;
+      }
+
+      if (currentSource === l1 && l2 && !tried.opt2) {
+        tried.opt2 = true;
+        showToast('Opción 1 falló — probando Opción 2…', 3500);
+        setPlayerSource(l2, { autoplay:true, label:'Opción 2', exclusive:false });
+        return;
+      }
+
+      if (currentSource === l2 && !tried.opt1) {
+        if (l1) {
+          tried.opt1 = true;
+          showToast('Opción 2 falló — probando Opción 1…', 3500);
+          setPlayerSource(l1, { autoplay:true, label:'Opción 1', exclusive:false });
+          return;
+        }
+      }
+
+      showToast('Error de reproducción. Ambas opciones fallaron o no hay alternativa.', 3500);
+      showPlayerError('Error de reproducción. No se pudo cargar el video desde las fuentes disponibles.');
+    }
+
+    // Eventos del player: ocultar loader cuando ya pueda reproducir
+    player.addEventListener('error', () => {
+      setTimeout(handlePlaybackError, 300);
+    });
+    player.addEventListener('canplay', () => {
+      hidePlayerError();
+      player.style.opacity = '1';
+      setTimeout(hideLoader, 180);
+    });
+    player.addEventListener('loadeddata', () => {
+      player.style.opacity = '1';
+      hidePlayerError();
+      setTimeout(hideLoader, 180);
+    });
+
+    playerRetryBtn.addEventListener('click', () => {
+      hidePlayerError();
+      if (currentSource) {
+        setPlayerSource(currentSource, { autoplay:true, label: opt1Btn.classList.contains('active') ? 'Opción 1' : 'Opción 2', exclusive: exclusiveMode });
+      } else if (episode && episode.link) {
+        setPlayerSource(episode.link, { autoplay:true, label: 'Opción 1', exclusive: exclusiveMode });
+      } else {
+        showToast('No hay enlace para reintentar');
+      }
+    });
+
+    /* ---------- Cargar episodio desde query ---------- */
+    function getNextEpisode(a, season, epi) {
+      const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>Number(x)-Number(y)), idx = eps.indexOf(epi);
+      if (idx >= 0 && idx < eps.length-1) return { s: season, e: eps[idx+1] };
+      const seasons = Object.keys(seas).sort((x,y)=>Number(x)-Number(y)), sIdx = seasons.indexOf(season);
+      if (sIdx >= 0 && sIdx < seasons.length-1) {
+        const nextS = seasons[sIdx+1], nextEs = Object.keys(seas[nextS]).sort((x,y)=>Number(x)-Number(y));
+        if (nextEs.length) return { s: nextS, e: nextEs[0] };
+      }
+      return null;
+    }
+    function getPrevEpisode(a, season, epi) {
+      const seas = DB[a] || {}, eps = Object.keys(seas[season]||{}).sort((x,y)=>Number(x)-Number(y)), idx = eps.indexOf(epi);
+      if (idx > 0) return { s: season, e: eps[idx-1] };
+      const seasons = Object.keys(seas).sort((x,y)=>Number(x)-Number(y)), sIdx = seasons.indexOf(season);
+      if (sIdx > 0) {
+        const prevS = seasons[sIdx-1], prevEs = Object.keys(seas[prevS]).sort((x,y)=>Number(x)-Number(y));
+        if (prevEs.length) return { s: prevS, e: prevEs[prevEs.length-1] };
+      }
+      return null;
+    }
+
+    function showToast(msg, ms = 6000) {
+      let visibleTimeout, hideTimeout;
+      clearTimeout(visibleTimeout);
+      clearTimeout(hideTimeout);
+      toast.textContent = msg;
+      toast.style.display   = 'flex';
+      toast.style.animation = 'popin 0.35s forwards';
+      visibleTimeout = setTimeout(() => {
+        toast.style.animation = 'popout 0.3s forwards';
+        hideTimeout = setTimeout(() => {
+          toast.style.display = 'none';
+        }, 300);
+      }, ms);
+    }
+
+    function loadEpisodeFromQuery() {
+      if (!anime || !s || !e) {
+        titleEl.textContent = 'Capítulo no especificado';
+        return;
+      }
+      episode = (DB[anime] && DB[anime][s] && DB[anime][s][e]) || null;
+      if (!episode) {
+        titleEl.textContent = 'Episodio no encontrado';
+        showToast('Próximamente');
+        return;
+      }
+      const epTitle = episode.title || `Anime ${anime} - S${s}E${e}`;
+      titleEl.textContent = epTitle;
+
+      const l1 = episode.link || null;
+      const l2 = episode.link2 || episode.alt || null;
+
+      // configurar botones y enlaces
+      if (l1) {
+        opt1Btn.style.display = 'inline-block';
+        opt1Btn.onclick = () => {
+          tried = { opt1:false, opt2:false };
+          setPlayerSource(l1, { autoplay:true, label:'Opción 1' });
+        };
+      } else {
+        opt1Btn.style.display = 'none';
+      }
+
+      if (l2) {
+        opt2Btn.style.display = 'inline-block';
+        opt2Btn.onclick = () => {
+          tried = { opt1:false, opt2:false };
+          setPlayerSource(l2, { autoplay:true, label:'Opción 2' });
+        };
+      } else {
+        opt2Btn.style.display = 'none';
+      }
+
+      // download / share
+      dlLink.onclick = (ev) => { /* download se setea en setPlayerSource */ };
+      sh.onclick = () => {
+        const url = currentSource || l1 || l2;
+        if (!url) { showToast('No hay enlace para compartir'); return; }
+        navigator.clipboard?.writeText(url).then(()=>showToast('✅ El enlace ha sido copiado')).catch(()=>showToast('No se pudo copiar'));
+      };
+
+      // nav
+      const nextEp = getNextEpisode(anime, s, e);
+      if (nextEp) {
+        next.style.display = 'inline-block';
+        next.onclick = () => {
+          location.search = `?anime=${anime}&s=${nextEp.s}&e=${nextEp.e}`;
+        };
+      } else next.style.display = 'none';
+
+      const prevEp = getPrevEpisode(anime, s, e);
+      if (prevEp) {
+        prev.style.display = 'inline-block';
+        prev.onclick = () => {
+          location.search = `?anime=${anime}&s=${prevEp.s}&e=${prevEp.e}`;
+        };
+      } else prev.style.display = 'none';
+
+      // finalmente cargar la primera opción disponible
+      if (l1) {
+        setPlayerSource(l1, { autoplay:true, label:'Opción 1' });
+      } else if (l2) {
+        setPlayerSource(l2, { autoplay:true, label:'Opción 2' });
+      }
+    }
+    /* --- Enlace de regresar: comportamiento robusto --- */
+    (function setupBackButton(){
+      if (!back) return;
+      const baseDetail = 'anime-detail.html';
+      const fallbackParams = new URLSearchParams();
+      if (anime) fallbackParams.set('id', anime);
+      if (typeof s !== 'undefined' && s) fallbackParams.set('s', s);
+      if (typeof e !== 'undefined' && e) fallbackParams.set('e', e);
+      back.setAttribute('href', `${baseDetail}?${fallbackParams.toString()}`);
+
+      back.addEventListener('click', function(ev){
+        try {
+          const ref = document.referrer ? new URL(document.referrer) : null;
+          if (ref && ref.origin === location.origin && /anime-detail(\.html)?$/.test(ref.pathname)) {
+            ev.preventDefault();
+            history.back();
+            return;
+          }
+        } catch (err) {}
+        ev.preventDefault();
+        const params = new URLSearchParams();
+        if (anime) params.set('id', anime);
+        if (typeof s !== 'undefined' && s) params.set('s', s);
+        if (typeof e !== 'undefined' && e) params.set('e', e);
+        location.href = `${baseDetail}?${params.toString()}`;
+      });
+    })();
+    // iniciar
+    applyPlayerAreaSize();
+    loadEpisodeFromQuery();
+
   </script>
 </body>
 </html>
