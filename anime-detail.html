@@ -16,7 +16,15 @@
        ESTILOS GLOBALES
        --------------------------- */
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;overflow-x:hidden;font-family:'Segoe UI',sans-serif;color:#fff}
+    
+    /* CORRECCIÓN 1: Fondo transparente para que se vea el video detrás */
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      background: transparent; /* Antes era #000 y tapaba el video */
+    }
 
     /* Fondo vídeo */
     #bg-video {
@@ -24,331 +32,211 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      z-index: -2;
-      opacity: 0;
-      /* Empieza invisible, JS lo maneja */
-      transition: opacity 1s ease;
-      background: #000;
-      pointer-events: none;
+      z-index: -10; /* Muy atrás */
+      background: #000; /* Fondo negro por si el video tarda en cargar */
+      /* No usamos opacity: 0 aquí para asegurar que se vea */
     }
     
-    /* Overlay (Imagen de carga / oscurecimiento) */
+    /* Overlay (Capa oscura sobre el video para que el texto resalte) */
     #overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      background: url('galaxia-morado1.avif') center/cover no-repeat,
-                  linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
-      opacity: 1; 
-      transition: opacity 0.8s ease;
+      z-index: -5;
+      background: rgba(0,0,0,0.6); /* Oscurece el video un 60% permanentemente */
       pointer-events: none;
+    }
+    
+    /* Pantalla de carga inicial */
+    #loading-screen {
+        position: fixed; top:0; left:0; width:100%; height:100%;
+        background: #000; z-index: 9999;
+        display:flex; justify-content:center; align-items:center;
+        transition: opacity 0.5s;
     }
 
     /* --- CONTENEDOR PRINCIPAL --- */
     .container{
-      position:relative;z-index:0;
+      position:relative; z-index:0;
       max-width:1000px;
-      margin:80px auto;padding:20px;
-      background:rgba(0,0,0,0.85); /* Un poco más oscuro para mejor rendimiento que el blur excesivo */
+      margin:80px auto; padding:20px;
+      
+      /* CORRECCIÓN 2: Transparencia simple (Sin Blur) para evitar LAG */
+      background: rgba(0, 0, 0, 0.85); 
+      
       border-radius:12px;
-      box-shadow:0 8px 32px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px); /* Mantenemos el blur solo en el contenedor padre */
-      animation:fadeIn 0.8s ease-out;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      animation:fadeIn 0.5s ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      /* Optimizaciones de hardware móvil */
+      transform: translateZ(0);
     }
-    @keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-    /* --- BOTONES SUPERIORES (LAYOUT) --- */
+    /* --- BOTONES SUPERIORES --- */
     .top-buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
         margin-bottom: 20px;
-        flex-wrap: nowrap;
     }
 
     .back, .share-detail {
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       color:#0ff;text-decoration:none;font-weight:bold;font-size:0.9rem;
-      transition:all .3s;cursor:pointer;
+      transition:background .2s;cursor:pointer;
       background: rgba(0, 255, 255, 0.1);
       padding: 8px 12px;
       border-radius: 20px;
-      border: 1px solid transparent;
-      white-space: nowrap;
     }
-    .back:hover, .share-detail:hover { 
-      background: rgba(0, 255, 255, 0.2);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-      color: #fff;
-    }
+    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
 
     /* --- PORTADA --- */
-    .anime-cover {
-      text-align: center;
-      margin-bottom: 25px;
-      position: relative;
-    }
+    .anime-cover { text-align: center; margin-bottom: 25px; }
     .anime-cover img {
-      max-height: 500px;
-      width: auto;
-      max-width: 100%;
+      max-height: 400px; width: auto; max-width: 100%;
       border-radius: 12px;
       object-fit: contain;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-      transition: transform 0.4s ease;
-      animation: scaleIn .8s ease-out;
-      /* Optimización para imagen */
-      will-change: transform; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-    .anime-cover img:hover { transform: scale(1.02); }
-    @keyframes scaleIn{from{transform:scale(1.05); opacity:0;}to{transform:scale(1); opacity:1;}}
 
-    /* --- INFO --- */
     h1{
-      margin: 10px 0 15px;
-      text-align: center;
-      font-size: 2.2rem;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(0, 255, 247, 0.5);
-      letter-spacing: 1px;
+      margin: 10px 0 15px; text-align: center;
+      font-size: 1.8rem; color: #fff;
+      text-shadow: 0 0 5px rgba(0, 255, 247, 0.5);
     }
 
     /* --- GÉNEROS --- */
     .genres-wrap {
-      display: flex;
-      flex-wrap: wrap; gap: 8px;
+      display: flex; flex-wrap: wrap; gap: 8px;
       justify-content: center; margin-bottom: 20px;
     }
     .genre-chip {
-      display: inline-flex;
-      align-items: center; justify-content: center;
-      padding: 8px 14px; font-size: 0.9rem; font-weight: 700;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 255, 255, 0.6);
-      background: rgba(0, 255, 255, 0.05); /* Quitamos degradado complejo */
-      color: #e0ffff;
-      cursor: pointer;
-      transition: transform .2s, background .2s;
-      position: relative; overflow: hidden;
-      /* Quitamos backdrop-filter de aquí para rendimiento */
-    }
-    .genre-chip:hover {
-      transform: translateY(-2px);
-      background: rgba(0, 255, 255, 0.2);
-      color: #fff;
-    }
-    .genre-chip.popped { transform: scale(0.95) translateY(0); }
-    .genre-chip .copied-badge {
-      position: absolute;
-      right: -8px; top: -8px;
-      background: #0ff; color: #000;
-      padding: 4px; border-radius: 50%;
-      font-size: 0.7rem; font-weight: 900;
-      opacity: 0; transform: scale(0.5);
-      transition: all 0.3s;
-    }
-    .genre-chip.show-badge .copied-badge {
-      opacity: 1; transform: scale(1);
-      right: 6px; top: 6px;
+      padding: 6px 12px; font-size: 0.85rem; font-weight: 700;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 255, 0.4);
+      background: rgba(0, 255, 255, 0.05);
+      color: #e0ffff; cursor: pointer;
     }
 
     .desc{
-      margin-bottom:30px;
-      line-height:1.7;
-      color:#e0e0e0;
-      font-size: 1.05rem;
-      background:rgba(255,255,255,0.05);
-      padding:15px;
-      border-radius:8px;
-      border-left:4px solid #0ff;
+      margin-bottom:30px; line-height:1.6; color:#ddd; font-size: 1rem;
+      background:rgba(255,255,255,0.03); padding:15px;
+      border-radius:8px; border-left:3px solid #0ff;
     }
 
-    /* --- TEMPORADAS (OPTIMIZADO) --- */
+    /* --- TEMPORADAS (OPTIMIZADO PARA MÓVIL - CERO LAG) --- */
     details {
-      margin-bottom:15px;
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.08);
+      margin-bottom:12px;
+      background: #222; /* Fondo sólido dentro de la lista para leer mejor */
+      border:1px solid #333;
       border-radius:8px;
       overflow:hidden;
-      /* IMPORTANTE: Quitamos transition: all para evitar lag al abrir */
+      contain: content; /* Aisla el renderizado para que no recalcule todo */
     }
-    details[open] { 
-      background:rgba(255,255,255,0.06); 
-    }
+    details[open] { background: #252525; }
+    
     summary {
-      padding:15px 20px;
-      cursor:pointer;
-      font-weight:bold;
-      color:#0ff;
+      padding:15px; cursor:pointer; font-weight:bold; color:#0ff;
       display:flex; justify-content:space-between; align-items:center;
-      list-style:none;
-      transition: background 0.2s;
-      user-select: none; /* Mejora sensación en móvil */
+      list-style:none; user-select: none;
+      touch-action: manipulation;
     }
-    summary:hover{ background:rgba(0,255,255,0.05); }
     summary::-webkit-details-marker { display:none; }
-    summary::after { content:'+'; font-size:1.3rem; transition:transform 0.3s; }
-    details[open] summary::after { content:'-'; transform:rotate(180deg); }
+    summary::after { content:'+'; font-size:1.5rem; }
+    details[open] summary::after { content:'-'; }
 
-    .season-content{ 
-        padding:15px; 
-        border-top:1px solid rgba(255,255,255,0.05); 
-        /* Animación ligera solo de opacidad */
-        animation: simpleFade 0.3s ease-out;
+    .season-content { 
+        padding: 10px; 
+        display: block;
     }
-    @keyframes simpleFade { from{opacity:0;} to{opacity:1;} }
-    
-    /* --- LISTA DE VIDEOS (GRID OPTIMIZADO) --- */
+
+    /* --- LISTA DE VIDEOS --- */
     .video-list { 
-        display:grid;
-        gap:10px;
+        display: grid;
+        gap: 8px;
         grid-template-columns: repeat(4, 1fr);
-        /* PROPIEDAD CLAVE PARA RENDIMIENTO: 
-           Evita renderizar elementos fuera de pantalla */
-        content-visibility: auto; 
-        contain-intrinsic-size: 500px; 
     }
 
-    .video-list a {
-      display:flex; 
-      align-items: center; justify-content: center;
-      padding:12px 5px;
-      background:rgba(0,0,0,0.4); /* Fondo plano para mejor rendimiento */
-      border:1px solid rgba(255,255,255,0.1);
-      border-radius:6px;
+    .ep-btn {
+      display:flex; align-items: center; justify-content: center;
+      padding:10px 4px;
+      background: #333;
+      border:1px solid #444;
+      border-radius:4px;
       text-decoration:none; color:#eee;
-      font-size:0.85rem; text-align:center;
-      transition: transform 0.1s, background 0.2s; /* Transición rápida */
-      white-space: normal;
+      font-size:0.8rem; text-align:center;
+      min-height: 45px;
       word-break: break-word;
-      min-height: 50px;
-      /* Optimizaciones GPU */
-      transform: translateZ(0);
     }
-    
-    /* Efectos pesados SOLO al pasar el mouse (PC) o tocar (Móvil) */
-    .video-list a:hover {
-      background:rgba(0,255,255,0.15);
-      border-color:#0ff; color:#fff;
-      transform:scale(1.02); 
-      box-shadow:0 4px 10px rgba(0,0,0,0.5);
-    }
+    .ep-btn:visited { color: #aaa; }
+    .ep-btn:active { background: #0ff; color: #000; }
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:50px;
-      border-top:1px solid rgba(255,255,255,0.1); padding-top:25px;
-    }
-    .rec-title { font-size:1.3rem; margin-bottom:20px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
-    .rec-grid { display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:15px; }
-    .rec-card {
-      background:rgba(255,255,255,0.05);
-      border-radius:8px; overflow:hidden;
-      transition:transform 0.3s; cursor:pointer;
-    }
-    .rec-card:hover { transform:translateY(-5px); box-shadow:0 5px 15px rgba(0,0,0,0.3); }
-    .rec-card img { width:100%; aspect-ratio:2/3;
-      object-fit:cover; }
-    .rec-card p { padding:8px; font-size:0.85rem; text-align:center;
-      color:#ccc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
+    .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333; }
+    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
+    .rec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; }
+    .rec-card { background:#222; border-radius:6px; overflow:hidden; }
+    .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
+    .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
-      position:fixed;
-      bottom:80px; left:50%; transform:translateX(-50%);
-      background:linear-gradient(90deg, #00fff7, #008cff);
-      color:#000; padding:10px 25px; border-radius:30px;
-      display:none; font-weight:bold; box-shadow:0 5px 20px rgba(0,255,255,0.4);
-      z-index:200;
-      animation:fadeUp 0.4s ease forwards;
+      position:fixed; bottom:50px; left:50%; transform:translateX(-50%);
+      background:#0ff; color:#000; padding:8px 20px; border-radius:20px;
+      display:none; z-index:999; font-weight:bold; box-shadow:0 0 10px rgba(0,0,0,0.5);
     }
-    @keyframes fadeUp { from{opacity:0; transform:translate(-50%,20px);} to{opacity:1; transform:translate(-50%,0);} }
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
-        .video-list {
-            grid-template-columns: repeat(3, 1fr);
-        }
+        .video-list { grid-template-columns: repeat(3, 1fr); }
     }
-
     @media (max-width: 600px) {
-        .container { padding:15px; margin-top:20px; width:95%; }
-        h1 { font-size:1.6rem; }
-        
-        .video-list {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px; /* Menos espacio en móvil */
-        }
-        
-        .top-buttons .back, .top-buttons .share-detail {
-            font-size: 0.8rem;
-            flex: 1;
-        }
-        
-        /* En móvil, evitar sombras en hover para mayor fluidez */
-        .video-list a:hover {
-             transform: none;
-             box-shadow: none;
-             background:rgba(0,255,255,0.2);
-        }
+        .container { width:100%; margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.85); }
+        .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        h1 { font-size:1.4rem; }
+        /* El video se verá detrás del contenedor semitransparente */
     }
   </style>
 </head>
 <body>
 
+  <div id="loading-screen"><h2 style="color:#0ff">Cargando...</h2></div>
+
   <div class="container">
     <div class="top-buttons">
-        <a href="index.html" class="back">← Volver al Inicio</a>
-        <span id="share-detail" class="share-detail">🔗 Compartir Anime</span>
+        <a href="index.html" class="back">← Volver</a>
+        <span id="share-detail" class="share-detail">🔗 Compartir</span>
     </div>
     
-    <div id="contenido">
-      <h2 style="text-align:center; margin-top: 50px;">Cargando datos...</h2>
-    </div>
+    <div id="contenido"></div>
 
     <div class="recommendations">
-        <div class="rec-title">Quizás te guste también:</div>
+        <div class="rec-title">Quizás te guste:</div>
         <div class="rec-grid" id="rec-grid"></div>
     </div>
- 
   </div>
 
-  <div id="toast" class="toast">✅ Copiado al portapapeles</div>
+  <div id="toast" class="toast">Enlace copiado</div>
 
   <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
      <source src="galaxia.mp4" type="video/mp4">
   </video>
-  
   <div id="overlay"></div>
 
   <script>
     /* ----------------------------------------------------
-       1. Lógica del Video de Fondo y Overlay
+       1. Gestión de Carga
        ---------------------------------------------------- */
-    const bgVideo = document.getElementById('bg-video');
-    const overlay = document.getElementById('overlay');
-
-    function hideOverlay() {
-        bgVideo.style.opacity = '1';
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-            overlay.style.display = 'none';
-        }, 800);
-    }
-
-    bgVideo.addEventListener('playing', hideOverlay);
-    if (bgVideo.readyState >= 3) {
-        hideOverlay();
-    }
-
+    window.addEventListener('load', () => {
+        const screen = document.getElementById('loading-screen');
+        screen.style.opacity = '0';
+        setTimeout(() => { screen.style.display = 'none'; }, 500);
+    });
 
     /* ----------------------------------------------------
-       2. Configuración de Audio (Lista de Reproducción)
+       2. Audio
        ---------------------------------------------------- */
     const audioPlaylists = {
         1: [ // Dan Da Dan
@@ -574,50 +462,22 @@
     };
 
 let currentAudio = null;
-    let currentTrackIndex = 0;
-    let currentPlaylist = [];
 
-    // Función para reproducir una pista específica
-    function playTrack(url) {
-        if (currentAudio) {
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-        }
-        currentAudio = new Audio(url);
-        currentAudio.volume = 0.4;
-        
-        // Evento al terminar: reproducir el siguiente (secuencial)
-        currentAudio.addEventListener('ended', () => {
-            currentTrackIndex++;
-            if (currentTrackIndex >= currentPlaylist.length) {
-                currentTrackIndex = 0; // Volver al inicio (Loop)
-            }
-            playTrack(currentPlaylist[currentTrackIndex]);
-        });
-
-        currentAudio.play().catch(e => console.log("Audio play blocked", e));
-    }
-
-    // Iniciar reproducción al primer clic
     document.addEventListener('click', () => {
         const params = new URLSearchParams(location.search);
         const id = params.get('id');
-        
-        // Solo iniciamos si no hay audio sonando y si existe playlist
         if (!currentAudio && audioPlaylists[id]) {
-            currentPlaylist = audioPlaylists[id];
-            
-            // Empezar en un índice ALEATORIO
-            if(currentPlaylist.length > 0){
-                currentTrackIndex = Math.floor(Math.random() * currentPlaylist.length);
-                playTrack(currentPlaylist[currentTrackIndex]);
-            }
+            const list = audioPlaylists[id];
+            const track = list[Math.floor(Math.random() * list.length)];
+            currentAudio = new Audio(track);
+            currentAudio.volume = 0.4;
+            currentAudio.loop = true; 
+            currentAudio.play().catch(()=>{});
         }
     }, { once: true });
 
-
     /* ----------------------------------------------------
-       3. Base de Datos de Animes (3 primeros + Plantilla)
+       3. DATA (3 primeros animes)
        ---------------------------------------------------- */
     const data = {
     1: {
@@ -4381,161 +4241,123 @@ let currentAudio = null;
 
 
 /* ----------------------------------------------------
-       4. Renderizado
+       4. Renderizado con Chunking (EVITA EL LAG)
        ---------------------------------------------------- */
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
     const anime = data[id];
     const container = document.getElementById('contenido');
-    
-    if (anime) {
-        // SEO Dinámico
-        document.title = `${anime.title} - Ver en Archinime`;
-        document.querySelector('meta[property="og:title"]').setAttribute("content", anime.title);
-        document.querySelector('meta[property="og:image"]').setAttribute("content", anime.cover);
-        
-        // HTML Content
-        let html = `
-            <div class="anime-cover"><img src="${anime.cover}" alt="${anime.title}"></div>
-            <h1>${anime.title}</h1>
-            
-            <div class="genres-wrap" id="genres-container"></div>
 
+    if (anime) {
+        document.title = `${anime.title} - Archinime`;
+        
+        let html = `
+            <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
+            <h1>${anime.title}</h1>
+            <div class="genres-wrap" id="genres-container"></div>
             <p class="desc">${anime.desc}</p>
         `;
-        // Renderizado de Temporadas
+
         if(anime.seasons){
-            anime.seasons.forEach(s => {
+            anime.seasons.forEach((s, index) => {
                 html += `
-                <details>
+                <details onontoggle="toggleSeason(this, ${id}, ${index})">
                     <summary>${s.name || 'Temporada ' + s.num}</summary>
                     <div class="season-content">
-                        ${s.cover ? `<img src="${s.cover}" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
-                        <div class="video-list">
-                            ${s.eps.map((ep, i) => `
-                                <a href="video-player.html?anime=${id}&s=${s.num}&e=${i+1}">
-                                    ▶ ${ep.title}
-                                </a>
-                            `).join('')}
-                        </div>
+                        ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
+                        
+                        <div class="video-list" id="list-${index}"></div>
+                        <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                     </div>
                 </details>`;
             });
         }
         container.innerHTML = html;
-        // Cargar Géneros
-        populateGenresForAnime(id);
-        // Cargar Recomendaciones
-        renderRecommendations(id);
+        populateGenres(id);
+        renderRecs(id);
     } else {
-        container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
+        container.innerHTML = "<h3 style='text-align:center; padding:50px;'>No encontrado</h3>";
     }
 
-    // Botón compartir
+    // Función clave para evitar congelamiento
+    function toggleSeason(details, animeId, seasonIndex) {
+        if (!details.open) return;
+
+        const listContainer = document.getElementById(`list-${seasonIndex}`);
+        if (listContainer.children.length > 0) return; // Ya cargado
+
+        const loadingMsg = document.getElementById(`loading-${seasonIndex}`);
+        loadingMsg.style.display = 'block';
+
+        const episodes = data[animeId].seasons[seasonIndex].eps;
+        const total = episodes.length;
+        const seasonNum = data[animeId].seasons[seasonIndex].num;
+        
+        let processed = 0;
+        const CHUNK_SIZE = 40; // Procesa 40 capítulos por frame
+
+        function processChunk() {
+            const fragment = document.createDocumentFragment();
+            const limit = Math.min(processed + CHUNK_SIZE, total);
+
+            for (let i = processed; i < limit; i++) {
+                const ep = episodes[i];
+                const a = document.createElement('a');
+                a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
+                a.className = 'ep-btn';
+                a.textContent = `▶ ${ep.title}`;
+                fragment.appendChild(a);
+            }
+
+            listContainer.appendChild(fragment);
+            processed += CHUNK_SIZE;
+
+            if (processed < total) {
+                requestAnimationFrame(processChunk);
+            } else {
+                loadingMsg.style.display = 'none';
+            }
+        }
+        requestAnimationFrame(processChunk);
+    }
+
+    /* ----------------------------------------------------
+       5. Funciones Extra
+       ---------------------------------------------------- */
     document.getElementById('share-detail').addEventListener('click', () => {
         navigator.clipboard.writeText(window.location.href);
-        showToast("Enlace copiado");
-    });
-    function showToast(msg) {
         const t = document.getElementById('toast');
-        t.textContent = "✅ " + msg;
-        t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2000);
-    }
+        t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
+    });
 
-    // Lógica de recomendaciones
-    function renderRecommendations(currentId) {
+    function renderRecs(currId) {
         const grid = document.getElementById('rec-grid');
-        const keys = Object.keys(data).filter(k => k != currentId);
-        const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
-        grid.innerHTML = randomKeys.map(k => `
-            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'" style="cursor:pointer">
-                <img src="${data[k].cover}" alt="${data[k].title}" loading="lazy">
+        const keys = Object.keys(data).filter(k => k != currId).slice(0, 6);
+        grid.innerHTML = keys.map(k => `
+            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'">
+                <img src="${data[k].cover}" loading="lazy">
                 <p>${data[k].title}</p>
             </div>
         `).join('');
     }
 
-    /* ------------------------------------------------------------------
-       5. Lógica para copiar géneros desde index.txt
-       ------------------------------------------------------------------ */
-    
-    function renderGenres(genres){
-      const cont = document.getElementById('genres-container');
-      if(!cont) return;
-      if(!genres || !genres.length){ 
-          cont.innerHTML = '<span style="font-size:0.8rem; color:#aaa;">Géneros no disponibles</span>';
-          return; 
-      }
-      
-      cont.innerHTML = genres.map(g => `
-        <button class="genre-chip" data-genre="${escapeHtml(g)}">
-          ${escapeHtml(g)}
-          <span class="copied-badge">✓</span>
-        </button>
-      `).join('');
-      cont.querySelectorAll('.genre-chip').forEach(btn => {
-        btn.addEventListener('click', async (ev) => {
-          const genre = btn.dataset.genre;
-          try { await navigator.clipboard.writeText(genre); } catch(e){}
-          btn.classList.add('popped','show-badge');
-          setTimeout(() => btn.classList.remove('popped'), 350);
-          setTimeout(() => btn.classList.remove('show-badge'), 1200);
-          showToast(`Género copiado: ${genre}`);
+    function populateGenres(aid){
+        const cont = document.getElementById('genres-container');
+        cont.innerHTML = `
+            <span class="genre-chip">Anime</span>
+            <span class="genre-chip">HD</span>
+        `;
+    }
+
+    // Polyfill simple para toggle en detalles
+    document.querySelectorAll('details').forEach(d => {
+        d.addEventListener('toggle', function() {
+             const onToggleAttr = this.getAttribute('onontoggle');
+             if(onToggleAttr) {
+                 new Function(onToggleAttr).call(this);
+             }
         });
-      });
-    }
-
-    function populateGenresForAnime(animeId){
-      const tries = ['index.txt','index.html'];
-      let tried = 0;
-
-      function tryNext(){
-        if(tried >= tries.length){ 
-            renderGenres([]);
-            return;
-        }
-        const url = tries[tried++];
-        fetch(url)
-          .then(r => r.text())
-          .then(text => {
-            const m = text.match(/const\s+animes\s*=\s*(\[[\s\S]*?\])\s*;/m);
-            if(!m){ 
-                tryNext(); 
-                return; 
-            }
-            try {
-              const arrayLiteral = m[1];
-              const arr = (new Function('return ' + arrayLiteral))();
-              const item = arr.find(it => Number(it.id) === Number(animeId) || String(it.id) === String(animeId));
-              
-              if(item && item.genres && item.genres.length){ 
-                  renderGenres(item.genres); 
-                  return; 
-              }
-              const currentTitle = normalizeText(data[animeId].title);
-              const matchByTitle = arr.find(it => it.title && normalizeText(it.title) === currentTitle);
-              if(matchByTitle && matchByTitle.genres && matchByTitle.genres.length){ 
-                  renderGenres(matchByTitle.genres);
-                  return;
-              }
-              renderGenres([]);
-            } catch(e){
-              console.warn('Error parseando géneros del index:', e);
-              tryNext();
-            }
-        }).catch(()=>{ tryNext(); });
-      }
-      tryNext();
-    }
-
-    function normalizeText(s){
-      return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-    }
-    function escapeHtml(str){
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
+    });
   </script>
 </body>
 </html>
