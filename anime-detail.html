@@ -110,7 +110,7 @@
       text-shadow: 0 0 5px rgba(0, 255, 247, 0.5);
     }
 
-    /* --- GÉNEROS --- */
+    /* --- GÉNEROS (ESTILOS) --- */
     .genres-wrap {
       display: flex;
       flex-wrap: wrap; gap: 8px;
@@ -123,7 +123,7 @@
       border: 1px solid rgba(0, 255, 255, 0.4);
       background: rgba(0, 255, 255, 0.05);
       color: #e0ffff;
-      cursor: default;
+      cursor: default; /* No clicable, solo informativo */
     }
 
     .desc{
@@ -186,22 +186,21 @@
     .ep-btn:active { background: #0ff; color: #000;
     }
 
-    /* --- RECOMENDACIONES (ACTUALIZADO) --- */
+    /* --- RECOMENDACIONES --- */
     .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333;
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
     
-    /* PC y Tablet: 6 por fila */
+    /* GRID: 6 por fila en PC/Tablet */
     .rec-grid { 
-      display:grid; 
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px; 
+        display:grid; 
+        grid-template-columns: repeat(6, 1fr);
+        gap:10px; 
     }
     
-    .rec-card { background:#222; border-radius:6px; overflow:hidden; cursor: pointer; transition: transform 0.2s;}
+    .rec-card { background:#222; border-radius:6px; overflow:hidden; cursor:pointer; transition: transform 0.2s; }
     .rec-card:hover { transform: scale(1.05); }
-    .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover;
-      display:block; }
+    .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0;
     }
 
@@ -216,6 +215,7 @@
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
         .video-list { grid-template-columns: repeat(3, 1fr); }
+        /* Tablet mantiene 6 o baja a 4 si prefieres, aquí lo dejo en 6 según pedido */
     }
 
     @media (max-width: 600px) {
@@ -223,10 +223,10 @@
         .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
         h1 { font-size:1.4rem; }
         
-        /* Recomendaciones: 3 por fila en celular */
+        /* GRID MÓVIL: 3 por fila */
         .rec-grid {
-             grid-template-columns: repeat(3, 1fr);
-             gap: 8px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
         }
     }
   </style>
@@ -508,7 +508,7 @@ let currentAudio = null;
     }, { once: true });
 
     /* ----------------------------------------------------
-       3. DATA (3 primeros animes con GÉNEROS añadidos)
+       3. DATA (3 primeros animes + GÉNEROS REALES)
        ---------------------------------------------------- */
     const data = {
     1: {
@@ -4272,7 +4272,7 @@ let currentAudio = null;
 
 
 /* ----------------------------------------------------
-       4. Renderizado con Chunking (EVITA EL LAG)
+       4. Renderizado
        ---------------------------------------------------- */
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
@@ -4308,11 +4308,38 @@ let currentAudio = null;
         container.innerHTML = "<h3 style='text-align:center; padding:50px;'>No encontrado</h3>";
     }
 
-    // Función clave para evitar congelamiento
+    // Función que carga los géneros dinámicamente desde el objeto DATA
+    function populateGenres(aid){
+        const cont = document.getElementById('genres-container');
+        const animeData = data[aid];
+        
+        // Verifica si tiene la propiedad 'genres'
+        if (animeData && animeData.genres && Array.isArray(animeData.genres)) {
+            cont.innerHTML = animeData.genres.map(g => 
+                `<span class="genre-chip">${g}</span>`
+            ).join('');
+        } else {
+            // Si no tiene, pone Anime por defecto
+            cont.innerHTML = '<span class="genre-chip">Anime</span>'; 
+        }
+    }
+
+    function renderRecs(currId) {
+        const grid = document.getElementById('rec-grid');
+        // Filtramos para no mostrar el actual y mostramos 12
+        const keys = Object.keys(data).filter(k => k != currId).slice(0, 12);
+        grid.innerHTML = keys.map(k => `
+            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'">
+                <img src="${data[k].cover}" loading="lazy">
+                <p>${data[k].title}</p>
+            </div>
+        `).join('');
+    }
+
     function toggleSeason(details, animeId, seasonIndex) {
         if (!details.open) return;
         const listContainer = document.getElementById(`list-${seasonIndex}`);
-        if (listContainer.children.length > 0) return; // Ya cargado
+        if (listContainer.children.length > 0) return;
 
         const loadingMsg = document.getElementById(`loading-${seasonIndex}`);
         loadingMsg.style.display = 'block';
@@ -4322,7 +4349,7 @@ let currentAudio = null;
         const seasonNum = data[animeId].seasons[seasonIndex].num;
         
         let processed = 0;
-        const CHUNK_SIZE = 40; // Procesa 40 capítulos por frame
+        const CHUNK_SIZE = 40; 
 
         function processChunk() {
             const fragment = document.createDocumentFragment();
@@ -4348,44 +4375,12 @@ let currentAudio = null;
         requestAnimationFrame(processChunk);
     }
 
-    /* ----------------------------------------------------
-       5. Funciones Extra
-       ---------------------------------------------------- */
     document.getElementById('share-detail').addEventListener('click', () => {
         navigator.clipboard.writeText(window.location.href);
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
 
-    // ACTUALIZADO: Muestra 12 recomendaciones
-    function renderRecs(currId) {
-        const grid = document.getElementById('rec-grid');
-        // Filtramos para no mostrar el actual y cortamos en 12
-        const keys = Object.keys(data).filter(k => k != currId).slice(0, 12);
-        grid.innerHTML = keys.map(k => `
-            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'">
-                <img src="${data[k].cover}" loading="lazy">
-                <p>${data[k].title}</p>
-            </div>
-        `).join('');
-    }
-
-    // ACTUALIZADO: Lee la propiedad genres del objeto data
-    function populateGenres(aid){
-        const cont = document.getElementById('genres-container');
-        const animeData = data[aid];
-        
-        if (animeData && animeData.genres && Array.isArray(animeData.genres)) {
-            cont.innerHTML = animeData.genres.map(g => 
-                `<span class="genre-chip">${g}</span>`
-            ).join('');
-        } else {
-            // Fallback por si algún anime no tiene géneros definidos aun
-            cont.innerHTML = '<span class="genre-chip">Anime</span>'; 
-        }
-    }
-
-    // Polyfill simple para toggle en detalles
     document.querySelectorAll('details').forEach(d => {
         d.addEventListener('toggle', function() {
              const onToggleAttr = this.getAttribute('onontoggle');
