@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=1200" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -15,7 +15,7 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.75); /* Fondo un poco más sólido para legibilidad */
+        --glass-bg: rgba(16, 16, 28, 0.75);
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
         --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
@@ -24,10 +24,10 @@
     /* --- ESTILOS GENERALES --- */
     body { 
         margin: 0; 
-        background: #000; /* Fondo negro de respaldo */
+        background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: auto; /* Permite scroll si es necesario */
+        overflow-x: auto; 
         min-height: 100vh;
     }
    
@@ -45,7 +45,8 @@
     /* --- OVERLAY LIGERO --- */
     #overlay {
       position: fixed; 
-      top: 0; left: 0; 
+      top: 0;
+      left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
       background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.7) 100%);
@@ -53,8 +54,10 @@
     }
     
     /* --- CONTENEDOR PRINCIPAL (EFECTO VIDRIO) --- */
+    /* CAMBIO: Aumentado el ancho para que el video sea mas grande */
     .container { 
-        width: 1100px; /* Ancho fijo para mantener aspecto PC */
+        width: 95%; /* Ocupa casi todo el ancho */
+        max-width: 1400px; /* Límite para pantallas muy grandes */
         margin: 40px auto;
         padding: 30px; 
         position: relative; 
@@ -66,26 +69,31 @@
         backdrop-filter: blur(12px);
     }
     
-    /* NAVEGACIÓN SUPERIOR (BOTONES VOLVER Y TABLET) */
+    /* NAVEGACIÓN SUPERIOR */
     .top-nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
-        flex-wrap: nowrap; /* Evita que bajen de línea */
-        gap: 10px;
+        margin-bottom: 25px;
+        flex-wrap: nowrap; 
+        gap: 15px;
     }
 
     /* BOTÓN GENÉRICO ESTILO NEÓN */
+    /* CAMBIO: Botones superiores más grandes */
     .back-btn { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color:#0ff;text-decoration:none;font-weight:bold;font-size:0.9rem;
-      transition:all .3s;cursor:pointer;
+      color:#0ff;
+      text-decoration:none;
+      font-weight:bold;
+      font-size: 1.2rem; /* Texto más grande */
+      transition:all .3s;
+      cursor:pointer;
       background: rgba(0, 255, 255, 0.1);
-      padding: 8px 12px;
-      border-radius: 20px;
+      padding: 15px 25px; /* Botón más gordo */
+      border-radius: 30px;
       border: 1px solid transparent;
       white-space: nowrap;
     }
@@ -110,37 +118,40 @@
     }
    
     .player-wrapper iframe, .player-wrapper video { 
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        position: absolute; top: 0;
+        left: 0; width: 100%; height: 100%; border: none;
     }
 
     /* TEXTOS */
+    /* CAMBIO: Título más grande */
     h1 { 
         color: #fff; 
-        font-size: 1.6rem; 
-        margin-top: 25px;
+        font-size: 2.2rem; /* Mucho más grande */
+        margin-top: 30px;
         text-align: center; 
         text-shadow: 0 0 10px rgba(0,0,0,0.8);
     }
     
     /* CONTROLES */
-    .controls { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+    .controls { margin-top: 35px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
     
+    /* CAMBIO: Botones de navegación y descarga mucho más grandes */
     .btn { 
-        padding: 12px 30px; 
+        padding: 18px 45px; /* Mucho más relleno para poder presionar fácil */
         background: rgba(0, 255, 255, 0.1); 
-        border: 1px solid var(--primary-color);
+        border: 2px solid var(--primary-color); /* Borde un poco más grueso */
         color: #fff; 
         text-decoration: none; 
         border-radius: 50px; 
         cursor: pointer; 
         transition: 0.3s;
-        font-weight: 600;
-        font-size: 0.9rem;
+        font-weight: 700;
+        font-size: 1.3rem; /* Letra grande */
     }
-    /* Estilo específico para el botón de descargar en Rosado */
+    
     #downloadBtn {
         background: rgba(255, 20, 147, 0.2);
-        border: 1px solid #ff1493;
+        border: 2px solid #ff1493;
         color: #ffffff;
     }
 
@@ -155,24 +166,26 @@
         color: #000;
         box-shadow: 0 0 15px var(--primary-color);
     }
+   
     .btn-hidden { display: none; }
     
     /* Opciones de Servidor */
     .options { 
-        margin-top: 25px; 
+        margin-top: 30px; 
         display: flex; 
-        gap: 15px;
+        gap: 20px;
         justify-content: center; 
         flex-wrap: wrap;
     }
+    /* CAMBIO: Botones de opciones más grandes */
     .opt-btn { 
-        font-size: 0.9rem; 
-        padding: 10px 20px; 
+        font-size: 1.1rem; /* Texto más grande */
+        padding: 14px 28px; /* Botón más grande */
         border: 1px solid #444; 
         background: #1a1a1a;
         color: #aaa; 
         cursor: pointer; 
-        border-radius: 8px;
+        border-radius: 12px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
     }
@@ -181,6 +194,7 @@
         background: #333;
         color: #fff;
     }
+  
     .opt-btn.active { 
         border-color: var(--primary-color); 
         color: #000;
@@ -189,27 +203,27 @@
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
     }
 
-    /* --- NUEVO DISEÑO DE COMENTARIOS --- */
+    /* --- COMENTARIOS --- */
     .comments-section { 
-        margin-top: 50px; 
+        margin-top: 60px; 
         border-top: 1px solid rgba(255,255,255,0.1); 
         padding-top: 40px; 
     }
 
     .comments-box {
-        background: rgba(0, 0, 0, 0.4); /* Fondo más oscuro para la caja */
+        background: rgba(0, 0, 0, 0.4);
         border-radius: 15px;
         padding: 25px;
-        border: 1px solid rgba(0, 255, 247, 0.15); /* Borde sutil cian */
+        border: 1px solid rgba(0, 255, 247, 0.15);
         box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
     }
 
     .comments-header {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
         border-bottom: 2px solid var(--primary-color);
         width: fit-content;
     }
@@ -217,24 +231,21 @@
     .comments-header h3 {
         color: #fff;
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.5rem; /* Título de comentarios más grande */
         text-transform: uppercase;
         letter-spacing: 1px;
         text-shadow: 0 0 8px var(--primary-color);
     }
 
     .comment-icon {
-        font-size: 1.4rem;
+        font-size: 1.8rem; /* Icono más grande */
         color: var(--primary-color);
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
-    /* Ajuste para el iframe de utterances */
     .utterances {
         max-width: 100%;
     }
-
-    /* NOTA: SE HAN ELIMINADO LOS MEDIA QUERIES PARA QUE NO SE ACHIQUE EN MÓVIL */
   </style>
 </head>
 <body>
@@ -282,7 +293,7 @@
 
   </div>
 
-  <script>
+<script>
     // -----------------------------------------------------------
     // 1. BASE DE DATOS (Solo los 3 primeros animes como solicitado)
     // -----------------------------------------------------------
@@ -2856,7 +2867,7 @@
         // Navegación
         setupNavigation();
     } else {
-        document.getElementById('epTitle').innerText = "Episodio no encontrado.";
+      document.getElementById('epTitle').innerText = "Episodio no encontrado.";
     }
 
     function generateDirectDownloadLink(url) {
@@ -2872,7 +2883,7 @@
     }
 
     function updateDownloadButton(url) {
-        const dlBtn = document.getElementById('downloadBtn');
+      const dlBtn = document.getElementById('downloadBtn');
         const directLink = generateDirectDownloadLink(url);
         dlBtn.href = directLink;
     }
@@ -2893,13 +2904,12 @@
 
     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
-        container.innerHTML = ''; // Limpiar
+        container.innerHTML = ''; 
         
         // Manejar visibilidad y enlace del botón "Para Tablet"
         const tabletBtn = document.getElementById('tabletBtn');
         if(tabletBtn) {
-            // Se muestra el botón si hay URL, sirve para cualquier dispositivo que prefiera link directo
-            if (url) {
+             if (url) {
                 tabletBtn.href = url;
                 tabletBtn.style.display = 'inline-flex';
             } else {
@@ -2909,9 +2919,6 @@
 
         const isDrive = url && url.includes('drive.google.com');
         
-        // NOTA: Se eliminó la lógica que mostraba el overlay para móviles.
-        // Ahora se carga el iframe o video directamente en todos los dispositivos.
-
         if (isDrive) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
@@ -2923,7 +2930,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
-            // Reproductor nativo (Dropbox/MP4 directo)
+            // Reproductor nativo
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
@@ -2946,7 +2953,6 @@
                         flatList.push({ s: sKey, e: eKey });
                     });
                 });
-
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
