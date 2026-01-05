@@ -94,6 +94,7 @@
       white-space: nowrap;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
+   
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.2);
         transform: scale(1.05);
@@ -246,7 +247,7 @@
     .comments-header h3 {
         color: #fff;
         margin: 0;
-        font-size: 2rem; 
+        font-size: 2rem;
         text-transform: uppercase;
         letter-spacing: 2px;
         text-shadow: 2px 2px 4px #000, 0 0 10px var(--primary-color);
@@ -276,13 +277,14 @@
             width: 800px !important;
             max-width: 800px !important;
             
+            /* --- CORRECCIÓN IMPORTANTE --- */
+            /* Añadimos una altura mínima para que la caja no desaparezca si no hay comentarios */
+            min-height: 600px; 
+            
             /* 2. Centramos la caja gigante usando margen izquierdo 50% y transform -50% */
             margin-left: 50%;
             
-            /* 3. ESCALADO MÁGICO:
-               Usamos scale(0.45) para reducir esos 800px y que quepan en una pantalla de móvil (~360px).
-               Esto hace que todo se vea pequeño y alejado, igual que en modo escritorio.
-            */
+            /* 3. ESCALADO MÁGICO: */
             transform: translateX(-50%) scale(0.45); 
             transform-origin: top center;
             
@@ -2905,7 +2907,7 @@
     // Asignar link de volver
     const backLink = document.getElementById('backLink');
     if (backLink) {
-        backLink.href = `anime-detail.html?id=${animeId}`;
+       backLink.href = `anime-detail.html?id=${animeId}`;
     }
 
     if (epData) {
@@ -2933,7 +2935,7 @@
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
-                const id = match[1];
+               const id = match[1];
                 return `https://drive.google.com/uc?export=download&id=${id}`;
             }
         }
@@ -2960,25 +2962,25 @@
         optContainer.appendChild(btn);
     }
 
-    function loadVideo(url) {
+     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         
         // Manejar visibilidad y enlace del botón "Para Tablet"
         const tabletBtn = document.getElementById('tabletBtn');
         if(tabletBtn) {
-             if (url) {
+          if (url) {
                 tabletBtn.href = url;
                 tabletBtn.style.display = 'inline-flex';
             } else {
                 tabletBtn.style.display = 'none';
             }
-        }
+         }
 
         const isDrive = url && url.includes('drive.google.com');
         
         if (isDrive) {
-            const iframe = document.createElement('iframe');
+             const iframe = document.createElement('iframe');
             iframe.src = url;
             iframe.setAttribute("allow", "autoplay; fullscreen");
             iframe.setAttribute("allowfullscreen", "true");
@@ -2989,7 +2991,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
-            // Reproductor nativo
+             // Reproductor nativo
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
@@ -3009,17 +3011,17 @@
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
-                        flatList.push({ s: sKey, e: eKey });
-                    });
+                         flatList.push({ s: sKey, e: eKey });
+                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
 
                 if (currentIndex > 0) {
-                    const prevItem = flatList[currentIndex - 1];
+                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
-                    prevBtn.style.display = 'inline-flex'; 
+                    prevBtn.style.display = 'inline-flex';
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
