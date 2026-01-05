@@ -4277,10 +4277,14 @@ let currentAudio = null;
             });
         }
         container.innerHTML = html;
-        populateGenres(id);
-        renderRecs(id);
+
+        // Cargar Géneros
+        populateGenresForAnime(id);
+        
+        // Cargar Recomendaciones
+        renderRecommendations(id);
     } else {
-        container.innerHTML = "<h3 style='text-align:center; padding:50px;'>No encontrado</h3>";
+        container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
     }
 
     // Función clave para evitar congelamiento
