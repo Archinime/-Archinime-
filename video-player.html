@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="viewport" content="width=1200" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -15,90 +15,85 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.90); /* Fondo un poco más oscuro para mejor contraste */
+        --glass-bg: rgba(16, 16, 28, 0.75); /* Fondo un poco más sólido para legibilidad */
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
-        --neon-shadow: 0 0 20px var(--primary-color);
+        --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
     }
 
-    /* --- ESTILOS GENERALES (ESCALADOS) --- */
+    /* --- ESTILOS GENERALES --- */
     body { 
-        margin: 0;
-        background: #000; 
+        margin: 0; 
+        background: #000; /* Fondo negro de respaldo */
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: hidden; /* Evita scroll horizontal */
+        overflow-x: auto; /* Permite scroll si es necesario */
         min-height: 100vh;
-        /* Aumentamos la fuente base aún más para escalar todo */
-        font-size: 22px; 
     }
    
     /* --- FONDO DE VIDEO --- */
     #bg-video { 
         position: fixed; 
-        top: 0; left: 0; 
+        top: 0;
+        left: 0; 
         width: 100%; height: 100%; 
         object-fit: cover;
-        z-index: -10;
+        z-index: -10; 
         opacity: 1; 
     }
 
+    /* --- OVERLAY LIGERO --- */
     #overlay {
       position: fixed; 
       top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.7) 100%);
       pointer-events: none;
     }
     
-    /* --- CONTENEDOR PRINCIPAL (MÁS ANCHO) --- */
+    /* --- CONTENEDOR PRINCIPAL (EFECTO VIDRIO) --- */
     .container { 
-        width: 95%; 
-        max-width: 1200px; /* Ancho aumentado para acomodar elementos grandes */
+        width: 1100px; /* Ancho fijo para mantener aspecto PC */
         margin: 40px auto;
-        padding: 50px; /* Más relleno */
+        padding: 30px; 
         position: relative; 
         z-index: 10;
         background: var(--glass-bg);
-        border: 3px solid var(--glass-border); 
-        border-radius: 35px;
-        box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px);
     }
     
-    /* NAVEGACIÓN SUPERIOR */
+    /* NAVEGACIÓN SUPERIOR (BOTONES VOLVER Y TABLET) */
     .top-nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: nowrap; /* Evita que bajen de línea */
+        gap: 10px;
     }
 
-    /* BOTONES DE NAVEGACIÓN (MÁS GRANDES) */
+    /* BOTÓN GENÉRICO ESTILO NEÓN */
     .back-btn { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #0ff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.4rem; /* Letra aumentada */
-      transition: all .3s;
-      cursor: pointer;
-      background: rgba(0, 255, 255, 0.15);
-      padding: 18px 35px; /* Botón más grande */
-      border-radius: 40px;
-      border: 2px solid transparent;
+      color:#0ff;text-decoration:none;font-weight:bold;font-size:0.9rem;
+      transition:all .3s;cursor:pointer;
+      background: rgba(0, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid transparent;
       white-space: nowrap;
     }
     .back-btn:hover {
-        background: rgba(0, 255, 247, 0.25);
+        background: rgba(0, 255, 247, 0.2);
         border-color: var(--primary-color);
-        box-shadow: 0 0 20px rgba(0, 255, 247, 0.4);
-        transform: scale(1.05);
+        transform: translateX(-2px);
+        box-shadow: 0 0 10px rgba(0, 255, 247, 0.3);
     }
    
     /* REPRODUCTOR */
@@ -107,148 +102,139 @@
         padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
         background: #000; 
-        border-radius: 25px;
+        border-radius: 16px;
         overflow: hidden; 
-        box-shadow: 0 0 50px rgba(0,0,0,0.95);
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
         z-index: 50;
-        border: 3px solid rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.1);
     }
    
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
 
-    /* TÍTULO DEL EPISODIO */
+    /* TEXTOS */
     h1 { 
         color: #fff; 
-        font-size: 3rem; /* Título gigante */
-        margin-top: 40px;
-        margin-bottom: 30px;
+        font-size: 1.6rem; 
+        margin-top: 25px;
         text-align: center; 
-        text-shadow: 0 0 20px rgba(0,0,0,0.9);
-        line-height: 1.2;
+        text-shadow: 0 0 10px rgba(0,0,0,0.8);
     }
     
-    /* CONTROLES PRINCIPALES */
-    .controls { 
-        margin-top: 50px; 
-        display: flex; 
-        justify-content: center; 
-        gap: 30px; 
-        flex-wrap: wrap; 
-    }
+    /* CONTROLES */
+    .controls { margin-top: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
     
     .btn { 
-        padding: 22px 55px; /* Botones extra grandes */
-        background: rgba(0, 255, 255, 0.1);
-        border: 3px solid var(--primary-color);
+        padding: 12px 30px; 
+        background: rgba(0, 255, 255, 0.1); 
+        border: 1px solid var(--primary-color);
         color: #fff; 
         text-decoration: none; 
-        border-radius: 70px; 
+        border-radius: 50px; 
         cursor: pointer; 
         transition: 0.3s;
-        font-weight: 800;
-        font-size: 1.6rem; 
+        font-weight: 600;
+        font-size: 0.9rem;
     }
-
+    /* Estilo específico para el botón de descargar en Rosado */
     #downloadBtn {
         background: rgba(255, 20, 147, 0.2);
-        border: 3px solid #ff1493;
+        border: 1px solid #ff1493;
         color: #ffffff;
     }
+
     #downloadBtn:hover {
         background: #ff1493;
-        box-shadow: 0 0 35px #ff1493;
+        color: #fff;
+        box-shadow: 0 0 20px #ff1493;
     }
+   
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
-        box-shadow: 0 0 35px var(--primary-color);
-        transform: scale(1.05);
+        box-shadow: 0 0 15px var(--primary-color);
     }
     .btn-hidden { display: none; }
     
-    /* OPCIONES DE SERVIDOR */
+    /* Opciones de Servidor */
     .options { 
-        margin-top: 40px; 
+        margin-top: 25px; 
         display: flex; 
-        gap: 25px;
+        gap: 15px;
         justify-content: center; 
         flex-wrap: wrap;
     }
     .opt-btn { 
-        font-size: 1.4rem; 
-        padding: 18px 40px; 
-        border: 3px solid #555; 
-        background: #222;
-        color: #ccc; 
+        font-size: 0.9rem; 
+        padding: 10px 20px; 
+        border: 1px solid #444; 
+        background: #1a1a1a;
+        color: #aaa; 
         cursor: pointer; 
-        border-radius: 18px;
+        border-radius: 8px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
+    }
+   
+    .opt-btn:hover {
+        background: #333;
+        color: #fff;
     }
     .opt-btn.active { 
         border-color: var(--primary-color); 
         color: #000;
         background: var(--primary-color); 
         font-weight: bold;
-        box-shadow: 0 0 25px rgba(0, 255, 247, 0.6);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
     }
 
-    /* --- COMENTARIOS (MAGNIFICADOS) --- */
+    /* --- NUEVO DISEÑO DE COMENTARIOS --- */
     .comments-section { 
-        margin-top: 80px; 
-        border-top: 3px solid rgba(255,255,255,0.1); 
-        padding-top: 60px; 
+        margin-top: 50px; 
+        border-top: 1px solid rgba(255,255,255,0.1); 
+        padding-top: 40px; 
     }
 
     .comments-box {
-        background: rgba(0, 0, 0, 0.6); 
-        border-radius: 30px;
-        padding: 40px;
-        border: 2px solid rgba(0, 255, 247, 0.2);
-        overflow: hidden; 
+        background: rgba(0, 0, 0, 0.4); /* Fondo más oscuro para la caja */
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid rgba(0, 255, 247, 0.15); /* Borde sutil cian */
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
     }
 
     .comments-header {
         display: flex;
         align-items: center;
-        gap: 20px;
-        margin-bottom: 30px;
-        padding-bottom: 15px;
-        border-bottom: 4px solid var(--primary-color);
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary-color);
         width: fit-content;
     }
 
     .comments-header h3 {
-        font-size: 2.2rem; 
-        text-shadow: 0 0 15px var(--primary-color);
+        color: #fff;
         margin: 0;
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 0 0 8px var(--primary-color);
     }
 
     .comment-icon {
-        font-size: 2.5rem;
+        font-size: 1.4rem;
         color: var(--primary-color);
+        filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
-    /* AGRANDAR COMENTARIOS DE UTTERANCES */
+    /* Ajuste para el iframe de utterances */
     .utterances {
-        transform-origin: top center;
-        transform: scale(1.4); /* Escalado al 140% */
-        width: 71.4%; /* 100% / 1.4 */
-        margin: 0 auto;
-        margin-bottom: -150px; 
+        max-width: 100%;
     }
 
-    /* Responsive básico para evitar que se rompa en móviles pequeños */
-    @media (max-width: 768px) {
-        body { font-size: 18px; }
-        h1 { font-size: 2rem; }
-        .container { padding: 20px; width: 90%; }
-        .btn { padding: 15px 30px; font-size: 1.2rem; }
-        .utterances { transform: scale(1.0); width: 100%; margin-bottom: 0; }
-    }
-
+    /* NOTA: SE HAN ELIMINADO LOS MEDIA QUERIES PARA QUE NO SE ACHIQUE EN MÓVIL */
   </style>
 </head>
 <body>
@@ -281,8 +267,8 @@
     <div class="comments-section">
         <div class="comments-box">
             <div class="comments-header">
-               <span class="comment-icon">💬</span>
-               <h3>Zona de Comentarios</h3>
+                <span class="comment-icon">💬</span>
+                <h3>Zona de Comentarios</h3>
             </div>
             <script src="https://utteranc.es/client.js"
                 repo="Archinime/Comentarios"
@@ -2856,6 +2842,7 @@
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
+
         // Cargar video inicial
         loadVideo(epData.link || epData.link2);
 
@@ -2911,6 +2898,7 @@
         // Manejar visibilidad y enlace del botón "Para Tablet"
         const tabletBtn = document.getElementById('tabletBtn');
         if(tabletBtn) {
+            // Se muestra el botón si hay URL, sirve para cualquier dispositivo que prefiera link directo
             if (url) {
                 tabletBtn.href = url;
                 tabletBtn.style.display = 'inline-flex';
@@ -2920,6 +2908,9 @@
         }
 
         const isDrive = url && url.includes('drive.google.com');
+        
+        // NOTA: Se eliminó la lógica que mostraba el overlay para móviles.
+        // Ahora se carga el iframe o video directamente en todos los dispositivos.
 
         if (isDrive) {
             const iframe = document.createElement('iframe');
@@ -2932,6 +2923,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
+            // Reproductor nativo (Dropbox/MP4 directo)
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
