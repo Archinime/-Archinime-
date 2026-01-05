@@ -15,16 +15,21 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.75); /* Fondo un poco más sólido para legibilidad */
+        --glass-bg: rgba(16, 16, 28, 0.75);
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
         --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
     }
 
+    /* --- RESET GLOBAL --- */
+    * {
+        box-sizing: border-box; /* Crucial para que el padding no rompa el ancho */
+    }
+
     /* --- ESTILOS GENERALES --- */
     body { 
         margin: 0; 
-        background: #000; /* Fondo negro de respaldo */
+        background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
         overflow-x: hidden;
@@ -63,7 +68,7 @@
         border-radius: 20px;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(12px);
-        box-sizing: border-box; /* Asegura que el padding no rompa el ancho */
+        width: 95%; /* Por defecto ocupa 95% en PC si la pantalla es menor a 1100px */
     }
     
     /* BOTÓN VOLVER */
@@ -148,19 +153,16 @@
         font-weight: 600;
         font-size: 0.9rem;
     }
-    /* Estilo específico para el botón de descargar en Rosado */
     #downloadBtn {
         background: rgba(255, 20, 147, 0.2);
         border: 1px solid #ff1493;
         color: #ffffff;
     }
-
     #downloadBtn:hover {
         background: #ff1493;
         color: #fff;
         box-shadow: 0 0 20px #ff1493;
     }
-   
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
@@ -187,7 +189,6 @@
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
     }
-   
     .opt-btn:hover {
         background: #333;
         color: #fff;
@@ -204,18 +205,17 @@
     .comments-section { 
         margin-top: 50px; 
         border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 40px;
-        width: 100%; 
+        padding-top: 40px; 
+        width: 100%;
     }
 
     .comments-box {
-        background: rgba(0, 0, 0, 0.4); /* Fondo más oscuro para la caja */
+        background: rgba(0, 0, 0, 0.4); 
         border-radius: 15px;
         padding: 25px;
-        border: 1px solid rgba(0, 255, 247, 0.15); /* Borde sutil cian */
+        border: 1px solid rgba(0, 255, 247, 0.15); 
         box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        width: 100%;
-        box-sizing: border-box;
+        width: 100%; /* Asegurar que ocupe todo el ancho disponible */
     }
 
     .comments-header {
@@ -247,24 +247,35 @@
         max-width: 100%;
     }
 
-    /* --- RESPONSIVE (CELULARES) --- */
+    /* --- RESPONSIVE OPTIMIZADO (CELULARES) --- */
     @media (max-width: 768px) {
         .container { 
-            margin: 5px; /* Margen externo mínimo */
-            padding: 10px; /* Padding interno reducido */
-            width: calc(100% - 10px); /* Ocupar todo el ancho posible */
+            margin: 0; /* Quitamos márgenes externos */
+            width: 100%; /* Ocupar todo el ancho */
+            padding: 10px 5px; /* Padding mínimo lateral para ganar espacio */
+            border-radius: 0; /* Quitar bordes redondeados para ganar espacio en esquinas */
+            border-left: none;
+            border-right: none;
         }
         
-        h1 { font-size: 1.1rem; }
+        h1 { font-size: 1.1rem; padding: 0 10px; }
         .btn { padding: 10px 20px; font-size: 0.85rem; }
         
         /* Ajuste CRÍTICO para los comentarios en celular */
         .comments-box { 
-            padding: 10px 5px; /* Muy poco padding lateral para dar espacio al iframe */
+            padding: 15px 2px; /* Casi CERO padding lateral para maximizar el iframe */
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
         }
         
         .comments-section {
             margin-top: 30px;
+            padding-top: 20px;
+        }
+        
+        .comments-header {
+            margin-left: 10px; /* Un poco de margen solo al título */
         }
         
         .comments-header h3 { font-size: 1.1rem; }
