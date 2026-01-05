@@ -219,7 +219,7 @@
         padding: 40px 20px; 
         width: 100%;
         box-sizing: border-box;
-        overflow: hidden; /* Evita scroll horizontal si escalamos */
+        overflow: hidden; /* Importante para el truco de escalado */
     }
 
     .comments-box {
@@ -263,32 +263,45 @@
         width: 100%;
     }
 
-    /* ---------------------------------------------------- */
-    /* AJUSTES ESPECÍFICOS PARA MÓVIL (ZOOM OUT COMENTARIOS) */
-    /* ---------------------------------------------------- */
-    @media (max-width: 600px) {
+    /* ----------------------------------------------------------------------- */
+    /* TRUCO PARA SIMULAR "MODO ESCRITORIO" EN LA SECCIÓN DE COMENTARIOS (MÓVIL) */
+    /* ----------------------------------------------------------------------- */
+    @media (max-width: 768px) {
         .comments-section {
-            /* Quitamos padding lateral para ganar espacio */
-            padding: 20px 0;
+            padding: 20px 0; /* Quitamos padding lateral */
         }
         
         .comments-box {
-            /* TRUCO: Forzamos que la caja sea más ancha que la pantalla (120%).
-               Esto engaña a GitHub/Utterances para que piense que hay espacio
-               suficiente para mostrar el avatar.
-            */
-            width: 120%; 
-            margin-left: -10%; /* Centramos la caja expandida */
+            /* 1. Forzamos un ancho de "PC" (800px es suficiente para que GitHub muestre el avatar) */
+            width: 800px !important;
+            max-width: 800px !important;
             
-            /* Luego escalamos todo hacia abajo (zoom out) al 85% 
-               para que visualmente quepa en la pantalla del celular.
+            /* 2. Centramos la caja gigante usando margen izquierdo 50% y transform -50% */
+            margin-left: 50%;
+            
+            /* 3. ESCALADO MÁGICO:
+               Usamos scale(0.45) para reducir esos 800px y que quepan en una pantalla de móvil (~360px).
+               Esto hace que todo se vea pequeño y alejado, igual que en modo escritorio.
             */
-            transform: scale(0.85); 
+            transform: translateX(-50%) scale(0.45); 
             transform-origin: top center;
+            
+            /* 4. Ajustamos el margen inferior porque al escalar, queda espacio vacío abajo */
+            margin-bottom: -400px; 
         }
 
+        /* Forzamos que el iframe de Utterances ocupe todo el ancho de 800px */
+        .utterances {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        /* Ajuste opcional para el título si quieres que se vea grande a pesar del alejamiento */
         .comments-header h3 {
-            font-size: 1.5rem;
+            font-size: 3rem; /* Compensamos el scale haciendo la fuente más grande */
+        }
+        .comment-icon {
+            font-size: 3rem;
         }
     }
   </style>
