@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -15,22 +15,22 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.85);
+        --glass-bg: rgba(16, 16, 28, 0.90); /* Fondo un poco más oscuro para mejor contraste */
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
-        --neon-shadow: 0 0 15px var(--primary-color);
+        --neon-shadow: 0 0 20px var(--primary-color);
     }
 
-    /* --- ESTILOS GENERALES (BASE PARA PC) --- */
+    /* --- ESTILOS GENERALES (ESCALADOS) --- */
     body { 
         margin: 0;
         background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
+        overflow-x: hidden; /* Evita scroll horizontal */
         min-height: 100vh;
-        /* En PC el tamaño es normal */
-        font-size: 16px; 
-        overflow-x: hidden;
+        /* Aumentamos la fuente base aún más para escalar todo */
+        font-size: 22px; 
     }
    
     /* --- FONDO DE VIDEO --- */
@@ -48,23 +48,23 @@
       top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.7) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);
       pointer-events: none;
     }
     
-    /* --- CONTENEDOR PRINCIPAL --- */
+    /* --- CONTENEDOR PRINCIPAL (MÁS ANCHO) --- */
     .container { 
-        width: 90%; 
-        max-width: 1050px; /* En PC tiene tope, en móvil se adapta */
+        width: 95%; 
+        max-width: 1200px; /* Ancho aumentado para acomodar elementos grandes */
         margin: 40px auto;
-        padding: 40px; 
+        padding: 50px; /* Más relleno */
         position: relative; 
         z-index: 10;
         background: var(--glass-bg);
-        border: 2px solid var(--glass-border);
-        border-radius: 25px;
-        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(15px);
+        border: 3px solid var(--glass-border); 
+        border-radius: 35px;
+        box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(20px);
     }
     
     /* NAVEGACIÓN SUPERIOR */
@@ -72,12 +72,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 20px;
     }
 
-    /* BOTONES DE NAVEGACIÓN */
+    /* BOTONES DE NAVEGACIÓN (MÁS GRANDES) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -85,19 +85,19 @@
       color: #0ff;
       text-decoration: none;
       font-weight: 700;
-      font-size: 1rem; /* Normal en PC */
+      font-size: 1.4rem; /* Letra aumentada */
       transition: all .3s;
       cursor: pointer;
       background: rgba(0, 255, 255, 0.15);
-      padding: 10px 20px; 
-      border-radius: 30px;
+      padding: 18px 35px; /* Botón más grande */
+      border-radius: 40px;
       border: 2px solid transparent;
       white-space: nowrap;
     }
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.25);
         border-color: var(--primary-color);
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
+        box-shadow: 0 0 20px rgba(0, 255, 247, 0.4);
         transform: scale(1.05);
     }
    
@@ -107,11 +107,11 @@
         padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
         background: #000; 
-        border-radius: 20px;
+        border-radius: 25px;
         overflow: hidden; 
-        box-shadow: 0 0 40px rgba(0,0,0,0.9);
+        box-shadow: 0 0 50px rgba(0,0,0,0.95);
         z-index: 50;
-        border: 2px solid rgba(255,255,255,0.1);
+        border: 3px solid rgba(255,255,255,0.15);
     }
    
     .player-wrapper iframe, .player-wrapper video { 
@@ -121,68 +121,69 @@
     /* TÍTULO DEL EPISODIO */
     h1 { 
         color: #fff; 
-        font-size: 2rem; /* Normal en PC */
-        margin-top: 35px;
+        font-size: 3rem; /* Título gigante */
+        margin-top: 40px;
+        margin-bottom: 30px;
         text-align: center; 
-        text-shadow: 0 0 15px rgba(0,0,0,0.9);
+        text-shadow: 0 0 20px rgba(0,0,0,0.9);
         line-height: 1.2;
     }
     
     /* CONTROLES PRINCIPALES */
     .controls { 
-        margin-top: 40px; 
+        margin-top: 50px; 
         display: flex; 
         justify-content: center; 
-        gap: 25px; 
+        gap: 30px; 
         flex-wrap: wrap; 
     }
     
     .btn { 
-        padding: 12px 30px; /* Normal en PC */
+        padding: 22px 55px; /* Botones extra grandes */
         background: rgba(0, 255, 255, 0.1);
-        border: 2px solid var(--primary-color);
+        border: 3px solid var(--primary-color);
         color: #fff; 
         text-decoration: none; 
-        border-radius: 60px; 
+        border-radius: 70px; 
         cursor: pointer; 
         transition: 0.3s;
-        font-weight: 700;
-        font-size: 1rem; 
-        text-align: center;
+        font-weight: 800;
+        font-size: 1.6rem; 
     }
 
     #downloadBtn {
         background: rgba(255, 20, 147, 0.2);
-        border: 2px solid #ff1493;
+        border: 3px solid #ff1493;
         color: #ffffff;
     }
     #downloadBtn:hover {
         background: #ff1493;
-        box-shadow: 0 0 25px #ff1493;
+        box-shadow: 0 0 35px #ff1493;
     }
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
-        box-shadow: 0 0 25px var(--primary-color);
+        box-shadow: 0 0 35px var(--primary-color);
+        transform: scale(1.05);
     }
     .btn-hidden { display: none; }
     
     /* OPCIONES DE SERVIDOR */
     .options { 
-        margin-top: 35px; 
+        margin-top: 40px; 
         display: flex; 
-        gap: 15px;
+        gap: 25px;
         justify-content: center; 
         flex-wrap: wrap;
     }
     .opt-btn { 
-        font-size: 1rem;
-        padding: 10px 20px;
-        border: 2px solid #555; 
+        font-size: 1.4rem; 
+        padding: 18px 40px; 
+        border: 3px solid #555; 
         background: #222;
         color: #ccc; 
         cursor: pointer; 
-        border-radius: 12px;
+        border-radius: 18px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
     }
@@ -191,145 +192,61 @@
         color: #000;
         background: var(--primary-color); 
         font-weight: bold;
-        box-shadow: 0 0 20px rgba(0, 255, 247, 0.5);
+        box-shadow: 0 0 25px rgba(0, 255, 247, 0.6);
     }
 
-    /* --- COMENTARIOS --- */
+    /* --- COMENTARIOS (MAGNIFICADOS) --- */
     .comments-section { 
-        margin-top: 60px; 
-        border-top: 2px solid rgba(255,255,255,0.1); 
-        padding-top: 50px; 
+        margin-top: 80px; 
+        border-top: 3px solid rgba(255,255,255,0.1); 
+        padding-top: 60px; 
     }
 
     .comments-box {
         background: rgba(0, 0, 0, 0.6); 
-        border-radius: 20px;
-        padding: 30px;
+        border-radius: 30px;
+        padding: 40px;
         border: 2px solid rgba(0, 255, 247, 0.2);
-        overflow: hidden;
+        overflow: hidden; 
     }
 
     .comments-header {
         display: flex;
         align-items: center;
-        gap: 15px;
-        margin-bottom: 25px;
+        gap: 20px;
+        margin-bottom: 30px;
         padding-bottom: 15px;
-        border-bottom: 3px solid var(--primary-color);
+        border-bottom: 4px solid var(--primary-color);
         width: fit-content;
     }
 
     .comments-header h3 {
-        font-size: 1.5rem;
-        text-shadow: 0 0 10px var(--primary-color);
+        font-size: 2.2rem; 
+        text-shadow: 0 0 15px var(--primary-color);
         margin: 0;
     }
 
     .comment-icon {
-        font-size: 1.5rem;
+        font-size: 2.5rem;
         color: var(--primary-color);
     }
     
+    /* AGRANDAR COMENTARIOS DE UTTERANCES */
     .utterances {
-        margin: 0 auto; 
+        transform-origin: top center;
+        transform: scale(1.4); /* Escalado al 140% */
+        width: 71.4%; /* 100% / 1.4 */
+        margin: 0 auto;
+        margin-bottom: -150px; 
     }
 
-    /* ========================================= */
-    /* === MEDIA QUERIES (AQUÍ ESTÁ LA MAGIA) == */
-    /* ========================================= */
-
-    /* 1. TABLET (iPad, Tablets Android) - El estilo que te gustaba */
-    @media (min-width: 768px) and (max-width: 1024px) {
-        body { font-size: 20px; } /* Fuente aumentada para tablet */
-        
-        .container { width: 95%; padding: 30px; }
-        
-        .back-btn { font-size: 1.3rem; padding: 15px 25px; }
-        
-        h1 { font-size: 2.5rem; }
-        
-        .btn { padding: 18px 40px; font-size: 1.3rem; }
-        
-        .opt-btn { font-size: 1.2rem; padding: 15px 30px; }
-        
-        .comments-header h3 { font-size: 1.8rem; }
-        
-        /* Utterances scale para tablet */
-        .utterances {
-            transform-origin: top center;
-            transform: scale(1.2);
-            width: 83.3%;
-            margin-bottom: -100px;
-        }
-    }
-
-    /* 2. MÓVIL (Celulares) - MODO SUPER ESCALADO */
-    @media (max-width: 767px) {
-        body { 
-            font-size: 22px; /* Fuente base MUY grande para móvil */
-        }
-
-        .container {
-            width: 95%; /* Ocupa casi todo el ancho */
-            padding: 20px 15px; /* Menos padding lateral para dar espacio al contenido */
-            margin: 20px auto;
-        }
-
-        .top-nav {
-            flex-direction: column; /* Botones uno debajo de otro */
-            gap: 15px;
-        }
-
-        .back-btn {
-            width: 100%; /* Botón ancho completo */
-            font-size: 1.4rem; /* Letra grande */
-            padding: 18px;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            font-size: 2.2rem; /* Título grande */
-            margin-top: 20px;
-        }
-
-        .controls {
-            flex-direction: column; /* Botones apilados verticalmente */
-            gap: 20px;
-            width: 100%;
-        }
-
-        .btn {
-            width: 100%; /* Botones gigantes ancho completo */
-            padding: 22px; /* Área de toque masiva */
-            font-size: 1.6rem; /* Texto muy legible */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        .options {
-            flex-direction: column; /* Opciones apiladas */
-            width: 100%;
-        }
-
-        .opt-btn {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.4rem;
-        }
-
-        /* Comentarios adaptados */
-        .comments-header { width: 100%; justify-content: center; }
-        .comments-header h3 { font-size: 1.8rem; }
-        
-        /* Utterances scale agresivo para móvil */
-        .utterances {
-            transform-origin: top center;
-            transform: scale(1.1); 
-            width: 90.9%;
-            margin-bottom: -50px;
-        }
+    /* Responsive básico para evitar que se rompa en móviles pequeños */
+    @media (max-width: 768px) {
+        body { font-size: 18px; }
+        h1 { font-size: 2rem; }
+        .container { padding: 20px; width: 90%; }
+        .btn { padding: 15px 30px; font-size: 1.2rem; }
+        .utterances { transform: scale(1.0); width: 100%; margin-bottom: 0; }
     }
 
   </style>
