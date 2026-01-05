@@ -15,21 +15,16 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.75);
+        --glass-bg: rgba(16, 16, 28, 0.75); /* Fondo un poco más sólido para legibilidad */
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
         --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
     }
 
-    /* --- RESET GLOBAL --- */
-    * {
-        box-sizing: border-box; /* Crucial para que el padding no rompa el ancho */
-    }
-
     /* --- ESTILOS GENERALES --- */
     body { 
         margin: 0; 
-        background: #000; 
+        background: #000; /* Fondo negro de respaldo */
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
         overflow-x: hidden;
@@ -39,7 +34,8 @@
     /* --- FONDO DE VIDEO --- */
     #bg-video { 
         position: fixed; 
-        top: 0; left: 0; 
+        top: 0;
+        left: 0; 
         width: 100%; height: 100%; 
         object-fit: cover;
         z-index: -10; 
@@ -68,10 +64,19 @@
         border-radius: 20px;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(12px);
-        width: 95%; /* Por defecto ocupa 95% en PC si la pantalla es menor a 1100px */
     }
     
-    /* BOTÓN VOLVER */
+    /* NAVEGACIÓN SUPERIOR (BOTONES VOLVER Y TABLET) */
+    .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* BOTÓN GENÉRICO ESTILO NEÓN */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -83,12 +88,11 @@
       border-radius: 20px;
       border: 1px solid transparent;
       white-space: nowrap;
-        margin-bottom: 20px;
     }
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.2);
         border-color: var(--primary-color);
-        transform: translateX(-5px);
+        transform: translateX(-2px); /* Un pequeño movimiento sutil */
         box-shadow: 0 0 10px rgba(0, 255, 247, 0.3);
     }
    
@@ -108,26 +112,6 @@
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
-
-    /* BOTÓN ESPECIAL PARA TABLET */
-    .tablet-play-container {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: radial-gradient(circle, rgba(20,20,20,0.9) 0%, rgba(0,0,0,1) 100%);
-        z-index: 60;
-    }
-    
-    .tablet-play-btn {
-        background: #008cff; color: white; border: none;
-        padding: 15px 35px; font-size: 1.2rem; border-radius: 50px;
-        cursor: pointer; box-shadow: 0 0 20px rgba(0, 140, 255, 0.6);
-        transition: transform 0.2s; font-weight: bold; text-decoration: none;
-        display: flex; align-items: center; gap: 10px;
-    }
-   
-    .tablet-play-btn:active { transform: scale(0.95); }
 
     /* TEXTOS */
     h1 { 
@@ -153,16 +137,19 @@
         font-weight: 600;
         font-size: 0.9rem;
     }
+    /* Estilo específico para el botón de descargar en Rosado */
     #downloadBtn {
         background: rgba(255, 20, 147, 0.2);
         border: 1px solid #ff1493;
         color: #ffffff;
     }
+
     #downloadBtn:hover {
         background: #ff1493;
         color: #fff;
         box-shadow: 0 0 20px #ff1493;
     }
+   
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
@@ -189,6 +176,7 @@
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
     }
+   
     .opt-btn:hover {
         background: #333;
         color: #fff;
@@ -206,16 +194,14 @@
         margin-top: 50px; 
         border-top: 1px solid rgba(255,255,255,0.1); 
         padding-top: 40px; 
-        width: 100%;
     }
 
     .comments-box {
-        background: rgba(0, 0, 0, 0.4); 
+        background: rgba(0, 0, 0, 0.4); /* Fondo más oscuro para la caja */
         border-radius: 15px;
         padding: 25px;
-        border: 1px solid rgba(0, 255, 247, 0.15); 
+        border: 1px solid rgba(0, 255, 247, 0.15); /* Borde sutil cian */
         box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        width: 100%; /* Asegurar que ocupe todo el ancho disponible */
     }
 
     .comments-header {
@@ -243,41 +229,17 @@
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
+    /* Ajuste para el iframe de utterances */
     .utterances {
         max-width: 100%;
     }
 
-    /* --- RESPONSIVE OPTIMIZADO (CELULARES) --- */
+    /* Responsive */
     @media (max-width: 768px) {
-        .container { 
-            margin: 0; /* Quitamos márgenes externos */
-            width: 100%; /* Ocupar todo el ancho */
-            padding: 10px 5px; /* Padding mínimo lateral para ganar espacio */
-            border-radius: 0; /* Quitar bordes redondeados para ganar espacio en esquinas */
-            border-left: none;
-            border-right: none;
-        }
-        
-        h1 { font-size: 1.1rem; padding: 0 10px; }
+        .container { margin: 10px; padding: 15px; }
+        h1 { font-size: 1.1rem; }
         .btn { padding: 10px 20px; font-size: 0.85rem; }
-        
-        /* Ajuste CRÍTICO para los comentarios en celular */
-        .comments-box { 
-            padding: 15px 2px; /* Casi CERO padding lateral para maximizar el iframe */
-            border-left: none;
-            border-right: none;
-            border-radius: 0;
-        }
-        
-        .comments-section {
-            margin-top: 30px;
-            padding-top: 20px;
-        }
-        
-        .comments-header {
-            margin-left: 10px; /* Un poco de margen solo al título */
-        }
-        
+        .comments-box { padding: 15px; }
         .comments-header h3 { font-size: 1.1rem; }
     }
   </style>
@@ -291,8 +253,11 @@
   <div id="overlay"></div>
 
   <div class="container">
- 
-   <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
+    
+    <div class="top-nav">
+       <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
+       <a href="#" id="tabletBtn" class="back-btn" target="_self">Para Tablet 📱</a>
+    </div>
 
     <div class="player-wrapper" id="playerContainer"></div>
 
@@ -326,7 +291,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (Solo los 3 primeros animes)
+    // 1. BASE DE DATOS (Solo los 3 primeros animes como solicitado)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2869,19 +2834,6 @@
 // -----------------------------------------------------------
     // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
     // -----------------------------------------------------------
-    
-    // Función para detectar si el dispositivo es TABLET
-    // Devuelve true solo si es iPad o Android Tablet (NO celulares)
-    function isTablet() {
-        const ua = navigator.userAgent;
-        // Detectar iPads (incluso los nuevos que reportan como Mac)
-        const isIPad = /iPad/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-        // Detectar Android Tablet (Android sin la palabra Mobile suele ser tablet)
-        const isAndroidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
-        
-        return isIPad || isAndroidTablet;
-    }
-
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
@@ -2950,22 +2902,22 @@
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; // Limpiar
         
+        // Manejar visibilidad y enlace del botón "Para Tablet"
+        const tabletBtn = document.getElementById('tabletBtn');
+        if(tabletBtn) {
+            // Se muestra el botón si hay URL, sirve para cualquier dispositivo que prefiera link directo
+            if (url) {
+                tabletBtn.href = url;
+                tabletBtn.style.display = 'inline-flex';
+            } else {
+                tabletBtn.style.display = 'none';
+            }
+        }
+
         const isDrive = url && url.includes('drive.google.com');
         
-        // MODIFICACIÓN: Solo muestra el botón si es una TABLET real y es Google Drive
-        if (isTablet() && isDrive) {
-            container.innerHTML = `
-                <div class="tablet-play-container">
-                    <p style="margin-bottom:15px; color:#ccc; text-align:center; width:80%;">
-                        Modo Tablet detectado: Pulsa para abrir el video
-                    </p>
-                    <a href="${url}" class="tablet-play-btn" target="_self">
-                        ▶ Reproducir Video
-                    </a>
-                </div>
-            `;
-            return;
-        }
+        // NOTA: Se eliminó la lógica que mostraba el overlay para móviles.
+        // Ahora se carga el iframe o video directamente en todos los dispositivos.
 
         if (isDrive) {
             const iframe = document.createElement('iframe');
