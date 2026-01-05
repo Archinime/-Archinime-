@@ -25,7 +25,8 @@
       width: 100%; height: 100%;
       object-fit: cover;
       z-index: -2;
-      opacity: 0; /* Empieza invisible, JS lo maneja */
+      opacity: 0;
+      /* Empieza invisible, JS lo maneja */
       transition: opacity 1s ease;
       background: #000;
       pointer-events: none;
@@ -48,10 +49,10 @@
       position:relative;z-index:0;
       max-width:1000px;
       margin:80px auto;padding:20px;
-      background:rgba(0,0,0,0.75);
+      background:rgba(0,0,0,0.85); /* Un poco más oscuro para mejor rendimiento que el blur excesivo */
       border-radius:12px;
       box-shadow:0 8px 32px rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px); /* Mantenemos el blur solo en el contenedor padre */
       animation:fadeIn 0.8s ease-out;
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -64,7 +65,7 @@
         align-items: center;
         gap: 10px;
         margin-bottom: 20px;
-        flex-wrap: nowrap; /* Fuerza una sola fila */
+        flex-wrap: nowrap;
     }
 
     .back, .share-detail {
@@ -100,6 +101,8 @@
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
       transition: transform 0.4s ease;
       animation: scaleIn .8s ease-out;
+      /* Optimización para imagen */
+      will-change: transform; 
     }
     .anime-cover img:hover { transform: scale(1.02); }
     @keyframes scaleIn{from{transform:scale(1.05); opacity:0;}to{transform:scale(1); opacity:1;}}
@@ -126,18 +129,16 @@
       padding: 8px 14px; font-size: 0.9rem; font-weight: 700;
       border-radius: 999px;
       border: 1px solid rgba(0, 255, 255, 0.6);
-      background: linear-gradient(180deg, rgba(0, 255, 255, 0.1), rgba(0, 200, 255, 0.05));
+      background: rgba(0, 255, 255, 0.05); /* Quitamos degradado complejo */
       color: #e0ffff;
-      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
       cursor: pointer;
-      transition: transform .2s cubic-bezier(.2,.9,.2,1), box-shadow .2s, filter .2s;
+      transition: transform .2s, background .2s;
       position: relative; overflow: hidden;
-      backdrop-filter: blur(2px);
+      /* Quitamos backdrop-filter de aquí para rendimiento */
     }
     .genre-chip:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(0, 255, 255, 0.25);
-      background: rgba(0, 255, 255, 0.15);
+      transform: translateY(-2px);
+      background: rgba(0, 255, 255, 0.2);
       color: #fff;
     }
     .genre-chip.popped { transform: scale(0.95) translateY(0); }
@@ -166,16 +167,18 @@
       border-left:4px solid #0ff;
     }
 
-    /* --- TEMPORADAS (DETAILS/SUMMARY) --- */
-    details{
+    /* --- TEMPORADAS (OPTIMIZADO) --- */
+    details {
       margin-bottom:15px;
       background:rgba(255,255,255,0.03);
       border:1px solid rgba(255,255,255,0.08);
       border-radius:8px;
       overflow:hidden;
-      transition:all 0.3s ease;
+      /* IMPORTANTE: Quitamos transition: all para evitar lag al abrir */
     }
-    details[open] { background:rgba(255,255,255,0.06); box-shadow:0 4px 15px rgba(0,0,0,0.2); }
+    details[open] { 
+      background:rgba(255,255,255,0.06); 
+    }
     summary {
       padding:15px 20px;
       cursor:pointer;
@@ -184,56 +187,75 @@
       display:flex; justify-content:space-between; align-items:center;
       list-style:none;
       transition: background 0.2s;
+      user-select: none; /* Mejora sensación en móvil */
     }
     summary:hover{ background:rgba(0,255,255,0.05); }
     summary::-webkit-details-marker { display:none; }
     summary::after { content:'+'; font-size:1.3rem; transition:transform 0.3s; }
     details[open] summary::after { content:'-'; transform:rotate(180deg); }
 
-    .season-content{ padding:15px; border-top:1px solid rgba(255,255,255,0.05); animation:fadeIn .4s; }
+    .season-content{ 
+        padding:15px; 
+        border-top:1px solid rgba(255,255,255,0.05); 
+        /* Animación ligera solo de opacidad */
+        animation: simpleFade 0.3s ease-out;
+    }
+    @keyframes simpleFade { from{opacity:0;} to{opacity:1;} }
     
-    /* --- LISTA DE VIDEOS (GRID RESPONSIVA ACTUALIZADA) --- */
+    /* --- LISTA DE VIDEOS (GRID OPTIMIZADO) --- */
     .video-list { 
-        display:grid; 
+        display:grid;
         gap:10px;
-        /* Por defecto en PC: 4 columnas */
         grid-template-columns: repeat(4, 1fr);
+        /* PROPIEDAD CLAVE PARA RENDIMIENTO: 
+           Evita renderizar elementos fuera de pantalla */
+        content-visibility: auto; 
+        contain-intrinsic-size: 500px; 
     }
 
-    .video-list a{
+    .video-list a {
       display:flex; 
       align-items: center; justify-content: center;
       padding:12px 5px;
-      background:rgba(0,0,0,0.3);
+      background:rgba(0,0,0,0.4); /* Fondo plano para mejor rendimiento */
       border:1px solid rgba(255,255,255,0.1);
       border-radius:6px;
       text-decoration:none; color:#eee;
       font-size:0.85rem; text-align:center;
-      transition:all 0.2s ease;
+      transition: transform 0.1s, background 0.2s; /* Transición rápida */
       white-space: normal;
       word-break: break-word;
       min-height: 50px;
+      /* Optimizaciones GPU */
+      transform: translateZ(0);
     }
-    .video-list a:hover{
+    
+    /* Efectos pesados SOLO al pasar el mouse (PC) o tocar (Móvil) */
+    .video-list a:hover {
       background:rgba(0,255,255,0.15);
       border-color:#0ff; color:#fff;
-      transform:scale(1.03); box-shadow:0 4px 10px rgba(0,0,0,0.3);
+      transform:scale(1.02); 
+      box-shadow:0 4px 10px rgba(0,0,0,0.5);
     }
 
     /* --- RECOMENDACIONES --- */
     .recommendations { margin-top:50px;
-      border-top:1px solid rgba(255,255,255,0.1); padding-top:25px; }
+      border-top:1px solid rgba(255,255,255,0.1); padding-top:25px;
+    }
     .rec-title { font-size:1.3rem; margin-bottom:20px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
-    .rec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:15px; }
+    .rec-grid { display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:15px; }
     .rec-card {
       background:rgba(255,255,255,0.05);
       border-radius:8px; overflow:hidden;
       transition:transform 0.3s; cursor:pointer;
     }
     .rec-card:hover { transform:translateY(-5px); box-shadow:0 5px 15px rgba(0,0,0,0.3); }
-    .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; }
+    .rec-card img { width:100%; aspect-ratio:2/3;
+      object-fit:cover; }
     .rec-card p { padding:8px; font-size:0.85rem; text-align:center;
-      color:#ccc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      color:#ccc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
 
     /* --- TOAST --- */
     .toast {
@@ -250,7 +272,7 @@
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
         .video-list {
-            grid-template-columns: repeat(3, 1fr); /* 3 por fila en laptop/tablet */
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 
@@ -258,14 +280,21 @@
         .container { padding:15px; margin-top:20px; width:95%; }
         h1 { font-size:1.6rem; }
         
-        /* 2 por fila en móvil */
         .video-list {
-            grid-template-columns: repeat(2, 1fr); 
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px; /* Menos espacio en móvil */
         }
         
         .top-buttons .back, .top-buttons .share-detail {
             font-size: 0.8rem;
             flex: 1;
+        }
+        
+        /* En móvil, evitar sombras en hover para mayor fluidez */
+        .video-list a:hover {
+             transform: none;
+             box-shadow: none;
+             background:rgba(0,255,255,0.2);
         }
     }
   </style>
@@ -286,6 +315,7 @@
         <div class="rec-title">Quizás te guste también:</div>
         <div class="rec-grid" id="rec-grid"></div>
     </div>
+ 
   </div>
 
   <div id="toast" class="toast">✅ Copiado al portapapeles</div>
@@ -543,7 +573,7 @@
         71: ["overlord.mp3"] 
     };
 
-    let currentAudio = null;
+let currentAudio = null;
     let currentTrackIndex = 0;
     let currentPlaylist = [];
 
@@ -577,7 +607,7 @@
         if (!currentAudio && audioPlaylists[id]) {
             currentPlaylist = audioPlaylists[id];
             
-            // MODIFICACIÓN: Empezar en un índice ALEATORIO
+            // Empezar en un índice ALEATORIO
             if(currentPlaylist.length > 0){
                 currentTrackIndex = Math.floor(Math.random() * currentPlaylist.length);
                 playTrack(currentPlaylist[currentTrackIndex]);
@@ -587,7 +617,7 @@
 
 
     /* ----------------------------------------------------
-       3. Base de Datos de Animes (Solo los 3 primeros)
+       3. Base de Datos de Animes (3 primeros + Plantilla)
        ---------------------------------------------------- */
     const data = {
     1: {
@@ -4373,7 +4403,6 @@
 
             <p class="desc">${anime.desc}</p>
         `;
-        
         // Renderizado de Temporadas
         if(anime.seasons){
             anime.seasons.forEach(s => {
@@ -4381,23 +4410,21 @@
                 <details>
                     <summary>${s.name || 'Temporada ' + s.num}</summary>
                     <div class="season-content">
-                        ${s.cover ? `<img src="${s.cover}" style="width:100%; border-radius:5px; margin-bottom:10px;">` : ''}
+                        ${s.cover ? `<img src="${s.cover}" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                         <div class="video-list">
                             ${s.eps.map((ep, i) => `
                                 <a href="video-player.html?anime=${id}&s=${s.num}&e=${i+1}">
                                     ▶ ${ep.title}
                                 </a>
-                             `).join('')}
+                            `).join('')}
                         </div>
                     </div>
                 </details>`;
             });
         }
         container.innerHTML = html;
-
         // Cargar Géneros
         populateGenresForAnime(id);
-        
         // Cargar Recomendaciones
         renderRecommendations(id);
     } else {
@@ -4409,7 +4436,6 @@
         navigator.clipboard.writeText(window.location.href);
         showToast("Enlace copiado");
     });
-    
     function showToast(msg) {
         const t = document.getElementById('toast');
         t.textContent = "✅ " + msg;
@@ -4422,10 +4448,9 @@
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
-        
         grid.innerHTML = randomKeys.map(k => `
             <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'" style="cursor:pointer">
-                <img src="${data[k].cover}" alt="${data[k].title}">
+                <img src="${data[k].cover}" alt="${data[k].title}" loading="lazy">
                 <p>${data[k].title}</p>
             </div>
         `).join('');
@@ -4449,7 +4474,6 @@
           <span class="copied-badge">✓</span>
         </button>
       `).join('');
-      
       cont.querySelectorAll('.genre-chip').forEach(btn => {
         btn.addEventListener('click', async (ev) => {
           const genre = btn.dataset.genre;
@@ -4493,7 +4517,7 @@
               const matchByTitle = arr.find(it => it.title && normalizeText(it.title) === currentTitle);
               if(matchByTitle && matchByTitle.genres && matchByTitle.genres.length){ 
                   renderGenres(matchByTitle.genres);
-                  return; 
+                  return;
               }
               renderGenres([]);
             } catch(e){
