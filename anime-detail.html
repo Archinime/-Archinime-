@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -4277,14 +4276,10 @@ let currentAudio = null;
             });
         }
         container.innerHTML = html;
-
-        // Cargar Géneros
-        populateGenresForAnime(id);
-        
-        // Cargar Recomendaciones
-        renderRecommendations(id);
+        populateGenres(id);
+        renderRecs(id);
     } else {
-        container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
+        container.innerHTML = "<h3 style='text-align:center; padding:50px;'>No encontrado</h3>";
     }
 
     // Función clave para evitar congelamiento
@@ -4338,107 +4333,34 @@ let currentAudio = null;
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
 
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.textContent = "✅ " + msg;
-        t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2000);
-    }
-
-    // Lógica de recomendaciones
-    function renderRecommendations(currentId) {
+    function renderRecs(currId) {
         const grid = document.getElementById('rec-grid');
-        const keys = Object.keys(data).filter(k => k != currentId);
-        const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
-        
-        grid.innerHTML = randomKeys.map(k => `
-            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'" style="cursor:pointer">
-                <img src="${data[k].cover}" alt="${data[k].title}">
+        const keys = Object.keys(data).filter(k => k != currId).slice(0, 6);
+        grid.innerHTML = keys.map(k => `
+            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'">
+                <img src="${data[k].cover}" loading="lazy">
                 <p>${data[k].title}</p>
             </div>
         `).join('');
     }
 
-    /* ------------------------------------------------------------------
-       5. Lógica para copiar géneros desde index.txt
-       ------------------------------------------------------------------ */
-    
-    function renderGenres(genres){
-      const cont = document.getElementById('genres-container');
-      if(!cont) return;
-      if(!genres || !genres.length){ 
-          cont.innerHTML = '<span style="font-size:0.8rem; color:#aaa;">Géneros no disponibles</span>';
-          return; 
-      }
-      
-      cont.innerHTML = genres.map(g => `
-        <button class="genre-chip" data-genre="${escapeHtml(g)}">
-          ${escapeHtml(g)}
-          <span class="copied-badge">✓</span>
-        </button>
-      `).join('');
-      
-      cont.querySelectorAll('.genre-chip').forEach(btn => {
-        btn.addEventListener('click', async (ev) => {
-          const genre = btn.dataset.genre;
-          try { await navigator.clipboard.writeText(genre); } catch(e){}
-          btn.classList.add('popped','show-badge');
-          setTimeout(() => btn.classList.remove('popped'), 350);
-          setTimeout(() => btn.classList.remove('show-badge'), 1200);
-          showToast(`Género copiado: ${genre}`);
+    function populateGenres(aid){
+        const cont = document.getElementById('genres-container');
+        cont.innerHTML = `
+            <span class="genre-chip">Anime</span>
+            <span class="genre-chip">HD</span>
+        `;
+    }
+
+    // Polyfill simple para toggle en detalles
+    document.querySelectorAll('details').forEach(d => {
+        d.addEventListener('toggle', function() {
+             const onToggleAttr = this.getAttribute('onontoggle');
+             if(onToggleAttr) {
+                 new Function(onToggleAttr).call(this);
+             }
         });
-      });
-    }
-
-    function populateGenresForAnime(animeId){
-      const tries = ['index.txt','index.html'];
-      let tried = 0;
-
-      function tryNext(){
-        if(tried >= tries.length){ 
-            renderGenres([]);
-            return;
-        }
-        const url = tries[tried++];
-        fetch(url)
-          .then(r => r.text())
-          .then(text => {
-            const m = text.match(/const\s+animes\s*=\s*(\[[\s\S]*?\])\s*;/m);
-            if(!m){ 
-                tryNext(); 
-                return; 
-            }
-            try {
-              const arrayLiteral = m[1];
-              const arr = (new Function('return ' + arrayLiteral))();
-              const item = arr.find(it => Number(it.id) === Number(animeId) || String(it.id) === String(animeId));
-              
-              if(item && item.genres && item.genres.length){ 
-                  renderGenres(item.genres); 
-                  return; 
-              }
-              const currentTitle = normalizeText(data[animeId].title);
-              const matchByTitle = arr.find(it => it.title && normalizeText(it.title) === currentTitle);
-              if(matchByTitle && matchByTitle.genres && matchByTitle.genres.length){ 
-                  renderGenres(matchByTitle.genres);
-                  return; 
-              }
-              renderGenres([]);
-            } catch(e){
-              console.warn('Error parseando géneros del index:', e);
-              tryNext();
-            }
-        }).catch(()=>{ tryNext(); });
-      }
-      tryNext();
-    }
-
-    function normalizeText(s){
-      return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-    }
-    function escapeHtml(str){
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
+    });
   </script>
 </body>
 </html>
