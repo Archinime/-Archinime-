@@ -15,8 +15,6 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.75);
-        --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
         --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
     }
@@ -27,11 +25,11 @@
         background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: auto; 
+        overflow-x: hidden; /* Evita scroll horizontal innecesario */
         min-height: 100vh;
     }
    
-    /* --- FONDO DE VIDEO --- */
+    /* --- FONDO DE VIDEO (Background) --- */
     #bg-video { 
         position: fixed; 
         top: 0;
@@ -53,20 +51,19 @@
       pointer-events: none;
     }
     
-    /* --- CONTENEDOR PRINCIPAL (EFECTO VIDRIO) --- */
-    /* CAMBIO: Aumentado el ancho para que el video sea mas grande */
+    /* --- CONTENEDOR PRINCIPAL (SIN RECTÁNGULO VISIBLE) --- */
+    /* CAMBIO: Se eliminó el fondo, bordes y sombras. Ancho al 100% */
     .container { 
-        width: 95%; /* Ocupa casi todo el ancho */
-        max-width: 1400px; /* Límite para pantallas muy grandes */
-        margin: 40px auto;
-        padding: 30px; 
+        width: 100%; 
+        max-width: none; /* Sin límite de ancho */
+        margin: 0;
+        padding: 10px 0; /* Padding vertical mínimo */
         position: relative; 
         z-index: 10;
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(12px);
+        background: transparent; /* Fondo transparente */
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
     }
     
     /* NAVEGACIÓN SUPERIOR */
@@ -74,13 +71,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
+        padding: 0 20px; /* Separación de los bordes de la pantalla */
         flex-wrap: nowrap; 
         gap: 15px;
     }
 
-    /* BOTÓN GENÉRICO ESTILO NEÓN */
-    /* CAMBIO: Botones superiores más grandes */
+    /* BOTÓN GENÉRICO ESTILO NEÓN (GIGANTE) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -88,33 +85,35 @@
       color:#0ff;
       text-decoration:none;
       font-weight:bold;
-      font-size: 1.2rem; /* Texto más grande */
+      font-size: 1.2rem; 
       transition:all .3s;
       cursor:pointer;
-      background: rgba(0, 255, 255, 0.1);
-      padding: 15px 25px; /* Botón más gordo */
+      background: rgba(0, 0, 0, 0.6); /* Fondo oscuro para que se lea sobre el video */
+      padding: 15px 25px; 
       border-radius: 30px;
-      border: 1px solid transparent;
+      border: 2px solid var(--primary-color);
       white-space: nowrap;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.2);
-        border-color: var(--primary-color);
-        transform: translateX(-2px);
-        box-shadow: 0 0 10px rgba(0, 255, 247, 0.3);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
     }
    
-    /* REPRODUCTOR */
+    /* REPRODUCTOR (FULL WIDTH) */
     .player-wrapper { 
         position: relative; 
         padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
+        width: 100%; /* Ocupa todo el ancho */
         background: #000; 
-        border-radius: 16px;
         overflow: hidden; 
-        box-shadow: 0 0 30px rgba(0,0,0,0.8);
         z-index: 50;
-        border: 1px solid rgba(255,255,255,0.1);
+        /* Sin bordes redondeados ni líneas */
+        border-radius: 0; 
+        border: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     }
    
     .player-wrapper iframe, .player-wrapper video { 
@@ -123,48 +122,57 @@
     }
 
     /* TEXTOS */
-    /* CAMBIO: Título más grande */
     h1 { 
         color: #fff; 
-        font-size: 2.2rem; /* Mucho más grande */
+        font-size: 2.5rem; /* Texto muy grande */
         margin-top: 30px;
         text-align: center; 
-        text-shadow: 0 0 10px rgba(0,0,0,0.8);
+        text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color); /* Sombra fuerte para leer sin fondo */
+        padding: 0 15px;
     }
     
     /* CONTROLES */
-    .controls { margin-top: 35px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .controls { 
+        margin-top: 40px; 
+        display: flex; 
+        justify-content: center; 
+        gap: 25px; 
+        flex-wrap: wrap; 
+        padding: 0 10px;
+    }
     
-    /* CAMBIO: Botones de navegación y descarga mucho más grandes */
+    /* BOTONES DE CONTROL (GIGANTES) */
     .btn { 
-        padding: 18px 45px; /* Mucho más relleno para poder presionar fácil */
-        background: rgba(0, 255, 255, 0.1); 
-        border: 2px solid var(--primary-color); /* Borde un poco más grueso */
+        padding: 20px 50px; 
+        background: rgba(0, 0, 0, 0.7); 
+        border: 3px solid var(--primary-color); 
         color: #fff; 
         text-decoration: none; 
-        border-radius: 50px; 
+        border-radius: 60px; 
         cursor: pointer; 
         transition: 0.3s;
-        font-weight: 700;
-        font-size: 1.3rem; /* Letra grande */
+        font-weight: 800;
+        font-size: 1.5rem; 
+        text-shadow: 1px 1px 2px #000;
     }
     
     #downloadBtn {
-        background: rgba(255, 20, 147, 0.2);
-        border: 2px solid #ff1493;
+        background: rgba(0, 0, 0, 0.7);
+        border: 3px solid #ff1493;
         color: #ffffff;
     }
 
     #downloadBtn:hover {
         background: #ff1493;
         color: #fff;
-        box-shadow: 0 0 20px #ff1493;
+        box-shadow: 0 0 30px #ff1493;
     }
    
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
-        box-shadow: 0 0 15px var(--primary-color);
+        box-shadow: 0 0 30px var(--primary-color);
+        text-shadow: none;
     }
    
     .btn-hidden { display: none; }
@@ -176,22 +184,25 @@
         gap: 20px;
         justify-content: center; 
         flex-wrap: wrap;
+        padding: 0 10px;
     }
-    /* CAMBIO: Botones de opciones más grandes */
+    
     .opt-btn { 
-        font-size: 1.1rem; /* Texto más grande */
-        padding: 14px 28px; /* Botón más grande */
-        border: 1px solid #444; 
-        background: #1a1a1a;
-        color: #aaa; 
+        font-size: 1.2rem; 
+        padding: 15px 30px; 
+        border: 2px solid #555; 
+        background: rgba(0,0,0,0.8);
+        color: #ddd; 
         cursor: pointer; 
-        border-radius: 12px;
+        border-radius: 15px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
+        font-weight: bold;
     }
    
     .opt-btn:hover {
         background: #333;
+        border-color: #fff;
         color: #fff;
     }
   
@@ -199,46 +210,52 @@
         border-color: var(--primary-color); 
         color: #000;
         background: var(--primary-color); 
-        font-weight: bold;
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
+        box-shadow: 0 0 20px rgba(0, 255, 247, 0.6);
     }
 
-    /* --- COMENTARIOS --- */
+    /* --- COMENTARIOS (SIN RECTÁNGULO) --- */
     .comments-section { 
-        margin-top: 60px; 
-        border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 40px; 
+        margin-top: 80px; 
+        /* Borde superior sutil para separar */
+        border-top: 1px solid rgba(255,255,255,0.2); 
+        padding: 40px 20px; 
+        width: 100%;
+        box-sizing: border-box;
     }
 
+    /* CAMBIO: Se eliminó el fondo de la caja de comentarios */
     .comments-box {
-        background: rgba(0, 0, 0, 0.4);
-        border-radius: 15px;
-        padding: 25px;
-        border: 1px solid rgba(0, 255, 247, 0.15);
-        box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        background: transparent; 
+        border-radius: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .comments-header {
         display: flex;
         align-items: center;
+        justify-content: center; /* Centrado */
         gap: 15px;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         padding-bottom: 15px;
-        border-bottom: 2px solid var(--primary-color);
-        width: fit-content;
+        border-bottom: 3px solid var(--primary-color);
+        width: 100%;
     }
 
     .comments-header h3 {
         color: #fff;
         margin: 0;
-        font-size: 1.5rem; /* Título de comentarios más grande */
+        font-size: 2rem; 
         text-transform: uppercase;
-        letter-spacing: 1px;
-        text-shadow: 0 0 8px var(--primary-color);
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 4px #000, 0 0 10px var(--primary-color);
     }
 
     .comment-icon {
-        font-size: 1.8rem; /* Icono más grande */
+        font-size: 2rem; 
         color: var(--primary-color);
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
@@ -259,8 +276,8 @@
   <div class="container">
     
     <div class="top-nav">
-       <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
-       <a href="#" id="tabletBtn" class="back-btn" target="_self">Para Tablet 📱</a>
+       <a href="#" id="backLink" class="back-btn">← Volver</a>
+       <a href="#" id="tabletBtn" class="back-btn" target="_self">Tablet 📱</a>
     </div>
 
     <div class="player-wrapper" id="playerContainer"></div>
@@ -279,7 +296,7 @@
         <div class="comments-box">
             <div class="comments-header">
                 <span class="comment-icon">💬</span>
-                <h3>Zona de Comentarios</h3>
+                <h3>Comentarios</h3>
             </div>
             <script src="https://utteranc.es/client.js"
                 repo="Archinime/Comentarios"
@@ -295,7 +312,7 @@
 
 <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (Solo los 3 primeros animes como solicitado)
+    // 1. BASE DE DATOS (Solo los 3 primeros animes)
     // -----------------------------------------------------------
     const DB = {
       "1": {
