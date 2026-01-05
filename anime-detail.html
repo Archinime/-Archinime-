@@ -191,7 +191,7 @@
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
     
-    /* Configuración para PC y Tablet (6 por fila) */
+    /* PC y Tablet: 6 por fila */
     .rec-grid { 
       display:grid; 
       grid-template-columns: repeat(6, 1fr);
@@ -214,12 +214,10 @@
     }
 
     /* --- MEDIA QUERIES --- */
-    /* Ajuste de lista de episodios en Tablet/Laptop pequeña */
     @media (max-width: 1024px) {
         .video-list { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* Ajustes para Móvil */
     @media (max-width: 600px) {
         .container { width:100%; margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.85); }
         .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
@@ -4359,7 +4357,7 @@ let currentAudio = null;
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
 
-    // ACTUALIZADO: Muestra 12 recomendaciones en lugar de 6
+    // ACTUALIZADO: Muestra 12 recomendaciones
     function renderRecs(currId) {
         const grid = document.getElementById('rec-grid');
         // Filtramos para no mostrar el actual y cortamos en 12
