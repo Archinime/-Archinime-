@@ -19,9 +19,9 @@
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
         --neon-shadow: 0 0 15px var(--primary-color);
-    }
+    } [cite: 3, 4, 5]
 
-    /* --- ESTILOS GENERALES (AJUSTADOS PARA VISIBILIDAD) --- */
+    /* --- ESTILOS GENERALES (AJUSTADOS PARA ALEJAR EL CONTENIDO) --- */
     body { 
         margin: 0;
         background: #000; 
@@ -29,9 +29,9 @@
         font-family: 'Poppins', sans-serif; 
         overflow-x: hidden; 
         min-height: 100vh;
-        /* Reducimos un poco la fuente respecto al anterior para "alejarlo" y que quepa todo */
-        font-size: 20px; 
-    }
+        /* CAMBIO: Reducido de 20px a 18px para alejar la vista en PC */
+        font-size: 18px; 
+    } [cite: 6, 7]
    
     /* --- FONDO DE VIDEO --- */
     #bg-video { 
@@ -41,7 +41,7 @@
         object-fit: cover;
         z-index: -10;
         opacity: 1; 
-    }
+    } [cite: 8, 9]
 
     #overlay {
       position: fixed; 
@@ -50,7 +50,7 @@
       z-index: -5;
       background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);
       pointer-events: none;
-    }
+    } [cite: 10]
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
@@ -65,7 +65,7 @@
         border-radius: 30px;
         box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(15px);
-    }
+    } [cite: 11, 12]
     
     /* NAVEGACIÓN SUPERIOR */
     .top-nav {
@@ -75,7 +75,7 @@
         margin-bottom: 30px;
         flex-wrap: wrap;
         gap: 15px;
-    }
+    } [cite: 13, 14]
 
     /* BOTONES DE NAVEGACIÓN */
     .back-btn { 
@@ -93,13 +93,14 @@
       border-radius: 30px;
       border: 2px solid transparent;
       white-space: nowrap;
-    }
+    } [cite: 15, 16]
+
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.25);
         border-color: var(--primary-color);
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
         transform: scale(1.02);
-    }
+    } [cite: 17]
    
     /* REPRODUCTOR */
     .player-wrapper { 
@@ -112,11 +113,12 @@
         box-shadow: 0 0 40px rgba(0,0,0,0.9);
         z-index: 50;
         border: 2px solid rgba(255,255,255,0.1);
-    }
+    } [cite: 18, 19, 20]
    
     .player-wrapper iframe, .player-wrapper video { 
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
-    }
+        position: absolute; top: 0;
+        left: 0; width: 100%; height: 100%; border: none;
+    } [cite: 21]
 
     /* TÍTULO DEL EPISODIO */
     h1 { 
@@ -127,8 +129,8 @@
         text-align: center; 
         text-shadow: 0 0 15px rgba(0,0,0,0.9);
         line-height: 1.2;
-    }
-    
+    } [cite: 22]
+   
     /* CONTROLES PRINCIPALES */
     .controls { 
         margin-top: 40px; 
@@ -136,7 +138,7 @@
         justify-content: center; 
         gap: 20px; 
         flex-wrap: wrap; 
-    }
+    } [cite: 23, 24]
     
     .btn { 
         padding: 15px 40px; 
@@ -149,24 +151,27 @@
         transition: 0.3s;
         font-weight: 700;
         font-size: 1.2rem; 
-    }
+    } [cite: 25, 26]
 
     #downloadBtn {
         background: rgba(255, 20, 147, 0.2);
         border: 2px solid #ff1493;
         color: #ffffff;
-    }
+    } [cite: 27]
+
     #downloadBtn:hover {
         background: #ff1493;
         box-shadow: 0 0 25px #ff1493;
     }
+
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
         box-shadow: 0 0 25px var(--primary-color);
         transform: scale(1.05);
-    }
-    .btn-hidden { display: none; }
+    } [cite: 28]
+
+    .btn-hidden { display: none; } [cite: 29]
     
     /* OPCIONES DE SERVIDOR */
     .options { 
@@ -175,7 +180,8 @@
         gap: 15px;
         justify-content: center; 
         flex-wrap: wrap;
-    }
+    } [cite: 30]
+
     .opt-btn { 
         font-size: 1.1rem; 
         padding: 12px 25px; 
@@ -186,31 +192,31 @@
         border-radius: 12px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
-    }
+    } [cite: 31, 32]
+
     .opt-btn.active { 
         border-color: var(--primary-color); 
         color: #000;
         background: var(--primary-color); 
         font-weight: bold;
         box-shadow: 0 0 20px rgba(0, 255, 247, 0.5);
-    }
+    } [cite: 33]
 
-    /* --- ZONA DE COMENTARIOS (AJUSTADA PARA MÓVIL) --- */
+    /* --- ZONA DE COMENTARIOS --- */
     .comments-section { 
         margin-top: 60px; 
         border-top: 2px solid rgba(255,255,255,0.1); 
         padding-top: 40px; 
-    }
+    } [cite: 34]
 
     .comments-box {
         background: rgba(0, 0, 0, 0.5); 
         border-radius: 20px;
         padding: 30px; 
         border: 2px solid rgba(0, 255, 247, 0.2);
-        /* Quitamos overflow hidden para que se vean popups, y añadimos un mínimo de alto */
         min-height: 200px;
         position: relative;
-    }
+    } [cite: 35, 36]
 
     .comments-header {
         display: flex;
@@ -219,68 +225,72 @@
         margin-bottom: 25px;
         padding-bottom: 10px;
         border-bottom: 3px solid var(--primary-color);
-        /* Quitamos fit-content para que use el ancho disponible y no se corte en móvil */
         width: 100%; 
-    }
+    } [cite: 37, 38]
 
     .comments-header h3 {
         font-size: 1.8rem; 
         text-shadow: 0 0 10px var(--primary-color);
         margin: 0;
-    }
+    } [cite: 39]
 
     .comment-icon {
         font-size: 2rem;
         color: var(--primary-color);
-        /* Aseguramos que el icono no se encoja */
         flex-shrink: 0; 
-    }
+    } [cite: 40, 41]
     
-    /* UTTERANCES: Ajuste sin scale exagerado para evitar cortes */
+    /* UTTERANCES */
     .utterances {
         width: 100%;
         margin: 0 auto;
-    }
+    } [cite: 42]
 
     /* --- RESPONSIVE: AJUSTE FINAL PARA MÓVIL "ALEJADO" --- */
     @media (max-width: 768px) {
         body { 
-            /* Bajamos el tamaño de fuente en móvil para que quepa todo */
+            /* CAMBIO: Bajamos de 16px a 14px para alejar más en móvil */
             font-size: 14px; 
-        }
+        } [cite: 43, 44, 45]
+
         .container {
             width: 95%;
-            padding: 20px; /* Menos padding para ganar espacio */
+            padding: 20px; 
             margin: 20px auto;
-        }
-        h1 { font-size: 1.5rem; }
-        
+        } [cite: 46, 47]
+
+        h1 { font-size: 1.5rem; } [cite: 47]
+       
         .comments-header h3 {
             font-size: 1.4rem;
-        }
+        } [cite: 48, 49]
+
         .comment-icon {
             font-size: 1.6rem;
-        }
+        } [cite: 49]
+  
         .btn {
             padding: 12px 30px;
             font-size: 1rem;
-            width: 100%; /* Botones full width en móvil para facilitar toque */
+            width: 100%; 
             text-align: center;
-        }
+        } [cite: 50, 51]
+ 
         .back-btn {
             width: 100%;
             text-align: center;
-            display: block; /* Botones de arriba en bloque para que no se amontonen */
+            display: block; 
             margin-bottom: 10px;
-        }
+        } [cite: 52, 53, 54]
+
         .top-nav {
             display: block;
-        }
-        /* Corrección Utterances para móvil */
+        } [cite: 54]
+ 
         .utterances {
             margin: 0;
             padding: 0;
-        }
+        } [cite: 55, 56]
     }
 
   </style>
@@ -289,7 +299,7 @@
 
   <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
     <source src="galaxia.mp4" type="video/mp4">
-  </video>
+  </video> [cite: 57]
 
   <div id="overlay"></div>
 
@@ -298,7 +308,7 @@
     <div class="top-nav">
        <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
        <a href="#" id="tabletBtn" class="back-btn" target="_self">Para Tablet 📱</a>
-    </div>
+    </div> [cite: 58, 59]
 
     <div class="player-wrapper" id="playerContainer"></div>
 
@@ -310,13 +320,13 @@
         <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
         <a id="downloadBtn" class="btn" href="#" target="_blank" download>⬇ Descargar</a>
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
-    </div>
+    </div> [cite: 60, 61]
 
     <div class="comments-section">
         <div class="comments-box">
             <div class="comments-header">
-               <span class="comment-icon">💬</span>
-               <h3>Zona de Comentarios</h3>
+                <span class="comment-icon">💬</span>
+                <h3>Zona de Comentarios</h3>
             </div>
             <script src="https://utteranc.es/client.js"
                 repo="Archinime/Comentarios"
@@ -326,7 +336,7 @@
                 async>
             </script>
         </div>
-    </div>
+    </div> [cite: 62, 63, 64, 65, 66, 67, 68, 69]
 
   </div>
 
@@ -2875,6 +2885,7 @@
 // -----------------------------------------------------------
     // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
     // -----------------------------------------------------------
+    
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
@@ -3008,7 +3019,7 @@
                 }
             }
         } catch (e) { console.error(e); }
-    }
+    } [cite: 1845-1879]
   </script>
 </body>
 </html>
