@@ -98,12 +98,12 @@
         z-index: 50;
         border: 1px solid rgba(255,255,255,0.1);
     }
-    
+   
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
 
-    /* BOTÓN ESPECIAL PARA MÓVIL/TABLET */
+    /* BOTÓN ESPECIAL PARA TABLET (MODIFICADO) */
     .tablet-play-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column;
@@ -173,13 +173,13 @@
         display: flex; 
         gap: 15px;
         justify-content: center; 
-        flex-wrap: wrap; 
+        flex-wrap: wrap;
     }
     .opt-btn { 
         font-size: 0.9rem; 
         padding: 10px 20px; 
         border: 1px solid #444; 
-        background: #1a1a1a; 
+        background: #1a1a1a;
         color: #aaa; 
         cursor: pointer; 
         border-radius: 8px;
@@ -193,7 +193,7 @@
     }
     .opt-btn.active { 
         border-color: var(--primary-color); 
-        color: #000; 
+        color: #000;
         background: var(--primary-color); 
         font-weight: bold;
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
@@ -263,7 +263,7 @@
   <div id="overlay"></div>
 
   <div class="container">
-  
+ 
    <a href="#" id="backLink" class="back-btn">← Volver al Anime</a>
 
     <div class="player-wrapper" id="playerContainer"></div>
@@ -298,7 +298,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (Solo los 3 primeros animes como solicitado)
+    // 1. BASE DE DATOS (Solo los 3 primeros animes, agrega el resto abajo)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2841,7 +2841,18 @@
 // -----------------------------------------------------------
     // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
     // -----------------------------------------------------------
-    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+    
+    // Función para detectar si el dispositivo es TABLET
+    // Devuelve true solo si es iPad o Android Tablet (NO celulares)
+    function isTablet() {
+        const ua = navigator.userAgent;
+        // Detectar iPads (incluso los nuevos que reportan como Mac)
+        const isIPad = /iPad/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        // Detectar Android Tablet (Android sin la palabra Mobile suele ser tablet)
+        const isAndroidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
+        
+        return isIPad || isAndroidTablet;
+    }
 
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
@@ -2913,7 +2924,8 @@
         
         const isDrive = url && url.includes('drive.google.com');
         
-        if (isMobileDevice && isDrive) {
+        // MODIFICACIÓN: Solo muestra el botón si es una TABLET real y es Google Drive
+        if (isTablet() && isDrive) {
             container.innerHTML = `
                 <div class="tablet-play-container">
                     <p style="margin-bottom:15px; color:#ccc; text-align:center; width:80%;">
