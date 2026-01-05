@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -8,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     /* --- VARIABLES --- */
@@ -16,6 +15,8 @@
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
         --text-color: #ffffff;
+        --glass-bg: rgba(0, 0, 0, 0.75);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
         --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
     }
 
@@ -25,44 +26,45 @@
         background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: hidden; /* Evita scroll horizontal innecesario */
+        overflow-x: hidden; /* Evita scroll horizontal */
         min-height: 100vh;
     }
    
     /* --- FONDO DE VIDEO (Background) --- */
     #bg-video { 
         position: fixed; 
-        top: 0;
-        left: 0; 
+        top: 0; left: 0; 
         width: 100%; height: 100%; 
         object-fit: cover;
         z-index: -10; 
-        opacity: 1; 
     }
 
     /* --- OVERLAY LIGERO --- */
     #overlay {
       position: fixed; 
-      top: 0;
-      left: 0; 
+      top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.7) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
       pointer-events: none;
     }
     
-    /* --- CONTENEDOR PRINCIPAL --- */
+    /* --- CONTENEDOR PRINCIPAL (MEJORADO PARA PC) --- */
     .container { 
-        width: 100%; 
-        max-width: none; 
-        margin: 0;
-        padding: 10px 0; 
+        width: 95%; 
+        max-width: 1100px; /* Limita el ancho en PC para que no se vea "estirado" */
+        margin: 40px auto; /* Centrado en pantalla */
+        padding: 30px; 
         position: relative; 
         z-index: 10;
-        background: transparent; 
-        border: none;
-        box-shadow: none;
-        backdrop-filter: none;
+        
+        /* Efecto Glassmorphism */
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px); /* Desenfoca lo que hay detrás */
+        -webkit-backdrop-filter: blur(15px);
+        border: var(--glass-border);
+        border-radius: 25px;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
     }
     
     /* NAVEGACIÓN SUPERIOR */
@@ -70,48 +72,48 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
-        padding: 0 20px; 
+        margin-bottom: 25px;
         flex-wrap: nowrap; 
         gap: 15px;
     }
 
-    /* BOTÓN GENÉRICO ESTILO NEÓN (GIGANTE) */
+    /* BOTONES DE NAVEGACIÓN */
     .back-btn { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color:#0ff;
-      text-decoration:none;
-      font-weight:bold;
-      font-size: 1.2rem; 
-      transition:all .3s;
-      cursor:pointer;
+      color: #0ff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem; 
+      transition: all .3s ease;
+      cursor: pointer;
       background: rgba(0, 0, 0, 0.6); 
-      padding: 15px 25px; 
-      border-radius: 30px;
-      border: 2px solid var(--primary-color);
+      padding: 10px 20px; 
+      border-radius: 50px;
+      border: 1px solid var(--primary-color);
       white-space: nowrap;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-    .back-btn:hover {
-        background: rgba(0, 255, 247, 0.2);
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
     }
    
-    /* REPRODUCTOR (FULL WIDTH) */
+    .back-btn:hover {
+        background: var(--primary-color);
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px var(--primary-color);
+    }
+   
+    /* REPRODUCTOR (16:9) */
     .player-wrapper { 
         position: relative; 
-        padding-bottom: 56.25%; /* 16:9 */
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
         height: 0; 
         width: 100%; 
         background: #000; 
         overflow: hidden; 
         z-index: 50;
-        border-radius: 0; 
-        border: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        border-radius: 15px; 
+        border: 1px solid #333;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
    
     .player-wrapper iframe, .player-wrapper video { 
@@ -120,87 +122,30 @@
         height: 100%; border: none;
     }
 
-    /* TEXTOS */
-    h1 { 
-        color: #fff; 
-        font-size: 2.5rem; 
-        margin-top: 30px;
-        text-align: center; 
-        text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color);
-        padding: 0 15px;
-    }
-    
-    /* CONTROLES */
-    .controls { 
-        margin-top: 40px; 
-        display: flex; 
-        justify-content: center; 
-        gap: 25px; 
-        flex-wrap: wrap; 
-        padding: 0 10px;
-    }
-    
-    /* BOTONES DE CONTROL (GIGANTES) */
-    .btn { 
-        padding: 20px 50px; 
-        background: rgba(0, 0, 0, 0.7); 
-        border: 3px solid var(--primary-color); 
-        color: #fff; 
-        text-decoration: none; 
-        border-radius: 60px; 
-        cursor: pointer; 
-        transition: 0.3s;
-        font-weight: 800;
-        font-size: 1.5rem; 
-        text-shadow: 1px 1px 2px #000;
-    }
-    
-    #downloadBtn {
-        background: rgba(0, 0, 0, 0.7);
-        border: 3px solid #ff1493;
-        color: #ffffff;
-    }
-
-    #downloadBtn:hover {
-        background: #ff1493;
-        color: #fff;
-        box-shadow: 0 0 30px #ff1493;
-    }
-   
-    .btn:hover { 
-        background: var(--primary-color); 
-        color: #000;
-        box-shadow: 0 0 30px var(--primary-color);
-        text-shadow: none;
-    }
-   
-    .btn-hidden { display: none; }
-    
-    /* Opciones de Servidor */
+    /* OPCIONES DE SERVIDOR */
     .options { 
-        margin-top: 30px; 
+        margin-top: 20px; 
         display: flex; 
-        gap: 20px;
+        gap: 15px;
         justify-content: center; 
         flex-wrap: wrap;
-        padding: 0 10px;
     }
     
     .opt-btn { 
-        font-size: 1.2rem; 
-        padding: 15px 30px; 
-        border: 2px solid #555; 
-        background: rgba(0,0,0,0.8);
+        font-size: 1rem; 
+        padding: 10px 25px; 
+        border: 1px solid #555; 
+        background: rgba(255,255,255,0.05);
         color: #ddd;
         cursor: pointer; 
-        border-radius: 15px;
+        border-radius: 12px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
-        font-weight: bold;
+        font-weight: 500;
     }
    
     .opt-btn:hover {
-        background: #333;
+        background: rgba(255,255,255,0.15);
         border-color: #fff;
         color: #fff;
     }
@@ -209,17 +154,73 @@
         border-color: var(--primary-color); 
         color: #000;
         background: var(--primary-color); 
-        box-shadow: 0 0 20px rgba(0, 255, 247, 0.6);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
+        font-weight: 700;
     }
 
-    /* --- COMENTARIOS --- */
+    /* TÍTULO DEL EPISODIO */
+    h1 { 
+        color: #fff; 
+        font-size: 2rem; 
+        margin: 30px 0 20px 0;
+        text-align: center; 
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px rgba(0, 255, 247, 0.5);
+    }
+    
+    /* CONTROLES (ANTERIOR / SIGUIENTE / DESCARGAR) */
+    .controls { 
+        margin-top: 20px; 
+        display: flex; 
+        justify-content: center; 
+        gap: 20px; 
+        flex-wrap: wrap; 
+    }
+    
+    .btn { 
+        padding: 15px 40px; 
+        background: transparent; 
+        border: 2px solid var(--primary-color); 
+        color: #fff; 
+        text-decoration: none; 
+        border-radius: 50px; 
+        cursor: pointer; 
+        transition: 0.3s;
+        font-weight: 700;
+        font-size: 1.1rem; 
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    #downloadBtn {
+        border-color: #ff1493;
+        color: #fff;
+    }
+
+    #downloadBtn:hover {
+        background: #ff1493;
+        box-shadow: 0 0 20px #ff1493;
+    }
+   
+    .btn:hover { 
+        background: var(--primary-color); 
+        color: #000;
+        box-shadow: 0 0 20px var(--primary-color);
+    }
+   
+    .btn-hidden { display: none !important; }
+    
+    /* --- COMENTARIOS (LÓGICA ORIGINAL) --- */
     .comments-section { 
-        margin-top: 80px; 
-        border-top: 1px solid rgba(255,255,255,0.2); 
+        margin-top: 60px; 
+        border-top: 1px solid rgba(255,255,255,0.1); 
         padding: 40px 20px; 
         width: 100%;
         box-sizing: border-box;
-        overflow: hidden; /* Importante para el truco de escalado */
+        overflow: hidden; 
     }
 
     .comments-box {
@@ -239,23 +240,21 @@
         gap: 15px;
         margin-bottom: 30px;
         padding-bottom: 15px;
-        border-bottom: 3px solid var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
         width: 100%;
     }
 
     .comments-header h3 {
         color: #fff;
         margin: 0;
-        font-size: 2rem; 
+        font-size: 1.8rem;
         text-transform: uppercase;
         letter-spacing: 2px;
-        text-shadow: 2px 2px 4px #000, 0 0 10px var(--primary-color);
     }
 
     .comment-icon {
-        font-size: 2rem; 
+        font-size: 1.8rem; 
         color: var(--primary-color);
-        filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
     .utterances {
@@ -263,42 +262,69 @@
         width: 100%;
     }
 
-    /* ----------------------------------------------------------------------- */
-    /* TRUCO PARA SIMULAR "MODO ESCRITORIO" EN LA SECCIÓN DE COMENTARIOS (MÓVIL) */
-    /* ----------------------------------------------------------------------- */
+    /* --- RESPONSIVE / MÓVIL --- */
     @media (max-width: 768px) {
+        
+        /* Ajuste del contenedor principal en móvil para que ocupe todo el ancho */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            border-radius: 0;
+            border: none;
+            background: rgba(0, 0, 0, 0.85); /* Fondo más oscuro en móvil */
+            padding: 20px 10px;
+            
+            /* SOLUCIÓN AL SCROLL DE COMENTARIOS:
+               Añadimos padding extra abajo para compensar el escalado negativo 
+               y que el usuario pueda bajar hasta el final */
+            padding-bottom: 150px; 
+        }
+
+        .back-btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            width: 100%; /* Botones full width en móvil */
+            justify-content: center;
+        }
+
+        /* --- LÓGICA DE COMENTARIOS (SIN TOCAR LO FUNCIONAL) --- */
         .comments-section {
-            padding: 20px 0; /* Quitamos padding lateral */
+            padding: 20px 0; 
         }
         
         .comments-box {
-            /* 1. Forzamos un ancho de "PC" (800px es suficiente para que GitHub muestre el avatar) */
+            /* 1. Ancho forzado PC */
             width: 800px !important;
             max-width: 800px !important;
             
-            /* 2. Centramos la caja gigante usando margen izquierdo 50% y transform -50% */
+            /* 2. Centrado */
             margin-left: 50%;
             
-            /* 3. ESCALADO MÁGICO:
-               Usamos scale(0.45) para reducir esos 800px y que quepan en una pantalla de móvil (~360px).
-               Esto hace que todo se vea pequeño y alejado, igual que en modo escritorio.
-            */
+            /* 3. ESCALADO MÁGICO */
             transform: translateX(-50%) scale(0.45); 
             transform-origin: top center;
             
-            /* 4. Ajustamos el margen inferior porque al escalar, queda espacio vacío abajo */
+            /* 4. Ajuste margen inferior */
             margin-bottom: -400px; 
         }
 
-        /* Forzamos que el iframe de Utterances ocupe todo el ancho de 800px */
         .utterances {
             width: 100% !important;
             max-width: 100% !important;
         }
         
-        /* Ajuste opcional para el título si quieres que se vea grande a pesar del alejamiento */
         .comments-header h3 {
-            font-size: 3rem; /* Compensamos el scale haciendo la fuente más grande */
+            font-size: 3rem; 
         }
         .comment-icon {
             font-size: 3rem;
@@ -335,7 +361,7 @@
 
     <div class="comments-section">
         <div class="comments-box">
-            <div class="comments-header">
+             <div class="comments-header">
                 <span class="comment-icon">💬</span>
                 <h3>Comentarios</h3>
             </div>
@@ -353,7 +379,7 @@
 
 <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (Solo los 3 primeros animes)
+    // 1. BASE DE DATOS (Solo los 3 primeros animes como pediste)
     // -----------------------------------------------------------
     const DB = {
       "1": {
@@ -2905,7 +2931,7 @@
     // Asignar link de volver
     const backLink = document.getElementById('backLink');
     if (backLink) {
-        backLink.href = `anime-detail.html?id=${animeId}`;
+       backLink.href = `anime-detail.html?id=${animeId}`;
     }
 
     if (epData) {
@@ -2933,7 +2959,7 @@
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
-                const id = match[1];
+               const id = match[1];
                 return `https://drive.google.com/uc?export=download&id=${id}`;
             }
         }
@@ -2960,25 +2986,25 @@
         optContainer.appendChild(btn);
     }
 
-    function loadVideo(url) {
+     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         
         // Manejar visibilidad y enlace del botón "Para Tablet"
         const tabletBtn = document.getElementById('tabletBtn');
         if(tabletBtn) {
-             if (url) {
+            if (url) {
                 tabletBtn.href = url;
                 tabletBtn.style.display = 'inline-flex';
             } else {
                 tabletBtn.style.display = 'none';
             }
-        }
+         }
 
         const isDrive = url && url.includes('drive.google.com');
         
         if (isDrive) {
-            const iframe = document.createElement('iframe');
+           const iframe = document.createElement('iframe');
             iframe.src = url;
             iframe.setAttribute("allow", "autoplay; fullscreen");
             iframe.setAttribute("allowfullscreen", "true");
@@ -2989,7 +3015,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
-            // Reproductor nativo
+             // Reproductor nativo
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
@@ -3008,18 +3034,18 @@
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
-                    episodes.forEach(eKey => {
-                        flatList.push({ s: sKey, e: eKey });
-                    });
+                     episodes.forEach(eKey => {
+                         flatList.push({ s: sKey, e: eKey });
+                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
 
                 if (currentIndex > 0) {
-                    const prevItem = flatList[currentIndex - 1];
+                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
-                    prevBtn.style.display = 'inline-flex'; 
+                    prevBtn.style.display = 'inline-flex';
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
