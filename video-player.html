@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=1200" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -27,7 +27,7 @@
         background: #000; /* Fondo negro de respaldo */
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: hidden;
+        overflow-x: auto; /* Permite scroll si es necesario */
         min-height: 100vh;
     }
    
@@ -54,7 +54,7 @@
     
     /* --- CONTENEDOR PRINCIPAL (EFECTO VIDRIO) --- */
     .container { 
-        max-width: 1100px; 
+        width: 1100px; /* Ancho fijo para mantener aspecto PC */
         margin: 40px auto;
         padding: 30px; 
         position: relative; 
@@ -72,7 +72,7 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap; /* Evita que bajen de línea */
         gap: 10px;
     }
 
@@ -92,7 +92,7 @@
     .back-btn:hover {
         background: rgba(0, 255, 247, 0.2);
         border-color: var(--primary-color);
-        transform: translateX(-2px); /* Un pequeño movimiento sutil */
+        transform: translateX(-2px);
         box-shadow: 0 0 10px rgba(0, 255, 247, 0.3);
     }
    
@@ -234,14 +234,7 @@
         max-width: 100%;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-        .container { margin: 10px; padding: 15px; }
-        h1 { font-size: 1.1rem; }
-        .btn { padding: 10px 20px; font-size: 0.85rem; }
-        .comments-box { padding: 15px; }
-        .comments-header h3 { font-size: 1.1rem; }
-    }
+    /* NOTA: SE HAN ELIMINADO LOS MEDIA QUERIES PARA QUE NO SE ACHIQUE EN MÓVIL */
   </style>
 </head>
 <body>
