@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=1100, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -15,22 +15,22 @@
     :root {
         --primary-color: #00fff7;  /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
-        --glass-bg: rgba(16, 16, 28, 0.85); /* Fondo un poco más oscuro para mejor contraste */
+        --glass-bg: rgba(16, 16, 28, 0.85);
         --glass-border: rgba(255, 255, 255, 0.15);
         --text-color: #ffffff;
         --neon-shadow: 0 0 15px var(--primary-color);
     }
 
-    /* --- ESTILOS GENERALES (Aumentados para compensar el zoom del móvil) --- */
+    /* --- ESTILOS GENERALES (BASE PARA PC) --- */
     body { 
-        margin: 0; 
+        margin: 0;
         background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: auto; 
         min-height: 100vh;
-        /* Aumentamos la fuente base drásticamente para que se lea bien en móvil */
-        font-size: 20px; 
+        /* En PC el tamaño es normal */
+        font-size: 16px; 
+        overflow-x: hidden;
     }
    
     /* --- FONDO DE VIDEO --- */
@@ -39,7 +39,7 @@
         top: 0; left: 0; 
         width: 100%; height: 100%; 
         object-fit: cover;
-        z-index: -10; 
+        z-index: -10;
         opacity: 1; 
     }
 
@@ -54,13 +54,14 @@
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
-        width: 1050px; /* Ancho fijo estilo PC */
+        width: 90%; 
+        max-width: 1050px; /* En PC tiene tope, en móvil se adapta */
         margin: 40px auto;
-        padding: 40px; /* Más relleno */
+        padding: 40px; 
         position: relative; 
         z-index: 10;
         background: var(--glass-bg);
-        border: 2px solid var(--glass-border); /* Borde más grueso */
+        border: 2px solid var(--glass-border);
         border-radius: 25px;
         box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(15px);
@@ -72,9 +73,11 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
     }
 
-    /* BOTONES DE NAVEGACIÓN (Más grandes y fáciles de tocar) */
+    /* BOTONES DE NAVEGACIÓN */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -82,11 +85,11 @@
       color: #0ff;
       text-decoration: none;
       font-weight: 700;
-      font-size: 1.3rem; /* Letra más grande */
+      font-size: 1rem; /* Normal en PC */
       transition: all .3s;
       cursor: pointer;
       background: rgba(0, 255, 255, 0.15);
-      padding: 15px 25px; /* Área de toque más grande */
+      padding: 10px 20px; 
       border-radius: 30px;
       border: 2px solid transparent;
       white-space: nowrap;
@@ -118,7 +121,7 @@
     /* TÍTULO DEL EPISODIO */
     h1 { 
         color: #fff; 
-        font-size: 2.5rem; /* Título mucho más grande */
+        font-size: 2rem; /* Normal en PC */
         margin-top: 35px;
         text-align: center; 
         text-shadow: 0 0 15px rgba(0,0,0,0.9);
@@ -126,11 +129,17 @@
     }
     
     /* CONTROLES PRINCIPALES */
-    .controls { margin-top: 40px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+    .controls { 
+        margin-top: 40px; 
+        display: flex; 
+        justify-content: center; 
+        gap: 25px; 
+        flex-wrap: wrap; 
+    }
     
     .btn { 
-        padding: 18px 40px; /* Botones gigantes para dedo */
-        background: rgba(0, 255, 255, 0.1); 
+        padding: 12px 30px; /* Normal en PC */
+        background: rgba(0, 255, 255, 0.1);
         border: 2px solid var(--primary-color);
         color: #fff; 
         text-decoration: none; 
@@ -138,7 +147,8 @@
         cursor: pointer; 
         transition: 0.3s;
         font-weight: 700;
-        font-size: 1.3rem; /* Texto botón grande */
+        font-size: 1rem; 
+        text-align: center;
     }
 
     #downloadBtn {
@@ -161,13 +171,13 @@
     .options { 
         margin-top: 35px; 
         display: flex; 
-        gap: 20px;
+        gap: 15px;
         justify-content: center; 
         flex-wrap: wrap;
     }
     .opt-btn { 
-        font-size: 1.2rem; /* Texto más grande */
-        padding: 15px 30px; /* Botón más grande */
+        font-size: 1rem;
+        padding: 10px 20px;
         border: 2px solid #555; 
         background: #222;
         color: #ccc; 
@@ -184,7 +194,7 @@
         box-shadow: 0 0 20px rgba(0, 255, 247, 0.5);
     }
 
-    /* --- COMENTARIOS (MAGNIFICADOS) --- */
+    /* --- COMENTARIOS --- */
     .comments-section { 
         margin-top: 60px; 
         border-top: 2px solid rgba(255,255,255,0.1); 
@@ -196,6 +206,7 @@
         border-radius: 20px;
         padding: 30px;
         border: 2px solid rgba(0, 255, 247, 0.2);
+        overflow: hidden;
     }
 
     .comments-header {
@@ -209,30 +220,116 @@
     }
 
     .comments-header h3 {
-        font-size: 1.8rem; /* Título comentarios más grande */
+        font-size: 1.5rem;
         text-shadow: 0 0 10px var(--primary-color);
         margin: 0;
     }
 
     .comment-icon {
-        font-size: 2rem;
+        font-size: 1.5rem;
         color: var(--primary-color);
     }
     
-    /* TRUCO PARA AGRANDAR LOS COMENTARIOS DE UTTERANCES */
-    /* Utterances es externo, así que usamos transform scale para hacerlo visualmente más grande */
     .utterances {
-        transform-origin: top center;
-        transform: scale(1.3); /* Aumenta el tamaño un 30% */
-        width: 76.9%; /* Compensa el ancho (100% / 1.3 = 76.9%) para que no se salga */
-        margin: 0 auto; /* Centrarlo */
-        margin-bottom: -150px; /* Compensar el espacio vertical extra que deja el scale */
+        margin: 0 auto; 
     }
-    
-    /* Ajuste para que el contenedor de comentarios tenga espacio suficiente para el scale */
-    .comments-box {
-        overflow: hidden; /* Evita scrolls raros si se pasa */
-        padding-bottom: 50px;
+
+    /* ========================================= */
+    /* === MEDIA QUERIES (AQUÍ ESTÁ LA MAGIA) == */
+    /* ========================================= */
+
+    /* 1. TABLET (iPad, Tablets Android) - El estilo que te gustaba */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        body { font-size: 20px; } /* Fuente aumentada para tablet */
+        
+        .container { width: 95%; padding: 30px; }
+        
+        .back-btn { font-size: 1.3rem; padding: 15px 25px; }
+        
+        h1 { font-size: 2.5rem; }
+        
+        .btn { padding: 18px 40px; font-size: 1.3rem; }
+        
+        .opt-btn { font-size: 1.2rem; padding: 15px 30px; }
+        
+        .comments-header h3 { font-size: 1.8rem; }
+        
+        /* Utterances scale para tablet */
+        .utterances {
+            transform-origin: top center;
+            transform: scale(1.2);
+            width: 83.3%;
+            margin-bottom: -100px;
+        }
+    }
+
+    /* 2. MÓVIL (Celulares) - MODO SUPER ESCALADO */
+    @media (max-width: 767px) {
+        body { 
+            font-size: 22px; /* Fuente base MUY grande para móvil */
+        }
+
+        .container {
+            width: 95%; /* Ocupa casi todo el ancho */
+            padding: 20px 15px; /* Menos padding lateral para dar espacio al contenido */
+            margin: 20px auto;
+        }
+
+        .top-nav {
+            flex-direction: column; /* Botones uno debajo de otro */
+            gap: 15px;
+        }
+
+        .back-btn {
+            width: 100%; /* Botón ancho completo */
+            font-size: 1.4rem; /* Letra grande */
+            padding: 18px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2.2rem; /* Título grande */
+            margin-top: 20px;
+        }
+
+        .controls {
+            flex-direction: column; /* Botones apilados verticalmente */
+            gap: 20px;
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%; /* Botones gigantes ancho completo */
+            padding: 22px; /* Área de toque masiva */
+            font-size: 1.6rem; /* Texto muy legible */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .options {
+            flex-direction: column; /* Opciones apiladas */
+            width: 100%;
+        }
+
+        .opt-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4rem;
+        }
+
+        /* Comentarios adaptados */
+        .comments-header { width: 100%; justify-content: center; }
+        .comments-header h3 { font-size: 1.8rem; }
+        
+        /* Utterances scale agresivo para móvil */
+        .utterances {
+            transform-origin: top center;
+            transform: scale(1.1); 
+            width: 90.9%;
+            margin-bottom: -50px;
+        }
     }
 
   </style>
@@ -267,8 +364,8 @@
     <div class="comments-section">
         <div class="comments-box">
             <div class="comments-header">
-                <span class="comment-icon">💬</span>
-                <h3>Zona de Comentarios</h3>
+               <span class="comment-icon">💬</span>
+               <h3>Zona de Comentarios</h3>
             </div>
             <script src="https://utteranc.es/client.js"
                 repo="Archinime/Comentarios"
@@ -2842,7 +2939,6 @@
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
-
         // Cargar video inicial
         loadVideo(epData.link || epData.link2);
 
