@@ -52,7 +52,6 @@
     }
     
     /* --- CONTENEDOR PRINCIPAL (SIN RECTÁNGULO VISIBLE) --- */
-    /* CAMBIO: Se eliminó el fondo, bordes y sombras. Ancho al 100% */
     .container { 
         width: 100%; 
         max-width: none; /* Sin límite de ancho */
@@ -110,7 +109,6 @@
         background: #000; 
         overflow: hidden; 
         z-index: 50;
-        /* Sin bordes redondeados ni líneas */
         border-radius: 0; 
         border: none;
         box-shadow: 0 10px 40px rgba(0,0,0,0.8);
@@ -118,7 +116,8 @@
    
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0;
-        left: 0; width: 100%; height: 100%; border: none;
+        left: 0; width: 100%;
+        height: 100%; border: none;
     }
 
     /* TEXTOS */
@@ -192,7 +191,7 @@
         padding: 15px 30px; 
         border: 2px solid #555; 
         background: rgba(0,0,0,0.8);
-        color: #ddd; 
+        color: #ddd;
         cursor: pointer; 
         border-radius: 15px;
         transition: all 0.3s;
@@ -213,17 +212,15 @@
         box-shadow: 0 0 20px rgba(0, 255, 247, 0.6);
     }
 
-    /* --- COMENTARIOS (SIN RECTÁNGULO) --- */
+    /* --- COMENTARIOS (FIX PARA MÓVIL) --- */
     .comments-section { 
         margin-top: 80px; 
-        /* Borde superior sutil para separar */
         border-top: 1px solid rgba(255,255,255,0.2); 
         padding: 40px 20px; 
         width: 100%;
         box-sizing: border-box;
     }
 
-    /* CAMBIO: Se eliminó el fondo de la caja de comentarios */
     .comments-box {
         background: transparent; 
         border-radius: 0;
@@ -260,8 +257,30 @@
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
+    /* --- CORRECCIÓN VISUAL PARA UTTERANCES EN MÓVIL --- */
     .utterances {
         max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    /* Forzar que el iframe no se corte */
+    .utterances iframe {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Ajustes específicos para pantallas pequeñas */
+    @media (max-width: 600px) {
+        .comments-section {
+            padding: 20px 5px; /* Menos padding lateral en móvil para dar espacio al iframe */
+        }
+        .comments-header h3 {
+            font-size: 1.5rem; /* Ajustar tamaño título */
+        }
+        .container {
+            padding: 0; /* Aprovechar todo el ancho en móvil */
+        }
     }
   </style>
 </head>
@@ -274,7 +293,7 @@
   <div id="overlay"></div>
 
   <div class="container">
-    
+   
     <div class="top-nav">
        <a href="#" id="backLink" class="back-btn">← Volver</a>
        <a href="#" id="tabletBtn" class="back-btn" target="_self">Tablet 📱</a>
@@ -2943,7 +2962,8 @@
             iframe.setAttribute("allowfullscreen", "true");
             iframe.style.position = "absolute";
             iframe.style.top = "0"; iframe.style.left = "0";
-            iframe.style.width = "100%"; iframe.style.height = "100%";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
