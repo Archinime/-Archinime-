@@ -63,6 +63,7 @@
         border-radius: 20px;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(12px);
+        box-sizing: border-box; /* Asegura que el padding no rompa el ancho */
     }
     
     /* BOTÓN VOLVER */
@@ -103,7 +104,7 @@
         position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
     }
 
-    /* BOTÓN ESPECIAL PARA TABLET (MODIFICADO) */
+    /* BOTÓN ESPECIAL PARA TABLET */
     .tablet-play-container {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column;
@@ -203,7 +204,8 @@
     .comments-section { 
         margin-top: 50px; 
         border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 40px; 
+        padding-top: 40px;
+        width: 100%; 
     }
 
     .comments-box {
@@ -212,6 +214,8 @@
         padding: 25px;
         border: 1px solid rgba(0, 255, 247, 0.15); /* Borde sutil cian */
         box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .comments-header {
@@ -239,17 +243,30 @@
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
-    /* Ajuste para el iframe de utterances */
     .utterances {
         max-width: 100%;
     }
 
-    /* Responsive */
+    /* --- RESPONSIVE (CELULARES) --- */
     @media (max-width: 768px) {
-        .container { margin: 10px; padding: 15px; }
+        .container { 
+            margin: 5px; /* Margen externo mínimo */
+            padding: 10px; /* Padding interno reducido */
+            width: calc(100% - 10px); /* Ocupar todo el ancho posible */
+        }
+        
         h1 { font-size: 1.1rem; }
         .btn { padding: 10px 20px; font-size: 0.85rem; }
-        .comments-box { padding: 15px; }
+        
+        /* Ajuste CRÍTICO para los comentarios en celular */
+        .comments-box { 
+            padding: 10px 5px; /* Muy poco padding lateral para dar espacio al iframe */
+        }
+        
+        .comments-section {
+            margin-top: 30px;
+        }
+        
         .comments-header h3 { font-size: 1.1rem; }
     }
   </style>
@@ -298,7 +315,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // 1. BASE DE DATOS (Solo los 3 primeros animes, agrega el resto abajo)
+    // 1. BASE DE DATOS (Solo los 3 primeros animes)
     // -----------------------------------------------------------
     const DB = {
       "1": {
