@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -17,12 +17,13 @@
        --------------------------- */
     *{box-sizing:border-box;margin:0;padding:0}
     
+    /* CORRECCIÓN 1: Fondo transparente para que se vea el video detrás */
     html, body {
       height: 100%;
       overflow-x: hidden;
       font-family: 'Segoe UI', sans-serif;
       color: #fff;
-      background: transparent;
+      background: transparent; /* Antes era #000 y tapaba el video */
     }
 
     /* Fondo vídeo */
@@ -31,6 +32,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
+      z-index: -10; /* Muy atrás */
       z-index: -1;
       background: url('galaxia-morado1.avif') center/cover no-repeat,
                   linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
@@ -39,19 +41,18 @@
       pointer-events: none;
     }
     
-    /* Overlay */
+    /* Overlay (Capa oscura sobre el video para que el texto resalte) */
     #overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       z-index: -5;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.6); /* Oscurece el video un 60% permanentemente */
       pointer-events: none;
     }
     
     /* Pantalla de carga inicial */
     #loading-screen {
-        position: fixed;
-        top:0; left:0; width:100%; height:100%;
+        position: fixed; top:0; left:0; width:100%; height:100%;
         background: #000; z-index: 9999;
         display:flex; justify-content:center; align-items:center;
         transition: opacity 0.5s;
@@ -59,15 +60,18 @@
 
     /* --- CONTENEDOR PRINCIPAL --- */
     .container{
-      position:relative;
-      z-index:0;
+      position:relative; z-index:0;
       max-width:1000px;
       margin:80px auto; padding:20px;
-      background: rgba(0, 0, 0, 0.85);
+      
+      /* CORRECCIÓN 2: Transparencia simple (Sin Blur) para evitar LAG */
+      background: rgba(0, 0, 0, 0.85); 
+      
       border-radius:12px;
       box-shadow:0 8px 32px rgba(0,0,0,0.5);
       animation:fadeIn 0.5s ease-out;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      /* Optimizaciones de hardware móvil */
       transform: translateZ(0);
     }
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -90,12 +94,10 @@
       padding: 8px 12px;
       border-radius: 20px;
     }
-    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3);
-    }
+    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
 
     /* --- PORTADA --- */
-    .anime-cover { text-align: center; margin-bottom: 25px;
-    }
+    .anime-cover { text-align: center; margin-bottom: 25px; }
     .anime-cover img {
       max-height: 400px; width: auto; max-width: 100%;
       border-radius: 12px;
@@ -104,59 +106,50 @@
     }
 
     h1{
-      margin: 10px 0 15px;
-      text-align: center;
+      margin: 10px 0 15px; text-align: center;
       font-size: 1.8rem; color: #fff;
       text-shadow: 0 0 5px rgba(0, 255, 247, 0.5);
     }
 
-    /* --- GÉNEROS (ESTILOS) --- */
+    /* --- GÉNEROS --- */
     .genres-wrap {
-      display: flex;
-      flex-wrap: wrap; gap: 8px;
+      display: flex; flex-wrap: wrap; gap: 8px;
       justify-content: center; margin-bottom: 20px;
     }
     .genre-chip {
-      padding: 6px 12px;
-      font-size: 0.85rem; font-weight: 700;
+      padding: 6px 12px; font-size: 0.85rem; font-weight: 700;
       border-radius: 20px;
       border: 1px solid rgba(0, 255, 255, 0.4);
       background: rgba(0, 255, 255, 0.05);
-      color: #e0ffff;
-      cursor: default; /* No clicable, solo informativo */
+      color: #e0ffff; cursor: pointer;
     }
 
     .desc{
       margin-bottom:30px; line-height:1.6; color:#ddd; font-size: 1rem;
       background:rgba(255,255,255,0.03); padding:15px;
-      border-radius:8px;
-      border-left:3px solid #0ff;
+      border-radius:8px; border-left:3px solid #0ff;
     }
 
-    /* --- TEMPORADAS --- */
+    /* --- TEMPORADAS (OPTIMIZADO PARA MÓVIL - CERO LAG) --- */
     details {
       margin-bottom:12px;
-      background: #222;
+      background: #222; /* Fondo sólido dentro de la lista para leer mejor */
       border:1px solid #333;
       border-radius:8px;
       overflow:hidden;
-      contain: content;
+      contain: content; /* Aisla el renderizado para que no recalcule todo */
     }
-    details[open] { background: #252525;
-    }
+    details[open] { background: #252525; }
     
     summary {
       padding:15px; cursor:pointer; font-weight:bold; color:#0ff;
-      display:flex;
-      justify-content:space-between; align-items:center;
+      display:flex; justify-content:space-between; align-items:center;
       list-style:none; user-select: none;
       touch-action: manipulation;
     }
-    summary::-webkit-details-marker { display:none;
-    }
+    summary::-webkit-details-marker { display:none; }
     summary::after { content:'+'; font-size:1.5rem; }
-    details[open] summary::after { content:'-';
-    }
+    details[open] summary::after { content:'-'; }
 
     .season-content { 
         padding: 10px; 
@@ -171,8 +164,7 @@
     }
 
     .ep-btn {
-      display:flex; align-items: center;
-      justify-content: center;
+      display:flex; align-items: center; justify-content: center;
       padding:10px 4px;
       background: #333;
       border:1px solid #444;
@@ -183,31 +175,19 @@
       word-break: break-word;
     }
     .ep-btn:visited { color: #aaa; }
-    .ep-btn:active { background: #0ff; color: #000;
-    }
+    .ep-btn:active { background: #0ff; color: #000; }
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333;
-    }
+    .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333; }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
-    
-    /* GRID: 6 por fila en PC/Tablet */
-    .rec-grid { 
-        display:grid; 
-        grid-template-columns: repeat(6, 1fr);
-        gap:10px; 
-    }
-    
-    .rec-card { background:#222; border-radius:6px; overflow:hidden; cursor:pointer; transition: transform 0.2s; }
-    .rec-card:hover { transform: scale(1.05); }
+    .rec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; }
+    .rec-card { background:#222; border-radius:6px; overflow:hidden; }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
-    .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0;
-    }
+    .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
-      position:fixed;
-      bottom:50px; left:50%; transform:translateX(-50%);
+      position:fixed; bottom:50px; left:50%; transform:translateX(-50%);
       background:#0ff; color:#000; padding:8px 20px; border-radius:20px;
       display:none; z-index:999; font-weight:bold; box-shadow:0 0 10px rgba(0,0,0,0.5);
     }
@@ -215,19 +195,12 @@
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
         .video-list { grid-template-columns: repeat(3, 1fr); }
-        /* Tablet mantiene 6 o baja a 4 si prefieres, aquí lo dejo en 6 según pedido */
     }
-
     @media (max-width: 600px) {
         .container { width:100%; margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.85); }
         .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
         h1 { font-size:1.4rem; }
-        
-        /* GRID MÓVIL: 3 por fila */
-        .rec-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
+        /* El video se verá detrás del contenedor semitransparente */
     }
   </style>
 </head>
@@ -508,7 +481,7 @@ let currentAudio = null;
     }, { once: true });
 
     /* ----------------------------------------------------
-       3. DATA (3 primeros animes + GÉNEROS REALES)
+       3. DATA (3 primeros animes)
        ---------------------------------------------------- */
     const data = {
     1: {
@@ -4272,7 +4245,7 @@ let currentAudio = null;
 
 
 /* ----------------------------------------------------
-       4. Renderizado
+       4. Renderizado con Chunking (EVITA EL LAG)
        ---------------------------------------------------- */
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
@@ -4281,12 +4254,14 @@ let currentAudio = null;
 
     if (anime) {
         document.title = `${anime.title} - Archinime`;
+        
         let html = `
             <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
             <h1>${anime.title}</h1>
             <div class="genres-wrap" id="genres-container"></div>
             <p class="desc">${anime.desc}</p>
         `;
+
         if(anime.seasons){
             anime.seasons.forEach((s, index) => {
                 html += `
@@ -4302,44 +4277,22 @@ let currentAudio = null;
             });
         }
         container.innerHTML = html;
-        populateGenres(id);
-        renderRecs(id);
-    } else {
-        container.innerHTML = "<h3 style='text-align:center; padding:50px;'>No encontrado</h3>";
-    }
 
-    // Función que carga los géneros dinámicamente desde el objeto DATA
-    function populateGenres(aid){
-        const cont = document.getElementById('genres-container');
-        const animeData = data[aid];
+        // Cargar Géneros
+        populateGenresForAnime(id);
         
-        // Verifica si tiene la propiedad 'genres'
-        if (animeData && animeData.genres && Array.isArray(animeData.genres)) {
-            cont.innerHTML = animeData.genres.map(g => 
-                `<span class="genre-chip">${g}</span>`
-            ).join('');
-        } else {
-            // Si no tiene, pone Anime por defecto
-            cont.innerHTML = '<span class="genre-chip">Anime</span>'; 
-        }
+        // Cargar Recomendaciones
+        renderRecommendations(id);
+    } else {
+        container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
     }
 
-    function renderRecs(currId) {
-        const grid = document.getElementById('rec-grid');
-        // Filtramos para no mostrar el actual y mostramos 12
-        const keys = Object.keys(data).filter(k => k != currId).slice(0, 12);
-        grid.innerHTML = keys.map(k => `
-            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'">
-                <img src="${data[k].cover}" loading="lazy">
-                <p>${data[k].title}</p>
-            </div>
-        `).join('');
-    }
-
+    // Función clave para evitar congelamiento
     function toggleSeason(details, animeId, seasonIndex) {
         if (!details.open) return;
+
         const listContainer = document.getElementById(`list-${seasonIndex}`);
-        if (listContainer.children.length > 0) return;
+        if (listContainer.children.length > 0) return; // Ya cargado
 
         const loadingMsg = document.getElementById(`loading-${seasonIndex}`);
         loadingMsg.style.display = 'block';
@@ -4349,7 +4302,7 @@ let currentAudio = null;
         const seasonNum = data[animeId].seasons[seasonIndex].num;
         
         let processed = 0;
-        const CHUNK_SIZE = 40; 
+        const CHUNK_SIZE = 40; // Procesa 40 capítulos por frame
 
         function processChunk() {
             const fragment = document.createDocumentFragment();
@@ -4366,6 +4319,7 @@ let currentAudio = null;
 
             listContainer.appendChild(fragment);
             processed += CHUNK_SIZE;
+
             if (processed < total) {
                 requestAnimationFrame(processChunk);
             } else {
@@ -4375,20 +4329,116 @@ let currentAudio = null;
         requestAnimationFrame(processChunk);
     }
 
+    /* ----------------------------------------------------
+       5. Funciones Extra
+       ---------------------------------------------------- */
     document.getElementById('share-detail').addEventListener('click', () => {
         navigator.clipboard.writeText(window.location.href);
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
 
-    document.querySelectorAll('details').forEach(d => {
-        d.addEventListener('toggle', function() {
-             const onToggleAttr = this.getAttribute('onontoggle');
-             if(onToggleAttr) {
-                 new Function(onToggleAttr).call(this);
-             }
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = "✅ " + msg;
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 2000);
+    }
+
+    // Lógica de recomendaciones
+    function renderRecommendations(currentId) {
+        const grid = document.getElementById('rec-grid');
+        const keys = Object.keys(data).filter(k => k != currentId);
+        const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
+        
+        grid.innerHTML = randomKeys.map(k => `
+            <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'" style="cursor:pointer">
+                <img src="${data[k].cover}" alt="${data[k].title}">
+                <p>${data[k].title}</p>
+            </div>
+        `).join('');
+    }
+
+    /* ------------------------------------------------------------------
+       5. Lógica para copiar géneros desde index.txt
+       ------------------------------------------------------------------ */
+    
+    function renderGenres(genres){
+      const cont = document.getElementById('genres-container');
+      if(!cont) return;
+      if(!genres || !genres.length){ 
+          cont.innerHTML = '<span style="font-size:0.8rem; color:#aaa;">Géneros no disponibles</span>';
+          return; 
+      }
+      
+      cont.innerHTML = genres.map(g => `
+        <button class="genre-chip" data-genre="${escapeHtml(g)}">
+          ${escapeHtml(g)}
+          <span class="copied-badge">✓</span>
+        </button>
+      `).join('');
+      
+      cont.querySelectorAll('.genre-chip').forEach(btn => {
+        btn.addEventListener('click', async (ev) => {
+          const genre = btn.dataset.genre;
+          try { await navigator.clipboard.writeText(genre); } catch(e){}
+          btn.classList.add('popped','show-badge');
+          setTimeout(() => btn.classList.remove('popped'), 350);
+          setTimeout(() => btn.classList.remove('show-badge'), 1200);
+          showToast(`Género copiado: ${genre}`);
         });
-    });
+      });
+    }
+
+    function populateGenresForAnime(animeId){
+      const tries = ['index.txt','index.html'];
+      let tried = 0;
+
+      function tryNext(){
+        if(tried >= tries.length){ 
+            renderGenres([]);
+            return;
+        }
+        const url = tries[tried++];
+        fetch(url)
+          .then(r => r.text())
+          .then(text => {
+            const m = text.match(/const\s+animes\s*=\s*(\[[\s\S]*?\])\s*;/m);
+            if(!m){ 
+                tryNext(); 
+                return; 
+            }
+            try {
+              const arrayLiteral = m[1];
+              const arr = (new Function('return ' + arrayLiteral))();
+              const item = arr.find(it => Number(it.id) === Number(animeId) || String(it.id) === String(animeId));
+              
+              if(item && item.genres && item.genres.length){ 
+                  renderGenres(item.genres); 
+                  return; 
+              }
+              const currentTitle = normalizeText(data[animeId].title);
+              const matchByTitle = arr.find(it => it.title && normalizeText(it.title) === currentTitle);
+              if(matchByTitle && matchByTitle.genres && matchByTitle.genres.length){ 
+                  renderGenres(matchByTitle.genres);
+                  return; 
+              }
+              renderGenres([]);
+            } catch(e){
+              console.warn('Error parseando géneros del index:', e);
+              tryNext();
+            }
+        }).catch(()=>{ tryNext(); });
+      }
+      tryNext();
+    }
+
+    function normalizeText(s){
+      return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+    }
+    function escapeHtml(str){
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
   </script>
 </body>
 </html>
