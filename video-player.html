@@ -51,15 +51,15 @@
       pointer-events: none;
     }
     
-    /* --- CONTENEDOR PRINCIPAL (SIN RECTÁNGULO VISIBLE) --- */
+    /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
         width: 100%; 
-        max-width: none; /* Sin límite de ancho */
+        max-width: none; 
         margin: 0;
-        padding: 10px 0; /* Padding vertical mínimo */
+        padding: 10px 0; 
         position: relative; 
         z-index: 10;
-        background: transparent; /* Fondo transparente */
+        background: transparent; 
         border: none;
         box-shadow: none;
         backdrop-filter: none;
@@ -71,7 +71,7 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        padding: 0 20px; /* Separación de los bordes de la pantalla */
+        padding: 0 20px; 
         flex-wrap: nowrap; 
         gap: 15px;
     }
@@ -87,7 +87,7 @@
       font-size: 1.2rem; 
       transition:all .3s;
       cursor:pointer;
-      background: rgba(0, 0, 0, 0.6); /* Fondo oscuro para que se lea sobre el video */
+      background: rgba(0, 0, 0, 0.6); 
       padding: 15px 25px; 
       border-radius: 30px;
       border: 2px solid var(--primary-color);
@@ -105,7 +105,7 @@
         position: relative; 
         padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
-        width: 100%; /* Ocupa todo el ancho */
+        width: 100%; 
         background: #000; 
         overflow: hidden; 
         z-index: 50;
@@ -123,10 +123,10 @@
     /* TEXTOS */
     h1 { 
         color: #fff; 
-        font-size: 2.5rem; /* Texto muy grande */
+        font-size: 2.5rem; 
         margin-top: 30px;
         text-align: center; 
-        text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color); /* Sombra fuerte para leer sin fondo */
+        text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color);
         padding: 0 15px;
     }
     
@@ -212,13 +212,14 @@
         box-shadow: 0 0 20px rgba(0, 255, 247, 0.6);
     }
 
-    /* --- COMENTARIOS (FIX PARA MÓVIL) --- */
+    /* --- COMENTARIOS --- */
     .comments-section { 
         margin-top: 80px; 
         border-top: 1px solid rgba(255,255,255,0.2); 
         padding: 40px 20px; 
         width: 100%;
         box-sizing: border-box;
+        overflow: hidden; /* Evita scroll horizontal si escalamos */
     }
 
     .comments-box {
@@ -234,7 +235,7 @@
     .comments-header {
         display: flex;
         align-items: center;
-        justify-content: center; /* Centrado */
+        justify-content: center;
         gap: 15px;
         margin-bottom: 30px;
         padding-bottom: 15px;
@@ -257,29 +258,37 @@
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
-    /* --- CORRECCIÓN VISUAL PARA UTTERANCES EN MÓVIL --- */
     .utterances {
         max-width: 100%;
         width: 100%;
-        margin: 0 auto;
-    }
-    
-    /* Forzar que el iframe no se corte */
-    .utterances iframe {
-        width: 100% !important;
-        max-width: 100% !important;
     }
 
-    /* Ajustes específicos para pantallas pequeñas */
+    /* ---------------------------------------------------- */
+    /* AJUSTES ESPECÍFICOS PARA MÓVIL (ZOOM OUT COMENTARIOS) */
+    /* ---------------------------------------------------- */
     @media (max-width: 600px) {
         .comments-section {
-            padding: 20px 5px; /* Menos padding lateral en móvil para dar espacio al iframe */
+            /* Quitamos padding lateral para ganar espacio */
+            padding: 20px 0;
         }
+        
+        .comments-box {
+            /* TRUCO: Forzamos que la caja sea más ancha que la pantalla (120%).
+               Esto engaña a GitHub/Utterances para que piense que hay espacio
+               suficiente para mostrar el avatar.
+            */
+            width: 120%; 
+            margin-left: -10%; /* Centramos la caja expandida */
+            
+            /* Luego escalamos todo hacia abajo (zoom out) al 85% 
+               para que visualmente quepa en la pantalla del celular.
+            */
+            transform: scale(0.85); 
+            transform-origin: top center;
+        }
+
         .comments-header h3 {
-            font-size: 1.5rem; /* Ajustar tamaño título */
-        }
-        .container {
-            padding: 0; /* Aprovechar todo el ancho en móvil */
+            font-size: 1.5rem;
         }
     }
   </style>
