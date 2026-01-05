@@ -25,7 +25,7 @@
         background: #000; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
-        overflow-x: hidden; /* Evita scroll horizontal innecesario */
+        overflow-x: hidden; 
         min-height: 100vh;
     }
    
@@ -76,7 +76,7 @@
         gap: 15px;
     }
 
-    /* BOTÓN GENÉRICO ESTILO NEÓN (GIGANTE) */
+    /* BOTÓN GENÉRICO ESTILO NEÓN (Ajustado tamaño) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -84,11 +84,11 @@
       color:#0ff;
       text-decoration:none;
       font-weight:bold;
-      font-size: 1.2rem; 
+      font-size: 1rem; /* Reducido de 1.2rem */
       transition:all .3s;
       cursor:pointer;
       background: rgba(0, 0, 0, 0.6); 
-      padding: 15px 25px; 
+      padding: 10px 20px; /* Reducido de 15px 25px */
       border-radius: 30px;
       border: 2px solid var(--primary-color);
       white-space: nowrap;
@@ -124,8 +124,8 @@
     /* TEXTOS */
     h1 { 
         color: #fff; 
-        font-size: 2.5rem; 
-        margin-top: 30px;
+        font-size: 2rem; /* Ligeramente reducido */
+        margin-top: 25px;
         text-align: center; 
         text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color);
         padding: 0 15px;
@@ -133,45 +133,48 @@
     
     /* CONTROLES */
     .controls { 
-        margin-top: 40px; 
+        margin-top: 30px; 
         display: flex; 
         justify-content: center; 
-        gap: 25px; 
+        gap: 20px; 
         flex-wrap: wrap; 
         padding: 0 10px;
     }
     
-    /* BOTONES DE CONTROL (GIGANTES) */
+    /* BOTONES DE CONTROL (Ajustado tamaño) */
     .btn { 
-        padding: 20px 50px; 
+        padding: 12px 35px; /* Reducido de 20px 50px */
         background: rgba(0, 0, 0, 0.7); 
-        border: 3px solid var(--primary-color); 
+        border: 2px solid var(--primary-color); /* Borde un poco más fino */
         color: #fff; 
         text-decoration: none; 
-        border-radius: 60px; 
+        border-radius: 50px; 
         cursor: pointer; 
         transition: 0.3s;
-        font-weight: 800;
-        font-size: 1.5rem; 
+        font-weight: 700;
+        font-size: 1.1rem; /* Reducido de 1.5rem */
         text-shadow: 1px 1px 2px #000;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
     
     #downloadBtn {
         background: rgba(0, 0, 0, 0.7);
-        border: 3px solid #ff1493;
+        border: 2px solid #ff1493;
         color: #ffffff;
     }
 
     #downloadBtn:hover {
         background: #ff1493;
         color: #fff;
-        box-shadow: 0 0 30px #ff1493;
+        box-shadow: 0 0 20px #ff1493;
     }
    
     .btn:hover { 
         background: var(--primary-color); 
         color: #000;
-        box-shadow: 0 0 30px var(--primary-color);
+        box-shadow: 0 0 20px var(--primary-color);
         text-shadow: none;
     }
    
@@ -179,22 +182,22 @@
     
     /* Opciones de Servidor */
     .options { 
-        margin-top: 30px; 
+        margin-top: 25px; 
         display: flex; 
-        gap: 20px;
+        gap: 15px;
         justify-content: center; 
         flex-wrap: wrap;
         padding: 0 10px;
     }
     
     .opt-btn { 
-        font-size: 1.2rem; 
-        padding: 15px 30px; 
+        font-size: 1rem; /* Reducido */
+        padding: 10px 20px; /* Reducido */
         border: 2px solid #555; 
         background: rgba(0,0,0,0.8);
         color: #ddd;
         cursor: pointer; 
-        border-radius: 15px;
+        border-radius: 12px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
         font-weight: bold;
@@ -210,17 +213,17 @@
         border-color: var(--primary-color); 
         color: #000;
         background: var(--primary-color); 
-        box-shadow: 0 0 20px rgba(0, 255, 247, 0.6);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.6);
     }
 
     /* --- COMENTARIOS --- */
     .comments-section { 
-        margin-top: 80px; 
+        margin-top: 60px; 
         border-top: 1px solid rgba(255,255,255,0.2); 
         padding: 40px 20px; 
         width: 100%;
         box-sizing: border-box;
-        overflow: hidden; /* Importante para el truco de escalado */
+        overflow: hidden; 
     }
 
     .comments-box {
@@ -247,14 +250,14 @@
     .comments-header h3 {
         color: #fff;
         margin: 0;
-        font-size: 2rem;
+        font-size: 1.8rem;
         text-transform: uppercase;
         letter-spacing: 2px;
         text-shadow: 2px 2px 4px #000, 0 0 10px var(--primary-color);
     }
 
     .comment-icon {
-        font-size: 2rem; 
+        font-size: 1.8rem; 
         color: var(--primary-color);
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
@@ -265,42 +268,41 @@
     }
 
     /* ----------------------------------------------------------------------- */
-    /* TRUCO PARA SIMULAR "MODO ESCRITORIO" EN LA SECCIÓN DE COMENTARIOS (MÓVIL) */
+    /* TRUCO PARA SIMULAR "MODO ESCRITORIO" EN MÓVIL (SOLO MÓVIL, NO TABLET) */
     /* ----------------------------------------------------------------------- */
-    @media (max-width: 768px) {
+    /* Cambiado de 768px a 550px para excluir Tablets */
+    @media (max-width: 550px) {
         .comments-section {
-            padding: 20px 0; /* Quitamos padding lateral */
+            padding: 20px 0; 
         }
         
         .comments-box {
-            /* 1. Forzamos un ancho de "PC" (800px es suficiente para que GitHub muestre el avatar) */
+            /* Forzamos ancho de PC */
             width: 800px !important;
             max-width: 800px !important;
             
-            /* --- CORRECCIÓN IMPORTANTE --- */
-            /* Añadimos una altura mínima para que la caja no desaparezca si no hay comentarios */
+            /* Altura mínima para que no desaparezca si no hay comentarios */
             min-height: 600px; 
             
-            /* 2. Centramos la caja gigante usando margen izquierdo 50% y transform -50% */
+            /* Centrado */
             margin-left: 50%;
             
-            /* 3. ESCALADO MÁGICO: */
+            /* Escalado */
             transform: translateX(-50%) scale(0.45); 
             transform-origin: top center;
             
-            /* 4. Ajustamos el margen inferior porque al escalar, queda espacio vacío abajo */
+            /* Ajuste de margen inferior */
             margin-bottom: -400px; 
         }
 
-        /* Forzamos que el iframe de Utterances ocupe todo el ancho de 800px */
         .utterances {
             width: 100% !important;
             max-width: 100% !important;
         }
         
-        /* Ajuste opcional para el título si quieres que se vea grande a pesar del alejamiento */
+        /* Ajuste para que el título se vea grande en móvil a pesar del scale */
         .comments-header h3 {
-            font-size: 3rem; /* Compensamos el scale haciendo la fuente más grande */
+            font-size: 3rem; 
         }
         .comment-icon {
             font-size: 3rem;
