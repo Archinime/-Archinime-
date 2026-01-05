@@ -90,10 +90,12 @@
       padding: 8px 12px;
       border-radius: 20px;
     }
-    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
+    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3);
+    }
 
     /* --- PORTADA --- */
-    .anime-cover { text-align: center; margin-bottom: 25px; }
+    .anime-cover { text-align: center; margin-bottom: 25px;
+    }
     .anime-cover img {
       max-height: 400px; width: auto; max-width: 100%;
       border-radius: 12px;
@@ -140,7 +142,8 @@
       overflow:hidden;
       contain: content;
     }
-    details[open] { background: #252525; }
+    details[open] { background: #252525;
+    }
     
     summary {
       padding:15px; cursor:pointer; font-weight:bold; color:#0ff;
@@ -149,9 +152,11 @@
       list-style:none; user-select: none;
       touch-action: manipulation;
     }
-    summary::-webkit-details-marker { display:none; }
+    summary::-webkit-details-marker { display:none;
+    }
     summary::after { content:'+'; font-size:1.5rem; }
-    details[open] summary::after { content:'-'; }
+    details[open] summary::after { content:'-';
+    }
 
     .season-content { 
         padding: 10px; 
@@ -178,12 +183,20 @@
       word-break: break-word;
     }
     .ep-btn:visited { color: #aaa; }
-    .ep-btn:active { background: #0ff; color: #000; }
+    .ep-btn:active { background: #0ff; color: #000;
+    }
 
-    /* --- RECOMENDACIONES --- */
+    /* --- RECOMENDACIONES (MODIFICADO) --- */
     .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333; }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
-    .rec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; }
+    
+    /* MODIFICACIÓN AQUÍ: 6 por fila en PC/Tablet */
+    .rec-grid { 
+        display: grid; 
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px; 
+    }
+
     .rec-card { background:#222; border-radius:6px; overflow:hidden; }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
@@ -198,12 +211,23 @@
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
+        /* Para tablets/laptops pequeñas mantenemos 6 en recs, pero ajustamos video-list si es necesario */
         .video-list { grid-template-columns: repeat(3, 1fr); }
     }
+
     @media (max-width: 600px) {
-        .container { width:100%; margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); }
+        .container { 
+            width:100%;
+            margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
+        }
         .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
         h1 { font-size:1.4rem; }
+        
+        /* MODIFICACIÓN AQUÍ: 3 por fila en MÓVILES */
+        .rec-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
     }
   </style>
 </head>
@@ -228,7 +252,7 @@
   <div id="toast" class="toast">Enlace copiado</div>
 
   <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
-     <source src="galaxia.mp4" type="video/mp4">
+    <source src="galaxia.mp4" type="video/mp4">
   </video>
   <div id="overlay"></div>
 
@@ -468,7 +492,7 @@
         71: ["overlord.mp3"] 
     };
 
-let currentAudio = null;
+    let currentAudio = null;
 
     document.addEventListener('click', () => {
         const params = new URLSearchParams(location.search);
@@ -4263,10 +4287,8 @@ let currentAudio = null;
             <div class="genres-wrap" id="genres-container"></div>
             <p class="desc">${anime.desc}</p>
         `;
-
         if(anime.seasons){
             anime.seasons.forEach((s, index) => {
-                // CORRECCIÓN PRINCIPAL AQUÍ: ontoggle (antes era onontoggle)
                 html += `
                 <details ontoggle="toggleSeason(this, ${id}, ${index})">
                     <summary>${s.name || 'Temporada ' + s.num}</summary>
@@ -4280,7 +4302,6 @@ let currentAudio = null;
             });
         }
         container.innerHTML = html;
-        
         // Cargar Géneros
         populateGenresForAnime(id);
         // Cargar Recomendaciones
@@ -4320,7 +4341,6 @@ let currentAudio = null;
 
             listContainer.appendChild(fragment);
             processed += CHUNK_SIZE;
-
             if (processed < total) {
                 requestAnimationFrame(processChunk);
             } else {
@@ -4338,7 +4358,6 @@ let currentAudio = null;
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
-
     function showToast(msg) {
         const t = document.getElementById('toast');
         t.textContent = "✅ " + msg;
@@ -4352,7 +4371,6 @@ let currentAudio = null;
         const keys = Object.keys(data).filter(k => k != currentId);
         // Si hay pocos animes, muestra todos, si hay muchos, randomiza
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
-        
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
              return;
@@ -4383,7 +4401,6 @@ let currentAudio = null;
           <span class="copied-badge">✓</span>
         </button>
       `).join('');
-
       cont.querySelectorAll('.genre-chip').forEach(btn => {
         btn.addEventListener('click', async (ev) => {
           const genre = btn.dataset.genre;
