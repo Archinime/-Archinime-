@@ -271,26 +271,26 @@
 </div>
 
 <script>
-    // ============================================
-    // 1. CONFIGURACIÓN FIREBASE (¡PEGA TUS DATOS AQUÍ!)
-    // ============================================
-    const firebaseConfig = {
-        apiKey: "PEGA_AQUI_TU_API_KEY",
-        authDomain: "PEGA_AQUI_TU_PROJECT_ID.firebaseapp.com",
-        projectId: "PEGA_AQUI_TU_PROJECT_ID",
-        storageBucket: "PEGA_AQUI_TU_PROJECT_ID.appspot.com",
-        messagingSenderId: "...",
-        appId: "..."
-    };
+// ============================================
+// ============================================
+// 1. CONFIGURACIÓN FIREBASE (TUS DATOS REALES)
+// ============================================
+const firebaseConfig = {
+    apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
+    authDomain: "login-admin-archinime.firebaseapp.com",
+    projectId: "login-admin-archinime",
+    storageBucket: "login-admin-archinime.firebasestorage.app",
+    messagingSenderId: "938164660242",
+    appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
+};
 
-    // ============================================
-    // 2. LISTA BLANCA (WHITELIST) DE APORTADORES
-    // ============================================
-    // Poner aquí los correos o usernames de GitHub permitidos
-    const ALLOWED_USERS = [
-        "archinime12@gmail.com", // Tu correo ejemplo
-        "Archinime"              // Tu usuario de GitHub
-    ];
+// ============================================
+// 2. LISTA BLANCA (WHITELIST) DE APORTADORES
+// ============================================
+const ALLOWED_USERS = [
+    "archinime12@gmail.com", 
+    "Archinime" // <-- CAMBIA ESTO por tu nombre de usuario de GitHub
+];
 
     // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
