@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Anime Generator PRO v15 (Login Edition)</title>
+    <title>CMS Anime Generator PRO v16 (Re-Design)</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
@@ -13,13 +13,14 @@
     <style>
         :root { 
             --bg-dark: #050505;
-            --glass-panel: rgba(20, 21, 26, 0.95);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-panel: rgba(20, 21, 26, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --primary: #7d5fff;
+            --primary-glow: rgba(125, 95, 255, 0.5);
             --accent: #00f3ff;
-            --latino: #ff9f43; --sub: #54a0ff; --error: #ff2e63; 
+            --latino: #ff9f43; --sub: #54a0ff; --error: #ff2e63;
             --text-main: #ffffff; --text-muted: #9496a8;
-            --radius-lg: 16px; --radius-md: 8px;
+            --radius-lg: 24px; --radius-md: 12px;
         }
 
         body { 
@@ -28,131 +29,316 @@
             color: var(--text-main); margin: 0; padding: 0; overflow-x: hidden;
         }
 
-        /* --- LOGIN SCREEN --- */
+        /* --- LOGIN SCREEN MEJORADO --- */
         #loginScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%);
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
-        .login-box {
-            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px;
-            border: 1px solid var(--glass-border); text-align: center;
-            backdrop-filter: blur(10px); max-width: 400px; width: 90%;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .login-btn {
-            background: #24292e; color: white; border: 1px solid #555;
-            padding: 15px 30px; font-size: 1.1rem; border-radius: 8px; cursor: pointer;
-            display: flex; align-items: center; gap: 10px; margin: 20px auto;
-            transition: 0.3s; font-family: inherit;
-        }
-        .login-btn:hover { background: #000; border-color: var(--accent); }
-        .error-msg { color: var(--error); margin-top: 15px; display: none; }
 
-        /* --- USER HEADER --- */
+        .login-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 50px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 420px; width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Brillo decorativo superior */
+        .login-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .login-title {
+            font-size: 2rem; margin-bottom: 5px; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        
+        .login-btn {
+            background: #1f2329;
+            color: white; border: 1px solid #444;
+            padding: 16px 35px; font-size: 1.1rem; border-radius: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; margin: 30px auto;
+            transition: all 0.3s ease; font-family: inherit; font-weight: 600;
+            width: 100%;
+        }
+        .login-btn:hover { 
+            background: #fff; color: #000;
+            border-color: #fff; 
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+        
+        .error-msg { 
+            color: var(--error); margin-top: 20px; display: none; 
+            background: rgba(255, 46, 99, 0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--error);
+        }
+
+        /* --- USER HEADER MEJORADO --- */
         .user-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 40px; background: rgba(0,0,0,0.8); border-bottom: 1px solid #333;
-            display: none; /* Hidden by default */
+            display: flex;
+            justify-content: space-between; align-items: center;
+            padding: 15px 40px; 
+            background: rgba(5, 5, 5, 0.8); 
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            display: none;
+            position: sticky; top: 0; z-index: 100;
         }
         .user-info { display: flex; align-items: center; gap: 15px; }
-        .user-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
-        .user-name { font-weight: bold; color: #fff; }
-        .btn-logout { background: #333; color: #fff; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; }
+        .user-avatar { 
+            width: 45px; height: 45px; border-radius: 50%;
+            border: 2px solid var(--primary); 
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        .user-name { 
+            font-weight: 700; color: #fff; font-size: 1.1em; 
+        }
+        .user-badge {
+            font-size: 0.7em; color: var(--accent); letter-spacing: 1px; text-transform: uppercase;
+            background: rgba(0, 243, 255, 0.1); padding: 2px 6px; border-radius: 4px;
+        }
+        .btn-logout { 
+            background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); 
+            padding: 8px 20px; border-radius: 8px; cursor: pointer; transition: 0.3s;
+        }
+        .btn-logout:hover { border-color: var(--error); color: var(--error); background: rgba(255,46,99,0.05); }
 
-        /* --- EXISTING STYLES --- */
+        /* --- EXISTING STYLES WITH TWEAKS --- */
         .bg-fixed {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 15% 25%, rgba(125, 95, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 85% 75%, rgba(0, 243, 255, 0.08) 0%, transparent 50%);
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 15% 25%, rgba(125, 95, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 85% 75%, rgba(0, 243, 255, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        
+        /* Scrollbar Moderna */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         .main-wrapper {
-            max-width: 1600px; margin: 0 auto; padding: 40px 20px;
+            max-width: 1600px;
+            margin: 0 auto; padding: 40px 20px;
             display: none; /* Oculto hasta login */
-            grid-template-columns: 1fr 400px; gap: 40px;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
         }
 
-        /* [RESTO DE TUS ESTILOS ORIGINALES MANTENIDOS] */
-        h2 { color: #fff; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin: 0 0 25px; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 12px; font-weight: 700; }
-        h2 i { color: var(--accent); }
-        .editor-panel { background: var(--glass-panel); border: 1px solid var(--glass-border); padding: 35px; border-radius: var(--radius-lg); }
-        .preview-sidebar { position: sticky; top: 20px; height: fit-content; }
-        label { display: block; margin: 20px 0 8px; font-weight: 600; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        h2 { 
+            color: #fff;
+            border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin: 0 0 25px; 
+            font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; 
+            display: flex; align-items: center; gap: 12px; font-weight: 700; 
+        }
+        h2 i { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
+
+        .editor-panel { 
+            background: var(--glass-panel); border: 1px solid var(--glass-border); 
+            padding: 40px; border-radius: var(--radius-lg);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .preview-sidebar { position: sticky; top: 100px; height: fit-content; }
+        
+        label { 
+            display: block; margin: 25px 0 10px; font-weight: 600; font-size: 0.8rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; 
+        }
         label span { color: var(--error); }
-        input, textarea, select { width: 100%; padding: 12px 15px; background: #0f1014; border: 1px solid #333; color: white; border-radius: var(--radius-md); box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; font-size: 0.9em; transition: border-color 0.2s; }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; background: #15161a; }
+        
+        input, textarea, select { 
+            width: 100%; padding: 14px 18px; background: #0b0c10;
+            border: 1px solid #2a2a2a; color: white; border-radius: var(--radius-md); 
+            box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; font-size: 0.95em; 
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--primary); outline: none; background: #121216; 
+            box-shadow: 0 0 0 3px rgba(125, 95, 255, 0.1);
+        }
         input.invalid { border-color: var(--error) !important; background: rgba(255, 46, 99, 0.05); }
+
         .chapter-inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         .input-group { position: relative; }
-        .input-group i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8em; pointer-events: none; z-index: 2; }
+        .input-group i { 
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+            font-size: 0.9em; pointer-events: none; z-index: 2; 
+        }
         .ico-lat { color: var(--latino); }
         .ico-sub { color: var(--sub); }
-        .input-group input { padding-left: 35px; font-size: 0.85em; border-left: 3px solid transparent; }
-        .input-group input.lat-field:focus { border-color: var(--latino); border-left-color: var(--latino); }
-        .input-group input.sub-field:focus { border-color: var(--sub); border-left-color: var(--sub); }
+        .input-group input { padding-left: 40px; }
+        
+        /* Botones y Elementos Dinámicos */
         .dynamic-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
-        .btn-mini-del { background: #1a1a1a; color: var(--error); border: 1px solid #333; width: 42px; height: 42px; border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
+        .btn-mini-del { 
+            background: #1a1a1a; color: var(--error); border: 1px solid #333; width: 48px;
+            height: 48px; border-radius: var(--radius-md); cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0;
+        }
         .btn-mini-del:hover { background: var(--error); color: white; border-color: var(--error); }
-        .genres-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; max-height: 200px; overflow-y: auto; background: #0a0a0c; padding: 15px; border-radius: var(--radius-md); border: 1px solid #333; }
-        .genres-box label { margin: 0; text-transform: none; color: #bbb; font-weight: 400; font-size: 0.8em; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 6px; transition: background 0.1s; }
-        .genres-box label:hover { background: #1f1f1f; color: #fff; }
-        .genres-box input { width: 14px; height: 14px; margin: 0; accent-color: var(--primary); }
+        
+        .genres-box { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; max-height: 250px;
+            overflow-y: auto; background: #0a0a0c; padding: 20px; border-radius: var(--radius-md); border: 1px solid #2a2a2a;
+        }
+        .genres-box label { 
+            margin: 0; text-transform: none; color: #ccc; font-weight: 500;
+            font-size: 0.85em; cursor: pointer; display: flex; align-items: center; gap: 10px; 
+            padding: 10px; border-radius: 8px; transition: background 0.1s; border: 1px solid transparent;
+        }
+        .genres-box label:hover { background: #1f1f1f; border-color: #333; color: #fff; }
+        .genres-box input { width: 16px; height: 16px; margin: 0; accent-color: var(--primary); }
+
         .row-flex { display: flex; gap: 20px; align-items: flex-end; }
         .col-flex { flex: 1; }
-        .season-card { background: #0e0f12; padding: 25px; border-radius: var(--radius-md); margin-bottom: 25px; border: 1px solid #2a2a2a; position: relative; }
-        .season-card::before { content: ''; position: absolute; left: 0; top: 25px; bottom: 25px; width: 3px; background: var(--primary); border-radius: 0 4px 4px 0; }
-        .btn-del { position: absolute; top: 20px; right: 20px; background: transparent; color: var(--error); border: 1px solid var(--error); padding: 4px 12px; cursor: pointer; font-size: 0.7em; border-radius: 20px; transition: 0.2s; font-weight: 700; }
+        
+        .season-card { 
+            background: #0e0f12; padding: 30px; border-radius: var(--radius-lg); margin-bottom: 30px;
+            border: 1px solid #2a2a2a; position: relative; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .season-card::before { 
+            content: ''; position: absolute;
+            left: 0; top: 30px; bottom: 30px; width: 4px; background: var(--primary); border-radius: 0 4px 4px 0;
+            box-shadow: 2px 0 10px var(--primary-glow);
+        }
+        
+        .btn-del { 
+            position: absolute; top: 25px; right: 25px; background: rgba(255, 46, 99, 0.1); color: var(--error);
+            border: 1px solid var(--error); padding: 5px 15px; cursor: pointer; font-size: 0.75em; 
+            border-radius: 20px; transition: 0.2s; font-weight: 700;
+        }
         .btn-del:hover { background: var(--error); color: white; }
-        .chapters-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; background: #050505; padding: 20px; border-radius: var(--radius-md); max-height: 500px; overflow-y: auto; border: 1px solid #222; }
-        .chapter-row { display: flex; flex-direction: column; gap: 8px; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; }
+        
+        .chapters-grid { 
+            display: flex; flex-direction: column; gap: 10px; margin-top: 25px; background: #050505;
+            padding: 20px; border-radius: var(--radius-md); max-height: 500px; overflow-y: auto; border: 1px solid #222;
+        }
+        .chapter-row { 
+            display: flex; flex-direction: column; gap: 10px; background: #111; padding: 15px;
+            border-radius: 8px; border: 1px solid #222; transition: border 0.2s;
+        }
         .chapter-row:focus-within { border-color: #444; }
         .chapter-row-header { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .chapter-num { color: var(--accent); font-weight: bold; font-family: monospace; font-size: 1em; background: rgba(0, 243, 255, 0.1); padding: 2px 6px; border-radius: 4px; }
-        .btn { width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: 700; margin-top: 20px; border-radius: var(--radius-md); transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
+        .chapter-num { 
+            color: var(--accent); font-weight: bold; font-family: monospace; font-size: 1.1em;
+            background: rgba(0, 243, 255, 0.1); padding: 4px 8px; border-radius: 6px;
+        }
+
+        .btn { 
+            width: 100%; padding: 16px; border: none; cursor: pointer; font-weight: 700;
+            margin-top: 25px; border-radius: var(--radius-md); transition: 0.2s; 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+        }
         .btn-add { background: #151515; color: var(--text-muted); border: 1px dashed #444; }
         .btn-add:hover { border-color: var(--primary); color: #fff; background: #1a1a1a; }
-        .btn-gen { background: var(--primary); color: white; font-size: 1rem; margin-top: 40px; }
-        .btn-gen:hover { background: #6c5ce7; transform: translateY(-2px); }
-        .web-card { background: #0b0c10; border-radius: 16px; overflow: hidden; border: 1px solid #333; }
-        .web-cover { width: 100%; height: 350px; object-fit: cover; background: #111; opacity: 0.9; mask-image: linear-gradient(to bottom, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
-        .web-info { padding: 25px; position: relative; margin-top: -80px; z-index: 2; }
-        .web-title { font-size: 1.5em; font-weight: 700; margin-bottom: 5px; line-height: 1.2; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,1); }
-        .web-alias { font-size: 0.75em; color: var(--accent); margin-bottom: 15px; font-family: monospace; }
+        
+        .btn-gen { 
+            background: linear-gradient(135deg, var(--primary), #6c5ce7); 
+            color: white; font-size: 1rem; margin-top: 50px;
+            box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
+        }
+        .btn-gen:hover { filter: brightness(1.2); transform: translateY(-3px); }
+
+        /* PREVIEW CARD */
+        .web-card { 
+            background: #0b0c10; border-radius: 20px; overflow: hidden; border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .web-cover { 
+            width: 100%; height: 380px; object-fit: cover; background: #111; opacity: 0.9;
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+        .web-info { padding: 30px; position: relative; margin-top: -90px; z-index: 2; }
+        .web-title { 
+            font-size: 1.8em; font-weight: 700; margin-bottom: 8px; line-height: 1.1; color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,1); 
+        }
+        .web-alias { font-size: 0.8em; color: var(--accent); margin-bottom: 15px; font-family: monospace; }
         .web-tags { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
-        .web-tags span { background: #1a1a1f; color: #ccc; padding: 4px 10px; font-size: 0.7em; border-radius: 12px; border: 1px solid #333; }
-        .web-meta { font-size: 0.8em; color: #a1a1aa; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .web-tags span { 
+            background: rgba(255,255,255,0.05); color: #ccc; padding: 4px 10px;
+            font-size: 0.7em; border-radius: 12px; border: 1px solid #333; backdrop-filter: blur(5px);
+        }
+        .web-meta { 
+            font-size: 0.85em; color: #a1a1aa; margin-bottom: 20px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid #333; padding-bottom: 15px;
+        }
         .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .preview-s-item { position: relative; border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 2/3; border: 1px solid #222; }
+        .preview-s-item { 
+            position: relative; border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 2/3;
+            border: 1px solid #222; transition: transform 0.2s;
+        }
+        .preview-s-item:hover { transform: scale(1.05); z-index: 2; border-color: var(--primary); }
         .preview-s-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .preview-s-info { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 5px; box-sizing: border-box; }
-        .preview-s-title { font-size: 0.6em; text-align: center; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .cover-validation-box { width: 100px; height: 140px; object-fit: cover; background: #080808; border-radius: var(--radius-md); border: 1px dashed #333; display: none; }
-        .cover-validation-box.active { display: block; border-style: solid; }
-        #dimDisplay { font-size: 0.7em; margin-top: 5px; color: var(--text-muted); }
-        #toast { visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #111; color: #fff; text-align: center; border-radius: 8px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; font-size: 13px; font-weight: 500; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .preview-s-info { 
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 8px 5px; box-sizing: border-box; 
+        }
+        .preview-s-title { font-size: 0.65em; text-align: center; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+        
+        /* Validation & Utils */
+        .cover-validation-box { 
+            width: 120px; height: 160px; object-fit: cover; background: #080808; border-radius: var(--radius-md);
+            border: 1px dashed #333; display: none; transition: 0.3s;
+        }
+        .cover-validation-box.active { display: block; border-style: solid; border-color: var(--accent); }
+        #dimDisplay { font-size: 0.75em; margin-top: 8px; color: var(--text-muted); font-family: monospace; }
+        
+        #toast { 
+            visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #111; color: #fff;
+            text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 40px; 
+            font-size: 14px; font-weight: 500; border: 1px solid #333; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; display:none; justify-content:center; align-items:center; flex-direction: column; }
-        textarea#jsonResult { width: 80%; max-width: 800px; height: 50%; background: #050505; color: var(--accent); border: 1px solid #333; padding: 20px; font-family: 'Consolas', monospace; font-size: 0.85em; border-radius: 12px; resize: none; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        #overlay { 
+            position: fixed; top:0; left:0; width:100%; height:100%; 
+            background:rgba(0,0,0,0.95); z-index:9999; display:none; 
+            justify-content:center; align-items:center; flex-direction: column;
+            backdrop-filter: blur(5px);
+        }
+        textarea#jsonResult { 
+            width: 80%; max-width: 800px; height: 50%; background: #080808; color: var(--accent);
+            border: 1px solid #333; padding: 25px; font-family: 'Consolas', monospace; font-size: 0.9em; 
+            border-radius: 16px; resize: none; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
 <div id="loginScreen">
     <div class="login-box">
-        <h1 style="color:#fff; margin-bottom:10px;">Archinime CMS</h1>
-        <p style="color:#888; font-size:0.9em; margin-bottom:30px;">Acceso restringido solo a colaboradores.</p>
+        <h1 class="login-title">Archinime CMS</h1>
+        <p style="color:#a0a0a0; font-size:0.95em; margin-bottom:40px; line-height: 1.5;">
+            Acceso exclusivo para el equipo de <br>
+            <span style="color:white; font-weight:600;">Aportadores Autorizados</span>
+        </p>
         
         <button class="login-btn" onclick="signInWithGitHub()">
-            <i class="fab fa-github" style="font-size:1.5em"></i>
-            Iniciar con GitHub
+            <i class="fab fa-github" style="font-size:1.6em"></i>
+            Iniciar sesión con GitHub
         </button>
         
         <div id="loginError" class="error-msg">
@@ -160,6 +346,7 @@
             <span id="errorText">Aun no formas parte del equipo de aportaciones.</span>
         </div>
     </div>
+    <div style="margin-top:20px; color:#555; font-size:0.8em;">v16.0 Protected System</div>
 </div>
 
 <div class="bg-fixed"></div>
@@ -168,8 +355,8 @@
     <div class="user-info">
         <img id="userAvatarImg" src="" class="user-avatar" alt="User">
         <div>
-            <div style="font-size:0.75em; color:#888;">Colaborador:</div>
-            <div id="userNameDisplay" class="user-name">Usuario</div>
+            <div class="user-badge">Colaborador</div>
+            <div id="userNameDisplay" class="user-name">@Usuario</div>
         </div>
     </div>
     <button class="btn-logout" onclick="logout()">
@@ -182,7 +369,7 @@
         <h2><i class="fas fa-pen-nib"></i> 1. Datos Generales</h2>
         
         <label>Título <span>*</span></label>
-        <input type="text" id="tituloAnime" placeholder="Agregar Título" onblur="autoCap(this); validate(this); updateWebPreview()">
+        <input type="text" id="tituloAnime" placeholder="Agregar Título Principal" onblur="autoCap(this); validate(this); updateWebPreview()">
 
         <label>Alias (Opcional)</label>
         <div id="aliasContainer"></div>
@@ -193,7 +380,7 @@
         <label style="margin-top:25px">URL Portada (Solo .AVIF Recomendado) <span>*</span></label>
         <div style="display:flex; gap:20px;">
             <div style="flex:1">
-                <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this)" onblur="validate(this); updateWebPreview()">
+                <input type="text" id="portadaAnime" placeholder="https://dominio.com/imagen.avif" oninput="checkCoverVisual(this)" onblur="validate(this); updateWebPreview()">
                 <div id="dimDisplay" style="display:none"></div>
             </div>
             <img id="mainCoverPreview" class="cover-validation-box">
@@ -203,7 +390,7 @@
         <div class="genres-box" id="genresContainer"></div>
 
         <label>Sinopsis <span>*</span></label>
-        <textarea id="sinopsisAnime" rows="3" placeholder="Descripción..." onblur="autoCap(this); validate(this)"></textarea>
+        <textarea id="sinopsisAnime" rows="4" placeholder="Escribe una descripción atrapante..." onblur="autoCap(this); validate(this)"></textarea>
         
         <div class="row-flex">
             <div class="col-flex">
@@ -226,20 +413,20 @@
             </div>
         </div>
 
-        <h2 style="margin-top:50px"><i class="fas fa-layer-group"></i> 2. Estructura</h2>
+        <h2 style="margin-top:60px"><i class="fas fa-layer-group"></i> 2. Estructura</h2>
         <div id="seasonsContainer"></div>
-        <button class="btn btn-add" onclick="addSeason()"><i class="fas fa-plus-circle"></i> AGREGAR BLOQUE</button>
+        <button class="btn btn-add" onclick="addSeason()"><i class="fas fa-plus-circle"></i> AGREGAR BLOQUE DE CONTENIDO</button>
 
-        <h2 style="margin-top:50px"><i class="fas fa-music"></i> 3. Música</h2>
+        <h2 style="margin-top:60px"><i class="fas fa-music"></i> 3. Música</h2>
         <div id="musicContainer"></div>
-        <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR MÚSICA</button>
+        <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR TRACK DE MÚSICA</button>
 
-        <button class="btn btn-gen" onclick="subirAGithHub()"><i class="fas fa-cloud-upload-alt"></i> SUBIR A BASE DE DATOS</button>
-        <div id="statusLog" style="color: #00ffbf; margin-top: 10px; font-family: monospace; background:#111; padding:10px; border-radius:5px; display:none;"></div>
+        <button class="btn btn-gen" onclick="subirAGithHub()"><i class="fas fa-cloud-upload-alt"></i> GENERAR Y SUBIR A BASE DE DATOS</button>
+        <div id="statusLog" style="color: #00ffbf; margin-top: 15px; font-family: monospace; background:#111; padding:15px; border-radius:8px; display:none; border:1px solid #333;"></div>
     </div>
 
     <div class="preview-sidebar">
-        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:15px; text-transform:uppercase; letter-spacing:2px; font-weight:700;">Vista Previa</h3>
+        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:15px; text-transform:uppercase; letter-spacing:2px; font-weight:700;">Vista Previa Web</h3>
         <div class="web-card">
             <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Portada">
             <div class="web-info">
@@ -252,7 +439,7 @@
                 </div>
                 <div id="webTags" class="web-tags"><span>Género</span></div>
                 
-                <div style="font-size:0.7em; font-weight:bold; color:#555; margin-top:20px; border-bottom:1px solid #222; padding-bottom:5px;">CONTENIDO:</div>
+                <div style="font-size:0.75em; font-weight:bold; color:#fff; margin-top:25px; border-bottom:1px solid #333; padding-bottom:8px; letter-spacing: 1px;">COLECCIÓN:</div>
                 <div id="webSeasonsGrid" class="preview-seasons-grid"></div>
             </div>
         </div>
@@ -262,18 +449,18 @@
 <div id="toast"><i class="fas fa-check-circle"></i> Notificación</div>
 
 <div id="overlay">
-    <h3 style="color:white; margin-bottom:20px;">Copia tu código JSON</h3>
+    <h3 style="color:white; margin-bottom:20px;">Código JSON Generado</h3>
     <textarea id="jsonResult" readonly></textarea>
     <div style="display:flex; gap:15px; margin-top:20px;">
-        <button class="btn" style="background:var(--primary); width:auto; padding:10px 30px; margin:0;" onclick="copyToClipboard()"><i class="fas fa-copy"></i> Copiar</button>
-        <button class="btn" style="background:var(--error); width:auto; padding:10px 30px; margin:0;" onclick="document.getElementById('overlay').style.display='none'">Cerrar</button>
+        <button class="btn" style="background:var(--primary); width:auto; padding:12px 35px; margin:0;" onclick="copyToClipboard()"><i class="fas fa-copy"></i> Copiar</button>
+        <button class="btn" style="background:var(--error); width:auto; padding:12px 35px; margin:0;" onclick="document.getElementById('overlay').style.display='none'">Cerrar</button>
     </div>
 </div>
 
 <script>
 // ============================================
 // ============================================
-// 1. CONFIGURACIÓN FIREBASE (TUS DATOS REALES)
+// 1. CONFIGURACIÓN FIREBASE
 // ============================================
 const firebaseConfig = {
     apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
@@ -285,17 +472,16 @@ const firebaseConfig = {
 };
 
 // ============================================
-// 2. LISTA BLANCA (WHITELIST) DE APORTADORES
+// 2. LISTA BLANCA (WHITELIST)
 // ============================================
 const ALLOWED_USERS = [
     "archinime12@gmail.com", 
-    "Archinime" // <-- CAMBIA ESTO por tu nombre de usuario de GitHub
 ];
 
     // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    let currentUserToken = null; // Aquí guardamos el token de GitHub temporalmente en memoria
+    let currentUserToken = null;
 
     // Escuchar cambios de sesión
     auth.onAuthStateChanged((user) => {
@@ -308,55 +494,53 @@ const ALLOWED_USERS = [
 
     function signInWithGitHub() {
         const provider = new firebase.auth.GithubAuthProvider();
-        provider.addScope('repo'); // IMPORTANTE: Pide permiso para escribir en el repo
+        provider.addScope('repo'); // Permiso escritura
         
         auth.signInWithPopup(provider)
             .then((result) => {
-                // El token de GitHub para usar la API
                 const credential = result.credential;
                 currentUserToken = credential.accessToken;
-                
                 checkAccess(result.user);
             }).catch((error) => {
                 console.error(error);
-                document.getElementById('errorText').innerText = "Error de conexión: " + error.message;
+                document.getElementById('errorText').innerText = "Error: " + error.message;
                 document.getElementById('loginError').style.display = 'block';
             });
     }
 
     function checkAccess(user) {
-        // Verificar si el email o el nickname de GitHub está en la lista blanca
-        // Nota: user.providerData[0] suele tener la info de GitHub
         const email = user.email;
-        const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName; // screenName es el usuario de GitHub
+        // Obtenemos el username de GitHub (handle)
+        const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
 
-        console.log("Verificando usuario:", email, nickname);
-
-        // Validamos si el email O el usuario está en la lista
+        console.log("Verificando:", email, nickname);
+        
         const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
 
         if (isAllowed) {
             showCMS(user);
         } else {
-            // Usuario no autorizado
-            document.getElementById('errorText').innerText = "Aun no formas parte del equipo de aportaciones.";
+            document.getElementById('errorText').innerText = "Lo sentimos, no estás en la lista de aportadores autorizados.";
             document.getElementById('loginError').style.display = 'block';
-            
-            // Cerrar sesión automáticamente tras unos segundos
-            setTimeout(() => {
-                auth.signOut(); 
-            }, 3000);
+            setTimeout(() => { auth.signOut(); }, 3000);
         }
     }
 
     function showCMS(user) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('userHeader').style.display = 'flex';
-        document.getElementById('cmsContent').style.display = 'grid'; // Mostrar grid principal
+        document.getElementById('cmsContent').style.display = 'grid';
         
-        // Cargar datos usuario
         document.getElementById('userAvatarImg').src = user.photoURL;
-        document.getElementById('userNameDisplay').innerText = user.displayName || user.email;
+        
+        // --- AQUÍ ESTÁ EL CAMBIO PARA EL NOMBRE ---
+        // Intentamos obtener el "screenName" (ej: Archinime) que es el handle de GitHub
+        // Si no existe, usamos displayName, y si no, el email.
+        let ghHandle = user.reloadUserInfo && user.reloadUserInfo.screenName;
+        let displayName = ghHandle ? `@${ghHandle}` : (user.displayName || user.email);
+        
+        document.getElementById('userNameDisplay').innerText = displayName;
+        // ------------------------------------------
     }
 
     function showLogin() {
@@ -372,7 +556,7 @@ const ALLOWED_USERS = [
         location.reload();
     }
 
-    /* --- LÓGICA DEL CMS (Igual que antes pero usando currentUserToken) --- */
+    /* --- LÓGICA DEL CMS --- */
     const genresList = [
         "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
         "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
@@ -415,7 +599,7 @@ const ALLOWED_USERS = [
         const copyText = document.getElementById("jsonResult");
         copyText.select();
         document.execCommand("copy");
-        showToast("¡Copiado!");
+        showToast("¡JSON Copiado al portapapeles!");
     }
 
     function log(msg) {
@@ -457,7 +641,7 @@ const ALLOWED_USERS = [
 
     function updateWebPreview() {
         const title = document.getElementById('tituloAnime').value;
-        document.getElementById('webTitle').innerText = title || 'Título';
+        document.getElementById('webTitle').innerText = title || 'Título del Anime';
         const coverUrl = document.getElementById('portadaAnime').value;
         if(coverUrl) document.getElementById('webCover').src = coverUrl;
         
@@ -471,7 +655,6 @@ const ALLOWED_USERS = [
                 tagsContainer.appendChild(s);
             }
         });
-        
         // Update seasons preview
         const grid = document.getElementById('webSeasonsGrid');
         grid.innerHTML = '';
@@ -495,10 +678,10 @@ const ALLOWED_USERS = [
         const div = document.createElement('div');
         div.className = 'season-card';
         div.innerHTML = `
-            <button class="btn-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-trash"></i></button>
+            <button class="btn-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-trash"></i> Eliminar Bloque</button>
             <div class="row-flex">
                 <div class="col-flex">
-                    <label>Tipo</label>
+                    <label>Tipo de Contenido</label>
                     <select class="s-type" onchange="updateSeasonName(this)">
                         <option value="Temporada" selected>Temporada</option>
                         <option value="Pelicula">Película</option>
@@ -507,12 +690,12 @@ const ALLOWED_USERS = [
                     </select>
                 </div>
                 <div class="col-flex">
-                     <label>Nombre Mostrado</label>
+                     <label>Nombre Mostrado (App)</label>
                      <input type="text" class="s-name" placeholder="Ej: Temporada 1" onblur="updateWebPreview()">
                 </div>
             </div>
-            <label>Poster Bloque</label>
-            <input type="text" class="s-img" placeholder="URL Imagen..." onblur="updateWebPreview()">
+            <label>Poster del Bloque</label>
+            <input type="text" class="s-img" placeholder="URL Imagen Vertical..." onblur="updateWebPreview()">
             <label>Cant. Capítulos</label>
             <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
             <div class="chapters-grid"></div>
@@ -575,7 +758,6 @@ const ALLOWED_USERS = [
         document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
         const aliasList = [];
         document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-        
         const anime = {
             id: 0, 
             titulo: document.getElementById('tituloAnime').value.trim(),
@@ -588,12 +770,10 @@ const ALLOWED_USERS = [
             musica: [],
             temporadas: []
         };
-
         // Musica
         document.querySelectorAll('#musicContainer .m-url').forEach(i => {
             if(i.value) anime.musica.push({ url_audio: i.value.trim() });
         });
-
         // Temporadas
         let sOrder = 1;
         document.querySelectorAll('.season-card').forEach(card => {
@@ -632,16 +812,14 @@ const ALLOWED_USERS = [
         const owner = "Archinime";
         const repo = "-Archinime-";
         
-        // EL TOKEN VIENE DEL LOGIN DE GITHUB (No está escrito en código)
-        const token = currentUserToken; 
-
+        // EL TOKEN VIENE DEL LOGIN DE GITHUB
+        const token = currentUserToken;
         if(!token) return alert("Error: No hay sesión activa con permisos de GitHub.");
 
         const nuevoAnime = generateJSON();
         if(!nuevoAnime.titulo) return alert("Falta el título del anime");
 
-        document.getElementById('statusLog').innerHTML = "🚀 Iniciando proceso...<br>";
-
+        document.getElementById('statusLog').innerHTML = "🚀 Iniciando proceso de subida...<br>";
         try {
             // 1. OBTENER INDEX-DATA.JS
             log("Leyendo índice actual...");
@@ -659,7 +837,7 @@ const ALLOWED_USERS = [
             log(`✅ Nuevo ID generado: ${NEW_ID}`);
 
             // 2. ACTUALIZAR ANIME-DETAIL-DATA.JS
-            log("Actualizando detalles...");
+            log("Actualizando base de detalles...");
             await updateGithubFile(token, owner, repo, 'anime-detail-data.js', (content) => {
                 let jsonStr = content.replace(/const\s+data\s*=\s*/, '').replace(/;\s*$/, '');
                 let dataObj = (new Function("return " + jsonStr))();
@@ -691,6 +869,7 @@ const ALLOWED_USERS = [
                     t.eps.forEach(e => {
                         let epTitle = e.title;
                         if (!epTitle) epTitle = `${nuevoAnime.titulo} ${t.name} Cap ${e.num}`;
+                        
                         dbObj[NEW_ID][t.num][e.num] = {
                             link: e.link || '',
                             link2: e.link2 || '',
@@ -711,7 +890,7 @@ const ALLOWED_USERS = [
                     return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
                 });
             } else {
-                log("⚠️ Sin música para agregar, saltando...");
+                log("⚠️ Sin música para agregar, saltando paso...");
             }
 
             // 5. ACTUALIZAR INDEX-DATA.JS
@@ -733,9 +912,9 @@ const ALLOWED_USERS = [
 
             log("✨ ¡ÉXITO TOTAL! Anime subido correctamente.");
             alert(`Anime "${nuevoAnime.titulo}" subido con ID: ${NEW_ID}`);
-
+            
         } catch (e) {
-            log("❌ ERROR: " + e.message);
+            log("❌ ERROR CRÍTICO: " + e.message);
             console.error(e);
             alert("Error al subir: " + e.message);
         }
