@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Anime Generator PRO v16 (Re-Design)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>CMS Archinime PRO v17 (Ultra UI)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -12,355 +12,273 @@
 
     <style>
         :root { 
-            --bg-dark: #050505;
-            --glass-panel: rgba(20, 21, 26, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --primary: #7d5fff;
-            --primary-glow: rgba(125, 95, 255, 0.5);
-            --accent: #00f3ff;
-            --latino: #ff9f43; --sub: #54a0ff; --error: #ff2e63;
-            --text-main: #ffffff; --text-muted: #9496a8;
-            --radius-lg: 24px; --radius-md: 12px;
+            --bg-dark: #050509;
+            --card-bg: #0f1016;
+            --glass-bg: rgba(20, 21, 35, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #6c5ce7;
+            --primary-glow: rgba(108, 92, 231, 0.4);
+            --accent: #00cec9;
+            --text-main: #ffffff; 
+            --text-muted: #a2aab0;
+            --radius-lg: 20px; 
+            --radius-md: 12px;
+            --gradient-main: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
         }
 
         body { 
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main); margin: 0; padding: 0; overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(108, 92, 231, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 92, 231, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
         /* --- LOGIN SCREEN MEJORADO --- */
         #loginScreen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%);
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .login-box {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 50px; border-radius: 30px;
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            max-width: 420px; width: 90%;
-            position: relative;
-            overflow: hidden;
-        }
-        /* Brillo decorativo superior */
-        .login-box::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-
-        .login-title {
-            font-size: 2rem; margin-bottom: 5px; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            box-shadow: 0 0 60px rgba(108, 92, 231, 0.2);
+            max-width: 400px; width: 90%;
+            animation: float 6s ease-in-out infinite;
         }
         
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
         .login-btn {
-            background: #1f2329;
-            color: white; border: 1px solid #444;
-            padding: 16px 35px; font-size: 1.1rem; border-radius: 12px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            gap: 12px; margin: 30px auto;
-            transition: all 0.3s ease; font-family: inherit; font-weight: 600;
-            width: 100%;
-        }
-        .login-btn:hover { 
             background: #fff; color: #000;
-            border-color: #fff; 
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
-            transform: translateY(-2px);
+            border: none; padding: 16px 30px; font-size: 1.1rem; 
+            border-radius: 50px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin: 30px auto 0; transition: 0.3s; font-weight: 700; width: 100%;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
         }
-        
+        .login-btn:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+
         .error-msg { 
-            color: var(--error); margin-top: 20px; display: none; 
-            background: rgba(255, 46, 99, 0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--error);
+            background: rgba(255, 46, 99, 0.1); color: #ff7675; 
+            padding: 15px; border-radius: 12px; margin-top: 20px; 
+            border: 1px solid rgba(255, 46, 99, 0.2); display: none; font-size: 0.9em;
         }
 
-        /* --- USER HEADER MEJORADO --- */
+        /* --- HEADER USUARIO --- */
         .user-header {
-            display: flex;
-            justify-content: space-between; align-items: center;
-            padding: 15px 40px; 
-            background: rgba(5, 5, 5, 0.8); 
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
-            display: none;
-            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(5, 5, 9, 0.8); 
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100; display: none;
         }
         .user-info { display: flex; align-items: center; gap: 15px; }
         .user-avatar { 
-            width: 45px; height: 45px; border-radius: 50%;
-            border: 2px solid var(--primary); 
-            box-shadow: 0 0 10px var(--primary-glow);
+            width: 42px; height: 42px; border-radius: 12px; 
+            border: 2px solid var(--primary); object-fit: cover;
         }
-        .user-name { 
-            font-weight: 700; color: #fff; font-size: 1.1em; 
-        }
-        .user-badge {
-            font-size: 0.7em; color: var(--accent); letter-spacing: 1px; text-transform: uppercase;
-            background: rgba(0, 243, 255, 0.1); padding: 2px 6px; border-radius: 4px;
-        }
-        .btn-logout { 
-            background: transparent; color: var(--text-muted); border: 1px solid var(--glass-border); 
-            padding: 8px 20px; border-radius: 8px; cursor: pointer; transition: 0.3s;
-        }
-        .btn-logout:hover { border-color: var(--error); color: var(--error); background: rgba(255,46,99,0.05); }
-
-        /* --- EXISTING STYLES WITH TWEAKS --- */
-        .bg-fixed {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 15% 25%, rgba(125, 95, 255, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 85% 75%, rgba(0, 243, 255, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
+        .user-details { display: flex; flex-direction: column; }
+        .user-role { font-size: 0.7em; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+        .user-name { font-weight: 600; color: #fff; font-size: 1rem; }
         
-        /* Scrollbar Moderna */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        .btn-logout { 
+            background: rgba(255,255,255,0.05); color: var(--text-muted); border: none;
+            padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 0.85em;
+        }
+        .btn-logout:hover { background: rgba(255, 46, 99, 0.1); color: #ff7675; }
 
+        /* --- LAYOUT PRINCIPAL --- */
         .main-wrapper {
-            max-width: 1600px;
-            margin: 0 auto; padding: 40px 20px;
-            display: none; /* Oculto hasta login */
-            grid-template-columns: 1fr 400px;
-            gap: 40px;
+            max-width: 1600px; margin: 0 auto; padding: 40px 20px;
+            display: none; grid-template-columns: 1fr 420px; gap: 40px;
+        }
+
+        .editor-panel { 
+            background: var(--card-bg); border: 1px solid var(--border-color); 
+            padding: 40px; border-radius: var(--radius-lg); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         h2 { 
-            color: #fff;
-            border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin: 0 0 25px; 
-            font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; 
+            color: #fff; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; 
+            margin: 0 0 30px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; 
             display: flex; align-items: center; gap: 12px; font-weight: 700; 
         }
-        h2 i { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
+        h2 i { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
 
-        .editor-panel { 
-            background: var(--glass-panel); border: 1px solid var(--glass-border); 
-            padding: 40px; border-radius: var(--radius-lg);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        
-        .preview-sidebar { position: sticky; top: 100px; height: fit-content; }
-        
+        /* --- INPUTS & CONTROLS --- */
         label { 
-            display: block; margin: 25px 0 10px; font-weight: 600; font-size: 0.8rem;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; 
+            display: block; margin: 25px 0 10px; font-weight: 600; font-size: 0.75rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; 
         }
-        label span { color: var(--error); }
         
         input, textarea, select { 
-            width: 100%; padding: 14px 18px; background: #0b0c10;
-            border: 1px solid #2a2a2a; color: white; border-radius: var(--radius-md); 
-            box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; font-size: 0.95em; 
+            width: 100%; padding: 15px 20px; background: #141419;
+            border: 1px solid #2d2d35; color: white; border-radius: var(--radius-md); 
+            box-sizing: border-box; font-family: 'Outfit', sans-serif; font-size: 0.95em; 
             transition: all 0.2s;
         }
         input:focus, select:focus, textarea:focus { 
-            border-color: var(--primary); outline: none; background: #121216; 
-            box-shadow: 0 0 0 3px rgba(125, 95, 255, 0.1);
-        }
-        input.invalid { border-color: var(--error) !important; background: rgba(255, 46, 99, 0.05); }
-
-        .chapter-inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
-        .input-group { position: relative; }
-        .input-group i { 
-            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-            font-size: 0.9em; pointer-events: none; z-index: 2; 
-        }
-        .ico-lat { color: var(--latino); }
-        .ico-sub { color: var(--sub); }
-        .input-group input { padding-left: 40px; }
-        
-        /* Botones y Elementos Dinámicos */
-        .dynamic-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
-        .btn-mini-del { 
-            background: #1a1a1a; color: var(--error); border: 1px solid #333; width: 48px;
-            height: 48px; border-radius: var(--radius-md); cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0;
-        }
-        .btn-mini-del:hover { background: var(--error); color: white; border-color: var(--error); }
-        
-        .genres-box { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; max-height: 250px;
-            overflow-y: auto; background: #0a0a0c; padding: 20px; border-radius: var(--radius-md); border: 1px solid #2a2a2a;
-        }
-        .genres-box label { 
-            margin: 0; text-transform: none; color: #ccc; font-weight: 500;
-            font-size: 0.85em; cursor: pointer; display: flex; align-items: center; gap: 10px; 
-            padding: 10px; border-radius: 8px; transition: background 0.1s; border: 1px solid transparent;
-        }
-        .genres-box label:hover { background: #1f1f1f; border-color: #333; color: #fff; }
-        .genres-box input { width: 16px; height: 16px; margin: 0; accent-color: var(--primary); }
-
-        .row-flex { display: flex; gap: 20px; align-items: flex-end; }
-        .col-flex { flex: 1; }
-        
-        .season-card { 
-            background: #0e0f12; padding: 30px; border-radius: var(--radius-lg); margin-bottom: 30px;
-            border: 1px solid #2a2a2a; position: relative; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .season-card::before { 
-            content: ''; position: absolute;
-            left: 0; top: 30px; bottom: 30px; width: 4px; background: var(--primary); border-radius: 0 4px 4px 0;
-            box-shadow: 2px 0 10px var(--primary-glow);
+            border-color: var(--primary); outline: none; background: #1a1a20; 
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
         }
         
-        .btn-del { 
-            position: absolute; top: 25px; right: 25px; background: rgba(255, 46, 99, 0.1); color: var(--error);
-            border: 1px solid var(--error); padding: 5px 15px; cursor: pointer; font-size: 0.75em; 
-            border-radius: 20px; transition: 0.2s; font-weight: 700;
-        }
-        .btn-del:hover { background: var(--error); color: white; }
-        
-        .chapters-grid { 
-            display: flex; flex-direction: column; gap: 10px; margin-top: 25px; background: #050505;
-            padding: 20px; border-radius: var(--radius-md); max-height: 500px; overflow-y: auto; border: 1px solid #222;
-        }
-        .chapter-row { 
-            display: flex; flex-direction: column; gap: 10px; background: #111; padding: 15px;
-            border-radius: 8px; border: 1px solid #222; transition: border 0.2s;
-        }
-        .chapter-row:focus-within { border-color: #444; }
-        .chapter-row-header { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .chapter-num { 
-            color: var(--accent); font-weight: bold; font-family: monospace; font-size: 1.1em;
-            background: rgba(0, 243, 255, 0.1); padding: 4px 8px; border-radius: 6px;
-        }
-
+        /* Botones Acción */
         .btn { 
             width: 100%; padding: 16px; border: none; cursor: pointer; font-weight: 700;
-            margin-top: 25px; border-radius: var(--radius-md); transition: 0.2s; 
+            margin-top: 25px; border-radius: var(--radius-md); transition: 0.3s; 
             display: flex; align-items: center; justify-content: center; gap: 10px; 
-            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-add { background: #151515; color: var(--text-muted); border: 1px dashed #444; }
-        .btn-add:hover { border-color: var(--primary); color: #fff; background: #1a1a1a; }
+        .btn-add { 
+            background: rgba(255,255,255,0.03); color: var(--text-muted); border: 1px dashed #444; 
+        }
+        .btn-add:hover { border-color: var(--accent); color: var(--accent); background: rgba(0, 206, 201, 0.05); }
         
         .btn-gen { 
-            background: linear-gradient(135deg, var(--primary), #6c5ce7); 
-            color: white; font-size: 1rem; margin-top: 50px;
-            box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
+            background: var(--gradient-main); color: white; font-size: 1rem; margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
         }
-        .btn-gen:hover { filter: brightness(1.2); transform: translateY(-3px); }
+        .btn-gen:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(108, 92, 231, 0.5); }
 
-        /* PREVIEW CARD */
+        /* --- CARDS & LISTS --- */
+        .season-card { 
+            background: #16171d; padding: 25px; border-radius: var(--radius-md); margin-bottom: 25px;
+            border: 1px solid #2d2d35; position: relative; overflow: hidden;
+        }
+        .season-card::after {
+            content:''; position: absolute; top:0; left:0; width: 4px; height: 100%;
+            background: var(--accent);
+        }
+        
+        .chapter-row { 
+            display: flex; flex-direction: column; gap: 10px; background: #0b0c10; padding: 15px;
+            border-radius: 8px; border: 1px solid #222; margin-bottom: 8px;
+        }
+        .chapter-num { 
+            color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: bold;
+            background: rgba(0, 206, 201, 0.1); padding: 3px 8px; border-radius: 4px; font-size: 0.9em;
+        }
+
+        .genres-box { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; 
+            background: #141419; padding: 20px; border-radius: var(--radius-md); border: 1px solid #2d2d35;
+            max-height: 250px; overflow-y: auto;
+        }
+        .genres-box label {
+            margin: 0; text-transform: none; color: #ccc; font-weight: 500; font-size: 0.9em;
+            padding: 8px 12px; border-radius: 8px; background: #0f1016; border: 1px solid transparent;
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px;
+        }
+        .genres-box label:hover { background: #1f2029; border-color: #444; }
+        .genres-box input { width: 16px; height: 16px; margin: 0; accent-color: var(--primary); }
+
+        /* --- PREVIEW SIDEBAR --- */
+        .preview-sidebar { position: sticky; top: 100px; height: fit-content; }
         .web-card { 
-            background: #0b0c10; border-radius: 20px; overflow: hidden; border: 1px solid #333;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: #000; border-radius: 20px; overflow: hidden; border: 1px solid #333;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6); position: relative;
         }
         .web-cover { 
-            width: 100%; height: 380px; object-fit: cover; background: #111; opacity: 0.9;
-            mask-image: linear-gradient(to bottom, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            width: 100%; height: 400px; object-fit: cover; opacity: 0.8;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
         }
-        .web-info { padding: 30px; position: relative; margin-top: -90px; z-index: 2; }
-        .web-title { 
-            font-size: 1.8em; font-weight: 700; margin-bottom: 8px; line-height: 1.1; color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,1); 
-        }
-        .web-alias { font-size: 0.8em; color: var(--accent); margin-bottom: 15px; font-family: monospace; }
-        .web-tags { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
-        .web-tags span { 
-            background: rgba(255,255,255,0.05); color: #ccc; padding: 4px 10px;
-            font-size: 0.7em; border-radius: 12px; border: 1px solid #333; backdrop-filter: blur(5px);
-        }
-        .web-meta { 
-            font-size: 0.85em; color: #a1a1aa; margin-bottom: 20px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid #333; padding-bottom: 15px;
-        }
-        .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .preview-s-item { 
-            position: relative; border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 2/3;
-            border: 1px solid #222; transition: transform 0.2s;
-        }
-        .preview-s-item:hover { transform: scale(1.05); z-index: 2; border-color: var(--primary); }
-        .preview-s-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .preview-s-info { 
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 8px 5px; box-sizing: border-box; 
-        }
-        .preview-s-title { font-size: 0.65em; text-align: center; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+        .web-info { padding: 30px; margin-top: -100px; position: relative; z-index: 2; }
+        .web-title { font-size: 2em; font-weight: 800; line-height: 1; color: #fff; margin-bottom: 5px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .web-alias { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.8em; }
         
-        /* Validation & Utils */
-        .cover-validation-box { 
-            width: 120px; height: 160px; object-fit: cover; background: #080808; border-radius: var(--radius-md);
-            border: 1px dashed #333; display: none; transition: 0.3s;
+        .web-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
+        .web-tags span { 
+            font-size: 0.7em; padding: 4px 10px; border-radius: 20px; 
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
         }
-        .cover-validation-box.active { display: block; border-style: solid; border-color: var(--accent); }
-        #dimDisplay { font-size: 0.75em; margin-top: 8px; color: var(--text-muted); font-family: monospace; }
+
+        .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+        .preview-s-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 2/3; border: 1px solid #333; }
+        .preview-s-item img { width: 100%; height: 100%; object-fit: cover; }
+        .preview-s-title { 
+            position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.8); 
+            font-size: 0.6em; text-align: center; padding: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+        }
+
+        /* --- UTILS --- */
+        .row-flex { display: flex; gap: 20px; }
+        .col-flex { flex: 1; }
+        .dynamic-item { display: flex; gap: 10px; margin-bottom: 10px; }
+        .btn-mini-del { 
+            background: #1a1a1a; color: #ff7675; border: 1px solid #333; width: 50px; flex-shrink: 0;
+            border-radius: var(--radius-md); cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .btn-mini-del:hover { background: #ff7675; color: white; border-color: #ff7675; }
+        .btn-del { 
+            position: absolute; top: 15px; right: 15px; background: transparent; color: #ff7675; 
+            border: 1px solid #ff7675; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.75em;
+        }
         
         #toast { 
-            visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #111; color: #fff;
-            text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 40px; 
-            font-size: 14px; font-weight: 500; border: 1px solid #333; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; gap: 10px;
+            visibility: hidden; background-color: var(--card-bg); color: #fff; text-align: center; 
+            border-radius: 50px; padding: 16px 30px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; 
+            transform: translateX(-50%); border: 1px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex; gap: 10px; align-items: center; font-weight: 600;
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
+        /* Overlay JSON */
         #overlay { 
-            position: fixed; top:0; left:0; width:100%; height:100%; 
-            background:rgba(0,0,0,0.95); z-index:9999; display:none; 
-            justify-content:center; align-items:center; flex-direction: column;
-            backdrop-filter: blur(5px);
+            position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); 
+            z-index:9999; display:none; justify-content:center; align-items:center; flex-direction: column;
+            backdrop-filter: blur(10px);
         }
         textarea#jsonResult { 
-            width: 80%; max-width: 800px; height: 50%; background: #080808; color: var(--accent);
-            border: 1px solid #333; padding: 25px; font-family: 'Consolas', monospace; font-size: 0.9em; 
-            border-radius: 16px; resize: none; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            width: 70%; height: 50%; background: #0b0c10; color: var(--accent); 
+            border: 1px solid #333; padding: 30px; border-radius: 20px; font-family: 'JetBrains Mono', monospace;
         }
     </style>
 </head>
 <body>
 
 <div id="loginScreen">
-    <div class="login-box">
-        <h1 class="login-title">Archinime CMS</h1>
-        <p style="color:#a0a0a0; font-size:0.95em; margin-bottom:40px; line-height: 1.5;">
-            Acceso exclusivo para el equipo de <br>
-            <span style="color:white; font-weight:600;">Aportadores Autorizados</span>
-        </p>
+    <div class="login-card">
+        <div style="font-size:3em; color:var(--primary); margin-bottom:10px;"><i class="fas fa-cube"></i></div>
+        <h1 style="color:#fff; margin:0; font-size:2rem; font-weight:700;">CMS ARCHINIME</h1>
+        <p style="color:var(--text-muted); margin-top:10px;">Acceso restringido solo a <br><span style="color:var(--accent)">Aportadores Autorizados</span></p>
         
         <button class="login-btn" onclick="signInWithGitHub()">
-            <i class="fab fa-github" style="font-size:1.6em"></i>
-            Iniciar sesión con GitHub
+            <i class="fab fa-github" style="font-size:1.5em"></i> Iniciar con GitHub
         </button>
         
         <div id="loginError" class="error-msg">
-            <i class="fas fa-exclamation-triangle"></i> 
-            <span id="errorText">Aun no formas parte del equipo de aportaciones.</span>
+            <i class="fas fa-exclamation-triangle"></i> <span id="errorText">Error de acceso.</span>
         </div>
     </div>
-    <div style="margin-top:20px; color:#555; font-size:0.8em;">v16.0 Protected System</div>
 </div>
-
-<div class="bg-fixed"></div>
 
 <div id="userHeader" class="user-header">
     <div class="user-info">
         <img id="userAvatarImg" src="" class="user-avatar" alt="User">
-        <div>
-            <div class="user-badge">Colaborador</div>
-            <div id="userNameDisplay" class="user-name">@Usuario</div>
+        <div class="user-details">
+            <span class="user-role">Aportador</span>
+            <span id="userNameDisplay" class="user-name">Usuario</span>
         </div>
     </div>
     <button class="btn-logout" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i> Salir
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
     </button>
 </div>
 
@@ -368,33 +286,33 @@
     <div class="editor-panel">
         <h2><i class="fas fa-pen-nib"></i> 1. Datos Generales</h2>
         
-        <label>Título <span>*</span></label>
-        <input type="text" id="tituloAnime" placeholder="Agregar Título Principal" onblur="autoCap(this); validate(this); updateWebPreview()">
+        <label>Título del Anime <span>*</span></label>
+        <input type="text" id="tituloAnime" placeholder="Ej: Kimetsu no Yaiba" onblur="autoCap(this); validate(this); updateWebPreview()">
 
-        <label>Alias (Opcional)</label>
+        <label>Alias Alternativos</label>
         <div id="aliasContainer"></div>
-        <button class="btn btn-add" style="margin-top:5px; padding:10px;" onclick="addAlias()">
-            <i class="fas fa-plus"></i> AGREGAR OTRO ALIAS
+        <button class="btn btn-add" style="margin-top:5px; padding:12px;" onclick="addAlias()">
+            <i class="fas fa-plus"></i> AGREGAR ALIAS
         </button>
 
-        <label style="margin-top:25px">URL Portada (Solo .AVIF Recomendado) <span>*</span></label>
-        <div style="display:flex; gap:20px;">
+        <label style="margin-top:25px">URL Portada (.AVIF) <span>*</span></label>
+        <div style="display:flex; gap:20px; align-items: flex-start;">
             <div style="flex:1">
-                <input type="text" id="portadaAnime" placeholder="https://dominio.com/imagen.avif" oninput="checkCoverVisual(this)" onblur="validate(this); updateWebPreview()">
-                <div id="dimDisplay" style="display:none"></div>
+                <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this)" onblur="validate(this); updateWebPreview()">
+                <div id="dimDisplay" style="color:var(--text-muted); font-size:0.8em; margin-top:5px; font-family:'JetBrains Mono'"></div>
             </div>
-            <img id="mainCoverPreview" class="cover-validation-box">
+            <img id="mainCoverPreview" style="width:100px; height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
         </div>
         
         <label>Géneros <span>*</span></label>
         <div class="genres-box" id="genresContainer"></div>
 
         <label>Sinopsis <span>*</span></label>
-        <textarea id="sinopsisAnime" rows="4" placeholder="Escribe una descripción atrapante..." onblur="autoCap(this); validate(this)"></textarea>
+        <textarea id="sinopsisAnime" rows="4" placeholder="Descripción detallada..." onblur="autoCap(this); validate(this)"></textarea>
         
         <div class="row-flex">
             <div class="col-flex">
-                <label>Demografía <span>*</span></label>
+                <label>Demografía</label>
                 <select id="demografiaAnime" onchange="updateWebPreview()">
                     <option value="Shōnen">Shōnen</option>
                     <option value="Seinen">Seinen</option>
@@ -404,7 +322,7 @@
                 </select>
             </div>
             <div class="col-flex">
-                <label>Rating <span>*</span></label>
+                <label>Calificación</label>
                 <select id="ratingAnime" onchange="updateWebPreview()">
                     <option value="excellent">⭐ Excelente (4.8+)</option>
                     <option value="good">⭐ Buena (4.6+)</option>
@@ -413,54 +331,54 @@
             </div>
         </div>
 
-        <h2 style="margin-top:60px"><i class="fas fa-layer-group"></i> 2. Estructura</h2>
+        <h2 style="margin-top:60px"><i class="fas fa-layer-group"></i> 2. Contenido</h2>
         <div id="seasonsContainer"></div>
-        <button class="btn btn-add" onclick="addSeason()"><i class="fas fa-plus-circle"></i> AGREGAR BLOQUE DE CONTENIDO</button>
+        <button class="btn btn-add" onclick="addSeason()"><i class="fas fa-plus-circle"></i> AGREGAR TEMPORADA / PELÍCULA</button>
 
-        <h2 style="margin-top:60px"><i class="fas fa-music"></i> 3. Música</h2>
+        <h2 style="margin-top:60px"><i class="fas fa-music"></i> 3. Extras</h2>
         <div id="musicContainer"></div>
-        <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR TRACK DE MÚSICA</button>
+        <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR OPENING/ENDING</button>
 
-        <button class="btn btn-gen" onclick="subirAGithHub()"><i class="fas fa-cloud-upload-alt"></i> GENERAR Y SUBIR A BASE DE DATOS</button>
-        <div id="statusLog" style="color: #00ffbf; margin-top: 15px; font-family: monospace; background:#111; padding:15px; border-radius:8px; display:none; border:1px solid #333;"></div>
+        <button class="btn btn-gen" onclick="subirAGithHub()"><i class="fas fa-cloud-upload-alt"></i> PROCESAR Y SUBIR A GITHUB</button>
+        
+        <div id="statusLog" style="display:none; margin-top:20px; padding:15px; background:#111; border-radius:8px; border:1px solid #333; font-family:'JetBrains Mono', monospace; font-size:0.85em; color:#00ffbf;"></div>
     </div>
 
     <div class="preview-sidebar">
-        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:15px; text-transform:uppercase; letter-spacing:2px; font-weight:700;">Vista Previa Web</h3>
+        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">Vista Previa</h3>
         <div class="web-card">
-            <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Portada">
+            <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Cover">
             <div class="web-info">
                 <div id="webTitle" class="web-title">Título</div>
-                <div id="webAlias" class="web-alias">alias-id</div>
+                <div id="webAlias" class="web-alias">alias-code</div>
                 
-                <div class="web-meta">
-                    <span id="webDemography" style="color:var(--accent); font-weight:600">Shōnen</span>
-                    <span id="webRating" style="color:#facc15">⭐ --</span>
+                <div style="display:flex; justify-content:space-between; margin-top:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    <span id="webDemography" style="color:var(--accent); font-weight:700; font-size:0.8em">SHONEN</span>
+                    <span id="webRating" style="color:#facc15; font-size:0.8em">⭐ --</span>
                 </div>
-                <div id="webTags" class="web-tags"><span>Género</span></div>
+                <div id="webTags" class="web-tags"><span>Acción</span></div>
                 
-                <div style="font-size:0.75em; font-weight:bold; color:#fff; margin-top:25px; border-bottom:1px solid #333; padding-bottom:8px; letter-spacing: 1px;">COLECCIÓN:</div>
+                <div style="font-size:0.7em; font-weight:bold; color:#777; margin-top:20px;">COLECCIÓN:</div>
                 <div id="webSeasonsGrid" class="preview-seasons-grid"></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="toast"><i class="fas fa-check-circle"></i> Notificación</div>
+<div id="toast"><i class="fas fa-check-circle"></i> <span>Notificación</span></div>
 
 <div id="overlay">
-    <h3 style="color:white; margin-bottom:20px;">Código JSON Generado</h3>
+    <h3 style="color:white; margin-bottom:20px;">JSON Generado</h3>
     <textarea id="jsonResult" readonly></textarea>
     <div style="display:flex; gap:15px; margin-top:20px;">
-        <button class="btn" style="background:var(--primary); width:auto; padding:12px 35px; margin:0;" onclick="copyToClipboard()"><i class="fas fa-copy"></i> Copiar</button>
-        <button class="btn" style="background:var(--error); width:auto; padding:12px 35px; margin:0;" onclick="document.getElementById('overlay').style.display='none'">Cerrar</button>
+        <button class="btn" style="background:var(--primary); width:auto; padding:10px 40px; margin:0" onclick="copyToClipboard()">Copiar</button>
+        <button class="btn" style="background:#ff7675; width:auto; padding:10px 40px; margin:0" onclick="document.getElementById('overlay').style.display='none'">Cerrar</button>
     </div>
 </div>
 
 <script>
 // ============================================
-// ============================================
-// 1. CONFIGURACIÓN FIREBASE
+// CONFIGURACIÓN (NO TOCAR)
 // ============================================
 const firebaseConfig = {
     apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
@@ -471,477 +389,448 @@ const firebaseConfig = {
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
 
-// ============================================
-// 2. LISTA BLANCA (WHITELIST)
-// ============================================
 const ALLOWED_USERS = [
     "archinime12@gmail.com", 
 ];
 
-    // Inicializar Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    let currentUserToken = null;
+// INICIALIZACIÓN
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+let currentUserToken = null;
 
-    // Escuchar cambios de sesión
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            checkAccess(user);
-        } else {
-            showLogin();
-        }
-    });
+// AUTH OBSERVER
+auth.onAuthStateChanged((user) => {
+    if (user) checkAccess(user);
+    else showLogin();
+});
 
-    function signInWithGitHub() {
-        const provider = new firebase.auth.GithubAuthProvider();
-        provider.addScope('repo'); // Permiso escritura
-        
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                const credential = result.credential;
-                currentUserToken = credential.accessToken;
-                checkAccess(result.user);
-            }).catch((error) => {
-                console.error(error);
-                document.getElementById('errorText').innerText = "Error: " + error.message;
-                document.getElementById('loginError').style.display = 'block';
-            });
-    }
-
-    function checkAccess(user) {
-        const email = user.email;
-        // Obtenemos el username de GitHub (handle)
-        const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
-
-        console.log("Verificando:", email, nickname);
-        
-        const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
-
-        if (isAllowed) {
-            showCMS(user);
-        } else {
-            document.getElementById('errorText').innerText = "Lo sentimos, no estás en la lista de aportadores autorizados.";
+function signInWithGitHub() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    provider.addScope('repo'); // Scope crítico
+    
+    auth.signInWithPopup(provider)
+        .then((result) => {
+            currentUserToken = result.credential.accessToken;
+            checkAccess(result.user);
+        }).catch((error) => {
+            console.error(error);
+            document.getElementById('errorText').innerText = "Error GitHub: " + error.message;
             document.getElementById('loginError').style.display = 'block';
-            setTimeout(() => { auth.signOut(); }, 3000);
+        });
+}
+
+function checkAccess(user) {
+    const email = user.email;
+    // Intentamos sacar el usuario de varias formas
+    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
+
+    const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
+
+    if (isAllowed) {
+        showCMS(user);
+    } else {
+        document.getElementById('errorText').innerText = "Lo sentimos, no estás en la lista de aportadores.";
+        document.getElementById('loginError').style.display = 'block';
+        setTimeout(() => { auth.signOut(); }, 3000);
+    }
+}
+
+function showCMS(user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('userHeader').style.display = 'flex';
+    document.getElementById('cmsContent').style.display = 'grid';
+    
+    document.getElementById('userAvatarImg').src = user.photoURL;
+    
+    // --- LÓGICA MEJORADA PARA OBTENER NOMBRE ---
+    let finalName = "Usuario";
+    
+    // 1. Intentar obtener el 'screenName' (handle de github, ej: archinime)
+    if(user.reloadUserInfo && user.reloadUserInfo.screenName) {
+        finalName = "@" + user.reloadUserInfo.screenName;
+    } 
+    // 2. Si falla, usar el displayName (Nombre de Perfil)
+    else if (user.displayName) {
+        finalName = user.displayName;
+    } 
+    // 3. Si falla, usar el correo pero quitando el @gmail.com para que se vea limpio
+    else if (user.email) {
+        finalName = "@" + user.email.split('@')[0];
+    }
+
+    document.getElementById('userNameDisplay').innerText = finalName;
+}
+
+function showLogin() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('userHeader').style.display = 'none';
+    document.getElementById('cmsContent').style.display = 'none';
+    document.getElementById('loginError').style.display = 'none';
+    currentUserToken = null;
+}
+
+function logout() {
+    auth.signOut();
+    location.reload();
+}
+
+/* --- LOGICA DEL CMS (MANTENIDA PERO OPTIMIZADA) --- */
+const genresList = [
+    "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
+    "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
+    "Harem", "Hentai", "Horror", "Incesto", "Isekai", "Isekai Inverso", "Kaiju", "Mecha", "Militar", 
+    "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
+    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
+];
+
+const gContainer = document.getElementById('genresContainer');
+genresList.forEach(g => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" value="${g}" onchange="updateWebPreview()"> ${g}`;
+    gContainer.appendChild(label);
+});
+
+window.onload = function() { addAlias(); };
+
+// Helpers
+function showToast(msg, isError = false) {
+    const x = document.getElementById("toast");
+    x.innerHTML = isError ? `<i class="fas fa-times-circle" style="color:#ff7675"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.className = "show";
+    x.style.borderColor = isError ? "#ff7675" : "var(--accent)";
+    setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function autoCap(input) {
+    if(input.value) input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+}
+
+function validate(input) {
+    if(!input.value.trim()) input.style.borderColor = '#ff7675';
+    else input.style.borderColor = '#2d2d35';
+}
+
+function copyToClipboard() {
+    const copyText = document.getElementById("jsonResult");
+    copyText.select();
+    document.execCommand("copy");
+    showToast("¡JSON Copiado!");
+}
+
+function log(msg) {
+    const el = document.getElementById('statusLog');
+    el.style.display = 'block';
+    el.innerHTML += `> ${msg}<br>`;
+    el.scrollTop = el.scrollHeight;
+}
+
+// Visuals & Logic
+function addAlias() {
+    const container = document.getElementById('aliasContainer');
+    const div = document.createElement('div');
+    div.className = 'dynamic-item';
+    div.innerHTML = `
+        <input type="text" class="alias-input" placeholder="Alias (opcional)" onblur="updateWebPreview()">
+        <button class="btn-mini-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-times"></i></button>
+    `;
+    container.appendChild(div);
+}
+
+function checkCoverVisual(input) {
+    const img = document.getElementById('mainCoverPreview');
+    const display = document.getElementById('dimDisplay');
+    const val = input.value.trim();
+    
+    if(val === "") {
+        img.style.display = 'none';
+        display.innerText = "";
+        return;
+    }
+    img.src = val;
+    img.style.display = 'block';
+    display.innerText = "Cargando...";
+    img.onload = function() { display.innerText = `OK: ${this.naturalWidth}x${this.naturalHeight}px`; updateWebPreview(); };
+    img.onerror = function() { display.innerText = "Error: URL inválida"; img.style.display='none'; };
+}
+
+function updateWebPreview() {
+    const title = document.getElementById('tituloAnime').value;
+    document.getElementById('webTitle').innerText = title || 'Título';
+    const coverUrl = document.getElementById('portadaAnime').value;
+    if(coverUrl) document.getElementById('webCover').src = coverUrl;
+    
+    document.getElementById('webDemography').innerText = document.getElementById('demografiaAnime').value.toUpperCase();
+    const tagsContainer = document.getElementById('webTags');
+    tagsContainer.innerHTML = '';
+    document.querySelectorAll('#genresContainer input:checked').forEach((cb, index) => {
+        if(index < 4) { 
+            let s = document.createElement('span');
+            s.innerText = cb.value;
+            tagsContainer.appendChild(s);
         }
+    });
+    
+    const grid = document.getElementById('webSeasonsGrid');
+    grid.innerHTML = '';
+    document.querySelectorAll('.season-card').forEach(card => {
+        const img = card.querySelector('.s-img').value;
+        const name = card.querySelector('.s-name').value;
+        if(img) {
+            const div = document.createElement('div');
+            div.className = 'preview-s-item';
+            div.innerHTML = `<img src="${img}"><div class="preview-s-title">${name || 'Temp'}</div>`;
+            grid.appendChild(div);
+        }
+    });
+}
+
+// Seasons Logic
+let seasonCounter = 0;
+function addSeason() {
+    seasonCounter++;
+    const container = document.getElementById('seasonsContainer');
+    const div = document.createElement('div');
+    div.className = 'season-card';
+    div.innerHTML = `
+        <button class="btn-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-trash"></i> Eliminar</button>
+        <div class="row-flex">
+            <div class="col-flex">
+                <label>Tipo</label>
+                <select class="s-type" onchange="updateSeasonName(this)">
+                    <option value="Temporada" selected>Temporada</option>
+                    <option value="Pelicula">Película</option>
+                    <option value="OVA">OVA</option>
+                    <option value="Especial">Especial</option>
+                </select>
+            </div>
+            <div class="col-flex">
+                 <label>Nombre Mostrado</label>
+                 <input type="text" class="s-name" placeholder="Ej: Temporada 1" onblur="updateWebPreview()">
+            </div>
+        </div>
+        <label>Poster Vertical</label>
+        <input type="text" class="s-img" placeholder="URL Imagen..." onblur="updateWebPreview()">
+        <label>Cantidad Capítulos</label>
+        <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
+        <div class="chapters-grid" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;"></div>
+    `;
+    container.appendChild(div);
+}
+
+function updateSeasonName(select) {
+    const card = select.closest('.season-card');
+    const nameInput = card.querySelector('.s-name');
+    const countInput = card.querySelector('.s-count');
+    const type = select.value;
+    if(type === 'Pelicula') {
+        countInput.value = 1;
+        nameInput.value = "Película";
+        renderChapters(countInput);
+    } else if (type === 'Temporada') {
+        nameInput.value = "Temporada X";
     }
+}
 
-    function showCMS(user) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('userHeader').style.display = 'flex';
-        document.getElementById('cmsContent').style.display = 'grid';
-        
-        document.getElementById('userAvatarImg').src = user.photoURL;
-        
-        // --- AQUÍ ESTÁ EL CAMBIO PARA EL NOMBRE ---
-        // Intentamos obtener el "screenName" (ej: Archinime) que es el handle de GitHub
-        // Si no existe, usamos displayName, y si no, el email.
-        let ghHandle = user.reloadUserInfo && user.reloadUserInfo.screenName;
-        let displayName = ghHandle ? `@${ghHandle}` : (user.displayName || user.email);
-        
-        document.getElementById('userNameDisplay').innerText = displayName;
-        // ------------------------------------------
+function renderChapters(input) {
+    const count = parseInt(input.value);
+    const list = input.nextElementSibling; 
+    list.innerHTML = '';
+    if(isNaN(count) || count < 1) return;
+    
+    for(let i=0; i<count; i++) {
+        const row = document.createElement('div');
+        row.className = 'chapter-row';
+        row.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="chapter-num">CAPÍTULO ${i+1}</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <input type="text" class="c-link-sub" placeholder="🔗 Link Subtitulado">
+                <input type="text" class="c-link-lat" placeholder="🔗 Link Latino">
+            </div>
+            <input type="text" class="c-title-ov" placeholder="Título Especial (Opcional)" style="font-size:0.8em; padding:8px; background:#050505; border:none;">
+        `;
+        list.appendChild(row);
     }
+}
 
-    function showLogin() {
-        document.getElementById('loginScreen').style.display = 'flex';
-        document.getElementById('userHeader').style.display = 'none';
-        document.getElementById('cmsContent').style.display = 'none';
-        document.getElementById('loginError').style.display = 'none';
-        currentUserToken = null;
-    }
+function addMusic() {
+    const container = document.getElementById('musicContainer');
+    const div = document.createElement('div');
+    div.className = 'dynamic-item';
+    div.innerHTML = `<input type="text" class="m-url" placeholder="NombreArchivo.mp3"><button class="btn-mini-del" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>`;
+    container.appendChild(div);
+}
 
-    function logout() {
-        auth.signOut();
-        location.reload();
-    }
-
-    /* --- LÓGICA DEL CMS --- */
-    const genresList = [
-        "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
-        "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
-        "Harem", "Hentai", "Horror", "Incesto", "Isekai", "Isekai Inverso", "Kaiju", "Mecha", "Militar", 
-        "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
-        "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
-    ];
-
-    const gContainer = document.getElementById('genresContainer');
-    genresList.forEach(g => {
-        const label = document.createElement('label');
-        label.innerHTML = `<input type="checkbox" value="${g}" onchange="updateWebPreview()"> ${g}`;
-        gContainer.appendChild(label);
+// JSON GENERATION (Mismo Core Logic)
+function generateJSON() {
+    const selectedGenres = [];
+    document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
+    const aliasList = [];
+    document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
+    
+    const anime = {
+        id: 0, 
+        titulo: document.getElementById('tituloAnime').value.trim(),
+        aliases: aliasList,
+        portada: document.getElementById('portadaAnime').value.trim(),
+        sinopsis: document.getElementById('sinopsisAnime').value.trim(),
+        demografia: document.getElementById('demografiaAnime').value,
+        generos: selectedGenres,
+        rating: parseFloat(document.getElementById('ratingAnime').value === 'excellent' ? 4.9 : document.getElementById('ratingAnime').value === 'good' ? 4.6 : 4.0),
+        musica: [],
+        temporadas: []
+    };
+    
+    document.querySelectorAll('#musicContainer .m-url').forEach(i => {
+        if(i.value) anime.musica.push({ url_audio: i.value.trim() });
     });
 
-    window.onload = function() {
-        addAlias();
-    };
-
-    /* --- UTILIDADES --- */
-    function showToast(msg, isError = false) {
-        const x = document.getElementById("toast");
-        const icon = isError ? '<i class="fas fa-times-circle" style="color:var(--error)"></i>' : '<i class="fas fa-check-circle" style="color:var(--accent)"></i>';
-        x.innerHTML = `${icon} ${msg}`;
-        x.className = "show";
-        x.style.borderColor = isError ? "var(--error)" : "var(--primary)";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3500);
-    }
-
-    function autoCap(input) {
-        if(input.value) input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
-    }
-
-    function validate(input) {
-        if(!input.value.trim()) input.classList.add('invalid');
-        else input.classList.remove('invalid');
-    }
-
-    function copyToClipboard() {
-        const copyText = document.getElementById("jsonResult");
-        copyText.select();
-        document.execCommand("copy");
-        showToast("¡JSON Copiado al portapapeles!");
-    }
-
-    function log(msg) {
-        const el = document.getElementById('statusLog');
-        el.style.display = 'block';
-        el.innerHTML += `> ${msg}<br>`;
-        el.scrollTop = el.scrollHeight;
-    }
-
-    /* --- ALIAS Y ESTRUCTURA --- */
-    function addAlias() {
-        const container = document.getElementById('aliasContainer');
-        const div = document.createElement('div');
-        div.className = 'dynamic-item';
-        div.innerHTML = `
-            <input type="text" class="alias-input" placeholder="Alias (opcional)" onblur="updateWebPreview()">
-            <button class="btn-mini-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-times"></i></button>
-        `;
-        container.appendChild(div);
-    }
-
-    function checkCoverVisual(input) {
-        const img = document.getElementById('mainCoverPreview');
-        const display = document.getElementById('dimDisplay');
-        const val = input.value.trim();
-        
-        if(val === "") {
-            img.classList.remove('active');
-            display.style.display = 'none';
-            return;
-        }
-        img.src = val;
-        img.classList.add('active');
-        display.style.display = 'block';
-        display.innerText = "Cargando...";
-        img.onload = function() { display.innerText = `${this.naturalWidth}x${this.naturalHeight} px`; updateWebPreview(); };
-        img.onerror = function() { display.innerText = "Error img"; };
-    }
-
-    function updateWebPreview() {
-        const title = document.getElementById('tituloAnime').value;
-        document.getElementById('webTitle').innerText = title || 'Título del Anime';
-        const coverUrl = document.getElementById('portadaAnime').value;
-        if(coverUrl) document.getElementById('webCover').src = coverUrl;
-        
-        document.getElementById('webDemography').innerText = document.getElementById('demografiaAnime').value;
-        const tagsContainer = document.getElementById('webTags');
-        tagsContainer.innerHTML = '';
-        document.querySelectorAll('#genresContainer input:checked').forEach((cb, index) => {
-            if(index < 3) { 
-                let s = document.createElement('span');
-                s.innerText = cb.value;
-                tagsContainer.appendChild(s);
-            }
-        });
-        // Update seasons preview
-        const grid = document.getElementById('webSeasonsGrid');
-        grid.innerHTML = '';
-        document.querySelectorAll('.season-card').forEach(card => {
-            const img = card.querySelector('.s-img').value;
-            const name = card.querySelector('.s-name').value;
-            if(img) {
-                const div = document.createElement('div');
-                div.className = 'preview-s-item';
-                div.innerHTML = `<img src="${img}"><div class="preview-s-info"><div class="preview-s-title">${name || 'Temp'}</div></div>`;
-                grid.appendChild(div);
-            }
-        });
-    }
-
-    /* --- LÓGICA DE TEMPORADAS --- */
-    let seasonCounter = 0;
-    function addSeason() {
-        seasonCounter++;
-        const container = document.getElementById('seasonsContainer');
-        const div = document.createElement('div');
-        div.className = 'season-card';
-        div.innerHTML = `
-            <button class="btn-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-trash"></i> Eliminar Bloque</button>
-            <div class="row-flex">
-                <div class="col-flex">
-                    <label>Tipo de Contenido</label>
-                    <select class="s-type" onchange="updateSeasonName(this)">
-                        <option value="Temporada" selected>Temporada</option>
-                        <option value="Pelicula">Película</option>
-                        <option value="OVA">OVA</option>
-                        <option value="Especial">Especial</option>
-                    </select>
-                </div>
-                <div class="col-flex">
-                     <label>Nombre Mostrado (App)</label>
-                     <input type="text" class="s-name" placeholder="Ej: Temporada 1" onblur="updateWebPreview()">
-                </div>
-            </div>
-            <label>Poster del Bloque</label>
-            <input type="text" class="s-img" placeholder="URL Imagen Vertical..." onblur="updateWebPreview()">
-            <label>Cant. Capítulos</label>
-            <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
-            <div class="chapters-grid"></div>
-        `;
-        container.appendChild(div);
-    }
-
-    function updateSeasonName(select) {
-        const card = select.closest('.season-card');
-        const nameInput = card.querySelector('.s-name');
-        const countInput = card.querySelector('.s-count');
-        const type = select.value;
-        if(type === 'Pelicula') {
-            countInput.value = 1;
-            nameInput.value = "Película";
-            renderChapters(countInput);
-        } else if (type === 'Temporada') {
-            nameInput.value = "Temporada X";
-        }
-    }
-
-    function renderChapters(input) {
-        const count = parseInt(input.value);
-        const list = input.nextElementSibling; // .chapters-grid
-        list.innerHTML = '';
-        if(isNaN(count) || count < 1) return;
-        
-        for(let i=0; i<count; i++) {
-            const row = document.createElement('div');
-            row.className = 'chapter-row';
-            row.innerHTML = `
-                <div class="chapter-row-header"><span class="chapter-num">#${i+1}</span></div>
-                <div class="chapter-inputs-grid">
-                    <div class="input-group">
-                        <i class="fas fa-closed-captioning ico-sub"></i>
-                        <input type="text" class="c-link-sub sub-field" placeholder="Link Subtitulado">
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-microphone-lines ico-lat"></i>
-                        <input type="text" class="c-link-lat lat-field" placeholder="Link Latino">
-                    </div>
-                </div>
-                <input type="text" class="c-title-ov" placeholder="Título opcional (solo si es necesario)" style="margin-top:5px; font-size:0.8em; color:#aaa; background:#080808; border:1px solid #222;">
-            `;
-            list.appendChild(row);
-        }
-    }
-
-    function addMusic() {
-        const container = document.getElementById('musicContainer');
-        const div = document.createElement('div');
-        div.className = 'dynamic-item';
-        div.innerHTML = `<input type="text" class="m-url" placeholder="NombreArchivo.mp3"><button class="btn-mini-del" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>`;
-        container.appendChild(div);
-    }
-
-    /* --- CORE: GENERACIÓN Y SUBIDA --- */
-    function generateJSON() {
-        const selectedGenres = [];
-        document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
-        const aliasList = [];
-        document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-        const anime = {
-            id: 0, 
-            titulo: document.getElementById('tituloAnime').value.trim(),
-            aliases: aliasList,
-            portada: document.getElementById('portadaAnime').value.trim(),
-            sinopsis: document.getElementById('sinopsisAnime').value.trim(),
-            demografia: document.getElementById('demografiaAnime').value,
-            generos: selectedGenres,
-            rating: parseFloat(document.getElementById('ratingAnime').value === 'excellent' ? 4.9 : document.getElementById('ratingAnime').value === 'good' ? 4.6 : 4.0),
-            musica: [],
-            temporadas: []
-        };
-        // Musica
-        document.querySelectorAll('#musicContainer .m-url').forEach(i => {
-            if(i.value) anime.musica.push({ url_audio: i.value.trim() });
-        });
-        // Temporadas
-        let sOrder = 1;
-        document.querySelectorAll('.season-card').forEach(card => {
-            const eps = [];
-            card.querySelectorAll('.chapter-row').forEach((row, idx) => {
-                const sub = row.querySelector('.c-link-sub').value.trim();
-                const lat = row.querySelector('.c-link-lat').value.trim();
-                const customTitle = row.querySelector('.c-title-ov').value.trim();
-                
-                if(sub || lat) {
-                    eps.push({
-                        num: idx + 1,
-                        link: sub,
-                        link2: lat,
-                        title: customTitle
-                    });
-                }
-            });
-
-            if(eps.length > 0) {
-                anime.temporadas.push({
-                    num: sOrder++,
-                    name: card.querySelector('.s-name').value || `Temporada ${sOrder}`,
-                    type: card.querySelector('.s-type').value,
-                    cover: card.querySelector('.s-img').value,
-                    eps: eps
-                });
-            }
-        });
-
-        return anime;
-    }
-
-    async function subirAGithHub() {
-        // DATOS FIJOS DE TU REPO (Ya no hace falta input)
-        const owner = "Archinime";
-        const repo = "-Archinime-";
-        
-        // EL TOKEN VIENE DEL LOGIN DE GITHUB
-        const token = currentUserToken;
-        if(!token) return alert("Error: No hay sesión activa con permisos de GitHub.");
-
-        const nuevoAnime = generateJSON();
-        if(!nuevoAnime.titulo) return alert("Falta el título del anime");
-
-        document.getElementById('statusLog').innerHTML = "🚀 Iniciando proceso de subida...<br>";
-        try {
-            // 1. OBTENER INDEX-DATA.JS
-            log("Leyendo índice actual...");
-            const indexFile = await getGithubFile(token, owner, repo, 'index-data.js');
+    let sOrder = 1;
+    document.querySelectorAll('.season-card').forEach(card => {
+        const eps = [];
+        card.querySelectorAll('.chapter-row').forEach((row, idx) => {
+            const sub = row.querySelector('.c-link-sub').value.trim();
+            const lat = row.querySelector('.c-link-lat').value.trim();
+            const customTitle = row.querySelector('.c-title-ov').value.trim();
             
-            let cleanIndex = indexFile.content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
-            let indexArr = (new Function("return " + cleanIndex))();
-
-            // CALCULAR ID AUTOMÁTICO
-            let maxId = 0;
-            indexArr.forEach(a => { if(a.id > maxId) maxId = a.id; });
-            const NEW_ID = maxId + 1;
-            
-            nuevoAnime.id = NEW_ID;
-            log(`✅ Nuevo ID generado: ${NEW_ID}`);
-
-            // 2. ACTUALIZAR ANIME-DETAIL-DATA.JS
-            log("Actualizando base de detalles...");
-            await updateGithubFile(token, owner, repo, 'anime-detail-data.js', (content) => {
-                let jsonStr = content.replace(/const\s+data\s*=\s*/, '').replace(/;\s*$/, '');
-                let dataObj = (new Function("return " + jsonStr))();
-
-                dataObj[NEW_ID] = {
-                    title: nuevoAnime.titulo,
-                    desc: nuevoAnime.sinopsis,
-                    cover: nuevoAnime.portada,
-                    seasons: nuevoAnime.temporadas.map(t => ({
-                        num: t.num,
-                        name: t.name,
-                        cover: t.cover,
-                        eps: t.eps.map(e => ({ title: e.title || `Capítulo ${e.num}` }))
-                    }))
-                };
-                return `const data = ${JSON.stringify(dataObj, null, 4)};`;
-            });
-
-            // 3. ACTUALIZAR VIDEO-PLAYER-DATA.JS
-            log("Actualizando reproductor...");
-            await updateGithubFile(token, owner, repo, 'video-player-data.js', (content) => {
-                let jsonStr = content.replace(/const\s+DB\s*=\s*/, '').replace(/;\s*$/, '');
-                let dbObj = (new Function("return " + jsonStr))();
-
-                dbObj[NEW_ID] = {};
-                
-                nuevoAnime.temporadas.forEach(t => {
-                    dbObj[NEW_ID][t.num] = {};
-                    t.eps.forEach(e => {
-                        let epTitle = e.title;
-                        if (!epTitle) epTitle = `${nuevoAnime.titulo} ${t.name} Cap ${e.num}`;
-                        
-                        dbObj[NEW_ID][t.num][e.num] = {
-                            link: e.link || '',
-                            link2: e.link2 || '',
-                            title: epTitle
-                        };
-                    });
+            if(sub || lat) {
+                eps.push({
+                    num: idx + 1,
+                    link: sub,
+                    link2: lat,
+                    title: customTitle
                 });
-                return `const DB = ${JSON.stringify(dbObj, null, 4)};`;
-            });
-
-            // 4. ACTUALIZAR MUSICA-DATA.JS
-            if (nuevoAnime.musica.length > 0) {
-                log("Actualizando playlist de música...");
-                await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
-                    let jsonStr = content.replace(/const\s+audioPlaylists\s*=\s*/, '').replace(/;\s*$/, '');
-                    let musicObj = (new Function("return " + jsonStr))();
-                    musicObj[NEW_ID] = nuevoAnime.musica.map(m => m.url_audio);
-                    return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
-                });
-            } else {
-                log("⚠️ Sin música para agregar, saltando paso...");
             }
-
-            // 5. ACTUALIZAR INDEX-DATA.JS
-            log("Guardando en índice principal...");
-            await updateGithubFile(token, owner, repo, 'index-data.js', (content) => {
-                let jsonStr = content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
-                let arr = (new Function("return " + jsonStr))();
-                
-                arr.push({
-                    id: NEW_ID,
-                    title: nuevoAnime.titulo,
-                    aliases: nuevoAnime.aliases,
-                    img: nuevoAnime.portada,
-                    rating: nuevoAnime.rating,
-                    genres: nuevoAnime.generos
-                });
-                return `const animes = ${JSON.stringify(arr, null, 4)};`;
-            });
-
-            log("✨ ¡ÉXITO TOTAL! Anime subido correctamente.");
-            alert(`Anime "${nuevoAnime.titulo}" subido con ID: ${NEW_ID}`);
-            
-        } catch (e) {
-            log("❌ ERROR CRÍTICO: " + e.message);
-            console.error(e);
-            alert("Error al subir: " + e.message);
-        }
-    }
-
-    /* --- FUNCIONES API GITHUB --- */
-    async function getGithubFile(token, owner, repo, path) {
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-        const res = await fetch(url, { headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" } });
-        if(!res.ok) throw new Error(`Error leyendo ${path} (${res.status}). Verifica el nombre del archivo en el repo.`);
-        const data = await res.json();
-        const content = new TextDecoder().decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0)));
-        return { sha: data.sha, content: content };
-    }
-
-    async function updateGithubFile(token, owner, repo, path, modifyCallback) {
-        const current = await getGithubFile(token, owner, repo, path);
-        const newContent = modifyCallback(current.content);
-        const encoded = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-        const res = await fetch(url, {
-            method: "PUT",
-            headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
-            body: JSON.stringify({ message: `CMS Update: ${path}`, content: encoded, sha: current.sha })
         });
-        if(!res.ok) throw new Error(`Error guardando ${path}`);
+
+        if(eps.length > 0) {
+            anime.temporadas.push({
+                num: sOrder++,
+                name: card.querySelector('.s-name').value || `Temporada ${sOrder}`,
+                type: card.querySelector('.s-type').value,
+                cover: card.querySelector('.s-img').value,
+                eps: eps
+            });
+        }
+    });
+
+    return anime;
+}
+
+// GITHUB UPLOAD (LOGICA EXACTA)
+async function subirAGithHub() {
+    const owner = "Archinime";
+    const repo = "-Archinime-";
+    const token = currentUserToken;
+    if(!token) return alert("Error: Sesión expirada.");
+
+    const nuevoAnime = generateJSON();
+    if(!nuevoAnime.titulo) return showToast("Falta el título", true);
+
+    document.getElementById('statusLog').innerHTML = "🚀 Iniciando subida segura...<br>";
+    try {
+        log("1/5 Leyendo índice...");
+        const indexFile = await getGithubFile(token, owner, repo, 'index-data.js');
+        let cleanIndex = indexFile.content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
+        let indexArr = (new Function("return " + cleanIndex))();
+
+        let maxId = 0;
+        indexArr.forEach(a => { if(a.id > maxId) maxId = a.id; });
+        const NEW_ID = maxId + 1;
+        nuevoAnime.id = NEW_ID;
+        log(`✅ ID Asignado: ${NEW_ID}`);
+
+        log("2/5 Guardando detalles...");
+        await updateGithubFile(token, owner, repo, 'anime-detail-data.js', (content) => {
+            let jsonStr = content.replace(/const\s+data\s*=\s*/, '').replace(/;\s*$/, '');
+            let dataObj = (new Function("return " + jsonStr))();
+            dataObj[NEW_ID] = {
+                title: nuevoAnime.titulo,
+                desc: nuevoAnime.sinopsis,
+                cover: nuevoAnime.portada,
+                seasons: nuevoAnime.temporadas.map(t => ({
+                    num: t.num,
+                    name: t.name,
+                    cover: t.cover,
+                    eps: t.eps.map(e => ({ title: e.title || `Capítulo ${e.num}` }))
+                }))
+            };
+            return `const data = ${JSON.stringify(dataObj, null, 4)};`;
+        });
+
+        log("3/5 Actualizando reproductor...");
+        await updateGithubFile(token, owner, repo, 'video-player-data.js', (content) => {
+            let jsonStr = content.replace(/const\s+DB\s*=\s*/, '').replace(/;\s*$/, '');
+            let dbObj = (new Function("return " + jsonStr))();
+            dbObj[NEW_ID] = {};
+            nuevoAnime.temporadas.forEach(t => {
+                dbObj[NEW_ID][t.num] = {};
+                t.eps.forEach(e => {
+                    let epTitle = e.title;
+                    if (!epTitle) epTitle = `${nuevoAnime.titulo} ${t.name} Cap ${e.num}`;
+                    dbObj[NEW_ID][t.num][e.num] = { link: e.link||'', link2: e.link2||'', title: epTitle };
+                });
+            });
+            return `const DB = ${JSON.stringify(dbObj, null, 4)};`;
+        });
+
+        if (nuevoAnime.musica.length > 0) {
+            log("4/5 Guardando música...");
+            await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
+                let jsonStr = content.replace(/const\s+audioPlaylists\s*=\s*/, '').replace(/;\s*$/, '');
+                let musicObj = (new Function("return " + jsonStr))();
+                musicObj[NEW_ID] = nuevoAnime.musica.map(m => m.url_audio);
+                return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
+            });
+        }
+
+        log("5/5 Finalizando índice...");
+        await updateGithubFile(token, owner, repo, 'index-data.js', (content) => {
+            let jsonStr = content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
+            let arr = (new Function("return " + jsonStr))();
+            arr.push({
+                id: NEW_ID,
+                title: nuevoAnime.titulo,
+                aliases: nuevoAnime.aliases,
+                img: nuevoAnime.portada,
+                rating: nuevoAnime.rating,
+                genres: nuevoAnime.generos
+            });
+            return `const animes = ${JSON.stringify(arr, null, 4)};`;
+        });
+
+        log("✨ ¡COMPLETADO!");
+        alert(`Anime subido con éxito. ID: ${NEW_ID}`);
+        
+    } catch (e) {
+        log("❌ ERROR: " + e.message);
+        console.error(e);
+        alert("Error: " + e.message);
     }
+}
+
+async function getGithubFile(token, owner, repo, path) {
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const res = await fetch(url, { headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" } });
+    if(!res.ok) throw new Error(`Error leyendo ${path}`);
+    const data = await res.json();
+    const content = new TextDecoder().decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0)));
+    return { sha: data.sha, content: content };
+}
+
+async function updateGithubFile(token, owner, repo, path, modifyCallback) {
+    const current = await getGithubFile(token, owner, repo, path);
+    const newContent = modifyCallback(current.content);
+    const encoded = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const res = await fetch(url, {
+        method: "PUT",
+        headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ message: `CMS Update: ${path}`, content: encoded, sha: current.sha })
+    });
+    if(!res.ok) throw new Error(`Error escribiendo ${path}`);
+}
 </script>
 </body>
 </html>
