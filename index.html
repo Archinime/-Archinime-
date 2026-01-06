@@ -12,26 +12,34 @@
        Variables globales y reset
        --------------------------- */
     :root {
-      --header-approx-height: 72px; /* ajusta si tu header cambia de tamaño */
-      --global-extra-gap: -6px; /* valor por defecto (JS puede sobrescribir) */
+      --header-approx-height: 72px;
+      /* ajusta si tu header cambia de tamaño */
+      --global-extra-gap: -6px;
+      /* valor por defecto (JS puede sobrescribir) */
     }
 
     *{margin:0;padding:0;box-sizing:border-box;}
-    html,body{height:100%;overflow-x:hidden; overflow-y:auto; font-family:sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    html,body{height:100%;overflow-x:hidden;
+    overflow-y:auto; font-family:sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
     /* Fondo */
-    #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
-    #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-morado1.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
+    #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover;
+    z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
+    #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
+    background: url('galaxia-morado1.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease;
+    pointer-events:none;}
 
     /* Header: sticky + altura mínima para consistencia */
     header{
-      position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap;
+      position:sticky;
+      top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap;
       min-height: var(--header-approx-height);
     }
 
     /* título y logo con gradiente animado */
     header h1{
-      cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:900;
+      cursor:default;
+      display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:900;
       white-space:nowrap; flex:0 0 auto; animation: hueShift 8s linear infinite;
       background: linear-gradient(90deg,
         #00fff7 0%,
@@ -50,47 +58,82 @@
       text-shadow: 0 1px 18px rgba(0,0,0,0.5);
     }
     @keyframes hueShift {
-      0% { background-position: 0% 50%; transform: translateY(0); }
-      25% { background-position: 50% 100%; transform: translateY(-1px); }
-      50% { background-position: 100% 50%; transform: translateY(0); }
-      75% { background-position: 50% 0%; transform: translateY(1px); }
-      100% { background-position: 0% 50%; transform: translateY(0); }
+      0% { background-position: 0% 50%; transform: translateY(0);
+      }
+      25% { background-position: 50% 100%; transform: translateY(-1px);
+      }
+      50% { background-position: 100% 50%; transform: translateY(0);
+      }
+      75% { background-position: 50% 0%; transform: translateY(1px);
+      }
+      100% { background-position: 0% 50%; transform: translateY(0);
+      }
     }
-    header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; cursor:pointer; }
+    header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; cursor:pointer;
+    }
 
     /* Social inline next to title */
-    .social-inline { display:flex; align-items:center; gap:.5rem; margin-left:.4rem; flex:0 0 auto; }
+    .social-inline { display:flex; align-items:center; gap:.5rem; margin-left:.4rem;
+    flex:0 0 auto; }
     .social-inline button {
-      width:44px; height:44px; border-radius:50%; border:none; padding:0; display:inline-flex;
+      width:44px; height:44px; border-radius:50%; border:none; padding:0;
+      display:inline-flex;
       align-items:center; justify-content:center; cursor:pointer; background:rgba(255,255,255,0.95);
       color:#000; box-shadow:0 6px 18px rgba(0,0,0,0.28); overflow:hidden;
     }
-    .social-inline img { width:70%; height:70%; object-fit:cover; display:block; border-radius:50%; image-rendering:auto; }
+    .social-inline img { width:70%; height:70%;
+    object-fit:cover; display:block; border-radius:50%; image-rendering:auto; }
+
+    /* BOTÓN ADMIN (Corona) - Estilos iguales a social-inline */
+    .admin-btn {
+      width:44px; height:44px; border-radius:50%; border:none; padding:0;
+      display:inline-flex; align-items:center; justify-content:center;
+      cursor:pointer; background:rgba(255,255,255,0.95); color:#000;
+      box-shadow:0 6px 18px rgba(0,0,0,0.28); overflow:hidden;
+      font-size: 1.4rem; /* Tamaño del emoji */
+      margin-left: auto; /* IMPORTANTE: Empuja el botón a la derecha */
+      transition: transform .2s ease;
+    }
+    .admin-btn:hover { transform: scale(1.1); }
+    .admin-btn:active { transform: scale(0.95); }
 
     /* Controls (selects + search) */
-    .controls { display:flex; align-items:center; gap:0.6rem; margin-left:1rem; flex-wrap:wrap; }
+    .controls { display:flex;
+    align-items:center; gap:0.6rem; margin-left:1rem; flex-wrap:wrap; }
     .controls select, .controls input {
-      padding:.5rem .9rem; border:none; border-radius:8px; font-size:1rem; background:rgba(255,255,255,0.95); color:#000; min-width:150px; -webkit-appearance:none; appearance:none;
+      padding:.5rem .9rem;
+      border:none; border-radius:8px; font-size:1rem; background:rgba(255,255,255,0.95); color:#000; min-width:150px; -webkit-appearance:none; appearance:none;
       box-sizing:border-box;
     }
-    #search { width:220px; min-width:120px; }
+    #search { width:220px; min-width:120px;
+    }
 
     /* layout principal: espacio reducido por defecto (JS lo ajusta) */
-    .container{ max-width:1200px; margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem; padding:0 1.6rem; z-index:6; position:relative; transition: margin-top .12s ease, padding-top .12s ease; }
+    .container{ max-width:1200px;
+    margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem; padding:0 1.6rem; z-index:6; position:relative; transition: margin-top .12s ease, padding-top .12s ease;
+    }
     main.container { padding-top: calc(var(--header-approx-height) + var(--global-extra-gap)); }
 
-    .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.2rem; margin-top:0.3rem; } /* gap reducido entre header y grid */
+    .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.2rem; margin-top:0.3rem;
+    } /* gap reducido entre header y grid */
     /* Eliminamos la ocultación inicial para que las tarjetas y las imágenes se muestren todas a la vez */
-    .card{ border-radius:10px; overflow:hidden; position:relative; cursor:pointer; transition:all .2s ease; opacity:1; transform:translateY(0); will-change: transform; }
-    .card img{ width:100%; display:block; transition:transform .4s,filter .4s; will-change: transform; }
+    .card{ border-radius:10px;
+    overflow:hidden; position:relative; cursor:pointer; transition:all .2s ease; opacity:1; transform:translateY(0); will-change: transform; }
+    .card img{ width:100%; display:block;
+    transition:transform .4s,filter .4s; will-change: transform; }
     .card:hover img{ transform:scale(1.05); filter:brightness(75%); }
-    .info{ position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7); padding:.75rem; transform:translateY(100%); transition:transform .3s; }
-    .card:hover .info{ transform:translateY(0); }
+    .info{ position:absolute; bottom:0;
+    left:0; right:0; background:rgba(0,0,0,0.7); padding:.75rem; transform:translateY(100%); transition:transform .3s; }
+    .card:hover .info{ transform:translateY(0);
+    }
 
     /* Foreground container (fixed) */
-    #fgContainer { position:fixed; z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center; right:20px; bottom:20px; overflow:hidden; min-width:120px; min-height:80px; max-width:360px; max-height:640px; background:transparent; border-radius:10px; }
-    @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; } }
-    #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
+    #fgContainer { position:fixed; z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center;
+    right:20px; bottom:20px; overflow:hidden; min-width:120px; min-height:80px; max-width:360px; max-height:640px; background:transparent; border-radius:10px; }
+    @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px;
+    max-height:360px; } }
+    #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px;
+    }
 
     /* Decorations container (sin campanas) */
     #decorations {
@@ -123,80 +166,121 @@
     }
 
     /* mobile-select-popup and rest */
-    .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
-    .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
-    .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
+    .mobile-select-popup { position: absolute;
+    z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch;
+    }
+    .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea;
+    }
+    .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03);
+    }
     .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.04); }
 
     /* Forzamos tamaño más reducido para móviles pequeños (reduce la altura del popup) */
     @media (max-width:780px) {
-      .mobile-select-popup { max-height: 160px; min-width: 120px; font-size:0.9rem; }
+      .mobile-select-popup { max-height: 160px;
+      min-width: 120px; font-size:0.9rem; }
     }
     @media (max-width:420px) {
-      .mobile-select-popup { max-height: 120px; min-width: 110px; font-size:0.85rem; padding:0.12rem; }
-      .mobile-select-popup .opt { padding: .18rem .32rem; font-size:0.82rem; }
+      .mobile-select-popup { max-height: 120px;
+      min-width: 110px; font-size:0.85rem; padding:0.12rem; }
+      .mobile-select-popup .opt { padding: .18rem .32rem; font-size:0.82rem;
+      }
     }
 
-    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes gradientMove { 0% { background-position: 0% 50%;
+    } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%;
+    } }
 
     /* compact mobile logic: 2 controls per line, small header */
     @media (max-width:780px) {
-      header { padding:0.45rem 0.6rem; gap:0.4rem; align-items:center; }
+      header { padding:0.45rem 0.6rem;
+      gap:0.4rem; align-items:center; flex-wrap: wrap; } /* Aseguramos wrap */
+      
+      /* Reordenamiento Flex para móviles:
+         Order 1: Logo/Título
+         Order 2: Botón Corona (derecha)
+         Order 3: Controles (abajo)
+      */
+      header h1 { order: 1; }
+      .admin-btn { order: 2; width:34px; height:34px; font-size: 1.1rem; }
+      .controls { order: 3; width: 100%; margin-left: 0; }
+
       .controls {
-        width:100%;
         display:grid;
         grid-template-columns: repeat(2, 1fr); /* 2 por linea en móviles/tablet */
         gap:0.4rem;
         align-items:center;
       }
-      .controls select, .controls input { font-size:0.9rem; padding:.28rem .48rem; border-radius:8px; min-width:0; }
+      .controls select, .controls input { font-size:0.9rem; padding:.28rem .48rem; border-radius:8px; min-width:0;
+      }
       #search { width:100%; min-width:0; }
-      .social-inline button { width:34px; height:34px; padding:0; }
-      .social-inline img { width:66%; height:66%; }
+      .social-inline button { width:34px;
+      height:34px; padding:0; }
+      .social-inline img { width:66%; height:66%;
+      }
 
       /* >>> MÓVILES: eliminar TODO el espacio entre header y contenido */
       .container {
         margin-top: 0 !important;
         padding-top: 0 !important;
       }
-      main.container { padding-top: 0 !important; }
-      .grid { margin-top: 0 !important; gap:0.6rem !important; }
+      main.container { padding-top: 0 !important;
+      }
+      .grid { margin-top: 0 !important; gap:0.6rem !important;
+      }
     }
 
     /* extra small phones */
     @media (max-width:420px) {
-      header { padding:0.38rem 0.5rem; }
-      .controls { grid-template-columns: repeat(2, 1fr); gap:.28rem; }
-      .controls select, .controls input { font-size:0.82rem; padding:.22rem .36rem; border-radius:6px; }
-      .social-inline button { width:32px; height:32px; }
+      header { padding:0.38rem 0.5rem;
+      }
+      .controls { grid-template-columns: repeat(2, 1fr); gap:.28rem;
+      }
+      .controls select, .controls input { font-size:0.82rem; padding:.22rem .36rem; border-radius:6px;
+      }
+      .social-inline button { width:32px; height:32px;
+      }
+      .admin-btn { width:32px; height:32px; font-size:1rem; }
       .social-inline img { width:66%; height:66%; }
-      .mobile-select-popup { max-height:160px; font-size:0.84rem; }
-      .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem; }
+      .mobile-select-popup { max-height:160px;
+      font-size:0.84rem; }
+      .mobile-select-popup .opt { padding:.18rem .32rem; font-size:0.82rem;
+      }
 
       /* >>> TELÉFONOS PEQUEÑOS: forzar 0px */
-      .container { margin-top: 0 !important; padding-top: 0 !important; }
-      main.container { padding-top: 0 !important; }
-      .grid { margin-top: 0 !important; gap:0.5rem !important; grid-template-columns: repeat(3, 1fr); }
+      .container { margin-top: 0 !important;
+      padding-top: 0 !important; }
+      main.container { padding-top: 0 !important;
+      }
+      .grid { margin-top: 0 !important; gap:0.5rem !important; grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     /* show 3 cards per row on mobile phones (<= 767px) */
     @media (max-width:767px) {
-      .container { padding: 0 1rem; /* margin-top controlado por JS o reglas anteriores */ }
-      .grid { grid-template-columns: repeat(3, 1fr); gap:0.9rem; }
-      .card { min-height: 0; }
-      .card img { height: auto; }
+      .container { padding: 0 1rem;
+      /* margin-top controlado por JS o reglas anteriores */ }
+      .grid { grid-template-columns: repeat(3, 1fr);
+      gap:0.9rem; }
+      .card { min-height: 0;
+      }
+      .card img { height: auto;
+      }
     }
 
-    .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,9,2,1), box-shadow .2s; }
+    .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column;
+    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,9,2,1), box-shadow .2s;
+    }
 
-    .play-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9; pointer-events:auto; display:none; }
-    .play-btn{ background: rgba(0,0,0,0.7); color:#fff; border:2px solid #fff; padding:14px 22px; border-radius:12px; font-size:18px; cursor:pointer; }
+    .play-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9; pointer-events:auto; display:none;
+    }
+    .play-btn{ background: rgba(0,0,0,0.7); color:#fff; border:2px solid #fff; padding:14px 22px; border-radius:12px; font-size:18px; cursor:pointer;
+    }
 
   </style>
 </head>
 <body>
 
-  <!-- Vídeo de fondo (preload reducido para mejorar carga inicial) -->
   <video id="bg-video" poster="galaxia-morado1.avif" autoplay muted loop playsinline preload="metadata">
     <source src="galaxia.mp4" type="video/mp4">
     Tu navegador no soporta vídeo.
@@ -213,17 +297,16 @@
         <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.youtube.com/@Archinime-k2g'); })(event)">
           <img src="youtube.avif" alt="YouTube">
         </button>
-        <button id="tiktok-btn" type="button" aria-label="Abrir TikTok en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.tiktok.com/@archinime?_t=ZS-8zGoKE4IqLw&_r=1'); })(event)">
+        <button id="tiktok-btn" type="button" aria-label="Abrir TikTok en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.tiktok.com/@archinime?_t=ZS-8zGoKE4IqLw&_r=1'); 
+        })(event)">
           <img src="tiktok.avif" alt="TikTok">
         </button>
       </span>
     </h1>
 
-    <!-- Controls agrupados -->
     <div class="controls" id="controls">
       <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
-        <!-- . opciones . (misma lista extensa que tenías) -->
         <option>Acción</option>
         <option>Animación</option>
         <option>Aventura</option>
@@ -235,6 +318,7 @@
         <option>Cyberpunk</option>
         <option>Deducción Social</option>
         <option>Deportivo</option>
+  
         <option>Dibujo Animado</option>
         <option>Divulgación Científica</option>
         <option>Drama</option>
@@ -247,6 +331,7 @@
         <option>Gag</option>
         <option>Gore</option>
         <option>Harem</option>
+   
         <option>Hentai</option>
         <option>Histórico</option>
         <option>Horror</option>
@@ -259,6 +344,7 @@
         <option>Mecha</option>
         <option>Militar</option>
         <option>Mitología</option>
+     
         <option>Misterio</option>
         <option>Musical</option>
         <option>Nekketsu</option>
@@ -271,6 +357,7 @@
         <option>Romance</option>
         <option>RPG</option>
         <option>Slice of Life</option>
+     
         <option>Sobrenatural</option>
         <option>Steampunk</option>
         <option>Superhéroes</option>
@@ -283,6 +370,7 @@
         <option>Thriller</option>
         <option>Thriller psicológico</option>
         <option>Tokusatsu</option>
+      
         <option>Tragedia</option>
         <option>Yaoi</option>
         <option>Yuri</option>
@@ -296,6 +384,7 @@
         <option>Seijin</option>
         <option>Seinen</option>
         <option>Shōjo</option>
+       
         <option>Shōnen</option>
       </select>
 
@@ -309,13 +398,16 @@
       <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()" aria-label="Buscar anime">
     </div>
 
+    <button class="admin-btn" type="button" aria-label="Creador CMS" onclick="openInNewTab('https://archinime.github.io/-Archinime-/Archinime%20CMS%20-%20Creador.html')">
+      👑
+    </button>
+
   </header>
 
   <main class="container">
     <div class="grid" id="grid"></div>
   </main>
 
-  <!-- Foreground (chroma) -->
   <div class="stage" aria-hidden="true">
     <div id="fgContainer" aria-label="Vídeo frontal">
       <canvas id="fgCanvas"></canvas>
@@ -327,9 +419,9 @@
     </div>
   </div>
 
-  <!-- Decorations: estrella (se mantiene el template) -->
-<div id="decorations" aria-hidden="true">
-    <svg id="star-template" class="shooting-star decor-hidden-mobile" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
+  <div id="decorations" aria-hidden="true">
+    <svg id="star-template" class="shooting-star decor-hidden-mobile" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;"
+    aria-hidden="true">
       <g>
         <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.98"></circle>
         <rect class="shooting-tail" x="8" y="3" width="160" height="4"></rect>
@@ -351,8 +443,10 @@
       if (!list || list.length === 0) {
         grid.innerHTML = `
           <div class="no-results" role="status" aria-live="polite">
-            <div class="title shimmer">¡Ups! No se encontraron resultados que coincidan con la búsqueda.</div>
-            <div class="subtitle">¿No lo encuentras? Puede que lo hayas escrito con un error o que todavía no lo haya subido.</div>
+            <div class="title shimmer">¡Ups!
+            No se encontraron resultados que coincidan con la búsqueda.</div>
+            <div class="subtitle">¿No lo encuentras?
+            Puede que lo hayas escrito con un error o que todavía no lo haya subido.</div>
             <div class="sparkles"><button class="btn-reset" id="btn-reset">Entiendo</button></div>
           </div>
         `;
@@ -377,12 +471,13 @@
       `).join('');
     }
 
-    function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
+    function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count;
+    }
     
-    function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
+    function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); };
+    }
     
     const debouncedFiltro = debounce(filtro, 200);
-
     function normalizeText(s){
       try {
         return (s||'').toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
@@ -391,7 +486,8 @@
       }
     }
 
-    function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []); const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
+    function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []); const norm = titles.map(t=>normalizeText(t));
+    norm.sort(); return norm[0]; }
 
     function filtro(){
       const qRaw = document.getElementById('search').value || '';
@@ -407,12 +503,12 @@
         const byGenre = !g || (a.genres && a.genres.includes(g));
         const byDemo  = !d || (a.genres && a.genres.includes(d));
         let byRating = true;
+       
         if (cat==='excellent') byRating = a.rating >= 4.8;
         else if (cat==='good') byRating = a.rating >= 4.6 && a.rating < 4.8;
         else if (cat==='regular') byRating = a.rating < 4.6;
         return matchesText && byGenre && byDemo && byRating;
       });
-
       let resultList = filtrados.slice();
       if (qn) {
         resultList.sort((A,B)=>{
@@ -421,7 +517,8 @@
           const aStarts = titlesA.some(t=>t.startsWith(qn));
           const bStarts = titlesB.some(t=>t.startsWith(qn));
           if (aStarts !== bStarts) return aStarts ? -1 : 1;
-          const na = getBestTitleForSort(A); const nb = getBestTitleForSort(B);
+          const na = getBestTitleForSort(A); const 
+          nb = getBestTitleForSort(B);
           return na < nb ? -1 : na > nb ? 1 : 0;
         });
       } else {
@@ -433,7 +530,8 @@
     }
 
     // inicial -> orden aleatorio
-    function shuffleArray(arr){ const a = arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+    function shuffleArray(arr){ const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
     
     // IMPORTANTE: Aseguramos que 'animes' existe antes de usarlo
     if (typeof animes !== 'undefined') {
@@ -451,7 +549,8 @@
        Helpers de rendimiento
        ---------------------------- */
     function getPerformanceHints() {
-      let cores = navigator.hardwareConcurrency || 4;
+      let cores = navigator.hardwareConcurrency ||
+      4;
       let deviceMem = navigator.deviceMemory || 4;
       let prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let processingScale = 1.0;
@@ -471,12 +570,14 @@
       // Si el dispositivo es de bajo rendimiento o prefiere menos movimiento, no reproducir video de fondo automáticamente
       if (hints.processingScale < 0.55 || hints.prefersReducedMotion) {
         // mostrar poster y ocultar playback para ahorrar CPU
-        try { video.pause(); video.style.display = 'none'; overlay.style.opacity = '1'; } catch(e){}
+        try { video.pause(); video.style.display = 'none'; overlay.style.opacity 
+        = '1'; } catch(e){}
       } else {
         try { video.preload = video.getAttribute('preload') || 'metadata'; } catch(e){ console.warn(e); }
         video.muted = true; video.playsInline = true;
         const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
-        overlay.addEventListener('transitionend', (ev) => { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; });
+        overlay.addEventListener('transitionend', (ev) => { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none';
+        });
         video.addEventListener('playing', () => { revealVideo(); }, { once: true });
         video.addEventListener('canplaythrough', () => { video.play().catch(()=>{}); }, { once: true });
         video.addEventListener('loadeddata', () => { video.play().catch(()=>{}); }, { once: true });
@@ -491,6 +592,7 @@
         'Nightcore - Battlecry (Heart of Courage) (Lyrics).mp3',
         'Nightcore - Monster [NMV].mp3',
         'Nightcore - PLAY x Unity x Faded  Alan Walker (Mashup  Switching Vocals) Lyrics.mp3',
+   
         'Nightcore - Sweet Little Bumblebee (lyric video).mp3',
         'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
         'Nightcore - When You Leave (Numa Numa).mp3',
@@ -498,7 +600,8 @@
         'Nightcore - Yo y los que tuvieron etapa Vocaloid cuando suena 😼✨.mp3',
       ];
       let currentMusicIndex = Math.floor(Math.random() * musicList.length);
-      function playByIndex(idx) {
+      function 
+      playByIndex(idx) {
          if (!musicList || musicList.length === 0) return;
          currentMusicIndex = ((idx % musicList.length) + musicList.length) % musicList.length;
          audio.src = musicList[currentMusicIndex];
@@ -507,14 +610,15 @@
          // En dispositivos de bajo rendimiento, no forzamos la reproducción
          if (hints.processingScale >= 0.6) {
            audio.play().catch(()=> { document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); });
-         }
+      }
       }
       audio.addEventListener('ended', ()=> { currentMusicIndex = (currentMusicIndex + 1) % musicList.length; playByIndex(currentMusicIndex); });
       playByIndex(currentMusicIndex);
     });
 
     // función utilitaria para abrir en nueva pestaña sin problemas
-    function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus(); }catch(e){} }
+    function openInNewTab(url){ try{ const w = window.open(url, '_blank');
+    if (w) w.focus(); }catch(e){} }
 
     /* ----------------------------
        Chroma + FG logic (soporta verdes y azules)
@@ -530,28 +634,30 @@
     let off = document.createElement('canvas');
     let offCtx = off.getContext ? off.getContext('2d') : null;
     let chromaIntervalId = null;
-    let chromaFps = 24; // valor por defecto, se ajusta abajo
+    let chromaFps = 24;
+    // valor por defecto, se ajusta abajo
     let usingChroma = true;
     let visibilityPaused = false;
     let currentVideoObj = null;
     let lastObjectUrl = null;
     let isAnimatingExplosion = false;
     let scheduledTimer = null;
-
     const videoList = [
       { id: 'hola', src: 'hola.mp4', preset: { threshold: 0.25, diff: 0, soft: 100 } },
       { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.10, diff: 0, soft: 100  } },
 
       // Animaciones navideñas (pantalla verde)
       { id: 'animacionnavidad1', src: 'animacionnavidad1.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
-      { id: 'animacionnavidad2', src: 'animacionnavidad2.mp4', preset: { threshold: 0.06, diff: 8, soft: 60, }, keyColor: 'green' },
+      { id: 'animacionnavidad2', src: 'animacionnavidad2.mp4', preset: { threshold: 0.06, diff: 8, soft: 60, }, keyColor: 'green' 
+      },
       { id: 'animacionnavidad3', src: 'animacionnavidad3.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
       { id: 'animacionnavidad4', src: 'animacionnavidad4.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
 
       // Animaciones navideñas (pantalla azul)
       { id: 'animacionnavidad5', src: 'animacionnavidad5.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' },
       { id: 'animacionnavidad6', src: 'animacionnavidad6.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' }
-    ];
+  
+      ];
 
     function pickRandomVideo(excludeId){
       if (!videoList || videoList.length === 0) return null;
@@ -562,10 +668,13 @@
     }
 
     function placeRandomSide(infoObj){
-      const side = Math.random() < 0.5 ? 'left' : 'right';
+      const side = Math.random() < 0.5 ?
+      'left' : 'right';
       const margin = window.matchMedia('(max-width:767px)').matches ? '12px' : '20px';
-      if (side === 'left') { fgContainer.style.left = margin; fgContainer.style.right = ''; }
-      else { fgContainer.style.right = margin; fgContainer.style.left = ''; }
+      if (side === 'left') { fgContainer.style.left = margin;
+      fgContainer.style.right = ''; }
+      else { fgContainer.style.right = margin; fgContainer.style.left = '';
+      }
     }
 
     // Ajuste y drawProcessedToScreen (versión que respeta devicePixelRatio)
@@ -583,7 +692,7 @@
       const dx = Math.round((cw - dw) / 2);
       const dy = Math.round((ch - dh) / 2);
       ctx.drawImage(off, 0, 0, vw, vh, dx, dy, dw, dh);
-    }
+      }
 
     function adjustContainerToVideo(video, infoObj){
       const vw = video.videoWidth || 16;
@@ -641,12 +750,14 @@
       off.height = Math.max(16, offH);
 
       resizeFireCanvas();
-    }
+      }
 
     // admite clave verde y azul
     function applyChromaKey(imageData, settings, keyColor = 'green'){
-      const data = imageData.data; const len = data.length;
-      const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30; const soften = settings.soft ?? 30;
+      const data = imageData.data;
+      const len = data.length;
+      const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30;
+      const soften = settings.soft ?? 30;
       for (let i = 0; i < len; i += 4) {
         const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
         if (a === 0) continue;
@@ -662,7 +773,7 @@
             const t = (diff - minDiff) / soften;
             const clamped = Math.max(0, Math.min(1, t));
             data[i+3] = Math.round((1 - clamped) * 255);
-          }
+            }
         } else {
           const maxrb = Math.max(r, b);
           const greenScore = (g - maxrb) / sum;
@@ -674,34 +785,37 @@
             const t = (diff - minDiff) / soften;
             const clamped = Math.max(0, Math.min(1, t));
             data[i+3] = Math.round((1 - clamped) * 255);
-          }
+            }
         }
       }
       return imageData;
-    }
+      }
 
     // Procesado por intervalo (FPS limitado) para evitar saturar CPU en movimiento del ratón
     function processFrame(video, infoObj){
       if (!usingChroma || visibilityPaused) return;
       if (video.paused || video.ended) return;
       if (!offCtx) return;
-      try { offCtx.drawImage(video, 0, 0, off.width, off.height); } catch (err) {
+      try { offCtx.drawImage(video, 0, 0, off.width, off.height);
+      } catch (err) {
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
       let frame;
-      try { frame = offCtx.getImageData(0,0,off.width,off.height); } catch (err) {
+      try { frame = offCtx.getImageData(0,0,off.width,off.height);
+      } catch (err) {
         usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
-      const settings = infoObj && infoObj.preset ? infoObj.preset : { threshold:0.4, diff:30, soft:30 };
+      const settings = infoObj && infoObj.preset ?
+      infoObj.preset : { threshold:0.4, diff:30, soft:30 };
       const keyColor = infoObj && infoObj.keyColor ? infoObj.keyColor : 'green';
       const processed = applyChromaKey(frame, settings, keyColor);
       offCtx.putImageData(processed, 0, 0);
       drawProcessedToScreen();
-    }
+      }
 
     function startChromaIntervalIfNeeded(infoObj){
       const hints = getPerformanceHints();
@@ -709,20 +823,23 @@
       stopChromaInterval();
       if (!usingChroma || visibilityPaused) return;
       chromaIntervalId = setInterval(()=>{ processFrame(fgVideo, infoObj); }, Math.round(1000 / chromaFps));
-    }
+      }
 
     function stopChromaInterval(){
-      if (chromaIntervalId) { clearInterval(chromaIntervalId); chromaIntervalId = null; }
+      if (chromaIntervalId) { clearInterval(chromaIntervalId); chromaIntervalId = null;
+      }
     }
 
-    function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter'); }
+    function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter');
+    }
     function hideContainerInstantlyForTransition(){ fgContainer.classList.remove('enter'); fgContainer.classList.add('exit'); }
 
     function scheduleNextVideo(afterSeconds = 3, excludeId = null){
-      if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null; }
+      if (scheduledTimer){ clearTimeout(scheduledTimer);
+      scheduledTimer = null; }
       hideContainerInstantlyForTransition();
       scheduledTimer = setTimeout(()=>{ const next = pickRandomVideo(excludeId); if (!next) return; playVideoClip(next); }, afterSeconds*1000);
-    }
+      }
 
     /* ----------------------------
        Fuegos artificiales (canvas)
@@ -742,7 +859,8 @@ if (fgContainer) {
 } else {
   console.warn('fgContainer no existe al crear fireCanvas — creando canvas sin appendChild.');
 }
-const fctx = fireCanvas.getContext ? fireCanvas.getContext('2d') : null;
+const fctx = fireCanvas.getContext ?
+fireCanvas.getContext('2d') : null;
 
     function resizeFireCanvas(){
       const rect = fgContainer.getBoundingClientRect();
@@ -755,20 +873,19 @@ const fctx = fireCanvas.getContext ? fireCanvas.getContext('2d') : null;
         fireCanvas.style.width = rect.width + 'px';
         fireCanvas.style.height = rect.height + 'px';
         fctx.setTransform(dpr,0,0,dpr,0,0);
-      }
+        }
     }
     window.addEventListener('resize', resizeFireCanvas, {passive:true});
     setTimeout(resizeFireCanvas, 120);
 
-    function random(min, max){ return Math.random()*(max-min)+min; }
+    function random(min, max){ return Math.random()*(max-min)+min;
+    }
 
 function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
   const hints = getPerformanceHints();
-
   // área relativa del contenedor (para escalar el número de partículas)
   const rect = fgContainer.getBoundingClientRect();
   const areaFactor = Math.min(2.2, Math.max(0.45, (rect.width * rect.height) / (360 * 640)));
-
   // Decide cantidades según capacidad
   let effectiveCount = Math.round(count * areaFactor);
   if (hints.processingScale < 0.45) effectiveCount = Math.max(12, Math.round(effectiveCount * 0.30));
@@ -776,9 +893,9 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
   else if (hints.processingScale < 0.85) effectiveCount = Math.max(28, Math.round(effectiveCount * 0.7));
   // never too many
   effectiveCount = Math.min(220, effectiveCount);
-
   // Target FPS para el efecto (menor en dispositivos más lentos)
-  const targetFps = hints.processingScale >= 0.85 ? 50 : hints.processingScale >= 0.6 ? 36 : 24;
+  const targetFps = hints.processingScale >= 0.85 ?
+  50 : hints.processingScale >= 0.6 ? 36 : 24;
   const frameInterval = 1000 / targetFps;
 
   const particles = [];
@@ -796,7 +913,7 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
       radius: rnd(1.6, 5.2),
       color: colors[Math.floor(Math.random()*colors.length)]
     });
-  }
+    }
 
   // Seguridad: si algo falla, resolvemos pasado el tiempo máximo + margen
   const safeTimeoutMs = Math.round(duration + 400);
@@ -815,6 +932,7 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
 
     function frame(now){
       try {
+        
         if (finished) return;
         // throttle by fps
         if (!lastFrameTime) lastFrameTime = now;
@@ -825,7 +943,8 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
         }
         lastFrameTime = now;
 
-        const t = now - start;
+        const t = now 
+        - start;
         fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
 
         // dibujo sencillo pero eficiente: dos arcos por partícula (core + glow)
@@ -833,9 +952,11 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
           p.age = t;
           const lifeRatio = Math.max(0, 1 - p.age / p.life);
           // Integración de movimiento con pequeñas sub-actualizaciones para suavizar y evitar saltos
+        
           p.x += p.vx * (dt/16.67);
           p.y += p.vy * (dt/16.67);
-          p.vy += 0.16 * (dt/16.67); // gravedad ajustada por dt
+          p.vy += 0.16 * (dt/16.67);
+          // gravedad ajustada por dt
 
           const alpha = Math.max(0, Math.min(1, lifeRatio));
           // core
@@ -850,25 +971,25 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
           fctx.fillStyle = p.color;
           fctx.arc(p.x, p.y, (p.radius * 5) * (0.22 + (1 - lifeRatio) * 0.9), 0, Math.PI*2);
           fctx.fill();
-        }
+          }
 
         fctx.globalAlpha = 1;
-
         if (t < duration) {
           requestAnimationFrame(frame);
         } else {
           finished = true;
           clearTimeout(safeTimer);
-          try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+          try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+          } catch(e){}
           resolve();
-        }
+          }
       } catch (err) {
         // en caso de error inesperado, limpiamos y resolvemos para evitar bloqueo
         finished = true;
         clearTimeout(safeTimer);
         try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
         resolve();
-      }
+        }
     }
 
     // kick off
@@ -876,7 +997,8 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
       requestAnimationFrame(frame);
     } catch (err) {
       clearTimeout(safeTimer);
-      try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+      try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+      } catch(e){}
       resolve();
     }
   });
@@ -888,7 +1010,6 @@ async function doFireworkThenHide(){
   try {
     // permitimos que el navegador pinte antes de empezar (evita bloqueo UI inmediato)
     await new Promise(r => setTimeout(r, 8));
-
     try { fgVideo.pause(); } catch(e){}
     const rect = fgContainer.getBoundingClientRect();
     // centra en el medio visible (usamos CSS px)
@@ -898,7 +1019,6 @@ async function doFireworkThenHide(){
     // garantizamos que el canvas de fuegos tenga tamaño correcto (puede ser costoso)
     // pero lo hacemos sólo si ha cambiado el bounding rect
     resizeFireCanvas();
-
     // paleta y transiciones (igual que antes)
     const palette = ['#ffcc00','#ff4d4d','#ffd700','#00fff7','#ff6ad5','#ff7f50','#8b5cf6'];
     // pequeña animación de entrada
@@ -908,14 +1028,11 @@ async function doFireworkThenHide(){
 
     // explotamos (esperamos la promesa) con parámetros seguros
     await explodeParticlesAt(cx, cy, palette, 80, 700);
-
     // animación de salida
     fgContainer.style.opacity = '0';
     fgContainer.style.transform = 'scale(.8) translateY(10px)';
-
     // damos un pequeño margen para la transición visual
     await new Promise(r => setTimeout(r, 220));
-
     // ocultamos y restauramos estilos para la próxima animación
     fgContainer.style.display = 'none';
     fgContainer.style.transform = '';
@@ -923,6 +1040,7 @@ async function doFireworkThenHide(){
   } catch (err) {
     // no dejamos el flag activo aunque algo salga mal
     console.warn('doFireworkThenHide error:', err);
+      
   } finally {
     isAnimatingExplosion = false;
   }
@@ -935,15 +1053,16 @@ async function doFireworkThenHide(){
       if (!infoObj) return;
       currentVideoObj = infoObj;
       usingChroma = true;
-      if (lastObjectUrl) { try { URL.revokeObjectURL(lastObjectUrl); } catch(e){}; lastObjectUrl = null; }
+      if (lastObjectUrl) { try { URL.revokeObjectURL(lastObjectUrl); } catch(e){}; lastObjectUrl = null;
+      }
 
       fgVideo.src = infoObj.src;
       fgVideo.load();
-
       const onMeta = () => {
         fgVideo.removeEventListener('loadedmetadata', onMeta);
         if (infoObj.id === 'hola') { fgContainer.style.bottom = '0px'; }
-        else { fgContainer.style.bottom = '20px'; }
+        else { fgContainer.style.bottom = '20px';
+        }
         placeRandomSide(infoObj);
         adjustContainerToVideo(fgVideo, infoObj);
         fgCanvas.style.display = 'block';
@@ -956,7 +1075,6 @@ async function doFireworkThenHide(){
       };
 
       fgVideo.addEventListener('loadedmetadata', onMeta);
-
       fgVideo.onerror = (e) => {
         usingChroma = false;
         fgCanvas.style.display = 'none';
@@ -979,19 +1097,18 @@ async function doFireworkThenHide(){
         await doFireworkThenHide();
       } catch (err) {
         console.warn('Error during fireworks click flow:', err);
+      
       }
       const currentId = currentVideoObj ? currentVideoObj.id : null;
       const next = pickRandomVideo(currentId);
       setTimeout(() => { playVideoClip(next); }, 420);
     });
-
     document.getElementById('playBtn').addEventListener('click', ()=>{
       document.getElementById('playOverlay').style.display = 'none';
       bgVideo.play().catch(()=>{}); fgVideo.play().catch(()=>{});
       try { bgMusic.play().catch(()=>{}); } catch(e){}
       if (currentVideoObj) startChromaIntervalIfNeeded(currentVideoObj);
     });
-
     // Throttled resize
     let resizeRaf = null;
     window.addEventListener('resize', ()=> {
@@ -1004,7 +1121,6 @@ async function doFireworkThenHide(){
         resizeRaf = null;
       });
     }, {passive:true});
-
     // Pausar procesamiento pesado cuando pestaña no visible
     document.addEventListener('visibilitychange', ()=> {
       if (document.hidden) {
@@ -1016,7 +1132,8 @@ async function doFireworkThenHide(){
           startChromaIntervalIfNeeded(currentVideoObj);
         }
       }
-    }, {passive:true});
+    }, 
+    {passive:true});
 
     /* ----------------------------
        POPUP MÓVIL PARA SELECTS (MEJORADO)
@@ -1027,6 +1144,7 @@ async function doFireworkThenHide(){
        ---------------------------- */
     (function mobileSelectPopups() {
       const mobileQ = () => window.matchMedia('(max-width:780px)').matches;
+  
       const SELECT_IDS = ['genre-select','demographic-select','rating-select'];
       let activePopup = null;
       let outsideListener = null;
@@ -1038,9 +1156,12 @@ async function doFireworkThenHide(){
           try { activePopup.remove(); } catch(e){}
           activePopup = null;
         }
-        if (outsideListener) { document.removeEventListener('pointerdown', outsideListener, true); outsideListener = null; }
-        if (resizeListener) { window.removeEventListener('resize', resizeListener); resizeListener = null; }
-        if (scrollListener) { window.removeEventListener('scroll', scrollListener, true); scrollListener = null; }
+     
+         if (outsideListener) { document.removeEventListener('pointerdown', outsideListener, true); outsideListener = null; }
+        if (resizeListener) { window.removeEventListener('resize', resizeListener);
+        resizeListener = null; }
+        if (scrollListener) { window.removeEventListener('scroll', scrollListener, true); scrollListener = null;
+        }
       }
 
       function createPopupFor(selectEl) {
@@ -1050,10 +1171,10 @@ async function doFireworkThenHide(){
           // Evitamos el menú nativo
           e.preventDefault();
           e.stopPropagation();
+        
           // Si ya hay un popup abierto, cerramos y volvemos a abrir para refrescar posición
           openPopupFor(selectEl);
         });
-
         // keyboard: Enter/Space abre popup en móvil
         selectEl.addEventListener('keydown', (e) => {
           if (!mobileQ()) return;
@@ -1062,7 +1183,7 @@ async function doFireworkThenHide(){
             openPopupFor(selectEl);
           }
         });
-      }
+        }
 
       function openPopupFor(selectEl) {
         closePopup();
@@ -1079,9 +1200,9 @@ async function doFireworkThenHide(){
         // tamaño lógico y posición: preferimos justo debajo del select,
         // pero si queda muy cerca del borde inferior, mostramos encima.
         const pad = 8;
-        const maxHeight = window.matchMedia('(max-width:420px)').matches ? 120 : 160; // consistente con CSS
+        const maxHeight = window.matchMedia('(max-width:420px)').matches ? 120 : 160;
+        // consistente con CSS
         popup.style.maxHeight = maxHeight + 'px';
-
         // ancho = min(selectWidth, winWidth - 24)
         const width = Math.min(rect.width, Math.max(120, winW - 24));
         popup.style.minWidth = Math.max(110, width) + 'px';
@@ -1108,27 +1229,30 @@ async function doFireworkThenHide(){
           if (opt.selected) d.setAttribute('aria-selected','true');
           d.textContent = opt.textContent || opt.innerText || opt.value;
 
-          d.addEventListener('click', (ev) => {
+          d.addEventListener('click', 
+          (ev) => {
             ev.stopPropagation();
             // asignamos valor al select y disparamos change
             try {
               selectEl.value = opt.value;
               // también actualizamos el atributo selected en las opciones HTML para consistencia
+             
               Array.from(selectEl.options).forEach(o => o.selected = (o.value === opt.value));
               const evCh = new Event('change', { bubbles: true });
               selectEl.dispatchEvent(evCh);
             } catch(e){}
             closePopup();
             // dejamos el foco sobre el select para que el usuario pueda reabrir si quiere
-            try { selectEl.focus(); } catch(e){}
+      
+             try { selectEl.focus(); } catch(e){}
           });
-
           // permitir selección con teclado dentro del popup
           d.addEventListener('keydown', (ev) => {
             if (ev.key === 'Enter' || ev.key === ' ') {
               ev.preventDefault();
               d.click();
             } else if (ev.key === 'ArrowDown') {
+             
               ev.preventDefault();
               const next = d.nextElementSibling;
               if (next) next.focus();
@@ -1136,12 +1260,12 @@ async function doFireworkThenHide(){
               ev.preventDefault();
               const prev = d.previousElementSibling;
               if (prev) prev.focus();
+ 
             } else if (ev.key === 'Escape') {
               closePopup();
               try { selectEl.focus(); } catch(e){}
             }
           });
-
           popup.appendChild(d);
         });
 
@@ -1149,7 +1273,8 @@ async function doFireworkThenHide(){
         document.body.appendChild(popup);
         activePopup = popup;
         const selected = popup.querySelector('.opt[aria-selected="true"]') || popup.querySelector('.opt');
-        if (selected) { selected.focus(); popup.scrollTop = Math.max(0, selected.offsetTop - 8); }
+        if (selected) { selected.focus(); popup.scrollTop = Math.max(0, selected.offsetTop - 8);
+        }
 
         // cerrar si click fuera (pero no cerrar cuando se hace click dentro del popup o sobre el select)
         outsideListener = function outsideHandler(ev){
@@ -1158,11 +1283,9 @@ async function doFireworkThenHide(){
           closePopup();
         };
         document.addEventListener('pointerdown', outsideListener, true);
-
         // cerrar en resize
         resizeListener = () => closePopup();
         window.addEventListener('resize', resizeListener);
-
         // cerrar si hay scroll fuera del popup (IMPORTANTE: NO cerramos si el evento de scroll viene del propio popup)
         scrollListener = function scrollHandler(ev) {
           if (!activePopup) return;
@@ -1183,7 +1306,8 @@ async function doFireworkThenHide(){
 
       // Inicialización: crear popup behaviour sólo si existan selects
       function init() {
-        try {
+      
+          try {
           SELECT_IDS.forEach(id => {
             const el = document.getElementById(id);
             if(el) createPopupFor(el);
@@ -1197,28 +1321,25 @@ async function doFireworkThenHide(){
       window.addEventListener('resize', function(){
         if (!mobileQ()) closePopup();
       }, { passive:true });
-
       // ejecuto al cargar DOM
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
       else init();
-
       // API para cerrar desde fuera si hace falta
       window._closeMobileSelectPopup = closePopup;
     })();
-
     /* ----------------------------
        Resto de código (chroma, init etc.)
        ---------------------------- */
 
     function init(){
-      fgContainer.style.display = 'none'; fgCanvas.style.display = 'none'; fgVideo.style.display = 'none';
+      fgContainer.style.display = 'none';
+      fgCanvas.style.display = 'none'; fgVideo.style.display = 'none';
       const first = pickRandomVideo(null);
       if (!first) return;
       playVideoClip(first);
     }
 
     init();
-
     window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
 
   </script>
