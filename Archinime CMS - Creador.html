@@ -782,29 +782,48 @@ function updateWebPreview() {
 // ============================================
 function generateJSON() {
     const selectedGenres = [];
+    // Recogemos los checkboxes de géneros
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
+    
+    // --- CORRECCIÓN AQUÍ ---
+    // Recogemos la demografía y la añadimos a los géneros si no está ya
+    const demoSelect = document.getElementById('demografiaAnime');
+    if (demoSelect && demoSelect.value) {
+        const demoValue = demoSelect.value;
+        // Evitamos duplicados si el usuario ya lo marcó en los checkboxes
+        if (!selectedGenres.includes(demoValue)) {
+            selectedGenres.push(demoValue);
+        }
+    }
+    // -----------------------
+
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
+
     const anime = {
         id: 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
         aliases: aliasList,
         portada: document.getElementById('portadaAnime').value.trim(),
         sinopsis: document.getElementById('sinopsisAnime').value.trim(),
-        demografia: document.getElementById('demografiaAnime').value,
+        // Aunque guardamos demografía aquí, lo importante es que ahora ya va en 'generos' para el index
+        demografia: document.getElementById('demografiaAnime').value, 
         generos: selectedGenres,
         rating: parseFloat(document.getElementById('ratingAnime').value === 'excellent' ? 4.9 : document.getElementById('ratingAnime').value === 'good' ? 4.6 : 4.0),
         musica: [],
         temporadas: []
     };
+
     // Musica
     document.querySelectorAll('#musicContainer .m-url').forEach(i => {
         if(i.value) anime.musica.push({ url_audio: i.value.trim() });
     });
+
     // Temporadas
     let globalOrder = 1; // Orden global en el array
     
     updateAllBlockNames();
+
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
@@ -813,7 +832,7 @@ function generateJSON() {
             const customTitle = row.querySelector('.c-title-ov').value.trim(); 
             
             if(sub || lat) {
-                eps.push({
+                 eps.push({
                     num: idx + 1,
                     link: sub,
                     link2: lat,
