@@ -3756,5 +3756,51 @@
 
 
 
-    };
-
+    
+    1767817313292: {
+        title: "Prueba",
+        desc: "Sfdgsfgesfgsd",
+        cover: "https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=l7x89zjk&raw=1",
+        seasons: [
+  {
+    "num": 1,
+    "name": "Temporada 1",
+    "cover": "https://www.dropbox.com/scl/fi/p0r8u7687ctb0gborj1xz/jujutsukaisent3.jpg?rlkey=ok9566cz3v673sjq26dibuwrs&st=mr3m3oxs&raw=1",
+    "eps": [
+      {
+        "title": "Capítulo 1"
+      },
+      {
+        "title": "Capítulo 2"
+      }
+    ]
+  },
+  {
+    "num": 2,
+    "name": "OVA 1",
+    "cover": "https://www.dropbox.com/scl/fi/p0r8u7687ctb0gborj1xz/jujutsukaisent3.jpg?rlkey=ok9566cz3v673sjq26dibuwrs&st=mr3m3oxs&raw=1",
+    "eps": [
+      {
+        "title": "Gfgsg"
+      },
+      {
+        "title": "OVA 2"
+      }
+    ]
+  },
+  {
+    "num": 3,
+    "name": "Temporada 2",
+    "cover": "https://www.dropbox.com/scl/fi/p0r8u7687ctb0gborj1xz/jujutsukaisent3.jpg?rlkey=ok9566cz3v673sjq26dibuwrs&st=mr3m3oxs&raw=1",
+    "eps": [
+      {
+        "title": "Capítulo 1"
+      },
+      {
+        "title": "Capítulo 2"
+      }
+    ]
+  }
+]
+    },
+};
