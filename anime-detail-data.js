@@ -3748,21 +3748,13 @@
             ]
           }
         ]
-      },,
-    72: {
-    "title": "awesdfsdf",
-    "desc": "sdsdgsdg",
-    "cover": "https://www.dropbox.com/scl/fi/jbppp4s21shy7wqcnyvkv/Bluelockt1.jpg?rlkey=skkirad9x3515lrdlfcahkdkk&st=01v7pyry&raw=1",
-    "seasons": [
-        {
-            "num": 1,
-            "cover": "Especial",
-            "eps": [
-                {
-                    "title": "Capítulo 1"
-                }
-            ]
-        }
-    ]
-}
-};
+      },
+
+
+
+
+
+
+
+    };
+
