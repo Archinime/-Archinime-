@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Archinime CMS: Master Console</title>
     <link rel="icon" href="Logo_Archinime.avif" type="image/avif">
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -25,19 +25,24 @@
             --text-muted: #8b8d96;
             --radius: 12px; 
             --gradient: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%);
+            --header-height: 70px;
         }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-body);
-            color: var(--text-main); margin: 0; padding: 0; overflow-x: hidden;
-            /* Fondo mejorado con animación */
+            color: var(--text-main); 
+            margin: 0; padding: 0; 
+            overflow-x: hidden;
             background-image: 
                 radial-gradient(circle at 50% 0%, #1a1b26 0%, transparent 50%),
                 radial-gradient(circle at 0% 50%, rgba(140, 82, 255, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 100% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 20%);
             background-size: 200% 200%;
             animation: bgBreath 10s ease infinite;
+            padding-bottom: 40px;
         }
 
         @keyframes bgBreath {
@@ -46,7 +51,7 @@
             100% { background-position: 50% 0%; }
         }
 
-        /* --- LOGIN (Minimalista y Elegante) --- */
+        /* --- LOGIN --- */
         #loginScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
@@ -56,217 +61,240 @@
                 linear-gradient(rgba(140, 82, 255, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(140, 82, 255, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
+            padding: 20px;
         }
         
         .login-card {
-            background: rgba(20, 20, 25, 0.8);
-            backdrop-filter: blur(20px);
-            padding: 60px 40px; border-radius: 24px; border: 1px solid var(--border);
+            background: rgba(20, 20, 25, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 40px 30px; border-radius: 24px; border: 1px solid var(--border);
             text-align: center;
-            box-shadow: 0 0 100px rgba(140, 82, 255, 0.2);
-            max-width: 400px; width: 90%; animation: fadeInUp 0.8s ease;
+            box-shadow: 0 0 100px rgba(140, 82, 255, 0.15);
+            max-width: 400px; width: 100%; 
+            animation: fadeInUp 0.8s ease;
         }
         @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
-        /* Estilo para el Logo Central */
         .login-logo {
-            width: 120px; height: 120px; object-fit: contain; margin-bottom: 20px;
+            width: 100px; height: 100px; object-fit: contain; margin-bottom: 20px;
             filter: drop-shadow(0 0 15px var(--primary-glow));
             transition: transform 0.5s;
         }
         .login-logo:hover { transform: scale(1.05) rotate(2deg); }
 
         .login-btn {
-            background: #fff;
-            color: #000; border: none; padding: 18px 30px; font-size: 1.1rem; 
+            background: #fff; color: #000; border: none; padding: 16px; font-size: 1rem; 
             border-radius: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center;
             gap: 12px; margin: 30px auto 0; transition: 0.3s; font-weight: 700; width: 100%;
         }
-        .login-btn:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+        .login-btn:hover { transform: scale(1.02); box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
 
         /* --- HEADER --- */
         .user-header {
-            display: flex;
-            justify-content: space-between; align-items: center;
-            padding: 15px 40px; background: rgba(15, 16, 20, 0.9); backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px; 
+            background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border); position: sticky;
-            top: 0; z-index: 100; display: none;
+            top: 0; z-index: 100; display: none; height: var(--header-height);
         }
+        .header-profile { display: flex; align-items: center; gap: 12px; }
         .user-badge {
-            background: rgba(0, 240, 255, 0.1);
-            color: var(--accent); padding: 4px 10px;
-            border-radius: 6px; font-size: 0.7em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            background: rgba(0, 240, 255, 0.1); color: var(--accent); padding: 2px 8px;
+            border-radius: 4px; font-size: 0.65em; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
         }
+        .user-name { font-weight: 600; font-size: 0.9em; max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* --- LAYOUT --- */
+        /* --- LAYOUT GRID --- */
         .main-wrapper {
-            max-width: 1600px;
-            margin: 0 auto; padding: 40px 20px;
-            display: none; grid-template-columns: 1fr 420px; gap: 40px;
+            max-width: 1600px; margin: 0 auto; padding: 20px;
+            display: none; 
+            grid-template-columns: 1fr 400px; /* Desktop default */
+            gap: 30px; align-items: start;
         }
 
         .editor-panel { 
-            background: var(--bg-panel);
-            border: 1px solid var(--border); 
-            padding: 40px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            background: var(--bg-panel); border: 1px solid var(--border); 
+            padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
+        /* --- TYPOGRAPHY & INPUTS --- */
         h2 { 
-            color: #fff;
-            border-bottom: 1px solid var(--border); padding-bottom: 15px; 
-            margin: 0 0 30px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; 
-            display: flex; align-items: center;
-            gap: 12px; font-weight: 700; 
+            color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 15px; 
+            margin: 0 0 25px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1.5px; 
+            display: flex; align-items: center; gap: 12px; font-weight: 700; 
         }
-        h2 i { color: var(--primary); filter: drop-shadow(0 0 8px var(--primary-glow)); }
+        h2 i { color: var(--primary); }
 
-        /* --- INPUTS --- */
         label { 
-            display: block;
-            margin: 25px 0 10px; font-weight: 600; font-size: 0.75rem;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px;
+            display: block; margin: 20px 0 8px; font-weight: 600; font-size: 0.75rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
         }
+        label span { color: #ff4757; }
         
         input, textarea, select { 
-            width: 100%;
-            padding: 16px 20px; background: var(--bg-input);
+            width: 100%; padding: 14px 16px; background: var(--bg-input);
             border: 1px solid var(--border); color: white; border-radius: var(--radius); 
-            box-sizing: border-box; font-family: 'Outfit', sans-serif; font-size: 0.95em;
-            transition: all 0.2s;
+            box-sizing: border-box; font-family: 'Outfit', sans-serif; font-size: 16px; /* 16px prevents iOS zoom */
+            transition: all 0.2s; appearance: none;
         }
         input:focus, select:focus, textarea:focus { 
-            border-color: var(--primary);
-            outline: none; background: #1f2029; 
-            box-shadow: 0 0 0 4px rgba(140, 82, 255, 0.1);
+            border-color: var(--primary); outline: none; background: #1f2029; 
         }
-        input:disabled { opacity: 0.6; cursor: not-allowed; background: #121216; border-color: #222; color: #777; font-style: italic; }
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b8d96'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 16px;
+        }
+        input:disabled { opacity: 0.6; cursor: not-allowed; background: #121216; border-color: #222; }
 
-        /* --- BOTONES --- */
+        /* --- BUTTONS --- */
         .btn { 
-            width: 100%;
-            padding: 16px; border: none; cursor: pointer; font-weight: 700;
-            margin-top: 25px; border-radius: var(--radius); transition: 0.3s; 
-            display: flex; align-items: center; justify-content: center;
-            gap: 10px; 
+            width: 100%; padding: 16px; border: none; cursor: pointer; font-weight: 700;
+            margin-top: 20px; border-radius: var(--radius); transition: 0.2s; 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
             font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
         }
+        .btn:active { transform: scale(0.98); }
+
         .btn-add { background: rgba(255,255,255,0.03); color: var(--text-muted); border: 1px dashed #444; }
         .btn-add:hover { border-color: var(--accent); color: var(--accent); background: rgba(0, 240, 255, 0.05); }
         
         .btn-gen { 
-            background: var(--gradient);
-            color: white; font-size: 1rem; margin-top: 50px;
-            box-shadow: 0 10px 30px rgba(140, 82, 255, 0.3);
+            background: var(--gradient); color: white; font-size: 1rem; margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(140, 82, 255, 0.2);
         }
-        .btn-gen:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(140, 82, 255, 0.5); }
+        .btn-gen:hover { box-shadow: 0 15px 40px rgba(140, 82, 255, 0.4); }
 
-        /* --- CARDS TEMPORADAS --- */
+        /* --- SEASONS & CARDS --- */
         .season-card { 
-            background: #15161b;
-            padding: 25px; border-radius: 16px; margin-bottom: 25px;
+            background: #131419; padding: 20px; border-radius: 16px; margin-bottom: 25px;
             border: 1px solid var(--border); position: relative; overflow: hidden;
-            transition: border 0.3s;
         }
-        .season-card:hover { border-color: #444; }
         .season-card::before {
-            content:'';
-            position: absolute; left:0; top:0; bottom:0; width: 4px;
-            background: var(--accent);
+            content:''; position: absolute; left:0; top:0; bottom:0; width: 4px; background: var(--accent);
         }
         
         .chapter-row { 
-            background: #0b0c10;
-            padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 10px;
+            background: #0b0c10; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 10px;
         }
         .chapter-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .chapter-num { 
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace; font-weight: bold;
+            color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: bold;
             background: rgba(0, 240, 255, 0.1); padding: 4px 8px; border-radius: 6px; font-size: 0.85em;
         }
+        
+        .c-inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         /* --- AUDIO PLAYER --- */
         .audio-preview-box {
-            background: #0b0c10;
-            padding: 15px; border-radius: 12px; border: 1px solid #222;
-            display: flex; flex-direction: column; gap: 10px;
+            background: #0b0c10; padding: 15px; border-radius: 12px; border: 1px solid #222;
+            display: flex; flex-direction: column; gap: 10px; width: 100%;
         }
-        audio { width: 100%; height: 35px; margin-top: 5px; opacity: 0.8; }
-        audio::-webkit-media-controls-panel { background-color: #f0f0f0; }
-        .audio-status-text { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; margin-left: 5px; }
+        audio { width: 100%; height: 40px; margin-top: 5px; opacity: 0.9; border-radius: 8px; }
+        .audio-status-text { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; }
 
-        /* --- PREVIEW --- */
+        /* --- PREVIEW SIDEBAR --- */
         .preview-sidebar { position: sticky; top: 100px; height: fit-content; }
+        
         .web-card { 
-            background: #000;
-            border-radius: 20px; overflow: hidden; border: 1px solid #333;
+            background: #000; border-radius: 20px; overflow: hidden; border: 1px solid #333;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
         }
         .web-cover { 
-            width: 100%;
-            height: 420px; object-fit: cover; opacity: 0.85;
+            width: 100%; height: 350px; object-fit: cover; opacity: 0.85;
             mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
         }
-        .web-info { padding: 30px; margin-top: -120px; position: relative; z-index: 2; }
-        .web-title { font-size: 2em; font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 8px; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
+        .web-info { padding: 25px; margin-top: -100px; position: relative; z-index: 2; }
+        .web-title { 
+            font-size: 1.8em; font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 8px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9); 
+        }
         .web-alias { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.8em; }
 
-        .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+        .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
         .preview-s-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 2/3; border: 1px solid #333; }
         .preview-s-item img { width: 100%; height: 100%; object-fit: cover; }
         .preview-s-title { 
-            position: absolute;
-            bottom: 0; width: 100%; background: rgba(0,0,0,0.8); 
-            font-size: 0.6em; text-align: center; padding: 6px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            color: #fff;
+            position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.8); 
+            font-size: 0.6em; text-align: center; padding: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff;
         }
 
         /* --- UTILS --- */
         .row-flex { display: flex; gap: 20px; }
         .col-flex { flex: 1; }
+        
         .dynamic-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start;}
         .btn-mini-del { 
-            background: #1a1a1a;
-            color: #ff4757; border: 1px solid #333; width: 52px; height: 52px; flex-shrink: 0;
-            border-radius: var(--radius); cursor: pointer; display: flex; align-items: center; justify-content: center;
+            background: #1a1a1a; color: #ff4757; border: 1px solid #333; 
+            width: 52px; height: 52px; flex-shrink: 0; border-radius: var(--radius); 
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-        .btn-mini-del:hover { background: #ff4757; color: white; border-color: #ff4757; }
-        
         .btn-del-section { 
-            position: absolute;
-            top: 15px; right: 15px; background: rgba(255, 71, 87, 0.1); color: #ff4757; 
-            border: 1px solid #ff4757; padding: 6px 15px; border-radius: 20px;
-            cursor: pointer; font-size: 0.75em; font-weight: 700;
+            position: absolute; top: 15px; right: 15px; 
+            background: rgba(255, 71, 87, 0.1); color: #ff4757; 
+            border: 1px solid #ff4757; padding: 6px 12px; border-radius: 20px;
+            cursor: pointer; font-size: 0.7em; font-weight: 700;
         }
-        .btn-del-section:hover { background: #ff4757; color: white; }
 
+        /* GENRES BOX */
         .genres-box { 
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; 
-            background: var(--bg-input); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border);
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; 
+            background: var(--bg-input); padding: 15px; border-radius: var(--radius); border: 1px solid var(--border);
             max-height: 250px; overflow-y: auto;
         }
         .genres-box label {
-            margin: 0;
-            text-transform: none; color: #ccc; font-weight: 500; font-size: 0.9em;
-            padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid transparent;
-            cursor: pointer;
-            transition: 0.2s; display: flex; align-items: center; gap: 8px;
+            margin: 0; text-transform: none; color: #ccc; font-weight: 500; font-size: 0.9em;
+            padding: 12px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid transparent;
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
         }
-        .genres-box label:hover { background: rgba(255,255,255,0.08); border-color: #444; color: white; }
-        .genres-box input { width: 16px; height: 16px; margin: 0; accent-color: var(--primary); }
+        .genres-box label:active { background: rgba(255,255,255,0.1); }
+        .genres-box input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
 
+        /* TOAST */
         #toast { 
-            visibility: hidden;
-            background-color: var(--bg-panel); color: #fff; text-align: center; 
-            border-radius: 50px; padding: 16px 30px; position: fixed; z-index: 1000; left: 50%; bottom: 40px;
-            transform: translateX(-50%); border: 1px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            display: flex; gap: 10px; align-items: center; font-weight: 600;
+            visibility: hidden; background-color: #1a1b20; color: #fff; text-align: center; 
+            border-radius: 50px; padding: 16px 24px; position: fixed; z-index: 2000; 
+            left: 50%; bottom: 30px; transform: translateX(-50%); 
+            border: 1px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            display: flex; gap: 10px; align-items: center; font-weight: 600; font-size: 0.9rem;
+            width: max-content; max-width: 90%;
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* LOG */
+        #statusLog {
+            display:none; margin-top:20px; padding:20px; background:#000; 
+            border-radius:8px; border:1px solid #333; 
+            font-family:'JetBrains Mono', monospace; font-size:0.8em; color:#00ffbf;
+            max-height: 200px; overflow-y: auto; word-break: break-all;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                grid-template-columns: 1fr; /* Una columna */
+                padding: 15px;
+            }
+            
+            .preview-sidebar {
+                position: relative; /* Ya no sticky */
+                top: 0;
+                order: 2; /* Poner al final */
+                margin-top: 40px;
+            }
+            
+            .row-flex { flex-direction: column; gap: 0; }
+            .col-flex { margin-bottom: 0; }
+            
+            .editor-panel { padding: 20px; }
+            
+            .c-inputs-grid { grid-template-columns: 1fr; } /* Inputs de caps uno debajo de otro */
+            
+            .web-cover { height: 250px; }
+            .web-title { font-size: 1.5em; }
+        }
     </style>
 </head>
 <body>
@@ -274,30 +302,29 @@
 <div id="loginScreen">
     <div class="login-card">
         <img src="Logo_Archinime.avif" alt="Archinime Logo" class="login-logo">
-        
-        <h1 style="color:#fff; margin:0; font-size:2rem; font-weight:800;">ARCHINIME CMS</h1>
-        <p style="color:var(--text-muted); margin-top:10px;">Consola de Aportadores Autorizados</p>
+        <h1 style="color:#fff; margin:0; font-size:1.8rem; font-weight:800;">ARCHINIME CMS</h1>
+        <p style="color:var(--text-muted); margin-top:8px; font-size:0.9rem;">Consola de Aportadores</p>
         
         <button class="login-btn" onclick="signInWithGitHub()">
             <i class="fab fa-github" style="font-size:1.5em"></i> Conectar con GitHub
         </button>
         
-        <div id="loginError" style="color: #ff4757; margin-top: 20px; display: none;">
+        <div id="loginError" style="color: #ff4757; margin-top: 20px; display: none; background: rgba(255, 71, 87, 0.1); padding: 10px; border-radius: 8px; font-size: 0.9em;">
             <i class="fas fa-ban"></i> <span id="errorText">Acceso Denegado</span>
         </div>
     </div>
 </div>
 
 <div id="userHeader" class="user-header">
-    <div style="display:flex; align-items:center; gap:15px;">
-        <img src="Logo_Archinime.avif" style="width:30px; height:30px; object-fit:contain; margin-right:5px;">
-        <img id="userAvatarImg" src="" style="width:40px; height:40px; border-radius:50%; border:2px solid var(--primary);">
+    <div class="header-profile">
+        <img src="Logo_Archinime.avif" style="width:28px; height:28px; object-fit:contain;">
+        <img id="userAvatarImg" src="" style="width:36px; height:36px; border-radius:50%; border:2px solid var(--primary);">
         <div>
             <div class="user-badge">Verificado</div>
-            <div id="userNameDisplay" style="color:#fff; font-weight:600; font-size:0.9em;">Usuario</div>
+            <div id="userNameDisplay" class="user-name">Usuario</div>
         </div>
     </div>
-    <button onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 16px; border-radius:8px; cursor:pointer;">
+    <button onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
         <i class="fas fa-power-off"></i>
     </button>
 </div>
@@ -312,24 +339,24 @@
 
         <label>Alias Alternativos</label>
         <div id="aliasContainer"></div>
-        <button class="btn btn-add" style="margin-top:5px; padding:12px;" onclick="addAlias()">
+        <button class="btn btn-add" style="margin-top:10px; padding:12px;" onclick="addAlias()">
             <i class="fas fa-plus"></i> AGREGAR ALIAS
         </button>
 
         <label style="margin-top:25px">URL Portada Vertical (.AVIF) <span>*</span></label>
-        <div style="display:flex; gap:20px; align-items: flex-start;">
-            <div style="flex:1">
+        <div style="display:flex; gap:15px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="flex:1; min-width: 200px;">
                 <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this)" onblur="validate(this); updateWebPreview()">
                 <div id="dimDisplay" style="color:var(--text-muted); font-size:0.8em; margin-top:8px; font-family:'JetBrains Mono'"></div>
             </div>
-            <img id="mainCoverPreview" style="width:110px; height:150px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
+            <img id="mainCoverPreview" style="width:100px; height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
         </div>
         
         <label>Géneros (Máx 4 visibles) <span>*</span></label>
         <div class="genres-box" id="genresContainer"></div>
 
         <label>Sinopsis <span>*</span></label>
-        <textarea id="sinopsisAnime" rows="4" placeholder="Sinopsis oficial..." onblur="autoCap(this); validate(this)"></textarea>
+        <textarea id="sinopsisAnime" rows="5" placeholder="Sinopsis oficial..." onblur="autoCap(this); validate(this)"></textarea>
         
         <div class="row-flex">
             <div class="col-flex">
@@ -352,23 +379,23 @@
             </div>
         </div>
 
-        <h2 style="margin-top:60px"><i class="fas fa-layer-group"></i> 2. Estructura & Capítulos</h2>
+        <h2 style="margin-top:50px"><i class="fas fa-layer-group"></i> 2. Estructura</h2>
         <div id="seasonsContainer"></div>
         <button class="btn btn-add" onclick="addSeason()"><i class="fas fa-folder-plus"></i> NUEVA TEMPORADA / PELÍCULA</button>
 
-        <h2 style="margin-top:60px"><i class="fas fa-music"></i> 3. Banda Sonora (Openings/Endings)</h2>
+        <h2 style="margin-top:50px"><i class="fas fa-music"></i> 3. Banda Sonora</h2>
         <div id="musicContainer"></div>
         <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
 
         <button class="btn btn-gen" onclick="subirAGithHub()">
-            <i class="fas fa-cloud-arrow-up"></i> COMPILAR Y SUBIR A GITHUB
+            <i class="fas fa-cloud-arrow-up"></i> COMPILAR Y SUBIR
         </button>
         
-        <div id="statusLog" style="display:none; margin-top:20px; padding:20px; background:#000; border-radius:8px; border:1px solid #333; font-family:'JetBrains Mono', monospace; font-size:0.85em; color:#00ffbf;"></div>
+        <div id="statusLog"></div>
     </div>
 
     <div class="preview-sidebar">
-        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
+        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
         <div class="web-card">
             <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Cover">
             <div class="web-info">
@@ -434,6 +461,7 @@ function signInWithGitHub() {
 function checkAccess(user) {
     const email = user.email;
     const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
+    // Permite acceso si el email o el nickname está en la lista (o si la lista está vacía para testing, pero aquí la tienes definida)
     const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
 
     if (isAllowed) {
@@ -487,11 +515,13 @@ genresList.forEach(g => {
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="updateWebPreview()"> ${g}`;
     gContainer.appendChild(label);
 });
+
 // Utils
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
-    x.innerHTML = isError ? 
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.innerHTML = isError ?
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : 
+        `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
@@ -549,9 +579,8 @@ function addMusic() {
     const container = document.getElementById('musicContainer');
     const div = document.createElement('div');
     div.className = 'dynamic-item';
-    // Se agregan elementos para el feedback visual
     div.innerHTML = `
-        <div class="audio-preview-box" style="flex:1">
+        <div class="audio-preview-box">
             <input type="text" class="m-url" placeholder="Enlace directo al audio (mp3, ogg, etc)" onchange="updateAudioPreview(this)">
             <audio controls preload="none"></audio>
             <div class="audio-status-text"></div>
@@ -568,7 +597,6 @@ function updateAudioPreview(input) {
     
     // Reset estado
     statusEl.innerHTML = '<span style="color:#facc15"><i class="fas fa-circle-notch fa-spin"></i> Cargando...</span>';
-    
     audioEl.src = input.value;
     audioEl.load();
 
@@ -590,9 +618,8 @@ function addSeason() {
     const div = document.createElement('div');
     div.className = 'season-card';
     
-    // Por defecto el select muestra "Seleccionar Tipo..."
     div.innerHTML = `
-        <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR BLOQUE</button>
+        <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
         <div class="row-flex">
             <div class="col-flex">
                 <label>Tipo de Contenido</label>
@@ -620,41 +647,33 @@ function addSeason() {
     container.appendChild(div);
 }
 
-// Nueva función para eliminar y re-calcular nombres
 function removeSeasonBlock(btn) {
     btn.closest('.season-card').remove();
     updateAllBlockNames();
     updateWebPreview();
 }
 
-// Función maestra para recalcular todos los nombres en orden
 function updateAllBlockNames() {
     const cards = document.querySelectorAll('.season-card');
-    
     let tempCount = 0;
     let movieCount = 0;
     let ovaCount = 0;
     let specialCount = 0;
-
     cards.forEach(card => {
         const typeSelect = card.querySelector('.s-type');
         const nameInput = card.querySelector('.s-name');
         const type = typeSelect.value;
 
-        // Si no ha seleccionado nada, no hacemos nada
         if (!type) return;
 
         if (type === 'Spin-Off') {
-            // Spin-off no se toca automáticamente, solo se habilita
             if (nameInput.disabled) {
                 nameInput.disabled = false;
                 nameInput.placeholder = "Nombre Obligatorio (Ej: Kakashi Gaiden)";
                 nameInput.value = ""; 
             }
         } else {
-            // Bloqueamos input para los autogenerados
             nameInput.disabled = true;
-            
             if (type === 'Temporada') {
                 tempCount++;
                 nameInput.value = `Temporada ${tempCount}`;
@@ -677,17 +696,14 @@ function handleSeasonTypeChange(select) {
     const countInput = card.querySelector('.s-count');
     const type = select.value;
 
-    // Lógica para prellenar cantidad si es película
     if (type === 'Pelicula') {
         countInput.value = 1;
         renderChapters(countInput);
     }
     
-    // Actualizamos todos los nombres para mantener la secuencia correcta
     updateAllBlockNames();
-    updateWebPreview(); // Actualizar vista previa para reflejar nuevo nombre
+    updateWebPreview(); 
     
-    // Re-renderizar inputs de capítulos por si cambió de temporada a otro (ocultar input nombre capitulo)
     if(countInput.value) renderChapters(countInput);
 }
 
@@ -700,16 +716,11 @@ function renderChapters(input) {
     
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
-    
-    // Logic: Si es Temporada, ocultamos input de nombre de cap individual
-    // Pero si es OVA o Especial, a veces tienen nombres únicos.
-    // Dejaremos visible para todo MENOS Temporada regular para simplificar, o según preferencia.
-    const showTitleInput = (type !== 'Temporada');
 
+    const showTitleInput = (type !== 'Temporada');
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
-        
         let titleHtml = '';
         if(showTitleInput) {
             titleHtml = `<input type="text" class="c-title-ov" placeholder="Nombre del capítulo (Opcional)" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">`;
@@ -721,7 +732,7 @@ function renderChapters(input) {
             <div class="chapter-header">
                 <span class="chapter-num">CAPÍTULO ${i+1}</span>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div class="c-inputs-grid">
                 <input type="text" class="c-link-sub" placeholder="🔗 Link Subtitulado">
                 <input type="text" class="c-link-lat" placeholder="🔗 Link Latino">
             </div>
@@ -752,13 +763,11 @@ function updateWebPreview() {
             tagsContainer.appendChild(s);
         }
     });
-    
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
         const img = card.querySelector('.s-img').value;
         const name = card.querySelector('.s-name').value;
-        // Solo mostramos en preview si tiene imagen, o al menos el bloque
         if(img || name) {
             const div = document.createElement('div');
             div.className = 'preview-s-item';
@@ -776,7 +785,6 @@ function generateJSON() {
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-    
     const anime = {
         id: 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -789,18 +797,14 @@ function generateJSON() {
         musica: [],
         temporadas: []
     };
-
     // Musica
     document.querySelectorAll('#musicContainer .m-url').forEach(i => {
         if(i.value) anime.musica.push({ url_audio: i.value.trim() });
     });
-
     // Temporadas
     let globalOrder = 1; // Orden global en el array
     
-    // Antes de generar, aseguramos que los nombres estén actualizados
     updateAllBlockNames();
-
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
@@ -859,7 +863,6 @@ async function subirAGithHub() {
     if(typeError) return showToast("Selecciona el TIPO en todos los bloques", true);
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando subida...<br>";
-    
     try {
         log("1/5 Leyendo índice...");
         const indexFile = await getGithubFile(token, owner, repo, 'index-data.js');
@@ -889,7 +892,6 @@ async function subirAGithHub() {
             };
             return `const data = ${JSON.stringify(dataObj, null, 4)};`;
         });
-
         log("3/5 Actualizando Player...");
         await updateGithubFile(token, owner, repo, 'video-player-data.js', (content) => {
             let jsonStr = content.replace(/const\s+DB\s*=\s*/, '').replace(/;\s*$/, '');
@@ -905,7 +907,6 @@ async function subirAGithHub() {
             });
             return `const DB = ${JSON.stringify(dbObj, null, 4)};`;
         });
-
         if (nuevoAnime.musica.length > 0) {
             log("4/5 Subiendo música...");
             await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
@@ -930,7 +931,6 @@ async function subirAGithHub() {
             });
             return `const animes = ${JSON.stringify(arr, null, 4)};`;
         });
-
         log("✨ ¡COMPLETADO CON ÉXITO!");
         alert(`Anime subido correctamente con ID: ${NEW_ID}`);
     } catch (e) {
