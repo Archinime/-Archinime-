@@ -395,22 +395,23 @@
     </div>
 
 <script>
-    // --- CONFIGURACIÓN ---
-    // REEMPLAZA ESTO CON TU CONFIG DE FIREBASE
-    const firebaseConfig = {
-        apiKey: "AIzaSyD-Bj1Hj8...", // Tu config real aquí
-        authDomain: "login-admin-archinime.firebaseapp.com",
-        projectId: "login-admin-archinime",
-        storageBucket: "login-admin-archinime.appspot.com",
-        messagingSenderId: "336338633785",
-        appId: "1:336338633785:web:..."
-    };
-    
-    // --- TOKEN DE RESPALDO MANUAL (AÑADIDO) ---
-    const BACKUP_TOKEN = "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";
+// ============================================
+// CONFIGURACIÓN
+// ============================================
+const firebaseConfig = {
+    apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
+    authDomain: "login-admin-archinime.firebaseapp.com",
+    projectId: "login-admin-archinime",
+    storageBucket: "login-admin-archinime.firebasestorage.app",
+    messagingSenderId: "938164660242",
+    appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
+};
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+const ALLOWED_USERS = ["archinime12@gmail.com"];
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+let currentUserToken = null;
 
     // --- STATE MANAGEMENT ---
     let currentUserToken = null;
