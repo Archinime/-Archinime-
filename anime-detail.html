@@ -123,7 +123,11 @@
       border: 1px solid rgba(0, 255, 255, 0.4);
       background: rgba(0, 255, 255, 0.05);
       color: #e0ffff;
-      cursor: pointer;
+      cursor: default; /* Cambiado a default ya que solo es visual */
+      user-select: none;
+    }
+    .genre-chip:hover {
+        background: rgba(0, 255, 255, 0.15);
     }
 
     .desc{
@@ -134,7 +138,7 @@
     }
 
     /* --- TEMPORADAS --- */
-details {
+    details {
       margin-bottom:12px;
       background: #0d0214; /* Morado muy oscuro sólido */
       border: 1px solid #4a004a; /* Borde morado */
@@ -169,7 +173,7 @@ details {
         grid-template-columns: repeat(4, 1fr);
     }
 
-.ep-btn {
+    .ep-btn {
       display:flex; align-items: center; justify-content: center;
       padding:10px 4px;
       background: #1a0525; /* Fondo sólido */
@@ -186,7 +190,8 @@ details {
       color: #0ff;
       box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
-    .ep-btn:active { background: #0ff; color: #000; }
+    .ep-btn:active { background: #0ff; color: #000;
+    }
 
     /* --- RECOMENDACIONES --- */
     .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333;
@@ -201,25 +206,25 @@ details {
         gap: 10px; 
     }
 
-.rec-card { 
-  background: #1a0525; 
-  border: 1.5px solid #330c4d;
-  border-radius: 6px; 
-  overflow: hidden;
-  transition: all 0.2s; /* Cambiado a 'all' para que el color y fondo también tengan transición */
-}
+    .rec-card { 
+      background: #1a0525; 
+      border: 1.5px solid #330c4d;
+      border-radius: 6px; 
+      overflow: hidden;
+      transition: all 0.2s; 
+    }
 
-.rec-card:hover {
-  transform: translateY(-3px);
-  background: #2a0a3d; /* Morado un poco más claro */
-  border-color: #0ff;   /* Borde celeste */
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-}
+    .rec-card:hover {
+      transform: translateY(-3px);
+      background: #2a0a3d; 
+      border-color: #0ff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
 
-/* Para que el texto cambie a celeste al pasar el mouse sobre la tarjeta */
-.rec-card:hover p {
-  color: #0ff;
-}
+    /* Para que el texto cambie a celeste al pasar el mouse sobre la tarjeta */
+    .rec-card:hover p {
+      color: #0ff;
+    }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem;
       text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
@@ -276,12 +281,13 @@ details {
 
   <div id="toast" class="toast">Enlace copiado</div>
 
-  <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
+  <video id="bg-video" autoplay muted loop playsinline 
+    poster="galaxia-morado1.avif">
     <source src="galaxia.mp4" type="video/mp4">
   </video>
   <div id="overlay"></div>
 
-  <script src="anime-detail-data.js"></script>
+  <script src="index-data.js"></script> <script src="anime-detail-data.js"></script>
   <script src="musica-data.js"></script>
 
   <script>
@@ -295,29 +301,24 @@ details {
     });
 
     /* ----------------------------------------------------
-       2. Lógica de Audio (MODIFICADA: Aleatorio inicio -> Ordenado)
+       2. Lógica de Audio
        ---------------------------------------------------- */
     let currentAudio = null;
     let playlist = [];
     let currentTrackIndex = -1;
 
-    // Función para reproducir una pista según su índice
     function playTrack(index) {
-        // Detener audio anterior si existe
         if (currentAudio) {
             currentAudio.pause();
-            currentAudio.onended = null; // Limpiar evento anterior
+            currentAudio.onended = null;
         }
 
-        // Obtener la canción actual
         const trackUrl = playlist[index];
         currentAudio = new Audio(trackUrl);
         currentAudio.volume = 0.4;
-        currentAudio.loop = false; // Desactivamos loop infinito de una canción
+        currentAudio.loop = false;
 
-        // Cuando la canción termine, pasar a la siguiente
         currentAudio.onended = () => {
-            // Calcula el siguiente índice (vuelve a 0 si llega al final)
             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
             playTrack(currentTrackIndex);
         };
@@ -326,19 +327,13 @@ details {
     }
 
     document.addEventListener('click', () => {
-        // Verificamos si audioPlaylists existe y si ya estamos reproduciendo
         if (typeof audioPlaylists === 'undefined' || currentAudio) return;
-
         const params = new URLSearchParams(location.search);
         const id = params.get('id');
         
         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
-            
-            // 1. Elegimos un índice aleatorio SOLO para empezar
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
-            
-            // 2. Iniciamos la reproducción
             playTrack(currentTrackIndex);
         }
     }, { once: true });
@@ -347,11 +342,9 @@ details {
        3. Renderizado y Lógica Visual
        ---------------------------------------------------- */
     
-    // Verificamos que los datos existan
     if (typeof data === 'undefined') {
         document.getElementById('contenido').innerHTML = "<h2 style='text-align:center; padding:50px; color:red;'>Error: No se pudo cargar el archivo de datos (anime-detail-data.js).</h2>";
     } else {
-        // Renderizado normal
         const params = new URLSearchParams(location.search);
         const id = params.get('id');
         const anime = data[id];
@@ -359,12 +352,32 @@ details {
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
+            
+            // --- Lógica de Géneros Actualizada ---
+            // Buscamos el anime en la lista completa (index-data.js) para sacar los géneros
+            let genreHtml = '';
+            if (typeof animes !== 'undefined') {
+                // Buscamos coincidencia por ID (número o texto)
+                const animeInfo = animes.find(a => String(a.id) === String(id));
+                
+                if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
+                    // Creamos los chips separados
+                    genreHtml = animeInfo.genres.map(g => 
+                        `<span class="genre-chip">${escapeHtml(g)}</span>`
+                    ).join('');
+                } else {
+                    genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
+                }
+            }
+            // -------------------------------------
+
             let html = `
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
-                <div class="genres-wrap" id="genres-container"></div>
+                <div class="genres-wrap" id="genres-container">${genreHtml}</div>
                 <p class="desc">${anime.desc}</p>
             `;
+
             if(anime.seasons){
                 anime.seasons.forEach((s, index) => {
                     html += `
@@ -372,7 +385,6 @@ details {
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
-                            
                             <div class="video-list" id="list-${index}"></div>
                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
@@ -380,23 +392,20 @@ details {
                 });
             }
             container.innerHTML = html;
-            
-            // Cargar Géneros
-            populateGenresForAnime(id);
-            // Cargar Recomendaciones
             renderRecommendations(id);
+
         } else {
             container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
         }
     }
 
     /* ----------------------------------------------------
-       4. Funciones Auxiliares (Renderizado Chunking)
+       4. Funciones Auxiliares
        ---------------------------------------------------- */
     function toggleSeason(details, animeId, seasonIndex) {
         if (!details.open) return;
         const listContainer = document.getElementById(`list-${seasonIndex}`);
-        if (listContainer.children.length > 0) return; // Ya cargado
+        if (listContainer.children.length > 0) return; 
 
         const loadingMsg = document.getElementById(`loading-${seasonIndex}`);
         loadingMsg.style.display = 'block';
@@ -406,7 +415,7 @@ details {
         const seasonNum = data[animeId].seasons[seasonIndex].num;
         
         let processed = 0;
-        const CHUNK_SIZE = 40; // Procesa 40 capítulos por frame para evitar lag
+        const CHUNK_SIZE = 40; 
 
         function processChunk() {
             const fragment = document.createDocumentFragment();
@@ -438,19 +447,11 @@ details {
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
 
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.textContent = "✅ " + msg;
-        t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2000);
-    }
-
-    // Lógica de recomendaciones
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
-        // Si hay pocos animes, muestra todos, si hay muchos, randomiza
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
+        
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
              return;
@@ -464,86 +465,6 @@ details {
         `).join('');
     }
 
-    /* ------------------------------------------------------------------
-       Lógica para copiar géneros desde index.txt / index.html
-       ------------------------------------------------------------------ */
-    function renderGenres(genres){
-      const cont = document.getElementById('genres-container');
-      if(!cont) return;
-      if(!genres || !genres.length){ 
-          cont.innerHTML = '<span style="font-size:0.8rem; color:#aaa;">Géneros no disponibles</span>';
-          return; 
-      }
-      
-      cont.innerHTML = genres.map(g => `
-        <button class="genre-chip" data-genre="${escapeHtml(g)}">
-          ${escapeHtml(g)}
-          <span class="copied-badge">✓</span>
-        </button>
-      `).join('');
-      cont.querySelectorAll('.genre-chip').forEach(btn => {
-        btn.addEventListener('click', async (ev) => {
-          const genre = btn.dataset.genre;
-          try { await navigator.clipboard.writeText(genre); } catch(e){}
-          btn.classList.add('popped','show-badge');
-          setTimeout(() => btn.classList.remove('popped'), 350);
-          setTimeout(() => btn.classList.remove('show-badge'), 1200);
-          showToast(`Género copiado: ${genre}`);
-        });
-      });
-    }
-
-    function populateGenresForAnime(animeId){
-      const tries = ['index.txt','index.html'];
-      let tried = 0;
-
-      function tryNext(){
-        if(tried >= tries.length){ 
-            renderGenres([]);
-            return;
-        }
-        const url = tries[tried++];
-        fetch(url)
-          .then(r => r.text())
-          .then(text => {
-            // Busca la estructura de datos en el archivo index
-            const m = text.match(/const\s+animes\s*=\s*(\[[\s\S]*?\])\s*;/m);
-            if(!m){ 
-                tryNext(); 
-                return; 
-            }
-            try {
-              const arrayLiteral = m[1];
-              // Parseamos el array de animes del index
-              const arr = (new Function('return ' + arrayLiteral))();
-              const item = arr.find(it => Number(it.id) === Number(animeId) || String(it.id) === String(animeId));
-              
-              if(item && item.genres && item.genres.length){ 
-                  renderGenres(item.genres); 
-                  return; 
-              }
-              // Intento secundario por título si el ID no coincide
-              if (data[animeId]) {
-                  const currentTitle = normalizeText(data[animeId].title);
-                  const matchByTitle = arr.find(it => it.title && normalizeText(it.title) === currentTitle);
-                  if(matchByTitle && matchByTitle.genres && matchByTitle.genres.length){ 
-                      renderGenres(matchByTitle.genres);
-                      return;
-                  }
-              }
-              renderGenres([]);
-            } catch(e){
-              console.warn('Error parseando géneros del index:', e);
-              tryNext();
-            }
-        }).catch(()=>{ tryNext(); });
-      }
-      tryNext();
-    }
-
-    function normalizeText(s){
-      return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-    }
     function escapeHtml(str){
       return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
