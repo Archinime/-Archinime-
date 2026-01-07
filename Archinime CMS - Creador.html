@@ -18,381 +18,433 @@
             --bg-panel: #0f1014;
             --bg-input: #181920;
             --border: #2a2b35;
-            --primary: #7c4dff; /* Violeta principal */
-            --primary-hover: #9e75ff;
-            --accent: #00e5ff; /* Cyan acento */
-            --danger: #ff3366;
-            --success: #00c853;
-            --text-main: #ffffff;
-            --text-muted: #8f90a6;
-            --radius: 12px;
-            --shadow: 0 8px 32px rgba(0,0,0,0.4);
-            --font-main: 'Outfit', sans-serif;
-            --font-code: 'JetBrains Mono', monospace;
+            --primary: #8c52ff;
+            --primary-glow: rgba(140, 82, 255, 0.4);
+            --accent: #00f0ff;
+            --text-main: #ffffff; 
+            --text-muted: #8b8d96;
+            --radius: 12px; 
+            --gradient: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%);
+            --header-height: 70px;
         }
 
-        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-        
-        body {
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body { 
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-body);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            margin: 0;
+            color: var(--text-main); 
+            margin: 0; padding: 0; 
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1a1b26 0%, transparent 50%),
+                radial-gradient(circle at 0% 50%, rgba(140, 82, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 100% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 20%);
+            background-size: 200% 200%;
+            animation: bgBreath 10s ease infinite;
+            padding-bottom: 40px;
+        }
+
+        @keyframes bgBreath {
+            0% { background-position: 50% 0%; }
+            50% { background-position: 52% 2%; }
+            100% { background-position: 50% 0%; }
+        }
+
+        /* --- LOGIN --- */
+        #loginScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: #000;
+            background-image: 
+                linear-gradient(rgba(140, 82, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(140, 82, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
             padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
         }
-
-        /* --- LAYOUT PRINCIPAL --- */
-        .cms-container {
-            width: 100%;
-            max-width: 1000px;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 24px;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            background: var(--bg-panel);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.2rem;
-            letter-spacing: -0.5px;
-            color: var(--text-main);
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-        .brand i { color: var(--primary); font-size: 1.4rem; }
-
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 12px 16px;
-            text-align: left;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: var(--font-main);
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-btn i { width: 20px; text-align: center; }
         
-        .nav-btn:hover { background: rgba(255,255,255,0.03); color: var(--text-main); }
-        .nav-btn.active { background: rgba(124, 77, 255, 0.15); color: var(--primary); border: 1px solid rgba(124, 77, 255, 0.3); }
-
-        .user-status {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-input); object-fit: cover;}
-        .logout-btn { margin-left: auto; color: var(--danger); cursor: pointer; background: none; border: none; font-size: 1rem; }
-
-        /* --- MAIN CONTENT --- */
-        .main-panel {
-            background: var(--bg-panel);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 30px;
-            min-height: 600px;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 0 24px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* --- FORMS & INPUTS --- */
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
-        
-        .input-field {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-        .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.1); }
-        textarea.input-field { min-height: 100px; resize: vertical; line-height: 1.6; }
-
-        /* Grid inputs */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-
-        /* Dynamic Lists (Temporadas/Caps) */
-        .dynamic-list { display: flex; flex-direction: column; gap: 12px; }
-        .list-item { 
-            background: rgba(255,255,255,0.02); 
-            border: 1px solid var(--border); 
-            padding: 16px; 
-            border-radius: 8px; 
-            position: relative;
-        }
-        .remove-btn {
-            position: absolute; top: 10px; right: 10px;
-            color: var(--text-muted); cursor: pointer;
-            transition: 0.2s;
-        }
-        .remove-btn:hover { color: var(--danger); }
-
-        .add-btn-dashed {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            border: 2px dashed var(--border);
-            color: var(--text-muted);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-        }
-        .add-btn-dashed:hover { border-color: var(--primary); color: var(--primary); background: rgba(124, 77, 255, 0.05); }
-
-        /* --- ACTION BUTTONS --- */
-        .action-bar {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.2s;
-            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
-        }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
-        .btn-primary:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; box-shadow: none; transform: none; }
-
-        /* --- LOGIN SCREEN --- */
-        #login-screen {
-            position: fixed; inset: 0;
-            background: var(--bg-body);
-            z-index: 100;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center;
-        }
         .login-card {
+            background: rgba(20, 20, 25, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 40px 30px; border-radius: 24px; border: 1px solid var(--border);
+            text-align: center;
+            box-shadow: 0 0 100px rgba(140, 82, 255, 0.15);
+            max-width: 400px; width: 100%; 
+            animation: fadeInUp 0.8s ease;
+        }
+        @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+        .login-logo {
+            width: 100px;
+            height: 100px; object-fit: contain; margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--primary-glow));
+            transition: transform 0.5s;
+        }
+        .login-logo:hover { transform: scale(1.05) rotate(2deg); }
+
+        .login-btn {
+            background: #fff;
+            color: #000; border: none; padding: 16px; font-size: 1rem; 
+            border-radius: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 12px;
+            margin: 30px auto 0; transition: 0.3s; font-weight: 700; width: 100%;
+        }
+        .login-btn:hover { transform: scale(1.02); box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
+
+        /* --- HEADER --- */
+        .user-header {
+            display: flex;
+            justify-content: space-between; align-items: center;
+            padding: 10px 20px; 
+            background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0; z-index: 100; display: none; height: var(--header-height);
+        }
+        .header-profile { display: flex; align-items: center; gap: 12px; }
+        .user-badge {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent); padding: 2px 8px;
+            border-radius: 4px; font-size: 0.65em; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .user-name { font-weight: 600; font-size: 0.9em; max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* --- LAYOUT GRID --- */
+        .main-wrapper {
+            max-width: 1600px;
+            margin: 0 auto; padding: 20px;
+            display: none; 
+            grid-template-columns: 1fr 400px;
+            gap: 30px; align-items: start;
+        }
+
+        .editor-panel { 
             background: var(--bg-panel);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            max-width: 400px; width: 90%;
+            border: 1px solid var(--border); 
+            padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .github-btn {
-            background: #24292e; color: white;
-            width: 100%; padding: 14px;
-            border-radius: 8px; border: none;
-            font-weight: 600; font-size: 1rem;
-            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px;
-            margin-top: 20px; transition: 0.2s;
-        }
-        .github-btn:hover { background: #2f363d; transform: scale(1.02); }
 
-        /* --- TOASTS --- */
-        .toast {
-            position: fixed; bottom: 20px; right: 20px;
-            background: var(--bg-panel); border: 1px solid var(--border);
-            padding: 16px 24px; border-radius: 8px;
-            display: flex; align-items: center; gap: 12px;
-            box-shadow: var(--shadow);
-            transform: translateY(100px); opacity: 0;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 200;
+        /* --- TYPOGRAPHY & INPUTS --- */
+        h2 { 
+            color: #fff;
+            border-bottom: 1px solid var(--border); padding-bottom: 15px; 
+            margin: 0 0 25px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1.5px; 
+            display: flex; align-items: center;
+            gap: 12px; font-weight: 700; 
         }
-        .toast.show { transform: translateY(0); opacity: 1; }
-        .toast.success { border-left: 4px solid var(--success); }
-        .toast.error { border-left: 4px solid var(--danger); }
+        h2 i { color: var(--primary); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .cms-container { grid-template-columns: 1fr; }
-            .sidebar { position: static; }
+        label { 
+            display: block;
+            margin: 20px 0 8px; font-weight: 600; font-size: 0.75rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
         }
-        .hidden { display: none !important; }
+        label span { color: #ff4757; }
+        
+        input, textarea, select { 
+            width: 100%;
+            padding: 14px 16px; background: var(--bg-input);
+            border: 1px solid var(--border); color: white; border-radius: var(--radius); 
+            box-sizing: border-box; font-family: 'Outfit', sans-serif; font-size: 16px;
+            transition: all 0.2s;
+            appearance: none;
+        }
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--primary);
+            outline: none; background: #1f2029; 
+        }
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b8d96'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 16px;
+        }
+        input:disabled { opacity: 0.6; cursor: not-allowed; background: #121216; border-color: #222; }
+
+        /* --- BUTTONS --- */
+        .btn { 
+            width: 100%;
+            padding: 16px; border: none; cursor: pointer; font-weight: 700;
+            margin-top: 20px; border-radius: var(--radius); transition: 0.2s; 
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; 
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:active { transform: scale(0.98); }
+
+        .btn-add { background: rgba(255,255,255,0.03); color: var(--text-muted); border: 1px dashed #444; }
+        .btn-add:hover { border-color: var(--accent); color: var(--accent); background: rgba(0, 240, 255, 0.05); }
+        
+        .btn-gen { 
+            background: var(--gradient);
+            color: white; font-size: 1rem; margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(140, 82, 255, 0.2);
+        }
+        .btn-gen:hover { box-shadow: 0 15px 40px rgba(140, 82, 255, 0.4); }
+
+        /* --- SEASONS & CARDS --- */
+        .season-card { 
+            background: #131419;
+            padding: 20px; border-radius: 16px; margin-bottom: 25px;
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+        }
+        .season-card::before {
+            content:'';
+            position: absolute; left:0; top:0; bottom:0; width: 4px; background: var(--accent);
+        }
+        
+        .chapter-row { 
+            background: #0b0c10;
+            padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 10px;
+        }
+        .chapter-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .chapter-num { 
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace; font-weight: bold;
+            background: rgba(0, 240, 255, 0.1); padding: 4px 8px; border-radius: 6px; font-size: 0.85em;
+        }
+        
+        .c-inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* --- AUDIO PLAYER --- */
+        .audio-preview-box {
+            background: #0b0c10;
+            padding: 15px; border-radius: 12px; border: 1px solid #222;
+            display: flex; flex-direction: column; gap: 10px; width: 100%;
+        }
+        audio { width: 100%; height: 40px; margin-top: 5px; opacity: 0.9; border-radius: 8px; }
+        .audio-status-text { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; }
+
+        /* --- PREVIEW SIDEBAR --- */
+        .preview-sidebar { position: sticky; top: 100px; height: fit-content; }
+        
+        .web-card { 
+            background: #000;
+            border-radius: 20px; overflow: hidden; border: 1px solid #333;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+        .web-cover { 
+            width: 100%;
+            height: 350px; object-fit: cover; opacity: 0.85;
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+        .web-info { padding: 25px; margin-top: -100px; position: relative; z-index: 2; }
+        .web-title { 
+            font-size: 1.8em;
+            font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 8px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+        }
+        .web-alias { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.8em; }
+
+        .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+        .preview-s-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 2/3; border: 1px solid #333; }
+        .preview-s-item img { width: 100%; height: 100%; object-fit: cover; }
+        .preview-s-title { 
+            position: absolute;
+            bottom: 0; width: 100%; background: rgba(0,0,0,0.8); 
+            font-size: 0.6em; text-align: center; padding: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff;
+        }
+
+        /* --- UTILS --- */
+        .row-flex { display: flex; gap: 20px; }
+        .col-flex { flex: 1; }
+        
+        .dynamic-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start;}
+        .btn-mini-del { 
+            background: #1a1a1a;
+            color: #ff4757; border: 1px solid #333; 
+            width: 52px; height: 52px; flex-shrink: 0; border-radius: var(--radius); 
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .btn-del-section { 
+            position: absolute;
+            top: 15px; right: 15px; 
+            background: rgba(255, 71, 87, 0.1); color: #ff4757; 
+            border: 1px solid #ff4757; padding: 6px 12px; border-radius: 20px;
+            cursor: pointer; font-size: 0.7em; font-weight: 700;
+        }
+
+        /* GENRES BOX */
+        .genres-box { 
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; 
+            background: var(--bg-input); padding: 15px; border-radius: var(--radius); border: 1px solid var(--border);
+            max-height: 250px; overflow-y: auto;
+        }
+        .genres-box label {
+            margin: 0;
+            text-transform: none; color: #ccc; font-weight: 500; font-size: 0.9em;
+            padding: 12px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid transparent;
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
+        }
+        .genres-box label:active { background: rgba(255,255,255,0.1); }
+        .genres-box input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
+
+        /* TOAST */
+        #toast { 
+            visibility: hidden;
+            background-color: #1a1b20; color: #fff; text-align: center; 
+            border-radius: 50px; padding: 16px 24px; position: fixed; z-index: 2000; 
+            left: 50%; bottom: 30px;
+            transform: translateX(-50%); 
+            border: 1px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            display: flex; gap: 10px; align-items: center; font-weight: 600;
+            font-size: 0.9rem;
+            width: max-content; max-width: 90%;
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* LOG */
+        #statusLog {
+            display:none;
+            margin-top:20px; padding:20px; background:#000; 
+            border-radius:8px; border:1px solid #333; 
+            font-family:'JetBrains Mono', monospace; font-size:0.8em; color:#00ffbf;
+            max-height: 200px; overflow-y: auto; word-break: break-all;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            .preview-sidebar {
+                position: relative;
+                top: 0;
+                order: 2; 
+                margin-top: 40px;
+            }
+            .row-flex { flex-direction: column; gap: 0; }
+            .col-flex { margin-bottom: 0; }
+            .editor-panel { padding: 20px; }
+            .c-inputs-grid { grid-template-columns: 1fr; } 
+            .web-cover { height: 250px; }
+            .web-title { font-size: 1.5em; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-card">
-            <div style="font-size: 3rem; margin-bottom: 20px; color: var(--primary);"><i class="fas fa-cube"></i></div>
-            <h1 style="margin:0 0 10px 0;">Archinime CMS</h1>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Consola de Administración Master</p>
-            <button class="github-btn" onclick="handleGithubLogin()">
-                <i class="fab fa-github"></i> Conectar con GitHub
-            </button>
-            <p id="login-status" style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted);"></p>
+<div id="loginScreen">
+    <div class="login-card">
+        <img src="Logo_Archinime.avif" alt="Archinime Logo" class="login-logo">
+        <h1 style="color:#fff; margin:0; font-size:1.8rem; font-weight:800;">ARCHINIME CMS</h1>
+        <p style="color:var(--text-muted); margin-top:8px; font-size:0.9rem;">Consola de Aportadores</p>
+        
+        <button class="login-btn" onclick="signInWithGitHub()">
+            <i class="fab fa-github" style="font-size:1.5em"></i> Conectar con GitHub
+        </button>
+        
+        <div id="loginError" style="color: #ff4757; margin-top: 20px; display: none; background: rgba(255, 71, 87, 0.1); padding: 10px; border-radius: 8px; font-size: 0.9em;">
+            <i class="fas fa-ban"></i> <span id="errorText">Acceso Denegado</span>
         </div>
     </div>
+</div>
 
-    <div class="cms-container hidden" id="app-interface">
-        <aside class="sidebar">
-            <div class="brand"><i class="fas fa-layer-group"></i> Archinime</div>
-            
-            <nav class="nav-menu">
-                <button class="nav-btn active" onclick="switchTab('basic')">
-                    <i class="fas fa-info-circle"></i> Datos Básicos
-                </button>
-                <button class="nav-btn" onclick="switchTab('seasons')">
-                    <i class="fas fa-film"></i> Temp. y Capítulos
-                </button>
-                <button class="nav-btn" onclick="switchTab('player')">
-                    <i class="fas fa-play-circle"></i> Reproductores
-                </button>
-                <button class="nav-btn" onclick="switchTab('music')">
-                    <i class="fas fa-music"></i> Banda Sonora
-                </button>
-            </nav>
+<div id="userHeader" class="user-header">
+    <div class="header-profile">
+        <img src="Logo_Archinime.avif" style="width:28px; height:28px; object-fit:contain;">
+        <img id="userAvatarImg" src="" style="width:36px; height:36px; border-radius:50%; border:2px solid var(--primary);">
+        <div>
+            <div class="user-badge">Verificado</div>
+            <div id="userNameDisplay" class="user-name">Usuario</div>
+        </div>
+    </div>
+    <button onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
+        <i class="fas fa-power-off"></i>
+    </button>
+</div>
 
-            <div class="user-status">
-                <img id="user-img" class="user-avatar" src="" alt="User">
-                <div style="flex:1; overflow:hidden;">
-                    <div id="user-name" style="color:var(--text-main); font-weight:600; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">Usuario</div>
-                    <div style="font-size:0.75rem; color:var(--success);">● Conectado</div>
-                </div>
-                <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-power-off"></i></button>
+<div class="main-wrapper" id="cmsContent">
+    
+    <div class="editor-panel">
+        <h2><i class="fas fa-pen-to-square"></i> 1. Ficha Técnica</h2>
+        
+        <label>Título Principal <span>*</span></label>
+        <input type="text" id="tituloAnime" placeholder="Ej: Dragon Ball Z" onblur="autoCap(this); validate(this);" oninput="updateWebPreview()">
+
+        <label>Alias Alternativos</label>
+        <div id="aliasContainer"></div>
+        <button class="btn btn-add" style="margin-top:10px; padding:12px;" onclick="addAlias()">
+            <i class="fas fa-plus"></i> AGREGAR ALIAS
+        </button>
+
+        <label style="margin-top:25px">URL Portada Vertical (.AVIF) <span>*</span></label>
+        <div style="display:flex; gap:15px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="flex:1; min-width: 200px;">
+                <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this); updateWebPreview()" onblur="validate(this);">
+                <div id="dimDisplay" style="color:var(--text-muted); font-size:0.8em; margin-top:8px; font-family:'JetBrains Mono'"></div>
             </div>
-        </aside>
+            <img id="mainCoverPreview" style="width:100px; height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
+        </div>
+        
+        <label>Géneros (Máx 4 visibles) <span>*</span></label>
+        <div class="genres-box" id="genresContainer"></div>
 
-        <main class="main-panel">
-            
-            <div id="tab-basic" class="tab-content">
-                <div class="section-title">Información del Anime</div>
+        <label>Sinopsis <span>*</span></label>
+        <textarea id="sinopsisAnime" rows="5" placeholder="Sinopsis oficial..." onblur="autoCap(this); validate(this)"></textarea>
+        
+        <div class="row-flex">
+            <div class="col-flex">
+                <label>Demografía</label>
+                <select id="demografiaAnime" onchange="updateWebPreview()">
+                    <option value="Shōnen">Shōnen</option>
+                    <option value="Seinen">Seinen</option>
+                    <option value="Shōjo">Shōjo</option>
+                    <option value="Josei">Josei</option>
+                    <option value="Kodomo">Kodomo</option>
+                </select>
+            </div>
+            <div class="col-flex">
+                <label>Valoración</label>
+                <select id="ratingAnime" onchange="updateWebPreview()">
+                    <option value="excellent">⭐ Excelente (4.8+)</option>
+                    <option value="good">⭐ Buena (4.6+)</option>
+                    <option value="regular">⭐ Regular (-4.5)</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 style="margin-top:50px"><i class="fas fa-layer-group"></i> 2. Estructura</h2>
+        <div id="seasonsContainer"></div>
+        <button class="btn btn-add" onclick="addSeason()"><i class="fas fa-folder-plus"></i> NUEVA TEMPORADA / PELÍCULA</button>
+
+        <h2 style="margin-top:50px"><i class="fas fa-music"></i> 3. Banda Sonora</h2>
+        <div id="musicContainer"></div>
+        <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
+
+        <button class="btn btn-gen" onclick="subirAGithHub()">
+            <i class="fas fa-cloud-arrow-up"></i> COMPILAR Y SUBIR
+        </button>
+        
+        <div id="statusLog"></div>
+    </div>
+
+    <div class="preview-sidebar">
+        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
+        <div class="web-card">
+            <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Cover">
+            <div class="web-info">
+                <div id="webTitle" class="web-title">Título</div>
+                <div id="webAlias" class="web-alias">ID: ###</div>
                 
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label class="form-label">Título Principal</label>
-                        <input type="text" id="title" class="input-field" placeholder="Ej: Dan Da Dan">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">ID (Automático)</label>
-                        <input type="text" id="anime-id" class="input-field" placeholder="Se genera al guardar..." readonly style="opacity: 0.7;">
-                    </div>
+                <div style="display:flex; justify-content:space-between; margin-top:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    <span id="webDemography" style="color:var(--accent); font-weight:700; font-size:0.8em">SHONEN</span>
+                    <span id="webRating" style="color:#facc15; font-size:0.8em">⭐ --</span>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Sinopsis</label>
-                    <textarea id="desc" class="input-field" placeholder="Descripción completa del anime..."></textarea>
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label class="form-label">Imagen de Portada (Archivo)</label>
-                        <input type="text" id="cover" class="input-field" placeholder="Ej: dandadan.avif">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Rating (0.0 - 5.0)</label>
-                        <input type="number" id="rating" class="input-field" step="0.1" placeholder="4.9">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Géneros (Separados por coma)</label>
-                    <input type="text" id="genres" class="input-field" placeholder="Acción, Comedia, Sobrenatural">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Nombres Alternativos (Aliases)</label>
-                    <input type="text" id="aliases" class="input-field" placeholder="Nombre en japonés, inglés...">
-                </div>
+                <div id="webTags" style="display:flex; flex-wrap:wrap; gap:6px; margin:15px 0;"></div>
+                
+                <div style="font-size:0.7em; font-weight:bold; color:#777; margin-top:20px; letter-spacing:1px;">COLECCIÓN:</div>
+                <div id="webSeasonsGrid" class="preview-seasons-grid"></div>
             </div>
-
-            <div id="tab-seasons" class="tab-content hidden">
-                <div class="section-title">Temporadas y Episodios</div>
-                <div id="seasons-list" class="dynamic-list"></div>
-                <button class="add-btn-dashed" onclick="addSeasonUI()" style="margin-top:15px;">
-                    <i class="fas fa-plus"></i> Añadir Temporada
-                </button>
-            </div>
-
-            <div id="tab-player" class="tab-content hidden">
-                <div class="section-title">Enlaces de Video (DB Player)</div>
-                <div class="p-3 mb-4" style="background: rgba(0,200,83,0.1); border: 1px solid var(--success); border-radius:8px; font-size:0.9rem; color: #b9f6ca;">
-                    <i class="fas fa-info-circle"></i> Los enlaces se vincularán automáticamente a las temporadas/capítulos creados en la pestaña anterior.
-                </div>
-                <div id="players-container" class="dynamic-list"></div>
-            </div>
-
-            <div id="tab-music" class="tab-content hidden">
-                <div class="section-title">Música (OST/Openings)</div>
-                <div id="music-list" class="dynamic-list"></div>
-                <button class="add-btn-dashed" onclick="addMusicUI()" style="margin-top:15px;">
-                    <i class="fas fa-music"></i> Añadir Pista de Audio
-                </button>
-            </div>
-
-            <div class="action-bar">
-                <button id="btn-publish" class="btn-primary" onclick="publishAll()">
-                    <i class="fas fa-cloud-upload-alt"></i> PUBLICAR TODO EN GITHUB
-                </button>
-            </div>
-        </main>
+        </div>
     </div>
+</div>
 
-    <div id="toast" class="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-msg">Operación exitosa</span>
-    </div>
+<div id="toast"><i class="fas fa-check-circle"></i> <span>Notificación</span></div>
 
 <script>
 // ============================================
@@ -410,374 +462,677 @@ const firebaseConfig = {
 const ALLOWED_USERS = ["archinime12@gmail.com"];
 
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+let currentUserToken = null;
 
-    // --- STATE MANAGEMENT ---
-    let currentUserToken = null;
-    let currentAnimeId = null; // Se calculará al leer index-data.js
-    let seasonsData = []; // Estructura temporal para UI
+// ============================================
+// AUTENTICACIÓN
+// ============================================
+auth.onAuthStateChanged((user) => {
+    if (user) checkAccess(user);
+    else showLogin();
+});
 
-    // --- AUTH LOGIC ---
-    function initApp() {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('app-interface').classList.remove('hidden');
-                
-                document.getElementById('user-name').innerText = user.displayName || "Admin";
-                document.getElementById('user-img').src = user.photoURL || "https://ui-avatars.com/api/?name=Admin";
+function signInWithGitHub() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    provider.addScope('repo'); 
+    auth.signInWithPopup(provider)
+        .then((result) => {
+            currentUserToken = result.credential.accessToken;
+            checkAccess(result.user);
+        }).catch((error) => {
+            console.error(error);
+            document.getElementById('errorText').innerText = error.message;
+            document.getElementById('loginError').style.display = 'block';
+        });
+}
 
-                // INTENTO RECUPERAR TOKEN SI SE PERDIÓ
-                if (!currentUserToken) {
-                    console.warn("⚠️ Token OAuth perdido por recarga. Usando TOKEN MANUAL DE RESPALDO.");
-                    currentUserToken = BACKUP_TOKEN; // <--- AQUÍ ESTÁ LA MAGIA
+function checkAccess(user) {
+    const email = user.email;
+    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
+    const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
+
+    if (isAllowed) {
+        showCMS(user);
+    } else {
+        document.getElementById('errorText').innerText = "No autorizado.";
+        document.getElementById('loginError').style.display = 'block';
+        setTimeout(() => auth.signOut(), 3000);
+    }
+}
+
+function showCMS(user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('userHeader').style.display = 'flex';
+    document.getElementById('cmsContent').style.display = 'grid';
+    document.getElementById('userAvatarImg').src = user.photoURL;
+    
+    let finalName = "Usuario";
+    if(user.reloadUserInfo && user.reloadUserInfo.screenName) finalName = "@" + user.reloadUserInfo.screenName;
+    else if (user.displayName) finalName = user.displayName;
+    else if (user.email) finalName = "@" + user.email.split('@')[0];
+
+    document.getElementById('userNameDisplay').innerText = finalName;
+}
+
+function showLogin() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('userHeader').style.display = 'none';
+    document.getElementById('cmsContent').style.display = 'none';
+}
+
+function logout() {
+    auth.signOut();
+    location.reload();
+}
+
+// ============================================
+// LÓGICA DEL FORMULARIO
+// ============================================
+const genresList = [
+    "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
+    "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
+    "Harem", "Hentai", "Horror", "Incesto", "Isekai", "Isekai Inverso", "Kaiju", "Mecha", "Militar", 
+    "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
+    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
+];
+const gContainer = document.getElementById('genresContainer');
+genresList.forEach(g => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" value="${g}" onchange="updateWebPreview()"> ${g}`;
+    gContainer.appendChild(label);
+});
+
+// Utils
+function showToast(msg, isError = false) {
+    const x = document.getElementById("toast");
+    x.innerHTML = isError ?
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : 
+        `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.className = "show";
+    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
+    setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function autoCap(input) {
+    if(input.value) input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+}
+
+function validate(input) {
+    if(!input.value.trim()) input.style.borderColor = '#ff4757';
+    else input.style.borderColor = '#2a2b35';
+}
+
+function log(msg) {
+    const el = document.getElementById('statusLog');
+    el.style.display = 'block';
+    el.innerHTML += `> ${msg}<br>`;
+    el.scrollTop = el.scrollHeight;
+}
+
+// Imagen Cover Check
+function checkCoverVisual(input) {
+    const img = document.getElementById('mainCoverPreview');
+    const display = document.getElementById('dimDisplay');
+    const val = input.value.trim();
+    
+    if(val === "") {
+        img.style.display = 'none';
+        display.innerText = "";
+        updateWebPreview(); // Update preview also when empty
+        return;
+    }
+    img.src = val;
+    img.style.display = 'block';
+    display.innerText = "Cargando...";
+    img.onload = function() { display.innerText = `OK: ${this.naturalWidth}x${this.naturalHeight}px`; updateWebPreview(); };
+    img.onerror = function() { display.innerText = "URL inválida"; img.style.display='none'; };
+}
+
+function addAlias() {
+    const container = document.getElementById('aliasContainer');
+    const div = document.createElement('div');
+    div.className = 'dynamic-item';
+    div.innerHTML = `
+        <input type="text" class="alias-input" placeholder="Alias..." oninput="updateWebPreview()">
+        <button class="btn-mini-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-times"></i></button>
+    `;
+    container.appendChild(div);
+}
+
+// ============================================
+// AUDIO PLAYER LOGIC
+// ============================================
+function addMusic() {
+    const container = document.getElementById('musicContainer');
+    const div = document.createElement('div');
+    div.className = 'dynamic-item';
+    // Se usa oninput para actualización rápida, y onchange también.
+    div.innerHTML = `
+        <div class="audio-preview-box">
+            <input type="text" class="m-url" placeholder="Enlace directo al audio (mp3, ogg, etc)" oninput="updateAudioPreview(this)">
+            <audio controls preload="none"></audio>
+            <div class="audio-status-text"></div>
+        </div>
+        <button class="btn-mini-del" onclick="this.parentElement.remove()" style="height:auto; aspect-ratio:1/1"><i class="fas fa-trash"></i></button>
+    `;
+    container.appendChild(div);
+}
+
+function updateAudioPreview(input) {
+    const parent = input.parentElement;
+    const audioEl = parent.querySelector('audio');
+    const statusEl = parent.querySelector('.audio-status-text');
+    
+    // Si no hay valor, resetear
+    if (!input.value.trim()) {
+        statusEl.innerHTML = '';
+        return;
+    }
+
+    statusEl.innerHTML = '<span style="color:#facc15"><i class="fas fa-circle-notch fa-spin"></i> Cargando...</span>';
+    audioEl.src = input.value;
+    audioEl.load(); // Importante forzar la carga
+    
+    audioEl.onloadeddata = () => {
+        statusEl.innerHTML = '<span style="color:#00ffbf"><i class="fas fa-check"></i> Audio válido</span>';
+    };
+    audioEl.onerror = () => {
+        statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error de audio</span>';
+    };
+}
+
+
+// ============================================
+// LOGICA DE TEMPORADAS Y CAPITULOS
+// ============================================
+
+function addSeason() {
+    const container = document.getElementById('seasonsContainer');
+    const div = document.createElement('div');
+    div.className = 'season-card';
+    
+    div.innerHTML = `
+        <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
+        <div class="row-flex">
+            <div class="col-flex">
+                <label>Tipo de Contenido</label>
+                <select class="s-type" onchange="handleSeasonTypeChange(this)">
+                    <option value="" disabled selected>Seleccionar Tipo...</option>
+                    <option value="Temporada">Temporada</option>
+                    <option value="Pelicula">Película</option>
+                    <option value="OVA">OVA</option>
+                    <option value="Especial">Especial</option>
+                    <option value="Spin-Off">Spin-Off</option>
+                </select>
+            </div>
+            <div class="col-flex">
+                 <label>Nombre del Bloque (Auto)</label>
+                 <input type="text" class="s-name" placeholder="Seleccione Tipo..." disabled oninput="updateWebPreview()">
+            </div>
+        </div>
+        <label>Poster Vertical del Bloque</label>
+        <input type="text" class="s-img" placeholder="https://..." oninput="updateWebPreview()">
+        
+        <label>Cantidad de Capítulos</label>
+        <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
+        <div class="chapters-grid" style="margin-top:20px;"></div>
+    `;
+    container.appendChild(div);
+}
+
+function removeSeasonBlock(btn) {
+    btn.closest('.season-card').remove();
+    updateAllBlockNames();
+    updateWebPreview();
+}
+
+function updateAllBlockNames() {
+    const cards = document.querySelectorAll('.season-card');
+    let tempCount = 0;
+    let movieCount = 0;
+    let ovaCount = 0;
+    let specialCount = 0;
+
+    cards.forEach(card => {
+        const typeSelect = card.querySelector('.s-type');
+        const nameInput = card.querySelector('.s-name');
+        const type = typeSelect.value;
+
+        if (!type) return;
+
+        // Lógica de nombres bloqueada/desbloqueada
+        if (type === 'Spin-Off') {
+            // Spin-Off: Editable y Obligatorio
+            if (nameInput.disabled) {
+                nameInput.disabled = false;
+                nameInput.placeholder = "Nombre Obligatorio (Ej: Kakashi Gaiden)";
+                // Solo limpiar si era automático antes
+                if(nameInput.value.startsWith('Temporada') || nameInput.value.startsWith('Película') || nameInput.value.startsWith('OVA') || nameInput.value.startsWith('Especial')) {
+                    nameInput.value = "";
                 }
-                
-                log("Sistema listo. Token activo.");
-            } else {
-                document.getElementById('login-screen').classList.remove('hidden');
-                document.getElementById('app-interface').classList.add('hidden');
             }
-        });
-    }
-
-    function handleGithubLogin() {
-        const provider = new firebase.auth.GithubAuthProvider();
-        provider.addScope('repo'); // Permiso de escritura
-        
-        document.getElementById('login-status').innerText = "Conectando con GitHub...";
-
-        firebase.auth().signInWithPopup(provider)
-            .then((result) => {
-                // El token "fresco" viene aquí
-                currentUserToken = result.credential.accessToken;
-                console.log("Token OAuth obtenido exitosamente.");
-            }).catch((error) => {
-                console.error(error);
-                // Si falla el popup, intentamos usar el manual si el usuario ya está logueado en firebase
-                if(firebase.auth().currentUser) {
-                     currentUserToken = BACKUP_TOKEN;
-                     log("Error en popup, pero usando token manual.");
-                     document.getElementById('login-screen').classList.add('hidden');
-                     document.getElementById('app-interface').classList.remove('hidden');
-                } else {
-                    document.getElementById('login-status').innerText = "Error: " + error.message;
-                }
-            });
-    }
-
-    function handleLogout() {
-        firebase.auth().signOut().then(() => window.location.reload());
-    }
-
-    // --- UI TABS ---
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-        
-        document.getElementById('tab-' + tabId).classList.remove('hidden');
-        event.currentTarget.classList.add('active');
-
-        // Si cambiamos a player, refrescar la vista basada en temporadas
-        if(tabId === 'player') renderPlayerFields();
-    }
-
-    // --- SEASONS UI LOGIC ---
-    function addSeasonUI() {
-        const seasonIndex = seasonsData.length + 1;
-        const seasonObj = { num: seasonIndex, cover: '', eps: [] };
-        seasonsData.push(seasonObj);
-        renderSeasons();
-    }
-
-    function addEpisodeUI(seasonIdx) {
-        seasonsData[seasonIdx].eps.push({ title: `Capítulo ${seasonsData[seasonIdx].eps.length + 1}` });
-        renderSeasons();
-    }
-
-    function removeSeason(idx) {
-        seasonsData.splice(idx, 1);
-        // Renumerar
-        seasonsData.forEach((s, i) => s.num = i + 1);
-        renderSeasons();
-    }
-
-    function renderSeasons() {
-        const container = document.getElementById('seasons-list');
-        container.innerHTML = "";
-
-        seasonsData.forEach((season, sIdx) => {
-            const el = document.createElement('div');
-            el.className = 'list-item';
-            el.innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                    <strong><i class="fas fa-tv"></i> Temporada ${season.num}</strong>
-                    <i class="fas fa-trash remove-btn" onclick="removeSeason(${sIdx})"></i>
-                </div>
-                <div class="grid-2" style="margin-bottom:10px;">
-                    <input type="text" class="input-field" placeholder="Cover Temp (Ej: dan1.jpg)" 
-                        value="${season.cover}" oninput="seasonsData[${sIdx}].cover = this.value">
-                </div>
-                
-                <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
-                    <small style="color:var(--text-muted); display:block; margin-bottom:8px;">Episodios: ${season.eps.length}</small>
-                    <div id="eps-list-${sIdx}" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:8px;">
-                        ${season.eps.map((ep, eIdx) => `
-                            <input type="text" class="input-field" style="padding:8px; font-size:0.85rem;" 
-                            value="${ep.title}" oninput="seasonsData[${sIdx}].eps[${eIdx}].title = this.value">
-                        `).join('')}
-                    </div>
-                    <button class="add-btn-dashed" style="margin-top:10px; padding:8px; font-size:0.85rem;" onclick="addEpisodeUI(${sIdx})">
-                        + Añadir Cap
-                    </button>
-                </div>
-            `;
-            container.appendChild(el);
-        });
-    }
-
-    // --- PLAYER UI LOGIC ---
-    // Genera campos de link basados en las temporadas creadas
-    function renderPlayerFields() {
-        const container = document.getElementById('players-container');
-        container.innerHTML = "";
-        
-        if(seasonsData.length === 0) {
-            container.innerHTML = "<div style='color:var(--text-muted); text-align:center; padding:20px;'>Añade temporadas primero</div>";
-            return;
+        } else {
+            // Otros: Bloqueado y Auto-generado
+            nameInput.disabled = true;
+            if (type === 'Temporada') {
+                tempCount++;
+                nameInput.value = `Temporada ${tempCount}`;
+            } else if (type === 'Pelicula') {
+                movieCount++;
+                nameInput.value = `Película ${movieCount}`;
+            } else if (type === 'OVA') {
+                ovaCount++;
+                nameInput.value = `OVA ${ovaCount}`;
+            } else if (type === 'Especial') {
+                specialCount++;
+                nameInput.value = `Especial ${specialCount}`;
+            }
         }
+    });
+}
 
-        seasonsData.forEach((season, sIdx) => {
-            if(!season.links) season.links = {}; // Inicializar si no existe
+function handleSeasonTypeChange(select) {
+    const card = select.closest('.season-card');
+    const countInput = card.querySelector('.s-count');
+    const type = select.value;
 
-            let html = `<div class="list-item">
-                <div style="font-weight:700; margin-bottom:12px; color:var(--accent);">Temporada ${season.num}</div>`;
-            
-            season.eps.forEach((ep, eIdx) => {
-                const epNum = eIdx + 1;
-                // Init link structure for this ep
-                if(!season.links[epNum]) season.links[epNum] = { link: '', link2: '' };
-
-                html += `
-                <div style="margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
-                    <label class="form-label" style="font-size:0.8rem;">Capítulo ${epNum}</label>
-                    <div class="grid-2">
-                        <input type="text" class="input-field" placeholder="Google Drive Link" 
-                            value="${season.links[epNum].link}" 
-                            onchange="updateLink(${sIdx}, ${epNum}, 'link', this.value)">
-                        <input type="text" class="input-field" placeholder="Dropbox/Opción 2" 
-                            value="${season.links[epNum].link2 || ''}" 
-                            onchange="updateLink(${sIdx}, ${epNum}, 'link2', this.value)">
-                    </div>
-                </div>`;
-            });
-            html += `</div>`;
-            container.innerHTML += html;
-        });
-    }
-
-    function updateLink(sIdx, epNum, type, val) {
-        if(!seasonsData[sIdx].links) seasonsData[sIdx].links = {};
-        if(!seasonsData[sIdx].links[epNum]) seasonsData[sIdx].links[epNum] = {};
-        seasonsData[sIdx].links[epNum][type] = val;
-    }
-
-    // --- MUSIC UI LOGIC ---
-    let musicList = [];
-    function addMusicUI() {
-        musicList.push("");
-        renderMusic();
+    if (type === 'Pelicula') {
+        countInput.value = 1;
     }
     
-    function renderMusic() {
-        const container = document.getElementById('music-list');
-        container.innerHTML = "";
-        musicList.forEach((track, idx) => {
-            const el = document.createElement('div');
-            el.className = 'grid-2';
-            el.style.marginBottom = "10px";
-            el.innerHTML = `
-                <input type="text" class="input-field" placeholder="Nombre archivo .mp3" value="${track}" oninput="musicList[${idx}] = this.value">
-                <button onclick="musicList.splice(${idx},1); renderMusic()" style="background:var(--bg-input); border:1px solid var(--border); color:var(--danger); border-radius:8px; cursor:pointer;"><i class="fas fa-trash"></i></button>
-            `;
-            container.appendChild(el);
-        });
-    }
+    // Primero actualizar nombres de bloques
+    updateAllBlockNames();
+    
+    // Luego renderizar capitulos (porque el placeholder del nombre de capitulo depende del nombre del bloque)
+    if(countInput.value) renderChapters(countInput);
+    
+    updateWebPreview(); 
+}
 
-    // --- CORE: GITHUB SYNC LOGIC ---
+function renderChapters(input) {
+    const card = input.closest('.season-card');
+    const typeSelect = card.querySelector('.s-type');
+    const sNameInput = card.querySelector('.s-name');
+    const type = typeSelect ? typeSelect.value : "";
+    const blockName = sNameInput.value || type; // Nombre del bloque para placeholder o fallback
 
-    const OWNER = "Archinime";
-    const REPO = "-Archinime-";
+    const count = parseInt(input.value);
+    const list = card.querySelector('.chapters-grid');
+    
+    // Guardar valores existentes si hay
+    const existingRows = Array.from(list.querySelectorAll('.chapter-row'));
+    
+    list.innerHTML = '';
+    if(isNaN(count) || count < 1) return;
 
-    async function publishAll() {
-        const btn = document.getElementById('btn-publish');
+    // Lógica para mostrar input de título de capítulo:
+    // Temporada -> Generalmente no se usa título específico, pero lo dejaremos opcional.
+    // Pelicula/OVA/Especial/SpinOff -> Input opcional. Si vacío -> toma nombre del bloque.
+    
+    for(let i=0; i<count; i++) {
+        const row = document.createElement('div');
+        row.className = 'chapter-row';
         
-        // CHECK TOKEN MANUAL
-        if (!currentUserToken) currentUserToken = BACKUP_TOKEN;
+        // Recuperar datos si existían
+        let oldSub = '';
+        let oldLat = '';
+        let oldTitle = '';
+        if(existingRows[i]) {
+            oldSub = existingRows[i].querySelector('.c-link-sub').value;
+            oldLat = existingRows[i].querySelector('.c-link-lat').value;
+            const tInput = existingRows[i].querySelector('.c-title-ov');
+            if(tInput) oldTitle = tInput.value;
+        }
 
-        if(!currentUserToken) return alert("FATAL: No hay token disponible.");
+        let titleHtml = '';
+        let placeholderTitle = "";
+        
+        if (type === 'Temporada') {
+             placeholderTitle = `Capítulo ${i+1}`;
+        } else {
+             // Si es Película 1, el capítulo se llamará "Película 1" por defecto si no ponen nada
+             placeholderTitle = `${blockName}`;
+        }
 
-        try {
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Procesando...';
+        titleHtml = `<input type="text" class="c-title-ov" placeholder="Título opcional (Defecto: ${placeholderTitle})" value="${oldTitle}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">`;
 
-            // 1. LEER index-data.js para calcular nuevo ID
-            log("Leyendo índice para obtener ID...");
-            const indexFile = await getGithubFile(currentUserToken, OWNER, REPO, "index-data.js");
-            
-            // Extraer el array actual usando regex sucio pero efectivo para no usar eval
-            let indexContent = indexFile.content;
-            // Parseamos "manualmente" buscando el último ID
-            const idRegex = /id:(\d+)/g;
-            let match;
-            let maxId = 0;
-            while ((match = idRegex.exec(indexContent)) !== null) {
-                const id = parseInt(match[1]);
-                if (id > maxId) maxId = id;
-            }
-            const NEW_ID = maxId + 1;
-            document.getElementById('anime-id').value = NEW_ID;
-            log(`Nuevo ID generado: ${NEW_ID}`);
+        row.innerHTML = `
+            <div class="chapter-header">
+                <span class="chapter-num">CAPÍTULO ${i+1}</span>
+            </div>
+            <div class="c-inputs-grid">
+                <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado">
+                <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino">
+            </div>
+            ${titleHtml}
+        `;
+        list.appendChild(row);
+    }
+}
 
-            // 2. PREPARAR DATOS
-            // A. Index Data Item
-            const newIndexItem = {
-                id: NEW_ID,
-                title: document.getElementById('title').value,
-                aliases: document.getElementById('aliases').value.split(',').map(s=>s.trim()).filter(s=>s),
-                img: document.getElementById('cover').value,
-                rating: parseFloat(document.getElementById('rating').value) || 0,
-                genres: document.getElementById('genres').value.split(',').map(s=>s.trim()).filter(s=>s)
-            };
+// ============================================
+// PREVIEW
+// ============================================
+function updateWebPreview() {
+    const title = document.getElementById('tituloAnime').value;
+    document.getElementById('webTitle').innerText = title || 'Título';
+    
+    const coverUrl = document.getElementById('portadaAnime').value;
+    if(coverUrl) document.getElementById('webCover').src = coverUrl;
+    
+    const demo = document.getElementById('demografiaAnime').value;
+    document.getElementById('webDemography').innerText = demo ? demo.toUpperCase() : 'DEMO';
+    
+    const tagsContainer = document.getElementById('webTags');
+    tagsContainer.innerHTML = '';
+    document.querySelectorAll('#genresContainer input:checked').forEach((cb, index) => {
+        if(index < 4) { 
+            let s = document.createElement('span');
+            s.style.cssText = "font-size:0.65em; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.1); color:#ccc;";
+            s.innerText = cb.value;
+            tagsContainer.appendChild(s);
+        }
+    });
 
-            // B. Anime Detail Data
-            const newDetailData = {
-                title: newIndexItem.title,
-                desc: document.getElementById('desc').value,
-                cover: newIndexItem.img,
-                seasons: seasonsData.map(s => ({
-                    num: s.num,
-                    cover: s.cover,
-                    eps: s.eps // ya tiene {title}
-                }))
-            };
+    const grid = document.getElementById('webSeasonsGrid');
+    grid.innerHTML = '';
+    document.querySelectorAll('.season-card').forEach(card => {
+        const img = card.querySelector('.s-img').value;
+        const name = card.querySelector('.s-name').value;
+        // Solo mostrar si hay imagen o nombre
+        if(name) {
+            const div = document.createElement('div');
+            div.className = 'preview-s-item';
+            div.innerHTML = `<img src="${img || 'https://via.placeholder.com/150'}"><div class="preview-s-title">${name}</div>`;
+            grid.appendChild(div);
+        }
+    });
+}
 
-            // C. Player Data
-            const newPlayerData = {}; // Estructura: { "1": { "1": { link... } } }
-            seasonsData.forEach(s => {
-                const sNumStr = s.num.toString();
-                newPlayerData[sNumStr] = {};
-                if(s.links) {
-                    Object.keys(s.links).forEach(epKey => {
-                        newPlayerData[sNumStr][epKey] = {
-                            link: s.links[epKey].link,
-                            link2: s.links[epKey].link2,
-                            title: `${newIndexItem.title} T${s.num} Cap ${epKey}`
-                        };
-                    });
-                }
-            });
+// ============================================
+// GITHUB UPLOAD LOGIC & FORMATTING
+// ============================================
 
-            // D. Music Data
-            const newMusicData = musicList.filter(m => m.trim() !== "");
+// Helper para quitar comillas de claves específicas en Strings JSON
+function stringifyNoQuotes(obj, keysToRemoveQuotes) {
+    let json = JSON.stringify(obj, null, 4);
+    // Regex dinámica para quitar comillas de las claves pasadas
+    const regex = new RegExp(`\"(${keysToRemoveQuotes.join('|')})\"\:`, 'g');
+    return json.replace(regex, '$1:');
+}
 
-            // 3. ACTUALIZAR ARCHIVOS EN ORDEN
+// Helper específico para el formato de Video Player (una línea por capítulo)
+function formatPlayerEp(link, link2, title) {
+    // Formato estricto: link:'...', link2:'...', title:'...'
+    // Aseguramos que si no hay link, quede vacío pero presente
+    return `{ link:'${link}', link2:'${link2}', title:'${title}' }`;
+}
 
-            // -> Update index-data.js
-            await updateGithubFile(currentUserToken, OWNER, REPO, "index-data.js", content => {
-                // Insertar antes del cierre de array '];'
-                const insertStr = `,\n      ${JSON.stringify(newIndexItem)}`;
-                return content.replace(/\s*\];/, insertStr + "\n];");
-            });
-            log("Index actualizado.");
-
-            // -> Update anime-detail-data.js
-            await updateGithubFile(currentUserToken, OWNER, REPO, "anime-detail-data.js", content => {
-                // Insertar nueva key antes de la llave de cierre final
-                // Formato: const data = { ... , NEW_ID: {OBJ} };
-                // Buscamos la última llave de cierre
-                const newItemStr = `,\n    ${NEW_ID}: ${JSON.stringify(newDetailData, null, 4)}`;
-                return content.replace(/\s*};(\s*)$/, newItemStr + "\n};");
-            });
-            log("Detalles actualizados.");
-
-            // -> Update video-player-data.js
-            await updateGithubFile(currentUserToken, OWNER, REPO, "video-player-data.js", content => {
-                const newItemStr = `,\n      "${NEW_ID}": ${JSON.stringify(newPlayerData, null, 4)}`;
-                return content.replace(/\s*};(\s*)$/, newItemStr + "\n};");
-            });
-            log("Player actualizado.");
-
-            // -> Update musica-data.js
-            if (newMusicData.length > 0) {
-                await updateGithubFile(currentUserToken, OWNER, REPO, "musica-data.js", content => {
-                     const newItemStr = `,\n        ${NEW_ID}: ${JSON.stringify(newMusicData, null, 4)}`;
-                     return content.replace(/\s*};(\s*)$/, newItemStr + "\n};");
-                });
-                log("Música actualizada.");
-            }
-
-            log("✅ TODO TERMINADO CON ÉXITO");
-            showToast("Anime subido correctamente con ID: " + NEW_ID, "success");
-            btn.innerHTML = '<i class="fas fa-check"></i> Publicado';
-            alert(`¡Anime subido correctamente con ID: ${NEW_ID}`);
-        } catch (e) {
-            log("❌ ERROR CRÍTICO: " + e.message);
-            console.error(e);
-            alert("Error: " + e.message);
-        } finally {
-            btn.disabled = false;
+function generateJSON() {
+    const selectedGenres = [];
+    document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
+    
+    // Demografía en géneros
+    const demoSelect = document.getElementById('demografiaAnime');
+    if (demoSelect && demoSelect.value) {
+        const demoValue = demoSelect.value;
+        if (!selectedGenres.includes(demoValue)) {
+            selectedGenres.push(demoValue);
         }
     }
 
-    // GitHub Utils
-    async function getGithubFile(token, owner, repo, path) {
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-        const res = await fetch(url, { headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" } });
-        if(!res.ok) throw new Error(`Error leyendo ${path} (${res.status})`);
-        const data = await res.json();
-        // Decode base64 UTF8
-        const content = new TextDecoder().decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0)));
-        return { sha: data.sha, content: content };
-    }
+    const aliasList = [];
+    document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
 
-    async function updateGithubFile(token, owner, repo, path, modifyCallback) {
-        const current = await getGithubFile(token, owner, repo, path);
-        const newContent = modifyCallback(current.content);
-        
-        // Encode base64 UTF8
-        const encoded = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-        
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-        const res = await fetch(url, {
-            method: "PUT",
-            headers: { 
-                "Authorization": `token ${token}`, 
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: `CMS Update: ${path}`,
-                content: encoded,
-                sha: current.sha
-            })
+    // Rating value logic
+    let ratingVal = 4.0;
+    const rInput = document.getElementById('ratingAnime').value;
+    if(rInput === 'excellent') ratingVal = 4.9;
+    else if(rInput === 'good') ratingVal = 4.6;
+
+    const anime = {
+        id: 0, // Se setea al subir
+        titulo: document.getElementById('tituloAnime').value.trim(),
+        aliases: aliasList,
+        portada: document.getElementById('portadaAnime').value.trim(),
+        sinopsis: document.getElementById('sinopsisAnime').value.trim(),
+        demografia: document.getElementById('demografiaAnime').value, 
+        generos: selectedGenres,
+        rating: ratingVal,
+        musica: [],
+        temporadas: []
+    };
+
+    // Musica
+    document.querySelectorAll('#musicContainer .m-url').forEach(i => {
+        if(i.value) anime.musica.push(i.value.trim()); // Guardamos directo el string URL
+    });
+
+    // Temporadas
+    let globalOrder = 1;
+    
+    updateAllBlockNames(); // Asegurar nombres actualizados
+
+    document.querySelectorAll('.season-card').forEach(card => {
+        const eps = [];
+        const sName = card.querySelector('.s-name').value;
+        const sType = card.querySelector('.s-type').value;
+
+        card.querySelectorAll('.chapter-row').forEach((row, idx) => {
+            const sub = row.querySelector('.c-link-sub').value.trim();
+            const lat = row.querySelector('.c-link-lat').value.trim();
+            let customTitle = row.querySelector('.c-title-ov').value.trim();
+            
+            // Lógica de nombre por defecto si está vacío
+            if (!customTitle) {
+                if (sType === 'Temporada') {
+                    customTitle = `Capítulo ${idx + 1}`;
+                } else {
+                    // Para Peliculas, OVAS, Especiales, SpinOffs
+                    // Si es el único capitulo o son varios, si no ponen nombre, hereda el del bloque.
+                    // Ej: Bloque "Película 1", Cap 1 -> Title: "Película 1"
+                    // Ej: Bloque "OVA 1", Cap 1 -> Title: "OVA 1"
+                    customTitle = sName;
+                    // Si hay multiples capitulos en una OVA/Especial y no ponen nombre, 
+                    // podría quedar raro que todos se llamen "OVA 1", pero es la lógica solicitada de herencia.
+                    // Podríamos agregarle el índice si son varios, pero nos ceñimos a "guardar nombre igual que el tipo".
+                }
+            }
+
+            if(sub || lat) {
+                eps.push({
+                    num: idx + 1,
+                    link: sub,
+                    link2: lat,
+                    title: customTitle
+                });
+            }
         });
-        if(!res.ok) throw new Error(`Error escribiendo ${path}`);
+
+        if(eps.length > 0) {
+            anime.temporadas.push({
+                num: globalOrder++,
+                name: sName,
+                type: sType,
+                cover: card.querySelector('.s-img').value,
+                eps: eps
+            });
+        }
+    });
+
+    return anime;
+}
+
+async function subirAGithHub() {
+    const owner = "Archinime";
+    const repo = "-Archinime-";
+    const token = currentUserToken; // Token global
+    if(!token) return showToast("Error de sesión GitHub", true);
+
+    const nuevoAnime = generateJSON();
+    if(!nuevoAnime.titulo) return showToast("Falta el título principal", true);
+    
+    // Validar Spin-Offs nombres vacíos
+    let spinOffError = false;
+    document.querySelectorAll('.season-card').forEach(c => {
+        if(c.querySelector('.s-type').value === 'Spin-Off' && !c.querySelector('.s-name').value.trim()) spinOffError = true;
+    });
+    if(spinOffError) return showToast("Falta nombre en un Spin-Off", true);
+    
+    // Validar tipo
+    let typeError = false;
+    document.querySelectorAll('.season-card').forEach(c => {
+         if(!c.querySelector('.s-type').value) typeError = true;
+    });
+    if(typeError) return showToast("Selecciona el TIPO en todos los bloques", true);
+
+    document.getElementById('statusLog').innerHTML = "🚀 Iniciando subida...<br>";
+    
+    try {
+        log("1/5 Leyendo índice...");
+        const indexFile = await getGithubFile(token, owner, repo, 'index-data.js');
+        // Parsear el JS existente
+        let cleanIndex = indexFile.content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
+        let indexArr = (new Function("return " + cleanIndex))();
+
+        let maxId = 0;
+        indexArr.forEach(a => { if(a.id > maxId) maxId = a.id; });
+        const NEW_ID = maxId + 1;
+        nuevoAnime.id = NEW_ID;
+        log(`✅ ID Generado: ${NEW_ID}`);
+
+        // --- UPDATE 1: ANIME-DETAIL-DATA ---
+        log("2/5 Subiendo detalles...");
+        await updateGithubFile(token, owner, repo, 'anime-detail-data.js', (content) => {
+            let jsonStr = content.replace(/const\s+data\s*=\s*/, '').replace(/;\s*$/, '');
+            let dataObj = (new Function("return " + jsonStr))();
+            
+            dataObj[NEW_ID] = {
+                title: nuevoAnime.titulo,
+                desc: nuevoAnime.sinopsis,
+                cover: nuevoAnime.portada,
+                seasons: nuevoAnime.temporadas.map(t => ({
+                    num: t.num,
+                    name: t.name,
+                    cover: t.cover,
+                    eps: t.eps.map(e => ({ title: e.title })) // Solo title en detail
+                }))
+            };
+            
+            // Formatear sin comillas en las claves indicadas
+            let finalString = stringifyNoQuotes(dataObj, ['title', 'desc', 'cover', 'seasons', 'num', 'eps']);
+            return `const data = ${finalString};`;
+        });
+
+        // --- UPDATE 2: VIDEO-PLAYER-DATA ---
+        log("3/5 Actualizando Player...");
+        await updateGithubFile(token, owner, repo, 'video-player-data.js', (content) => {
+            let jsonStr = content.replace(/const\s+DB\s*=\s*/, '').replace(/;\s*$/, '');
+            let dbObj = (new Function("return " + jsonStr))();
+            
+            // Construir objeto en memoria primero
+            dbObj[NEW_ID] = {};
+            nuevoAnime.temporadas.forEach(t => {
+                dbObj[NEW_ID][t.num] = {};
+                t.eps.forEach(e => {
+                    dbObj[NEW_ID][t.num][e.num] = { 
+                        link: e.link||'', 
+                        link2: e.link2||'', 
+                        title: e.title 
+                    };
+                });
+            });
+
+            // AHORA convertimos a string con el formato ESPECÍFICO solicitado
+            // Iteramos manualmente para construir el string porque JSON.stringify no nos da el formato de una línea exacto con comillas simples en valores y sin comillas en claves
+            
+            let output = "const DB = {\n";
+            // Reconstruir todo el objeto DB (incluyendo lo viejo y lo nuevo)
+            for (const [animeId, seasons] of Object.entries(dbObj)) {
+                output += `      "${animeId}": {\n`;
+                for (const [seasonNum, eps] of Object.entries(seasons)) {
+                    output += `        "${seasonNum}": {\n`;
+                    for (const [epNum, epData] of Object.entries(eps)) {
+                        // AQUÍ está la magia del formato solicitado:
+                        // link:'url', link2:'url', title:'text' (todo en una fila, claves sin comillas, valores con comillas simples)
+                        const epString = formatPlayerEp(epData.link, epData.link2, epData.title);
+                        output += `          "${epNum}": ${epString},\n`;
+                    }
+                    output += `        },\n`;
+                }
+                output += `      },\n`;
+            }
+            output += "};";
+            return output;
+        });
+
+        // --- UPDATE 3: MUSICA-DATA ---
+        if (nuevoAnime.musica.length > 0) {
+            log("4/5 Subiendo música...");
+            await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
+                let jsonStr = content.replace(/const\s+audioPlaylists\s*=\s*/, '').replace(/;\s*$/, '');
+                let musicObj = (new Function("return " + jsonStr))();
+                musicObj[NEW_ID] = nuevoAnime.musica; // Array de strings
+                return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
+            });
+        }
+
+        // --- UPDATE 4: INDEX-DATA ---
+        log("5/5 Actualizando Índice...");
+        await updateGithubFile(token, owner, repo, 'index-data.js', (content) => {
+            let jsonStr = content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
+            let arr = (new Function("return " + jsonStr))();
+            
+            const newEntry = {
+                id: NEW_ID,
+                title: nuevoAnime.titulo,
+                img: nuevoAnime.portada,
+                rating: nuevoAnime.rating,
+                genres: nuevoAnime.generos
+            };
+            if(nuevoAnime.aliases.length > 0) newEntry.aliases = nuevoAnime.aliases;
+
+            arr.push(newEntry);
+            
+            // Formatear sin comillas en claves del index
+            let finalString = stringifyNoQuotes(arr, ['id', 'title', 'aliases', 'img', 'rating', 'genres']);
+            return `const animes = ${finalString};`;
+        });
+
+        log("✨ ¡COMPLETADO CON ÉXITO!");
+        alert(`Anime subido correctamente con ID: ${NEW_ID}`);
+        location.reload(); // Recargar para limpiar
+
+    } catch (e) {
+        log("❌ ERROR CRÍTICO: " + e.message);
+        console.error(e);
+        alert("Error: " + e.message);
     }
+}
 
-    function log(msg) {
-        console.log(`[CMS] ${msg}`);
-        document.getElementById('toast-msg').innerText = msg;
-    }
+// GitHub Utils
+async function getGithubFile(token, owner, repo, path) {
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const res = await fetch(url, { headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" } });
+    if(!res.ok) throw new Error(`Error leyendo ${path}`);
+    const data = await res.json();
+    const content = new TextDecoder().decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0)));
+    return { sha: data.sha, content: content };
+}
 
-    function showToast(msg, type="success") {
-        const t = document.getElementById('toast');
-        t.className = `toast show ${type}`;
-        t.querySelector('span').innerText = msg;
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    // Start
-    initApp();
-
+async function updateGithubFile(token, owner, repo, path, modifyCallback) {
+    const current = await getGithubFile(token, owner, repo, path);
+    const newContent = modifyCallback(current.content);
+    const encoded = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const res = await fetch(url, {
+        method: "PUT",
+        headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ message: `CMS Update: ${path}`, content: encoded, sha: current.sha })
+    });
+    if(!res.ok) throw new Error(`Error escribiendo ${path}`);
+}
 </script>
 </body>
 </html>
