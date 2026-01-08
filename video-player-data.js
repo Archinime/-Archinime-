@@ -2534,4 +2534,11 @@
 
 
 
-    };
+    ,
+      "72": {
+        "1": {
+          "1": { link:'https://drive.google.com/file/d/1OWitAmBd_VPhIX_kuAh2A3s2j_lgcu79/preview', link2:'https://drive.google.com/file/d/1OWitAmBd_VPhIX_kuAh2A3s2j_lgcu79/preview', title:'Sdggsg T1 Cap 1' },
+          "2": { link:'https://drive.google.com/file/d/1OWitAmBd_VPhIX_kuAh2A3s2j_lgcu79/preview', link2:'https://drive.google.com/file/d/1OWitAmBd_VPhIX_kuAh2A3s2j_lgcu79/preview', title:'Sdggsg T1 Cap 2' },
+        },
+      }
+};
