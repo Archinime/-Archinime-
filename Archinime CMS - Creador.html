@@ -287,7 +287,19 @@
             border-color: var(--primary);
             color: #fff;
         }
-        .genres-box input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
+        
+        /* CORRECCIÓN CHECKBOXES GÉNERO */
+        .genres-box input { 
+            appearance: auto; 
+            -webkit-appearance: auto;
+            width: 18px; 
+            height: 18px; 
+            margin: 0; 
+            accent-color: var(--primary);
+            background: transparent; /* Quita el fondo de input general */
+            border: none; /* Quita el borde de input general */
+            padding: 0;
+        }
 
         /* TOAST */
         #toast { 
@@ -730,29 +742,30 @@ function updateAllBlockNames() {
 
         if (!type) return;
 
-        // Lógica de habilitar/deshabilitar nombre según restricciones
-        if (type === 'OVA' || type === 'Especial' || type === 'Pelicula') {
-            nameInput.disabled = false; // Permitir editar nombre
+        // Regla: Temporada, OVA, Pelicula, Especial NO se pueden cambiar de nombre. Spin-Off SI.
+        if (type === 'Spin-Off') {
+            nameInput.disabled = false; // Solo Spin-Off editable
         } else {
-            nameInput.disabled = true; // Bloquear nombre para Temporada y Spin-Off
+            nameInput.disabled = true; // El resto bloqueado
         }
 
-        // Generar nombre por defecto
+        // Generar nombre por defecto con contador
         if (type === 'Temporada') {
             tempCount++;
             nameInput.value = `Temporada ${tempCount}`;
         } else if (type === 'Spin-Off') {
             spinOffCount++;
-            nameInput.value = `Spin-Off ${spinOffCount}`; // Auto-nombre para Spin-Off
+            // Spin-off puede tener un placeholder o valor inicial, pero es editable
+            if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
         } else if (type === 'Pelicula') {
             movieCount++;
-            if (!nameInput.value) nameInput.value = `Película ${movieCount}`;
+            nameInput.value = `Película ${movieCount}`;
         } else if (type === 'OVA') {
             ovaCount++;
-            if (!nameInput.value) nameInput.value = `OVA ${ovaCount}`;
+            nameInput.value = `OVA ${ovaCount}`;
         } else if (type === 'Especial') {
             specialCount++;
-            if (!nameInput.value) nameInput.value = `Especial ${specialCount}`;
+            nameInput.value = `Especial ${specialCount}`;
         }
     });
 }
@@ -799,10 +812,25 @@ function renderChapters(input) {
             oldLat = existingRows[i].querySelector('.c-link-lat').value;
         }
 
-        // Título del capítulo: Por defecto "Capítulo X"
         let defaultChapTitle = `Capítulo ${i+1}`;
-        // Si es OVA/Peli/Especial, el título por defecto puede ser el nombre del bloque, pero la instrucción dice "por defecto aunque ya esta sea Capitulo"
         
+        // Logica de input de nombre de capitulo:
+        // Temporada y Spin-Off -> Bloqueado (No se puede cambiar)
+        // OVA, Especial, Pelicula -> Desbloqueado (Se puede cambiar)
+        
+        let titleInputDisabled = "";
+        let titleInputValue = "";
+        let titlePlaceholder = "Título opcional...";
+
+        if(type === 'Temporada' || type === 'Spin-Off') {
+            titleInputDisabled = "disabled";
+            titleInputValue = defaultChapTitle;
+        } else {
+            // Para OVA/Peli/Especial, permitimos editar
+            titleInputValue = ""; 
+            titlePlaceholder = "Nombre (ej: El viaje...)";
+        }
+
         row.innerHTML = `
             <div class="chapter-header">
                 <span class="chapter-num">CAPÍTULO ${i+1}</span>
@@ -811,7 +839,7 @@ function renderChapters(input) {
                 <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado">
                 <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino">
             </div>
-            <input type="text" class="c-title-ov" placeholder="Título opcional (Defecto: ${defaultChapTitle})" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
+            <input type="text" class="c-title-ov" value="${titleInputValue}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
     }
@@ -852,7 +880,7 @@ function updateWebPreview() {
             const div = document.createElement('div');
             div.className = 'preview-s-item';
             
-            // Lógica de etiqueta de conteo
+            // Lógica de etiqueta de conteo debajo del tipo (como pidió el usuario: "abajito de cada tipo... indique cuantos capitulos tiene")
             let countLabel = "";
             if (type === 'Temporada' || type === 'Spin-Off') {
                 countLabel = `${count} Capítulos`;
@@ -953,15 +981,22 @@ function generateData() {
 
     let globalOrder = 1;
     let tempCounter = 0; 
-    let ovaCounter = 0;
+    
+    // Reiniciar contadores para video-player names
+    let seasonCountVP = 0;
+    let ovaCountVP = 0;
+    let movieCountVP = 0;
+    let specialCountVP = 0;
 
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
         const sType = card.querySelector('.s-type').value;
         
-        if(sType === 'Temporada') tempCounter++;
-        if(sType === 'OVA') ovaCounter++;
+        if(sType === 'Temporada') seasonCountVP++;
+        if(sType === 'OVA') ovaCountVP++;
+        if(sType === 'Pelicula') movieCountVP++;
+        if(sType === 'Especial') specialCountVP++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
             const sub = row.querySelector('.c-link-sub').value.trim();
@@ -969,36 +1004,37 @@ function generateData() {
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             
             // Lógica de títulos para Video-Player
-            // T1 Cap 1, OVA 1 "Name", etc.
+            // Temporada: Anime T1 Cap 1
+            // OVA: Anime OVA 1 "Nombre"
             
             let playerTitle = "";
-            let detailTitle = customTitleInput || `Capítulo ${idx+1}`; // Título para anime-detail-data
+            let detailTitle = ""; 
 
-            // Título para video-player-data (Nombre Global)
             if (sType === 'Temporada') {
-                playerTitle = `${anime.titulo} T${tempCount} Cap ${idx+1}`;
+                detailTitle = `Capítulo ${idx+1}`;
+                playerTitle = `${anime.titulo} T${seasonCountVP} Cap ${idx+1}`;
             } else if (sType === 'Spin-Off') {
+                // Spin-offs no tienen contador T, usan su nombre de bloque o T1 si es la primera
+                detailTitle = `Capítulo ${idx+1}`;
                 playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
             } else if (sType === 'OVA') {
-                // Si el nombre del bloque (sName) tiene un nombre personalizado entre parentesis o comillas, lo usamos.
-                // El usuario escribe el nombre en el bloque sName. Ej: "OVA 1" o "OVA 1 Nombre"
-                // El requerimiento dice: si tiene nombre sera Ova 1 "name", dentro del parentesis.
-                // Asumimos que si el usuario cambió el nombre del bloque, ese es el nombre completo.
-                // Pero si el usuario puso un título personalizado en el input del capítulo, usaremos ese.
-                
-                // Si el nombre del bloque es solo "OVA X", queda así.
-                // Si el usuario editó el nombre del bloque a "OVA 1 La Aventura", el título será ese.
-                playerTitle = `${anime.titulo} ${sName}`;
-                if (customTitleInput && customTitleInput !== `Capítulo ${idx+1}`) {
-                     playerTitle += ` "${customTitleInput}"`;
-                }
+                detailTitle = sName; // En detail-data suele ir el nombre del bloque
+                if(customTitleInput) detailTitle = customTitleInput;
+
+                playerTitle = `${anime.titulo} OVA ${ovaCountVP}`;
+                if(customTitleInput) playerTitle += ` "${customTitleInput}"`;
             } else if (sType === 'Pelicula') {
-                playerTitle = `${anime.titulo} ${sName}`;
-                if (customTitleInput && customTitleInput !== `Capítulo ${idx+1}`) {
-                     playerTitle += `: ${customTitleInput}`;
-                }
-            } else {
-                playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
+                detailTitle = sName;
+                if(customTitleInput) detailTitle = customTitleInput;
+
+                playerTitle = `${anime.titulo} Película ${movieCountVP}`;
+                if(customTitleInput) playerTitle += `: ${customTitleInput}`;
+            } else if (sType === 'Especial') {
+                detailTitle = sName;
+                if(customTitleInput) detailTitle = customTitleInput;
+
+                playerTitle = `${anime.titulo} Especial ${specialCountVP}`;
+                if(customTitleInput) playerTitle += `: ${customTitleInput}`;
             }
 
             if(sub || lat) {
