@@ -69,5 +69,5 @@ const animes = [
       {id:68, title:"It - Bienvenidos a Derry", aliases: ["It - Welcome to Derry"], img:"it.avif", rating:4.9, genres:["Terror","Sobrenatural","Suspenso","Drama","Thriller","Seijin"]},
       {id:69, title:"Cars", aliases: ["Rayo McQueen"], img:"cars.avif", rating:4.7, genres:["Infantil","Familiar","Aventura","Animación","Comedia","Acción","Road Movie","Deportivo","Kodomo"]},
       {id:70, title:"Kimi to Koete Koi ni Naru", aliases: ["With You, Our Love Will Make It Through"], img:"kimitokoete.avif", rating:4.3, genres:["Comedia","Romance","Escolar","Slice of Life","Drama","Fantasía","Shōjo"]},
-      {id:71, title:"Overlord", img:"overlord.avif", rating:4.8, genres:["Fantasía oscura","Aventura","Comedia","Acción","Isekai","Comedia oscura","RPG","Sobrenatural","Shōnen"]},
+      {id:71, title:"Overlord", img:"overlord.avif", rating:4.8, genres:["Fantasía oscura","Aventura","Comedia","Acción","Isekai","Comedia oscura","RPG","Sobrenatural","Shōnen"]}
     ];
