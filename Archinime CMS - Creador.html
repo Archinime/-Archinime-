@@ -1133,7 +1133,7 @@ async function subirAGithHub() {
             const generosStr = nuevoAnime.generos.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // IMPORTANTE: Agregamos una coma inicial por seguridad
+            // IMPORTANTE: Agregamos una coma inicial por seguridad y para mantener orden
             const newEntry = `,
       {id:${NEW_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
             
@@ -1196,7 +1196,6 @@ ${seasonsStr}        ]
         });
 
         // --- UPDATE 4: MUSICA-DATA ---
-        // Aquí estaba el error del ID 72/Musica. Faltaba una coma.
         log("5/5 Subiendo Música...");
         await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
             const insertionPoint = content.lastIndexOf('};');
@@ -1204,7 +1203,7 @@ ${seasonsStr}        ]
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
             
-            // IMPORTANTE: La coma al inicio `, \n` asegura que no rompa el JSON anterior
+            // IMPORTANTE: La coma al inicio aseguro que se escribe bien tras el elemento anterior
             const musicEntry = `,
         ${NEW_ID}: [\n            ${tracks}\n        ]`;
             
