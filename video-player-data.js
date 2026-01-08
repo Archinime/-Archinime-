@@ -2534,16 +2534,4 @@
 
 
 
-          "72": {
-        "1": {
-          "1": { link:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', link2:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', title:'Prueba T1 Cap 1' },
-          "2": { link:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', link2:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', title:'Prueba T1 Cap 2' },
-          "3": { link:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', link2:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', title:'Prueba T1 Cap 3' },
-        },
-      },
-      "73": {
-        "1": {
-          "1": { link:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', link2:'https://drive.google.com/file/d/1B8M97sypCgnyDhEHZ7kdngaR0xYLbICC/preview', title:'Gokuuuuuuuuu Película 1: sefssdfsdf' },
-        },
-      },
-};
+    };
