@@ -533,7 +533,10 @@ let currentUserToken = null;
 let isEditMode = false;
 let currentEditingId = null;
 let cachedIndex = [];
-let searchTimeout = null; // Para evitar lag al escribir
+let searchTimeout = null; 
+
+// LISTA DE DEMOGRAFÍAS (Para detectar al cargar)
+const DEMOGRAPHICS_LIST = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo"];
 
 // ============================================
 // AUTENTICACIÓN
@@ -597,9 +600,12 @@ const genresList = [
     "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
     "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
     "Harem", "Hentai", "Horror", "Incesto", "Isekai", "Isekai Inverso", "Kaiju", "Mecha", "Militar", 
-    "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
-    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
-];
+    "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Romance", "Slice of Life", "Sobrenatural", 
+    "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
+]; 
+// Nota: 'Seinen', 'Shonen' etc los quitamos de checkbox porque van en el select de Demografía
+// Pero si en tu lista original estaban mezclados, no pasa nada, el filtro los separará.
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
@@ -631,7 +637,7 @@ function log(msg) {
     el.scrollTop = el.scrollHeight;
 }
 
-// CONVERSOR DE LINKS (DROPBOX / DRIVE)
+// CONVERSOR DE LINKS
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
@@ -852,7 +858,6 @@ function renderChapters(input, existingEps = []) {
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
     
-    // Guardar datos actuales si no es carga inicial
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
@@ -873,7 +878,6 @@ function renderChapters(input, existingEps = []) {
         
         let sub = '', lat = '', customTitle = '';
         
-        // Prioridad: 1. Datos de Edición, 2. Datos guardados en memoria al cambiar input, 3. Vacio
         if(existingEps[i]) {
              sub = existingEps[i].link || '';
              lat = existingEps[i].link2 || '';
@@ -942,7 +946,7 @@ function updateWebPreview() {
 }
 
 // ============================================
-// API GITHUB Y PARSEO SEGURO (SOLUCIÓN ERROR CONST)
+// API GITHUB Y PARSEO SEGURO
 // ============================================
 async function getGithubFile(token, owner, repo, path) {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -957,20 +961,12 @@ async function getGithubFile(token, owner, repo, path) {
     };
 }
 
-// ESTA FUNCIÓN SOLUCIONA EL "UNEXPECTED TOKEN CONST"
 function safeEval(fileContent) {
     try {
-        // Buscamos el primer signo igual '='
         const eqIndex = fileContent.indexOf('=');
         if (eqIndex === -1) throw new Error("No se encontró asignación de variable");
-        
-        // Tomamos todo lo que está DESPUÉS del igual
         let dataStr = fileContent.substring(eqIndex + 1).trim();
-        
-        // Quitamos el punto y coma final si existe
         if (dataStr.endsWith(';')) dataStr = dataStr.slice(0, -1);
-        
-        // Evaluamos solo la estructura de datos (JSON/Array puro)
         return eval('(' + dataStr + ')');
     } catch (e) {
         console.error("Error parseando JS:", e);
@@ -996,16 +992,14 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA Y EDICIÓN (OPTIMIZADA SIN LAG)
+// CARGA Y EDICIÓN (OPTIMIZADA)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
-    document.getElementById('searchInput').value = ""; // Limpiar busqueda anterior
+    document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = ""; 
-    
-    // Cargar solo si está vacío para ahorrar datos
     if(cachedIndex.length === 0) loadIndexForSearch();
-    else filterSearch(); // Mostrar iniciales si ya hay caché
+    else filterSearch();
 }
 function closeSearchModal() { document.getElementById('searchModal').style.display = 'none'; }
 
@@ -1016,7 +1010,6 @@ async function loadIndexForSearch() {
     try {
         if(!currentUserToken) throw new Error("No hay sesión");
         const file = await getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js');
-        // USAMOS EL NUEVO PARSER SEGURO
         const data = safeEval(file.content);
         cachedIndex = data.reverse(); 
         filterSearch();
@@ -1028,19 +1021,14 @@ async function loadIndexForSearch() {
 }
 
 function filterSearch() {
-    // DEBOUNCE: Esperar que el usuario deje de escribir
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        _performFilter();
-    }, 300);
+    searchTimeout = setTimeout(() => { _performFilter(); }, 300);
 }
 
 function _performFilter() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
-    
-    // OPTIMIZACIÓN: Filtrar y cortar array a 50 elementos para evitar LAG
     const filtered = cachedIndex.filter(a => a.title.toLowerCase().includes(query)).slice(0, 50);
     
     filtered.forEach(anime => {
@@ -1056,7 +1044,6 @@ function _performFilter() {
         `;
         results.appendChild(div);
     });
-
     if(filtered.length === 0) results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados</div>';
 }
 
@@ -1072,7 +1059,6 @@ async function loadAnimeForEditing(id) {
             getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         ]);
 
-        // USAMOS safeEval PARA EVITAR EL ERROR 'CONST'
         const detObj = safeEval(detailFile.content);
         const playObj = safeEval(playerFile.content);
         const musObj = safeEval(musicFile.content);
@@ -1083,28 +1069,44 @@ async function loadAnimeForEditing(id) {
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
 
-        // UI SETUP
         isEditMode = true;
         currentEditingId = id;
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
         document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
 
-        // LLENADO
+        // 1. Cargar Datos Básicos
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
         document.getElementById('sinopsisAnime').value = targetDetail.desc;
         
+        // 2. Cargar datos del Index (Aliases, Generos, Rating, DEMOGRAFÍA)
         const indexEntry = cachedIndex.find(x => x.id === id);
+        
+        // Aliases
         document.getElementById('aliasContainer').innerHTML = '';
         if(indexEntry && indexEntry.aliases) indexEntry.aliases.forEach(a => addAlias(a));
 
+        // Géneros y Demografía
+        // Limpiar
+        document.querySelectorAll('#genresContainer input').forEach(cb => cb.checked = false);
+        document.getElementById('demografiaAnime').value = ""; // Reset select
+
         if(indexEntry && indexEntry.genres) {
-            document.querySelectorAll('#genresContainer input').forEach(cb => {
-                cb.checked = indexEntry.genres.includes(cb.value);
+            // Separar qué es género y qué es demografía
+            indexEntry.genres.forEach(g => {
+                if (DEMOGRAPHICS_LIST.includes(g)) {
+                    // Es demografía -> Setear Select
+                    document.getElementById('demografiaAnime').value = g;
+                } else {
+                    // Es género -> Checkear checkbox
+                    const cb = document.querySelector(`#genresContainer input[value="${g}"]`);
+                    if(cb) cb.checked = true;
+                }
             });
         }
         
+        // Rating
         const rateSelect = document.getElementById('ratingAnime');
         if(indexEntry) {
             if(indexEntry.rating >= 4.8) rateSelect.value = 'excellent';
@@ -1112,6 +1114,7 @@ async function loadAnimeForEditing(id) {
             else rateSelect.value = 'regular';
         }
         
+        // 3. Temporadas
         document.getElementById('seasonsContainer').innerHTML = '';
         targetDetail.seasons.forEach(s => {
             const seasonPlayer = targetPlayer[s.num] || {}; 
@@ -1123,6 +1126,7 @@ async function loadAnimeForEditing(id) {
             addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
         });
 
+        // 4. Música
         document.getElementById('musicContainer').innerHTML = '';
         targetMusic.forEach(url => addMusic(url));
 
@@ -1142,7 +1146,7 @@ function exitEditMode() {
     currentEditingId = null;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
-    location.reload(); // Es mas seguro recargar para limpiar todo
+    location.reload(); 
 }
 
 // ============================================
@@ -1254,7 +1258,7 @@ async function subirAGithHub() {
         if (!isEditMode) {
             log("1/5 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
-            const indexData = safeEval(indexFile.content); // USANDO safeEval
+            const indexData = safeEval(indexFile.content); 
             let maxId = 0;
             indexData.forEach(item => { if(item.id > maxId) maxId = item.id; });
             FINAL_ID = maxId + 1;
@@ -1263,7 +1267,7 @@ async function subirAGithHub() {
             log(`📝 Editando ID: ${FINAL_ID}`);
         }
 
-        // UPDATE INDEX
+        // UPDATE INDEX (AQUÍ ESTABA EL ERROR DEL GUARDADO DE DEMOGRAFÍA)
         log("2/5 Actualizando Index...");
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             let newContent = content;
@@ -1274,7 +1278,13 @@ async function subirAGithHub() {
             const insertionPoint = newContent.lastIndexOf('];');
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
-            const generosStr = nuevoAnime.generos.map(g => `"${g}"`).join(',');
+            // CORRECCIÓN: Agregar Demografía al array de géneros antes de guardar
+            const combinedGenres = [...nuevoAnime.generos];
+            if(nuevoAnime.demografia) {
+                combinedGenres.push(nuevoAnime.demografia);
+            }
+
+            const generosStr = combinedGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
