@@ -296,8 +296,8 @@
             height: 18px; 
             margin: 0; 
             accent-color: var(--primary);
-            background: transparent; /* Quita el fondo de input general */
-            border: none; /* Quita el borde de input general */
+            background: transparent;
+            border: none;
             padding: 0;
         }
 
@@ -788,6 +788,27 @@ function handleSeasonTypeChange(select) {
     updateWebPreview(); 
 }
 
+// ============================================
+// LÓGICA DE CONVERSIÓN DE LINKS AUTOMÁTICA
+// ============================================
+function autoConvertDriveLink(input) {
+    let val = input.value.trim();
+    // Expresión regular para detectar links de Drive en modo vista/preview
+    // Busca patrones que terminen en /view?usp=drive_link, /view, /preview, etc. y los normaliza a /preview
+    const driveRegex = /(https:\/\/drive\.google\.com\/file\/d\/[^\/]+)\/(?:view|preview)(?:\?.*)?/;
+    
+    if (driveRegex.test(val)) {
+        // Verifica si NO termina ya en /preview exactamente para evitar loops o mensajes innecesarios
+        if (!val.endsWith('/preview')) {
+            const match = val.match(driveRegex);
+            if (match && match[1]) {
+                input.value = match[1] + '/preview';
+                showToast("¡Link convertido a /preview!", false); // Mensaje de éxito verde
+            }
+        }
+    }
+}
+
 function renderChapters(input) {
     const card = input.closest('.season-card');
     const typeSelect = card.querySelector('.s-type');
@@ -836,8 +857,8 @@ function renderChapters(input) {
                 <span class="chapter-num">CAPÍTULO ${i+1}</span>
             </div>
             <div class="c-inputs-grid">
-                <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado">
-                <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino">
+                <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado" onblur="autoConvertDriveLink(this)">
+                <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino" onblur="autoConvertDriveLink(this)">
             </div>
             <input type="text" class="c-title-ov" value="${titleInputValue}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
@@ -1168,13 +1189,16 @@ ${seasonsStr}        ]
         if (nuevoAnime.musica.length > 0) {
             log("5/5 Subiendo Música...");
             await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
+                // Buscamos el último cierre de llave }; para insertar antes
                 const insertionPoint = content.lastIndexOf('};');
+                if(insertionPoint === -1) throw new Error("Formato musica-data corrupto");
                 
-                // Arreglado el formato de array de strings
                 const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
+                // Formato exacto:  ID: [ "track.mp3" ],
                 const musicEntry = `        ${NEW_ID}: [\n            ${tracks}\n        ],`;
                 
-                return content.slice(0, insertionPoint) + "\n" + musicEntry + "\n};";
+                // Insertamos antes del }; final
+                return content.slice(0, insertionPoint) + musicEntry + "\n};";
             });
         } else {
             log("5/5 (Sin música para subir)");
