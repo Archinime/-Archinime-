@@ -72,4 +72,6 @@ const animes = [
       {id:71, title:"Overlord", img:"overlord.avif", rating:4.8, genres:["Fantasía oscura","Aventura","Comedia","Acción","Isekai","Comedia oscura","RPG","Sobrenatural","Shōnen"]},
     
       {id:72, title:"Prueba", aliases: ["hola"], img:"https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=wd5pkyj1&raw=1", rating:4.9, genres:["Romance","Suspenso","Shōnen"]},
+
+      {id:73, title:"Gokuuuuuuuuu", img:"https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=m5p7yt7k&raw=1", rating:4.9, genres:["Aventura","Ciencia ficción","Deportivo","Shōnen"]},
 ];
