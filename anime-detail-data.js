@@ -3748,37 +3748,12 @@
             ]
           }
         ]
-      },
-    72: {
-        title: "Prueba",
-        desc: "Asdfsdgsdg",
-        cover: "https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=m5p7yt7k&raw=1",
-        seasons: [
-          {
-            num: 1,
-            name: "Temporada 1",
-            cover: "https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=m5p7yt7k&raw=1",
-            eps: [
-              { title: "Capítulo 1"},
-              { title: "Capítulo 2"},
-            ]
-          },
-        ]
-    },
-    72: {
-        title: "Prueba",
-        desc: "Asdfsdgsdg",
-        cover: "https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=m5p7yt7k&raw=1",
-        seasons: [
-          {
-            num: 1,
-            name: "Temporada 1",
-            cover: "https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=m5p7yt7k&raw=1",
-            eps: [
-              { title: "Capítulo 1"},
-              { title: "Capítulo 2"},
-            ]
-          },
-        ]
-    }
-};
+      }
+
+
+
+
+
+
+
+    };
