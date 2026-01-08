@@ -2534,10 +2534,4 @@
 
 
 
-          "72": {
-        "1": {
-          "1": { link:'https://drive.google.com/file/d/1sPO8g9lkY2HpCTo6Yy1tgHGiNnLtm4_2/preview', link2:'https://drive.google.com/file/d/1sPO8g9lkY2HpCTo6Yy1tgHGiNnLtm4_2/preview', title:'Capítulo 1' },
-          "2": { link:'https://drive.google.com/file/d/1sPO8g9lkY2HpCTo6Yy1tgHGiNnLtm4_2/preview', link2:'https://drive.google.com/file/d/1sPO8g9lkY2HpCTo6Yy1tgHGiNnLtm4_2/preview', title:'Capítulo 2' },
-        },
-      },
-};
+    };

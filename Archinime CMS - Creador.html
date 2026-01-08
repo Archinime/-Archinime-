@@ -244,6 +244,9 @@
             bottom: 0; width: 100%; background: rgba(0,0,0,0.8); 
             font-size: 0.6em; text-align: center; padding: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff;
         }
+        .preview-s-count {
+            position: absolute; top: 0; right: 0; background: var(--primary); color: #fff; font-size: 0.55em; padding: 2px 6px; border-bottom-left-radius: 6px; font-weight: bold;
+        }
 
         /* --- UTILS --- */
         .row-flex { display: flex; gap: 20px; }
@@ -254,7 +257,8 @@
             background: #1a1a1a;
             color: #ff4757; border: 1px solid #333; 
             width: 52px; height: 52px; flex-shrink: 0; border-radius: var(--radius); 
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center;
         }
         .btn-del-section { 
             position: absolute;
@@ -273,11 +277,16 @@
         }
         .genres-box label {
             margin: 0;
-            text-transform: none; color: #ccc; font-weight: 500; font-size: 0.9em;
+            text-transform: none; color: #8b8d96; font-weight: 500; font-size: 0.9em;
             padding: 12px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid transparent;
             cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
         }
-        .genres-box label:active { background: rgba(255,255,255,0.1); }
+        /* ESTILO SELECCIONADO PARA GENEROS */
+        .genres-box label:has(input:checked) {
+            background: rgba(140, 82, 255, 0.15);
+            border-color: var(--primary);
+            color: #fff;
+        }
         .genres-box input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
 
         /* TOAST */
@@ -288,7 +297,8 @@
             left: 50%; bottom: 30px;
             transform: translateX(-50%); 
             border: 1px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            display: flex; gap: 10px; align-items: center; font-weight: 600; font-size: 0.9rem;
+            display: flex; gap: 10px; align-items: center; font-weight: 600;
+            font-size: 0.9rem;
             width: max-content; max-width: 90%;
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
@@ -372,6 +382,7 @@
         </button>
 
         <label style="margin-top:25px">URL Portada Vertical (.AVIF) <span>*</span></label>
+        <div style="margin-bottom:5px; font-size:0.8em; color:var(--accent);">Permitido: 1000x1500, 2000x3000, 3412x5120</div>
         <div style="display:flex; gap:15px; align-items: flex-start; flex-wrap: wrap;">
             <div style="flex:1; min-width: 200px;">
                 <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this); updateWebPreview()" onblur="validate(this);">
@@ -380,7 +391,7 @@
             <img id="mainCoverPreview" style="width:100px; height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
         </div>
         
-        <label>Géneros (Máx 4 visibles) <span>*</span></label>
+        <label>Géneros (Selecciona varios) <span>*</span></label>
         <div class="genres-box" id="genresContainer"></div>
 
         <label>Sinopsis <span>*</span></label>
@@ -474,7 +485,7 @@ auth.onAuthStateChanged((user) => {
 
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
-    provider.addScope('repo'); 
+    provider.addScope('repo');
     auth.signInWithPopup(provider)
         .then((result) => {
             currentUserToken = result.credential.accessToken;
@@ -535,6 +546,7 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
@@ -569,6 +581,7 @@ function log(msg) {
     el.scrollTop = el.scrollHeight;
 }
 
+// VALIDACIÓN DE IMAGEN
 function checkCoverVisual(input) {
     const img = document.getElementById('mainCoverPreview');
     const display = document.getElementById('dimDisplay');
@@ -582,9 +595,37 @@ function checkCoverVisual(input) {
     }
     img.src = val;
     img.style.display = 'block';
-    display.innerText = "Cargando...";
-    img.onload = function() { display.innerText = `OK: ${this.naturalWidth}x${this.naturalHeight}px`; updateWebPreview(); };
-    img.onerror = function() { display.innerText = "URL inválida"; img.style.display='none'; };
+    display.innerText = "Verificando...";
+    
+    img.onload = function() { 
+        const w = this.naturalWidth;
+        const h = this.naturalHeight;
+        
+        // Dimensiones permitidas
+        const allowed = [
+            {w: 1000, h: 1500},
+            {w: 2000, h: 3000},
+            {w: 3412, h: 5120}
+        ];
+        
+        const isValid = allowed.some(d => d.w === w && d.h === h);
+        
+        if (isValid) {
+            display.innerHTML = `<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido: ${w}x${h}px</span>`;
+            input.style.borderColor = '#00ffbf';
+            updateWebPreview(); 
+        } else {
+            display.innerHTML = `<span style="color:#ff4757"><i class="fas fa-times"></i> Inválido: ${w}x${h}px. Permitido: 1000x1500, 2000x3000, 3412x5120</span>`;
+            input.style.borderColor = '#ff4757';
+            input.value = ""; // Limpiar input si es invalido
+            img.style.display = 'none';
+        }
+    };
+    img.onerror = function() { 
+        display.innerText = "URL inválida"; 
+        img.style.display='none'; 
+        input.style.borderColor = '#ff4757';
+    };
 }
 
 function addAlias() {
@@ -654,7 +695,7 @@ function addSeason() {
                 </select>
             </div>
             <div class="col-flex">
-                 <label>Nombre del Bloque (Auto)</label>
+                 <label>Nombre del Bloque</label>
                  <input type="text" class="s-name" placeholder="Seleccione Tipo..." disabled oninput="updateWebPreview()">
             </div>
         </div>
@@ -680,6 +721,8 @@ function updateAllBlockNames() {
     let movieCount = 0;
     let ovaCount = 0;
     let specialCount = 0;
+    let spinOffCount = 0;
+
     cards.forEach(card => {
         const typeSelect = card.querySelector('.s-type');
         const nameInput = card.querySelector('.s-name');
@@ -687,29 +730,29 @@ function updateAllBlockNames() {
 
         if (!type) return;
 
-        if (type === 'Spin-Off') {
-            if (nameInput.disabled) {
-                nameInput.disabled = false;
-                nameInput.placeholder = "Nombre Obligatorio (Ej: Kakashi Gaiden)";
-                if(nameInput.value.startsWith('Temporada') || nameInput.value.startsWith('Película') || nameInput.value.startsWith('OVA') || nameInput.value.startsWith('Especial')) {
-                    nameInput.value = "";
-                }
-            }
+        // Lógica de habilitar/deshabilitar nombre según restricciones
+        if (type === 'OVA' || type === 'Especial' || type === 'Pelicula') {
+            nameInput.disabled = false; // Permitir editar nombre
         } else {
-            nameInput.disabled = true;
-            if (type === 'Temporada') {
-                tempCount++;
-                nameInput.value = `Temporada ${tempCount}`;
-            } else if (type === 'Pelicula') {
-                movieCount++;
-                nameInput.value = `Película ${movieCount}`;
-            } else if (type === 'OVA') {
-                ovaCount++;
-                nameInput.value = `OVA ${ovaCount}`;
-            } else if (type === 'Especial') {
-                specialCount++;
-                nameInput.value = `Especial ${specialCount}`;
-            }
+            nameInput.disabled = true; // Bloquear nombre para Temporada y Spin-Off
+        }
+
+        // Generar nombre por defecto
+        if (type === 'Temporada') {
+            tempCount++;
+            nameInput.value = `Temporada ${tempCount}`;
+        } else if (type === 'Spin-Off') {
+            spinOffCount++;
+            nameInput.value = `Spin-Off ${spinOffCount}`; // Auto-nombre para Spin-Off
+        } else if (type === 'Pelicula') {
+            movieCount++;
+            if (!nameInput.value) nameInput.value = `Película ${movieCount}`;
+        } else if (type === 'OVA') {
+            ovaCount++;
+            if (!nameInput.value) nameInput.value = `OVA ${ovaCount}`;
+        } else if (type === 'Especial') {
+            specialCount++;
+            if (!nameInput.value) nameInput.value = `Especial ${specialCount}`;
         }
     });
 }
@@ -718,9 +761,15 @@ function handleSeasonTypeChange(select) {
     const card = select.closest('.season-card');
     const countInput = card.querySelector('.s-count');
     const type = select.value;
-    if (type === 'Pelicula') {
+
+    // Restricción de 1 solo capítulo para OVA, Especial, Película
+    if (type === 'Pelicula' || type === 'OVA' || type === 'Especial') {
         countInput.value = 1;
+        countInput.disabled = true; // Bloquea el input de cantidad
+    } else {
+        countInput.disabled = false; // Permite poner muchos para Temporada/Spin-Off
     }
+
     updateAllBlockNames();
     if(countInput.value) renderChapters(countInput);
     updateWebPreview(); 
@@ -731,8 +780,7 @@ function renderChapters(input) {
     const typeSelect = card.querySelector('.s-type');
     const sNameInput = card.querySelector('.s-name');
     const type = typeSelect ? typeSelect.value : "";
-    const blockName = sNameInput.value || type;
-
+    
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
     const existingRows = Array.from(list.querySelectorAll('.chapter-row'));
@@ -745,22 +793,16 @@ function renderChapters(input) {
         row.className = 'chapter-row';
         let oldSub = '';
         let oldLat = '';
-        let oldTitle = '';
+        
         if(existingRows[i]) {
             oldSub = existingRows[i].querySelector('.c-link-sub').value;
             oldLat = existingRows[i].querySelector('.c-link-lat').value;
-            const tInput = existingRows[i].querySelector('.c-title-ov');
-            if(tInput) oldTitle = tInput.value;
         }
 
-        let placeholderTitle = "";
-        if (type === 'Temporada') {
-             placeholderTitle = `Capítulo ${i+1}`;
-        } else {
-             placeholderTitle = `${blockName}`;
-        }
-
-        let titleHtml = `<input type="text" class="c-title-ov" placeholder="Título opcional (Defecto: ${placeholderTitle})" value="${oldTitle}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">`;
+        // Título del capítulo: Por defecto "Capítulo X"
+        let defaultChapTitle = `Capítulo ${i+1}`;
+        // Si es OVA/Peli/Especial, el título por defecto puede ser el nombre del bloque, pero la instrucción dice "por defecto aunque ya esta sea Capitulo"
+        
         row.innerHTML = `
             <div class="chapter-header">
                 <span class="chapter-num">CAPÍTULO ${i+1}</span>
@@ -769,7 +811,7 @@ function renderChapters(input) {
                 <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado">
                 <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino">
             </div>
-            ${titleHtml}
+            <input type="text" class="c-title-ov" placeholder="Título opcional (Defecto: ${defaultChapTitle})" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
     }
@@ -783,25 +825,50 @@ function updateWebPreview() {
     
     const demo = document.getElementById('demografiaAnime').value;
     document.getElementById('webDemography').innerText = demo ? demo.toUpperCase() : 'DEMO';
+    
+    // Preview de Géneros
     const tagsContainer = document.getElementById('webTags');
     tagsContainer.innerHTML = '';
+    let genresCount = 0;
     document.querySelectorAll('#genresContainer input:checked').forEach((cb, index) => {
-        if(index < 4) { 
+        if(genresCount < 4) { // Máximo 4 en preview
             let s = document.createElement('span');
             s.style.cssText = "font-size:0.65em; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.1); color:#ccc;";
             s.innerText = cb.value;
             tagsContainer.appendChild(s);
+            genresCount++;
         }
     });
+
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
         const img = card.querySelector('.s-img').value;
         const name = card.querySelector('.s-name').value;
+        const type = card.querySelector('.s-type').value;
+        const count = card.querySelector('.s-count').value || 0;
+
         if(name) {
             const div = document.createElement('div');
             div.className = 'preview-s-item';
-            div.innerHTML = `<img src="${img || 'https://via.placeholder.com/150'}"><div class="preview-s-title">${name}</div>`;
+            
+            // Lógica de etiqueta de conteo
+            let countLabel = "";
+            if (type === 'Temporada' || type === 'Spin-Off') {
+                countLabel = `${count} Capítulos`;
+            } else if (type === 'OVA') {
+                countLabel = count > 1 ? `${count} OVAs` : `${count} OVA`;
+            } else if (type === 'Pelicula') {
+                countLabel = count > 1 ? `${count} Películas` : `${count} Película`;
+            } else if (type === 'Especial') {
+                countLabel = count > 1 ? `${count} Especiales` : `${count} Especial`;
+            }
+
+            div.innerHTML = `
+                <img src="${img || 'https://via.placeholder.com/150'}">
+                <div class="preview-s-count">${countLabel}</div>
+                <div class="preview-s-title">${name}</div>
+            `;
             grid.appendChild(div);
         }
     });
@@ -826,21 +893,16 @@ async function getGithubFile(token, owner, repo, path) {
 }
 
 async function updateGithubFile(token, owner, repo, path, contentTransformer) {
-    // 1. Leer archivo actual
     const fileData = await getGithubFile(token, owner, repo, path);
-    // 2. Transformar contenido
     const newContent = contentTransformer(fileData.content);
-    // 3. Codificar a Base64 (UTF-8 safe)
     const encodedContent = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
     
-    // 4. Subir actualización
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     const body = {
         message: `Update ${path} via CMS`,
         content: encodedContent,
         sha: fileData.sha
     };
-    
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -849,12 +911,11 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
         },
         body: JSON.stringify(body)
     });
-    
     if (!response.ok) throw new Error(`Error actualizando ${path}`);
 }
 
 // ============================================
-// LÓGICA DE SUBIDA (FORMATO CORREGIDO)
+// LÓGICA DE GENERACIÓN DE DATOS
 // ============================================
 
 function generateData() {
@@ -891,24 +952,53 @@ function generateData() {
     });
 
     let globalOrder = 1;
-    updateAllBlockNames();
+    let tempCounter = 0; 
+    let ovaCounter = 0;
 
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
         const sType = card.querySelector('.s-type').value;
+        
+        if(sType === 'Temporada') tempCounter++;
+        if(sType === 'OVA') ovaCounter++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
             const sub = row.querySelector('.c-link-sub').value.trim();
             const lat = row.querySelector('.c-link-lat').value.trim();
-            let customTitle = row.querySelector('.c-title-ov').value.trim();
+            let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             
-            if (!customTitle) {
-                if (sType === 'Temporada') {
-                    customTitle = `Capítulo ${idx + 1}`;
-                } else {
-                    customTitle = sName;
+            // Lógica de títulos para Video-Player
+            // T1 Cap 1, OVA 1 "Name", etc.
+            
+            let playerTitle = "";
+            let detailTitle = customTitleInput || `Capítulo ${idx+1}`; // Título para anime-detail-data
+
+            // Título para video-player-data (Nombre Global)
+            if (sType === 'Temporada') {
+                playerTitle = `${anime.titulo} T${tempCount} Cap ${idx+1}`;
+            } else if (sType === 'Spin-Off') {
+                playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
+            } else if (sType === 'OVA') {
+                // Si el nombre del bloque (sName) tiene un nombre personalizado entre parentesis o comillas, lo usamos.
+                // El usuario escribe el nombre en el bloque sName. Ej: "OVA 1" o "OVA 1 Nombre"
+                // El requerimiento dice: si tiene nombre sera Ova 1 "name", dentro del parentesis.
+                // Asumimos que si el usuario cambió el nombre del bloque, ese es el nombre completo.
+                // Pero si el usuario puso un título personalizado en el input del capítulo, usaremos ese.
+                
+                // Si el nombre del bloque es solo "OVA X", queda así.
+                // Si el usuario editó el nombre del bloque a "OVA 1 La Aventura", el título será ese.
+                playerTitle = `${anime.titulo} ${sName}`;
+                if (customTitleInput && customTitleInput !== `Capítulo ${idx+1}`) {
+                     playerTitle += ` "${customTitleInput}"`;
                 }
+            } else if (sType === 'Pelicula') {
+                playerTitle = `${anime.titulo} ${sName}`;
+                if (customTitleInput && customTitleInput !== `Capítulo ${idx+1}`) {
+                     playerTitle += `: ${customTitleInput}`;
+                }
+            } else {
+                playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
             }
 
             if(sub || lat) {
@@ -916,7 +1006,8 @@ function generateData() {
                     num: idx + 1,
                     link: sub,
                     link2: lat,
-                    title: customTitle
+                    title: detailTitle, // Para detail-data
+                    playerTitle: playerTitle // Para video-player-data
                 });
             }
         });
@@ -939,18 +1030,11 @@ async function subirAGithHub() {
     const owner = "Archinime";
     const repo = "-Archinime-";
     const token = currentUserToken;
-    
+
     if(!token) return showToast("Error de sesión GitHub", true);
     
     const nuevoAnime = generateData();
     if(!nuevoAnime.titulo) return showToast("Falta el título principal", true);
-    
-    // Validaciones basicas
-    let spinOffError = false;
-    document.querySelectorAll('.season-card').forEach(c => {
-        if(c.querySelector('.s-type').value === 'Spin-Off' && !c.querySelector('.s-name').value.trim()) spinOffError = true;
-    });
-    if(spinOffError) return showToast("Falta nombre en un Spin-Off", true);
     
     let typeError = false;
     document.querySelectorAll('.season-card').forEach(c => {
@@ -962,31 +1046,25 @@ async function subirAGithHub() {
 
     try {
         log("1/5 Leyendo índice para calcular ID...");
-        // Leemos el índice para saber cuál es el último ID numérico (ignora los timestamp raros si los hubiera)
         const indexFile = await getGithubFile(token, owner, repo, 'index-data.js');
-        // Parse simple para obtener IDs
         let cleanIndex = indexFile.content.replace(/const\s+animes\s*=\s*/, '').replace(/;\s*$/, '');
-        // Usamos un eval controlado o Regex para sacar IDs
         const ids = cleanIndex.match(/id:\s*(\d+)/g);
         let maxId = 0;
         if(ids) {
             ids.forEach(str => {
                 const num = parseInt(str.replace('id:', '').trim());
-                if(num > maxId && num < 1000000) maxId = num; // Evitamos timestamp IDs grandes
+                if(num > maxId && num < 1000000) maxId = num; 
             });
         }
-        
         const NEW_ID = maxId + 1;
         log(`✅ ID Generado: ${NEW_ID} (${nuevoAnime.titulo})`);
 
         // --- UPDATE 1: INDEX-DATA ---
         log("2/5 Actualizando Índice...");
         await updateGithubFile(token, owner, repo, 'index-data.js', (content) => {
-            // Buscamos el final del array "];" y le pegamos el nuevo objeto ANTES
             const insertionPoint = content.lastIndexOf('];');
             if(insertionPoint === -1) throw new Error("Formato de index-data corrupto");
             
-            // Construimos el string SIN comillas en las claves, estilo antiguo
             const generosStr = nuevoAnime.generos.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
@@ -1002,7 +1080,6 @@ async function subirAGithHub() {
             const insertionPoint = content.lastIndexOf('};');
             if(insertionPoint === -1) throw new Error("Formato detail-data corrupto");
 
-            // Construcción manual del string para respetar el formato sin comillas en claves
             let seasonsStr = "";
             nuevoAnime.temporadas.forEach(t => {
                 let epsStr = "";
@@ -1010,9 +1087,10 @@ async function subirAGithHub() {
                     epsStr += `              { title: "${e.title}"},\n`;
                 });
 
+                let nameField = t.name ? `\n            name: "${t.name}",` : "";
+
                 seasonsStr += `          {
-            num: ${t.num},
-            name: "${t.name}",
+            num: ${t.num},${nameField}
             cover: "${t.cover}",
             eps: [
 ${epsStr}            ]
@@ -1027,7 +1105,6 @@ ${epsStr}            ]
         seasons: [
 ${seasonsStr}        ]
     },`;
-            
             return content.slice(0, insertionPoint) + newDetail + "\n};";
         });
 
@@ -1041,8 +1118,8 @@ ${seasonsStr}        ]
             nuevoAnime.temporadas.forEach(t => {
                 playerStr += `        "${t.num}": {\n`;
                 t.eps.forEach(e => {
-                    // Formato específico: link:'url', link2:'url', title:'texto'
-                    playerStr += `          "${e.num}": { link:'${e.link}', link2:'${e.link2}', title:'${e.title}' },\n`;
+                    // Usamos e.playerTitle que calculamos en generateData
+                    playerStr += `          "${e.num}": { link:'${e.link}', link2:'${e.link2}', title:'${e.playerTitle}' },\n`;
                 });
                 playerStr += `        },\n`;
             });
@@ -1057,7 +1134,7 @@ ${seasonsStr}        ]
             await updateGithubFile(token, owner, repo, 'musica-data.js', (content) => {
                 const insertionPoint = content.lastIndexOf('};');
                 
-                // Formato: 71: ["url1", "url2"],
+                // Arreglado el formato de array de strings
                 const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
                 const musicEntry = `        ${NEW_ID}: [\n            ${tracks}\n        ],`;
                 

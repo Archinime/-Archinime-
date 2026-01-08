@@ -70,6 +70,4 @@ const animes = [
       {id:69, title:"Cars", aliases: ["Rayo McQueen"], img:"cars.avif", rating:4.7, genres:["Infantil","Familiar","Aventura","Animación","Comedia","Acción","Road Movie","Deportivo","Kodomo"]},
       {id:70, title:"Kimi to Koete Koi ni Naru", aliases: ["With You, Our Love Will Make It Through"], img:"kimitokoete.avif", rating:4.3, genres:["Comedia","Romance","Escolar","Slice of Life","Drama","Fantasía","Shōjo"]},
       {id:71, title:"Overlord", img:"overlord.avif", rating:4.8, genres:["Fantasía oscura","Aventura","Comedia","Acción","Isekai","Comedia oscura","RPG","Sobrenatural","Shōnen"]},
-    
-      {id:72, title:"Sdfsfsdf", img:"https://www.dropbox.com/scl/fi/jbppp4s21shy7wqcnyvkv/Bluelockt1.jpg?rlkey=skkirad9x3515lrdlfcahkdkk&st=01v7pyry&raw=1", rating:4.9, genres:["Acción","Animación","Shōnen"]},
-];
+    ];
