@@ -219,9 +219,4 @@
             "kimitokoete.mp3"
         ],
         71: ["overlord.mp3"] 
-    ,
-        72: [
-            "https://www.dropbox.com/scl/fi/7lp1tkbioyyi3bj9mhq8y/TICK-TICK-TICK-TICK-TICK-BITE-Archinime.mp3?rlkey=vsg0gby24ceyakz88tnh7gt3f&st=6tvhztjy&raw=1",
-            "https://www.dropbox.com/scl/fi/v7244hmfgzqg0ode1bsho/syn2.mp3?rlkey=6vyzi3qr8ci8hnzncxayrhez1&st=ee75uqat&raw=1"
-        ]
-};
+    };

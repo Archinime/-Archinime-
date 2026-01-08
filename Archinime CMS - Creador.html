@@ -798,22 +798,28 @@ function handleSeasonTypeChange(select) {
 }
 
 // ============================================
-// LÓGICA DE CONVERSIÓN DE LINKS AUTOMÁTICA
+// LÓGICA DE CONVERSIÓN DE LINKS AUTOMÁTICA (MEJORADA)
 // ============================================
-function autoConvertDriveLink(input) {
+function autoConvertLinks(input) {
     let val = input.value.trim();
-    // Expresión regular para detectar links de Drive en modo vista/preview
-    // Busca patrones que terminen en /view?usp=drive_link, /view, /preview, etc. y los normaliza a /preview
+    
+    // 1. Google Drive: /view -> /preview
     const driveRegex = /(https:\/\/drive\.google\.com\/file\/d\/[^\/]+)\/(?:view|preview)(?:\?.*)?/;
     if (driveRegex.test(val)) {
-        // Verifica si NO termina ya en /preview exactamente para evitar loops o mensajes innecesarios
         if (!val.endsWith('/preview')) {
             const match = val.match(driveRegex);
             if (match && match[1]) {
                 input.value = match[1] + '/preview';
-                showToast("¡Link convertido a /preview!", false); // Mensaje de éxito verde
+                showToast("¡Link de Drive convertido a /preview!", false);
             }
         }
+    }
+    
+    // 2. Dropbox: &dl=0 -> &raw=1
+    // Detecta si es un link de dropbox y si termina en dl=0
+    if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
+        input.value = val.replace('&dl=0', '&raw=1');
+        showToast("¡Link de Dropbox corregido a &raw=1!", false);
     }
 }
 
@@ -858,13 +864,14 @@ function renderChapters(input) {
             titlePlaceholder = "Nombre (ej: El viaje...)";
         }
 
+        // Se usa autoConvertLinks en lugar de autoConvertDriveLink para soportar ambos
         row.innerHTML = `
             <div class="chapter-header">
                 <span class="chapter-num">CAPÍTULO ${i+1}</span>
             </div>
             <div class="c-inputs-grid">
-                <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado" onblur="autoConvertDriveLink(this)">
-                <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino" onblur="autoConvertDriveLink(this)">
+                <input type="text" class="c-link-sub" value="${oldSub}" placeholder="🔗 Link Subtitulado" onblur="autoConvertLinks(this)">
+                <input type="text" class="c-link-lat" value="${oldLat}" placeholder="🔗 Link Latino" onblur="autoConvertLinks(this)">
             </div>
             <input type="text" class="c-title-ov" value="${titleInputValue}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
@@ -1130,14 +1137,16 @@ async function subirAGithHub() {
             const insertionPoint = content.lastIndexOf('];');
             if(insertionPoint === -1) throw new Error("Formato de index-data corrupto");
             
+            // TRIMEND: Eliminamos espacios/saltos de línea extra antes del ];
+            const before = content.substring(0, insertionPoint).trimEnd();
+            
             const generosStr = nuevoAnime.generos.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // IMPORTANTE: Agregamos una coma inicial por seguridad y para mantener orden
-            const newEntry = `,
-      {id:${NEW_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
+            // IMPORTANTE: Agregamos una coma inicial y salto de línea limpio
+            const newEntry = `,\n      {id:${NEW_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
             
-            return content.slice(0, insertionPoint) + newEntry + "\n];";
+            return before + newEntry + "\n];";
         });
 
         // --- UPDATE 2: ANIME-DETAIL-DATA ---
@@ -1145,6 +1154,9 @@ async function subirAGithHub() {
         await updateGithubFile(token, owner, repo, 'anime-detail-data.js', (content) => {
             const insertionPoint = content.lastIndexOf('};');
             if(insertionPoint === -1) throw new Error("Formato detail-data corrupto");
+            
+            // TRIMEND para limpiar
+            const before = content.substring(0, insertionPoint).trimEnd();
 
             let seasonsStr = "";
             nuevoAnime.temporadas.forEach(t => {
@@ -1163,25 +1175,24 @@ ${epsStr}            ]
           },\n`;
             });
 
-            // Agregamos coma inicial por seguridad
-            const newDetail = `,
-    ${NEW_ID}: {
+            // Agregamos coma inicial
+            const newDetail = `,\n    ${NEW_ID}: {
         title: "${nuevoAnime.titulo}",
         desc: "${nuevoAnime.sinopsis.replace(/"/g, '\\"')}",
         cover: "${nuevoAnime.portada}",
         seasons: [
 ${seasonsStr}        ]
     }`;
-            return content.slice(0, insertionPoint) + newDetail + "\n};";
+            return before + newDetail + "\n};";
         });
 
         // --- UPDATE 3: VIDEO-PLAYER-DATA ---
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, owner, repo, 'video-player-data.js', (content) => {
             const insertionPoint = content.lastIndexOf('};');
+            const before = content.substring(0, insertionPoint).trimEnd();
             
-            let playerStr = `,
-      "${NEW_ID}": {\n`;
+            let playerStr = `,\n      "${NEW_ID}": {\n`;
             
             nuevoAnime.temporadas.forEach(t => {
                 playerStr += `        "${t.num}": {\n`;
@@ -1192,7 +1203,7 @@ ${seasonsStr}        ]
             });
             playerStr += `      }`;
 
-            return content.slice(0, insertionPoint) + playerStr + "\n};";
+            return before + playerStr + "\n};";
         });
 
         // --- UPDATE 4: MUSICA-DATA ---
@@ -1201,13 +1212,15 @@ ${seasonsStr}        ]
             const insertionPoint = content.lastIndexOf('};');
             if(insertionPoint === -1) throw new Error("Formato musica-data corrupto");
             
+            // TRIMEND para evitar saltos de línea gigantes y asegurar coma correcta
+            const before = content.substring(0, insertionPoint).trimEnd();
+            
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
             
-            // IMPORTANTE: La coma al inicio aseguro que se escribe bien tras el elemento anterior
-            const musicEntry = `,
-        ${NEW_ID}: [\n            ${tracks}\n        ]`;
+            // IMPORTANTE: La coma va antes del nuevo ID
+            const musicEntry = `,\n        ${NEW_ID}: [\n            ${tracks}\n        ]`;
             
-            return content.slice(0, insertionPoint) + musicEntry + "\n};";
+            return before + musicEntry + "\n};";
         });
 
         log("✨ ¡TODO COMPLETADO CON ÉXITO!");
