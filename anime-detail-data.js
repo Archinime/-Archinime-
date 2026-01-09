@@ -3843,5 +3843,100 @@
             ]
           },
           ]
+    },
+    71: {
+        title: "Overlord",
+        desc: "Cuando un popular MMORPG anuncia su cierre definitivo, el veterano jugador Momonoga decide quedarse en él hasta el mismo cierre, sin salir. El problema es que pasa la horra de cierre y él no se desconecta, pero los NPC han ganado conciencia propia. ¿Está atrapado?",
+        cover: "overlord.avif",
+        seasons: [
+          {
+            num: 1,
+            name: "Temporada 1",
+            cover: "overlord1.avif",
+            eps: [
+            { title: "Capítulo 1"},
+            { title: "Capítulo 2"},
+            { title: "Capítulo 3"},
+            { title: "Capítulo 4"},
+            { title: "Capítulo 5"},
+            { title: "Capítulo 6"},
+            { title: "Capítulo 7"},
+            { title: "Capítulo 8"},
+            { title: "Capítulo 9"},
+            { title: "Capítulo 10"},
+            { title: "Capítulo 11"},
+            { title: "Capítulo 12"},
+            { title: "Capítulo 13"},
+            ]
+          },
+          {
+            num: 2,
+            name: "Temporada 2",
+            cover: "overlord2.avif",
+            eps: [
+            { title: "Capítulo 1"},
+            { title: "Capítulo 2"},
+            { title: "Capítulo 3"},
+            { title: "Capítulo 4"},
+            { title: "Capítulo 5"},
+            { title: "Capítulo 6"},
+            { title: "Capítulo 7"},
+            { title: "Capítulo 8"},
+            { title: "Capítulo 9"},
+            { title: "Capítulo 10"},
+            { title: "Capítulo 11"},
+            { title: "Capítulo 12"},
+            { title: "Capítulo 13"},
+            ]
+          },
+          {
+            num: 3,
+            name: "Temporada 3",
+            cover: "overlord3.avif",
+            eps: [
+            { title: "Capítulo 1"},
+            { title: "Capítulo 2"},
+            { title: "Capítulo 3"},
+            { title: "Capítulo 4"},
+            { title: "Capítulo 5"},
+            { title: "Capítulo 6"},
+            { title: "Capítulo 7"},
+            { title: "Capítulo 8"},
+            { title: "Capítulo 9"},
+            { title: "Capítulo 10"},
+            { title: "Capítulo 11"},
+            { title: "Capítulo 12"},
+            { title: "Capítulo 13"},
+            ]
+          },
+          {
+            num: 4,
+            name: "Temporada 4",
+            cover: "overlord4.avif",
+            eps: [
+            { title: "Capítulo 1"},
+            { title: "Capítulo 2"},
+            { title: "Capítulo 3"},
+            { title: "Capítulo 4"},
+            { title: "Capítulo 5"},
+            { title: "Capítulo 6"},
+            { title: "Capítulo 7"},
+            { title: "Capítulo 8"},
+            { title: "Capítulo 9"},
+            { title: "Capítulo 10"},
+            { title: "Capítulo 11"},
+            { title: "Capítulo 12"},
+            { title: "Capítulo 13"},
+            ]
+          },
+          {
+            num: 5,
+            name: "Película 1",
+            cover: "overlordp.avif",
+            eps: [
+            { title: "El Reino Sagrado"},
+            ]
+          },
+          ]
     }
 };
