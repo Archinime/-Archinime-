@@ -27,7 +27,6 @@ let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
-// Throttle para vista previa
 
 // ============================================
 // AUTENTICACIÓN
@@ -36,6 +35,7 @@ auth.onAuthStateChanged((user) => {
     if (user) checkAccess(user);
     else showLogin();
 });
+
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -93,19 +93,20 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
+
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
     `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ?
-    "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
 }
 
@@ -129,6 +130,7 @@ function log(msg) {
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
+
     if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
         input.value = val.replace('&dl=0', '&raw=1');
         changed = true;
@@ -154,6 +156,7 @@ function checkCoverVisual(input) {
     const img = document.getElementById('mainCoverPreview');
     const display = document.getElementById('dimDisplay');
     const val = input.value.trim();
+
     if(val === "") {
         img.style.display = 'none';
         display.innerText = "";
@@ -163,11 +166,13 @@ function checkCoverVisual(input) {
     img.src = val;
     img.style.display = 'block';
     display.innerText = "Verificando...";
+    
     img.onload = function() { 
         const w = this.naturalWidth;
         const h = this.naturalHeight;
         const allowed = [{w: 1000, h: 1500}, {w: 2000, h: 3000}, {w: 3412, h: 5120}];
         const isValid = allowed.some(d => d.w === w && d.h === h);
+        
         if (isValid) {
             display.innerHTML = `<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido: ${w}x${h}px</span>`;
             input.style.borderColor = '#00ffbf';
@@ -216,6 +221,7 @@ function updateAudioPreview(input) {
     const parent = input.parentElement;
     const audioEl = parent.querySelector('audio');
     const statusEl = parent.querySelector('.audio-status-text');
+    
     if (!input.value.trim()) {
         statusEl.innerHTML = '';
         return;
@@ -231,12 +237,14 @@ function updateAudioPreview(input) {
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
+
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
     div.className = 'season-card';
     const count = document.querySelectorAll('.season-card').length;
     const color = colorPalette[count % colorPalette.length];
+    
     div.style.cssText = `
         border-left: 4px solid ${color};
         background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
@@ -247,8 +255,7 @@ function addSeason(data = null) {
             <div class="col-flex">
                 <label>Tipo</label>
                 <select class="s-type" onchange="handleSeasonTypeChange(this)">
-                    <option value="" disabled ${!data ?
-                    'selected' : ''}>Seleccionar...</option>
+                    <option value="" disabled ${!data ? 'selected' : ''}>Seleccionar...</option>
                     <option value="Temporada">Temporada</option>
                     <option value="Pelicula">Película</option>
                     <option value="OVA">OVA</option>
@@ -259,7 +266,6 @@ function addSeason(data = null) {
             <div class="col-flex">
                  <label>Nombre Bloque</label>
                  <input type="text" class="s-name" placeholder="Auto" disabled oninput="requestPreviewUpdate()">
-            
             </div>
         </div>
         <label>Poster Bloque</label>
@@ -306,6 +312,7 @@ function removeSeasonBlock(btn) {
 function updateAllBlockNames() {
     const cards = document.querySelectorAll('.season-card');
     let tempCount = 0, movieCount = 0, ovaCount = 0, specialCount = 0, spinOffCount = 0;
+    
     cards.forEach(card => {
         const typeSelect = card.querySelector('.s-type');
         const nameInput = card.querySelector('.s-name');
@@ -316,21 +323,18 @@ function updateAllBlockNames() {
 
         if(!isEditMode) { 
              if (type === 'Temporada') {
-                
                 tempCount++;
                 nameInput.value = `Temporada ${tempCount}`;
             } else if (type === 'Spin-Off') {
                 spinOffCount++;
                 if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
             } else if (type === 'Pelicula') {
-       
                  movieCount++;
                 nameInput.value = `Película ${movieCount}`;
             } else if (type === 'OVA') {
                 ovaCount++;
                 nameInput.value = `OVA ${ovaCount}`;
             } else if (type === 'Especial') {
- 
                 specialCount++;
                 nameInput.value = `Especial ${specialCount}`;
             }
@@ -342,6 +346,7 @@ function handleSeasonTypeChange(select) {
     const card = select.closest('.season-card');
     const countInput = card.querySelector('.s-count');
     const type = select.value;
+
     if (['Pelicula', 'OVA', 'Especial'].includes(type)) {
         countInput.value = 1;
         countInput.disabled = true;
@@ -359,6 +364,7 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
+    
     // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
@@ -373,20 +379,14 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
+    
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
-        // ** CAMBIO DE LÓGICA DE CARGA **
-        // En DB: link = Lat, link2 = Sub (según tu petición de carga inversa)
-        // Pero en la estructura original: link=Sub, link2=Lat
-        // Para respetar tu petición de "enlaces guardados en link se coloquen en Lat":
         
+        // ** CAMBIO DE LÓGICA DE CARGA **
         if(existingEps[i]) {
-             // Si el objeto viene 
-             // de DB: { link: '...', link2: '...' }
-             // Tu pedido: "link en anime-detail-data se coloquen siempre en el bloque que dice Lat"
-             // Por lo tanto:
              lat = existingEps[i].link || '';  
              sub = existingEps[i].link2 || ''; 
              if(!['Temporada', 'Spin-Off'].includes(type)) customTitle = existingEps[i].title;
@@ -399,14 +399,14 @@ function renderChapters(input, existingEps = []) {
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
+        
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
             </div>
-            <input type="text" 
-            class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
+            <input type="text" class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
     }
@@ -430,13 +430,11 @@ function updateWebPreview() {
     document.getElementById('previewId').innerText = isEditMode ? currentEditingId : "###";
 
     const demo = document.getElementById('demografiaAnime').value;
-    document.getElementById('webDemography').innerText = demo ?
-    demo.toUpperCase() : 'DEMO';
+    document.getElementById('webDemography').innerText = demo ? demo.toUpperCase() : 'DEMO';
     
     const aliases = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
-    const aliasStr = aliases.length > 0 ?
-    aliases.join(', ') : "";
+    const aliasStr = aliases.length > 0 ? aliases.join(', ') : "";
     document.getElementById('previewAliasesList').innerText = aliasStr;
 
     const ratingSel = document.getElementById('ratingAnime').value;
@@ -454,6 +452,7 @@ function updateWebPreview() {
         s.innerText = cb.value;
         tagsContainer.appendChild(s);
     });
+    
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -465,7 +464,6 @@ function updateWebPreview() {
         if(name) {
             const div = document.createElement('div');
             div.className = 'preview-s-item';
-       
             let label = (['Temporada', 'Spin-Off'].includes(type)) ? `${count} Caps` : (count > 1 ? `${count} ${type}s` : `${count} ${type}`);
             div.innerHTML = `<img src="${img || 'https://via.placeholder.com/150'}"><div class="preview-s-count">${label}</div><div class="preview-s-title">${name}</div>`;
             grid.appendChild(div);
@@ -506,6 +504,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
     const fileData = await getGithubFile(token, owner, repo, path);
     const newContent = contentTransformer(fileData.content);
     const encodedContent = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
@@ -566,6 +565,7 @@ function _performFilter() {
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
     const filtered = cachedIndex.filter(a => a.title.toLowerCase().includes(query)).slice(0, 50);
+    
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
@@ -574,7 +574,6 @@ function _performFilter() {
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
                 <div style="font-weight:bold; color:#fff;">${anime.title}</div>
-          
                 <div style="color:#777; font-size:0.8em">ID: ${anime.id} | ⭐ ${anime.rating}</div>
             </div>
         `;
@@ -603,6 +602,7 @@ async function loadAnimeForEditing(id) {
         const targetMusic = musObj[id] || [];
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
+        
         isEditMode = true;
         currentEditingId = id;
         document.getElementById('editModeBar').style.display = 'block';
@@ -644,14 +644,11 @@ async function loadAnimeForEditing(id) {
             const fullEps = s.eps.map((e, idx) => {
                 const epNum = idx + 1;
                 const links = seasonPlayer[epNum] || {};
-                // AQUÍ SE APLICA EL CAMBIO AL CARGAR
-                // link (DB) -> link (Objeto intermedio, que irá al input LAT)
-                // link2 (DB) -> link2 (Objeto intermedio, que irá al input SUB)
                 return { title: e.title, link: links.link, link2: links.link2 };
             });
-       
-             addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
+            addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
         });
+        
         document.getElementById('musicContainer').innerHTML = '';
         targetMusic.forEach(url => addMusic(url));
 
@@ -683,14 +680,14 @@ function generateData() {
     const ratingSelect = document.getElementById('ratingAnime').value;
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
+
     let ratingVal = 0;
     if(ratingSelect === 'excellent') ratingVal = 4.9;
     else if(ratingSelect === 'good') ratingVal = 4.6;
     else if(ratingSelect === 'regular') ratingVal = 4.0;
 
     const anime = {
-        id: isEditMode ?
-        currentEditingId : 0, 
+        id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
         aliases: aliasList,
         portada: document.getElementById('portadaAnime').value.trim(),
@@ -704,6 +701,7 @@ function generateData() {
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
 
     let globalOrder = 1, seasonCountVP = 0, ovaCountVP = 0, movieCountVP = 0, specialCountVP = 0, spinOffCount = 0;
+    
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
@@ -715,14 +713,12 @@ function generateData() {
         if(sType === 'Especial') specialCountVP++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
-  
             // ** AQUI SE APLICA EL CAMBIO AL GUARDAR **
             // Input class 'c-link-lat' -> Variable 'lat'
             // Input class 'c-link-sub' -> Variable 'sub'
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
             
-   
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             
             let playerTitle = "", detailTitle = ""; 
@@ -768,6 +764,7 @@ function generateData() {
 async function subirAGithHub() {
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
+
     const nuevoAnime = generateData();
     
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
@@ -779,8 +776,10 @@ async function subirAGithHub() {
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
+
     try {
         let FINAL_ID = nuevoAnime.id;
+        
         if (!isEditMode) {
             log("1/5 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
@@ -809,7 +808,6 @@ async function subirAGithHub() {
             let before = newContent.substring(0, insertionPoint).trim();
             
             // SI TERMINA EN COMA, LA QUITAMOS PARA EVITAR DUPLICADOS
-   
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
@@ -821,6 +819,7 @@ async function subirAGithHub() {
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
+            
             // SIEMPRE AGREGAMOS UNA COMA AL PRINCIPIO DE LA NUEVA ENTRADA
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
@@ -834,8 +833,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-           
- 
+            
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -846,7 +844,6 @@ async function subirAGithHub() {
                 let nameField = t.name ? `\n            name: "${t.name}",` : "";
                 seasonsStr += `          {
             num: ${t.num},${nameField}
-         
             cover: "${t.cover}",
             eps: [\n${epsStr}            ]
           },\n`;
@@ -855,11 +852,11 @@ async function subirAGithHub() {
         title: "${nuevoAnime.titulo}",
         desc: "${nuevoAnime.sinopsis.replace(/"/g, '\\"')}",
         cover: "${nuevoAnime.portada}",
- 
         seasons: [\n${seasonsStr}          ]
     }`;
-        return before + newDetail + "\n};";
+            return before + newDetail + "\n};";
         });
+
         // UPDATE PLAYER
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
@@ -868,38 +865,52 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-           
+            
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
             let playerStr = `,\n      "${FINAL_ID}": {\n`;
             nuevoAnime.temporadas.forEach(t => {
-                playerStr += `  
-        "${t.num}": {\n`;
+                playerStr += `          "${t.num}": {\n`;
                 t.eps.forEach(e => playerStr += `          "${e.num}": { link:'${e.link}', link2:'${e.link2}', title:'${e.playerTitle}' },\n`);
                 playerStr += `        },\n`;
             });
-            playerStr += `      
-}`;
+            playerStr += `      }`;
             
             return before + playerStr + "\n};";
         });
+
         // UPDATE MUSIC
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
+            
+            // 1. ELIMINAR ENTRADA ANTIGUA SI ES EDICIÓN
             if(isEditMode) {
                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
+
+            // 2. LIMPIEZA DE COMAS DOBLES (SEGURIDAD)
+            newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('};');
-            const before = newContent.substring(0, insertionPoint).trimEnd();
+            let before = newContent.substring(0, insertionPoint).trimEnd();
+            
+            // 3. FIX: SI LO ANTERIOR TERMINA EN COMA, BORRARLA
+            // Esto evita que se forme ",," al añadir la nueva entrada que empieza con ","
+            if(before.endsWith(',')) {
+                before = before.slice(0, -1);
+            }
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
-            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n     
-        ]`;
+            
+            // La nueva entrada empieza con coma
+            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n        ]`;
+            
             return before + musicEntry + "\n};";
         });
+
         log("✨ ¡EXITO!");
         showToast("¡Proceso Completado!");
         setTimeout(() => location.reload(), 3000);
