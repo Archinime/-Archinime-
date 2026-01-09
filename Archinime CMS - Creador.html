@@ -68,11 +68,10 @@
         .login-card {
             background: rgba(20, 20, 25, 0.85);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); /* Blur reducido para rendimiento */
-            padding: 40px 30px;
-            border-radius: 24px; border: 1px solid var(--border);
+            padding: 40px 30px; border-radius: 24px; border: 1px solid var(--border);
             text-align: center;
             box-shadow: 0 0 50px rgba(140, 82, 255, 0.1);
-            max-width: 400px; width: 100%;
+            max-width: 400px; width: 100%; 
             animation: fadeInUp 0.8s ease;
         }
         @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
@@ -99,8 +98,7 @@
             display: flex;
             justify-content: space-between; align-items: center;
             padding: 10px 20px; 
-            background: rgba(5, 5, 7, 0.95);
-            /* Menos transparencia para mejor rendimiento */
+            background: rgba(5, 5, 7, 0.95); /* Menos transparencia para mejor rendimiento */
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0; z-index: 100; display: none; height: var(--header-height);
@@ -289,7 +287,8 @@
             background: #1a1a1a;
             color: #ff4757; border: 1px solid #333; 
             width: 52px; height: 52px; flex-shrink: 0; border-radius: var(--radius); 
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center;
         }
         .btn-del-section { 
             position: absolute;
@@ -313,7 +312,8 @@
             cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
         }
         .genres-box label:has(input:checked) {
-            background: rgba(140, 82, 255, 0.15); border-color: var(--primary);
+            background: rgba(140, 82, 255, 0.15);
+            border-color: var(--primary);
             color: #fff;
         }
         .genres-box input { 
@@ -331,7 +331,8 @@
             left: 50%; bottom: 30px;
             transform: translateX(-50%); 
             border: 1px solid var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            display: flex; gap: 10px; align-items: center; font-weight: 600; font-size: 0.9rem;
+            display: flex; gap: 10px; align-items: center; font-weight: 600;
+            font-size: 0.9rem;
             width: max-content; max-width: 90%;
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
@@ -384,7 +385,7 @@
         @media (max-width: 900px) {
             .main-wrapper { grid-template-columns: 1fr; padding: 15px; }
             .preview-sidebar { 
-                position: relative;
+                position: relative; 
                 top: 0; 
                 order: 2; 
                 margin-top: 40px; 
@@ -647,6 +648,7 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
@@ -656,7 +658,8 @@ genresList.forEach(g => {
 
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
-    x.innerHTML = isError ? `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.innerHTML = isError ?
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
@@ -907,6 +910,7 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
+    
     // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
@@ -921,10 +925,12 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
+    
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
+        
         // ** CAMBIO DE LÓGICA DE CARGA **
         // En DB: link = Lat, link2 = Sub (según tu petición de carga inversa)
         // Pero en la estructura original: link=Sub, link2=Lat
@@ -946,13 +952,15 @@ function renderChapters(input, existingEps = []) {
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
+
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
             </div>
-            <input type="text" class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
+            <input type="text" 
+            class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
     }
@@ -998,6 +1006,7 @@ function updateWebPreview() {
         s.innerText = cb.value;
         tagsContainer.appendChild(s);
     });
+
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -1080,7 +1089,7 @@ function handleModalClick(event) {
 }
 
 function closeSearchModal() { 
-    document.getElementById('searchModal').style.display = 'none';
+    document.getElementById('searchModal').style.display = 'none'; 
 }
 
 async function loadIndexForSearch() {
@@ -1090,8 +1099,7 @@ async function loadIndexForSearch() {
         if(!currentUserToken) throw new Error("No hay sesión");
         const file = await getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js');
         const data = safeEval(file.content);
-        // *** CORRECCIÓN CRÍTICA: FILTRAR HUECOS (NULLS) EN EL ARCHIVO ***
-        cachedIndex = data.filter(item => item != null).reverse(); 
+        cachedIndex = data.reverse(); 
         filterSearch();
     } catch(e) {
         document.getElementById('searchResults').innerHTML = `<div style="color:red; text-align:center">Error: ${e.message}</div>`;
@@ -1164,6 +1172,7 @@ async function loadAnimeForEditing(id) {
             let loadedGenres = [...indexEntry.genres];
             const lastGenre = loadedGenres[loadedGenres.length - 1];
             const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo"];
+            
             if (demoOptions.includes(lastGenre)) {
                 document.getElementById('demografiaAnime').value = lastGenre;
                 loadedGenres.pop();
@@ -1221,10 +1230,12 @@ function exitEditMode() {
 function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
+    
     const demoSelect = document.getElementById('demografiaAnime').value;
     const ratingSelect = document.getElementById('ratingAnime').value;
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
+    
     let ratingVal = 0;
     if(ratingSelect === 'excellent') ratingVal = 4.9;
     else if(ratingSelect === 'good') ratingVal = 4.6;
@@ -1290,6 +1301,7 @@ function generateData() {
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
+
         if(eps.length > 0) {
             anime.temporadas.push({
                 num: globalOrder++,
@@ -1307,6 +1319,7 @@ function generateData() {
 async function subirAGithHub() {
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
+    
     const nuevoAnime = generateData();
     
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
@@ -1325,8 +1338,7 @@ async function subirAGithHub() {
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
             const indexData = safeEval(indexFile.content);
             let maxId = 0;
-            // Filtrar nulls aquí también por si acaso
-            indexData.filter(i=>i).forEach(item => { if(item.id > maxId) maxId = item.id; });
+            indexData.forEach(item => { if(item.id > maxId) maxId = item.id; });
             FINAL_ID = maxId + 1;
             log(`✅ ID: ${FINAL_ID}`);
         } else {
@@ -1338,36 +1350,22 @@ async function subirAGithHub() {
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             let newContent = content;
             if(isEditMode) {
-                // Regex ajustado para borrar la entrada antigua
                 const regexRemove = new RegExp(`\\s*\\{id:${FINAL_ID},[^]*?genres:\\[[^]*?\\]\\},?`, 'g');
-                newContent = newContent.replace(regexRemove, '');
-                // Limpiar posibles comas dobles intermedias
-                newContent = newContent.replace(/,\s*,/g, ','); 
+                newContent = newContent.replace(regexRemove, '').replace(/,\s*,/g, ','); 
             }
-            
+           
             const insertionPoint = newContent.lastIndexOf('];');
-            // Obtener todo el contenido antes del cierre del array
-            let before = newContent.substring(0, insertionPoint).trim();
-
-            // --- CORRECCIÓN DE COMAS ---
-            // Si termina en coma, la quitamos
-            if (before.endsWith(',')) {
-                before = before.slice(0, -1).trim();
-            }
-
-            // Solo ponemos coma inicial si NO es el primer elemento (si no termina en '[')
-            const needsComma = !before.endsWith('[');
-
+            const before = newContent.substring(0, insertionPoint).trimEnd();
+            
             let finalGenres = [...nuevoAnime.generos];
             if(nuevoAnime.demografia) {
                 finalGenres = finalGenres.filter(g => g !== nuevoAnime.demografia);
                 finalGenres.push(nuevoAnime.demografia);
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
+
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
-            
-            const newEntry = `${needsComma ? ',' : ''}\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
-            
+            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
         // UPDATE DETAILS
@@ -1435,7 +1433,7 @@ async function subirAGithHub() {
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
-            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n            ]`;
+            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n           ]`;
             return before + musicEntry + "\n};";
         });
         log("✨ ¡EXITO!");
