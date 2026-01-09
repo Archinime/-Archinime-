@@ -24,13 +24,16 @@ const REPO = "-Archinime-";
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 let currentUserToken = null;
+let currentUserEmail = null; // Variable Global para Email
 
 // VARIABLES DE ESTADO
 let isEditMode = false;
+let isReadOnly = false; // Nuevo estado para proteger animes ajenos
 let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
+let currentSearchMode = 'mine'; // 'mine' | 'all'
 
 // ============================================
 // AUTENTICACIÓN
@@ -62,6 +65,7 @@ function checkAccess(user) {
     const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
 
     if (isAllowed) {
+        currentUserEmail = email; // Guardamos el email para identificar propiedad
         showCMS(user);
     } else {
         document.getElementById('errorText').innerText = "No autorizado.";
@@ -76,8 +80,8 @@ function showCMS(user) {
     document.getElementById('cmsContent').style.display = 'grid';
     document.getElementById('userAvatarImg').src = user.photoURL;
 
-    // LÓGICA DE NOMBRES DE USUARIO (ACTUALIZADO)
-    let displayName = "Archinime"; // Nombre por defecto (Dueño)
+    // LÓGICA DE NOMBRES DE USUARIO
+    let displayName = "Archinime"; // Nombre por defecto
     
     if (user.email === "alejandroarchi12@gmail.com") {
         displayName = "Alejandro";
@@ -403,7 +407,6 @@ function renderChapters(input, existingEps = []) {
         
         let sub = '', lat = '', customTitle = '';
         
-        // ** CAMBIO DE LÓGICA DE CARGA **
         if(existingEps[i]) {
              lat = existingEps[i].link || '';  
              sub = existingEps[i].link2 || ''; 
@@ -430,7 +433,6 @@ function renderChapters(input, existingEps = []) {
     }
 }
 
-// THROTTLE PARA VISTA PREVIA (ANTI-LAG)
 function requestPreviewUpdate() {
     if (!previewTimeout) {
         previewTimeout = requestAnimationFrame(() => {
@@ -455,12 +457,9 @@ function updateWebPreview() {
     const aliasStr = aliases.length > 0 ? aliases.join(', ') : "";
     document.getElementById('previewAliasesList').innerText = aliasStr;
 
-    // --- CAMBIO PARA VALORACIÓN NUMÉRICA ---
     const ratingInputVal = document.getElementById('ratingAnime').value;
-    // Si hay valor, lo muestra, si no "--"
     const ratingTxt = ratingInputVal ? parseFloat(ratingInputVal).toFixed(1) : "--";
     document.getElementById('webRating').innerText = `⭐ ${ratingTxt}`;
-    // ----------------------------------------
     
     const tagsContainer = document.getElementById('webTags');
     tagsContainer.innerHTML = '';
@@ -535,17 +534,30 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA Y EDICIÓN (OPTIMIZADA)
+// CARGA, EDICIÓN Y FILTRO (MEJORADO)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
     document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
+    
+    // Por defecto abrimos en Mis Animes si queremos ver lo nuestro primero
+    setSearchMode('mine');
+    
     if(cachedIndex.length === 0) loadIndexForSearch();
     else filterSearch();
 }
 
-// MANEJADOR DE CLIC FUERA DEL MODAL
+function setSearchMode(mode) {
+    currentSearchMode = mode;
+    
+    // Actualizar botones UI
+    document.getElementById('tabMine').classList.toggle('active', mode === 'mine');
+    document.getElementById('tabAll').classList.toggle('active', mode === 'all');
+    
+    filterSearch();
+}
+
 function handleModalClick(event) {
     if (event.target.id === 'searchModal') {
         closeSearchModal();
@@ -581,26 +593,62 @@ function _performFilter() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
-    const filtered = cachedIndex.filter(a => a.title.toLowerCase().includes(query)).slice(0, 50);
+    
+    // FILTRO DE ORIGEN (MIO O GENERAL)
+    let sourceData = cachedIndex;
+    if (currentSearchMode === 'mine') {
+        sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail);
+    }
+
+    // FILTRO DE TEXTO Y SIN LÍMITE (MUESTRA TODOS)
+    const filtered = sourceData.filter(a => a.title.toLowerCase().includes(query));
     
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
-        div.onclick = () => loadAnimeForEditing(anime.id);
+        div.onclick = () => loadAnimeForEditing(anime.id, anime.uploader);
+        
+        // Icono visual si es mío
+        const isMine = (anime.uploader === currentUserEmail);
+        const ownerTag = isMine ? '<span style="color:#00ffbf; font-size:0.7em; margin-left:5px;">(MÍO)</span>' : '';
+
         div.innerHTML = `
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
-                <div style="font-weight:bold; color:#fff;">${anime.title}</div>
+                <div style="font-weight:bold; color:#fff;">${anime.title} ${ownerTag}</div>
                 <div style="color:#777; font-size:0.8em">ID: ${anime.id} | ⭐ ${anime.rating}</div>
             </div>
         `;
         results.appendChild(div);
     });
-    if(filtered.length === 0) results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados</div>';
+
+    if(filtered.length === 0) {
+        if(currentSearchMode === 'mine') {
+             results.innerHTML = '<div style="padding:20px; color:#777; text-align:center">No has subido ningún anime aún (o no se ha registrado tu autoría en versiones anteriores).<br>Usa la pestaña <b>General</b> para buscar.</div>';
+        } else {
+             results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados</div>';
+        }
+    }
 }
 
-async function loadAnimeForEditing(id) {
-    if(!confirm("¿Cargar anime? Se perderán los datos actuales del formulario.")) return;
+async function loadAnimeForEditing(id, uploaderEmail) {
+    const isMine = (uploaderEmail === currentUserEmail);
+    
+    // LÓGICA DE PERMISOS
+    // Si estoy en pestaña "General" y NO es mío -> Solo lectura
+    // Si estoy en pestaña "Mis Animes" -> Edición
+    // Si estoy en "General" pero ES mío -> Edición
+    
+    let readOnly = false;
+    let confirmMsg = "¿Cargar anime para EDITAR? Se perderán los datos actuales.";
+    
+    if (currentSearchMode === 'all' && !isMine) {
+        readOnly = true;
+        confirmMsg = "Este anime NO es tuyo. Se cargará en MODO LECTURA (No podrás guardar cambios). ¿Continuar?";
+    }
+
+    if(!confirm(confirmMsg)) return;
+    
     closeSearchModal();
     showToast("Descargando datos...", false);
     
@@ -621,11 +669,34 @@ async function loadAnimeForEditing(id) {
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
 
+        // SET MODES
         isEditMode = true;
         currentEditingId = id;
+        isReadOnly = readOnly;
+
+        // UI UPDATE FOR MODES
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
-        document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
+        
+        const btnMain = document.getElementById('mainActionButton');
+        const modeLabel = document.getElementById('modeLabel');
+        const modeDesc = document.getElementById('modeDescription');
+
+        if (isReadOnly) {
+            // MODO LECTURA
+            modeLabel.innerText = "MODO LECTURA (VISITANTE)";
+            modeDesc.innerText = "Solo puedes ver cómo está configurado. No puedes guardar cambios.";
+            document.getElementById('btnActionText').innerText = "BLOQUEADO (SOLO LECTURA)";
+            btnMain.classList.add('btn-disabled');
+            btnMain.disabled = true;
+        } else {
+            // MODO EDICIÓN
+            modeLabel.innerText = "MODO EDICIÓN";
+            modeDesc.innerText = "Los cambios sobrescribirán el anime existente.";
+            document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
+            btnMain.classList.remove('btn-disabled');
+            btnMain.disabled = false;
+        }
 
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
@@ -650,13 +721,11 @@ async function loadAnimeForEditing(id) {
             });
         }
         
-        // --- CAMBIO PARA CARGA DE VALORACIÓN ---
         if(indexEntry && indexEntry.rating) {
             document.getElementById('ratingAnime').value = indexEntry.rating;
         } else {
             document.getElementById('ratingAnime').value = "";
         }
-        // ---------------------------------------
         
         document.getElementById('seasonsContainer').innerHTML = '';
         targetDetail.seasons.forEach(s => {
@@ -685,8 +754,15 @@ async function loadAnimeForEditing(id) {
 function exitEditMode() {
     isEditMode = false;
     currentEditingId = null;
+    isReadOnly = false;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
+    
+    // Restaurar botón
+    const btnMain = document.getElementById('mainActionButton');
+    btnMain.classList.remove('btn-disabled');
+    btnMain.disabled = false;
+
     location.reload(); 
 }
 
@@ -698,11 +774,9 @@ function generateData() {
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
     const demoSelect = document.getElementById('demografiaAnime').value;
     
-    // --- CAMBIO: OBTENER VALORACIÓN NUMÉRICA ---
     const ratingInput = document.getElementById('ratingAnime');
     let ratingVal = parseFloat(ratingInput.value);
     if(isNaN(ratingVal)) ratingVal = 0;
-    // --------------------------------------------
 
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
@@ -734,8 +808,6 @@ function generateData() {
         if(sType === 'Especial') specialCountVP++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
-            // Input class 'c-link-lat' -> Variable 'lat'
-            // Input class 'c-link-sub' -> Variable 'sub'
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
             
@@ -760,9 +832,6 @@ function generateData() {
             }
 
             if(sub || lat) {
-                // ** MAPEO FINAL PARA BASE DE DATOS **
-                // link = LAT
-                // link2 = SUB
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
@@ -782,6 +851,10 @@ function generateData() {
 }
 
 async function subirAGithHub() {
+    if(isReadOnly) {
+        return showToast("Modo Lectura: No puedes guardar cambios.", true);
+    }
+
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
     
@@ -792,11 +865,9 @@ async function subirAGithHub() {
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
     
-    // --- NUEVA VALIDACIÓN DE RATING ---
     if(!nuevoAnime.rating || isNaN(nuevoAnime.rating) || nuevoAnime.rating < 1 || nuevoAnime.rating > 5) {
         return showToast("Valoración inválida (Debe ser entre 1.0 y 5.0)", true);
     }
-    // ----------------------------------
     
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
@@ -825,13 +896,11 @@ async function subirAGithHub() {
                 newContent = newContent.replace(regexRemove, '');
             }
             
-            // LIMPIEZA DE COMAS DOBLES ANTES DE INSERTAR
             newContent = newContent.replace(/,\s*,/g, ',');
 
             const insertionPoint = newContent.lastIndexOf('];');
             let before = newContent.substring(0, insertionPoint).trim();
             
-            // SI TERMINA EN COMA, LA QUITAMOS PARA EVITAR DUPLICADOS
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
@@ -844,8 +913,8 @@ async function subirAGithHub() {
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // SIEMPRE AGREGAMOS UNA COMA AL PRINCIPIO DE LA NUEVA ENTRADA
-            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
+            // AQUI AGREGAMOS LA PROPIEDAD UPLOADER (EL CORREO DEL USUARIO)
+            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${currentUserEmail}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
         
@@ -891,14 +960,11 @@ async function subirAGithHub() {
                  newContent = newContent.replace(regexRemove, '');
             }
             
-            // 2. Limpieza de seguridad de comas dobles
             newContent = newContent.replace(/,\s*,/g, ',');
 
-            // 3. Definir punto de inserción
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
             
-            // Si lo anterior termina en coma, la quitamos para que no choque con la coma inicial de 'playerStr'
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
@@ -910,7 +976,6 @@ async function subirAGithHub() {
                 playerStr += `        },\n`;
             });
             playerStr += `      }`;
-            // Importante: Mantener 6 espacios aquí para que el Regex futuro lo detecte bien
             
             return before + playerStr + "\n};";
         });
@@ -920,25 +985,21 @@ async function subirAGithHub() {
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
             
-            // 1. ELIMINAR ENTRADA ANTIGUA SI ES EDICIÓN
             if(isEditMode) {
                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
 
-            // 2. LIMPIEZA DE COMAS DOBLES (SEGURIDAD)
             newContent = newContent.replace(/,\s*,/g, ',');
 
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
             
-            // 3. FIX: SI LO ANTERIOR TERMINA EN COMA, BORRARLA
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
-            // La nueva entrada empieza con coma
             const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n        ]`;
             return before + musicEntry + "\n};";
         });
