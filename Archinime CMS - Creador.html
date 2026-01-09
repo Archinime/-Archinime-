@@ -566,11 +566,7 @@ const firebaseConfig = {
 };
 
 // USUARIOS PERMITIDOS
-const ALLOWED_USERS = [
-    "archinime12@gmail.com", 
-    "lucioguapofeo@gmail.com", 
-    "alejandroarchi12@gmail.com"
-];
+const ALLOWED_USERS = ["archinime12@gmail.com"];
 
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
@@ -628,25 +624,7 @@ function showCMS(user) {
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
     document.getElementById('userAvatarImg').src = user.photoURL;
-
-    // LÓGICA DE NOMBRES SEGÚN EL CORREO
-    let nombreAMostrar;
-
-    switch (user.email) {
-        case "lucioguapofeo@gmail.com":
-            nombreAMostrar = "Lucio";
-            break;
-        case "alejandroarchi12@gmail.com":
-            nombreAMostrar = "Alejandro";
-            break;
-        case "archinime12@gmail.com":
-            nombreAMostrar = "Archinime";
-            break;
-        default:
-            nombreAMostrar = "Invitado"; // Por si acaso
-    }
-
-    document.getElementById('userNameDisplay').innerText = nombreAMostrar;
+    document.getElementById('userNameDisplay').innerText = "Archinime";
 }
 
 function showLogin() {
