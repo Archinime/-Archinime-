@@ -10,12 +10,22 @@ const firebaseConfig = {
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
 
-// USUARIOS PERMITIDOS (ACTUALIZADO)
+// CORREO DEL ADMINISTRADOR PRINCIPAL (TIENE PERMISO TOTAL)
+const SUPER_ADMIN_EMAIL = "archinime12@gmail.com";
+
+// USUARIOS PERMITIDOS
 const ALLOWED_USERS = [
     "archinime12@gmail.com", 
     "alejandroarchi12@gmail.com", 
     "lucioguapofeo@gmail.com"
 ];
+
+// MAPEO DE CORREOS A NOMBRES (Para mostrar en el buscador)
+const USER_NAMES_MAP = {
+    "archinime12@gmail.com": "Archinime",
+    "alejandroarchi12@gmail.com": "Alejandro",
+    "lucioguapofeo@gmail.com": "Lucio"
+};
 
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
@@ -24,11 +34,11 @@ const REPO = "-Archinime-";
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 let currentUserToken = null;
-let currentUserEmail = null; // Variable Global para Email
+let currentUserEmail = null;
 
 // VARIABLES DE ESTADO
 let isEditMode = false;
-let isReadOnly = false; // Nuevo estado para proteger animes ajenos
+let isReadOnly = false;
 let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
@@ -61,11 +71,10 @@ function checkAccess(user) {
     const email = user.email;
     const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
     
-    // Verificamos si el email o el nickname están en la lista
     const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
 
     if (isAllowed) {
-        currentUserEmail = email; // Guardamos el email para identificar propiedad
+        currentUserEmail = email; 
         showCMS(user);
     } else {
         document.getElementById('errorText').innerText = "No autorizado.";
@@ -80,15 +89,8 @@ function showCMS(user) {
     document.getElementById('cmsContent').style.display = 'grid';
     document.getElementById('userAvatarImg').src = user.photoURL;
 
-    // LÓGICA DE NOMBRES DE USUARIO
-    let displayName = "Archinime"; // Nombre por defecto
-    
-    if (user.email === "alejandroarchi12@gmail.com") {
-        displayName = "Alejandro";
-    } else if (user.email === "lucioguapofeo@gmail.com") {
-        displayName = "Lucio";
-    }
-
+    // Obtener nombre bonito desde el mapa o usar email
+    let displayName = USER_NAMES_MAP[user.email] || "Aportador";
     document.getElementById('userNameDisplay').innerText = displayName;
 }
 
@@ -254,7 +256,7 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS & CHAPTERS - PALETA DE COLORES
+// SEASONS & CHAPTERS
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
@@ -386,7 +388,6 @@ function renderChapters(input, existingEps = []) {
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
 
-    // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
@@ -541,7 +542,6 @@ function openSearchModal() {
     document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
     
-    // Por defecto abrimos en Mis Animes si queremos ver lo nuestro primero
     setSearchMode('mine');
     
     if(cachedIndex.length === 0) loadIndexForSearch();
@@ -550,11 +550,8 @@ function openSearchModal() {
 
 function setSearchMode(mode) {
     currentSearchMode = mode;
-    
-    // Actualizar botones UI
     document.getElementById('tabMine').classList.toggle('active', mode === 'mine');
     document.getElementById('tabAll').classList.toggle('active', mode === 'all');
-    
     filterSearch();
 }
 
@@ -594,13 +591,22 @@ function _performFilter() {
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
     
-    // FILTRO DE ORIGEN (MIO O GENERAL)
+    // FILTRO DE ORIGEN
     let sourceData = cachedIndex;
+    
+    // Si soy SUPER ADMIN (Archinime), en "Mis Aportes" mostrar todo lo que sea mío O lo que no tenga dueño (legacy)
+    const isSuperAdmin = (currentUserEmail === SUPER_ADMIN_EMAIL);
+
     if (currentSearchMode === 'mine') {
-        sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail);
+        if(isSuperAdmin) {
+            // Archinime ve sus subidas + las antiguas sin uploader
+            sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail || !item.uploader);
+        } else {
+            // Resto de usuarios solo ven lo suyo explícitamente
+            sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail);
+        }
     }
 
-    // FILTRO DE TEXTO Y SIN LÍMITE (MUESTRA TODOS)
     const filtered = sourceData.filter(a => a.title.toLowerCase().includes(query));
     
     filtered.forEach(anime => {
@@ -608,7 +614,15 @@ function _performFilter() {
         div.className = 's-result-item';
         div.onclick = () => loadAnimeForEditing(anime.id, anime.uploader);
         
-        // Icono visual si es mío
+        // --- CAMBIO VISUAL: UPLOADER EN VEZ DE RATING ---
+        let uploaderName = "Desconocido";
+        if (anime.uploader) {
+            uploaderName = USER_NAMES_MAP[anime.uploader] || "Usuario";
+        } else {
+            uploaderName = "Administración/Legacy"; // Para animes antiguos sin etiqueta
+        }
+        
+        // Etiqueta visual si es mío
         const isMine = (anime.uploader === currentUserEmail);
         const ownerTag = isMine ? '<span style="color:#00ffbf; font-size:0.7em; margin-left:5px;">(MÍO)</span>' : '';
 
@@ -616,7 +630,7 @@ function _performFilter() {
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
                 <div style="font-weight:bold; color:#fff;">${anime.title} ${ownerTag}</div>
-                <div style="color:#777; font-size:0.8em">ID: ${anime.id} | ⭐ ${anime.rating}</div>
+                <div style="color:#777; font-size:0.8em">ID: ${anime.id} | <i class="fas fa-user-circle"></i> Subido por: ${uploaderName}</div>
             </div>
         `;
         results.appendChild(div);
@@ -624,7 +638,7 @@ function _performFilter() {
 
     if(filtered.length === 0) {
         if(currentSearchMode === 'mine') {
-             results.innerHTML = '<div style="padding:20px; color:#777; text-align:center">No has subido ningún anime aún (o no se ha registrado tu autoría en versiones anteriores).<br>Usa la pestaña <b>General</b> para buscar.</div>';
+             results.innerHTML = '<div style="padding:20px; color:#777; text-align:center">No se encontraron aportes asociados a tu cuenta.<br>Intenta buscar en <b>General</b>.</div>';
         } else {
              results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados</div>';
         }
@@ -633,18 +647,18 @@ function _performFilter() {
 
 async function loadAnimeForEditing(id, uploaderEmail) {
     const isMine = (uploaderEmail === currentUserEmail);
+    const isSuperAdmin = (currentUserEmail === SUPER_ADMIN_EMAIL);
     
-    // LÓGICA DE PERMISOS
-    // Si estoy en pestaña "General" y NO es mío -> Solo lectura
-    // Si estoy en pestaña "Mis Animes" -> Edición
-    // Si estoy en "General" pero ES mío -> Edición
+    // LÓGICA DE PERMISOS ACTUALIZADA
+    // Puede editar si: ES SUYO -O- ES SUPER ADMIN (Archinime)
+    const canEdit = isMine || isSuperAdmin;
     
     let readOnly = false;
     let confirmMsg = "¿Cargar anime para EDITAR? Se perderán los datos actuales.";
     
-    if (currentSearchMode === 'all' && !isMine) {
+    if (!canEdit) {
         readOnly = true;
-        confirmMsg = "Este anime NO es tuyo. Se cargará en MODO LECTURA (No podrás guardar cambios). ¿Continuar?";
+        confirmMsg = "No tienes permisos de edición sobre este anime. Se cargará en MODO LECTURA. ¿Continuar?";
     }
 
     if(!confirm(confirmMsg)) return;
@@ -683,14 +697,12 @@ async function loadAnimeForEditing(id, uploaderEmail) {
         const modeDesc = document.getElementById('modeDescription');
 
         if (isReadOnly) {
-            // MODO LECTURA
-            modeLabel.innerText = "MODO LECTURA (VISITANTE)";
-            modeDesc.innerText = "Solo puedes ver cómo está configurado. No puedes guardar cambios.";
+            modeLabel.innerText = "MODO LECTURA";
+            modeDesc.innerText = "No tienes permisos para editar este contenido.";
             document.getElementById('btnActionText').innerText = "BLOQUEADO (SOLO LECTURA)";
             btnMain.classList.add('btn-disabled');
             btnMain.disabled = true;
         } else {
-            // MODO EDICIÓN
             modeLabel.innerText = "MODO EDICIÓN";
             modeDesc.innerText = "Los cambios sobrescribirán el anime existente.";
             document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
@@ -852,7 +864,7 @@ function generateData() {
 
 async function subirAGithHub() {
     if(isReadOnly) {
-        return showToast("Modo Lectura: No puedes guardar cambios.", true);
+        return showToast("Modo Lectura: No tienes permiso para guardar.", true);
     }
 
     const token = currentUserToken;
@@ -913,7 +925,6 @@ async function subirAGithHub() {
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // AQUI AGREGAMOS LA PROPIEDAD UPLOADER (EL CORREO DEL USUARIO)
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${currentUserEmail}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
@@ -950,7 +961,7 @@ async function subirAGithHub() {
             return before + newDetail + "\n};";
         });
 
-// UPDATE PLAYER
+        // UPDATE PLAYER
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             let newContent = content;
