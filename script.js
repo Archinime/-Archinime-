@@ -91,7 +91,7 @@ const genresList = [
     "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
     "Harem", "Hentai", "Horror", "Incesto", "Isekai", "Isekai Inverso", "Kaiju", "Mecha", "Militar", 
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
-    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
+    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi"
 ];
 
 const gContainer = document.getElementById('genresContainer');
@@ -620,7 +620,7 @@ async function loadAnimeForEditing(id) {
         if(indexEntry && indexEntry.genres && indexEntry.genres.length > 0) {
             let loadedGenres = [...indexEntry.genres];
             const lastGenre = loadedGenres[loadedGenres.length - 1];
-            const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo"];
+            const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo", "Seijin"];
             if (demoOptions.includes(lastGenre)) {
                 document.getElementById('demografiaAnime').value = lastGenre;
                 loadedGenres.pop();
