@@ -188,7 +188,7 @@
         .season-card { 
             background: #131419;
             padding: 20px; border-radius: 16px; margin-bottom: 25px;
-            /* Controlado por JS para color dinámico */
+            /* Quitamos el border left fijo del CSS para controlarlo con JS */
             border: 1px solid var(--border); 
             position: relative; overflow: hidden;
             transition: all 0.3s ease;
@@ -226,32 +226,20 @@
             border-radius: 20px; overflow: hidden; border: 1px solid #333;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
         }
-        /* --- MODIFICADO: Imagen completa --- */
         .web-cover { 
             width: 100%;
-            height: auto; /* Altura automática */
-            min-height: 300px; /* Altura mínima para que no colapse */
-            object-fit: contain; /* Mostrar imagen completa */
-            opacity: 1; /* Opacidad total */
-            mask-image: none; /* Quitar máscara de desvanecimiento */
-            -webkit-mask-image: none;
+            height: 350px; object-fit: cover; opacity: 0.85;
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
         }
-        .web-info { padding: 25px; margin-top: 0px; position: relative; z-index: 2; }
-        
+        .web-info { padding: 25px; margin-top: -100px; position: relative; z-index: 2; }
         .web-title { 
             font-size: 1.8em;
-            font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 4px;
+            font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 8px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.9);
         }
-        /* --- MODIFICADO: Estilo Alias --- */
-        .web-alias { 
-            font-family: 'Outfit', sans-serif; 
-            color: #999; 
-            font-size: 0.8em; 
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        
+        .web-alias { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.8em; }
+
         .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
         .preview-s-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 2/3;
         border: 1px solid #333; }
@@ -386,7 +374,7 @@
             .col-flex { margin-bottom: 0; }
             .editor-panel { padding: 20px; }
             .c-inputs-grid { grid-template-columns: 1fr; } 
-            .web-cover { height: auto; }
+            .web-cover { height: 250px; }
             .web-title { font-size: 1.5em; }
         }
     </style>
@@ -542,10 +530,7 @@
             <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Cover">
             <div class="web-info">
                 <div id="webTitle" class="web-title">Título</div>
-                <div id="webAlias" class="web-alias">
-                    <div>ID: <span id="previewId">###</span></div>
-                    <div id="previewAliasesList" style="margin-top:4px; font-style: italic; color:#777;"></div>
-                </div>
+                <div id="webAlias" class="web-alias">ID: <span id="previewId">###</span></div>
                 
                 <div style="display:flex; justify-content:space-between; margin-top:15px; border-bottom:1px solid #333;
                 padding-bottom:10px;">
@@ -973,13 +958,11 @@ function renderChapters(input, existingEps = []) {
         "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
-        
-        // --- MODIFICADO: ORDEN DE INPUTS (LATINO PRIMERO) ---
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
-                <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
+                <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
             </div>
             <input type="text" 
             class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
@@ -999,30 +982,18 @@ function updateWebPreview() {
     document.getElementById('webDemography').innerText = demo ?
     demo.toUpperCase() : 'DEMO';
     
-    // --- MODIFICADO: ALIAS DEBAJO DEL TÍTULO ---
-    const aliases = [];
-    document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
-    const aliasStr = aliases.length > 0 ? aliases.join(', ') : "";
-    document.getElementById('previewAliasesList').innerText = aliasStr;
-
-    // --- MODIFICADO: VALORACIÓN NUMÉRICA ---
-    const ratingSel = document.getElementById('ratingAnime').value;
-    let ratingTxt = "--";
-    if(ratingSel === 'excellent') ratingTxt = "4.9";
-    else if(ratingSel === 'good') ratingTxt = "4.6";
-    else if(ratingSel === 'regular') ratingTxt = "4.0";
-    document.getElementById('webRating').innerText = `⭐ ${ratingTxt}`;
-    
     const tagsContainer = document.getElementById('webTags');
     tagsContainer.innerHTML = '';
-    // --- MODIFICADO: SIN LÍMITE DE GÉNEROS ---
+    let genresCount = 0;
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => {
-        let s = document.createElement('span');
-        s.style.cssText = "font-size:0.65em; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.1); color:#ccc;";
-        s.innerText = cb.value;
-        tagsContainer.appendChild(s);
+        if(genresCount < 4) { 
+            let s = document.createElement('span');
+            s.style.cssText = "font-size:0.65em; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.1); color:#ccc;";
+            s.innerText = cb.value;
+            tagsContainer.appendChild(s);
+            genresCount++;
+        }
     });
-
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -1290,10 +1261,7 @@ function generateData() {
         if(sType === 'Especial') specialCountVP++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
-            
-            // IMPORTANTE: Mapeo correcto para mantener la lógica de base de datos
-            // c-link-sub = link (Sub)
-            // c-link-lat = link2 (Lat)
+  
             const sub = row.querySelector('.c-link-sub').value.trim();
             const lat = row.querySelector('.c-link-lat').value.trim();
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
@@ -1321,7 +1289,6 @@ function generateData() {
             }
 
             if(sub || lat) {
-                // Link es sub, Link2 es lat. Esto no cambia aunque cambiemos el orden visual de los inputs.
                 eps.push({ num: idx + 1, link: sub, link2: lat, title: detailTitle, playerTitle: playerTitle });
             }
         });
