@@ -188,10 +188,11 @@
         .season-card { 
             background: #131419;
             padding: 20px; border-radius: 16px; margin-bottom: 25px;
-            /* Quitamos el border left fijo del CSS para controlarlo con JS */
-            border: 1px solid var(--border); 
-            position: relative; overflow: hidden;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+        }
+        .season-card::before {
+            content:'';
+            position: absolute; left:0; top:0; bottom:0; width: 4px; background: var(--accent);
         }
         
         .chapter-row { 
@@ -780,32 +781,11 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS & CHAPTERS - PALETA DE COLORES
-const colorPalette = [
-    '#00f0ff', // Cyan
-    '#8c52ff', // Purple
-    '#ff0055', // Pink
-    '#00ff9d', // Green
-    '#ffeb3b', // Yellow
-    '#ff9100', // Orange
-    '#2979ff', // Blue
-    '#e040fb'  // Magenta
-];
-
+// SEASONS & CHAPTERS
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
     div.className = 'season-card';
-    
-    // Calcular color basado en el índice
-    const count = document.querySelectorAll('.season-card').length;
-    const color = colorPalette[count % colorPalette.length];
-    
-    // Aplicar estilo dinámico: Borde Izquierdo y un leve fondo degradado
-    div.style.cssText = `
-        border-left: 4px solid ${color};
-        background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
-    `;
     
     div.innerHTML = `
         <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
@@ -862,12 +842,6 @@ function removeSeasonBlock(btn) {
     btn.closest('.season-card').remove();
     updateAllBlockNames();
     updateWebPreview();
-    // Reordenar colores al borrar? Opcional, pero para mantener el orden visual:
-    document.querySelectorAll('.season-card').forEach((card, idx) => {
-        const color = colorPalette[idx % colorPalette.length];
-        card.style.borderLeftColor = color;
-        card.style.background = `linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%)`;
-    });
 }
 
 function updateAllBlockNames() {
