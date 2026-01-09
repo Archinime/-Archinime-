@@ -28,8 +28,7 @@
             --header-height: 70px;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
             font-family: 'Outfit', sans-serif;
@@ -46,6 +45,7 @@
             padding-bottom: 40px;
         }
 
+        /* Optimización de animación de fondo para reducir LAG */
         @keyframes bgBreath {
             0% { background-position: 50% 0%; }
             50% { background-position: 52% 2%; }
@@ -67,10 +67,10 @@
         
         .login-card {
             background: rgba(20, 20, 25, 0.85);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); /* Blur reducido para rendimiento */
             padding: 40px 30px; border-radius: 24px; border: 1px solid var(--border);
             text-align: center;
-            box-shadow: 0 0 100px rgba(140, 82, 255, 0.15);
+            box-shadow: 0 0 50px rgba(140, 82, 255, 0.1);
             max-width: 400px; width: 100%; 
             animation: fadeInUp 0.8s ease;
         }
@@ -79,7 +79,7 @@
         .login-logo {
             width: 100px;
             height: 100px; object-fit: contain; margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px var(--primary-glow));
+            filter: drop-shadow(0 0 10px var(--primary-glow));
             transition: transform 0.5s;
         }
         .login-logo:hover { transform: scale(1.05) rotate(2deg); }
@@ -98,7 +98,7 @@
             display: flex;
             justify-content: space-between; align-items: center;
             padding: 10px 20px; 
-            background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(5, 5, 7, 0.95); /* Menos transparencia para mejor rendimiento */
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0; z-index: 100; display: none; height: var(--header-height);
@@ -109,8 +109,7 @@
             color: var(--accent); padding: 2px 8px;
             border-radius: 4px; font-size: 0.65em; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
         }
-        .user-name { font-weight: 600; font-size: 0.9em; max-width: 150px; white-space: nowrap; overflow: hidden;
-            text-overflow: ellipsis; }
+        .user-name { font-weight: 600; font-size: 0.9em; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* --- LAYOUT GRID --- */
         .main-wrapper {
@@ -149,7 +148,7 @@
             padding: 14px 16px; background: var(--bg-input);
             border: 1px solid var(--border); color: white; border-radius: var(--radius); 
             box-sizing: border-box; font-family: 'Outfit', sans-serif; font-size: 16px;
-            transition: all 0.2s;
+            transition: border-color 0.2s; /* Transición solo en borde para rendimiento */
             appearance: none;
         }
         input:focus, select:focus, textarea:focus { 
@@ -160,8 +159,7 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b8d96'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat; background-position: right 15px center; background-size: 16px;
         }
-        input:disabled { opacity: 0.6;
-            cursor: not-allowed; background: #121216; border-color: #222; }
+        input:disabled { opacity: 0.6; cursor: not-allowed; background: #121216; border-color: #222; }
 
         /* --- BUTTONS --- */
         .btn { 
@@ -188,11 +186,9 @@
         .season-card { 
             background: #131419;
             padding: 20px; border-radius: 16px; margin-bottom: 25px;
-            border: 1px solid var(--border); position: relative; overflow: hidden;
-        }
-        .season-card::before {
-            content:'';
-            position: absolute; left:0; top:0; bottom:0; width: 4px; background: var(--accent);
+            border: 1px solid var(--border);
+            position: relative; overflow: hidden;
+            transition: none; /* Quitamos transición para rendimiento */
         }
         
         .chapter-row { 
@@ -206,8 +202,7 @@
             background: rgba(0, 240, 255, 0.1); padding: 4px 8px; border-radius: 6px; font-size: 0.85em;
         }
         
-        .c-inputs-grid { display: grid;
-            grid-template-columns: 1fr 1fr; gap: 10px; }
+        .c-inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         /* --- AUDIO PLAYER --- */
         .audio-preview-box {
@@ -218,10 +213,25 @@
         audio { width: 100%; height: 40px; margin-top: 5px; opacity: 0.9; border-radius: 8px; }
         .audio-status-text { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; }
 
-        /* --- PREVIEW SIDEBAR --- */
-        .preview-sidebar { position: sticky;
-            top: 100px; height: fit-content; }
+        /* --- PREVIEW SIDEBAR (MEJORADO PARA SCROLL INDEPENDIENTE) --- */
+        .preview-sidebar { 
+            position: sticky;
+            top: 90px; /* Debajo del header */
+            height: fit-content;
+            max-height: calc(100vh - 110px); /* Altura máxima para no salirse */
+            overflow-y: auto; /* Scroll interno si es muy largo */
+            padding-right: 5px; /* Espacio para scrollbar */
+            
+            /* Scrollbar personalizado */
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #111;
+        }
         
+        /* Webkit scrollbar */
+        .preview-sidebar::-webkit-scrollbar { width: 6px; }
+        .preview-sidebar::-webkit-scrollbar-track { background: #111; }
+        .preview-sidebar::-webkit-scrollbar-thumb { background-color: var(--primary); border-radius: 6px; }
+
         .web-card { 
             background: #000;
             border-radius: 20px; overflow: hidden; border: 1px solid #333;
@@ -229,23 +239,35 @@
         }
         .web-cover { 
             width: 100%;
-            height: 350px; object-fit: cover; opacity: 0.85;
-            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            height: auto; 
+            min-height: 300px;
+            object-fit: contain;
+            opacity: 1;
+            mask-image: none;
+            -webkit-mask-image: none;
         }
-        .web-info { padding: 25px; margin-top: -100px; position: relative; z-index: 2; }
+        .web-info { padding: 25px; margin-top: 0px; position: relative; z-index: 2; }
+        
         .web-title { 
             font-size: 1.8em;
-            font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 8px;
+            font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 4px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.9);
         }
-        .web-alias { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.8em; }
-
+        .web-alias { 
+            font-family: 'Outfit', sans-serif;
+            color: #999; 
+            font-size: 0.8em; 
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
         .preview-seasons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
-        .preview-s-item { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 2/3;
-        border: 1px solid #333; }
-        .preview-s-item img { width: 100%; height: 100%;
-        object-fit: cover; }
+        .preview-s-item { 
+            position: relative;
+            border-radius: 8px; overflow: hidden; aspect-ratio: 2/3;
+            border: 1px solid #333;
+        }
+        .preview-s-item img { width: 100%; height: 100%; object-fit: cover; }
         .preview-s-title { 
             position: absolute;
             bottom: 0; width: 100%; background: rgba(0,0,0,0.8); 
@@ -257,12 +279,10 @@
         }
 
         /* --- UTILS --- */
-        .row-flex { display: flex;
-        gap: 20px; }
+        .row-flex { display: flex; gap: 20px; }
         .col-flex { flex: 1; }
         
-        .dynamic-item { display: flex;
-        gap: 10px; margin-bottom: 10px; align-items: flex-start;}
+        .dynamic-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start;}
         .btn-mini-del { 
             background: #1a1a1a;
             color: #ff4757; border: 1px solid #333; 
@@ -315,12 +335,9 @@
             font-size: 0.9rem;
             width: max-content; max-width: 90%;
         }
-        #toast.show { visibility: visible;
-        animation: fadein 0.5s, fadeout 0.5s 3.5s; }
-        @keyframes fadein { from {bottom: 0;
-        opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px;
-        opacity: 1;} to {bottom: 0; opacity: 0;} }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 3.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
         /* LOG */
         #statusLog {
@@ -335,19 +352,19 @@
         #searchModal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 5000; display: none;
+            background: rgba(0,0,0,0.8); /* Fondo semi-transparente para detectar clics */
+            z-index: 5000; display: none;
             justify-content: center; align-items: center; padding: 20px;
+            backdrop-filter: blur(5px);
         }
         .search-box {
             background: #131419;
             width: 100%; max-width: 500px;
             border-radius: 16px; border: 1px solid #333;
             max-height: 80vh; display: flex; flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .search-results {
-            overflow-y: auto;
-            flex: 1; padding: 10px;
-        }
+        .search-results { overflow-y: auto; flex: 1; padding: 10px; }
         .s-result-item {
             display: flex;
             gap: 10px; padding: 10px; border-bottom: 1px solid #222;
@@ -366,16 +383,20 @@
 
         /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 900px) {
-            .main-wrapper { grid-template-columns: 1fr;
-            padding: 15px; }
-            .preview-sidebar { position: relative; top: 0;
-            order: 2; margin-top: 40px; }
-            .row-flex { flex-direction: column;
-            gap: 0; }
+            .main-wrapper { grid-template-columns: 1fr; padding: 15px; }
+            .preview-sidebar { 
+                position: relative; 
+                top: 0; 
+                order: 2; 
+                margin-top: 40px; 
+                max-height: none; /* En móvil no limitamos la altura */
+                overflow-y: visible;
+            }
+            .row-flex { flex-direction: column; gap: 0; }
             .col-flex { margin-bottom: 0; }
             .editor-panel { padding: 20px; }
             .c-inputs-grid { grid-template-columns: 1fr; } 
-            .web-cover { height: 250px; }
+            .web-cover { height: auto; }
             .web-title { font-size: 1.5em; }
         }
     </style>
@@ -400,38 +421,31 @@
 
 <div id="userHeader" class="user-header">
     <div class="header-profile">
-        <img id="userAvatarImg" src="" style="width:36px;
-        height:36px; border-radius:50%; border:2px solid var(--primary);">
+        <img id="userAvatarImg" src="" style="width:36px; height:36px; border-radius:50%; border:2px solid var(--primary);">
         <div>
             <div class="user-badge">Verificado</div>
             <div id="userNameDisplay" class="user-name">Archinime</div>
         </div>
     </div>
     <div style="display:flex; gap:10px;">
-        <button onclick="openSearchModal()" style="background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold;
-        font-size:0.8em;">
+        <button onclick="openSearchModal()" style="background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:0.8em;">
             <i class="fas fa-folder-open"></i> CARGAR / EDITAR
         </button>
-        <button onclick="logout()" style="background:transparent;
-        color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
+        <button onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
             <i class="fas fa-power-off"></i>
         </button>
     </div>
 </div>
 
-<div id="searchModal">
+<div id="searchModal" onclick="handleModalClick(event)">
     <div class="search-box">
-        <div style="padding:15px;
-        border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0;
-            color:#fff;">📂 Seleccionar Anime</h3>
-            <button onclick="closeSearchModal()" style="background:none; border:none; color:#ff4757; font-size:1.2em;
-            cursor:pointer;"><i class="fas fa-times"></i></button>
+        <div style="padding:15px; border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; color:#fff;">📂 Seleccionar Anime</h3>
+            <button onclick="closeSearchModal()" style="background:none; border:none; color:#ff4757; font-size:1.2em; cursor:pointer;"><i class="fas fa-times"></i></button>
         </div>
         <div style="padding:10px;">
             <input type="text" id="searchInput" placeholder="Buscar por nombre..." style="margin:0;" oninput="filterSearch()">
-            <div id="loadingSearch" style="color:var(--accent);
-            text-align:center; padding:10px; display:none;">Cargando índice...</div>
+            <div id="loadingSearch" style="color:var(--accent); text-align:center; padding:10px; display:none;">Cargando índice...</div>
         </div>
         <div id="searchResults" class="search-results"></div>
     </div>
@@ -443,52 +457,41 @@
         
         <div id="editModeBar">
             <i class="fas fa-edit"></i> MODO EDICIÓN ACTIVADO (ID: <span id="editIdDisplay">0</span>)
-            <div style="font-size:0.8em;
-            font-weight:normal; margin-top:5px;">Los cambios sobrescribirán el anime existente.</div>
-            <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3);
-            border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar Edición</button>
+            <div style="font-size:0.8em; font-weight:normal; margin-top:5px;">Los cambios sobrescribirán el anime existente.</div>
+            <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3); border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar Edición</button>
         </div>
 
         <h2><i class="fas fa-pen-to-square"></i> 1. Ficha Técnica</h2>
         
         <label>Título Principal <span>*</span></label>
-        <input type="text" id="tituloAnime" placeholder="Ej: Dragon Ball Z" onblur="autoCap(this);
-        validate(this);" oninput="updateWebPreview()">
+        <input type="text" id="tituloAnime" placeholder="Ej: Dragon Ball Z" onblur="autoCap(this); validate(this);" oninput="requestPreviewUpdate()">
 
         <label>Alias Alternativos</label>
         <div id="aliasContainer"></div>
-        <button class="btn btn-add" style="margin-top:10px;
-        padding:12px;" onclick="addAlias()">
+        <button class="btn btn-add" style="margin-top:10px; padding:12px;" onclick="addAlias()">
             <i class="fas fa-plus"></i> AGREGAR ALIAS
         </button>
 
         <label style="margin-top:25px">URL Portada Vertical (.AVIF) <span>*</span></label>
-        <div style="margin-bottom:5px;
-        font-size:0.8em; color:var(--accent);">Permitido: 1000x1500, 2000x3000, 3412x5120</div>
-        <div style="display:flex; gap:15px; align-items: flex-start;
-        flex-wrap: wrap;">
-            <div style="flex:1;
-            min-width: 200px;">
-                <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this);
-                updateWebPreview()" onblur="validate(this); smartLinkConvert(this)">
-                <div id="dimDisplay" style="color:var(--text-muted);
-                font-size:0.8em; margin-top:8px; font-family:'JetBrains Mono'"></div>
+        <div style="margin-bottom:5px; font-size:0.8em; color:var(--accent);">Permitido: 1000x1500, 2000x3000, 3412x5120</div>
+        <div style="display:flex; gap:15px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="flex:1; min-width: 200px;">
+                <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this); requestPreviewUpdate()" onblur="validate(this); smartLinkConvert(this)">
+                <div id="dimDisplay" style="color:var(--text-muted); font-size:0.8em; margin-top:8px; font-family:'JetBrains Mono'"></div>
             </div>
-            <img id="mainCoverPreview" style="width:100px;
-            height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
+            <img id="mainCoverPreview" style="width:100px; height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
         </div>
         
         <label>Géneros (Selecciona varios) <span>*</span></label>
         <div class="genres-box" id="genresContainer"></div>
 
         <label>Sinopsis <span>*</span></label>
-        <textarea id="sinopsisAnime" rows="5" placeholder="Sinopsis oficial..." onblur="autoCap(this);
-        validate(this)"></textarea>
+        <textarea id="sinopsisAnime" rows="5" placeholder="Sinopsis oficial..." onblur="autoCap(this); validate(this)"></textarea>
         
         <div class="row-flex">
             <div class="col-flex">
                 <label>Demografía <span>*</span></label>
-                <select id="demografiaAnime" onchange="updateWebPreview()">
+                <select id="demografiaAnime" onchange="requestPreviewUpdate()">
                     <option value="" disabled selected>Elegir Demografía...</option>
                     <option value="Shōnen">Shōnen</option>
                     <option value="Seinen">Seinen</option>
@@ -499,7 +502,7 @@
             </div>
             <div class="col-flex">
                 <label>Valoración <span>*</span></label>
-                <select id="ratingAnime" onchange="updateWebPreview()">
+                <select id="ratingAnime" onchange="requestPreviewUpdate()">
                     <option value="" disabled selected>Elegir Valoración...</option>
                     <option value="excellent">⭐ Excelente (4.8+)</option>
                     <option value="good">⭐ Buena (4.6+)</option>
@@ -514,8 +517,7 @@
 
         <h2 style="margin-top:50px"><i class="fas fa-music"></i> 3. Banda Sonora</h2>
         <div id="musicContainer"></div>
-        <button class="btn btn-add" style="border-color:var(--primary);
-        color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
+        <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
 
         <button class="btn btn-gen" onclick="subirAGithHub()">
             <i class="fas fa-cloud-arrow-up"></i> <span id="btnActionText">COMPILAR Y SUBIR</span>
@@ -525,26 +527,23 @@
     </div>
 
     <div class="preview-sidebar">
-        <h3 style="color:var(--text-muted);
-        font-size:0.8em; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
+        <h3 style="color:var(--text-muted); font-size:0.8em; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
         <div class="web-card">
             <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Cover">
             <div class="web-info">
                 <div id="webTitle" class="web-title">Título</div>
-                <div id="webAlias" class="web-alias">ID: <span id="previewId">###</span></div>
-                
-                <div style="display:flex; justify-content:space-between; margin-top:15px; border-bottom:1px solid #333;
-                padding-bottom:10px;">
-                    <span id="webDemography" style="color:var(--accent);
-                    font-weight:700; font-size:0.8em">DEMO</span>
-                    <span id="webRating" style="color:#facc15;
-                    font-size:0.8em">⭐ --</span>
+                <div id="webAlias" class="web-alias">
+                    <div>ID: <span id="previewId">###</span></div>
+                    <div id="previewAliasesList" style="margin-top:4px; font-style: italic; color:#777;"></div>
                 </div>
-                <div id="webTags" style="display:flex;
-                flex-wrap:wrap; gap:6px; margin:15px 0;"></div>
                 
-                <div style="font-size:0.7em;
-                font-weight:bold; color:#777; margin-top:20px; letter-spacing:1px;">COLECCIÓN:</div>
+                <div style="display:flex; justify-content:space-between; margin-top:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    <span id="webDemography" style="color:var(--accent); font-weight:700; font-size:0.8em">DEMO</span>
+                    <span id="webRating" style="color:#facc15; font-size:0.8em">⭐ --</span>
+                </div>
+                <div id="webTags" style="display:flex; flex-wrap:wrap; gap:6px; margin:15px 0;"></div>
+                
+                <div style="font-size:0.7em; font-weight:bold; color:#777; margin-top:20px; letter-spacing:1px;">COLECCIÓN:</div>
                 <div id="webSeasonsGrid" class="preview-seasons-grid"></div>
             </div>
         </div>
@@ -581,7 +580,8 @@ let currentUserToken = null;
 let isEditMode = false;
 let currentEditingId = null;
 let cachedIndex = [];
-let searchTimeout = null; // Para evitar lag al escribir
+let searchTimeout = null;
+let previewTimeout = null; // Throttle para vista previa
 
 // ============================================
 // AUTENTICACIÓN
@@ -590,6 +590,7 @@ auth.onAuthStateChanged((user) => {
     if (user) checkAccess(user);
     else showLogin();
 });
+
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -647,19 +648,20 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" value="${g}" onchange="updateWebPreview()"> ${g}`;
+    label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
+
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
-    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ?
-    "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
 }
 
@@ -700,7 +702,7 @@ function smartLinkConvert(input) {
 
     if(changed && input.id === 'portadaAnime') {
         checkCoverVisual(input);
-        updateWebPreview();
+        requestPreviewUpdate();
     }
 }
 
@@ -711,7 +713,7 @@ function checkCoverVisual(input) {
     if(val === "") {
         img.style.display = 'none';
         display.innerText = "";
-        updateWebPreview();
+        requestPreviewUpdate();
         return;
     }
     img.src = val;
@@ -725,7 +727,7 @@ function checkCoverVisual(input) {
         if (isValid) {
             display.innerHTML = `<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido: ${w}x${h}px</span>`;
             input.style.borderColor = '#00ffbf';
-            updateWebPreview(); 
+            requestPreviewUpdate(); 
         } else {
             display.innerHTML = `<span style="color:#ff4757"><i class="fas fa-times"></i> Inválido: ${w}x${h}px.</span>`;
             input.style.borderColor = '#ff4757';
@@ -743,8 +745,8 @@ function addAlias(value = "") {
     const div = document.createElement('div');
     div.className = 'dynamic-item';
     div.innerHTML = `
-        <input type="text" class="alias-input" placeholder="Alias..." value="${value}" oninput="updateWebPreview()">
-        <button class="btn-mini-del" onclick="this.parentElement.remove(); updateWebPreview()"><i class="fas fa-times"></i></button>
+        <input type="text" class="alias-input" placeholder="Alias..." value="${value}" oninput="requestPreviewUpdate()">
+        <button class="btn-mini-del" onclick="this.parentElement.remove(); requestPreviewUpdate()"><i class="fas fa-times"></i></button>
     `;
     container.appendChild(div);
 }
@@ -781,20 +783,27 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS & CHAPTERS
+// SEASONS & CHAPTERS - PALETA DE COLORES
+const colorPalette = [
+    '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
+];
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
     div.className = 'season-card';
-    
+    const count = document.querySelectorAll('.season-card').length;
+    const color = colorPalette[count % colorPalette.length];
+    div.style.cssText = `
+        border-left: 4px solid ${color};
+        background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
+    `;
     div.innerHTML = `
         <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
         <div class="row-flex">
             <div class="col-flex">
                 <label>Tipo</label>
                 <select class="s-type" onchange="handleSeasonTypeChange(this)">
-                    <option value="" disabled ${!data ?
-                    'selected' : ''}>Seleccionar...</option>
+                    <option value="" disabled ${!data ? 'selected' : ''}>Seleccionar...</option>
                     <option value="Temporada">Temporada</option>
                     <option value="Pelicula">Película</option>
                     <option value="OVA">OVA</option>
@@ -804,12 +813,11 @@ function addSeason(data = null) {
             </div>
             <div class="col-flex">
                  <label>Nombre Bloque</label>
-                 <input type="text" class="s-name" placeholder="Auto" disabled oninput="updateWebPreview()">
-            
+                 <input type="text" class="s-name" placeholder="Auto" disabled oninput="requestPreviewUpdate()">
             </div>
         </div>
         <label>Poster Bloque</label>
-        <input type="text" class="s-img" placeholder="https://..." oninput="updateWebPreview()" onblur="smartLinkConvert(this)">
+        <input type="text" class="s-img" placeholder="https://..." oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
         
         <label>Cant. Capítulos</label>
         <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
@@ -841,7 +849,12 @@ function addSeason(data = null) {
 function removeSeasonBlock(btn) {
     btn.closest('.season-card').remove();
     updateAllBlockNames();
-    updateWebPreview();
+    requestPreviewUpdate();
+    document.querySelectorAll('.season-card').forEach((card, idx) => {
+        const color = colorPalette[idx % colorPalette.length];
+        card.style.borderLeftColor = color;
+        card.style.background = `linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%)`;
+    });
 }
 
 function updateAllBlockNames() {
@@ -857,7 +870,6 @@ function updateAllBlockNames() {
 
         if(!isEditMode) { 
              if (type === 'Temporada') {
-                
                 tempCount++;
                 nameInput.value = `Temporada ${tempCount}`;
             } else if (type === 'Spin-Off') {
@@ -889,7 +901,7 @@ function handleSeasonTypeChange(select) {
     }
     if(!select.dataset.loading) updateAllBlockNames();
     if(countInput.value) renderChapters(countInput);
-    updateWebPreview();
+    requestPreviewUpdate();
 }
 
 function renderChapters(input, existingEps = []) {
@@ -898,13 +910,14 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
-    // Guardar datos actuales si no es carga inicial
+    
+    // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
             currentData.push({
-                sub: row.querySelector('.c-link-sub').value,
                 lat: row.querySelector('.c-link-lat').value,
+                sub: row.querySelector('.c-link-sub').value,
                 title: row.querySelector('.c-title-ov').value
             });
         });
@@ -912,36 +925,54 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
+    
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
-        // Prioridad: 1. Datos de Edición, 2. Datos guardados en memoria al cambiar input, 3. Vacio
+        
+        // ** CAMBIO DE LÓGICA DE CARGA **
+        // En DB: link = Lat, link2 = Sub (según tu petición de carga inversa)
+        // Pero en la estructura original: link=Sub, link2=Lat
+        // Para respetar tu petición de "enlaces guardados en link se coloquen en Lat":
+        
         if(existingEps[i]) {
-             sub = existingEps[i].link ||
-             '';
-             lat = existingEps[i].link2 || '';
+             // Si el objeto viene de DB: { link: '...', link2: '...' }
+             // Tu pedido: "link en anime-detail-data se coloquen siempre en el bloque que dice Lat"
+             // Por lo tanto:
+             lat = existingEps[i].link || '';  
+             sub = existingEps[i].link2 || ''; 
              if(!['Temporada', 'Spin-Off'].includes(type)) customTitle = existingEps[i].title;
         } else if(currentData[i]) {
-             sub = currentData[i].sub;
              lat = currentData[i].lat;
+             sub = currentData[i].sub;
              customTitle = currentData[i].title;
         }
 
-        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ?
-        "disabled" : "";
+        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
+
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
-                <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
+                <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
             </div>
             <input type="text" 
             class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
+    }
+}
+
+// THROTTLE PARA VISTA PREVIA (ANTI-LAG)
+function requestPreviewUpdate() {
+    if (!previewTimeout) {
+        previewTimeout = requestAnimationFrame(() => {
+            updateWebPreview();
+            previewTimeout = null;
+        });
     }
 }
 
@@ -953,21 +984,29 @@ function updateWebPreview() {
     document.getElementById('previewId').innerText = isEditMode ? currentEditingId : "###";
 
     const demo = document.getElementById('demografiaAnime').value;
-    document.getElementById('webDemography').innerText = demo ?
-    demo.toUpperCase() : 'DEMO';
+    document.getElementById('webDemography').innerText = demo ? demo.toUpperCase() : 'DEMO';
+    
+    const aliases = [];
+    document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
+    const aliasStr = aliases.length > 0 ? aliases.join(', ') : "";
+    document.getElementById('previewAliasesList').innerText = aliasStr;
+
+    const ratingSel = document.getElementById('ratingAnime').value;
+    let ratingTxt = "--";
+    if(ratingSel === 'excellent') ratingTxt = "4.9";
+    else if(ratingSel === 'good') ratingTxt = "4.6";
+    else if(ratingSel === 'regular') ratingTxt = "4.0";
+    document.getElementById('webRating').innerText = `⭐ ${ratingTxt}`;
     
     const tagsContainer = document.getElementById('webTags');
     tagsContainer.innerHTML = '';
-    let genresCount = 0;
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => {
-        if(genresCount < 4) { 
-            let s = document.createElement('span');
-            s.style.cssText = "font-size:0.65em; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.1); color:#ccc;";
-            s.innerText = cb.value;
-            tagsContainer.appendChild(s);
-            genresCount++;
-        }
+        let s = document.createElement('span');
+        s.style.cssText = "font-size:0.65em; padding:3px 8px; border-radius:4px; background:rgba(255,255,255,0.1); color:#ccc;";
+        s.innerText = cb.value;
+        tagsContainer.appendChild(s);
     });
+
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -987,7 +1026,7 @@ function updateWebPreview() {
 }
 
 // ============================================
-// API GITHUB Y PARSEO SEGURO (SOLUCIÓN ERROR CONST)
+// API GITHUB Y PARSEO SEGURO
 // ============================================
 async function getGithubFile(token, owner, repo, path) {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -1002,17 +1041,12 @@ async function getGithubFile(token, owner, repo, path) {
     };
 }
 
-// ESTA FUNCIÓN SOLUCIONA EL "UNEXPECTED TOKEN CONST"
 function safeEval(fileContent) {
     try {
-        // Buscamos el primer signo igual '='
         const eqIndex = fileContent.indexOf('=');
         if (eqIndex === -1) throw new Error("No se encontró asignación de variable");
-        // Tomamos todo lo que está DESPUÉS del igual
         let dataStr = fileContent.substring(eqIndex + 1).trim();
-        // Quitamos el punto y coma final si existe
         if (dataStr.endsWith(';')) dataStr = dataStr.slice(0, -1);
-        // Evaluamos solo la estructura de datos (JSON/Array puro)
         return eval('(' + dataStr + ')');
     } catch (e) {
         console.error("Error parseando JS:", e);
@@ -1037,18 +1071,25 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA Y EDICIÓN (OPTIMIZADA SIN LAG)
+// CARGA Y EDICIÓN (OPTIMIZADA)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
-    document.getElementById('searchInput').value = ""; // Limpiar busqueda anterior
+    document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
-    // Cargar solo si está vacío para ahorrar datos
     if(cachedIndex.length === 0) loadIndexForSearch();
     else filterSearch();
-    // Mostrar iniciales si ya hay caché
 }
-function closeSearchModal() { document.getElementById('searchModal').style.display = 'none';
+
+// MANEJADOR DE CLIC FUERA DEL MODAL
+function handleModalClick(event) {
+    if (event.target.id === 'searchModal') {
+        closeSearchModal();
+    }
+}
+
+function closeSearchModal() { 
+    document.getElementById('searchModal').style.display = 'none'; 
 }
 
 async function loadIndexForSearch() {
@@ -1057,7 +1098,6 @@ async function loadIndexForSearch() {
     try {
         if(!currentUserToken) throw new Error("No hay sesión");
         const file = await getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js');
-        // USAMOS EL NUEVO PARSER SEGURO
         const data = safeEval(file.content);
         cachedIndex = data.reverse(); 
         filterSearch();
@@ -1069,18 +1109,14 @@ async function loadIndexForSearch() {
 }
 
 function filterSearch() {
-    // DEBOUNCE: Esperar que el usuario deje de escribir
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        _performFilter();
-    }, 300);
+    searchTimeout = setTimeout(() => { _performFilter(); }, 300);
 }
 
 function _performFilter() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
-    // OPTIMIZACIÓN: Filtrar y cortar array a 50 elementos para evitar LAG
     const filtered = cachedIndex.filter(a => a.title.toLowerCase().includes(query)).slice(0, 50);
     filtered.forEach(anime => {
         const div = document.createElement('div');
@@ -1109,7 +1145,6 @@ async function loadAnimeForEditing(id) {
             getGithubFile(currentUserToken, OWNER, REPO, 'video-player-data.js'),
             getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         ]);
-        // USAMOS safeEval PARA EVITAR EL ERROR 'CONST'
         const detObj = safeEval(detailFile.content);
         const playObj = safeEval(playerFile.content);
         const musObj = safeEval(musicFile.content);
@@ -1119,14 +1154,12 @@ async function loadAnimeForEditing(id) {
         const targetMusic = musObj[id] || [];
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
-        // UI SETUP
         isEditMode = true;
         currentEditingId = id;
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
         document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
 
-        // LLENADO
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
         document.getElementById('sinopsisAnime').value = targetDetail.desc;
@@ -1137,16 +1170,13 @@ async function loadAnimeForEditing(id) {
 
         if(indexEntry && indexEntry.genres && indexEntry.genres.length > 0) {
             let loadedGenres = [...indexEntry.genres];
-            // --- MODIFICACIÓN: DETECTAR DEMOGRAFÍA (ÚLTIMO ELEMENTO) ---
             const lastGenre = loadedGenres[loadedGenres.length - 1];
             const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo"];
             
             if (demoOptions.includes(lastGenre)) {
                 document.getElementById('demografiaAnime').value = lastGenre;
-                // Lo sacamos de la lista para que no se marque el checkbox y evitemos duplicados visuales
-                loadedGenres.pop(); 
+                loadedGenres.pop();
             }
-            // ------------------------------------------------------------
 
             document.querySelectorAll('#genresContainer input').forEach(cb => {
                 cb.checked = loadedGenres.includes(cb.value);
@@ -1166,8 +1196,10 @@ async function loadAnimeForEditing(id) {
             const fullEps = s.eps.map((e, idx) => {
                 const epNum = idx + 1;
                 const links = seasonPlayer[epNum] || {};
-                return { title: e.title, 
-                link: links.link, link2: links.link2 };
+                // AQUÍ SE APLICA EL CAMBIO AL CARGAR
+                // link (DB) -> link (Objeto intermedio, que irá al input LAT)
+                // link2 (DB) -> link2 (Objeto intermedio, que irá al input SUB)
+                return { title: e.title, link: links.link, link2: links.link2 };
             });
             addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
         });
@@ -1175,7 +1207,7 @@ async function loadAnimeForEditing(id) {
         targetMusic.forEach(url => addMusic(url));
 
         checkCoverVisual(document.getElementById('portadaAnime'));
-        updateWebPreview();
+        requestPreviewUpdate();
         showToast("¡Datos cargados correctamente!");
     } catch(e) {
         console.error(e);
@@ -1189,7 +1221,7 @@ function exitEditMode() {
     currentEditingId = null;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
-    location.reload(); // Es mas seguro recargar para limpiar todo
+    location.reload(); 
 }
 
 // ============================================
@@ -1208,9 +1240,9 @@ function generateData() {
     if(ratingSelect === 'excellent') ratingVal = 4.9;
     else if(ratingSelect === 'good') ratingVal = 4.6;
     else if(ratingSelect === 'regular') ratingVal = 4.0;
+
     const anime = {
-        id: isEditMode ?
-        currentEditingId : 0, 
+        id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
         aliases: aliasList,
         portada: document.getElementById('portadaAnime').value.trim(),
@@ -1223,7 +1255,7 @@ function generateData() {
     };
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
 
-    let globalOrder = 1, seasonCountVP = 0, ovaCountVP = 0, movieCountVP = 0, specialCountVP = 0;
+    let globalOrder = 1, seasonCountVP = 0, ovaCountVP = 0, movieCountVP = 0, specialCountVP = 0, spinOffCount = 0;
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
@@ -1235,9 +1267,12 @@ function generateData() {
         if(sType === 'Especial') specialCountVP++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
-  
-            const sub = row.querySelector('.c-link-sub').value.trim();
+            // ** AQUI SE APLICA EL CAMBIO AL GUARDAR **
+            // Input class 'c-link-lat' -> Variable 'lat'
+            // Input class 'c-link-sub' -> Variable 'sub'
             const lat = row.querySelector('.c-link-lat').value.trim();
+            const sub = row.querySelector('.c-link-sub').value.trim();
+            
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             
             let playerTitle = "", detailTitle = ""; 
@@ -1249,21 +1284,21 @@ function generateData() {
                 detailTitle = `Capítulo ${idx+1}`;
                 playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
             } else if (sType === 'OVA') {
-                detailTitle = customTitleInput ||
-                sName;
+                detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} OVA ${ovaCountVP}` + (customTitleInput ? ` "${customTitleInput}"` : "");
             } else if (sType === 'Pelicula') {
-                detailTitle = customTitleInput ||
-                sName;
+                detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} Película ${movieCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             } else if (sType === 'Especial') {
-                detailTitle = customTitleInput ||
-                sName;
+                detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} Especial ${specialCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             }
 
             if(sub || lat) {
-                eps.push({ num: idx + 1, link: sub, link2: lat, title: detailTitle, playerTitle: playerTitle });
+                // ** MAPEO FINAL PARA BASE DE DATOS **
+                // link = LAT
+                // link2 = SUB
+                eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
 
@@ -1302,7 +1337,6 @@ async function subirAGithHub() {
             log("1/5 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
             const indexData = safeEval(indexFile.content);
-            // USANDO safeEval
             let maxId = 0;
             indexData.forEach(item => { if(item.id > maxId) maxId = item.id; });
             FINAL_ID = maxId + 1;
@@ -1319,18 +1353,16 @@ async function subirAGithHub() {
                 const regexRemove = new RegExp(`\\s*\\{id:${FINAL_ID},[^]*?genres:\\[[^]*?\\]\\},?`, 'g');
                 newContent = newContent.replace(regexRemove, '').replace(/,\s*,/g, ','); 
             }
+           
             const insertionPoint = newContent.lastIndexOf('];');
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
-            // --- MODIFICACIÓN: INSERTAR DEMOGRAFÍA AL FINAL ---
             let finalGenres = [...nuevoAnime.generos];
             if(nuevoAnime.demografia) {
-                // Si ya estaba en la lista (por error de checkbox), lo removemos para ponerlo al final
                 finalGenres = finalGenres.filter(g => g !== nuevoAnime.demografia);
                 finalGenres.push(nuevoAnime.demografia);
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
-            // ---------------------------------------------------
 
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
@@ -1344,14 +1376,14 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
+           
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
             let seasonsStr = "";
             nuevoAnime.temporadas.forEach(t => {
                 let epsStr = "";
-                t.eps.forEach(e => epsStr += `            
-                  { title: "${e.title}"},\n`);
+                t.eps.forEach(e => epsStr += `            { title: "${e.title}"},\n`);
                 let nameField = t.name ? `\n            name: "${t.name}",` : "";
                 seasonsStr += `          {
             num: ${t.num},${nameField}
@@ -1359,13 +1391,11 @@ async function subirAGithHub() {
             eps: [\n${epsStr}            ]
           },\n`;
             });
-
             const newDetail = `,\n    ${FINAL_ID}: {
         title: "${nuevoAnime.titulo}",
         desc: "${nuevoAnime.sinopsis.replace(/"/g, '\\"')}",
         cover: "${nuevoAnime.portada}",
-        seasons: [\n${seasonsStr}  
-        ]
+        seasons: [\n${seasonsStr}          ]
     }`;
             return before + newDetail + "\n};";
         });
@@ -1377,6 +1407,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
+           
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
@@ -1402,8 +1433,7 @@ async function subirAGithHub() {
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
-            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n     
-           ]`;
+            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n           ]`;
             return before + musicEntry + "\n};";
         });
         log("✨ ¡EXITO!");
@@ -1416,6 +1446,6 @@ async function subirAGithHub() {
         showToast("Error crítico (ver log)", true);
     }
 }
-  </script>
+</script>
 </body>
 </html>
