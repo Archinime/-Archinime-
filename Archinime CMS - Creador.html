@@ -68,10 +68,11 @@
         .login-card {
             background: rgba(20, 20, 25, 0.85);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); /* Blur reducido para rendimiento */
-            padding: 40px 30px; border-radius: 24px; border: 1px solid var(--border);
+            padding: 40px 30px;
+            border-radius: 24px; border: 1px solid var(--border);
             text-align: center;
             box-shadow: 0 0 50px rgba(140, 82, 255, 0.1);
-            max-width: 400px; width: 100%; 
+            max-width: 400px; width: 100%;
             animation: fadeInUp 0.8s ease;
         }
         @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
@@ -98,7 +99,8 @@
             display: flex;
             justify-content: space-between; align-items: center;
             padding: 10px 20px; 
-            background: rgba(5, 5, 7, 0.95); /* Menos transparencia para mejor rendimiento */
+            background: rgba(5, 5, 7, 0.95);
+            /* Menos transparencia para mejor rendimiento */
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0; z-index: 100; display: none; height: var(--header-height);
@@ -188,7 +190,8 @@
             padding: 20px; border-radius: 16px; margin-bottom: 25px;
             border: 1px solid var(--border);
             position: relative; overflow: hidden;
-            transition: none; /* Quitamos transición para rendimiento */
+            transition: none;
+            /* Quitamos transición para rendimiento */
         }
         
         .chapter-row { 
@@ -219,8 +222,10 @@
             top: 90px; /* Debajo del header */
             height: fit-content;
             max-height: calc(100vh - 110px); /* Altura máxima para no salirse */
-            overflow-y: auto; /* Scroll interno si es muy largo */
-            padding-right: 5px; /* Espacio para scrollbar */
+            overflow-y: auto;
+            /* Scroll interno si es muy largo */
+            padding-right: 5px;
+            /* Espacio para scrollbar */
             
             /* Scrollbar personalizado */
             scrollbar-width: thin;
@@ -352,8 +357,10 @@
         #searchModal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); /* Fondo semi-transparente para detectar clics */
-            z-index: 5000; display: none;
+            background: rgba(0,0,0,0.8);
+            /* Fondo semi-transparente para detectar clics */
+            z-index: 5000;
+            display: none;
             justify-content: center; align-items: center; padding: 20px;
             backdrop-filter: blur(5px);
         }
@@ -385,7 +392,7 @@
         @media (max-width: 900px) {
             .main-wrapper { grid-template-columns: 1fr; padding: 15px; }
             .preview-sidebar { 
-                position: relative; 
+                position: relative;
                 top: 0; 
                 order: 2; 
                 margin-top: 40px; 
@@ -590,7 +597,6 @@ auth.onAuthStateChanged((user) => {
     if (user) checkAccess(user);
     else showLogin();
 });
-
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -648,18 +654,15 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
-
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
-
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
-    x.innerHTML = isError ?
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.innerHTML = isError ? `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
@@ -910,7 +913,6 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
-    
     // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
@@ -925,12 +927,10 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
-    
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
-        
         // ** CAMBIO DE LÓGICA DE CARGA **
         // En DB: link = Lat, link2 = Sub (según tu petición de carga inversa)
         // Pero en la estructura original: link=Sub, link2=Lat
@@ -952,15 +952,13 @@ function renderChapters(input, existingEps = []) {
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
-
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
             </div>
-            <input type="text" 
-            class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
+            <input type="text" class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
     }
@@ -1006,7 +1004,6 @@ function updateWebPreview() {
         s.innerText = cb.value;
         tagsContainer.appendChild(s);
     });
-
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -1089,7 +1086,7 @@ function handleModalClick(event) {
 }
 
 function closeSearchModal() { 
-    document.getElementById('searchModal').style.display = 'none'; 
+    document.getElementById('searchModal').style.display = 'none';
 }
 
 async function loadIndexForSearch() {
@@ -1172,7 +1169,6 @@ async function loadAnimeForEditing(id) {
             let loadedGenres = [...indexEntry.genres];
             const lastGenre = loadedGenres[loadedGenres.length - 1];
             const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo"];
-            
             if (demoOptions.includes(lastGenre)) {
                 document.getElementById('demografiaAnime').value = lastGenre;
                 loadedGenres.pop();
@@ -1230,12 +1226,10 @@ function exitEditMode() {
 function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
-    
     const demoSelect = document.getElementById('demografiaAnime').value;
     const ratingSelect = document.getElementById('ratingAnime').value;
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-    
     let ratingVal = 0;
     if(ratingSelect === 'excellent') ratingVal = 4.9;
     else if(ratingSelect === 'good') ratingVal = 4.6;
@@ -1301,7 +1295,6 @@ function generateData() {
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
-
         if(eps.length > 0) {
             anime.temporadas.push({
                 num: globalOrder++,
@@ -1319,7 +1312,6 @@ function generateData() {
 async function subirAGithHub() {
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
-    
     const nuevoAnime = generateData();
     
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
@@ -1351,11 +1343,19 @@ async function subirAGithHub() {
             let newContent = content;
             if(isEditMode) {
                 const regexRemove = new RegExp(`\\s*\\{id:${FINAL_ID},[^]*?genres:\\[[^]*?\\]\\},?`, 'g');
-                newContent = newContent.replace(regexRemove, '').replace(/,\s*,/g, ','); 
+                newContent = newContent.replace(regexRemove, '');
             }
-           
+            
+            // LIMPIEZA DE COMAS DOBLES ANTES DE INSERTAR
+            newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('];');
-            const before = newContent.substring(0, insertionPoint).trimEnd();
+            let before = newContent.substring(0, insertionPoint).trim();
+            
+            // SI TERMINA EN COMA, LA QUITAMOS PARA EVITAR DUPLICADOS
+            if(before.endsWith(',')) {
+                before = before.slice(0, -1);
+            }
             
             let finalGenres = [...nuevoAnime.generos];
             if(nuevoAnime.demografia) {
@@ -1365,9 +1365,12 @@ async function subirAGithHub() {
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
 
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
+            // SIEMPRE AGREGAMOS UNA COMA AL PRINCIPIO DE LA NUEVA ENTRADA
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, genres:[${generosStr}]}`;
+            
             return before + newEntry + "\n];";
         });
+        
         // UPDATE DETAILS
         log("3/5 Actualizando Detalles...");
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
@@ -1376,7 +1379,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-           
+            
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -1407,7 +1410,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-           
+            
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
@@ -1433,7 +1436,7 @@ async function subirAGithHub() {
             const before = newContent.substring(0, insertionPoint).trimEnd();
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
-            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n           ]`;
+            const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n            ]`;
             return before + musicEntry + "\n};";
         });
         log("✨ ¡EXITO!");
