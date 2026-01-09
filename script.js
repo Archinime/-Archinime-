@@ -857,17 +857,32 @@ async function subirAGithHub() {
             return before + newDetail + "\n};";
         });
 
-        // UPDATE PLAYER
+// UPDATE PLAYER
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
-                 const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s*\\},?`, 'g');
+                 // --- CORRECCIÓN CRÍTICA DE REGEX ---
+                 // El problema anterior era que el regex se detenía en la primera llave '}' que encontraba (la de una temporada).
+                 // Ahora forzamos a que busque la llave de cierre que tenga 6 espacios de indentación (la del ID principal),
+                 // ignorando las de 8 o más espacios (las de las temporadas/capítulos).
+                 const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
             
+            // 2. Limpieza de seguridad de comas dobles
+            newContent = newContent.replace(/,\s*,/g, ',');
+
+            // 3. Definir punto de inserción
             const insertionPoint = newContent.lastIndexOf('};');
-            const before = newContent.substring(0, insertionPoint).trimEnd();
+            let before = newContent.substring(0, insertionPoint).trimEnd();
+            
+            // --- CORRECCIÓN DE COMAS (Igual que en música) ---
+            // Si lo anterior termina en coma, la quitamos para que no choque con la coma inicial de 'playerStr'
+            if(before.endsWith(',')) {
+                before = before.slice(0, -1);
+            }
             
             let playerStr = `,\n      "${FINAL_ID}": {\n`;
             nuevoAnime.temporadas.forEach(t => {
@@ -875,7 +890,7 @@ async function subirAGithHub() {
                 t.eps.forEach(e => playerStr += `          "${e.num}": { link:'${e.link}', link2:'${e.link2}', title:'${e.playerTitle}' },\n`);
                 playerStr += `        },\n`;
             });
-            playerStr += `      }`;
+            playerStr += `      }`; // Importante: Mantener 6 espacios aquí para que el Regex futuro lo detecte bien
             
             return before + playerStr + "\n};";
         });
