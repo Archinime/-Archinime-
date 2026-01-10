@@ -123,7 +123,7 @@
       border: 1px solid rgba(0, 255, 255, 0.4);
       background: rgba(0, 255, 255, 0.05);
       color: #e0ffff;
-      cursor: default; /* Cambiado a default ya que solo es visual */
+      cursor: default; 
       user-select: none;
     }
     .genre-chip:hover {
@@ -141,7 +141,8 @@
     details {
       margin-bottom:12px;
       background: #0d0214; /* Morado muy oscuro sólido */
-      border: 1px solid #4a004a; /* Borde morado */
+      border: 1px solid #4a004a;
+      /* Borde morado */
       border-radius:8px;
       overflow:hidden;
     }
@@ -174,7 +175,8 @@
     }
 
     .ep-btn {
-      display:flex; align-items: center; justify-content: center;
+      display:flex; align-items: center;
+      justify-content: center;
       padding:10px 4px;
       background: #1a0525; /* Fondo sólido */
       border: 1px solid #330c4d;
@@ -190,11 +192,27 @@
       color: #0ff;
       box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
-    .ep-btn:active { background: #0ff; color: #000;
+    .ep-btn:active { background: #0ff;
+      color: #000;
+    }
+
+    /* --- UPLOADER CREDIT --- */
+    .uploader-credit {
+        text-align: right;
+        margin-top: 25px;
+        font-size: 0.85rem;
+        color: #888;
+        font-style: italic;
+        padding-right: 10px;
+    }
+    .uploader-credit span {
+        color: #0ff;
+        font-weight: 600;
     }
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333;
+    .recommendations { margin-top:40px; padding-top:20px;
+      border-top:1px solid #333;
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
     }
@@ -207,11 +225,11 @@
     }
 
     .rec-card { 
-      background: #1a0525; 
+      background: #1a0525;
       border: 1.5px solid #330c4d;
       border-radius: 6px; 
       overflow: hidden;
-      transition: all 0.2s; 
+      transition: all 0.2s;
     }
 
     .rec-card:hover {
@@ -299,7 +317,6 @@
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
-
     /* ----------------------------------------------------
        2. Lógica de Audio
        ---------------------------------------------------- */
@@ -337,7 +354,6 @@
             playTrack(currentTrackIndex);
         }
     }, { once: true });
-
     /* ----------------------------------------------------
        3. Renderizado y Lógica Visual
        ---------------------------------------------------- */
@@ -352,14 +368,12 @@
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
-            
             // --- Lógica de Géneros Actualizada ---
             // Buscamos el anime en la lista completa (index-data.js) para sacar los géneros
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
                 // Buscamos coincidencia por ID (número o texto)
                 const animeInfo = animes.find(a => String(a.id) === String(id));
-                
                 if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
                     // Creamos los chips separados
                     genreHtml = animeInfo.genres.map(g => 
@@ -377,23 +391,28 @@
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
                 <p class="desc">${anime.desc}</p>
             `;
-
             if(anime.seasons){
                 anime.seasons.forEach((s, index) => {
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-                        <div class="season-content">
+                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-                            <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
+              
+                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
                 });
             }
+
+            // --- AÑADIR UPLOADER AL FINAL ---
+            if(anime.uploader) {
+                html += `<div class="uploader-credit">Subido por: <span>${escapeHtml(anime.uploader)}</span></div>`;
+            }
+
             container.innerHTML = html;
             renderRecommendations(id);
-
         } else {
             container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
         }
@@ -415,8 +434,7 @@
         const seasonNum = data[animeId].seasons[seasonIndex].num;
         
         let processed = 0;
-        const CHUNK_SIZE = 40; 
-
+        const CHUNK_SIZE = 40;
         function processChunk() {
             const fragment = document.createDocumentFragment();
             const limit = Math.min(processed + CHUNK_SIZE, total);
@@ -446,12 +464,10 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
-
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
-        
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
              return;
