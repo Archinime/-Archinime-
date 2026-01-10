@@ -3,6 +3,7 @@
         title: "DAN DA DAN",
         desc: "Cuando Momo, una estudiante de preparatoria de una familia de médiums espirituales, conoce a su compañero de clase Okarun, un friki del ocultismo, discuten: Momo cree en los fantasmas pero no en los extraterrestres, y Okarun cree en los extraterrestres pero no en los fantasmas. Cuando resulta que ambos fenómenos son reales, en Momo surge un poder oculto y en Okarun el poder de una maldición. Juntos, deberán desafiar a las fuerzas paranormales que amenazan su mundo.",
         cover: "dan.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -43,10 +44,11 @@
       ]
     },
     2: {
-      title: "Jujutsu Kaisen",
-      desc: "Yuji Itadori se traga un dedo maldito para salvar a alguien de su clase y ahora Ryomen Sukuna, un poderoso hechicero malvado conocido como el Rey de las Maldiciones, vive en su alma. Las maldiciones son seres sobrenaturales creadas a partir de las emociones negativas de los humanos. Esta energía maldita puede usarse como fuente de poder por parte de los hechiceros y de los espíritus malditos.Guiado por los hechiceros, Yuji Itadori se une a la Escuela de Bachillerato Técnico de Brujería de Tokio, una organización que enfrenta a las maldiciones. Con la ayuda de su maestro, Satoru Gojo, Itadori hace amistad con Megumi Fushiguro y Nobara Kugisaki, ambos estudiantes de primer año como él.",
-      cover: "Jujutsu.avif",
-      seasons: [
+        title: "Jujutsu Kaisen",
+        desc: "Yuji Itadori se traga un dedo maldito para salvar a alguien de su clase y ahora Ryomen Sukuna, un poderoso hechicero malvado conocido como el Rey de las Maldiciones, vive en su alma. Las maldiciones son seres sobrenaturales creadas a partir de las emociones negativas de los humanos. Esta energía maldita puede usarse como fuente de poder por parte de los hechiceros y de los espíritus malditos.Guiado por los hechiceros, Yuji Itadori se une a la Escuela de Bachillerato Técnico de Brujería de Tokio, una organización que enfrenta a las maldiciones. Con la ayuda de su maestro, Satoru Gojo, Itadori hace amistad con Megumi Fushiguro y Nobara Kugisaki, ambos estudiantes de primer año como él.",
+        cover: "Jujutsu.avif",
+        uploader: "Archinime", 
+        seasons: [
         {
           num: 1,
 	  name: "Película", 
@@ -131,6 +133,7 @@
         title: "¡KonoSuba! ¡Una bendición para este maravilloso mundo!",
         desc: "Kazuma Satou es un chico de preparatoria otaku y hikikomori que no suele salir de casa, pero cuando lo hace, un fatídico (y ridículo) accidente acaba con su vida. En el otro mundo aparece una diosa ante él y le propone comenzar de nuevo su vida en un mundo de magia y espada, pero las condiciones son un tanto peculiares, así que acabará comenzando de cero como aventurero y acompañado de una diosa.",
         cover: "konosubaportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -243,6 +246,7 @@
         desc: "Subaru Natsuki es un estudiante corriente de preparatoria que conoce a una hermosa chica de pelo plateado de otro mundo que lo rescata. Para devolverle el favor decide quedarse con ella, pero el destino con el que carga la muchacha es mucho más pesado de lo que Subaru puede imaginar. Los enemigos atacan sin descanso, uno tras otro, hasta que finalmente mueren tanto él como la chica. Subaru no quiere que la chica resulte herida, con lo que jura acabar con cualquier enemigo, con cualquier destino que le aguarde, siempre por protegerla.",
         // portada
         cover: "rezero.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -352,6 +356,7 @@
         title: "Mushoku Tensei",
         desc: "Cuando un autobús atropella a un joven de 34 años que no ha logrado mucho en su vida, su historia no termina ahí. Habiéndose reencarnado en un niño, Rudy aprovechará cada oportunidad para vivir la vida que siempre quiso. ¡Con la ayuda de sus amigos, unas habilidades mágicas recién adquiridas, y el coraje para hacer las cosas que siempre ha soñado, se embarca en una aventura épica, con su experiencia pasada intacta!",
         cover: "mushoku.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -427,6 +432,7 @@
         desc: "Satoru Mikami es un hombre de 37 años que tiene un trabajo que no le gusta, sin salida y que no es feliz con la vida que lleva, pero cuando muere a manos de un ladrón y piensa que es su fin, se despierta descubriendo que se ha reencarnado en un mundo de magia y espada… ¡pero como un slime! Ahora tendrá que acostumbrarse a su nueva vida, aunque por suerte contará con dos habilidades únicas que le ayudarán a sobrevivir: una que le proporciona una gran comprensión de todo lo que le rodea, y otra que le permite copiar las habilidades de sus oponentes.",
         // portada
         cover: "slime.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -591,6 +597,7 @@
         title: "Saga of Tanya the Evil (Youjo Senki)",
         desc: "Junio del año 1923. Una joven de cabello rubio y ojos azules, Tanya Degurechaff, ha entrado en la selección final de la Academia Militar Imperial y entrena en el distrito militar norte, Norden Theater, como parte de su servicio. Su entrenamiento, el primer paso hacia una brillante carrera como maga de la aviación, debería haber sido un camino de rosas, pero... las cosas toman un tinte inesperado. Estalla guerra entre el Imperio y la vecina Federación cuando esta viola las fronteras del Imperio. Un ataque sorpresa de las fuerzas de la Federación obliga a Tanya a entrar en combate.",
         cover: "tanya1.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -632,6 +639,7 @@
         title: "Akame Ga Kill",
         desc: "Bajo el gobierno de un imperio tirano, Tatsumi, un joven espadachín, parte de su pueblo natal para intentar salvarlo de una pobreza extrema. En su viaje conocerá a Akami, una chica que fue comprada por el imperio, criada y entrenada para convertirse en un aasesina de élite miembro del grupo \"Night Raid\". Juntos, Tatsumi y Night Raid se enfrentarán a la corrupción del imperio.",
         cover: "Akame1.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -669,6 +677,7 @@
         title: "To Be Hero X",
         desc: "Este es un mundo en el que los mejores héroes son aclamados. El \"Valor de Confianza\" es lo que crean superhéroes. Si la gente cree que un héroe \"puede volar\", adquirirá la capacidad de volar. También ocurre al revés: aunque un héroe tenga poderes, si baja su Valor de Confianza, también perderá sus poderes. El Valor de Confianza se mide en forma de datos y se usa para clasificar a los héroes. Una vez cada dos años, los mejores héroes se reúnen para competir en un torneo especial. El Valor de Confianza de los participantes en el torneo varía en función de su rendimiento en el mismo, actualizándose posteriormente la clasificación, y al héroe que queda en lo más alto se lo conoce como \"X\"...",
         cover: "hero11.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -706,6 +715,7 @@
         title: "Demon Slayer",
         desc: "Estamos en la era Taisho de Japón. Tanjiro, un joven que se gana la vida vendiendo carbón, descubre un día que su familia ha sido asesinada por un demonio. Para empeorar las cosas, su hermana menor Nezuko, la única superviviente de la masacre, ha sufrido una transformación en demonio. Destrozado por los acontecimientos Tanjiro decide convertirse en un cazador de demonios para poder devolver a su hermana a la normalidad y matar al demonio que masacró a su familia.",
         cover: "demon.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -812,6 +822,7 @@
         title: "Maou 2099",
         desc: "Hace cinco siglos, el Señor Demonio Veltol reinaba sobre una nación inmortal. Ahora, ha llegado su momento de despertar. Corre el año 2099 y la civilización ha alcanzado su máximo desarrollo, dando lugar a un paisaje de alta tecnología con imponentes rascacielos, algo nunca antes conquistado. Veltol puede ser una reliquia del pasado, pero no se equivoquen: ¡este nuevo mundo estará a su disposición!",
         cover: "maou2099portada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -837,6 +848,7 @@
         title: "Tsue to Tsurugi no Wistoria",
         desc: "Will es un chico muy trabajador que se inscribe en una academia de magia con la esperanza de convertirse en un gran hechicero. Por desgracia, su plan tiene un fallo crítico: que no tiene la habilidad de usar magia. Las miradas de desprecio de sus compañeros e instructores hacen que Will se desanime en ocasiones, pero sigue adelante con una fuerza de voluntad inquebrantable. No puede usar una varita, pero puede blandir su espada en su intento por llegar a lo más alto de un mundo dominado por la magia. Solo tiene que creer en sus propios puntos fuertes y recordar la promesa que le hizo a alguien muy importante para él...",
         cover: "wistoria.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -863,6 +875,7 @@
         title: "Izure Saikyou no Renkinjutsushi",
         desc: "Takumi Iruma termina siendo arrastrado a una invocación heroica, aun cuando él no es ningún héroe. Llamado por error a Mildgard, un mundo fantástico de magia y espadas, Takumi ve en esto la oportunidad de empezar desde cero. Aunque anhela una vida pacífica, la diosa Nolyn le concede la “Alquimia”, una habilidad sumamente poderosa que le permite crear casi cualquier cosa, desde espadas sagradas hasta naves voladoras.",
         cover: "Izure.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -889,6 +902,7 @@
         title: "Alya Sometimes Hides Her Feelings in Russian",
         desc: "Alya es una estudiante recién transferida que disfruta de tener buenas calificaciones y mucha popularidad en su nueva preparatoria, aunque lo habitual es que luzca muy fría. No suele hablar nunca con un compañero de clase muy estudioso llamado Kuza Masachika, y cuando lo hace, es para decirle algún halago en ruso. Lo que ella no sabe es que Kuze entiende el ruso, aunque hace ver que no. ¡Comprobemos hasta dónde llega esta curiosa historia de amor!",
         cover: "alia.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -915,6 +929,7 @@
         title: "Reborn as a Vending Machine",
         desc: "Después de morir en un accidente de tráfico, me encuentro de pie cerca de un lago desconocido. No puedo moverme, no me oigo mi voz, y cuando trato de gritar, ¡salen palabras inesperadas! ¡Parece que me he convertido en una máquina expendedora! Solo puedo hacer lo que las máquinas expendedoras reales pueden hacer. No puedo moverme solo, y no hay forma de tener una conversación significativa. ¿Cómo voy a sobrevivir en una mazmorra de un mundo de fantasía como este?",
         cover: "jidou.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -959,6 +974,7 @@
         title: "Kimi to Boku no Saigo no Senjou",
         desc: "Dos enemigos enfrentados en un conflicto encuentran una base común, lo que los convierte en potenciales traidores para sus países y amantes desgarrados por la guerra.",
         cover: "kimi22222.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1002,6 +1018,7 @@
         title: "The Gorila God's Go- To Girl",
         desc: "Sophia es la tímida hija de un conde que únicamente desea llevar una vida tranquila, pero el Dios Gorila tiene otros planes. Dotada de una fuerza inigualable, se ve obligada a unirse a la Real Orden de Caballeros, lo que convierte su tranquila vida en un caos. Ahora deberá hacer malabares con los estudios, la vida de caballero y su gran poder. ¿Quién podría creer que tener la fuerza de un gorila fuera tan complicado?",
         cover: "gorila11.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1027,6 +1044,7 @@
         title: "Chainsaw Man",
         desc: "Denji es un adolescente que vive con un demonio motosierra llamado Pochita. Para pagar la deuda que le dejó su padre tras su muerte, ha tenido que ganarse el pan como puede matar demonios y vender sus cadáveres a la mafia, aunque su vida siempre ha sido miserable. Cuando una traición provoca la muerte de Denji, Pochita hace un contrato con él y Denji revive como Chainsaw Man, un ser humano con el corazón de un demonio.",
         cover: "chaiportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1061,6 +1079,7 @@
         title: "The Rising of the Shield Hero",
         desc: "Iwatani Naofumi es el típico otaku, al menos hasta que un día encuentra en la biblioteca un libro que lo transporta a otro mundo. Allí se convertirá en el Héroe del Escudo, uno de los Cuatro Héroes Cardinales, y tendrá que luchar contra las Olas de la Catástrofe junto a los héroes de la espada, la lanza y el arco. Emocionado ante la perspectiva de vivir una gran aventura, Naofumi parte de viaje con su grupo. No obstante, al cabo de unos pocos días lo traicionan y pierde su dinero, su dignidad y el respeto de los que le rodean.",
         cover: "heroedelescudoportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1154,6 +1173,7 @@
         title: "Overflow",
         desc: "¡Puedo deslizarme lentamente, pero no podre desbordar todo mi amor! Un día, Kazushi Sudou recibe la visita de las hermanas Ayane y Kotone Shirakawa, sus dos hermosas amigas de la infancia. Aunque no tienen relación sanguínea, ambas lo llaman con cariño como «hermano». De la nada, y por venganza de Ayane, ambas hermanas deciden unirse a Kazushi en su pequeño baño, y terminan bañándose juntos. Entre el dulce aroma y espuma de baño, Kotone tiene un pequeño accidente con Kazushi y ambos terminan «conectados». ¿Podrá el pervertido Kazushi resistir a los encantos de estas hermosas hermanas?.",
         cover: "overflow.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1175,6 +1195,7 @@
         title: "Shiunji-ke no Kodomotachi",
         desc: "La familia Shiunji y sus siete hijos residen en una mansión del barrio tokiota de Setagaya. El hijo mayor, Arata, está cansado de que sus cinco hermanas y fantasea con la posibilidad de vivir lejos de ellas. Sin embargo, el padre de Arata les revela algo sorprendente: ¡en realidad son todos adoptados! Con este nuevo dato sobre la mesa, las relaciones entre los hermanos cambiarán completamente.",
         cover: "Shiux.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1200,6 +1221,7 @@
         title: "Goblin Slayer",
         desc: "Una joven sacerdotisa ha formado su primer grupo de aventureros, pero no tardan mucho en verse en serios problemas. Por suerte, quien aparece en su rescate es el Asesino de Goblins, un hombre que ha dedicado su vida a exterminar a todo goblin viviente por los medios que fueran necesarios. Cuando comienzan a circular rumores sobre sus hazañas, no hay forma de saber quién será el próximo en aparecer…",
         cover: "goblinslayerportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1253,6 +1275,7 @@
         title: "Kanchigai no Atelier Meister",
         desc: "Kurt Rockhans es un bondadoso chico de los recados del grupo de héroes, el Colmillo de Dragón Llameante. Un día, lo destierran del grupo y descubre que tiene el rango más bajo en combate. Para ganarse la vida, Kurt acepta diversos trabajos y descubre que posee habilidades asombrosas. Aunque aún no lo sabe, Kurt posee habilidades de rango SSS en todo menos en la lucha, y se embarca en una nueva aventura.",
         cover: "atelier1.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1278,6 +1301,7 @@
         title: "Definitivamente. ¡No me gusta mi hermano para nada!",
         desc: "Shuusuke Takanashi es un joven apasionado por coleccionar todo tipo de contenido lascivo, pero se enfrenta a un dilema cuando su encantadora hermana menor, Nao, busca atraer su atención como mujer. Para su fortuna, o quizás su infortunio, reaparece Iroha Tsuchiura, una amiga de la infancia de Shuusuke a quien no había visto en más de 10 años. Sin embargo, Iroha comienza a seducirlo y a mostrar un lado inusual. Así da comienzo a un triángulo amoroso entre Nao, Iroha y Shuusuke, al que se une Mayuka Kondou, compañera de clase y amante de historias de amor entre chicos, desencadenando una comedia romántica única.",
         cover: "Oni.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1311,6 +1335,7 @@
         title: "Kaiju No. 8",
         desc: "La historia la protagoniza Kafka Hibino, un hombre de 32 años que quiere unirse a la Fuerza de Defensa y cumplir la promesa que le hizo a una amiga de la infancia, Mina Ashiro. En su trabajo como limpiador de restos de Kaiju forja amistad con un nuevo compañero, Reno Ichikawa, cuya determinación de unirse a la Fuerza de Defensa inspira a Kafka a cumplir su promesa de la infancia de unirse a Mina para proteger a la humanidad. Cuando un pequeño Kaiju se introduce en el interior de Kafka, éste adquiere una fuerza sobrehumana y poderes que le permiten luchar contra los Kaiju. Ahora se esfuerza por ganarse la confianza de sus compañeros humanos, derrotar a unos Kaiju cada vez más poderosos y proteger el mundo.",
         cover: "kaijuportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1362,6 +1387,7 @@
         title: "Zootopia",
         desc: "La metrópoli Zootopía es una ciudad de mamíferos, donde muchos animales viven y se desarrollan. Allí, la optimista agente Judy Hopps se convierte en la primera conejita de un cuerpo policial compuesto por animales duros y enormes. Judy está decidida a demostrar su valentía y se mete en un caso con Nick Wilde, un zorro parlanchín y estafador.",
         cover: "zootopiaportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1385,6 +1411,7 @@
         title: "Clevatess -Majuu no Ou to Akago",
         desc: "Uno de los Señores de las Bestias Oscuras, el reinado de Clevatess se hace trizas cuando revive a un héroe al que él mismo mató y adopta a un bebé humanoide huérfano, la última esperanza para salvar un mundo moribundo. Ahora unidos por el destino, ¿qué les deparará a este trío tan improbable?",
         cover: "Clevatessportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1410,6 +1437,7 @@
         title: "Dr. Stone",
         desc: "Senku es un joven extremadamente inteligente con un gran don para la ciencia y una ácida personalidad, y su mejor amigo es Taiju, que es muy buena persona pero más apto para usar los músculos que para pensar. Cuando tras cierto incidente toda la humanidad acaba convertida en piedra, ellos logran despertarse en un mundo miles de años después, con la civilización humana completamente desaparecida y con toda la humanidad congelada en piedra como ellos estuvieron. Ahora es su obligación rescatar a la gente y crear un nuevo mundo.",
         cover: "Dr._Stoneportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1534,6 +1562,7 @@
         title: "One Piece (Live Action)",
         desc: "Acompañado de su ecléctica tripulación, el joven pirata Monkey D. Luffy emprende un viaje en busca de un tesoro legendario en esta adaptación del popular manga.",
         cover: "onepieceportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1569,6 +1598,7 @@
         title: "Shoujo Ramune",
         desc: "Ha sido unos meses desde Kiyoshi renunció a su trabajo para cumplir su sueño de tener un dagashis-ya en las afueras de Tokio. Él quería vivir el resto de su vida viendo niñas. Su plan fue un éxito, con las niñas de la escuela cercana que visitan su tienda todos los días y hablaban con él felizmente como amigos. Sin embargo, poco después que las vacaciones de verano comenzaran, se dio cuenta que una de sus clientes habituales, Chie, robaba algunos dulces. A pesar de que no había mucha pérdida, no podía dejar que se saliera con la suya. Cuando se le preguntó, ella dijo que le iba a compensar por ello mediante el trabajo a tiempo parcial en su tienda. Así comienza sus vacaciones de verano con pequeñas niñas.",
         cover: "shoujoramuneportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1587,6 +1617,7 @@
         title: "To Your Eternity",
         desc: "Al principio el \"orbe\" llegó a la Tierra. Podía hacer dos cosas: tomar la forma de cualquier cosa con la que interactuara y regenerarse para volver a la vida. El orbe se convirtió en roca, luego en lobo y finalmente en un chico, pero vaga por el mundo como un recién nacido que no sabe nada. Como niño se convierte en Fushi. Poco a poco va conociendo la amabilidad humana y Fushi no solo aprende a sobrevivir, sino que crece como \"persona\". Pero su viaje queda ensombrecido por Nokker, un destructivo e inexplicable enemigo, así como por las crueles depedidas de aquellos a quienes ama.",
         cover: "fumetsuportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1674,6 +1705,7 @@
         title: "Tsugunai Subbed",
         desc: "Nuestro mc vive con su hermana, Nana, después de que sus padres murieran en un accidente. Crecieron compartiendo momentos tristes y felices juntos. Pero un día, Nana tuvo que pasar por una vida terrible, fue asaltada por un grupo de hombres ricos y quedó extremadamente traumatizada. Quería vengarse de esos sucios hombres ricos. Mc se convierte en profesor de secundaria donde estudia la hija de los ricos. Después de retomar el momento, los invitó a una villa remota para recibir clases complementarias. Cerró la puerta para asegurarse de que ninguno de ellos escapara y se vengara por primera vez de la chica llamada Ruriko, que tenía el mayor respeto por su asqueroso padre que agredió a la hermana de mc. El resto de la chica trató de huir, pero ¿serán capaces de escapar de la ira de mc?",
         cover: "TsugunaiSubbed.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1713,6 +1745,7 @@
         title: "Blue Lock",
         desc: "Yoichi es un joven al que acaban de eliminar junto a su equipo. De pronto recibe una carta donde lo convocan para participar en un extraño experimento sobre fútbol.",
         cover: "Bluelockportada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1779,6 +1812,7 @@
         title: "Magic Maker: Isekai Mahou no Tsukurikata",
         desc: "La noche de su trigésimo cumpleaños, los sueños de usar la magia de un hombre se hacen realidad tras fallecer de forma inesperada. Al despertar se encuentra convertido en Sion, un niño de otro mundo. Él y su hermana mayor, Marie, son hijos de una familia noble de clase baja que gobierna su región. Tras recibir mensajes contradictorios de su padre, Sion y Marie emprenden una aventura para descubrir la magia.",
         cover: "magic maker.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1804,6 +1838,7 @@
         title: "Tsuyokute New Saga",
         desc: "Tras una brutal guerra, el espadachín mágico Kyle derrota al Rey Demonio, pero se queda agonizante. Un cristal carmesí le envía cuatro años al pasado, a su ciudad natal, antaño destruido, donde se encuentra con vida a sus seres queridos perdidos. Armado con el conocimiento del futuro, Kyle jura evitar la tragedia que se avecina y reescribir el destino.",
         cover: "New Saga.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1829,6 +1864,7 @@
         title: "Gachiakuta",
         desc: "En una ciudad flotante donde los ricos se deshacen de su basura y de las personas, a Ludo lo acusan de asesinato y lo arrojan al Abismo, un infierno habitado por las bestias de la basura. Para sobrevivir, deberá hacer uso de un nuevo poder y unirse a los Limpiadores. El objetivo de Ludo no es solo acabar con los monstruos, sino también con aquellos que lo arrojaron al Infierno.",
         cover: "Gachiakuta.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1866,6 +1902,7 @@
         title: "Shinsei Kourin Dacryon Luna",
         desc: "En el club de periodismo de la Escuela Privada Etoile, Runa, Reina y Miyu activan la aplicación Angel Maker, lo que desencadena una tragedia. Se convierten en chicas mágicas y luchan contra monstruos deformes, pero un día son capturadas y violadas por ellos. Erika, la chica mágica, las rescata, pero les advierte que si siguen luchando atraerán más ataques. Resulta que la aplicación ha sido maldecida por ángeles caídos. Erika lucha contra ellos, pero su corazón se corrompe.",
         cover: "Shinsei Kourin Dacryon Luna portada.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1881,6 +1918,7 @@
         title: "Kami-tachi ni Hirowareta Otoko",
         desc: "Ryoma no había tenido suerte en su vida previa. Pero tres deidades deciden darle una segunda oportunidad en un mundo de fantasía y magia.",
         cover: "Kamitachi.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1924,6 +1962,7 @@
         title: "Ore dake Haireru Kakushi Dungeon",
         desc: "Mazmorra Oculta es un lugar legendario repleto de tesoros y objetos muy poco comunes. Nor, el tercer hijo de una ahora en decencia familia noble y que ha perdido el único trabajo que tenía, tiene la suerte de escuchar hablar de esta mazmorra. Es entonces cuando adquiere una habilidad que le permite crear, usar y editar habilidades... y para poder usarla debe acumular puntos cumpliendo tareas como comer cosas deliciosas o dedicarse a hacer cosas eróticas a miembros del sexo opuesto.",
         cover: "oredake.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -1949,6 +1988,7 @@
         title: "One Punch-Man",
         desc: "Saitama comenzó a hacer de héroe por pura afición, y tras tres años de un durísimo entrenamiento consiguió tal nivel de fuerza que puede acabar con cualquier enemigo de un solo puñetazo. Ahora la vida emocionante que esperaba tener se ha convertido en una de tedio absoluto, pero ¿habrá alguien a su nivel entre todos los héroes del mundo? ¿Y un villano capaz de hacerle sombra?",
         cover: "onepunch.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2033,6 +2073,7 @@
         title: "Mashle",
         desc: "Este es un mundo de magia. Este es un mundo en el que todos usan la magia habitualmente. En un bosque profundo y oscuro de este mundo de magia, hay un chico que se ejercita a diario. Su nombre es Mash Burnedead y tiene un secreto: no puede usar magia. Lo único que quería era vivir tranquilo con su familia, pero cuando un día intentan matarlo por no poder usar magia, las cosas se salen de control y acaba inscrito en una escuela mágica, donde su objetivo será convertirse en el \"Iluminado Divino\", el alumno más formidable, el elegido de Dios. ¿Podrán sus poderosos músculos derrotar a los más brillantes usuarios de magia? ¡Se alza el telón de esta historia de magia y fantasía peculiar en el que la fuerza puede con la magia!",
         cover: "mashle1.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2076,6 +2117,7 @@
         title: "Los Diarios de la Boticaria",
         desc: "Maomao llevaba una vida tranquila ayudando a su padre, un boticario. Todo cambia el día que la venden como sirvienta al palacio del emperador, pero la vida entre nobles y realeza no es para ella. Cuando la familia imperial enferma, ella decide intervenir para encontrar una cura, lo que llama la atención de Jinshi, un guapo oficial de palacio que decide ascenderla como dama de compañía de una de las concubinas del emperador. ¡Su habilidad con la medicina la hará conocida en el palacio por ayudar a resolver muchos misterios!",
         cover: "maomaot1.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2143,6 +2185,7 @@
         title: "Maplestar",
         desc: "✨𝗠𝗮𝗽𝗹𝗲𝘀𝘁𝗮𝗿, un creador de contenido y artista conocido por sus animaciones para adultos de personajes de anime",
         cover: "pm.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2274,6 +2317,7 @@
         title: "Uzumaki",
         desc: "Kurozu-cho, un pequeño pueblo rodeado de niebla en la costa de Japón, está maldito. Según Shuichi Saito, el novio retraído de la adolescente Kirie Goshima, su pueblo no está embrujado por una persona o un ser, sino por un patrón: uzumaki, la espiral, la hipnótica forma secreta del mundo. Se manifiesta en todo, desde conchas marinas y remolinos en el agua hasta las marcas en espiral en los cuerpos de las personas, las obsesiones insanas del padre de Shuichi y la voz de la cóclea en nuestro oído interno. A medida que la locura se extiende, los habitantes de Kurozu-cho se ven arrastrados cada vez más a un remolino del que no hay retorno.",
         cover: "uzumakii.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2291,6 +2335,7 @@
         title: "Tondemo Skill de Isekai Hourou Meshi",
         desc: "Tsuyoshi Mukoda es un oficinista cualquiera al que de repente transportan a otro mundo. La habilidad única que obtiene al llegar a este nuevo mundo es una que parece un tanto inútil, “Supermercado Online”. Al inicio Mukoda está muy deprimido, ¡pero resulta que toda la comida moderna que puede proporcionar a este nuevo mundo con su nueva habilidad tiene algunos efectos increíbles!",
         cover: "todemo.avif",
+        uploader: "Archinime",
         seasons: [
           {
             num: 1,
@@ -2334,6 +2379,7 @@
         title: "My Dress-Up Darling",
         desc: "Gojo Wakana es un estudiante de preparatoria que quiere convertirse en un maestro del tradicional arte de crear muñecas Hina. Aunque adora ese arte, no sabe nada de las últimas tendencias y eso hace que le cueste encajar con sus compañeros de clase. Los más populares de la clase, en especial una chica llamada Marin Kitagawa, parecen creer que él vive en un mundo aparte. Todo esto cambia por completo un día cuando Marin comparte un secreto inesperado con él y hace que sus dos mundos coincidan.",
         cover: "muneca.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2377,6 +2423,7 @@
         title: "Hazbin Hotel",
         desc: "Charlie, la princesa del Infierno, en su audaz intento de redimir demonios para aliviar la sobrepoblación en su reino de manera pacífica. Tras un exterminio anual decretado por el Cielo, Charlie inaugura un hotel con la esperanza de que los huéspedes lo abandonen una vez que demuestren la redención de sus almas.",
         cover: "hhzz.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2412,6 +2459,7 @@
         title: "The Eminence in Shadow",
         desc: "Incluso en su vida pasada, el sueño de Cid no era convertirse en protagonista o jefe final. Prefiere pasar desapercibido como un personaje secundario hasta que sea el momento de máxima audiencia para revelar que es un autor intelectual… o al menos, hacer lo siguiente mejor: ¡pretender serlo! Y ahora que ha renacido en otro mundo, está listo para establecer las condiciones perfectas para vivir sus sueños al máximo. Armado con su imaginación hiperactiva, Cid recluta en broma miembros para su organización e inventa toda una historia de fondo sobre un culto malvado que deben acabar. Bueno, por suerte, estos adversarios imaginarios resultan ser reales, ¡y todos saben la verdad menos él!",
         cover: "shadow.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2463,6 +2511,7 @@
         title: "Spy × Family",
         desc: "Todo el mundo tiene una parte de sí mismos que no puede mostrar a los demás. En una era en la que las naciones de todo el mundo se encuentran involucradas en una feroz guerra de información a puerta cerrada, Ostania y Westalis llevan décadas en guerra fría. La División de Inteligencia de Westalis (WISE) envía a su mejor espía, “Twilight”, en una misión ultrasecreta para vigilar los movimientos de Donovan Desmond, quien dirige el Partido Nacional por la Unidad de Ostania, responsable de bombardear los esfuerzos de paz entre ambos países.",
         cover: "spy.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2547,6 +2596,7 @@
         title: "Black Clover",
         desc: "En un mundo en el que la magia lo es todo, Asta y Yuno son dos niños que encuentran abandonados el mismo día en una iglesia. Mientras que Yuno crece demostrando tener unos grandes poderes mágicos, Asta parece ser la única persona en el mundo que no posee capacidad mágica alguna. Eso no importará a los dos jóvenes, que aspirarán a alcanzar el puesto de Rey Mago, el mejor mago de todos. Pero para ello tendrán que ser seleccionados primero por una Orden de Caballeros Mágicos, ¡y Asta no tiene magia!",
         cover: "portbla.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2727,6 +2777,7 @@
         title: "My Hero Academia",
         desc: "My Hero Academia trata sobre un mundo donde la mayoría de las personas nacen con superpoderes llamados “Dones”. La historia sigue a Izuku Midoriya, un chico que nace sin “Don”, pero que sueña con convertirse en un héroe como su ídolo, All Might. Después de un encuentro fortuito con All Might, quien ve su gran determinación, le transfiere sus poderes. Izuku luego se matricula en una prestigiosa academia de héroes para aprender a usar sus nuevos poderes y enfrentarse a villanos.",
         cover: "sgsgsdseg.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2753,6 +2804,7 @@
         title: "Kakkou no Linazuke",
         desc: "Nagi Umino es un estudiante de preparatoria al que intercambiaron con el hijo de otra familia cuando nació, pero ahora por fin va a conocer a sus padres biológicos. El día que va a concerlos se encuentra con Erika Amano, estudiante en una preparatoria femenina para señoritas de buena familia. A petición de la chica, Nagi se ve medio forzado a fingir ser su novio para evitar un matrimonio concertado... Sin embargo, lo que no sabían es que además de ser falsos prometidos, ¡son los bebés a los que intercambiaron al nacer!",
         cover: "pordf.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2808,6 +2860,7 @@
         title: "Futari Solo Camp",
         desc: "Gen Kinokura solo quería disfrutar de sus tranquilos viajes de acampada en solitario: sin distracciones ni problemas. Entonces aparece Shizuku Kusano, una novata despistada pero entusiasta que irrumpe en su campamento (literalmente). Ahora, este excursionista algo molesto se ve obligado a enseñarle los entresijos del camping. ¡Risas, percances y momentos entrañables aguardan esta aventura de acampada bajo las estrellas!",
         cover: "futaripor.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2845,6 +2898,7 @@
         title: "Tōjima Tanzaburō wa Kamen Rider ni Naritai",
         desc: "Tanzaburo Tojima ha soñado con ser un Kamen Rider toda su vida. Pero ahora que tiene 40 años, empieza a pensar que su sueño quizá nunca se haga realidad… ¡hasta que se ve envuelto en una serie de crímenes inspirados en el infame “Shocker”! De Shibata Yokusaru, creador de Air Master y 81 Diver, llega una historia alocada y conmovedora sobre adultos que adoran a Kamen Rider demasiado y empiezan a jugar a serlo… ¡de verdad!",
         cover: "tojima1.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2882,6 +2936,7 @@
         title: "Alma-chan wa Kazoku ni Naritai",
         desc: "Creada por los científicos Enji y Suzume, Alma es una inteligencia artificial capaz de aprender por sí misma… y de destrozar un tanque en segundos. Sin embargo, cree que ellos son su padre y su padre. Ahora, la pareja deberá ocultar sus sentimientos románticos mientras enfrenta su experimento más caótico: la vida en familia.",
         cover: "almachan.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2906,6 +2961,7 @@
         title: "Spice and Wolf",
         desc: "Lawrence, un comerciante ambulante, encuentra a una chica desnuda con orejas y cola de lobo dormida en su carreta. Ella es Holo, una diosa de la cosecha con una bestia indómita acechando en su interior. Armados con su astucia callejera y sus instintos animales, un simple vendedor ambulante y una deidad olvidada viajan por el campo mientras cosechan las riquezas de la felicidad y exponen la bancarrota que habita en el corazón humano",
         cover: "drgfedfgdf.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2944,6 +3000,7 @@
         title: "Oyasumi Sex",
         desc: "Yui le comenta a su hermano que alguien se le confesó, lo que causa que este comience a sentirse celoso y comenzar a ver diferente a su hermanita. Una noche mientras ella dormía, este decide aprovecharse y hacerla suya...",
         cover: "oyasumi.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -2961,6 +3018,7 @@
         title: "Rick and Morty",
         desc: "Las descontroladas aventuras de un científico brillante, pero excéntrico, junto a su nieto común y corriente, los llevan a explorar universos paralelos, enfrentar criaturas extrañas y vivir situaciones absurdas que desafían la lógica.",
         cover: "rymp.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3097,6 +3155,7 @@
         title: "Akujiki Reijou to Kyouketsu Koushaku",
         desc: "Toda dama noble debe tener unos gustos refinados, y lo que más disfruta la señorita Melphiera son… ¡los monstruos! Por desgracia, la sociedad no ve con buenos ojos tales antojos y la apoda la “Villana Voraz”. En pleno banquete, un monstruo la ataca, pero la salva el “Duque Sediento de Sangre”. Es brutal, misterioso y encantador. ¿Será él la primera persona que aprecie su monstruoso apetito?",
         cover: "akujiki.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3122,6 +3181,7 @@
         title: "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka",
         desc: "Scarlet ya ha soportado bastante los abusos de su prometido. El segundo príncipe Kyle no solo es arrogante y vulgar, sino que además rompe su compromiso con ella en pleno baile. Y, por si fuera poco, la acusa de un crimen que jamás cometió. Enfadada por la traición, Scarlet desata toda su furia y la propina al príncipe y a sus nobles una paliza que nunca olvidarán.",
         cover: "saigo ni hitotsu.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3148,6 +3208,7 @@
         title: "Ataque a los titanes",
         desc: "Desde que 100 años atrás los titanes apareciesen de la nada y llevasen a la humanidad al borde de la extinción, la población vive encerrada en ciudades rodeadas de enormes muros llamados Maria, Rose y Sina, con el fin de protegerse de la aparición de nuevos titanes. Ese es el día a día de Eren Jaeger, un joven que sueña con el poder estar fuera de los muros, fastidiado del conformismo con el que la humanidad vive encerrada como si fuese ganado. La repentina llegada de los titanes Colosal y Acorazado aplastará la ilusión de paz en la que hasta ahora vivía la sociedad humana y hará que Eren, junto a su hermana adoptiva Mikasa Ackerman y su mejor amigo Armin Arlert, se embarque en una arriesgada odisea de venganza en nombre de la humanidad.",
         cover: "synt.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3295,6 +3356,7 @@
         title: "Record of Ragnarok",
         desc: "En el Concejo del Valhalla, los dioses acuerdan unánimemente extinguir a la raza humana. Pero Brunilda, la mayor de las hermanas valquirias, se opone. En el primer combate de la batalla de Ragnarok, Lü Bu, el caudillo militar de la dinastía Han, lucha contra el dios nórdico Thor y sorprende a los dioses presentes.",
         cover: "recordpor.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3362,6 +3424,7 @@
         title: "Genshin Impact Hentai",
         desc: "Mira Los mejores videos, películas y cortos Genshin Impact Hentai, aquí en Archinime.",
         cover: "gih.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3396,6 +3459,7 @@
         title: "Gnosia",
         desc: "Cuando un enemigo cambiaformas conocido como Gnosia se infiltra en una nave espacial solitaria, la tripulación solo tiene una forma de sobrevivir: identificar al impostor cada día y ponerlo en criosueño. Pero para Yuri, el día nunca termina. Atrapada en un bucle temporal, revive el primer día de la crisis una y otra vez. Para escapar, Yuri debe descubrir la verdad tras Gnosia y el propio bucle temporal, antes de que sea demasiado tarde.",
         cover: "gnosiap.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3430,6 +3494,7 @@
         title: "Classroom of the Elite",
         desc: "Kiyotaka Ayanokouji acaba de entrar en la Academia Tokyo Koudo Ikusei, de la cual se dice que el 100% de sus estudiantes acaban yendo a la universidad o encontrando un buen trabajo. Sin embargo nuestro protagonista acaba en la Clase 1-D, donde la escuela pone a todos los alumnos con problemas. Y lo que es más, cada mes la escuela otorga a los estudiantes puntos por valor de 100.000 yenes, y las clases emplean un sistema por el cual se puede hablar, dormir e incluso molestar a los compañeros durante las clases.",
         cover: "classroomelite.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3500,6 +3565,7 @@
         title: "Frieren: Más allá del final del viaje",
         desc: "Frieren, una maga elfa inmortal, que tras derrotar al Rey Demonio con un grupo de héroes humanos, se da cuenta de que su larga vida le impide valorar el tiempo con sus compañeros mortales, por lo que emprende un nuevo viaje para entender las relaciones humanas y redescubrir el valor de los momentos efímeros antes de que todos a su alrededor desaparezcan, explorando temas de mortalidad, el paso del tiempo y la memoria con una perspectiva madura y reflexiva.",
         cover: "ff.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3541,6 +3607,7 @@
         title: "Solo leveling",
         desc: "Sung Jinwoo, el cazador más débil de la humanidad, que recibe una misteriosa habilidad para subir de nivel como si fuera un videojuego tras una experiencia mortal en una mazmorra, lo que le permite volverse increíblemente fuerte y ascender de rango mientras otros cazadores no pueden, protegiendo al mundo de portales interdimensionales y monstruos. ",
         cover: "sololeveling.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3585,6 +3652,7 @@
         title: "It - Bienvenidos a Derry",
         desc: "En 1962, una pareja con su hijo se muda a Derry, Maine, justo cuando un niño desaparece. Con su llegada, comienzan a suceder cosas malas en el pueblo.",
         cover: "it.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3606,6 +3674,7 @@
         title: "Cars",
         desc: "El aspirante a campeón de carreras Rayo McQueen parece que está a punto de conseguir el éxito. Su actitud arrogante se desvanece cuando llega a una pequeña comunidad olvidada que le enseña las cosas importantes de la vida que había olvidado.",
         cover: "cars.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3637,6 +3706,7 @@
         title: "Kimi to Koete Koi ni Naru",
         desc: "Mari, una estudiante de secundaria, no se imaginaba que se enamoraría de Tsunagu, un amable y sensible hombres bestia, los cuales están segregados tras unos muros. Mari y Tsunagu demuestran que sus diferencias son, en realidad, un puente. ¿Podrá su amor superar la brecha entre ambas especies?",
         cover: "kimitokoete.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
@@ -3662,6 +3732,7 @@
         title: "Overlord",
         desc: "Cuando un popular MMORPG anuncia su cierre definitivo, el veterano jugador Momonoga decide quedarse en él hasta el mismo cierre, sin salir. El problema es que pasa la horra de cierre y él no se desconecta, pero los NPC han ganado conciencia propia. ¿Está atrapado?",
         cover: "overlord.avif",
+        uploader: "Archinime", 
         seasons: [
           {
             num: 1,
