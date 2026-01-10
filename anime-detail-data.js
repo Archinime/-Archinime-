@@ -3824,8 +3824,6 @@
           },
           ]
     },
-          ]
-    },
     72: {
         title: "Prueba",
         desc: "Adfafasf",
