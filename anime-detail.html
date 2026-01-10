@@ -196,33 +196,40 @@
       color: #000;
     }
 
-    /* --- UPLOADER CREDIT --- */
+    /* --- UPLOADER CREDIT (DISEÑO MEJORADO) --- */
     .uploader-credit {
-        text-align: right;
-        margin-top: 25px;
-        font-size: 0.9rem;
-        color: #888;
-        font-style: italic;
-        padding-right: 10px;
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+        margin-top: 35px;
+        background: rgba(0, 255, 255, 0.05); /* Fondo sutil cyan */
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        padding: 10px 25px;
+        border-radius: 50px;
+        width: fit-content;
+        margin-left: auto; 
+        backdrop-filter: blur(5px);
+        font-size: 0.9rem;
+        color: #ccc;
     }
     .uploader-credit span {
         color: #0ff;
-        font-weight: 600;
+        font-weight: 700;
+        letter-spacing: 0.5px;
     }
     .uploader-avatar {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid #0ff;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px; padding-top:20px;
+    .recommendations { margin-top:40px;
+      padding-top:20px;
       border-top:1px solid #333;
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
@@ -256,7 +263,7 @@
     }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem;
-      text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+    text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
@@ -328,6 +335,7 @@
         "Archinime": "Logo_Archinime.avif",
         "Alejandro": "https://via.placeholder.com/40",
         "Lucio": "https://via.placeholder.com/40"
+    
     };
 
     /* ----------------------------------------------------
@@ -372,7 +380,8 @@
         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
-            playTrack(currentTrackIndex);
+   
+             playTrack(currentTrackIndex);
         }
     }, { once: true });
     /* ----------------------------------------------------
@@ -389,7 +398,6 @@
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
-            
             // --- GÉNEROS ---
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
@@ -407,6 +415,7 @@
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
+        
                 <p class="desc">${anime.desc}</p>
             `;
             if(anime.seasons){
@@ -414,10 +423,12 @@
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-                         <div class="season-content">
+       
+                          <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-              
+             
+  
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
@@ -425,16 +436,15 @@
             }
 
             // --- AÑADIR UPLOADER + LOGO AL FINAL ---
-            if(anime.uploader) {
-                // Buscamos la foto en el mapa local, si no, placeholder
-                const avatarUrl = AVATAR_MAP[anime.uploader] || "https://via.placeholder.com/40";
-                
-                html += `
-                <div class="uploader-credit">
-                    Subido por: <span>${escapeHtml(anime.uploader)}</span>
-                    <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
-                </div>`;
-            }
+            // Si NO tiene uploader, asumimos que es Archinime
+            const uploaderName = anime.uploader || "Archinime";
+            const avatarUrl = AVATAR_MAP[uploaderName] || AVATAR_MAP["Archinime"] || "https://via.placeholder.com/40";
+            
+            html += `
+            <div class="uploader-credit">
+                Subido por: <span>${escapeHtml(uploaderName)}</span>
+                <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
+            </div>`;
 
             container.innerHTML = html;
             renderRecommendations(id);
