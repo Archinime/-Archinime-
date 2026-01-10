@@ -203,8 +203,7 @@
         align-items: center;
         gap: 12px;
         margin-top: 35px;
-        background: rgba(0, 255, 255, 0.05);
-        /* Fondo sutil cyan */
+        background: rgba(0, 255, 255, 0.05); /* Fondo sutil cyan */
         border: 1px solid rgba(0, 255, 255, 0.2);
         padding: 10px 25px;
         border-radius: 50px;
@@ -219,16 +218,6 @@
         font-weight: 700;
         letter-spacing: 0.5px;
     }
-    
-    /* MODIFICADO: Estilo para el link del avatar */
-    .uploader-link {
-        display: inline-block;
-        transition: transform 0.2s;
-    }
-    .uploader-link:hover {
-        transform: scale(1.1);
-    }
-
     .uploader-avatar {
         width: 35px;
         height: 35px;
@@ -236,7 +225,6 @@
         object-fit: cover;
         border: 2px solid #0ff;
         box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-        display: block; /* Para quitar espacio extra en el enlace */
     }
 
     /* --- RECOMENDACIONES --- */
@@ -275,7 +263,7 @@
     }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem;
-      text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+    text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
@@ -304,7 +292,7 @@
         /* 3 por fila en MÓVILES */
         .rec-grid {
             grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
+            gap: 6px;
         }
     }
   </style>
@@ -340,19 +328,14 @@
 
   <script>
     /* ----------------------------------------------------
-       0. MAPA DE AVATARES Y LINKS (Configuración)
+       0. MAPA DE AVATARES (Configuración)
        ---------------------------------------------------- */
+    // Poner aquí los mismos enlaces que pusiste en script.js
     const AVATAR_MAP = {
         "Archinime": "Logo_Archinime.avif",
         "Alejandro": "https://via.placeholder.com/40",
         "Lucio": "https://via.placeholder.com/40"
-    };
-
-    const USER_LINKS_MAP = {
-        "archinime12@gmail.com": "https://www.youtube.com/@Archinime-k2g",
-        "alejandroarchi12@gmail.com": "https://portal.omnilife.com/productos",
-        // Fallback por defecto si no está en la data ni aquí
-        "default": "#"
+    
     };
 
     /* ----------------------------------------------------
@@ -444,39 +427,25 @@
                           <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-     
+             
+  
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
-            
                 });
             }
 
-            // --- AÑADIR UPLOADER + LOGO CON ENLACE ---
+            // --- AÑADIR UPLOADER + LOGO AL FINAL ---
             // Si NO tiene uploader, asumimos que es Archinime
             const uploaderName = anime.uploader || "Archinime";
             const avatarUrl = AVATAR_MAP[uploaderName] || AVATAR_MAP["Archinime"] || "https://via.placeholder.com/40";
             
-            // Lógica para obtener el enlace
-            // 1. Si está guardado en el anime data, usarlo.
-            // 2. Si no, buscar en el mapa local por nombre/correo (fallback para animes viejos).
-            let targetLink = anime.uploaderLink; 
-            if (!targetLink) {
-                 // Intentamos buscar por el correo si coincide con la key del mapa
-                 // Pero aqui tenemos el nombre "Archinime", no el correo "archinime12@gmail.com".
-                 // Hacemos una búsqueda inversa simple o hardcodeamos los casos conocidos:
-                 if(uploaderName === "Archinime") targetLink = USER_LINKS_MAP["archinime12@gmail.com"];
-                 else if(uploaderName === "Alejandro") targetLink = USER_LINKS_MAP["alejandroarchi12@gmail.com"];
-                 else targetLink = "#";
-            }
-
             html += `
             <div class="uploader-credit">
                 Subido por: <span>${escapeHtml(uploaderName)}</span>
-                <a href="${targetLink}" target="_blank" class="uploader-link" title="Visitar perfil">
-                    <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
-                </a>
+                <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
             </div>`;
+
             container.innerHTML = html;
             renderRecommendations(id);
         } else {

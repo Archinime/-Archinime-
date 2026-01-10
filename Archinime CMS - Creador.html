@@ -21,7 +21,7 @@
             padding: 0 15px 10px 15px;
             border-bottom: 1px solid #333;
             background: #131419;
-            margin-top: 20px;
+            margin-top: 20px; /* ESPACIO AÑADIDO AQUI */
         }
         .search-tab-btn {
             flex: 1;
@@ -49,35 +49,6 @@
             color: #777 !important;
             cursor: not-allowed !important;
             box-shadow: none !important;
-        }
-        
-        /* FLECHA Y MENSAJE DE LOGOUT (NUEVO) */
-        #logoutHint {
-            position: absolute;
-            top: 75px;
-            right: 20px;
-            background: #ff4757;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            z-index: 2000;
-            display: none;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.5);
-            animation: bounce 1s infinite;
-        }
-        #logoutHint::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            right: 15px;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 8px solid #ff4757;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
         }
     </style>
 </head>
@@ -111,13 +82,11 @@
         <button onclick="openSearchModal()" style="background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:0.8em;">
             <i class="fas fa-folder-open"></i> CARGAR / EDITAR
         </button>
-        <button id="btnLogout" onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
+        <button onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
             <i class="fas fa-power-off"></i>
         </button>
     </div>
 </div>
-
-<div id="logoutHint">¡Cierra sesión aquí para ver cambios! ⬆</div>
 
 <div id="searchModal" onclick="handleModalClick(event)">
     <div class="search-box">
