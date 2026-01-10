@@ -200,25 +200,14 @@
     .uploader-credit {
         text-align: right;
         margin-top: 25px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: #888;
         font-style: italic;
         padding-right: 10px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 10px;
     }
     .uploader-credit span {
         color: #0ff;
         font-weight: 600;
-    }
-    .uploader-avatar {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #0ff;
     }
 
     /* --- RECOMENDACIONES --- */
@@ -321,16 +310,6 @@
 
   <script>
     /* ----------------------------------------------------
-       0. MAPA DE AVATARES (Configuración)
-       ---------------------------------------------------- */
-    // Poner aquí los mismos enlaces que pusiste en script.js
-    const AVATAR_MAP = {
-        "Archinime": "Logo_Archinime.avif",
-        "Alejandro": "https://via.placeholder.com/40",
-        "Lucio": "https://via.placeholder.com/40"
-    };
-
-    /* ----------------------------------------------------
        1. Gestión de Carga
        ---------------------------------------------------- */
     window.addEventListener('load', () => {
@@ -389,12 +368,14 @@
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
-            
-            // --- GÉNEROS ---
+            // --- Lógica de Géneros Actualizada ---
+            // Buscamos el anime en la lista completa (index-data.js) para sacar los géneros
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
+                // Buscamos coincidencia por ID (número o texto)
                 const animeInfo = animes.find(a => String(a.id) === String(id));
                 if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
+                    // Creamos los chips separados
                     genreHtml = animeInfo.genres.map(g => 
                         `<span class="genre-chip">${escapeHtml(g)}</span>`
                     ).join('');
@@ -402,7 +383,8 @@
                     genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
                 }
             }
-            
+            // -------------------------------------
+
             let html = `
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
@@ -424,16 +406,9 @@
                 });
             }
 
-            // --- AÑADIR UPLOADER + LOGO AL FINAL ---
+            // --- AÑADIR UPLOADER AL FINAL ---
             if(anime.uploader) {
-                // Buscamos la foto en el mapa local, si no, placeholder
-                const avatarUrl = AVATAR_MAP[anime.uploader] || "https://via.placeholder.com/40";
-                
-                html += `
-                <div class="uploader-credit">
-                    Subido por: <span>${escapeHtml(anime.uploader)}</span>
-                    <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
-                </div>`;
+                html += `<div class="uploader-credit">Subido por: <span>${escapeHtml(anime.uploader)}</span></div>`;
             }
 
             container.innerHTML = html;
