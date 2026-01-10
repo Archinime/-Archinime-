@@ -17,21 +17,18 @@ const ALLOWED_USERS = [
     "alejandroarchi12@gmail.com", 
     "lucioguapofeo@gmail.com"
 ];
-
 // --- MAPEO DE NOMBRES ---
 const USER_NAMES_MAP = {
     "archinime12@gmail.com": "Archinime",
     "alejandroarchi12@gmail.com": "Alejandro",
     "lucioguapofeo@gmail.com": "Lucio"
 };
-
-// --- MAPEO DE LOGOS/AVATARES (Poner aquí las URLs de las fotos) ---
+// --- MAPEO DE LOGOS/AVATARES ---
 const USER_AVATARS_MAP = {
-    "archinime12@gmail.com": "Logo_Archinime.avif",  // Tu logo principal
-    "alejandroarchi12@gmail.com": "https://via.placeholder.com/40", // Pon la url de la foto de Alejandro
-    "lucioguapofeo@gmail.com": "https://via.placeholder.com/40"     // Pon la url de la foto de Lucio
+    "archinime12@gmail.com": "Logo_Archinime.avif",
+    "alejandroarchi12@gmail.com": "https://via.placeholder.com/40",
+    "lucioguapofeo@gmail.com": "https://via.placeholder.com/40"
 };
-
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
@@ -50,7 +47,6 @@ let searchTimeout = null;
 let previewTimeout = null;
 let currentSearchMode = 'mine'; 
 let originalUploaderName = null;
-
 // ============================================
 // AUTENTICACIÓN
 // ============================================
@@ -93,7 +89,6 @@ function showCMS(user) {
     document.getElementById('cmsContent').style.display = 'grid';
     document.getElementById('userAvatarImg').src = user.photoURL;
 
-    // Obtener nombre bonito desde el mapa o usar email
     let displayName = USER_NAMES_MAP[user.email] || "Aportador";
     document.getElementById('userNameDisplay').innerText = displayName;
 }
@@ -128,9 +123,10 @@ genresList.forEach(g => {
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ?
+    "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
 }
 
@@ -408,7 +404,8 @@ function renderChapters(input, existingEps = []) {
              customTitle = currentData[i].title;
         }
 
-        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
+        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ?
+        "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
         row.innerHTML = `
@@ -523,7 +520,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA, EDICIÓN Y FILTRO (MEJORADO)
+// CARGA, EDICIÓN Y FILTRO
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
@@ -553,14 +550,30 @@ function closeSearchModal() {
     document.getElementById('searchModal').style.display = 'none';
 }
 
+// --- FUNCIÓN MODIFICADA PARA DETECTAR EL UPLOADER REAL ---
 async function loadIndexForSearch() {
     const loading = document.getElementById('loadingSearch');
     loading.style.display = 'block';
     try {
         if(!currentUserToken) throw new Error("No hay sesión");
-        const file = await getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js');
-        const data = safeEval(file.content);
-        cachedIndex = data.reverse(); 
+        
+        // MODIFICACIÓN: Cargar ambos archivos para sincronizar el uploader real
+        const [indexFile, detailFile] = await Promise.all([
+            getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js'),
+            getGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js')
+        ]);
+
+        const indexData = safeEval(indexFile.content);
+        const detailData = safeEval(detailFile.content);
+
+        // Inyectar el uploader correcto desde detailData al indexData
+        indexData.forEach(item => {
+            if (detailData[item.id] && detailData[item.id].uploader) {
+                item.uploader = detailData[item.id].uploader;
+            }
+        });
+
+        cachedIndex = indexData.reverse(); 
         filterSearch();
     } catch(e) {
         document.getElementById('searchResults').innerHTML = `<div style="color:red; text-align:center">Error: ${e.message}</div>`;
@@ -579,15 +592,13 @@ function _performFilter() {
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
     
-    // FILTRO DE ORIGEN
     let sourceData = cachedIndex;
     const isSuperAdmin = (currentUserEmail === SUPER_ADMIN_EMAIL);
     if (currentSearchMode === 'mine') {
         if(isSuperAdmin) {
-            // Archinime ve sus subidas + las antiguas sin uploader
+            // Archinime ve sus subidas + las antiguas sin uploader (ahora consideradas de Archinime)
             sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail || !item.uploader);
         } else {
-            // Resto de usuarios solo ven lo suyo explícitamente
             sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail);
         }
     }
@@ -596,34 +607,24 @@ function _performFilter() {
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
-        div.onclick = () => loadAnimeForEditing(anime.id, anime.uploader);
         
-        // --- CAMBIO VISUAL: UPLOADER NOMBRE + LOGO ---
-        let uploaderName = "Desconocido";
-        let uploaderLogo = "https://via.placeholder.com/30"; // Placeholder si no hay
+        // --- LÓGICA DE PROPIEDAD Y LOGO ---
+        // Si no tiene uploader, asumimos que es del Admin (Archinime)
+        let effectiveUploader = anime.uploader || SUPER_ADMIN_EMAIL;
+        
+        div.onclick = () => loadAnimeForEditing(anime.id, effectiveUploader);
 
-        if (anime.uploader) {
-            // Si el uploader es un email (formato index-data antiguo/nuevo)
-            uploaderName = USER_NAMES_MAP[anime.uploader] || anime.uploader;
-            uploaderLogo = USER_AVATARS_MAP[anime.uploader] || uploaderLogo;
-        } else {
-            // Si no tiene uploader (Legacy), no ponemos nada o ponemos texto vacío
-            uploaderName = ""; 
-        }
+        let uploaderName = USER_NAMES_MAP[effectiveUploader] || effectiveUploader;
+        let uploaderLogo = USER_AVATARS_MAP[effectiveUploader] || "https://via.placeholder.com/30";
 
-        // Creamos el HTML del uploader solo si hay nombre
-        let uploaderHtml = "";
-        if (uploaderName) {
-            uploaderHtml = `
+        let uploaderHtml = `
             <div style="color:#777; font-size:0.8em; display:flex; align-items:center; gap:6px; margin-top:4px;">
-                <img src="${uploaderLogo}" style="width:16px; height:16px; border-radius:50%; object-fit:cover;">
                 Subido por: ${uploaderName}
+                <img src="${uploaderLogo}" style="width:16px; height:16px; border-radius:50%; object-fit:cover;">
             </div>`;
-        }
         
-        const isMine = (anime.uploader === currentUserEmail);
+        const isMine = (effectiveUploader === currentUserEmail);
         const ownerTag = isMine ? '<span style="color:#00ffbf; font-size:0.7em; margin-left:5px;">(MÍO)</span>' : '';
-
         div.innerHTML = `
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
@@ -645,14 +646,16 @@ function _performFilter() {
 }
 
 async function loadAnimeForEditing(id, uploaderEmail) {
-    const isMine = (uploaderEmail === currentUserEmail);
+    // Si uploaderEmail es null/undefined, asumimos que es del Admin (Archinime)
+    const effectiveUploader = uploaderEmail || SUPER_ADMIN_EMAIL;
+    const isMine = (effectiveUploader === currentUserEmail);
     const isSuperAdmin = (currentUserEmail === SUPER_ADMIN_EMAIL);
-    
+    // Si eres SuperAdmin puedes editar TODO (tuyo, sin uploader o de otros)
+    // Si eres usuario normal, solo lo tuyo.
     const canEdit = isMine || isSuperAdmin;
     
     let readOnly = false;
     let confirmMsg = "¿Cargar anime para EDITAR? Se perderán los datos actuales.";
-    
     if (!canEdit) {
         readOnly = true;
         confirmMsg = "No tienes permisos de edición sobre este anime. Se cargará en MODO LECTURA. ¿Continuar?";
@@ -662,14 +665,12 @@ async function loadAnimeForEditing(id, uploaderEmail) {
     
     closeSearchModal();
     showToast("Descargando datos...", false);
-    
     try {
         const [detailFile, playerFile, musicFile] = await Promise.all([
             getGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js'),
             getGithubFile(currentUserToken, OWNER, REPO, 'video-player-data.js'),
             getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         ]);
-        
         const detObj = safeEval(detailFile.content);
         const playObj = safeEval(playerFile.content);
         const musObj = safeEval(musicFile.content);
@@ -679,21 +680,19 @@ async function loadAnimeForEditing(id, uploaderEmail) {
         const targetMusic = musObj[id] || [];
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
-
         // SET MODES
         isEditMode = true;
         currentEditingId = id;
         isReadOnly = readOnly;
-
         // ---- LÓGICA DE UPLOADER ----
         const indexEntry = cachedIndex.find(x => x.id === id);
-        
+        // Si tiene uploader explícito
         if (targetDetail.uploader) {
             originalUploaderName = targetDetail.uploader;
-        } else if (indexEntry && indexEntry.uploader) {
-            originalUploaderName = USER_NAMES_MAP[indexEntry.uploader] || "Desconocido";
-        } else {
-            originalUploaderName = "Administración"; 
+        } 
+        // Si no tiene, y el index tampoco (legacy) -> "Archinime"
+        else {
+            originalUploaderName = SUPER_ADMIN_EMAIL;
         }
         // ----------------------------
 
@@ -794,10 +793,8 @@ function generateData() {
     const ratingInput = document.getElementById('ratingAnime');
     let ratingVal = parseFloat(ratingInput.value);
     if(isNaN(ratingVal)) ratingVal = 0;
-
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -903,12 +900,12 @@ async function subirAGithHub() {
 
         // LÓGICA DE UPLOADER NAME
         let finalUploaderName = "";
-        if (isEditMode && originalUploaderName) {
-            finalUploaderName = originalUploaderName;
-            log(`👤 Manteniendo Uploader Original: ${finalUploaderName}`);
+        if (isEditMode) {
+             finalUploaderName = originalUploaderName; 
+             log(`👤 Uploader: ${finalUploaderName}`);
         } else {
-            finalUploaderName = USER_NAMES_MAP[currentUserEmail] || "Aportador";
-            log(`👤 Asignando Uploader: ${finalUploaderName}`);
+             finalUploaderName = currentUserEmail;
+             log(`👤 Nuevo Uploader: ${finalUploaderName}`);
         }
 
         // UPDATE INDEX
@@ -934,10 +931,11 @@ async function subirAGithHub() {
                 finalGenres = finalGenres.filter(g => g !== nuevoAnime.demografia);
                 finalGenres.push(nuevoAnime.demografia);
             }
+             
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
-            
-            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${currentUserEmail}", genres:[${generosStr}]}`;
+            // Aquí usamos finalUploaderName (email)
+            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${finalUploaderName}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
         
@@ -946,10 +944,12 @@ async function subirAGithHub() {
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
             let newContent = content;
             if(isEditMode) {
-                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
+                 const regexRemove = new RegExp(`\\s*["']?${FINAL_ID}["']?:\\s*\\{[\\s\\S]*?\\n\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-           
+             
+            newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -959,7 +959,7 @@ async function subirAGithHub() {
                 t.eps.forEach(e => epsStr += `            { title: "${e.title}"},\n`);
                 let nameField = t.name ? `\n            name: "${t.name}",` : "";
                 seasonsStr += `          {
-            num: ${t.num},${nameField}
+             num: ${t.num},${nameField}
             cover: "${t.cover}",
             eps: [\n${epsStr}            ]
           },\n`;
@@ -981,7 +981,7 @@ async function subirAGithHub() {
             let newContent = content;
             
             if(isEditMode) {
-                 const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
+                 const regexRemove = new RegExp(`\\s*["']?${FINAL_ID}["']?:\\s*\\{[\\s\\S]*?\\n\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
             
@@ -1010,7 +1010,7 @@ async function subirAGithHub() {
             let newContent = content;
             
             if(isEditMode) {
-                const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
+                const regexRemove = new RegExp(`\\s*["']?${FINAL_ID}["']?:\\s*\\[[\\s\\S]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
 
