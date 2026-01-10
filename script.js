@@ -17,12 +17,21 @@ const ALLOWED_USERS = [
     "alejandroarchi12@gmail.com", 
     "lucioguapofeo@gmail.com"
 ];
-// MAPEO DE CORREOS A NOMBRES (Para mostrar en el buscador y detalle)
+
+// --- MAPEO DE NOMBRES ---
 const USER_NAMES_MAP = {
     "archinime12@gmail.com": "Archinime",
     "alejandroarchi12@gmail.com": "Alejandro",
     "lucioguapofeo@gmail.com": "Lucio"
 };
+
+// --- MAPEO DE LOGOS/AVATARES (Poner aquí las URLs de las fotos) ---
+const USER_AVATARS_MAP = {
+    "archinime12@gmail.com": "Logo_Archinime.avif",  // Tu logo principal
+    "alejandroarchi12@gmail.com": "https://via.placeholder.com/40", // Pon la url de la foto de Alejandro
+    "lucioguapofeo@gmail.com": "https://via.placeholder.com/40"     // Pon la url de la foto de Lucio
+};
+
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
@@ -40,8 +49,6 @@ let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
 let currentSearchMode = 'mine'; 
-
-// NUEVA VARIABLE: Para guardar quién subió el anime originalmente y no sobreescribirlo
 let originalUploaderName = null;
 
 // ============================================
@@ -591,11 +598,27 @@ function _performFilter() {
         div.className = 's-result-item';
         div.onclick = () => loadAnimeForEditing(anime.id, anime.uploader);
         
+        // --- CAMBIO VISUAL: UPLOADER NOMBRE + LOGO ---
         let uploaderName = "Desconocido";
+        let uploaderLogo = "https://via.placeholder.com/30"; // Placeholder si no hay
+
         if (anime.uploader) {
-            uploaderName = USER_NAMES_MAP[anime.uploader] || "Usuario";
+            // Si el uploader es un email (formato index-data antiguo/nuevo)
+            uploaderName = USER_NAMES_MAP[anime.uploader] || anime.uploader;
+            uploaderLogo = USER_AVATARS_MAP[anime.uploader] || uploaderLogo;
         } else {
-            uploaderName = "Administración/Legacy"; 
+            // Si no tiene uploader (Legacy), no ponemos nada o ponemos texto vacío
+            uploaderName = ""; 
+        }
+
+        // Creamos el HTML del uploader solo si hay nombre
+        let uploaderHtml = "";
+        if (uploaderName) {
+            uploaderHtml = `
+            <div style="color:#777; font-size:0.8em; display:flex; align-items:center; gap:6px; margin-top:4px;">
+                <img src="${uploaderLogo}" style="width:16px; height:16px; border-radius:50%; object-fit:cover;">
+                Subido por: ${uploaderName}
+            </div>`;
         }
         
         const isMine = (anime.uploader === currentUserEmail);
@@ -605,7 +628,8 @@ function _performFilter() {
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
                 <div style="font-weight:bold; color:#fff;">${anime.title} ${ownerTag}</div>
-                <div style="color:#777; font-size:0.8em">ID: ${anime.id} | <i class="fas fa-user-circle"></i> Subido por: ${uploaderName}</div>
+                <div style="color:#777; font-size:0.8em">ID: ${anime.id}</div>
+                ${uploaderHtml}
             </div>
         `;
         results.appendChild(div);
@@ -662,16 +686,14 @@ async function loadAnimeForEditing(id, uploaderEmail) {
         isReadOnly = readOnly;
 
         // ---- LÓGICA DE UPLOADER ----
-        // Intentamos obtener el uploader existente del objeto de detalles, si no, del index
         const indexEntry = cachedIndex.find(x => x.id === id);
         
         if (targetDetail.uploader) {
             originalUploaderName = targetDetail.uploader;
         } else if (indexEntry && indexEntry.uploader) {
-            // Si no está en detalle, pero está en el index (email), lo convertimos
             originalUploaderName = USER_NAMES_MAP[indexEntry.uploader] || "Desconocido";
         } else {
-            originalUploaderName = "Administración"; // Legacy
+            originalUploaderName = "Administración"; 
         }
         // ----------------------------
 
@@ -880,7 +902,6 @@ async function subirAGithHub() {
         }
 
         // LÓGICA DE UPLOADER NAME
-        // Si es edición, mantenemos el original. Si es nuevo, usamos el actual.
         let finalUploaderName = "";
         if (isEditMode && originalUploaderName) {
             finalUploaderName = originalUploaderName;
@@ -916,18 +937,6 @@ async function subirAGithHub() {
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // NOTA: Aquí en index-data seguimos guardando el EMAIL para control de permisos
-            // Pero en uploader ponemos currentUserEmail si es nuevo, o mantenemos si no tenemos la logica aqui
-            // Simplificación: guardamos quien hace la acción como 'uploader' en el index para permisos
-            // PERO si estamos editando, deberíamos mantener el email original si no queremos robar la propiedad
-            
-            // Para index-data (permisos):
-            // Si es edit, el indexEntry viejo tenía el email. Pero aquí estamos regenerando.
-            // Para no complicar, en index pondremos el currentUserEmail si es nuevo. Si es edit, asumimos que quien edita toma responsabilidad o es el mismo.
-            // Pero el prompt dice "cuando alguien resuba un anime, el nombre no cambia".
-            // Para index (interno) es mejor dejar constancia de quién tocó último o mantener el original?
-            // Mantendremos lógica simple en index: el uploader es el dueño del registro.
-            
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${currentUserEmail}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
@@ -956,7 +965,6 @@ async function subirAGithHub() {
           },\n`;
             });
             
-            // AQUI INSERTAMOS EL NOMBRE DE USUARIO VISIBLE
             const newDetail = `,\n    ${FINAL_ID}: {
         title: "${nuevoAnime.titulo}",
         desc: "${nuevoAnime.sinopsis.replace(/"/g, '\\"')}",
