@@ -203,7 +203,8 @@
         align-items: center;
         gap: 12px;
         margin-top: 35px;
-        background: rgba(0, 255, 255, 0.05); /* Fondo sutil cyan */
+        background: rgba(0, 255, 255, 0.05);
+        /* Fondo sutil cyan */
         border: 1px solid rgba(0, 255, 255, 0.2);
         padding: 10px 25px;
         border-radius: 50px;
@@ -218,6 +219,18 @@
         font-weight: 700;
         letter-spacing: 0.5px;
     }
+    
+    /* ENLACE AVATAR */
+    .uploader-avatar-link {
+        display: block;
+        transition: transform 0.2s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .uploader-avatar-link:hover {
+        transform: scale(1.1);
+    }
+    
     .uploader-avatar {
         width: 35px;
         height: 35px;
@@ -225,6 +238,7 @@
         object-fit: cover;
         border: 2px solid #0ff;
         box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        display: block;
     }
 
     /* --- RECOMENDACIONES --- */
@@ -263,7 +277,7 @@
     }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem;
-    text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+      text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
@@ -285,7 +299,7 @@
             margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
         }
         .video-list { grid-template-columns: repeat(2, 1fr);
-        gap: 6px; }
+            gap: 6px; }
         h1 { font-size:1.4rem;
         }
         
@@ -328,14 +342,27 @@
 
   <script>
     /* ----------------------------------------------------
-       0. MAPA DE AVATARES (Configuración)
+       0. MAPA DE AVATARES Y ENLACES
        ---------------------------------------------------- */
-    // Poner aquí los mismos enlaces que pusiste en script.js
     const AVATAR_MAP = {
         "Archinime": "Logo_Archinime.avif",
+        "archinime12@gmail.com": "Logo_Archinime.avif",
         "Alejandro": "https://via.placeholder.com/40",
-        "Lucio": "https://via.placeholder.com/40"
-    
+        "alejandroarchi12@gmail.com": "https://via.placeholder.com/40",
+        "Lucio": "https://via.placeholder.com/40",
+        "lucioguapofeo@gmail.com": "https://via.placeholder.com/40"
+    };
+
+    // --- ENLACES PERSONALIZADOS ---
+    const USER_LINKS = {
+        "archinime12@gmail.com": "https://www.youtube.com/@Archinime-k2g",
+        "Archinime": "https://www.youtube.com/@Archinime-k2g",
+        
+        "alejandroarchi12@gmail.com": "https://portal.omnilife.com/productos",
+        "Alejandro": "https://portal.omnilife.com/productos",
+        
+        "lucioguapofeo@gmail.com": "#",
+        "Lucio": "#"
     };
 
     /* ----------------------------------------------------
@@ -346,6 +373,7 @@
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
+
     /* ----------------------------------------------------
        2. Lógica de Audio
        ---------------------------------------------------- */
@@ -380,10 +408,10 @@
         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
-   
              playTrack(currentTrackIndex);
         }
     }, { once: true });
+
     /* ----------------------------------------------------
        3. Renderizado y Lógica Visual
        ---------------------------------------------------- */
@@ -415,7 +443,6 @@
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
-        
                 <p class="desc">${anime.desc}</p>
             `;
             if(anime.seasons){
@@ -423,29 +450,30 @@
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-       
                           <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-             
-  
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
                 });
             }
 
-            // --- AÑADIR UPLOADER + LOGO AL FINAL ---
-            // Si NO tiene uploader, asumimos que es Archinime
+            // --- LÓGICA DE UPLOADER Y BOTÓN DE ENLACE ---
             const uploaderName = anime.uploader || "Archinime";
             const avatarUrl = AVATAR_MAP[uploaderName] || AVATAR_MAP["Archinime"] || "https://via.placeholder.com/40";
             
+            // Determinar enlace según el uploader
+            const userLink = USER_LINKS[uploaderName] || USER_LINKS["Archinime"] || "#";
+
             html += `
             <div class="uploader-credit">
                 Subido por: <span>${escapeHtml(uploaderName)}</span>
-                <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
+                <a href="${userLink}" target="_blank" rel="noopener noreferrer" class="uploader-avatar-link" title="Ver perfil de ${escapeHtml(uploaderName)}">
+                    <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
+                </a>
             </div>`;
-
+            
             container.innerHTML = html;
             renderRecommendations(id);
         } else {
@@ -499,13 +527,14 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
+
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
-             return;
+            return;
         }
 
         grid.innerHTML = randomKeys.map(k => `
