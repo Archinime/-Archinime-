@@ -196,51 +196,33 @@
       color: #000;
     }
 
-    /* --- UPLOADER CREDIT (BOTÓN LINK) --- */
+    /* --- UPLOADER CREDIT --- */
     .uploader-credit {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        margin-top: 35px;
-        background: rgba(0, 255, 255, 0.05);
-        /* Fondo sutil cyan */
-        border: 1px solid rgba(0, 255, 255, 0.2);
-        padding: 10px 25px;
-        border-radius: 50px;
-        width: fit-content;
-        margin-left: auto; 
-        backdrop-filter: blur(5px);
+        text-align: right;
+        margin-top: 25px;
         font-size: 0.9rem;
-        color: #ccc;
-        
-        /* Nuevos estilos para botón */
-        text-decoration: none;
-        cursor: pointer;
-        transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-    }
-    .uploader-credit:hover {
-        transform: scale(1.05);
-        background: rgba(0, 255, 255, 0.15);
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        color: #888;
+        font-style: italic;
+        padding-right: 10px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
     }
     .uploader-credit span {
         color: #0ff;
-        font-weight: 700;
-        letter-spacing: 0.5px;
+        font-weight: 600;
     }
     .uploader-avatar {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid #0ff;
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px;
-      padding-top:20px;
+    .recommendations { margin-top:40px; padding-top:20px;
       border-top:1px solid #333;
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
@@ -339,19 +321,13 @@
 
   <script>
     /* ----------------------------------------------------
-       0. MAPA DE AVATARES Y LINKS (Configuración)
+       0. MAPA DE AVATARES (Configuración)
        ---------------------------------------------------- */
+    // Poner aquí los mismos enlaces que pusiste en script.js
     const AVATAR_MAP = {
         "Archinime": "Logo_Archinime.avif",
         "Alejandro": "https://via.placeholder.com/40",
         "Lucio": "https://via.placeholder.com/40"
-    };
-
-    // --- NUEVO: MAPA DE LINKS DE YOUTUBE ---
-    const PROFILE_LINKS = {
-        "Archinime": "https://www.youtube.com/@Archinime-k2g",
-        "Alejandro": "https://www.youtube.com/watch?v=B_lP_sQpw_A",
-        "Lucio": "https://www.youtube.com/watch?v=nc2Z6_rhFz0"
     };
 
     /* ----------------------------------------------------
@@ -396,8 +372,7 @@
         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
-   
-             playTrack(currentTrackIndex);
+            playTrack(currentTrackIndex);
         }
     }, { once: true });
     /* ----------------------------------------------------
@@ -414,6 +389,7 @@
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
+            
             // --- GÉNEROS ---
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
@@ -431,7 +407,6 @@
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
-        
                 <p class="desc">${anime.desc}</p>
             `;
             if(anime.seasons){
@@ -439,34 +414,28 @@
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-       
-                          <div class="season-content">
+                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-     
-         
-  
+              
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
-            
                 });
             }
 
-            // --- AÑADIR UPLOADER + LOGO AL FINAL (MODIFICADO) ---
-            const uploaderName = anime.uploader || "Archinime";
-            const avatarUrl = AVATAR_MAP[uploaderName] || AVATAR_MAP["Archinime"] || "https://via.placeholder.com/40";
-            
-            // Obtener link del perfil o usar fallback
-            const profileLink = PROFILE_LINKS[uploaderName] || PROFILE_LINKS["Archinime"] || "#";
-            
-            // Ahora es un <a> link con target _blank
-            html += `
-            <a href="${profileLink}" target="_blank" class="uploader-credit" title="Ver canal de ${escapeHtml(uploaderName)}">
-                Subido por: <span>${escapeHtml(uploaderName)}</span>
-                <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
-            </a>`;
-            
+            // --- AÑADIR UPLOADER + LOGO AL FINAL ---
+            if(anime.uploader) {
+                // Buscamos la foto en el mapa local, si no, placeholder
+                const avatarUrl = AVATAR_MAP[anime.uploader] || "https://via.placeholder.com/40";
+                
+                html += `
+                <div class="uploader-credit">
+                    Subido por: <span>${escapeHtml(anime.uploader)}</span>
+                    <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
+                </div>`;
+            }
+
             container.innerHTML = html;
             renderRecommendations(id);
         } else {
