@@ -222,6 +222,7 @@
             "overlord.mp3"
         ],
         72: [
-            
+            "syn.mp3",
+            "syn2.mp3"
         ]
 };
