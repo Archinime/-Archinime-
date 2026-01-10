@@ -196,14 +196,15 @@
       color: #000;
     }
 
-    /* --- UPLOADER CREDIT (DISEÑO MEJORADO) --- */
+    /* --- UPLOADER CREDIT (BOTÓN LINK) --- */
     .uploader-credit {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 12px;
         margin-top: 35px;
-        background: rgba(0, 255, 255, 0.05); /* Fondo sutil cyan */
+        background: rgba(0, 255, 255, 0.05);
+        /* Fondo sutil cyan */
         border: 1px solid rgba(0, 255, 255, 0.2);
         padding: 10px 25px;
         border-radius: 50px;
@@ -212,6 +213,16 @@
         backdrop-filter: blur(5px);
         font-size: 0.9rem;
         color: #ccc;
+        
+        /* Nuevos estilos para botón */
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .uploader-credit:hover {
+        transform: scale(1.05);
+        background: rgba(0, 255, 255, 0.15);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
     }
     .uploader-credit span {
         color: #0ff;
@@ -263,7 +274,7 @@
     }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem;
-    text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+      text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
@@ -328,14 +339,19 @@
 
   <script>
     /* ----------------------------------------------------
-       0. MAPA DE AVATARES (Configuración)
+       0. MAPA DE AVATARES Y LINKS (Configuración)
        ---------------------------------------------------- */
-    // Poner aquí los mismos enlaces que pusiste en script.js
     const AVATAR_MAP = {
         "Archinime": "Logo_Archinime.avif",
         "Alejandro": "https://via.placeholder.com/40",
         "Lucio": "https://via.placeholder.com/40"
-    
+    };
+
+    // --- NUEVO: MAPA DE LINKS DE YOUTUBE ---
+    const PROFILE_LINKS = {
+        "Archinime": "https://www.youtube.com/@Archinime-k2g",
+        "Alejandro": "https://www.youtube.com/watch?v=B_lP_sQpw_A",
+        "Lucio": "https://www.youtube.com/watch?v=nc2Z6_rhFz0"
     };
 
     /* ----------------------------------------------------
@@ -427,25 +443,30 @@
                           <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-             
+     
+         
   
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
+            
                 });
             }
 
-            // --- AÑADIR UPLOADER + LOGO AL FINAL ---
-            // Si NO tiene uploader, asumimos que es Archinime
+            // --- AÑADIR UPLOADER + LOGO AL FINAL (MODIFICADO) ---
             const uploaderName = anime.uploader || "Archinime";
             const avatarUrl = AVATAR_MAP[uploaderName] || AVATAR_MAP["Archinime"] || "https://via.placeholder.com/40";
             
+            // Obtener link del perfil o usar fallback
+            const profileLink = PROFILE_LINKS[uploaderName] || PROFILE_LINKS["Archinime"] || "#";
+            
+            // Ahora es un <a> link con target _blank
             html += `
-            <div class="uploader-credit">
+            <a href="${profileLink}" target="_blank" class="uploader-credit" title="Ver canal de ${escapeHtml(uploaderName)}">
                 Subido por: <span>${escapeHtml(uploaderName)}</span>
                 <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
-            </div>`;
-
+            </a>`;
+            
             container.innerHTML = html;
             renderRecommendations(id);
         } else {
