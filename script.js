@@ -851,7 +851,7 @@ function generateData() {
     return anime;
 }
 
-// --- FUNCIÓN MODIFICADA: ALERTA DE SESIÓN Y BRILLO DEL BOTÓN (SIN TOOLTIP) ---
+// --- FUNCIÓN MODIFICADA: ALERTA DE SESIÓN CON TEXTO NUEVO ---
 function showSessionAlert() {
     // 1. Crear el banner rojo en la parte superior
     if (!document.getElementById('session-warning-banner')) {
@@ -869,7 +869,10 @@ function showSessionAlert() {
         banner.style.zIndex = '10000';
         banner.style.fontFamily = "'Outfit', sans-serif";
         banner.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
-        banner.innerHTML = '<i class="fas fa-exclamation-triangle"></i> NO TIENES SESIÓN / SESIÓN FINALIZADA. POR FAVOR, CIERRA SESIÓN E INGRESA DE NUEVO.';
+        
+        // --- CAMBIO DE TEXTO AQUI ---
+        banner.innerHTML = '<i class="fas fa-exclamation-triangle"></i> SESIÓN FINALIZADA. POR FAVOR, CIERRA SESIÓN E INGRESA DE NUEVO.';
+        
         document.body.appendChild(banner);
 
         // Bajar un poco el header para que no se tape
@@ -877,7 +880,7 @@ function showSessionAlert() {
         if(header) header.style.marginTop = '45px';
     }
 
-    // 2. Hacer brillar el botón de Logout (igual que antes pero sin el tooltip)
+    // 2. Hacer brillar el botón de Logout
     highlightLogoutButton();
 }
 
