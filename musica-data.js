@@ -218,11 +218,11 @@
         70: [ // Kimi to Koete Koi ni Naru
             "kimitokoete.mp3"
         ],
-        71: [
-            "overlord.mp3"
-        ],
         72: [
             "syn.mp3",
             "syn2.mp3"
+        ],
+        71: [
+            "overlord.mp3"
         ]
 };
