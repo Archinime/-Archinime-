@@ -69,6 +69,5 @@ const animes = [
       {id:68, title:"It - Bienvenidos a Derry", aliases: ["It - Welcome to Derry"], img:"it.avif", rating:4.9, uploader:"Archinime", genres:["Terror","Sobrenatural","Suspenso","Drama","Thriller","Seijin"]},
       {id:69, title:"Cars", aliases: ["Rayo McQueen"], img:"cars.avif", rating:4.7, uploader:"Archinime", genres:["Infantil","Familiar","Aventura","Animación","Comedia","Acción","Road Movie","Deportivo","Kodomo"]},
       {id:70, title:"Kimi to Koete Koi ni Naru", aliases: ["With You, Our Love Will Make It Through"], img:"kimitokoete.avif", rating:4.3, uploader:"Archinime", genres:["Comedia","Romance","Escolar","Slice of Life","Drama","Fantasía","Shōjo"]},
-      {id:71, title:"Overlord", img:"overlord.avif", rating:4.9, uploader:"Archinime", genres:["Acción","Aventura","Comedia","Comedia oscura","Fantasía oscura","Isekai","Sobrenatural","Shōnen"]},
-      {id:72, title:"Prueba", img:"https://www.dropbox.com/scl/fi/xhgst0hwk6s5dsrfyz1zs/synt.avif?rlkey=c0agosckce8dsmorhk08rfly4&st=m5p7yt7k&raw=1", rating:4.5, uploader:"Archinime", genres:["Acción","Josei"]}
+      {id:71, title:"Overlord", img:"overlord.avif", rating:4.9, uploader:"Archinime", genres:["Acción","Aventura","Comedia","Comedia oscura","Fantasía oscura","Isekai","Sobrenatural","Shōnen"]}
 ];
