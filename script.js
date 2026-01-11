@@ -1,4 +1,4 @@
-// ============================================
+ // ============================================
 // CONFIGURACIÓN FIREBASE
 // ============================================
 const firebaseConfig = {
@@ -9,6 +9,7 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
+
 // USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
 const ALLOWED_USERS = ["archinime12@gmail.com"];
 
@@ -18,6 +19,11 @@ const REPO = "-Archinime-";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+
+// --- MODIFICACIÓN: FORZAR CIERRE DE SESIÓN AL CERRAR PESTAÑA ---
+// Esto asegura que cada vez que entres de nuevo, debas loguearte.
+auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
 let currentUserToken = null;
 
 // VARIABLES DE ESTADO
@@ -26,13 +32,14 @@ let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
+
 // DATOS DEL USUARIO ACTUAL
 let currentUserNick = "Archinime"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
 
 // Variable para el modo de búsqueda ('mine' o 'general')
-let currentSearchMode = 'mine'; 
+let currentSearchMode = 'mine';
 
 // ============================================
 // AUTENTICACIÓN
@@ -41,10 +48,16 @@ auth.onAuthStateChanged((user) => {
     if (user) checkAccess(user);
     else showLogin();
 });
+
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
-    auth.signInWithPopup(provider)
+    
+    // Aseguramos persistencia SESSION también al iniciar
+    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(() => {
+            return auth.signInWithPopup(provider);
+        })
         .then((result) => {
             currentUserToken = result.credential.accessToken;
             checkAccess(result.user);
@@ -65,8 +78,7 @@ function checkAccess(user) {
     currentUserAvatar = avatar;
     currentUserEmail = email;
 
-    const isAllowed = true; 
-
+    const isAllowed = true; // Aquí podrías restringir por email si quisieras
     if (isAllowed) {
         showCMS(user);
     } else {
@@ -92,8 +104,9 @@ function showLogin() {
 }
 
 function logout() {
-    auth.signOut();
-    location.reload();
+    auth.signOut().then(() => {
+        location.reload();
+    });
 }
 
 // ============================================
@@ -106,19 +119,21 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
+
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
-    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
-    setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+    setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
 }
 
 function autoCap(input) {
@@ -540,7 +555,6 @@ function closeSearchModal() {
 
 function switchSearchTab(mode) {
     currentSearchMode = mode;
-    
     // Update visual
     document.getElementById('tabMine').className = mode === 'mine' ? 'tab-btn active' : 'tab-btn';
     document.getElementById('tabGeneral').className = mode === 'general' ? 'tab-btn active' : 'tab-btn';
@@ -576,7 +590,6 @@ function _performFilter() {
     results.innerHTML = '';
     
     const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
-    
     const filtered = cachedIndex.filter(a => {
         const matchesText = a.title.toLowerCase().includes(query);
         const uploaderName = a.uploader || "Archinime";
@@ -588,7 +601,7 @@ function _performFilter() {
             // General: muestra todo
             return matchesText;
         }
-    }).slice(0, 50);
+    }).slice(0, 1000); // --- MODIFICACIÓN: AUMENTADO EL LÍMITE DE 50 A 1000 ---
 
     filtered.forEach(anime => {
         const div = document.createElement('div');
@@ -651,7 +664,6 @@ async function loadAnimeForEditing(id) {
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
         document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
-
         // VERIFICACIÓN DE PROPIEDAD PARA BLOQUEAR BOTÓN
         const indexEntry = cachedIndex.find(x => x.id === id);
         const uploaderName = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
@@ -727,7 +739,7 @@ function exitEditMode() {
     const saveBtn = document.getElementById('btnSaveAction');
     saveBtn.disabled = false;
     
-    location.reload(); 
+    location.reload();
 }
 
 // ============================================
@@ -816,6 +828,44 @@ function generateData() {
     return anime;
 }
 
+// --- MODIFICACIÓN: FUNCIÓN PARA RESALTAR EL BOTÓN DE LOGOUT ---
+function highlightLogoutButton() {
+    const headerBtns = document.querySelectorAll('#userHeader button');
+    // Buscamos el último botón (usualmente es el de logout con icono de power-off)
+    // O buscamos el que ejecuta logout()
+    const logoutBtn = Array.from(headerBtns).find(btn => btn.getAttribute('onclick') === 'logout()');
+    
+    if (logoutBtn) {
+        logoutBtn.style.transition = 'all 0.5s ease';
+        logoutBtn.style.border = '2px solid #00f0ff';
+        logoutBtn.style.boxShadow = '0 0 20px #00f0ff, inset 0 0 10px #00f0ff';
+        logoutBtn.style.color = '#00f0ff';
+        logoutBtn.style.transform = 'scale(1.2)';
+        
+        // Animación simple de parpadeo
+        let visible = true;
+        setInterval(() => {
+            logoutBtn.style.opacity = visible ? '0.5' : '1';
+            visible = !visible;
+        }, 500);
+        
+        // Mensaje flotante cerca del botón (opcional, pero ayuda)
+        const tip = document.createElement('div');
+        tip.innerHTML = "⬇ CLIC AQUÍ ⬇";
+        tip.style.position = 'absolute';
+        tip.style.top = '50px';
+        tip.style.right = '10px';
+        tip.style.background = '#00f0ff';
+        tip.style.color = '#000';
+        tip.style.padding = '5px 10px';
+        tip.style.borderRadius = '5px';
+        tip.style.fontWeight = 'bold';
+        tip.style.zIndex = '9999';
+        tip.style.pointerEvents = 'none';
+        document.body.appendChild(tip);
+    }
+}
+
 async function subirAGithHub() {
     const btn = document.getElementById('btnSaveAction');
     if(btn.disabled) return showToast("Edición Bloqueada", true);
@@ -823,7 +873,6 @@ async function subirAGithHub() {
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
     const nuevoAnime = generateData();
-    
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
@@ -964,9 +1013,13 @@ async function subirAGithHub() {
             return before + musicEntry + "\n};";
         });
 
-        log("✨ ¡EXITO!");
-        showToast("¡Proceso Completado!");
-        setTimeout(() => location.reload(), 3000);
+        log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
+        showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
+        
+        // --- MODIFICACIÓN: NO RECARGAR, SINO AVISAR ---
+        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
+        highlightLogoutButton();
+
     } catch (e) {
         console.error(e);
         log(`❌ ERROR: ${e.message}`);
