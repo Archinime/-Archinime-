@@ -40,16 +40,11 @@
             <div id="userNameDisplay" class="user-name">Usuario</div>
         </div>
     </div>
-    <div style="display:flex; gap:10px; align-items: center; position:relative;">
-        <div id="logoutHint" style="display:none; color:#ff4757; font-size:0.8em; font-weight:bold; animation: slideLeft 1s infinite alternate;">
-            SALIR AQUÍ <i class="fas fa-arrow-right"></i>
-        </div>
-        
+    <div style="display:flex; gap:10px;">
         <button onclick="openSearchModal()" style="background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:0.8em;">
             <i class="fas fa-folder-open"></i> CARGAR / EDITAR
         </button>
-        
-        <button id="btnLogout" onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer; transition:all 0.3s;">
+        <button onclick="logout()" style="background:transparent; color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
             <i class="fas fa-power-off"></i>
         </button>
     </div>

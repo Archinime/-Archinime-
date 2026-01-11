@@ -1,13 +1,4 @@
 // ============================================
-// SEGURIDAD DE SESIÓN (Forzar Login al Reabrir)
-// ============================================
-// Si no hay flag de sesión en esta pestaña específica, cerramos sesión de Firebase
-if (!sessionStorage.getItem('isActiveSession')) {
-    // Es una nueva pestaña o navegador reiniciado -> Forzar Login
-    if (firebase.auth) firebase.auth().signOut();
-}
-
-// ============================================
 // CONFIGURACIÓN FIREBASE
 // ============================================
 const firebaseConfig = {
@@ -18,6 +9,7 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
+// USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
 const ALLOWED_USERS = ["archinime12@gmail.com"];
 
 // CONFIGURACIÓN GITHUB
@@ -34,35 +26,26 @@ let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
+// DATOS DEL USUARIO ACTUAL
 let currentUserNick = "Archinime"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
+
+// Variable para el modo de búsqueda ('mine' o 'general')
 let currentSearchMode = 'mine'; 
 
 // ============================================
 // AUTENTICACIÓN
 // ============================================
 auth.onAuthStateChanged((user) => {
-    // Solo mostramos el CMS si el usuario está autenticado Y tenemos el flag de sesión activa
-    if (user && sessionStorage.getItem('isActiveSession')) {
-        checkAccess(user);
-    } else {
-        showLogin();
-    }
+    if (user) checkAccess(user);
+    else showLogin();
 });
-
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
-    
-    // Configurar persistencia LOCAL para que sobreviva F5, pero usamos sessionStorage para detectar cierre
-    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(() => {
-            return auth.signInWithPopup(provider);
-        })
+    auth.signInWithPopup(provider)
         .then((result) => {
-            // MARCAR SESIÓN COMO ACTIVA EN ESTA PESTAÑA
-            sessionStorage.setItem('isActiveSession', 'true');
             currentUserToken = result.credential.accessToken;
             checkAccess(result.user);
         }).catch((error) => {
@@ -77,6 +60,7 @@ function checkAccess(user) {
     const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Usuario";
     const avatar = user.photoURL || "Logo_Archinime.avif";
 
+    // Guardamos datos globales del usuario
     currentUserNick = nickname;
     currentUserAvatar = avatar;
     currentUserEmail = email;
@@ -88,7 +72,7 @@ function checkAccess(user) {
     } else {
         document.getElementById('errorText').innerText = "No autorizado.";
         document.getElementById('loginError').style.display = 'block';
-        setTimeout(() => logout(), 3000);
+        setTimeout(() => auth.signOut(), 3000);
     }
 }
 
@@ -96,6 +80,7 @@ function showCMS(user) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
+    // Actualizar UI con datos del usuario
     document.getElementById('userAvatarImg').src = currentUserAvatar;
     document.getElementById('userNameDisplay').innerText = currentUserNick;
 }
@@ -107,10 +92,8 @@ function showLogin() {
 }
 
 function logout() {
-    sessionStorage.removeItem('isActiveSession'); // Eliminar flag
-    auth.signOut().then(() => {
-        location.reload();
-    });
+    auth.signOut();
+    location.reload();
 }
 
 // ============================================
@@ -224,6 +207,7 @@ function addAlias(value = "") {
     container.appendChild(div);
 }
 
+// AUDIO PLAYER
 function addMusic(url = "") {
     const container = document.getElementById('musicContainer');
     const div = document.createElement('div');
@@ -256,7 +240,7 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS & CHAPTERS
+// SEASONS & CHAPTERS - PALETA DE COLORES
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
@@ -383,7 +367,7 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
-    
+    // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
@@ -426,6 +410,7 @@ function renderChapters(input, existingEps = []) {
     }
 }
 
+// THROTTLE PARA VISTA PREVIA (ANTI-LAG)
 function requestPreviewUpdate() {
     if (!previewTimeout) {
         previewTimeout = requestAnimationFrame(() => {
@@ -484,7 +469,7 @@ function updateWebPreview() {
 }
 
 // ============================================
-// API GITHUB Y PARSEO
+// API GITHUB Y PARSEO SEGURO
 // ============================================
 async function getGithubFile(token, owner, repo, path) {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -529,13 +514,14 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA Y EDICIÓN
+// CARGA Y EDICIÓN (CON PESTAÑAS)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
     document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
     
+    // Default a 'mine' al abrir
     switchSearchTab('mine');
 
     if(cachedIndex.length === 0) loadIndexForSearch();
@@ -554,8 +540,12 @@ function closeSearchModal() {
 
 function switchSearchTab(mode) {
     currentSearchMode = mode;
+    
+    // Update visual
     document.getElementById('tabMine').className = mode === 'mine' ? 'tab-btn active' : 'tab-btn';
     document.getElementById('tabGeneral').className = mode === 'general' ? 'tab-btn active' : 'tab-btn';
+
+    // Refilter
     if(cachedIndex.length > 0) filterSearch();
 }
 
@@ -595,6 +585,7 @@ function _performFilter() {
         if (currentSearchMode === 'mine') {
             return matchesText && isMyUpload;
         } else {
+            // General: muestra todo
             return matchesText;
         }
     }).slice(0, 50);
@@ -661,7 +652,7 @@ async function loadAnimeForEditing(id) {
         document.getElementById('editIdDisplay').innerText = id;
         document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
 
-        // VERIFICACIÓN DE PROPIEDAD
+        // VERIFICACIÓN DE PROPIEDAD PARA BLOQUEAR BOTÓN
         const indexEntry = cachedIndex.find(x => x.id === id);
         const uploaderName = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
         const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
@@ -732,13 +723,15 @@ function exitEditMode() {
     currentEditingId = null;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
+    // Restaurar botón si estaba bloqueado
     const saveBtn = document.getElementById('btnSaveAction');
     saveBtn.disabled = false;
+    
     location.reload(); 
 }
 
 // ============================================
-// GENERACIÓN Y SUBIDA (MODIFICADO PARA NO RECARGAR)
+// GENERACIÓN Y SUBIDA
 // ============================================
 function generateData() {
     const selectedGenres = [];
@@ -752,6 +745,7 @@ function generateData() {
     else if(ratingSelect === 'good') ratingVal = 4.6;
     else if(ratingSelect === 'regular') ratingVal = 4.0;
 
+    // Aquí capturamos la info del usuario actual
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -763,8 +757,8 @@ function generateData() {
         rating: ratingVal,
         musica: [],
         temporadas: [],
-        uploader: currentUserNick,
-        uploaderAvatar: currentUserAvatar
+        uploader: currentUserNick, // Guardamos tu nombre
+        uploaderAvatar: currentUserAvatar // Guardamos tu foto
     };
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
 
@@ -784,6 +778,7 @@ function generateData() {
             const sub = row.querySelector('.c-link-sub').value.trim();
             
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
+            
             let playerTitle = "", detailTitle = ""; 
 
             if (sType === 'Temporada') {
@@ -852,6 +847,7 @@ async function subirAGithHub() {
             log(`📝 Editando ID: ${FINAL_ID}`);
         }
 
+        // UPDATE INDEX
         log("2/5 Actualizando Index...");
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             let newContent = content;
@@ -859,10 +855,16 @@ async function subirAGithHub() {
                 const regexRemove = new RegExp(`\\s*\\{id:${FINAL_ID},[^]*?genres:\\[[^]*?\\]\\},?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
+            
+            // LIMPIEZA DE COMAS DOBLES ANTES DE INSERTAR
             newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('];');
             let before = newContent.substring(0, insertionPoint).trim();
-            if(before.endsWith(',')) before = before.slice(0, -1);
+            
+            if(before.endsWith(',')) {
+                before = before.slice(0, -1);
+            }
             
             let finalGenres = [...nuevoAnime.generos];
             if(nuevoAnime.demografia) {
@@ -871,10 +873,12 @@ async function subirAGithHub() {
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
+            // AQUI AGREGAMOS TU NOMBRE Y TU AVATAR AL ARCHIVO
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
         
+        // UPDATE DETAILS
         log("3/5 Actualizando Detalles...");
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
             let newContent = content;
@@ -882,6 +886,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
+            
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -906,17 +911,24 @@ async function subirAGithHub() {
             return before + newDetail + "\n};";
         });
 
+// UPDATE PLAYER
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
+            
             newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
-            if(before.endsWith(',')) before = before.slice(0, -1);
+            
+            if(before.endsWith(',')) {
+                before = before.slice(0, -1);
+            }
             
             let playerStr = `,\n      "${FINAL_ID}": {\n`;
             nuevoAnime.temporadas.forEach(t => {
@@ -925,39 +937,36 @@ async function subirAGithHub() {
                 playerStr += `        },\n`;
             });
             playerStr += `      }`;
+            
             return before + playerStr + "\n};";
         });
-
+        // UPDATE MUSIC
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
+
             newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
-            if(before.endsWith(',')) before = before.slice(0, -1);
+            
+            if(before.endsWith(',')) {
+                before = before.slice(0, -1);
+            }
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
             const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n        ]`;
             return before + musicEntry + "\n};";
         });
 
-        log("✨ ¡EXITO! (Puedes salir o seguir editando)");
+        log("✨ ¡EXITO!");
         showToast("¡Proceso Completado!");
-        
-        // --- AQUÍ ESTÁ EL CAMBIO FINAL: NO RECARGAR, SINO INDICAR SALIDA ---
-        const logoutBtn = document.getElementById('btnLogout');
-        const hint = document.getElementById('logoutHint');
-        
-        if(logoutBtn) logoutBtn.classList.add('attention-logout');
-        if(hint) hint.style.display = 'block';
-
-        // Scroll al inicio para que vean el botón
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
+        setTimeout(() => location.reload(), 3000);
     } catch (e) {
         console.error(e);
         log(`❌ ERROR: ${e.message}`);
