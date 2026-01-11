@@ -12,9 +12,9 @@ const firebaseConfig = {
 
 // USUARIOS PERMITIDOS (Super Admins)
 const ALLOWED_USERS = [
-"archinime12@gmail.com", 
-"alejandroarchi12@gmail.com",
-"lucioguapofeo@gmail.com",
+    "archinime12@gmail.com", 
+    "alejandroarchi12@gmail.com",
+    "lucioguapofeo@gmail.com",
 ];
 
 // CONFIGURACIÓN GITHUB
@@ -28,7 +28,8 @@ const auth = firebase.auth();
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 let currentUserToken = null;
-let globalUsersData = {}; // Guardará todos los usuarios cargados
+let globalUsersData = {};
+// Guardará todos los usuarios cargados
 
 // VARIABLES DE ESTADO
 let isEditMode = false;
@@ -61,7 +62,6 @@ auth.onAuthStateChanged((user) => {
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
-
     auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then(() => {
             return auth.signInWithPopup(provider);
@@ -81,7 +81,6 @@ function signInWithGitHub() {
 async function checkAccess(user) {
     const email = user.email;
     currentUserEmail = email;
-
     document.getElementById('errorText').innerText = "Verificando base de datos...";
     document.getElementById('loginError').style.display = 'none';
 
@@ -137,7 +136,7 @@ async function saveUserProfile() {
     const social = document.getElementById('setupSocial').value.trim();
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
-
+    
     if(!nick || !avatar) {
         alert("Nick y Avatar son obligatorios.");
         return;
@@ -145,7 +144,6 @@ async function saveUserProfile() {
 
     btn.disabled = true;
     logEl.innerText = "Guardando perfil en GitHub...";
-
     try {
         // Actualizamos el objeto local
         globalUsersData[currentUserEmail] = {
@@ -153,24 +151,20 @@ async function saveUserProfile() {
             avatar: avatar,
             social: social
         };
-
         // Guardamos en GitHub
         await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
             // Reconstruimos el archivo completo
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
         });
-
         // Actualizamos variables globales de sesión
         currentUserNick = nick;
         currentUserAvatar = avatar;
-
         logEl.innerText = "¡Perfil creado! Entrando...";
         setTimeout(() => {
             document.getElementById('profileSetupModal').style.display = 'none';
             showCMS();
         }, 1000);
-
     } catch(e) {
         console.error(e);
         logEl.innerText = "Error: " + e.message;
@@ -210,7 +204,6 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
-
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
@@ -220,7 +213,8 @@ genresList.forEach(g => {
 
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
-    x.innerHTML = isError ? `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.innerHTML = isError ?
+    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
@@ -349,7 +343,6 @@ function updateAudioPreview(input) {
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
-
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
@@ -684,10 +677,12 @@ function _performFilter() {
     const filtered = cachedIndex.filter(a => {
         const matchesText = a.title.toLowerCase().includes(query);
         const uploaderName = a.uploader || "Archinime";
-        const isMyUpload = (uploaderName === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
 
+        // CORREGIDO: Lógica estricta para "Mis Animes"
         if (currentSearchMode === 'mine') {
-            return matchesText && isMyUpload;
+            // Solo muestra si el nombre del uploader coincide EXACTAMENTE con el usuario actual
+            // Ignoramos isSuperAdmin aquí para limpiar la vista personal
+            return matchesText && (uploaderName === currentUserNick);
         } else {
             // General: muestra todo
             return matchesText;
@@ -713,6 +708,7 @@ function _performFilter() {
         `;
         results.appendChild(div);
     });
+
     if(filtered.length === 0) {
         let emptyMsg = "";
         if (currentSearchMode === 'mine') {
@@ -1042,7 +1038,7 @@ async function subirAGithHub() {
         uploader: "${nuevoAnime.uploader}", 
         seasons: [\n${seasonsStr}          ]
     }`;
-            return before + newDetail + "\n};";
+        return before + newDetail + "\n};";
         });
 
         // UPDATE PLAYER
