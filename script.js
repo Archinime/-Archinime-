@@ -10,7 +10,7 @@ const firebaseConfig = {
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
 
-// USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
+// USUARIOS PERMITIDOS (Super Admins)
 const ALLOWED_USERS = ["archinime12@gmail.com"];
 
 // CONFIGURACIÓN GITHUB
@@ -32,20 +32,101 @@ let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
 
-// DATOS DEL USUARIO ACTUAL
-let currentUserNick = "Archinime"; 
+// DATOS DEL USUARIO ACTUAL (Valores por defecto)
+let currentUserNick = "Usuario"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
+let currentUserSocial = "";
 
 // Variable para el modo de búsqueda ('mine' o 'general')
 let currentSearchMode = 'mine';
 
 // ============================================
+// INYECCIÓN DE ESTILOS Y MODAL DE REGISTRO
+// ============================================
+// Esto crea el menú visualmente sin editar el HTML
+document.addEventListener("DOMContentLoaded", () => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #setupModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 10000;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .setup-card {
+            background: #131419; border: 1px solid #2a2b35; padding: 40px;
+            border-radius: 24px; width: 90%; max-width: 450px; text-align: center;
+            box-shadow: 0 0 50px rgba(140, 82, 255, 0.2);
+            animation: fadeInUp 0.5s ease;
+        }
+        .setup-title { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+        .setup-desc { color: #8b8d96; font-size: 0.9rem; margin-bottom: 30px; }
+        
+        .avatar-preview-container {
+            width: 120px; height: 120px; margin: 0 auto 20px;
+            border-radius: 50%; border: 3px solid #8c52ff;
+            overflow: hidden; background: #000;
+            box-shadow: 0 0 20px rgba(140, 82, 255, 0.4);
+        }
+        .avatar-preview-img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .setup-input {
+            width: 100%; padding: 14px; background: #181920; border: 1px solid #2a2b35;
+            color: #fff; border-radius: 12px; margin-bottom: 15px;
+            font-family: 'Outfit', sans-serif;
+        }
+        .setup-input:focus { border-color: #8c52ff; outline: none; }
+        
+        .setup-btn {
+            background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%);
+            color: white; border: none; padding: 16px; width: 100%;
+            border-radius: 50px; font-weight: 700; cursor: pointer;
+            margin-top: 10px; transition: transform 0.2s;
+        }
+        .setup-btn:hover { transform: scale(1.02); }
+        .setup-btn:disabled { background: #333; cursor: wait; }
+    `;
+    document.head.appendChild(style);
+
+    const modalHTML = `
+    <div id="setupModal">
+        <div class="setup-card">
+            <div class="setup-title">¡BIENVENIDO APORTADOR!</div>
+            <p class="setup-desc">Configura tu perfil de uploader. Estos datos aparecerán en los animes que subas.</p>
+            
+            <div class="avatar-preview-container">
+                <img id="setupAvatarPreview" src="https://via.placeholder.com/150" class="avatar-preview-img">
+            </div>
+
+            <input type="text" id="setupNick" class="setup-input" placeholder="Nombre de Usuario (Nick)">
+            <input type="text" id="setupAvatarUrl" class="setup-input" placeholder="URL Imagen de Perfil" oninput="updateSetupPreview()">
+            <input type="text" id="setupSocial" class="setup-input" placeholder="Link Red Social (Opcional)">
+            
+            <button id="btnFinishSetup" class="setup-btn" onclick="saveUserProfile()">GUARDAR Y ENTRAR</button>
+            <div id="setupLog" style="color:#ff4757; margin-top:10px; font-size:0.8em;"></div>
+        </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+});
+
+function updateSetupPreview() {
+    const url = document.getElementById('setupAvatarUrl').value;
+    const img = document.getElementById('setupAvatarPreview');
+    if(url) img.src = url;
+    else img.src = "https://via.placeholder.com/150";
+}
+
+// ============================================
 // AUTENTICACIÓN
 // ============================================
 auth.onAuthStateChanged((user) => {
-    if (user) checkAccess(user);
-    else showLogin();
+    if (user) {
+        // Obtenemos el token de GitHub almacenado previamente (si existe) 
+        // Nota: En flujo real, signInWithGitHub refresca el token.
+    } else {
+        showLogin();
+    }
 });
 
 function signInWithGitHub() {
@@ -58,7 +139,8 @@ function signInWithGitHub() {
         })
         .then((result) => {
             currentUserToken = result.credential.accessToken;
-            checkAccess(result.user);
+            // Iniciamos la verificación de perfil
+            checkUserProfile(result.user);
         }).catch((error) => {
             console.error(error);
             document.getElementById('errorText').innerText = error.message;
@@ -66,31 +148,114 @@ function signInWithGitHub() {
         });
 }
 
-function checkAccess(user) {
-    const email = user.email;
-    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Usuario";
-    const avatar = user.photoURL || "Logo_Archinime.avif";
+// --- NUEVA LÓGICA DE VERIFICACIÓN DE PERFIL ---
+async function checkUserProfile(user) {
+    currentUserEmail = user.email;
+    const loginScreen = document.getElementById('loginScreen');
+    const loadingText = document.getElementById('errorText'); // Reusamos el texto de error para feedback
+    
+    // Mostramos feedback visual
+    loadingText.innerText = "Verificando perfil...";
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('loginError').style.background = 'rgba(0, 255, 255, 0.1)';
+    document.getElementById('loginError').style.color = '#00f0ff';
 
-    // Guardamos datos globales del usuario
-    currentUserNick = nickname;
-    currentUserAvatar = avatar;
-    currentUserEmail = email;
+    try {
+        // 1. Descargar users-data.js
+        const file = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
+        const usersDB = safeEval(file.content);
 
-    const isAllowed = true;
+        if (usersDB[currentUserEmail]) {
+            // SCENARIO A: USUARIO EXISTE -> CARGAR DATOS
+            const userData = usersDB[currentUserEmail];
+            currentUserNick = userData.nick;
+            currentUserAvatar = userData.avatar;
+            currentUserSocial = userData.social || "";
+            
+            showCMS(); // Entrar directo
+        } else {
+            // SCENARIO B: USUARIO NUEVO -> MOSTRAR MENÚ DE REGISTRO
+            loginScreen.style.display = 'none'; // Ocultar login
+            document.getElementById('setupModal').style.display = 'flex'; // Mostrar setup
+            
+            // Pre-llenar avatar si GitHub trajo uno
+            if(user.photoURL) {
+                document.getElementById('setupAvatarUrl').value = user.photoURL;
+                updateSetupPreview();
+            }
+            if(user.displayName) {
+                document.getElementById('setupNick').value = user.displayName;
+            }
+        }
 
-    if (isAllowed) {
-        showCMS(user);
-    } else {
-        document.getElementById('errorText').innerText = "No autorizado.";
-        document.getElementById('loginError').style.display = 'block';
-        setTimeout(() => auth.signOut(), 3000);
+    } catch (e) {
+        console.error("Error fetching users:", e);
+        // Si falla (ej. archivo no existe), asumimos nuevo y permitimos crear
+        document.getElementById('setupModal').style.display = 'flex';
+        loginScreen.style.display = 'none';
     }
 }
 
-function showCMS(user) {
+// --- FUNCIÓN PARA GUARDAR EL NUEVO PERFIL ---
+async function saveUserProfile() {
+    const nick = document.getElementById('setupNick').value.trim();
+    const avatar = document.getElementById('setupAvatarUrl').value.trim();
+    const social = document.getElementById('setupSocial').value.trim();
+    const btn = document.getElementById('btnFinishSetup');
+    const logDiv = document.getElementById('setupLog');
+
+    if (!nick || !avatar) {
+        logDiv.innerText = "El nombre y la foto son obligatorios.";
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Guardando...";
+
+    try {
+        // 1. Actualizar users-data.js en GitHub
+        await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
+            // Limpiar JS anterior para obtener objeto limpio
+            let cleanContent = content;
+            const eqIndex = cleanContent.indexOf('=');
+            let dataStr = cleanContent.substring(eqIndex + 1).trim();
+            if (dataStr.endsWith(';')) dataStr = dataStr.slice(0, -1);
+            
+            const usersDB = eval('(' + dataStr + ')');
+            
+            // Agregar nuevo usuario
+            usersDB[currentUserEmail] = {
+                nick: nick,
+                avatar: avatar,
+                social: social
+            };
+
+            // Reconvertir a string formato archivo JS
+            return `const usersData = ${JSON.stringify(usersDB, null, 4)};`;
+        });
+
+        // 2. Establecer variables locales
+        currentUserNick = nick;
+        currentUserAvatar = avatar;
+        currentUserSocial = social;
+
+        // 3. Entrar al CMS
+        document.getElementById('setupModal').style.display = 'none';
+        showCMS();
+
+    } catch (e) {
+        console.error(e);
+        logDiv.innerText = "Error guardando: " + e.message;
+        btn.disabled = false;
+        btn.innerText = "INTENTAR DE NUEVO";
+    }
+}
+
+function showCMS() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
+    
     // Actualizar UI con datos del usuario
     document.getElementById('userAvatarImg').src = currentUserAvatar;
     document.getElementById('userNameDisplay').innerText = currentUserNick;
@@ -100,6 +265,7 @@ function showLogin() {
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('userHeader').style.display = 'none';
     document.getElementById('cmsContent').style.display = 'none';
+    document.getElementById('setupModal').style.display = 'none';
 }
 
 function logout() {
@@ -109,8 +275,10 @@ function logout() {
 }
 
 // ============================================
-// LÓGICA DE INTERFAZ Y FORMULARIO
+// LÓGICA DE INTERFAZ, FORMULARIO Y SUBIDA (CÓDIGO ANTERIOR)
 // ============================================
+// ... (Aquí sigue el resto de la lógica de edición, alertas y subida que ya tenías) ...
+
 const genresList = [
     "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
     "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
@@ -851,7 +1019,7 @@ function generateData() {
     return anime;
 }
 
-// --- FUNCIÓN MODIFICADA: ALERTA DE SESIÓN CON TEXTO NUEVO ---
+// --- FUNCIÓN MODIFICADA: ALERTA DE SESIÓN Y BRILLO DEL BOTÓN (SIN TOOLTIP) ---
 function showSessionAlert() {
     // 1. Crear el banner rojo en la parte superior
     if (!document.getElementById('session-warning-banner')) {
@@ -869,10 +1037,7 @@ function showSessionAlert() {
         banner.style.zIndex = '10000';
         banner.style.fontFamily = "'Outfit', sans-serif";
         banner.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
-        
-        // --- CAMBIO DE TEXTO AQUI ---
         banner.innerHTML = '<i class="fas fa-exclamation-triangle"></i> SESIÓN FINALIZADA. POR FAVOR, CIERRA SESIÓN E INGRESA DE NUEVO.';
-        
         document.body.appendChild(banner);
 
         // Bajar un poco el header para que no se tape
@@ -880,7 +1045,7 @@ function showSessionAlert() {
         if(header) header.style.marginTop = '45px';
     }
 
-    // 2. Hacer brillar el botón de Logout
+    // 2. Hacer brillar el botón de Logout (igual que antes pero sin el tooltip)
     highlightLogoutButton();
 }
 
