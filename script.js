@@ -9,26 +9,10 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
-// CORREO DEL ADMINISTRADOR PRINCIPAL (TIENE PERMISO TOTAL)
-const SUPER_ADMIN_EMAIL = "archinime12@gmail.com";
-// USUARIOS PERMITIDOS
-const ALLOWED_USERS = [
-    "archinime12@gmail.com", 
-    "alejandroarchi12@gmail.com", 
-    "lucioguapofeo@gmail.com"
-];
-// --- MAPEO DE NOMBRES ---
-const USER_NAMES_MAP = {
-    "archinime12@gmail.com": "Archinime",
-    "alejandroarchi12@gmail.com": "Alejandro",
-    "lucioguapofeo@gmail.com": "Lucio"
-};
-// --- MAPEO DE LOGOS/AVATARES ---
-const USER_AVATARS_MAP = {
-    "archinime12@gmail.com": "Logo_Archinime.avif",
-    "alejandroarchi12@gmail.com": "https://via.placeholder.com/40",
-    "lucioguapofeo@gmail.com": "https://via.placeholder.com/40"
-};
+
+// USUARIOS PERMITIDOS (Correos o Nombres de usuario de GitHub)
+const ALLOWED_USERS = ["archinime12@gmail.com", "Archinime"]; 
+
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
@@ -36,17 +20,19 @@ const REPO = "-Archinime-";
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 let currentUserToken = null;
-let currentUserEmail = null;
+
+// DATOS DEL USUARIO ACTUAL
+let currentUserEmail = "";
+let currentUserName = "";
+let currentUserAvatar = "";
 
 // VARIABLES DE ESTADO
 let isEditMode = false;
-let isReadOnly = false;
 let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
-let currentSearchMode = 'mine'; 
-let originalUploaderName = null;
+
 // ============================================
 // AUTENTICACIÓN
 // ============================================
@@ -54,6 +40,7 @@ auth.onAuthStateChanged((user) => {
     if (user) checkAccess(user);
     else showLogin();
 });
+
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -70,11 +57,18 @@ function signInWithGitHub() {
 
 function checkAccess(user) {
     const email = user.email;
-    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName;
+    // Obtenemos el nombre de usuario (Nick de GitHub)
+    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Anónimo";
+    const photo = user.photoURL || "https://via.placeholder.com/50";
+
     const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
 
     if (isAllowed) {
-        currentUserEmail = email; 
+        // GUARDAMOS DATOS GLOBALES DEL USUARIO
+        currentUserEmail = email;
+        currentUserName = nickname;
+        currentUserAvatar = photo;
+
         showCMS(user);
     } else {
         document.getElementById('errorText').innerText = "No autorizado.";
@@ -87,10 +81,9 @@ function showCMS(user) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
-    document.getElementById('userAvatarImg').src = user.photoURL;
-
-    let displayName = USER_NAMES_MAP[user.email] || "Aportador";
-    document.getElementById('userNameDisplay').innerText = displayName;
+    
+    document.getElementById('userAvatarImg').src = currentUserAvatar;
+    document.getElementById('userNameDisplay').innerText = currentUserName;
 }
 
 function showLogin() {
@@ -112,21 +105,22 @@ const genresList = [
     "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
     "Harem", "Hentai", "Horror", "Incesto", "Isekai", "Isekai Inverso", "Kaiju", "Mecha", "Militar", 
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
-    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi"
+    "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
+
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
-    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ?
-    "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
 }
 
@@ -249,7 +243,7 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS & CHAPTERS
+// SEASONS & CHAPTERS - PALETA DE COLORES
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
@@ -376,7 +370,7 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
-
+    // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
@@ -394,8 +388,9 @@ function renderChapters(input, existingEps = []) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
+        // ** CAMBIO DE LÓGICA DE CARGA **
         if(existingEps[i]) {
-             lat = existingEps[i].link || '';
+             lat = existingEps[i].link || '';  
              sub = existingEps[i].link2 || ''; 
              if(!['Temporada', 'Spin-Off'].includes(type)) customTitle = existingEps[i].title;
         } else if(currentData[i]) {
@@ -404,8 +399,7 @@ function renderChapters(input, existingEps = []) {
              customTitle = currentData[i].title;
         }
 
-        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ?
-        "disabled" : "";
+        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
         row.innerHTML = `
@@ -420,6 +414,7 @@ function renderChapters(input, existingEps = []) {
     }
 }
 
+// THROTTLE PARA VISTA PREVIA (ANTI-LAG)
 function requestPreviewUpdate() {
     if (!previewTimeout) {
         previewTimeout = requestAnimationFrame(() => {
@@ -444,8 +439,11 @@ function updateWebPreview() {
     const aliasStr = aliases.length > 0 ? aliases.join(', ') : "";
     document.getElementById('previewAliasesList').innerText = aliasStr;
 
-    const ratingInputVal = document.getElementById('ratingAnime').value;
-    const ratingTxt = ratingInputVal ? parseFloat(ratingInputVal).toFixed(1) : "--";
+    const ratingSel = document.getElementById('ratingAnime').value;
+    let ratingTxt = "--";
+    if(ratingSel === 'excellent') ratingTxt = "4.9";
+    else if(ratingSel === 'good') ratingTxt = "4.6";
+    else if(ratingSel === 'regular') ratingTxt = "4.0";
     document.getElementById('webRating').innerText = `⭐ ${ratingTxt}`;
     
     const tagsContainer = document.getElementById('webTags');
@@ -511,7 +509,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            message: `Update ${path} via CMS (${isEditMode ? 'Edit' : 'New'})`,
+            message: `Update ${path} via CMS (${isEditMode ? 'Edit' : 'New'}) by ${currentUserName}`,
             content: encodedContent,
             sha: fileData.sha
         })
@@ -520,26 +518,17 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA, EDICIÓN Y FILTRO
+// CARGA Y EDICIÓN (OPTIMIZADA)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
     document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
-    
-    setSearchMode('mine');
-    
     if(cachedIndex.length === 0) loadIndexForSearch();
     else filterSearch();
 }
 
-function setSearchMode(mode) {
-    currentSearchMode = mode;
-    document.getElementById('tabMine').classList.toggle('active', mode === 'mine');
-    document.getElementById('tabAll').classList.toggle('active', mode === 'all');
-    filterSearch();
-}
-
+// MANEJADOR DE CLIC FUERA DEL MODAL
 function handleModalClick(event) {
     if (event.target.id === 'searchModal') {
         closeSearchModal();
@@ -550,30 +539,14 @@ function closeSearchModal() {
     document.getElementById('searchModal').style.display = 'none';
 }
 
-// --- FUNCIÓN MODIFICADA PARA DETECTAR EL UPLOADER REAL ---
 async function loadIndexForSearch() {
     const loading = document.getElementById('loadingSearch');
     loading.style.display = 'block';
     try {
         if(!currentUserToken) throw new Error("No hay sesión");
-        
-        // MODIFICACIÓN: Cargar ambos archivos para sincronizar el uploader real
-        const [indexFile, detailFile] = await Promise.all([
-            getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js'),
-            getGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js')
-        ]);
-
-        const indexData = safeEval(indexFile.content);
-        const detailData = safeEval(detailFile.content);
-
-        // Inyectar el uploader correcto desde detailData al indexData
-        indexData.forEach(item => {
-            if (detailData[item.id] && detailData[item.id].uploader) {
-                item.uploader = detailData[item.id].uploader;
-            }
-        });
-
-        cachedIndex = indexData.reverse(); 
+        const file = await getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js');
+        const data = safeEval(file.content);
+        cachedIndex = data.reverse(); 
         filterSearch();
     } catch(e) {
         document.getElementById('searchResults').innerHTML = `<div style="color:red; text-align:center">Error: ${e.message}</div>`;
@@ -587,84 +560,60 @@ function filterSearch() {
     searchTimeout = setTimeout(() => { _performFilter(); }, 300);
 }
 
+// ** FILTRO DE BÚSQUEDA ACTUALIZADO PARA MOSTRAR SOLO ANIMES DEL USUARIO **
 function _performFilter() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
     
-    let sourceData = cachedIndex;
-    const isSuperAdmin = (currentUserEmail === SUPER_ADMIN_EMAIL);
-    if (currentSearchMode === 'mine') {
-        if(isSuperAdmin) {
-            // Archinime ve sus subidas + las antiguas sin uploader (ahora consideradas de Archinime)
-            sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail || !item.uploader);
-        } else {
-            sourceData = cachedIndex.filter(item => item.uploader === currentUserEmail);
-        }
-    }
+    // Filtramos primero por nombre
+    let filtered = cachedIndex.filter(a => a.title.toLowerCase().includes(query));
 
-    const filtered = sourceData.filter(a => a.title.toLowerCase().includes(query));
-    filtered.forEach(anime => {
+    // LUEGO FILTRAMOS POR USUARIO (Uploader)
+    // Si el usuario es "Archinime" (admin supremo), puede ver todo o al menos sus cosas
+    // Asumimos que "Archinime" es el usuario legado para los animes viejos
+    filtered = filtered.filter(a => {
+        // Normalizamos comparación (por si acaso mayúsculas/minúsculas)
+        const uploaderName = (a.uploader || "").toLowerCase();
+        const myName = (currentUserName || "").toLowerCase();
+        return uploaderName === myName;
+    });
+
+    const displayList = filtered.slice(0, 50);
+
+    displayList.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
+        div.onclick = () => loadAnimeForEditing(anime.id);
         
-        // --- LÓGICA DE PROPIEDAD Y LOGO ---
-        // Si no tiene uploader, asumimos que es del Admin (Archinime)
-        let effectiveUploader = anime.uploader || SUPER_ADMIN_EMAIL;
+        // Usamos avatar guardado o placeholder
+        const avatarUrl = anime.uploaderAvatar || "https://via.placeholder.com/20?text=?";
         
-        div.onclick = () => loadAnimeForEditing(anime.id, effectiveUploader);
-
-        let uploaderName = USER_NAMES_MAP[effectiveUploader] || effectiveUploader;
-        let uploaderLogo = USER_AVATARS_MAP[effectiveUploader] || "https://via.placeholder.com/30";
-
-        let uploaderHtml = `
-            <div style="color:#777; font-size:0.8em; display:flex; align-items:center; gap:6px; margin-top:4px;">
-                Subido por: ${uploaderName}
-                <img src="${uploaderLogo}" style="width:16px; height:16px; border-radius:50%; object-fit:cover;">
-            </div>`;
-        
-        const isMine = (effectiveUploader === currentUserEmail);
-        const ownerTag = isMine ? '<span style="color:#00ffbf; font-size:0.7em; margin-left:5px;">(MÍO)</span>' : '';
         div.innerHTML = `
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
-                <div style="font-weight:bold; color:#fff;">${anime.title} ${ownerTag}</div>
-                <div style="color:#777; font-size:0.8em">ID: ${anime.id}</div>
-                ${uploaderHtml}
+                <div style="font-weight:bold; color:#fff;">${anime.title}</div>
+                <div style="color:#777; font-size:0.8em; display:flex; align-items:center; gap:5px;">
+                    ID: ${anime.id} | ⭐ ${anime.rating} | 
+                    <img src="${avatarUrl}" style="width:16px; height:16px; border-radius:50%; border:1px solid #555;"> 
+                    <span>${anime.uploader || "Desconocido"}</span>
+                </div>
             </div>
         `;
         results.appendChild(div);
     });
 
-    if(filtered.length === 0) {
-        if(currentSearchMode === 'mine') {
-             results.innerHTML = '<div style="padding:20px; color:#777; text-align:center">No se encontraron aportes asociados a tu cuenta.<br>Intenta buscar en <b>General</b>.</div>';
-        } else {
-             results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados</div>';
-        }
+    if(displayList.length === 0) {
+        if(query === "") results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">No has subido ningún anime todavía.</div>';
+        else results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados en tu lista.</div>';
     }
 }
 
-async function loadAnimeForEditing(id, uploaderEmail) {
-    // Si uploaderEmail es null/undefined, asumimos que es del Admin (Archinime)
-    const effectiveUploader = uploaderEmail || SUPER_ADMIN_EMAIL;
-    const isMine = (effectiveUploader === currentUserEmail);
-    const isSuperAdmin = (currentUserEmail === SUPER_ADMIN_EMAIL);
-    // Si eres SuperAdmin puedes editar TODO (tuyo, sin uploader o de otros)
-    // Si eres usuario normal, solo lo tuyo.
-    const canEdit = isMine || isSuperAdmin;
-    
-    let readOnly = false;
-    let confirmMsg = "¿Cargar anime para EDITAR? Se perderán los datos actuales.";
-    if (!canEdit) {
-        readOnly = true;
-        confirmMsg = "No tienes permisos de edición sobre este anime. Se cargará en MODO LECTURA. ¿Continuar?";
-    }
-
-    if(!confirm(confirmMsg)) return;
-    
+async function loadAnimeForEditing(id) {
+    if(!confirm("¿Cargar anime? Se perderán los datos actuales del formulario.")) return;
     closeSearchModal();
     showToast("Descargando datos...", false);
+    
     try {
         const [detailFile, playerFile, musicFile] = await Promise.all([
             getGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js'),
@@ -680,53 +629,24 @@ async function loadAnimeForEditing(id, uploaderEmail) {
         const targetMusic = musObj[id] || [];
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
-        // SET MODES
         isEditMode = true;
         currentEditingId = id;
-        isReadOnly = readOnly;
-        // ---- LÓGICA DE UPLOADER ----
-        const indexEntry = cachedIndex.find(x => x.id === id);
-        // Si tiene uploader explícito
-        if (targetDetail.uploader) {
-            originalUploaderName = targetDetail.uploader;
-        } 
-        // Si no tiene, y el index tampoco (legacy) -> "Archinime"
-        else {
-            originalUploaderName = SUPER_ADMIN_EMAIL;
-        }
-        // ----------------------------
-
-        // UI UPDATE FOR MODES
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
-        
-        const btnMain = document.getElementById('mainActionButton');
-        const modeLabel = document.getElementById('modeLabel');
-        const modeDesc = document.getElementById('modeDescription');
-        if (isReadOnly) {
-            modeLabel.innerText = "MODO LECTURA";
-            modeDesc.innerText = "No tienes permisos para editar este contenido.";
-            document.getElementById('btnActionText').innerText = "BLOQUEADO (SOLO LECTURA)";
-            btnMain.classList.add('btn-disabled');
-            btnMain.disabled = true;
-        } else {
-            modeLabel.innerText = "MODO EDICIÓN";
-            modeDesc.innerText = "Los cambios sobrescribirán el anime existente.";
-            document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
-            btnMain.classList.remove('btn-disabled');
-            btnMain.disabled = false;
-        }
+        document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
 
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
         document.getElementById('sinopsisAnime').value = targetDetail.desc;
         
+        const indexEntry = cachedIndex.find(x => x.id === id);
         document.getElementById('aliasContainer').innerHTML = '';
         if(indexEntry && indexEntry.aliases) indexEntry.aliases.forEach(a => addAlias(a));
+
         if(indexEntry && indexEntry.genres && indexEntry.genres.length > 0) {
             let loadedGenres = [...indexEntry.genres];
             const lastGenre = loadedGenres[loadedGenres.length - 1];
-            const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo", "Seijin"];
+            const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo"];
             if (demoOptions.includes(lastGenre)) {
                 document.getElementById('demografiaAnime').value = lastGenre;
                 loadedGenres.pop();
@@ -737,10 +657,11 @@ async function loadAnimeForEditing(id, uploaderEmail) {
             });
         }
         
-        if(indexEntry && indexEntry.rating) {
-            document.getElementById('ratingAnime').value = indexEntry.rating;
-        } else {
-            document.getElementById('ratingAnime').value = "";
+        const rateSelect = document.getElementById('ratingAnime');
+        if(indexEntry) {
+            if(indexEntry.rating >= 4.8) rateSelect.value = 'excellent';
+            else if(indexEntry.rating >= 4.6) rateSelect.value = 'good';
+            else rateSelect.value = 'regular';
         }
         
         document.getElementById('seasonsContainer').innerHTML = '';
@@ -769,17 +690,9 @@ async function loadAnimeForEditing(id, uploaderEmail) {
 function exitEditMode() {
     isEditMode = false;
     currentEditingId = null;
-    isReadOnly = false;
-    originalUploaderName = null;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
-    
-    // Restaurar botón
-    const btnMain = document.getElementById('mainActionButton');
-    btnMain.classList.remove('btn-disabled');
-    btnMain.disabled = false;
-
-    location.reload();
+    location.reload(); 
 }
 
 // ============================================
@@ -789,12 +702,14 @@ function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
     const demoSelect = document.getElementById('demografiaAnime').value;
-    
-    const ratingInput = document.getElementById('ratingAnime');
-    let ratingVal = parseFloat(ratingInput.value);
-    if(isNaN(ratingVal)) ratingVal = 0;
+    const ratingSelect = document.getElementById('ratingAnime').value;
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
+    let ratingVal = 0;
+    if(ratingSelect === 'excellent') ratingVal = 4.9;
+    else if(ratingSelect === 'good') ratingVal = 4.6;
+    else if(ratingSelect === 'regular') ratingVal = 4.0;
+
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -805,7 +720,10 @@ function generateData() {
         generos: selectedGenres,
         rating: ratingVal,
         musica: [],
-        temporadas: []
+        temporadas: [],
+        // ** AGREGAMOS DATOS DEL UPLOADER **
+        uploader: currentUserName,
+        uploaderAvatar: currentUserAvatar
     };
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
 
@@ -823,7 +741,6 @@ function generateData() {
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
-            
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             let playerTitle = "", detailTitle = ""; 
 
@@ -848,7 +765,6 @@ function generateData() {
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
-
         if(eps.length > 0) {
             anime.temporadas.push({
                 num: globalOrder++,
@@ -864,22 +780,15 @@ function generateData() {
 }
 
 async function subirAGithHub() {
-    if(isReadOnly) {
-        return showToast("Modo Lectura: No tienes permiso para guardar.", true);
-    }
-
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
-    
     const nuevoAnime = generateData();
+    
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
-    if(!nuevoAnime.rating || isNaN(nuevoAnime.rating) || nuevoAnime.rating < 1 || nuevoAnime.rating > 5) {
-        return showToast("Valoración inválida (Debe ser entre 1.0 y 5.0)", true);
-    }
-    
+    if(nuevoAnime.rating === 0) return showToast("Elige Valoración", true);
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
 
@@ -898,21 +807,12 @@ async function subirAGithHub() {
             log(`📝 Editando ID: ${FINAL_ID}`);
         }
 
-        // LÓGICA DE UPLOADER NAME
-        let finalUploaderName = "";
-        if (isEditMode) {
-             finalUploaderName = originalUploaderName; 
-             log(`👤 Uploader: ${finalUploaderName}`);
-        } else {
-             finalUploaderName = currentUserEmail;
-             log(`👤 Nuevo Uploader: ${finalUploaderName}`);
-        }
-
         // UPDATE INDEX
         log("2/5 Actualizando Index...");
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             let newContent = content;
             if(isEditMode) {
+                // Borra la entrada anterior
                 const regexRemove = new RegExp(`\\s*\\{id:${FINAL_ID},[^]*?genres:\\[[^]*?\\]\\},?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
@@ -931,11 +831,15 @@ async function subirAGithHub() {
                 finalGenres = finalGenres.filter(g => g !== nuevoAnime.demografia);
                 finalGenres.push(nuevoAnime.demografia);
             }
-             
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
-            // Aquí usamos finalUploaderName (email)
-            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${finalUploaderName}", genres:[${generosStr}]}`;
+            
+            // ** AQUI INSERTAMOS EL UPLOADER Y AVATAR **
+            // Usamos "Archinime" por defecto si falla el nombre, pero debería estar
+            const upl = nuevoAnime.uploader || "Archinime";
+            const uplAv = nuevoAnime.uploaderAvatar || "https://via.placeholder.com/50";
+
+            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${upl}", uploaderAvatar:"${uplAv}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
         
@@ -944,12 +848,9 @@ async function subirAGithHub() {
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
             let newContent = content;
             if(isEditMode) {
-                 const regexRemove = new RegExp(`\\s*["']?${FINAL_ID}["']?:\\s*\\{[\\s\\S]*?\\n\\s*\\},?`, 'g');
+                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-             
-            newContent = newContent.replace(/,\s*,/g, ',');
-
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -959,17 +860,16 @@ async function subirAGithHub() {
                 t.eps.forEach(e => epsStr += `            { title: "${e.title}"},\n`);
                 let nameField = t.name ? `\n            name: "${t.name}",` : "";
                 seasonsStr += `          {
-             num: ${t.num},${nameField}
+            num: ${t.num},${nameField}
             cover: "${t.cover}",
             eps: [\n${epsStr}            ]
           },\n`;
             });
-            
             const newDetail = `,\n    ${FINAL_ID}: {
         title: "${nuevoAnime.titulo}",
         desc: "${nuevoAnime.sinopsis.replace(/"/g, '\\"')}",
         cover: "${nuevoAnime.portada}",
-        uploader: "${finalUploaderName}", 
+        uploader: "${nuevoAnime.uploader}", 
         seasons: [\n${seasonsStr}          ]
     }`;
             return before + newDetail + "\n};";
@@ -979,21 +879,16 @@ async function subirAGithHub() {
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             let newContent = content;
-            
             if(isEditMode) {
-                 const regexRemove = new RegExp(`\\s*["']?${FINAL_ID}["']?:\\s*\\{[\\s\\S]*?\\n\\s*\\},?`, 'g');
+                 const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-            
             newContent = newContent.replace(/,\s*,/g, ',');
-
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
-            
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
-            
             let playerStr = `,\n      "${FINAL_ID}": {\n`;
             nuevoAnime.temporadas.forEach(t => {
                 playerStr += `          "${t.num}": {\n`;
@@ -1001,28 +896,23 @@ async function subirAGithHub() {
                 playerStr += `        },\n`;
             });
             playerStr += `      }`;
-            
             return before + playerStr + "\n};";
         });
+
         // UPDATE MUSIC
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
-            
             if(isEditMode) {
-                const regexRemove = new RegExp(`\\s*["']?${FINAL_ID}["']?:\\s*\\[[\\s\\S]*?\\]\\,?`, 'g');
+                const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
-
             newContent = newContent.replace(/,\s*,/g, ',');
-
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
-            
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
-            
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
             const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n        ]`;
             return before + musicEntry + "\n};";

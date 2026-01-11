@@ -13,44 +13,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Estilos extra para las pestañas del buscador */
-        .search-tabs {
-            display: flex;
-            gap: 10px;
-            padding: 0 15px 10px 15px;
-            border-bottom: 1px solid #333;
-            background: #131419;
-            margin-top: 20px; /* ESPACIO AÑADIDO AQUI */
-        }
-        .search-tab-btn {
-            flex: 1;
-            padding: 10px;
-            background: transparent;
-            border: 1px solid #333;
-            color: #777;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .search-tab-btn.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .search-tab-btn:hover:not(.active) {
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-        }
-        /* Estilo para botón deshabilitado (Modo Lectura) */
-        .btn-disabled {
-            background: #333 !important;
-            color: #777 !important;
-            cursor: not-allowed !important;
-            box-shadow: none !important;
-        }
-    </style>
 </head>
 <body>
 
@@ -94,16 +56,6 @@
             <h3 style="margin:0; color:#fff;">📂 Seleccionar Anime</h3>
             <button onclick="closeSearchModal()" style="background:none; border:none; color:#ff4757; font-size:1.2em; cursor:pointer;"><i class="fas fa-times"></i></button>
         </div>
-        
-        <div class="search-tabs">
-            <button id="tabMine" class="search-tab-btn active" onclick="setSearchMode('mine')">
-                <i class="fas fa-user"></i> Mis Aportes
-            </button>
-            <button id="tabAll" class="search-tab-btn" onclick="setSearchMode('all')">
-                <i class="fas fa-globe"></i> General
-            </button>
-        </div>
-
         <div style="padding:10px;">
             <input type="text" id="searchInput" placeholder="Buscar por nombre..." style="margin:0;" oninput="filterSearch()">
             <div id="loadingSearch" style="color:var(--accent); text-align:center; padding:10px; display:none;">Cargando índice...</div>
@@ -117,9 +69,9 @@
     <div class="editor-panel">
         
         <div id="editModeBar">
-            <i class="fas fa-edit"></i> <span id="modeLabel">MODO EDICIÓN</span> (ID: <span id="editIdDisplay">0</span>)
-            <div style="font-size:0.8em; font-weight:normal; margin-top:5px;" id="modeDescription">Los cambios sobrescribirán el anime existente.</div>
-            <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3); border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar / Cerrar</button>
+            <i class="fas fa-edit"></i> MODO EDICIÓN ACTIVADO (ID: <span id="editIdDisplay">0</span>)
+            <div style="font-size:0.8em; font-weight:normal; margin-top:5px;">Los cambios sobrescribirán el anime existente.</div>
+            <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3); border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar Edición</button>
         </div>
 
         <h2><i class="fas fa-pen-to-square"></i> 1. Ficha Técnica</h2>
@@ -159,12 +111,16 @@
                     <option value="Shōjo">Shōjo</option>
                     <option value="Josei">Josei</option>
                     <option value="Kodomo">Kodomo</option>
-                    <option value="Seijin">Seijin</option>
                 </select>
             </div>
             <div class="col-flex">
-                <label>Valoración (1.0 - 5.0) <span>*</span></label>
-                <input type="number" id="ratingAnime" step="0.1" min="1.0" max="5.0" placeholder="Ej: 4.5" oninput="requestPreviewUpdate()" onblur="validate(this)">
+                <label>Valoración <span>*</span></label>
+                <select id="ratingAnime" onchange="requestPreviewUpdate()">
+                    <option value="" disabled selected>Elegir Valoración...</option>
+                    <option value="excellent">⭐ Excelente (4.8+)</option>
+                    <option value="good">⭐ Buena (4.6+)</option>
+                    <option value="regular">⭐ Regular (-4.5)</option>
+                </select>
             </div>
         </div>
 
@@ -176,7 +132,7 @@
         <div id="musicContainer"></div>
         <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
 
-        <button id="mainActionButton" class="btn btn-gen" onclick="subirAGithHub()">
+        <button class="btn btn-gen" onclick="subirAGithHub()">
             <i class="fas fa-cloud-arrow-up"></i> <span id="btnActionText">COMPILAR Y SUBIR</span>
         </button>
         
