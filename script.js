@@ -14,6 +14,7 @@ const firebaseConfig = {
 const ALLOWED_USERS = [
 "archinime12@gmail.com", 
 "alejandroarchi12@gmail.com"
+"lucioguapofeo@gmail.com"
 ];
 
 // CONFIGURACIÓN GITHUB
