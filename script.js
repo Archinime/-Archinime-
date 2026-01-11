@@ -10,8 +10,8 @@ const firebaseConfig = {
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
 
-// USUARIOS PERMITIDOS (Correos o Nombres de usuario de GitHub)
-const ALLOWED_USERS = ["archinime12@gmail.com", "Archinime"]; 
+// USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
+const ALLOWED_USERS = ["archinime12@gmail.com"];
 
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
@@ -21,17 +21,17 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 let currentUserToken = null;
 
-// DATOS DEL USUARIO ACTUAL
-let currentUserEmail = "";
-let currentUserName = "";
-let currentUserAvatar = "";
-
 // VARIABLES DE ESTADO
 let isEditMode = false;
 let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
+
+// DATOS DEL USUARIO ACTUAL
+let currentUserNick = "Archinime"; // Valor por defecto
+let currentUserAvatar = "Logo_Archinime.avif"; // Valor por defecto
+let currentUserEmail = "";
 
 // ============================================
 // AUTENTICACIÓN
@@ -57,18 +57,19 @@ function signInWithGitHub() {
 
 function checkAccess(user) {
     const email = user.email;
-    // Obtenemos el nombre de usuario (Nick de GitHub)
-    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Anónimo";
-    const photo = user.photoURL || "https://via.placeholder.com/50";
+    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Usuario";
+    const avatar = user.photoURL || "Logo_Archinime.avif";
 
-    const isAllowed = ALLOWED_USERS.includes(email) || ALLOWED_USERS.includes(nickname);
+    // Guardamos datos globales del usuario
+    currentUserNick = nickname;
+    currentUserAvatar = avatar;
+    currentUserEmail = email;
+
+    // Permitir acceso si está en la lista o es un usuario válido de GitHub (aquí puedes restringir más si quieres)
+    // Por ahora, permitimos entrar, pero el filtro de edición limitará lo que ven.
+    const isAllowed = true; 
 
     if (isAllowed) {
-        // GUARDAMOS DATOS GLOBALES DEL USUARIO
-        currentUserEmail = email;
-        currentUserName = nickname;
-        currentUserAvatar = photo;
-
         showCMS(user);
     } else {
         document.getElementById('errorText').innerText = "No autorizado.";
@@ -82,8 +83,9 @@ function showCMS(user) {
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
     
+    // Actualizar UI con datos del usuario
     document.getElementById('userAvatarImg').src = currentUserAvatar;
-    document.getElementById('userNameDisplay').innerText = currentUserName;
+    document.getElementById('userNameDisplay').innerText = currentUserNick;
 }
 
 function showLogin() {
@@ -247,6 +249,7 @@ function updateAudioPreview(input) {
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
+
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
@@ -388,7 +391,7 @@ function renderChapters(input, existingEps = []) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
-        // ** CAMBIO DE LÓGICA DE CARGA **
+        
         if(existingEps[i]) {
              lat = existingEps[i].link || '';  
              sub = existingEps[i].link2 || ''; 
@@ -509,7 +512,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            message: `Update ${path} via CMS (${isEditMode ? 'Edit' : 'New'}) by ${currentUserName}`,
+            message: `Update ${path} via CMS (${isEditMode ? 'Edit' : 'New'})`,
             content: encodedContent,
             sha: fileData.sha
         })
@@ -518,7 +521,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA Y EDICIÓN (OPTIMIZADA)
+// CARGA Y EDICIÓN (FILTRADO MEJORADO)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
@@ -528,7 +531,6 @@ function openSearchModal() {
     else filterSearch();
 }
 
-// MANEJADOR DE CLIC FUERA DEL MODAL
 function handleModalClick(event) {
     if (event.target.id === 'searchModal') {
         closeSearchModal();
@@ -560,52 +562,47 @@ function filterSearch() {
     searchTimeout = setTimeout(() => { _performFilter(); }, 300);
 }
 
-// ** FILTRO DE BÚSQUEDA ACTUALIZADO PARA MOSTRAR SOLO ANIMES DEL USUARIO **
 function _performFilter() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
     
-    // Filtramos primero por nombre
-    let filtered = cachedIndex.filter(a => a.title.toLowerCase().includes(query));
+    // FILTRADO INTELIGENTE:
+    // 1. Coincide con el texto buscado
+    // 2. Coincide con el uploader O el usuario es Super Admin (archinime12@gmail.com)
+    const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
 
-    // LUEGO FILTRAMOS POR USUARIO (Uploader)
-    // Si el usuario es "Archinime" (admin supremo), puede ver todo o al menos sus cosas
-    // Asumimos que "Archinime" es el usuario legado para los animes viejos
-    filtered = filtered.filter(a => {
-        // Normalizamos comparación (por si acaso mayúsculas/minúsculas)
-        const uploaderName = (a.uploader || "").toLowerCase();
-        const myName = (currentUserName || "").toLowerCase();
-        return uploaderName === myName;
-    });
+    const filtered = cachedIndex.filter(a => {
+        const matchesText = a.title.toLowerCase().includes(query);
+        
+        // Comprobamos si el anime fue subido por el usuario actual
+        // Si el anime no tiene campo 'uploader', asumimos que es antiguo y solo el admin lo ve (o si el usuario se llama Archinime)
+        const uploaderName = a.uploader || "Archinime"; 
+        const isMyUpload = (uploaderName === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
 
-    const displayList = filtered.slice(0, 50);
+        return matchesText && isMyUpload;
+    }).slice(0, 50);
 
-    displayList.forEach(anime => {
+    filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
         div.onclick = () => loadAnimeForEditing(anime.id);
-        
-        // Usamos avatar guardado o placeholder
-        const avatarUrl = anime.uploaderAvatar || "https://via.placeholder.com/20?text=?";
-        
         div.innerHTML = `
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
                 <div style="font-weight:bold; color:#fff;">${anime.title}</div>
-                <div style="color:#777; font-size:0.8em; display:flex; align-items:center; gap:5px;">
-                    ID: ${anime.id} | ⭐ ${anime.rating} | 
-                    <img src="${avatarUrl}" style="width:16px; height:16px; border-radius:50%; border:1px solid #555;"> 
-                    <span>${anime.uploader || "Desconocido"}</span>
-                </div>
+                <div style="color:#777; font-size:0.8em">ID: ${anime.id} | Subido por: ${anime.uploader || "Desconocido"}</div>
             </div>
         `;
         results.appendChild(div);
     });
 
-    if(displayList.length === 0) {
-        if(query === "") results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">No has subido ningún anime todavía.</div>';
-        else results.innerHTML = '<div style="padding:10px; color:#777; text-align:center">Sin resultados en tu lista.</div>';
+    if(filtered.length === 0) {
+        results.innerHTML = `
+            <div style="padding:20px; color:#777; text-align:center">
+                <i class="fas fa-folder-open" style="font-size:2em; margin-bottom:10px;"></i><br>
+                No se encontraron animes subidos por <b>${currentUserNick}</b> con ese nombre.
+            </div>`;
     }
 }
 
@@ -710,6 +707,7 @@ function generateData() {
     else if(ratingSelect === 'good') ratingVal = 4.6;
     else if(ratingSelect === 'regular') ratingVal = 4.0;
 
+    // Aquí capturamos la info del usuario actual
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -721,9 +719,8 @@ function generateData() {
         rating: ratingVal,
         musica: [],
         temporadas: [],
-        // ** AGREGAMOS DATOS DEL UPLOADER **
-        uploader: currentUserName,
-        uploaderAvatar: currentUserAvatar
+        uploader: currentUserNick, // Guardamos tu nombre
+        uploaderAvatar: currentUserAvatar // Guardamos tu foto
     };
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
 
@@ -741,7 +738,9 @@ function generateData() {
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
+            
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
+            
             let playerTitle = "", detailTitle = ""; 
 
             if (sType === 'Temporada') {
@@ -812,11 +811,11 @@ async function subirAGithHub() {
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             let newContent = content;
             if(isEditMode) {
-                // Borra la entrada anterior
                 const regexRemove = new RegExp(`\\s*\\{id:${FINAL_ID},[^]*?genres:\\[[^]*?\\]\\},?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
             
+            // LIMPIEZA DE COMAS DOBLES ANTES DE INSERTAR
             newContent = newContent.replace(/,\s*,/g, ',');
 
             const insertionPoint = newContent.lastIndexOf('];');
@@ -834,12 +833,8 @@ async function subirAGithHub() {
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // ** AQUI INSERTAMOS EL UPLOADER Y AVATAR **
-            // Usamos "Archinime" por defecto si falla el nombre, pero debería estar
-            const upl = nuevoAnime.uploader || "Archinime";
-            const uplAv = nuevoAnime.uploaderAvatar || "https://via.placeholder.com/50";
-
-            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${upl}", uploaderAvatar:"${uplAv}", genres:[${generosStr}]}`;
+            // AQUI AGREGAMOS TU NOMBRE Y TU AVATAR AL ARCHIVO
+            const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
         
@@ -851,6 +846,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
+           
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -875,20 +871,25 @@ async function subirAGithHub() {
             return before + newDetail + "\n};";
         });
 
-        // UPDATE PLAYER
+// UPDATE PLAYER
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
+            
             newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
+            
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
+            
             let playerStr = `,\n      "${FINAL_ID}": {\n`;
             nuevoAnime.temporadas.forEach(t => {
                 playerStr += `          "${t.num}": {\n`;
@@ -896,6 +897,7 @@ async function subirAGithHub() {
                 playerStr += `        },\n`;
             });
             playerStr += `      }`;
+            
             return before + playerStr + "\n};";
         });
 
@@ -903,16 +905,21 @@ async function subirAGithHub() {
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
+
             newContent = newContent.replace(/,\s*,/g, ',');
+
             const insertionPoint = newContent.lastIndexOf('};');
             let before = newContent.substring(0, insertionPoint).trimEnd();
+            
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
             }
+            
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
             const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n        ]`;
             return before + musicEntry + "\n};";
