@@ -10,21 +10,17 @@ const firebaseConfig = {
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
 
-// USUARIOS PERMITIDOS (Super Admins y usuarios base)
-const ALLOWED_USERS = [
-    "archinime12@gmail.com", 
-    "alejandroarchi12@gmail.com",
-    "lucioguapofeo@gmail.com"
-];
+// USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
+const ALLOWED_USERS = ["archinime12@gmail.com"];
 
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
-const USERS_FILE_PATH = "users-data.js";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+// FORZAR CIERRE DE SESIÓN AL CERRAR PESTAÑA
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 let currentUserToken = null;
@@ -36,7 +32,7 @@ let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
 
-// DATOS DEL USUARIO ACTUAL (Globales)
+// DATOS DEL USUARIO ACTUAL
 let currentUserNick = "Archinime"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
@@ -48,30 +44,14 @@ let currentSearchMode = 'mine';
 // AUTENTICACIÓN
 // ============================================
 auth.onAuthStateChanged((user) => {
-    if (user) {
-        // En persistencia SESSION, el token puede necesitar refrescarse si usamos github api
-        // pero normalmente tomamos el del login explicito. Si recargas pagina, 
-        // user está logueado pero currentUserToken es null.
-        // GitHub API necesita token reciente. 
-        // Para este flujo simple, pedimos login si no hay token, o intentamos re-autenticar.
-        // Pero para simplificar, asumimos que entras por signInWithPopup.
-        if(!currentUserToken) {
-            // Si recargas la página, estás en firebase pero sin token de GitHub.
-            // Forzamos logout para que vuelva a loguear y obtener token fresco.
-            auth.signOut(); 
-            showLogin();
-        } else {
-            checkAccess(user);
-        }
-    } else {
-        showLogin();
-    }
+    if (user) checkAccess(user);
+    else showLogin();
 });
 
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
-    
+
     auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then(() => {
             return auth.signInWithPopup(provider);
@@ -86,104 +66,34 @@ function signInWithGitHub() {
         });
 }
 
-// --- MODIFICACIÓN CLAVE: COMPROBAR EXISTENCIA EN USERS-DATA ---
-async function checkAccess(user) {
+function checkAccess(user) {
     const email = user.email;
+    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Usuario";
+    const avatar = user.photoURL || "Logo_Archinime.avif";
+
+    // Guardamos datos globales del usuario
+    currentUserNick = nickname;
+    currentUserAvatar = avatar;
     currentUserEmail = email;
 
-    // Primero verificamos si es uno de los hardcoded (opcional, por seguridad)
-    // O simplemente dejamos pasar a cualquiera que tenga GitHub y quiera registrarse.
-    // Asumiremos que cualquiera puede intentar entrar, pero si no está registrado, se registra.
-    
-    document.getElementById('loginScreen').style.display = 'none'; // Ocultar login mientras carga
-    showToast("Verificando perfil...", false);
+    const isAllowed = true;
 
-    try {
-        // 1. Descargar users-data.js de GitHub
-        const file = await getGithubFile(currentUserToken, OWNER, REPO, USERS_FILE_PATH);
-        const usersData = safeEval(file.content);
-
-        // 2. Verificar si el email existe
-        if (usersData[email]) {
-            // USUARIO EXISTE: Cargar sus datos
-            currentUserNick = usersData[email].nick;
-            currentUserAvatar = usersData[email].avatar;
-            console.log("Usuario encontrado:", currentUserNick);
-            showCMS(user); // Entrar al CMS
-        } else {
-            // USUARIO NUEVO: Mostrar modal de configuración
-            console.log("Usuario nuevo detectado.");
-            document.getElementById('setupUserModal').style.display = 'flex';
-            // Pre-llenar input si es posible
-            document.getElementById('newNick').value = user.displayName || "Usuario";
-        }
-
-    } catch (e) {
-        console.error("Error verificando usuario:", e);
-        document.getElementById('loginScreen').style.display = 'flex'; // Volver a mostrar login
-        document.getElementById('errorText').innerText = "Error verificando perfil: " + e.message;
+    if (isAllowed) {
+        showCMS(user);
+    } else {
+        document.getElementById('errorText').innerText = "No autorizado.";
         document.getElementById('loginError').style.display = 'block';
+        setTimeout(() => auth.signOut(), 3000);
     }
 }
-
-// --- FUNCIÓN PARA GUARDAR PERFIL NUEVO ---
-async function saveNewUserProfile() {
-    const nick = document.getElementById('newNick').value.trim();
-    const avatar = document.getElementById('newAvatar').value.trim();
-    const social = document.getElementById('newSocial').value.trim();
-    const btn = document.getElementById('btnSaveProfile');
-
-    if(!nick || !avatar) return alert("Debes poner un Nick y un Avatar.");
-
-    btn.disabled = true;
-    btn.innerText = "Guardando...";
-
-    try {
-        // 1. Descargar users-data.js (por si cambió en el interin)
-        await updateGithubFile(currentUserToken, OWNER, REPO, USERS_FILE_PATH, (content) => {
-            // Limpieza básica del string
-            let newContent = content.trim();
-            // Buscar dónde termina el objeto (antes del último '};')
-            const lastBrace = newContent.lastIndexOf('}');
-            if (lastBrace === -1) throw new Error("Formato de archivo corrupto");
-
-            let before = newContent.substring(0, lastBrace).trim();
-            if (before.endsWith(',')) before = before.slice(0, -1); // Quitar coma final si existe
-
-            // Crear la entrada nueva
-            // Usamos JSON.stringify para sanitizar strings
-            const newEntry = `,\n    "${currentUserEmail}": {\n        "nick": "${nick}",\n        "avatar": "${avatar}",\n        "social": "${social}"\n    }`;
-
-            return before + newEntry + "\n};";
-        });
-
-        // 2. Actualizar variables locales
-        currentUserNick = nick;
-        currentUserAvatar = avatar;
-
-        // 3. Cerrar modal y entrar
-        document.getElementById('setupUserModal').style.display = 'none';
-        showCMS({ email: currentUserEmail });
-        showToast("¡Perfil creado con éxito!");
-
-    } catch (e) {
-        console.error(e);
-        alert("Error guardando perfil: " + e.message);
-        btn.disabled = false;
-        btn.innerText = "GUARDAR Y ENTRAR";
-    }
-}
-
 
 function showCMS(user) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
-    
-    // Actualizar UI con datos del usuario cargados
+    // Actualizar UI con datos del usuario
     document.getElementById('userAvatarImg').src = currentUserAvatar;
     document.getElementById('userNameDisplay').innerText = currentUserNick;
-    showToast(`Bienvenido, ${currentUserNick}`);
 }
 
 function showLogin() {
@@ -218,9 +128,8 @@ genresList.forEach(g => {
 
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
-    x.innerHTML = isError ? 
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : 
-        `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.innerHTML = isError ?
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
@@ -246,7 +155,7 @@ function log(msg) {
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
-    
+
     if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
         input.value = val.replace('&dl=0', '&raw=1');
         changed = true;
@@ -282,14 +191,12 @@ function checkCoverVisual(input) {
     img.src = val;
     img.style.display = 'block';
     display.innerText = "Verificando...";
-    
+
     img.onload = function() { 
         const w = this.naturalWidth;
         const h = this.naturalHeight;
-        // Permitir algunos tamaños estándar
         const allowed = [{w: 1000, h: 1500}, {w: 2000, h: 3000}, {w: 3412, h: 5120}];
         const isValid = allowed.some(d => d.w === w && d.h === h);
-        
         if (isValid) {
             display.innerHTML = `<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido: ${w}x${h}px</span>`;
             input.style.borderColor = '#00ffbf';
@@ -300,7 +207,7 @@ function checkCoverVisual(input) {
         }
     };
     img.onerror = function() { 
-        display.innerText = "URL inválida"; 
+        display.innerText = "URL inválida";
         img.style.display='none'; 
         input.style.borderColor = '#ff4757';
     };
@@ -346,7 +253,7 @@ function updateAudioPreview(input) {
     statusEl.innerHTML = '<span style="color:#facc15"><i class="fas fa-circle-notch fa-spin"></i> Cargando...</span>';
     audioEl.src = input.value;
     audioEl.load();
-    
+
     audioEl.onloadeddata = () => { statusEl.innerHTML = '<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido</span>'; };
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
@@ -360,10 +267,9 @@ function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
     div.className = 'season-card';
-    
     const count = document.querySelectorAll('.season-card').length;
     const color = colorPalette[count % colorPalette.length];
-    
+
     div.style.cssText = `
         border-left: 4px solid ${color};
         background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
@@ -422,7 +328,6 @@ function removeSeasonBlock(btn) {
     btn.closest('.season-card').remove();
     updateAllBlockNames();
     requestPreviewUpdate();
-    
     document.querySelectorAll('.season-card').forEach((card, idx) => {
         const color = colorPalette[idx % colorPalette.length];
         card.style.borderLeftColor = color;
@@ -475,7 +380,6 @@ function handleSeasonTypeChange(select) {
         countInput.disabled = false;
     }
     if(!select.dataset.loading) updateAllBlockNames();
-    
     if(countInput.value) renderChapters(countInput);
     requestPreviewUpdate();
 }
@@ -486,7 +390,7 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
-    
+
     // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
@@ -507,7 +411,6 @@ function renderChapters(input, existingEps = []) {
         row.className = 'chapter-row';
         
         let sub = '', lat = '', customTitle = '';
-        
         if(existingEps[i]) {
              lat = existingEps[i].link || '';
              sub = existingEps[i].link2 || ''; 
@@ -574,7 +477,7 @@ function updateWebPreview() {
         s.innerText = cb.value;
         tagsContainer.appendChild(s);
     });
-    
+
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -626,7 +529,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
     const fileData = await getGithubFile(token, owner, repo, path);
     const newContent = contentTransformer(fileData.content);
     const encodedContent = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    
+
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
@@ -701,12 +604,10 @@ function _performFilter() {
     results.innerHTML = '';
     
     const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
-    
+
     const filtered = cachedIndex.filter(a => {
         const matchesText = a.title.toLowerCase().includes(query);
         const uploaderName = a.uploader || "Archinime";
-        
-        // Verifica si es super admin o es el dueño
         const isMyUpload = (uploaderName === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
 
         if (currentSearchMode === 'mine') {
@@ -715,7 +616,7 @@ function _performFilter() {
             // General: muestra todo
             return matchesText;
         }
-    }).slice(0, 1000);
+    }).slice(0, 1000); // Límite 1000
 
     filtered.forEach(anime => {
         const div = document.createElement('div');
@@ -867,7 +768,6 @@ function exitEditMode() {
 function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
-    
     const demoSelect = document.getElementById('demografiaAnime').value;
     const ratingSelect = document.getElementById('ratingAnime').value;
     const aliasList = [];
@@ -878,6 +778,7 @@ function generateData() {
     else if(ratingSelect === 'good') ratingVal = 4.6;
     else if(ratingSelect === 'regular') ratingVal = 4.0;
 
+    // Aquí capturamos la info del usuario actual
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -889,8 +790,8 @@ function generateData() {
         rating: ratingVal,
         musica: [],
         temporadas: [],
-        uploader: currentUserNick, 
-        uploaderAvatar: currentUserAvatar 
+        uploader: currentUserNick, // Guardamos tu nombre
+        uploaderAvatar: currentUserAvatar // Guardamos tu foto
     };
 
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
@@ -910,6 +811,7 @@ function generateData() {
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
+            
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             
             let playerTitle = "", detailTitle = ""; 
@@ -949,8 +851,39 @@ function generateData() {
     return anime;
 }
 
+// --- FUNCIÓN MODIFICADA: ALERTA DE SESIÓN Y BRILLO DEL BOTÓN (SIN TOOLTIP) ---
+function showSessionAlert() {
+    // 1. Crear el banner rojo en la parte superior
+    if (!document.getElementById('session-warning-banner')) {
+        const banner = document.createElement('div');
+        banner.id = 'session-warning-banner';
+        banner.style.position = 'fixed';
+        banner.style.top = '0';
+        banner.style.left = '0';
+        banner.style.width = '100%';
+        banner.style.background = '#ff4757'; // Rojo intenso
+        banner.style.color = '#fff';
+        banner.style.textAlign = 'center';
+        banner.style.padding = '12px';
+        banner.style.fontWeight = 'bold';
+        banner.style.zIndex = '10000';
+        banner.style.fontFamily = "'Outfit', sans-serif";
+        banner.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
+        banner.innerHTML = '<i class="fas fa-exclamation-triangle"></i> NO TIENES SESIÓN / SESIÓN FINALIZADA. POR FAVOR, CIERRA SESIÓN E INGRESA DE NUEVO.';
+        document.body.appendChild(banner);
+
+        // Bajar un poco el header para que no se tape
+        const header = document.getElementById('userHeader');
+        if(header) header.style.marginTop = '45px';
+    }
+
+    // 2. Hacer brillar el botón de Logout (igual que antes pero sin el tooltip)
+    highlightLogoutButton();
+}
+
 function highlightLogoutButton() {
     const headerBtns = document.querySelectorAll('#userHeader button');
+    // Buscamos el botón de logout (el que llama a logout())
     const logoutBtn = Array.from(headerBtns).find(btn => btn.getAttribute('onclick') === 'logout()');
     
     if (logoutBtn) {
@@ -960,25 +893,12 @@ function highlightLogoutButton() {
         logoutBtn.style.color = '#00f0ff';
         logoutBtn.style.transform = 'scale(1.2)';
         
+        // Animación de parpadeo
         let visible = true;
         setInterval(() => {
             logoutBtn.style.opacity = visible ? '0.5' : '1';
             visible = !visible;
         }, 500);
-
-        const tip = document.createElement('div');
-        tip.innerHTML = "⬇ CLIC AQUÍ ⬇";
-        tip.style.position = 'absolute';
-        tip.style.top = '50px';
-        tip.style.right = '10px';
-        tip.style.background = '#00f0ff';
-        tip.style.color = '#000';
-        tip.style.padding = '5px 10px';
-        tip.style.borderRadius = '5px';
-        tip.style.fontWeight = 'bold';
-        tip.style.zIndex = '9999';
-        tip.style.pointerEvents = 'none';
-        document.body.appendChild(tip);
     }
 }
 
@@ -987,7 +907,12 @@ async function subirAGithHub() {
     if(btn.disabled) return showToast("Edición Bloqueada", true);
 
     const token = currentUserToken;
-    if(!token) return showToast("Error de sesión", true);
+    // --- AQUÍ ACTIVAMOS LA ALERTA ROJA SI NO HAY TOKEN ---
+    if(!token) { 
+        showSessionAlert(); 
+        return; 
+    }
+    
     const nuevoAnime = generateData();
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
@@ -998,9 +923,9 @@ async function subirAGithHub() {
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
+
     try {
         let FINAL_ID = nuevoAnime.id;
-        
         if (!isEditMode) {
             log("1/5 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
@@ -1022,14 +947,14 @@ async function subirAGithHub() {
                 newContent = newContent.replace(regexRemove, '');
             }
             
-            // LIMPIEZA DE COMAS DOBLES
+            // LIMPIEZA DE COMAS DOBLES ANTES DE INSERTAR
             newContent = newContent.replace(/,\s*,/g, ',');
 
             const insertionPoint = newContent.lastIndexOf('];');
             let before = newContent.substring(0, insertionPoint).trim();
             
             if(before.endsWith(',')) {
-                 before = before.slice(0, -1);
+                before = before.slice(0, -1);
             }
             
             let finalGenres = [...nuevoAnime.generos];
@@ -1039,7 +964,8 @@ async function subirAGithHub() {
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
-            
+
+            // AQUI AGREGAMOS TU NOMBRE Y TU AVATAR AL ARCHIVO
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
@@ -1081,6 +1007,7 @@ async function subirAGithHub() {
         log("4/5 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
@@ -1110,6 +1037,7 @@ async function subirAGithHub() {
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
+            
             if(isEditMode) {
                 const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
@@ -1132,8 +1060,8 @@ async function subirAGithHub() {
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
         showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
         
-        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
-        highlightLogoutButton();
+        // --- ACTIVAR ALERTA ROJA Y BRILLO TRAS SUBIDA EXITOSA ---
+        showSessionAlert(); 
 
     } catch (e) {
         console.error(e);
