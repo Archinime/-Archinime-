@@ -13,42 +13,56 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <link rel="stylesheet" href="styles.css">
+
     <style>
-        /* Estilos extra para las pestañas del buscador */
-        .search-tabs {
-            display: flex;
-            gap: 10px;
-            padding: 0 15px 10px 15px;
-            border-bottom: 1px solid #333;
+        /* ESTILOS EXTRA PARA EL MODAL DE REGISTRO DE PERFIL */
+        #profileSetupModal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 10000; /* Por encima de todo */
+            display: none; /* Se activa con JS */
+            flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 20px;
+        }
+        .profile-card {
             background: #131419;
-            margin-top: 20px; /* ESPACIO AÑADIDO AQUI */
-        }
-        .search-tab-btn {
-            flex: 1;
-            padding: 10px;
-            background: transparent;
             border: 1px solid #333;
-            color: #777;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px; width: 100%;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.1);
+            text-align: center;
         }
-        .search-tab-btn.active {
-            background: var(--primary);
+        .profile-card h2 {
+            border: none;
+            justify-content: center;
             color: #fff;
-            border-color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
-        .search-tab-btn:hover:not(.active) {
-            background: rgba(255,255,255,0.05);
-            color: #fff;
+        .profile-card p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
         }
-        /* Estilo para botón deshabilitado (Modo Lectura) */
-        .btn-disabled {
-            background: #333 !important;
-            color: #777 !important;
-            cursor: not-allowed !important;
-            box-shadow: none !important;
+        .p-input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .p-input-group label {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+        .profile-preview-img {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00f0ff;
+            margin: 0 auto 20px;
+            display: block;
+            background: #000;
         }
     </style>
 </head>
@@ -70,12 +84,40 @@
     </div>
 </div>
 
+<div id="profileSetupModal">
+    <div class="profile-card">
+        <img id="setupAvatarPreview" src="Logo_Archinime.avif" class="profile-preview-img">
+        <h2>Bienvenido/a</h2>
+        <p>Es tu primera vez aquí. Configura tu perfil de Uploader para continuar.</p>
+
+        <div class="p-input-group">
+            <label>Nick / Nombre de Uploader <span>*</span></label>
+            <input type="text" id="setupNick" placeholder="Ej: Archinime">
+        </div>
+
+        <div class="p-input-group">
+            <label>URL de Avatar (.avif/.jpg/.png) <span>*</span></label>
+            <input type="text" id="setupAvatar" placeholder="https://..." oninput="updateProfilePreview(this)">
+        </div>
+
+        <div class="p-input-group">
+            <label>Link Red Social (Opcional)</label>
+            <input type="text" id="setupSocial" placeholder="Youtube, Instagram...">
+        </div>
+
+        <button class="btn btn-gen" id="btnSaveProfile" onclick="saveUserProfile()">
+            <i class="fas fa-save"></i> GUARDAR PERFIL
+        </button>
+        <div id="profileLog" style="margin-top:10px; color:#00f0ff; font-size:0.8em;"></div>
+    </div>
+</div>
+
 <div id="userHeader" class="user-header">
     <div class="header-profile">
         <img id="userAvatarImg" src="" style="width:36px; height:36px; border-radius:50%; border:2px solid var(--primary);">
         <div>
             <div class="user-badge">Verificado</div>
-            <div id="userNameDisplay" class="user-name">Archinime</div>
+            <div id="userNameDisplay" class="user-name">Usuario</div>
         </div>
     </div>
     <div style="display:flex; gap:10px;">
@@ -91,15 +133,15 @@
 <div id="searchModal" onclick="handleModalClick(event)">
     <div class="search-box">
         <div style="padding:15px; border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color:#fff;">📂 Seleccionar Anime</h3>
+            <h3 style="margin:0; color:#fff;">📂 Cargar Anime</h3>
             <button onclick="closeSearchModal()" style="background:none; border:none; color:#ff4757; font-size:1.2em; cursor:pointer;"><i class="fas fa-times"></i></button>
         </div>
         
         <div class="search-tabs">
-            <button id="tabMine" class="search-tab-btn active" onclick="setSearchMode('mine')">
-                <i class="fas fa-user"></i> Mis Aportes
+            <button class="tab-btn active" id="tabMine" onclick="switchSearchTab('mine')">
+                <i class="fas fa-user-tag"></i> Mis Animes
             </button>
-            <button id="tabAll" class="search-tab-btn" onclick="setSearchMode('all')">
+            <button class="tab-btn" id="tabGeneral" onclick="switchSearchTab('general')">
                 <i class="fas fa-globe"></i> General
             </button>
         </div>
@@ -117,9 +159,9 @@
     <div class="editor-panel">
         
         <div id="editModeBar">
-            <i class="fas fa-edit"></i> <span id="modeLabel">MODO EDICIÓN</span> (ID: <span id="editIdDisplay">0</span>)
-            <div style="font-size:0.8em; font-weight:normal; margin-top:5px;" id="modeDescription">Los cambios sobrescribirán el anime existente.</div>
-            <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3); border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar / Cerrar</button>
+            <i class="fas fa-edit"></i> MODO EDICIÓN ACTIVADO (ID: <span id="editIdDisplay">0</span>)
+            <div style="font-size:0.8em; font-weight:normal; margin-top:5px;">Los cambios sobrescribirán el anime existente.</div>
+            <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3); border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar Edición</button>
         </div>
 
         <h2><i class="fas fa-pen-to-square"></i> 1. Ficha Técnica</h2>
@@ -159,12 +201,16 @@
                     <option value="Shōjo">Shōjo</option>
                     <option value="Josei">Josei</option>
                     <option value="Kodomo">Kodomo</option>
-                    <option value="Seijin">Seijin</option>
                 </select>
             </div>
             <div class="col-flex">
-                <label>Valoración (1.0 - 5.0) <span>*</span></label>
-                <input type="number" id="ratingAnime" step="0.1" min="1.0" max="5.0" placeholder="Ej: 4.5" oninput="requestPreviewUpdate()" onblur="validate(this)">
+                <label>Valoración <span>*</span></label>
+                <select id="ratingAnime" onchange="requestPreviewUpdate()">
+                    <option value="" disabled selected>Elegir Valoración...</option>
+                    <option value="excellent">⭐ Excelente (4.8+)</option>
+                    <option value="good">⭐ Buena (4.6+)</option>
+                    <option value="regular">⭐ Regular (-4.5)</option>
+                </select>
             </div>
         </div>
 
@@ -176,7 +222,7 @@
         <div id="musicContainer"></div>
         <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
 
-        <button id="mainActionButton" class="btn btn-gen" onclick="subirAGithHub()">
+        <button class="btn btn-gen" id="btnSaveAction" onclick="subirAGithHub()">
             <i class="fas fa-cloud-arrow-up"></i> <span id="btnActionText">COMPILAR Y SUBIR</span>
         </button>
         

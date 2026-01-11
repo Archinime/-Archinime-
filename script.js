@@ -10,8 +10,12 @@ const firebaseConfig = {
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
 
-// USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
-const ALLOWED_USERS = ["archinime12@gmail.com"];
+// USUARIOS PERMITIDOS (Super Admins)
+const ALLOWED_USERS = [
+"archinime12@gmail.com", 
+"alejandroarchi12@gmail.com",
+"lucioguapofeo@gmail.com",
+];
 
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
@@ -24,6 +28,7 @@ const auth = firebase.auth();
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 let currentUserToken = null;
+let globalUsersData = {}; // Guardará todos los usuarios cargados
 
 // VARIABLES DE ESTADO
 let isEditMode = false;
@@ -33,7 +38,7 @@ let searchTimeout = null;
 let previewTimeout = null;
 
 // DATOS DEL USUARIO ACTUAL
-let currentUserNick = "Archinime"; 
+let currentUserNick = "Usuario"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
 
@@ -44,8 +49,13 @@ let currentSearchMode = 'mine';
 // AUTENTICACIÓN
 // ============================================
 auth.onAuthStateChanged((user) => {
-    if (user) checkAccess(user);
-    else showLogin();
+    // Solo actuamos si tenemos token (significa que entró por Github o ya estaba)
+    // El flujo principal se dispara en signInWithGitHub
+    if (user && currentUserToken) {
+        checkAccess(user);
+    } else if (!user) {
+        showLogin();
+    }
 });
 
 function signInWithGitHub() {
@@ -58,6 +68,7 @@ function signInWithGitHub() {
         })
         .then((result) => {
             currentUserToken = result.credential.accessToken;
+            // Llamamos a checkAccess aquí porque ya tenemos el token de GH necesario
             checkAccess(result.user);
         }).catch((error) => {
             console.error(error);
@@ -66,28 +77,108 @@ function signInWithGitHub() {
         });
 }
 
-function checkAccess(user) {
+// MODIFICADO: Ahora verifica en users-data.js
+async function checkAccess(user) {
     const email = user.email;
-    const nickname = user.providerData[0]?.displayName || user.reloadUserInfo?.screenName || "Usuario";
-    const avatar = user.photoURL || "Logo_Archinime.avif";
-
-    // Guardamos datos globales del usuario
-    currentUserNick = nickname;
-    currentUserAvatar = avatar;
     currentUserEmail = email;
 
-    const isAllowed = true;
+    document.getElementById('errorText').innerText = "Verificando base de datos...";
+    document.getElementById('loginError').style.display = 'none';
 
-    if (isAllowed) {
-        showCMS(user);
-    } else {
-        document.getElementById('errorText').innerText = "No autorizado.";
+    try {
+        // 1. Descargar users-data.js para ver si el usuario existe
+        const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
+        globalUsersData = safeEval(usersFile.content);
+
+        if (globalUsersData[email]) {
+            // USUARIO EXISTE -> CARGAR SUS DATOS
+            const userData = globalUsersData[email];
+            currentUserNick = userData.nick;
+            currentUserAvatar = userData.avatar;
+            showCMS();
+        } else {
+            // USUARIO NUEVO -> MOSTRAR PANTALLA DE REGISTRO
+            showProfileSetup();
+        }
+
+    } catch (e) {
+        console.error(e);
+        document.getElementById('errorText').innerText = "Error leyendo users-data: " + e.message;
         document.getElementById('loginError').style.display = 'block';
-        setTimeout(() => auth.signOut(), 3000);
     }
 }
 
-function showCMS(user) {
+function showProfileSetup() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('userHeader').style.display = 'none';
+    document.getElementById('cmsContent').style.display = 'none';
+    document.getElementById('profileSetupModal').style.display = 'flex';
+    
+    // Prellenar con info básica de la cuenta Google/Github si hay
+    const user = auth.currentUser;
+    if(user) {
+        document.getElementById('setupNick').value = user.displayName || "";
+        if(user.photoURL) {
+            document.getElementById('setupAvatar').value = user.photoURL;
+            document.getElementById('setupAvatarPreview').src = user.photoURL;
+        }
+    }
+}
+
+function updateProfilePreview(input) {
+    const img = document.getElementById('setupAvatarPreview');
+    if(input.value) img.src = input.value;
+    else img.src = "Logo_Archinime.avif";
+}
+
+async function saveUserProfile() {
+    const nick = document.getElementById('setupNick').value.trim();
+    const avatar = document.getElementById('setupAvatar').value.trim();
+    const social = document.getElementById('setupSocial').value.trim();
+    const logEl = document.getElementById('profileLog');
+    const btn = document.getElementById('btnSaveProfile');
+
+    if(!nick || !avatar) {
+        alert("Nick y Avatar son obligatorios.");
+        return;
+    }
+
+    btn.disabled = true;
+    logEl.innerText = "Guardando perfil en GitHub...";
+
+    try {
+        // Actualizamos el objeto local
+        globalUsersData[currentUserEmail] = {
+            nick: nick,
+            avatar: avatar,
+            social: social
+        };
+
+        // Guardamos en GitHub
+        await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
+            // Reconstruimos el archivo completo
+            const jsonStr = JSON.stringify(globalUsersData, null, 4);
+            return `const usersData = ${jsonStr};`;
+        });
+
+        // Actualizamos variables globales de sesión
+        currentUserNick = nick;
+        currentUserAvatar = avatar;
+
+        logEl.innerText = "¡Perfil creado! Entrando...";
+        setTimeout(() => {
+            document.getElementById('profileSetupModal').style.display = 'none';
+            showCMS();
+        }, 1000);
+
+    } catch(e) {
+        console.error(e);
+        logEl.innerText = "Error: " + e.message;
+        btn.disabled = false;
+    }
+}
+
+function showCMS() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
@@ -100,6 +191,7 @@ function showLogin() {
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('userHeader').style.display = 'none';
     document.getElementById('cmsContent').style.display = 'none';
+    document.getElementById('profileSetupModal').style.display = 'none';
 }
 
 function logout() {
@@ -128,8 +220,7 @@ genresList.forEach(g => {
 
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
-    x.innerHTML = isError ?
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    x.innerHTML = isError ? `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
@@ -155,7 +246,6 @@ function log(msg) {
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
-
     if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
         input.value = val.replace('&dl=0', '&raw=1');
         changed = true;
@@ -181,7 +271,6 @@ function checkCoverVisual(input) {
     const img = document.getElementById('mainCoverPreview');
     const display = document.getElementById('dimDisplay');
     const val = input.value.trim();
-
     if(val === "") {
         img.style.display = 'none';
         display.innerText = "";
@@ -191,7 +280,6 @@ function checkCoverVisual(input) {
     img.src = val;
     img.style.display = 'block';
     display.innerText = "Verificando...";
-
     img.onload = function() { 
         const w = this.naturalWidth;
         const h = this.naturalHeight;
@@ -253,7 +341,6 @@ function updateAudioPreview(input) {
     statusEl.innerHTML = '<span style="color:#facc15"><i class="fas fa-circle-notch fa-spin"></i> Cargando...</span>';
     audioEl.src = input.value;
     audioEl.load();
-
     audioEl.onloadeddata = () => { statusEl.innerHTML = '<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido</span>'; };
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
@@ -269,12 +356,10 @@ function addSeason(data = null) {
     div.className = 'season-card';
     const count = document.querySelectorAll('.season-card').length;
     const color = colorPalette[count % colorPalette.length];
-
     div.style.cssText = `
         border-left: 4px solid ${color};
         background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
     `;
-
     div.innerHTML = `
         <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
         <div class="row-flex">
@@ -338,7 +423,6 @@ function removeSeasonBlock(btn) {
 function updateAllBlockNames() {
     const cards = document.querySelectorAll('.season-card');
     let tempCount = 0, movieCount = 0, ovaCount = 0, specialCount = 0, spinOffCount = 0;
-    
     cards.forEach(card => {
         const typeSelect = card.querySelector('.s-type');
         const nameInput = card.querySelector('.s-name');
@@ -372,7 +456,6 @@ function handleSeasonTypeChange(select) {
     const card = select.closest('.season-card');
     const countInput = card.querySelector('.s-count');
     const type = select.value;
-
     if (['Pelicula', 'OVA', 'Especial'].includes(type)) {
         countInput.value = 1;
         countInput.disabled = true;
@@ -390,7 +473,6 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const count = parseInt(input.value);
     const list = card.querySelector('.chapters-grid');
-
     // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
@@ -405,11 +487,9 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
-
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
-        
         let sub = '', lat = '', customTitle = '';
         if(existingEps[i]) {
              lat = existingEps[i].link || '';
@@ -424,7 +504,6 @@ function renderChapters(input, existingEps = []) {
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
-
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
@@ -477,7 +556,6 @@ function updateWebPreview() {
         s.innerText = cb.value;
         tagsContainer.appendChild(s);
     });
-
     const grid = document.getElementById('webSeasonsGrid');
     grid.innerHTML = '';
     document.querySelectorAll('.season-card').forEach(card => {
@@ -529,7 +607,6 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
     const fileData = await getGithubFile(token, owner, repo, path);
     const newContent = contentTransformer(fileData.content);
     const encodedContent = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
@@ -604,7 +681,6 @@ function _performFilter() {
     results.innerHTML = '';
     
     const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
-
     const filtered = cachedIndex.filter(a => {
         const matchesText = a.title.toLowerCase().includes(query);
         const uploaderName = a.uploader || "Archinime";
@@ -616,7 +692,7 @@ function _performFilter() {
             // General: muestra todo
             return matchesText;
         }
-    }).slice(0, 1000); // Límite 1000
+    }).slice(0, 1000);
 
     filtered.forEach(anime => {
         const div = document.createElement('div');
@@ -637,7 +713,6 @@ function _performFilter() {
         `;
         results.appendChild(div);
     });
-
     if(filtered.length === 0) {
         let emptyMsg = "";
         if (currentSearchMode === 'mine') {
@@ -665,7 +740,6 @@ async function loadAnimeForEditing(id) {
             getGithubFile(currentUserToken, OWNER, REPO, 'video-player-data.js'),
             getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         ]);
-
         const detObj = safeEval(detailFile.content);
         const playObj = safeEval(playerFile.content);
         const musObj = safeEval(musicFile.content);
@@ -675,13 +749,11 @@ async function loadAnimeForEditing(id) {
         const targetMusic = musObj[id] || [];
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
-
         isEditMode = true;
         currentEditingId = id;
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
         document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
-
         // VERIFICACIÓN DE PROPIEDAD PARA BLOQUEAR BOTÓN
         const indexEntry = cachedIndex.find(x => x.id === id);
         const uploaderName = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
@@ -735,14 +807,12 @@ async function loadAnimeForEditing(id) {
             });
             addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
         });
-
         document.getElementById('musicContainer').innerHTML = '';
         targetMusic.forEach(url => addMusic(url));
 
         checkCoverVisual(document.getElementById('portadaAnime'));
         requestPreviewUpdate();
         showToast("¡Datos cargados correctamente!");
-
     } catch(e) {
         console.error(e);
         showToast("Error cargando: " + e.message, true);
@@ -772,7 +842,6 @@ function generateData() {
     const ratingSelect = document.getElementById('ratingAnime').value;
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-
     let ratingVal = 0;
     if(ratingSelect === 'excellent') ratingVal = 4.9;
     else if(ratingSelect === 'good') ratingVal = 4.6;
@@ -793,11 +862,9 @@ function generateData() {
         uploader: currentUserNick, // Guardamos tu nombre
         uploaderAvatar: currentUserAvatar // Guardamos tu foto
     };
-
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
 
     let globalOrder = 1, seasonCountVP = 0, ovaCountVP = 0, movieCountVP = 0, specialCountVP = 0, spinOffCount = 0;
-    
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
@@ -851,57 +918,36 @@ function generateData() {
     return anime;
 }
 
-// --- FUNCIÓN MODIFICADA: ALERTA DE SESIÓN CON TEXTO NUEVO ---
-function showSessionAlert() {
-    // 1. Crear el banner rojo en la parte superior
-    if (!document.getElementById('session-warning-banner')) {
-        const banner = document.createElement('div');
-        banner.id = 'session-warning-banner';
-        banner.style.position = 'fixed';
-        banner.style.top = '0';
-        banner.style.left = '0';
-        banner.style.width = '100%';
-        banner.style.background = '#ff4757'; // Rojo intenso
-        banner.style.color = '#fff';
-        banner.style.textAlign = 'center';
-        banner.style.padding = '12px';
-        banner.style.fontWeight = 'bold';
-        banner.style.zIndex = '10000';
-        banner.style.fontFamily = "'Outfit', sans-serif";
-        banner.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
-        
-        // --- CAMBIO DE TEXTO AQUI ---
-        banner.innerHTML = '<i class="fas fa-exclamation-triangle"></i> SESIÓN FINALIZADA. POR FAVOR, CIERRA SESIÓN E INGRESA DE NUEVO.';
-        
-        document.body.appendChild(banner);
-
-        // Bajar un poco el header para que no se tape
-        const header = document.getElementById('userHeader');
-        if(header) header.style.marginTop = '45px';
-    }
-
-    // 2. Hacer brillar el botón de Logout
-    highlightLogoutButton();
-}
-
+// FUNCIÓN PARA RESALTAR EL BOTÓN DE LOGOUT
 function highlightLogoutButton() {
     const headerBtns = document.querySelectorAll('#userHeader button');
-    // Buscamos el botón de logout (el que llama a logout())
     const logoutBtn = Array.from(headerBtns).find(btn => btn.getAttribute('onclick') === 'logout()');
-    
     if (logoutBtn) {
         logoutBtn.style.transition = 'all 0.5s ease';
         logoutBtn.style.border = '2px solid #00f0ff';
         logoutBtn.style.boxShadow = '0 0 20px #00f0ff, inset 0 0 10px #00f0ff';
         logoutBtn.style.color = '#00f0ff';
         logoutBtn.style.transform = 'scale(1.2)';
-        
-        // Animación de parpadeo
+        // Animación simple de parpadeo
         let visible = true;
         setInterval(() => {
             logoutBtn.style.opacity = visible ? '0.5' : '1';
             visible = !visible;
         }, 500);
+        // Mensaje flotante
+        const tip = document.createElement('div');
+        tip.innerHTML = "⬇ CLIC AQUÍ ⬇";
+        tip.style.position = 'absolute';
+        tip.style.top = '50px';
+        tip.style.right = '10px';
+        tip.style.background = '#00f0ff';
+        tip.style.color = '#000';
+        tip.style.padding = '5px 10px';
+        tip.style.borderRadius = '5px';
+        tip.style.fontWeight = 'bold';
+        tip.style.zIndex = '9999';
+        tip.style.pointerEvents = 'none';
+        document.body.appendChild(tip);
     }
 }
 
@@ -910,12 +956,7 @@ async function subirAGithHub() {
     if(btn.disabled) return showToast("Edición Bloqueada", true);
 
     const token = currentUserToken;
-    // --- AQUÍ ACTIVAMOS LA ALERTA ROJA SI NO HAY TOKEN ---
-    if(!token) { 
-        showSessionAlert(); 
-        return; 
-    }
-    
+    if(!token) return showToast("Error de sesión", true);
     const nuevoAnime = generateData();
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
@@ -926,7 +967,6 @@ async function subirAGithHub() {
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
-
     try {
         let FINAL_ID = nuevoAnime.id;
         if (!isEditMode) {
@@ -967,7 +1007,6 @@ async function subirAGithHub() {
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
-
             // AQUI AGREGAMOS TU NOMBRE Y TU AVATAR AL ARCHIVO
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
@@ -1035,7 +1074,6 @@ async function subirAGithHub() {
             
             return before + playerStr + "\n};";
         });
-
         // UPDATE MUSIC
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
@@ -1063,8 +1101,9 @@ async function subirAGithHub() {
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
         showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
         
-        // --- ACTIVAR ALERTA ROJA Y BRILLO TRAS SUBIDA EXITOSA ---
-        showSessionAlert(); 
+        // AVISAR
+        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
+        highlightLogoutButton();
 
     } catch (e) {
         console.error(e);
