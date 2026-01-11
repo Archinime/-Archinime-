@@ -8,5 +8,10 @@ const usersData = {
         "nick": "Alejandro",
         "avatar": "https://avatars.githubusercontent.com/u/253379195?v=4",
         "social": ""
+    },
+    "lucioguapofeo@gmail.com": {
+        "nick": "lulu",
+        "avatar": "https://avatars.githubusercontent.com/u/254288605?v=4",
+        "social": ""
     }
 };
