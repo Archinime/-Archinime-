@@ -9,7 +9,6 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
-
 // USUARIOS PERMITIDOS (Super Admins que pueden ver todo)
 const ALLOWED_USERS = ["archinime12@gmail.com"];
 
@@ -27,11 +26,13 @@ let currentEditingId = null;
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
-
 // DATOS DEL USUARIO ACTUAL
-let currentUserNick = "Archinime"; // Valor por defecto
-let currentUserAvatar = "Logo_Archinime.avif"; // Valor por defecto
+let currentUserNick = "Archinime"; 
+let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
+
+// Variable para el modo de búsqueda ('mine' o 'general')
+let currentSearchMode = 'mine'; 
 
 // ============================================
 // AUTENTICACIÓN
@@ -40,7 +41,6 @@ auth.onAuthStateChanged((user) => {
     if (user) checkAccess(user);
     else showLogin();
 });
-
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -65,8 +65,6 @@ function checkAccess(user) {
     currentUserAvatar = avatar;
     currentUserEmail = email;
 
-    // Permitir acceso si está en la lista o es un usuario válido de GitHub (aquí puedes restringir más si quieres)
-    // Por ahora, permitimos entrar, pero el filtro de edición limitará lo que ven.
     const isAllowed = true; 
 
     if (isAllowed) {
@@ -82,7 +80,6 @@ function showCMS(user) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'flex';
     document.getElementById('cmsContent').style.display = 'grid';
-    
     // Actualizar UI con datos del usuario
     document.getElementById('userAvatarImg').src = currentUserAvatar;
     document.getElementById('userNameDisplay').innerText = currentUserNick;
@@ -109,18 +106,16 @@ const genresList = [
     "Misterio", "Musical", "Nekketsu", "Psicológico", "Romance", "Seinen", "Shōnen", "Shōjo", 
     "Slice of Life", "Sobrenatural", "Superhéroes", "Suspenso", "Terror", "Yuri", "Yaoi", "Seijin"
 ];
-
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
-
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
@@ -142,7 +137,7 @@ function log(msg) {
     el.scrollTop = el.scrollHeight;
 }
 
-// CONVERSOR DE LINKS (DROPBOX / DRIVE)
+// CONVERSOR DE LINKS
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
@@ -249,7 +244,6 @@ function updateAudioPreview(input) {
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
-
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
@@ -391,9 +385,8 @@ function renderChapters(input, existingEps = []) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
-        
         if(existingEps[i]) {
-             lat = existingEps[i].link || '';  
+             lat = existingEps[i].link || '';
              sub = existingEps[i].link2 || ''; 
              if(!['Temporada', 'Spin-Off'].includes(type)) customTitle = existingEps[i].title;
         } else if(currentData[i]) {
@@ -521,12 +514,16 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
 }
 
 // ============================================
-// CARGA Y EDICIÓN (FILTRADO MEJORADO)
+// CARGA Y EDICIÓN (CON PESTAÑAS)
 // ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
     document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
+    
+    // Default a 'mine' al abrir
+    switchSearchTab('mine');
+
     if(cachedIndex.length === 0) loadIndexForSearch();
     else filterSearch();
 }
@@ -539,6 +536,17 @@ function handleModalClick(event) {
 
 function closeSearchModal() { 
     document.getElementById('searchModal').style.display = 'none';
+}
+
+function switchSearchTab(mode) {
+    currentSearchMode = mode;
+    
+    // Update visual
+    document.getElementById('tabMine').className = mode === 'mine' ? 'tab-btn active' : 'tab-btn';
+    document.getElementById('tabGeneral').className = mode === 'general' ? 'tab-btn active' : 'tab-btn';
+
+    // Refilter
+    if(cachedIndex.length > 0) filterSearch();
 }
 
 async function loadIndexForSearch() {
@@ -567,41 +575,53 @@ function _performFilter() {
     const results = document.getElementById('searchResults');
     results.innerHTML = '';
     
-    // FILTRADO INTELIGENTE:
-    // 1. Coincide con el texto buscado
-    // 2. Coincide con el uploader O el usuario es Super Admin (archinime12@gmail.com)
     const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
-
+    
     const filtered = cachedIndex.filter(a => {
         const matchesText = a.title.toLowerCase().includes(query);
-        
-        // Comprobamos si el anime fue subido por el usuario actual
-        // Si el anime no tiene campo 'uploader', asumimos que es antiguo y solo el admin lo ve (o si el usuario se llama Archinime)
-        const uploaderName = a.uploader || "Archinime"; 
+        const uploaderName = a.uploader || "Archinime";
         const isMyUpload = (uploaderName === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
 
-        return matchesText && isMyUpload;
+        if (currentSearchMode === 'mine') {
+            return matchesText && isMyUpload;
+        } else {
+            // General: muestra todo
+            return matchesText;
+        }
     }).slice(0, 50);
 
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
         div.onclick = () => loadAnimeForEditing(anime.id);
+        
+        let extraInfo = "";
+        if (currentSearchMode === 'general') {
+            extraInfo = ` | Subido por: <span style="color:var(--primary)">${anime.uploader || "Desconocido"}</span>`;
+        }
+
         div.innerHTML = `
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
                 <div style="font-weight:bold; color:#fff;">${anime.title}</div>
-                <div style="color:#777; font-size:0.8em">ID: ${anime.id} | Subido por: ${anime.uploader || "Desconocido"}</div>
+                <div style="color:#777; font-size:0.8em">ID: ${anime.id}${extraInfo}</div>
             </div>
         `;
         results.appendChild(div);
     });
 
     if(filtered.length === 0) {
+        let emptyMsg = "";
+        if (currentSearchMode === 'mine') {
+            emptyMsg = `No se encontraron animes subidos por <b>${currentUserNick}</b>.`;
+        } else {
+            emptyMsg = "No se encontraron resultados en el catálogo general.";
+        }
+
         results.innerHTML = `
             <div style="padding:20px; color:#777; text-align:center">
                 <i class="fas fa-folder-open" style="font-size:2em; margin-bottom:10px;"></i><br>
-                No se encontraron animes subidos por <b>${currentUserNick}</b> con ese nombre.
+                ${emptyMsg}
             </div>`;
     }
 }
@@ -632,11 +652,25 @@ async function loadAnimeForEditing(id) {
         document.getElementById('editIdDisplay').innerText = id;
         document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
 
+        // VERIFICACIÓN DE PROPIEDAD PARA BLOQUEAR BOTÓN
+        const indexEntry = cachedIndex.find(x => x.id === id);
+        const uploaderName = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
+        const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
+        const isOwner = (uploaderName === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
+
+        const saveBtn = document.getElementById('btnSaveAction');
+        if (!isOwner) {
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fas fa-lock"></i> EDICIÓN BLOQUEADA (Solo Lectura)';
+            showToast("Modo Lectura: No eres el autor de este anime", true);
+        } else {
+            saveBtn.disabled = false;
+        }
+
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
         document.getElementById('sinopsisAnime').value = targetDetail.desc;
         
-        const indexEntry = cachedIndex.find(x => x.id === id);
         document.getElementById('aliasContainer').innerHTML = '';
         if(indexEntry && indexEntry.aliases) indexEntry.aliases.forEach(a => addAlias(a));
 
@@ -689,6 +723,10 @@ function exitEditMode() {
     currentEditingId = null;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
+    // Restaurar botón si estaba bloqueado
+    const saveBtn = document.getElementById('btnSaveAction');
+    saveBtn.disabled = false;
+    
     location.reload(); 
 }
 
@@ -779,6 +817,9 @@ function generateData() {
 }
 
 async function subirAGithHub() {
+    const btn = document.getElementById('btnSaveAction');
+    if(btn.disabled) return showToast("Edición Bloqueada", true);
+
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
     const nuevoAnime = generateData();
@@ -832,7 +873,6 @@ async function subirAGithHub() {
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
-            
             // AQUI AGREGAMOS TU NOMBRE Y TU AVATAR AL ARCHIVO
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
@@ -846,7 +886,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-           
+            
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -900,7 +940,6 @@ async function subirAGithHub() {
             
             return before + playerStr + "\n};";
         });
-
         // UPDATE MUSIC
         log("5/5 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {

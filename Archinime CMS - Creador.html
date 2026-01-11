@@ -53,9 +53,19 @@
 <div id="searchModal" onclick="handleModalClick(event)">
     <div class="search-box">
         <div style="padding:15px; border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color:#fff;">📂 Seleccionar Mis Animes</h3>
+            <h3 style="margin:0; color:#fff;">📂 Cargar Anime</h3>
             <button onclick="closeSearchModal()" style="background:none; border:none; color:#ff4757; font-size:1.2em; cursor:pointer;"><i class="fas fa-times"></i></button>
         </div>
+        
+        <div class="search-tabs">
+            <button class="tab-btn active" id="tabMine" onclick="switchSearchTab('mine')">
+                <i class="fas fa-user-tag"></i> Mis Animes
+            </button>
+            <button class="tab-btn" id="tabGeneral" onclick="switchSearchTab('general')">
+                <i class="fas fa-globe"></i> General
+            </button>
+        </div>
+
         <div style="padding:10px;">
             <input type="text" id="searchInput" placeholder="Buscar por nombre..." style="margin:0;" oninput="filterSearch()">
             <div id="loadingSearch" style="color:var(--accent); text-align:center; padding:10px; display:none;">Cargando índice...</div>
@@ -132,7 +142,7 @@
         <div id="musicContainer"></div>
         <button class="btn btn-add" style="border-color:var(--primary); color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
 
-        <button class="btn btn-gen" onclick="subirAGithHub()">
+        <button class="btn btn-gen" id="btnSaveAction" onclick="subirAGithHub()">
             <i class="fas fa-cloud-arrow-up"></i> <span id="btnActionText">COMPILAR Y SUBIR</span>
         </button>
         
