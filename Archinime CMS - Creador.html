@@ -20,9 +20,8 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
-            z-index: 10000; /* Por encima de todo */
+            z-index: 10000;
             display: none;
-            /* Se activa con JS */
             flex-direction: column;
             justify-content: center; align-items: center;
             padding: 20px;
@@ -98,8 +97,8 @@
         </div>
 
         <div class="p-input-group">
-            <label>Avatar por defecto de GitHub (Bloqueado) <span>*</span></label>
-            <input type="text" id="setupAvatar" placeholder="Se cargará automáticamente..." disabled style="cursor: not-allowed; opacity: 0.7;">
+            <label>Avatar por defecto de GitHub <span>*</span></label>
+            <input type="text" id="setupAvatar" placeholder="URL de imagen..." oninput="updateProfilePreview(this)">
         </div>
 
         <div class="p-input-group">
@@ -109,7 +108,7 @@
 
         <div style="display: flex; gap: 10px; margin-top: 40px;">
             <button class="btn btn-gen" id="btnSaveProfile" onclick="saveUserProfile()" style="margin-top: 0; flex: 1;">
-                GUARDAR PERFIL
+                 GUARDAR PERFIL
             </button>
             
             <button class="btn" id="btnCancelProfile" onclick="closeProfileModal()" style="margin-top: 0; background: transparent; border: 1px solid #333; color: #aaa; width: auto; display: none;">
@@ -152,7 +151,7 @@
                 <i class="fas fa-user-tag"></i> Mis Animes
             </button>
             <button class="tab-btn" id="tabGeneral" onclick="switchSearchTab('general')">
-                <i class="fas fa-globe"></i> General
+                 <i class="fas fa-globe"></i> General
             </button>
         </div>
 
@@ -213,16 +212,12 @@
                     <option value="Shōjo">Shōjo</option>
                     <option value="Josei">Josei</option>
                     <option value="Kodomo">Kodomo</option>
+                    <option value="Seijin">Seijin</option>
                 </select>
             </div>
             <div class="col-flex">
-                <label>Valoración <span>*</span></label>
-                <select id="ratingAnime" onchange="requestPreviewUpdate()">
-                    <option value="" disabled selected>Elegir Valoración...</option>
-                    <option value="excellent">⭐ Excelente (4.8+)</option>
-                    <option value="good">⭐ Buena (4.6+)</option>
-                    <option value="regular">⭐ Regular (-4.5)</option>
-                </select>
+                <label>Valoración (1.0 - 5.0) <span>*</span></label>
+                <input type="number" id="ratingAnime" step="0.1" min="1.0" max="5.0" placeholder="Ej: 4.5" oninput="requestPreviewUpdate()" onblur="validate(this)">
             </div>
         </div>
 
