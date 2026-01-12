@@ -74,9 +74,24 @@ async function checkAccess(user) {
     document.getElementById('errorText').innerText = "Verificando base de datos...";
     document.getElementById('loginError').style.display = 'none';
 
-    // VERIFICACIÓN BLINDADA PARA EL DUEÑO
-    const isSuperAdmin = ALLOWED_USERS.includes(email);
+    // 1. COMPROBACIÓN ESPECIAL PARA EL DUEÑO (SUPER ADMIN)
+    // Si eres tú, forzamos tus datos para evitar que te pida configurar el perfil
+    if (email === "archinime12@gmail.com") {
+        currentUserNick = "Archinime";
+        currentUserAvatar = "Logo_Archinime.avif";
+        // Intentamos cargar la DB solo para tener los otros usuarios, pero te dejamos pasar ya
+        try {
+            const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
+            globalUsersData = safeEval(usersFile.content);
+        } catch (e) {
+            console.warn("No se pudo cargar la DB de usuarios, pero eres Admin.");
+            globalUsersData = {}; 
+        }
+        showCMS();
+        return; // Salimos aquí para que no ejecute el código de abajo
+    }
 
+    // 2. LÓGICA PARA EL RESTO DE APORTADORES
     try {
         const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
         globalUsersData = safeEval(usersFile.content);
@@ -87,8 +102,8 @@ async function checkAccess(user) {
             currentUserAvatar = userData.avatar;
             showCMS();
         } else {
-            // Si es super admin, permitir configurar aunque no esté en el JSON
-            if (isSuperAdmin) {
+            // Si es un Super Admin de la lista ALLOWED_USERS pero no está en el JSON
+            if (ALLOWED_USERS.includes(email)) {
                 showProfileSetup();
             } else {
                 throw new Error("No registrado.");
@@ -97,14 +112,8 @@ async function checkAccess(user) {
 
     } catch (e) {
         console.error("Error acceso:", e);
-        // FAILSAFE: Si hay error leyendo el archivo pero eres Admin, ENTRAS IGUAL
-        if (isSuperAdmin) {
-            console.warn("Error leyendo DB, pero eres Super Admin. Acceso concedido.");
-            showProfileSetup();
-        } else {
-            document.getElementById('errorText').innerText = "Aún no formas parte del grupo de aportadores.";
-            document.getElementById('loginError').style.display = 'block';
-        }
+        document.getElementById('errorText').innerText = "Acceso Denegado: No formas parte de los aportadores.";
+        document.getElementById('loginError').style.display = 'block';
     }
 }
 
