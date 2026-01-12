@@ -9,19 +9,18 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
-
 // USUARIOS PERMITIDOS (Super Admins)
 const ALLOWED_USERS = [
-    "archinime12@gmail.com",
+    "archinime12@gmail.com", 
+    "alejandroarchi12@gmail.com",
+    "lucioguapofeo@gmail.com",
 ];
-
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-
 // FORZAR CIERRE DE SESIÓN AL CERRAR PESTAÑA
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
@@ -36,6 +35,9 @@ let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
 
+// Variable para detectar cambios (dirty state)
+let originalAnimeState = null;
+
 // DATOS DEL USUARIO ACTUAL
 let currentUserNick = "Usuario"; 
 let currentUserAvatar = "Logo_Archinime.avif";
@@ -43,7 +45,6 @@ let currentUserEmail = "";
 
 // Variable para el modo de búsqueda ('mine' o 'general')
 let currentSearchMode = 'mine';
-
 // ============================================
 // AUTENTICACIÓN
 // ============================================
@@ -56,7 +57,6 @@ auth.onAuthStateChanged((user) => {
         showLogin();
     }
 });
-
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -134,7 +134,6 @@ async function saveUserProfile() {
     const social = document.getElementById('setupSocial').value.trim();
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
-    
     if(!nick || !avatar) {
         alert("Nick y Avatar son obligatorios.");
         return;
@@ -208,13 +207,13 @@ genresList.forEach(g => {
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
-
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     x.innerHTML = isError ?
     `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ?
+    "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
 }
 
@@ -275,7 +274,14 @@ function checkCoverVisual(input) {
     img.onload = function() { 
         const w = this.naturalWidth;
         const h = this.naturalHeight;
-        const allowed = [{w: 1000, h: 1500}, {w: 2000, h: 3000}, {w: 3412, h: 5120}];
+        // AÑADIDAS NUEVAS DIMENSIONES AQUÍ
+        const allowed = [
+            {w: 1000, h: 1500}, 
+            {w: 1400, h: 2100}, 
+            {w: 2000, h: 3000}, 
+            {w: 2090, h: 3135},
+            {w: 3412, h: 5120}
+        ];
         const isValid = allowed.some(d => d.w === w && d.h === h);
         if (isValid) {
             display.innerHTML = `<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido: ${w}x${h}px</span>`;
@@ -351,8 +357,15 @@ function addSeason(data = null) {
         border-left: 4px solid ${color};
         background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
     `;
+    
+    // BOTONES DE MOVER Y ELIMINAR
     div.innerHTML = `
-        <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
+        <div class="card-controls">
+            <button class="btn-move" onclick="moveSeason(this, -1)" title="Mover Atrás/Arriba"><i class="fas fa-arrow-up"></i></button>
+            <button class="btn-move" onclick="moveSeason(this, 1)" title="Mover Adelante/Abajo"><i class="fas fa-arrow-down"></i></button>
+            <button class="btn-del-section" onclick="removeSeasonBlock(this)"><i class="fas fa-trash"></i> ELIMINAR</button>
+        </div>
+
         <div class="row-flex">
             <div class="col-flex">
                 <label>Tipo</label>
@@ -400,6 +413,36 @@ function addSeason(data = null) {
     }
 }
 
+// NUEVA FUNCIÓN PARA MOVER BLOQUES
+function moveSeason(btn, direction) {
+    const card = btn.closest('.season-card');
+    const container = document.getElementById('seasonsContainer');
+    
+    if (direction === -1) {
+        // Mover arriba
+        if (card.previousElementSibling) {
+            container.insertBefore(card, card.previousElementSibling);
+        }
+    } else {
+        // Mover abajo
+        if (card.nextElementSibling) {
+            container.insertBefore(card, card.nextElementSibling.nextElementSibling);
+        }
+    }
+    
+    // Recolorear y renombrar
+    updateAllBlockNames();
+    
+    // Corregir colores (visual)
+    document.querySelectorAll('.season-card').forEach((c, idx) => {
+        const color = colorPalette[idx % colorPalette.length];
+        c.style.borderLeftColor = color;
+        c.style.background = `linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%)`;
+    });
+
+    requestPreviewUpdate();
+}
+
 function removeSeasonBlock(btn) {
     btn.closest('.season-card').remove();
     updateAllBlockNames();
@@ -430,7 +473,7 @@ function updateAllBlockNames() {
                 spinOffCount++;
                 if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
             } else if (type === 'Pelicula') {
-                movieCount++;
+                 movieCount++;
                 nameInput.value = `Película ${movieCount}`;
             } else if (type === 'OVA') {
                 ovaCount++;
@@ -492,7 +535,8 @@ function renderChapters(input, existingEps = []) {
              customTitle = currentData[i].title;
         }
 
-        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
+        let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ?
+        "disabled" : "";
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
         row.innerHTML = `
@@ -512,8 +556,39 @@ function requestPreviewUpdate() {
     if (!previewTimeout) {
         previewTimeout = requestAnimationFrame(() => {
             updateWebPreview();
+            checkForChanges(); // Verificamos cambios en cada update
             previewTimeout = null;
         });
+    }
+}
+
+// NUEVA FUNCIÓN: DETECTAR CAMBIOS PARA HABILITAR BOTÓN
+function checkForChanges() {
+    // Si no estamos en modo edición, no bloqueamos nada (a menos que sea validación básica)
+    if (!isEditMode) return;
+
+    const btn = document.getElementById('btnSaveAction');
+    
+    // Si no tenemos estado original, no hacemos nada
+    if (!originalAnimeState) return;
+
+    const currentState = JSON.stringify(generateData());
+    
+    if (currentState !== originalAnimeState) {
+        // Hay cambios
+        if (btn.disabled && !btn.innerHTML.includes("BLOQUEADA")) {
+             btn.disabled = false;
+             btn.style.opacity = "1";
+             btn.innerHTML = '<i class="fas fa-cloud-arrow-up"></i> GUARDAR CAMBIOS';
+        }
+    } else {
+        // No hay cambios
+        // Solo bloqueamos si no es un bloqueo de permisos
+        if (!btn.innerHTML.includes("BLOQUEADA")) {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.innerHTML = '<i class="fas fa-check"></i> Sin cambios pendientes';
+        }
     }
 }
 
@@ -525,11 +600,13 @@ function updateWebPreview() {
     document.getElementById('previewId').innerText = isEditMode ? currentEditingId : "###";
 
     const demo = document.getElementById('demografiaAnime').value;
-    document.getElementById('webDemography').innerText = demo ? demo.toUpperCase() : 'DEMO';
+    document.getElementById('webDemography').innerText = demo ?
+    demo.toUpperCase() : 'DEMO';
     
     const aliases = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
-    const aliasStr = aliases.length > 0 ? aliases.join(', ') : "";
+    const aliasStr = aliases.length > 0 ?
+    aliases.join(', ') : "";
     document.getElementById('previewAliasesList').innerText = aliasStr;
 
     const ratingSel = document.getElementById('ratingAnime').value;
@@ -686,7 +763,6 @@ function _performFilter() {
             return matchesText;
         }
     }).slice(0, 1000);
-
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
@@ -705,7 +781,7 @@ function _performFilter() {
             </div>
         `;
         results.appendChild(div);
-    });
+     });
 
     if(filtered.length === 0) {
         let emptyMsg = "";
@@ -747,7 +823,8 @@ async function loadAnimeForEditing(id) {
         currentEditingId = id;
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
-        document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS (EDITAR)";
+        document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS"; // CAMBIO DE TEXTO SOLICITADO
+        
         // VERIFICACIÓN DE PROPIEDAD PARA BLOQUEAR BOTÓN
         const indexEntry = cachedIndex.find(x => x.id === id);
         const uploaderName = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
@@ -760,7 +837,10 @@ async function loadAnimeForEditing(id) {
             saveBtn.innerHTML = '<i class="fas fa-lock"></i> EDICIÓN BLOQUEADA (Solo Lectura)';
             showToast("Modo Lectura: No eres el autor de este anime", true);
         } else {
-            saveBtn.disabled = false;
+            // SI ES EL DUEÑO, INICIALMENTE LO BLOQUEAMOS HASTA QUE HAYA CAMBIOS
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fas fa-check"></i> Sin cambios pendientes';
+            saveBtn.style.opacity = '0.5';
         }
 
         document.getElementById('tituloAnime').value = targetDetail.title;
@@ -806,6 +886,10 @@ async function loadAnimeForEditing(id) {
 
         checkCoverVisual(document.getElementById('portadaAnime'));
         requestPreviewUpdate();
+
+        // SNAPSHOT DEL ESTADO ORIGINAL PARA COMPARAR CAMBIOS
+        originalAnimeState = JSON.stringify(generateData());
+
         showToast("¡Datos cargados correctamente!");
     } catch(e) {
         console.error(e);
@@ -817,11 +901,13 @@ async function loadAnimeForEditing(id) {
 function exitEditMode() {
     isEditMode = false;
     currentEditingId = null;
+    originalAnimeState = null;
     document.getElementById('editModeBar').style.display = 'none';
     document.getElementById('btnActionText').innerText = "COMPILAR Y SUBIR";
     // Restaurar botón si estaba bloqueado
     const saveBtn = document.getElementById('btnSaveAction');
     saveBtn.disabled = false;
+    saveBtn.style.opacity = '1';
     
     location.reload();
 }
@@ -947,10 +1033,11 @@ function highlightLogoutButton() {
 
 async function subirAGithHub() {
     const btn = document.getElementById('btnSaveAction');
-    if(btn.disabled) return showToast("Edición Bloqueada", true);
+    if(btn.disabled) return showToast("Edición Bloqueada o Sin Cambios", true);
 
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
+    
     const nuevoAnime = generateData();
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
@@ -959,6 +1046,12 @@ async function subirAGithHub() {
     if(nuevoAnime.rating === 0) return showToast("Elige Valoración", true);
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
+
+    // NUEVO: CONFIRMACIÓN ANTES DE SUBIR
+    const confirmMsg = `¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?\n\n- Presiona 'Aceptar' para SÍ (Subir).\n- Presiona 'Cancelar' para AÚN NO (Seguir editando).`;
+    if(!confirm(confirmMsg)) {
+        return; // El usuario eligió "Aun no"
+    }
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
     try {
@@ -991,7 +1084,7 @@ async function subirAGithHub() {
             let before = newContent.substring(0, insertionPoint).trim();
             
             if(before.endsWith(',')) {
-                before = before.slice(0, -1);
+                 before = before.slice(0, -1);
             }
             
             let finalGenres = [...nuevoAnime.generos];
@@ -1014,7 +1107,7 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-            
+             
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
@@ -1036,7 +1129,7 @@ async function subirAGithHub() {
         uploader: "${nuevoAnime.uploader}", 
         seasons: [\n${seasonsStr}          ]
     }`;
-        return before + newDetail + "\n};";
+            return before + newDetail + "\n};";
         });
 
         // UPDATE PLAYER
