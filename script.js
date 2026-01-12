@@ -12,9 +12,7 @@ const firebaseConfig = {
 
 // USUARIOS PERMITIDOS (Super Admins)
 const ALLOWED_USERS = [
-    "archinime12@gmail.com", 
-    "alejandroarchi12@gmail.com",
-    "lucioguapofeo@gmail.com",
+    "archinime12@gmail.com",
 ];
 
 // CONFIGURACIÓN GITHUB
