@@ -119,7 +119,8 @@ function showProfileSetup() {
     // Configurar Textos para Nuevo Usuario
     document.getElementById('modalTitle').innerText = "Bienvenido/a";
     document.getElementById('modalDesc').innerText = "Es tu primera vez aquí. Configura tu cuenta para continuar.";
-    document.getElementById('btnSaveProfile').innerText = '<i class="fas fa-save"></i> GUARDAR PERFIL';
+    // CAMBIO: SOLO TEXTO, SIN ÍCONO
+    document.getElementById('btnSaveProfile').innerText = 'GUARDAR PERFIL';
     
     // OCULTAR BOTÓN DE CANCELAR (Obligatorio configurar)
     document.getElementById('btnCancelProfile').style.display = 'none';
