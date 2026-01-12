@@ -37,12 +37,10 @@ let previewTimeout = null;
 
 // Variable para detectar cambios (dirty state)
 let originalAnimeState = null;
-
 // DATOS DEL USUARIO ACTUAL
 let currentUserNick = "Usuario"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
-
 // Variable para el modo de búsqueda ('mine' o 'general')
 let currentSearchMode = 'mine';
 // ============================================
@@ -101,9 +99,14 @@ async function checkAccess(user) {
     } catch (e) {
         console.error(e);
         // MENSAJE DE ERROR PERSONALIZADO SOLICITADO
-        document.getElementById('errorText').innerText = "Aún no formas parte del grupo de aportadores o consola de aportadores.";
+        document.getElementById('errorText').innerText = "Aún no formas parte del grupo de aportadores.";
         document.getElementById('loginError').style.display = 'block';
     }
+}
+
+// NUEVA FUNCIÓN: Cerrar modal (solo funciona si no es el primer setup)
+function closeProfileModal() {
+    document.getElementById('profileSetupModal').style.display = 'none';
 }
 
 // MUESTRA EL MODAL PARA USUARIOS NUEVOS
@@ -117,11 +120,15 @@ function showProfileSetup() {
     document.getElementById('modalTitle').innerText = "Bienvenido/a";
     document.getElementById('modalDesc').innerText = "Es tu primera vez aquí. Configura tu cuenta para continuar.";
     document.getElementById('btnSaveProfile').innerText = '<i class="fas fa-save"></i> GUARDAR PERFIL';
+    
+    // OCULTAR BOTÓN DE CANCELAR (Obligatorio configurar)
+    document.getElementById('btnCancelProfile').style.display = 'none';
 
     // Prellenar con info básica de la cuenta Google/Github
     const user = auth.currentUser;
     if(user) {
-        document.getElementById('setupNick').value = ""; // Dejar vacío para que elija
+        document.getElementById('setupNick').value = "";
+        // Dejar vacío para que elija
         if(user.photoURL) {
             document.getElementById('setupAvatar').value = user.photoURL;
             document.getElementById('setupAvatarPreview').src = user.photoURL;
@@ -134,7 +141,12 @@ function openProfileEditor() {
     document.getElementById('profileSetupModal').style.display = 'flex';
     document.getElementById('modalTitle').innerText = "Editar Perfil";
     document.getElementById('modalDesc').innerText = "Actualiza tu nombre o red social.";
-    document.getElementById('btnSaveProfile').innerText = '<i class="fas fa-sync"></i> ACTUALIZAR DATOS';
+    
+    // CAMBIO SOLICITADO: TEXTO DEL BOTÓN SIMPLIFICADO
+    document.getElementById('btnSaveProfile').innerText = 'ACTUALIZAR DATOS';
+    
+    // MOSTRAR BOTÓN DE CANCELAR
+    document.getElementById('btnCancelProfile').style.display = 'block';
 
     // Cargar datos actuales
     if(globalUsersData[currentUserEmail]) {
@@ -155,11 +167,10 @@ function updateProfilePreview(input) {
 async function saveUserProfile() {
     const nick = document.getElementById('setupNick').value.trim();
     // El avatar ahora se toma del valor (que está disabled pero tiene el valor)
-    const avatar = document.getElementById('setupAvatar').value.trim(); 
+    const avatar = document.getElementById('setupAvatar').value.trim();
     const social = document.getElementById('setupSocial').value.trim();
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
-
     if(!nick) {
         alert("Debes elegir un nombre de usuario.");
         return;
@@ -183,7 +194,6 @@ async function saveUserProfile() {
         // Si el nick coincide y el email NO es el mío (para permitirme guardar mis propios cambios)
         return data.nick.toLowerCase() === nickLower && email !== currentUserEmail;
     });
-
     if (isTaken) {
         alert("Este nombre ya ha sido registrado, elige otro por favor.");
         return;
@@ -191,7 +201,6 @@ async function saveUserProfile() {
 
     btn.disabled = true;
     logEl.innerText = "Guardando perfil en GitHub...";
-    
     try {
         // Actualizamos el objeto local
         globalUsersData[currentUserEmail] = {
@@ -205,11 +214,9 @@ async function saveUserProfile() {
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
         });
-        
         // Actualizamos variables globales de sesión
         currentUserNick = nick;
         currentUserAvatar = avatar;
-        
         logEl.innerText = "¡Perfil actualizado! Entrando...";
         
         setTimeout(() => {
@@ -218,11 +225,10 @@ async function saveUserProfile() {
             logEl.innerText = "";
             showCMS();
         }, 1000);
-
     } catch(e) {
         console.error(e);
         // MENSAJE DE ERROR PERSONALIZADO SOLICITADO
-        logEl.innerText = "Aún no formas parte del grupo de aportadores o consola de aportadores.";
+        logEl.innerText = "Aún no formas parte del grupo de aportadores.";
         btn.disabled = false;
     }
 }
@@ -415,7 +421,6 @@ function addSeason(data = null) {
         border-left: 4px solid ${color};
         background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
     `;
-    
     // BOTONES DE MOVER Y ELIMINAR
     div.innerHTML = `
         <div class="card-controls">
@@ -425,20 +430,24 @@ function addSeason(data = null) {
         </div>
 
         <div class="row-flex">
+        
             <div class="col-flex">
                 <label>Tipo</label>
                 <select class="s-type" onchange="handleSeasonTypeChange(this)">
-                    <option value="" disabled ${!data ? 'selected' : ''}>Seleccionar...</option>
+                    <option value="" disabled ${!data ?
+                    'selected' : ''}>Seleccionar...</option>
                     <option value="Temporada">Temporada</option>
                     <option value="Pelicula">Película</option>
                     <option value="OVA">OVA</option>
                     <option value="Especial">Especial</option>
+              
                     <option value="Spin-Off">Spin-Off</option>
                 </select>
             </div>
             <div class="col-flex">
                  <label>Nombre Bloque</label>
                  <input type="text" class="s-name" placeholder="Auto" disabled oninput="requestPreviewUpdate()">
+            
             </div>
         </div>
         <label>Poster Bloque</label>
@@ -490,14 +499,12 @@ function moveSeason(btn, direction) {
     
     // Recolorear y renombrar
     updateAllBlockNames();
-    
     // Corregir colores (visual)
     document.querySelectorAll('.season-card').forEach((c, idx) => {
         const color = colorPalette[idx % colorPalette.length];
         c.style.borderLeftColor = color;
         c.style.background = `linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%)`;
     });
-
     requestPreviewUpdate();
 }
 
@@ -525,18 +532,21 @@ function updateAllBlockNames() {
 
         if(!isEditMode) { 
              if (type === 'Temporada') {
+                
                 tempCount++;
                 nameInput.value = `Temporada ${tempCount}`;
             } else if (type === 'Spin-Off') {
                 spinOffCount++;
                 if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
             } else if (type === 'Pelicula') {
-                 movieCount++;
+       
+                movieCount++;
                 nameInput.value = `Película ${movieCount}`;
             } else if (type === 'OVA') {
                 ovaCount++;
                 nameInput.value = `OVA ${ovaCount}`;
-            } else if (type === 'Especial') {
+            } else if (type === 'Especial') 
+            {
                 specialCount++;
                 nameInput.value = `Especial ${specialCount}`;
             }
@@ -603,7 +613,8 @@ function renderChapters(input, existingEps = []) {
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" onblur="smartLinkConvert(this)">
             </div>
-            <input type="text" class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
+            <input type="text" 
+            class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
     }
@@ -624,12 +635,10 @@ function requestPreviewUpdate() {
 function checkForChanges() {
     // Si no estamos en modo edición, no bloqueamos nada (a menos que sea validación básica)
     if (!isEditMode) return;
-
     const btn = document.getElementById('btnSaveAction');
     
     // Si no tenemos estado original, no hacemos nada
     if (!originalAnimeState) return;
-
     const currentState = JSON.stringify(generateData());
     
     if (currentState !== originalAnimeState) {
@@ -693,7 +702,8 @@ function updateWebPreview() {
         if(name) {
             const div = document.createElement('div');
             div.className = 'preview-s-item';
-            let label = (['Temporada', 'Spin-Off'].includes(type)) ? `${count} Caps` : (count > 1 ? `${count} ${type}s` : `${count} ${type}`);
+       
+             let label = (['Temporada', 'Spin-Off'].includes(type)) ? `${count} Caps` : (count > 1 ? `${count} ${type}s` : `${count} ${type}`);
             div.innerHTML = `<img src="${img || 'https://via.placeholder.com/150'}"><div class="preview-s-count">${label}</div><div class="preview-s-title">${name}</div>`;
             grid.appendChild(div);
         }
@@ -839,7 +849,8 @@ function _performFilter() {
             </div>
         `;
         results.appendChild(div);
-     });
+   
+      });
 
     if(filtered.length === 0) {
         let emptyMsg = "";
@@ -881,7 +892,8 @@ async function loadAnimeForEditing(id) {
         currentEditingId = id;
         document.getElementById('editModeBar').style.display = 'block';
         document.getElementById('editIdDisplay').innerText = id;
-        document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS"; // CAMBIO DE TEXTO SOLICITADO
+        document.getElementById('btnActionText').innerText = "GUARDAR CAMBIOS";
+        // CAMBIO DE TEXTO SOLICITADO
         
         // VERIFICACIÓN DE PROPIEDAD PARA BLOQUEAR BOTÓN
         const indexEntry = cachedIndex.find(x => x.id === id);
@@ -935,7 +947,8 @@ async function loadAnimeForEditing(id) {
             const fullEps = s.eps.map((e, idx) => {
                 const epNum = idx + 1;
                 const links = seasonPlayer[epNum] || {};
-                return { title: e.title, link: links.link, link2: links.link2 };
+                return { title: e.title, 
+                link: links.link, link2: links.link2 };
             });
             addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
         });
@@ -947,7 +960,6 @@ async function loadAnimeForEditing(id) {
 
         // SNAPSHOT DEL ESTADO ORIGINAL PARA COMPARAR CAMBIOS
         originalAnimeState = JSON.stringify(generateData());
-
         showToast("¡Datos cargados correctamente!");
     } catch(e) {
         console.error(e);
@@ -984,10 +996,10 @@ function generateData() {
     if(ratingSelect === 'excellent') ratingVal = 4.9;
     else if(ratingSelect === 'good') ratingVal = 4.6;
     else if(ratingSelect === 'regular') ratingVal = 4.0;
-
     // Aquí capturamos la info del usuario actual
     const anime = {
-        id: isEditMode ? currentEditingId : 0, 
+        id: isEditMode ?
+        currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
         aliases: aliasList,
         portada: document.getElementById('portadaAnime').value.trim(),
@@ -998,6 +1010,7 @@ function generateData() {
         musica: [],
         temporadas: [],
         uploader: currentUserNick, // Guardamos tu nombre
+  
         uploaderAvatar: currentUserAvatar // Guardamos tu foto
     };
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
@@ -1014,6 +1027,7 @@ function generateData() {
         if(sType === 'Especial') specialCountVP++;
 
         card.querySelectorAll('.chapter-row').forEach((row, idx) => {
+  
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
             
@@ -1021,20 +1035,24 @@ function generateData() {
             
             let playerTitle = "", detailTitle = ""; 
 
-            if (sType === 'Temporada') {
+            if (sType 
+            === 'Temporada') {
                 detailTitle = `Capítulo ${idx+1}`;
                 playerTitle = `${anime.titulo} T${seasonCountVP} Cap ${idx+1}`;
             } else if (sType === 'Spin-Off') {
                 detailTitle = `Capítulo ${idx+1}`;
                 playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
             } else if (sType === 'OVA') {
-                detailTitle = customTitleInput || sName;
+                detailTitle = customTitleInput ||
+                sName;
                 playerTitle = `${anime.titulo} OVA ${ovaCountVP}` + (customTitleInput ? ` "${customTitleInput}"` : "");
             } else if (sType === 'Pelicula') {
-                detailTitle = customTitleInput || sName;
+                detailTitle = customTitleInput ||
+                sName;
                 playerTitle = `${anime.titulo} Película ${movieCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             } else if (sType === 'Especial') {
-                detailTitle = customTitleInput || sName;
+                detailTitle = customTitleInput ||
+                sName;
                 playerTitle = `${anime.titulo} Especial ${specialCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             }
 
@@ -1048,6 +1066,7 @@ function generateData() {
                 name: sName,
                 type: sType,
                 cover: card.querySelector('.s-img').value,
+        
                 eps: eps
             });
         }
@@ -1092,7 +1111,6 @@ function highlightLogoutButton() {
 async function subirAGithHub() {
     const btn = document.getElementById('btnSaveAction');
     if(btn.disabled) return showToast("Edición Bloqueada o Sin Cambios", true);
-
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
     
@@ -1108,7 +1126,8 @@ async function subirAGithHub() {
     // NUEVO: CONFIRMACIÓN ANTES DE SUBIR
     const confirmMsg = `¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?\n\n- Presiona 'Aceptar' para SÍ (Subir).\n- Presiona 'Cancelar' para AÚN NO (Seguir editando).`;
     if(!confirm(confirmMsg)) {
-        return; // El usuario eligió "Aun no"
+        return;
+    // El usuario eligió "Aun no"
     }
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
@@ -1142,13 +1161,15 @@ async function subirAGithHub() {
             let before = newContent.substring(0, insertionPoint).trim();
             
             if(before.endsWith(',')) {
-                 before = before.slice(0, -1);
+           
+                before = before.slice(0, -1);
             }
             
             let finalGenres = [...nuevoAnime.generos];
             if(nuevoAnime.demografia) {
                 finalGenres = finalGenres.filter(g => g !== nuevoAnime.demografia);
                 finalGenres.push(nuevoAnime.demografia);
+ 
             }
             const generosStr = finalGenres.map(g => `"${g}"`).join(',');
             const aliasesStr = nuevoAnime.aliases.length > 0 ? `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
@@ -1165,17 +1186,19 @@ async function subirAGithHub() {
                  const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?seasons:\\[[^]*?\\]\\s*\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
             }
-             
+           
             const insertionPoint = newContent.lastIndexOf('};');
             const before = newContent.substring(0, insertionPoint).trimEnd();
 
             let seasonsStr = "";
             nuevoAnime.temporadas.forEach(t => {
                 let epsStr = "";
-                t.eps.forEach(e => epsStr += `            { title: "${e.title}"},\n`);
+                t.eps.forEach(e => epsStr 
+                += `            { title: "${e.title}"},\n`);
                 let nameField = t.name ? `\n            name: "${t.name}",` : "";
                 seasonsStr += `          {
             num: ${t.num},${nameField}
+        
             cover: "${t.cover}",
             eps: [\n${epsStr}            ]
           },\n`;
@@ -1183,7 +1206,8 @@ async function subirAGithHub() {
             const newDetail = `,\n    ${FINAL_ID}: {
         title: "${nuevoAnime.titulo}",
         desc: "${nuevoAnime.sinopsis.replace(/"/g, '\\"')}",
-        cover: "${nuevoAnime.portada}",
+        cover: 
+        "${nuevoAnime.portada}",
         uploader: "${nuevoAnime.uploader}", 
         seasons: [\n${seasonsStr}          ]
     }`;
@@ -1198,6 +1222,7 @@ async function subirAGithHub() {
             if(isEditMode) {
                  const regexRemove = new RegExp(`\\s*"${FINAL_ID}":\\s*\\{[^]*?\\n\\s{0,7}\\},?`, 'g');
                  newContent = newContent.replace(regexRemove, '');
+           
             }
             
             newContent = newContent.replace(/,\s*,/g, ',');
@@ -1206,12 +1231,14 @@ async function subirAGithHub() {
             let before = newContent.substring(0, insertionPoint).trimEnd();
             
             if(before.endsWith(',')) {
+                
                 before = before.slice(0, -1);
             }
             
             let playerStr = `,\n      "${FINAL_ID}": {\n`;
             nuevoAnime.temporadas.forEach(t => {
                 playerStr += `          "${t.num}": {\n`;
+        
                 t.eps.forEach(e => playerStr += `          "${e.num}": { link:'${e.link}', link2:'${e.link2}', title:'${e.playerTitle}' },\n`);
                 playerStr += `        },\n`;
             });
@@ -1236,11 +1263,13 @@ async function subirAGithHub() {
             
             if(before.endsWith(',')) {
                 before = before.slice(0, -1);
+           
             }
             
             const tracks = nuevoAnime.musica.map(m => `"${m}"`).join(',\n            ');
             const musicEntry = `,\n        ${FINAL_ID}: [\n            ${tracks}\n        ]`;
-            return before + musicEntry + "\n};";
+            return before 
+            + musicEntry + "\n};";
         });
 
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");

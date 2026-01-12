@@ -107,9 +107,15 @@
             <input type="text" id="setupSocial" placeholder="Youtube, Instagram...">
         </div>
 
-        <button class="btn btn-gen" id="btnSaveProfile" onclick="saveUserProfile()">
-            <i class="fas fa-save"></i> GUARDAR PERFIL
-        </button>
+        <div style="display: flex; gap: 10px; margin-top: 40px;">
+            <button class="btn btn-gen" id="btnSaveProfile" onclick="saveUserProfile()" style="margin-top: 0; flex: 1;">
+                <i class="fas fa-save"></i> GUARDAR PERFIL
+            </button>
+            <button class="btn" id="btnCancelProfile" onclick="closeProfileModal()" style="margin-top: 0; background: transparent; border: 1px solid #333; color: #aaa; width: auto; display: none;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
         <div id="profileLog" style="margin-top:10px; color:#00f0ff; font-size:0.8em;"></div>
     </div>
 </div>
