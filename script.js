@@ -100,21 +100,28 @@ async function checkAccess(user) {
 
     } catch (e) {
         console.error(e);
-        document.getElementById('errorText').innerText = "Error leyendo users-data: " + e.message;
+        // MENSAJE DE ERROR PERSONALIZADO SOLICITADO
+        document.getElementById('errorText').innerText = "Aún no formas parte del grupo de aportadores o consola de aportadores.";
         document.getElementById('loginError').style.display = 'block';
     }
 }
 
+// MUESTRA EL MODAL PARA USUARIOS NUEVOS
 function showProfileSetup() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('userHeader').style.display = 'none';
     document.getElementById('cmsContent').style.display = 'none';
     document.getElementById('profileSetupModal').style.display = 'flex';
     
-    // Prellenar con info básica de la cuenta Google/Github si hay
+    // Configurar Textos para Nuevo Usuario
+    document.getElementById('modalTitle').innerText = "Bienvenido/a";
+    document.getElementById('modalDesc').innerText = "Es tu primera vez aquí. Configura tu cuenta para continuar.";
+    document.getElementById('btnSaveProfile').innerText = '<i class="fas fa-save"></i> GUARDAR PERFIL';
+
+    // Prellenar con info básica de la cuenta Google/Github
     const user = auth.currentUser;
     if(user) {
-        document.getElementById('setupNick').value = user.displayName || "";
+        document.getElementById('setupNick').value = ""; // Dejar vacío para que elija
         if(user.photoURL) {
             document.getElementById('setupAvatar').value = user.photoURL;
             document.getElementById('setupAvatarPreview').src = user.photoURL;
@@ -122,7 +129,24 @@ function showProfileSetup() {
     }
 }
 
+// MUESTRA EL MODAL PARA EDITAR PERFIL EXISTENTE
+function openProfileEditor() {
+    document.getElementById('profileSetupModal').style.display = 'flex';
+    document.getElementById('modalTitle').innerText = "Editar Perfil";
+    document.getElementById('modalDesc').innerText = "Actualiza tu nombre o red social.";
+    document.getElementById('btnSaveProfile').innerText = '<i class="fas fa-sync"></i> ACTUALIZAR DATOS';
+
+    // Cargar datos actuales
+    if(globalUsersData[currentUserEmail]) {
+        document.getElementById('setupNick').value = globalUsersData[currentUserEmail].nick;
+        document.getElementById('setupAvatar').value = globalUsersData[currentUserEmail].avatar;
+        document.getElementById('setupAvatarPreview').src = globalUsersData[currentUserEmail].avatar;
+        document.getElementById('setupSocial').value = globalUsersData[currentUserEmail].social || "";
+    }
+}
+
 function updateProfilePreview(input) {
+    // Función mantenida por si acaso, aunque el input ahora está bloqueado
     const img = document.getElementById('setupAvatarPreview');
     if(input.value) img.src = input.value;
     else img.src = "Logo_Archinime.avif";
@@ -130,17 +154,44 @@ function updateProfilePreview(input) {
 
 async function saveUserProfile() {
     const nick = document.getElementById('setupNick').value.trim();
-    const avatar = document.getElementById('setupAvatar').value.trim();
+    // El avatar ahora se toma del valor (que está disabled pero tiene el valor)
+    const avatar = document.getElementById('setupAvatar').value.trim(); 
     const social = document.getElementById('setupSocial').value.trim();
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
-    if(!nick || !avatar) {
-        alert("Nick y Avatar son obligatorios.");
+
+    if(!nick) {
+        alert("Debes elegir un nombre de usuario.");
+        return;
+    }
+
+    // --- VALIDACIÓN 1: PROHIBIR 'ARCHINIME' ---
+    // Detecta "Archinime" en cualquier parte, insensible a mayúsculas
+    if (nick.toLowerCase().includes("archinime")) {
+        // Solo permitir si el email actual es el del dueño real (excepción opcional, pero solicitaste bloquear)
+        // Si tú quieres poder ponértelo, descomenta la siguiente línea:
+        // if (currentUserEmail !== "archinime12@gmail.com") {
+             alert("El nombre 'Archinime' está reservado y no puede ser utilizado.");
+             return;
+        // }
+    }
+
+    // --- VALIDACIÓN 2: NOMBRE ÚNICO ---
+    // Revisar si alguien más ya tiene este nick
+    const nickLower = nick.toLowerCase();
+    const isTaken = Object.entries(globalUsersData).some(([email, data]) => {
+        // Si el nick coincide y el email NO es el mío (para permitirme guardar mis propios cambios)
+        return data.nick.toLowerCase() === nickLower && email !== currentUserEmail;
+    });
+
+    if (isTaken) {
+        alert("Este nombre ya ha sido registrado, elige otro por favor.");
         return;
     }
 
     btn.disabled = true;
     logEl.innerText = "Guardando perfil en GitHub...";
+    
     try {
         // Actualizamos el objeto local
         globalUsersData[currentUserEmail] = {
@@ -154,17 +205,24 @@ async function saveUserProfile() {
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
         });
+        
         // Actualizamos variables globales de sesión
         currentUserNick = nick;
         currentUserAvatar = avatar;
-        logEl.innerText = "¡Perfil creado! Entrando...";
+        
+        logEl.innerText = "¡Perfil actualizado! Entrando...";
+        
         setTimeout(() => {
             document.getElementById('profileSetupModal').style.display = 'none';
+            btn.disabled = false;
+            logEl.innerText = "";
             showCMS();
         }, 1000);
+
     } catch(e) {
         console.error(e);
-        logEl.innerText = "Error: " + e.message;
+        // MENSAJE DE ERROR PERSONALIZADO SOLICITADO
+        logEl.innerText = "Aún no formas parte del grupo de aportadores o consola de aportadores.";
         btn.disabled = false;
     }
 }

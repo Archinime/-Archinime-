@@ -89,17 +89,17 @@
 <div id="profileSetupModal">
     <div class="profile-card">
         <img id="setupAvatarPreview" src="Logo_Archinime.avif" class="profile-preview-img">
-        <h2>Bienvenido/a</h2>
-        <p>Es tu primera vez aquí. Configura tu perfil de Uploader para continuar.</p>
+        <h2 id="modalTitle">Bienvenido/a</h2>
+        <p id="modalDesc">Es tu primera vez aquí. Configura tu cuenta para continuar.</p>
 
         <div class="p-input-group">
-            <label>Nick / Nombre de Uploader <span>*</span></label>
-            <input type="text" id="setupNick" placeholder="Ej: Archinime">
+            <label>Elige tu Nombre de Usuario <span>*</span></label>
+            <input type="text" id="setupNick" placeholder="Ej: Usuario">
         </div>
 
         <div class="p-input-group">
-            <label>URL de Avatar (.avif/.jpg/.png) <span>*</span></label>
-            <input type="text" id="setupAvatar" placeholder="https://..." oninput="updateProfilePreview(this)">
+            <label>Avatar por defecto de GitHub (Bloqueado) <span>*</span></label>
+            <input type="text" id="setupAvatar" placeholder="Se cargará automáticamente..." disabled style="cursor: not-allowed; opacity: 0.7;">
         </div>
 
         <div class="p-input-group">
@@ -115,12 +115,13 @@
 </div>
 
 <div id="userHeader" class="user-header">
-    <div class="header-profile">
+    <div class="header-profile" onclick="openProfileEditor()" style="cursor: pointer;" title="Clic para editar perfil">
         <img id="userAvatarImg" src="" style="width:36px; height:36px; border-radius:50%; border:2px solid var(--primary);">
         <div>
             <div class="user-badge">Verificado</div>
             <div id="userNameDisplay" class="user-name">Usuario</div>
         </div>
+        <i class="fas fa-pen" style="font-size:0.7em; color:#555; margin-left:5px;"></i>
     </div>
     <div style="display:flex; gap:10px;">
         <button onclick="openSearchModal()" style="background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:0.8em;">
