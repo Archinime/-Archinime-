@@ -15,56 +15,37 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        /* ESTILOS EXTRA PARA EL MODAL DE REGISTRO DE PERFIL */
+        /* ESTILOS EXTRA PARA EL MODAL DE PERFIL */
         #profileSetupModal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            z-index: 10000;
-            display: none;
-            flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000; display: none;
+            flex-direction: column; justify-content: center; align-items: center; padding: 20px;
         }
         .profile-card {
-            background: #131419;
-            border: 1px solid #333;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 450px; width: 100%;
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.1);
-            text-align: center;
+            background: #131419; border: 1px solid #333; border-radius: 20px;
+            padding: 30px; max-width: 450px; width: 100%;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.1); text-align: center;
         }
-        .profile-card h2 {
-            border: none;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .profile-card p {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-        .p-input-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-        .p-input-group label {
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
+        .profile-card h2 { border: none; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+        .profile-card p { color: #888; font-size: 0.9rem; margin-bottom: 25px; }
+        .p-input-group { text-align: left; margin-bottom: 15px; }
+        .p-input-group label { margin-top: 0; margin-bottom: 5px; }
         .profile-preview-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #00f0ff;
-            margin: 0 auto 20px;
-            display: block;
-            background: #000;
+            width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+            border: 2px solid #00f0ff; margin: 0 auto 20px; display: block; background: #000;
         }
+
+        /* ESTILOS NUEVOS PARA LA VALORACIÓN DIVIDIDA */
+        .rating-container {
+            display: flex; align-items: flex-end; gap: 10px;
+        }
+        .rating-box {
+            width: 60px; text-align: center; font-size: 1.5rem; font-weight: 800;
+            padding: 10px 5px; background: #181920; border: 2px solid #2a2b35;
+            border-radius: 12px; color: #fff; appearance: none;
+        }
+        .rating-box:focus { border-color: #facc15; outline: none; }
+        .rating-dot { font-size: 2rem; font-weight: 800; color: #fff; padding-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -110,12 +91,10 @@
             <button class="btn btn-gen" id="btnSaveProfile" onclick="saveUserProfile()" style="margin-top: 0; flex: 1;">
                  GUARDAR PERFIL
             </button>
-            
             <button class="btn" id="btnCancelProfile" onclick="closeProfileModal()" style="margin-top: 0; background: transparent; border: 1px solid #333; color: #aaa; width: auto; display: none;">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-
         <div id="profileLog" style="margin-top:10px; color:#00f0ff; font-size:0.8em;"></div>
     </div>
 </div>
@@ -216,8 +195,12 @@
                 </select>
             </div>
             <div class="col-flex">
-                <label>Valoración (1.0 - 5.0) <span>*</span></label>
-                <input type="number" id="ratingAnime" step="0.1" min="1.0" max="5.0" placeholder="Ej: 4.5" oninput="requestPreviewUpdate()" onblur="validate(this)">
+                <label>Valoración (Ej: 4.5) <span>*</span></label>
+                <div class="rating-container">
+                    <input type="number" id="ratingInt" class="rating-box" min="1" max="5" placeholder="4" oninput="limitRating(this, 1, 5); requestPreviewUpdate()">
+                    <span class="rating-dot">.</span>
+                    <input type="number" id="ratingDec" class="rating-box" min="0" max="9" placeholder="5" oninput="limitRating(this, 0, 9); requestPreviewUpdate()">
+                </div>
             </div>
         </div>
 
