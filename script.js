@@ -74,6 +74,9 @@ async function checkAccess(user) {
     document.getElementById('errorText').innerText = "Verificando base de datos...";
     document.getElementById('loginError').style.display = 'none';
 
+    // VERIFICACIÓN BLINDADA PARA EL DUEÑO
+    const isSuperAdmin = ALLOWED_USERS.includes(email);
+
     try {
         const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
         globalUsersData = safeEval(usersFile.content);
@@ -84,13 +87,24 @@ async function checkAccess(user) {
             currentUserAvatar = userData.avatar;
             showCMS();
         } else {
-            showProfileSetup();
+            // Si es super admin, permitir configurar aunque no esté en el JSON
+            if (isSuperAdmin) {
+                showProfileSetup();
+            } else {
+                throw new Error("No registrado.");
+            }
         }
 
     } catch (e) {
-        console.error(e);
-        document.getElementById('errorText').innerText = "Aún no formas parte del grupo de aportadores.";
-        document.getElementById('loginError').style.display = 'block';
+        console.error("Error acceso:", e);
+        // FAILSAFE: Si hay error leyendo el archivo pero eres Admin, ENTRAS IGUAL
+        if (isSuperAdmin) {
+            console.warn("Error leyendo DB, pero eres Super Admin. Acceso concedido.");
+            showProfileSetup();
+        } else {
+            document.getElementById('errorText').innerText = "Aún no formas parte del grupo de aportadores.";
+            document.getElementById('loginError').style.display = 'block';
+        }
     }
 }
 
@@ -219,7 +233,6 @@ function logout() {
 // ============================================
 // LÓGICA DE INTERFAZ Y FORMULARIO
 // ============================================
-// LISTA DE GÉNEROS (SIN SEIJIN)
 const genresList = [
     "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", "Comedia oscura", "Cosplay", 
     "Cyberpunk", "Deducción Social", "Deportivo", "Drama", "Ecchi", "Escolar", "Fantasía", "Fantasía oscura", 
@@ -235,10 +248,12 @@ genresList.forEach(g => {
     gContainer.appendChild(label);
 });
 
-// NUEVA FUNCIÓN PARA LIMITAR LOS CUADROS DE NÚMERO
+// LIMITAR VALORACIÓN EN TIEMPO REAL
 function limitRating(input, min, max) {
     if(input.value.length > 1) input.value = input.value.slice(0,1);
     const val = parseInt(input.value);
+    // Permitir vacío para editar
+    if(isNaN(val)) return; 
     if (val < min) input.value = min;
     if (val > max) input.value = max;
 }
@@ -573,10 +588,10 @@ function updateWebPreview() {
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
     document.getElementById('previewAliasesList').innerText = aliases.length > 0 ? aliases.join(', ') : "";
 
-    // Puntuación en vista previa
+    // PUNTUACIÓN EN PREVIEW
     const ri = document.getElementById('ratingInt').value;
     const rd = document.getElementById('ratingDec').value;
-    document.getElementById('webRating').innerText = `⭐ ${ri}.${rd}`;
+    document.getElementById('webRating').innerText = `⭐ ${ri || 0}.${rd || 0}`;
     
     const tagsContainer = document.getElementById('webTags');
     tagsContainer.innerHTML = '';
@@ -773,25 +788,36 @@ async function loadAnimeForEditing(id) {
         if(indexEntry && indexEntry.genres && indexEntry.genres.length > 0) {
             let loadedGenres = [...indexEntry.genres];
             const lastGenre = loadedGenres[loadedGenres.length - 1];
-            // Seijin ahora es demografía, lo añadimos a la detección
+            // FIX: DETECTAR SEIJIN EN DEMOGRAFÍA
             const demoOptions = ["Shōnen", "Seinen", "Shōjo", "Josei", "Kodomo", "Seijin"];
+            
+            // Si el último es demografía, lo sacamos
             if (demoOptions.includes(lastGenre)) {
                 document.getElementById('demografiaAnime').value = lastGenre;
                 loadedGenres.pop();
+            } else {
+                // Si no estaba al final, buscamos si está en algún lado del array
+                const foundDemo = loadedGenres.find(g => demoOptions.includes(g));
+                if(foundDemo) {
+                    document.getElementById('demografiaAnime').value = foundDemo;
+                    loadedGenres = loadedGenres.filter(g => g !== foundDemo);
+                }
             }
+
             document.querySelectorAll('#genresContainer input').forEach(cb => {
                 cb.checked = loadedGenres.includes(cb.value);
             });
         }
         
-        // CARGAR VALORACIÓN (DIVIDIR EN DOS CUADROS)
+        // FIX: CARGA DE VALORACIÓN EN DOS CUADROS
         let r = 0;
         if(indexEntry && indexEntry.rating) r = parseFloat(indexEntry.rating);
         if(isNaN(r)) r = 0;
-        const intPart = Math.floor(r);
-        const decPart = Math.round((r - intPart) * 10); // Ejemplo: 4.8 -> (0.8 * 10) = 8
+        // Separar entero y decimal
+        const intPart = Math.floor(r); 
+        const decPart = Math.round((r - intPart) * 10);
         document.getElementById('ratingInt').value = intPart || "";
-        document.getElementById('ratingDec').value = decPart; // Puede ser 0
+        document.getElementById('ratingDec').value = decPart; // 0 es válido
         
         document.getElementById('seasonsContainer').innerHTML = '';
         targetDetail.seasons.forEach(s => {
@@ -835,11 +861,10 @@ function generateData() {
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
     const demoSelect = document.getElementById('demografiaAnime').value;
     
-    // OBTENER VALORACIÓN EXACTA DE DOS INPUTS
+    // OBTENER VALOR EXACTO DE DOS INPUTS
     const iVal = document.getElementById('ratingInt').value || "0";
     const dVal = document.getElementById('ratingDec').value || "0";
-    let ratingVal = parseFloat(iVal + "." + dVal);
-    if(isNaN(ratingVal)) ratingVal = 0;
+    const ratingVal = parseFloat(iVal + "." + dVal);
 
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
@@ -1062,7 +1087,7 @@ async function subirAGithHub() {
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             let newContent = content;
             if(isEditMode) {
-                const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\[[^]*?\\]\\,?`, 'g');
+                const regexRemove = new RegExp(`\\s*${FINAL_ID}:\\s*\\{[^]*?\\]\\,?`, 'g');
                 newContent = newContent.replace(regexRemove, '');
             }
             newContent = newContent.replace(/,\s*,/g, ',');
