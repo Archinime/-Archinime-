@@ -31,6 +31,7 @@ let globalUsersData = {};
 // VARIABLES DE ESTADO
 let isEditMode = false;
 let currentEditingId = null;
+let currentAnimeUploader = null; // Variable nueva para recordar quién subió el anime
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
@@ -587,8 +588,10 @@ function checkForChanges() {
     }
 }
 
+// -------------------------------------------------------------
+// VISTA PREVIA: TRADUCCIÓN DE EMAIL -> NICK + LINK SOCIAL
+// -------------------------------------------------------------
 function updateWebPreview() {
-    // PROTECCIÓN CONTRA ELEMENTOS NULOS
     const titleEl = document.getElementById('webTitle');
     const titleVal = document.getElementById('tituloAnime').value;
     if(titleEl) titleEl.innerText = titleVal || 'Título';
@@ -607,6 +610,35 @@ function updateWebPreview() {
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
     const prevAlias = document.getElementById('previewAliasesList');
     if(prevAlias) prevAlias.innerText = aliases.length > 0 ? aliases.join(', ') : "";
+
+    // LÓGICA DE UPLOADER EN PREVIEW
+    // Determinamos el email que se va a mostrar (si estamos editando uno existente, es ese, sino el mio)
+    let displayUploaderKey = (isEditMode && currentAnimeUploader) ? currentAnimeUploader : currentUserEmail;
+    
+    // Buscar en Users Data
+    let displayNick = "Desconocido";
+    let socialLink = "#";
+    
+    if (globalUsersData[displayUploaderKey]) {
+        displayNick = globalUsersData[displayUploaderKey].nick;
+        socialLink = globalUsersData[displayUploaderKey].social || "#";
+    } else {
+        // Fallback (por si es un anime viejo con nick)
+        displayNick = displayUploaderKey;
+    }
+
+    // Inyectar el HTML de "Subido por"
+    // Buscamos si ya existe el contenedor, si no lo creamos
+    let uploaderContainer = document.getElementById('previewUploaderBox');
+    if(!uploaderContainer) {
+        uploaderContainer = document.createElement('div');
+        uploaderContainer.id = 'previewUploaderBox';
+        uploaderContainer.style.cssText = "margin-top:10px; font-size:0.8em; color:#888;";
+        const aliasBox = document.getElementById('webAlias');
+        if(aliasBox) aliasBox.appendChild(uploaderContainer);
+    }
+    
+    uploaderContainer.innerHTML = `Subido por: <a href="${socialLink}" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:bold;">${displayNick} <i class="fas fa-external-link-alt" style="font-size:0.8em"></i></a>`;
 
     // PUNTUACIÓN EN PREVIEW
     const ri = document.getElementById('ratingInt').value;
@@ -802,12 +834,9 @@ async function loadAnimeForEditing(id) {
         const editModeBar = document.getElementById('editModeBar');
         if(editModeBar) editModeBar.style.display = 'block';
         
-        // --- INYECCIÓN DEL BOTÓN DE ELIMINAR ---
-        // Verificar si existe botón previo para no duplicar
         const existingDelBtn = document.getElementById('btnDeleteAnime');
         if(existingDelBtn) existingDelBtn.remove();
 
-        // Si es el Super Admin, agregar botón de Borrar
         if(currentUserEmail === "archinime12@gmail.com") {
              const delBtn = document.createElement('button');
              delBtn.id = 'btnDeleteAnime';
@@ -816,7 +845,6 @@ async function loadAnimeForEditing(id) {
              delBtn.onclick = () => deleteCurrentAnime(id);
              editModeBar.appendChild(delBtn);
         }
-        // ----------------------------------------
 
         const editIdEl = document.getElementById('editIdDisplay');
         if(editIdEl) editIdEl.innerText = id;
@@ -827,6 +855,9 @@ async function loadAnimeForEditing(id) {
         const indexEntry = cachedIndex.find(x => x.id === id);
         
         const storedUploader = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
+        // GUARDAMOS QUIEN SUBIÓ ESTO PARA USARLO EN LA VISTA PREVIA
+        currentAnimeUploader = storedUploader;
+
         const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
         
         const isOwner = (storedUploader === currentUserEmail) || 
@@ -908,9 +939,6 @@ async function loadAnimeForEditing(id) {
     }
 }
 
-// -------------------------------------------------------------
-// NUEVA FUNCIÓN: BORRAR ANIME Y REORDENAR IDS (SHIFTING)
-// -------------------------------------------------------------
 async function deleteCurrentAnime(idToDelete) {
     if(currentUserEmail !== "archinime12@gmail.com") {
         alert("Acción no permitida."); return;
@@ -930,7 +958,6 @@ async function deleteCurrentAnime(idToDelete) {
     try {
         log("1/5 Descargando bases de datos...");
         
-        // Descargar TODO
         const [indexFile, detailFile, playerFile, musicFile] = await Promise.all([
             getGithubFile(token, OWNER, REPO, 'index-data.js'),
             getGithubFile(token, OWNER, REPO, 'anime-detail-data.js'),
@@ -944,28 +971,24 @@ async function deleteCurrentAnime(idToDelete) {
         let musicData = safeEval(musicFile.content);
 
         log("2/5 Procesando Index...");
-        // Filtrar y Shiftear Index
         const newIndex = indexData.filter(item => item.id !== idToDelete).map(item => {
             if (item.id > idToDelete) {
-                item.id = item.id - 1; // Restar 1 al ID
+                item.id = item.id - 1;
             }
             return item;
         });
 
         log("3/5 Procesando Detalles y Player...");
         
-        // Función helper para shiftear objetos (Keys numéricas)
         const shiftObjectKeys = (obj) => {
             const newObj = {};
-            // Ordenar claves numéricamente para procesar en orden
             const keys = Object.keys(obj).map(Number).sort((a,b) => a-b);
-            
             keys.forEach(key => {
-                if (key === idToDelete) return; // Eliminar
+                if (key === idToDelete) return; 
                 if (key > idToDelete) {
-                    newObj[key - 1] = obj[key]; // Mover atrás
+                    newObj[key - 1] = obj[key]; 
                 } else {
-                    newObj[key] = obj[key]; // Mantener
+                    newObj[key] = obj[key];
                 }
             });
             return newObj;
@@ -977,22 +1000,18 @@ async function deleteCurrentAnime(idToDelete) {
 
         log("4/5 Subiendo cambios a GitHub...");
         
-        // Subir Index
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', () => {
              return `const animes = ${JSON.stringify(newIndex, null, 4)};`;
         });
 
-        // Subir Detalles
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', () => {
              return `const data = ${JSON.stringify(newDetail, null, 4)};`;
         });
 
-        // Subir Player
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', () => {
              return `const players = ${JSON.stringify(newPlayer, null, 4)};`;
         });
 
-        // Subir Música
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => {
              return `const musica = ${JSON.stringify(newMusic, null, 4)};`;
         });
@@ -1141,6 +1160,7 @@ async function subirAGithHub() {
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
     
+    // Validación de Rating
     if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) {
         return showToast("Valoración inválida (Min: 1.0, Max: 5.0)", true);
     }
@@ -1188,6 +1208,7 @@ async function subirAGithHub() {
             const aliasesStr = nuevoAnime.aliases.length > 0 ?
             `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
+            // GARANTIZAMOS QUE SE GUARDE EL EMAIL (ID)
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
