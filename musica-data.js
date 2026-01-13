@@ -223,8 +223,5 @@ const musica = {
     ],
     "72": [
         "overlord.mp3"
-    ],
-    "73": [
-        "overlord.mp3"
     ]
 };
