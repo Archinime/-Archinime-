@@ -4320,5 +4320,21 @@
             ]
           },
           ]
+    },
+    73: {
+        title: "Prueba2",
+        desc: "Afsdfsdf",
+        cover: "overlord.avif",
+        uploader: "lucioguapofeo@gmail.com", 
+        seasons: [
+          {
+            num: 1,
+            name: "Temporada 1",
+            cover: "overlord.avif",
+            eps: [
+            { title: "Capítulo 1"},
+            ]
+          },
+          ]
     }
 };
