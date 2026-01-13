@@ -1176,16 +1176,5 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ]
-    },
-    {
-        "id": 72,
-        "title": "Prueba3",
-        "img": "overlord.avif",
-        "rating": 5,
-        "uploader": "lucioguapofeo@gmail.com",
-        "genres": [
-            "Animación",
-            "Shōjo"
-        ]
     }
 ];
