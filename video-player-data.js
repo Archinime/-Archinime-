@@ -2452,6 +2452,7 @@
           "6": { link:'https://drive.google.com/file/d/1D2SiUqtsac8MBIGOEP-ZdUHYlBsL7uEi/preview', title:'Kimi to Koete Koi ni Naru T1 Cap 6' },
           "7": { link:'https://drive.google.com/file/d/15QGfj-crIB9VCRqKl7yXIcI1KrHug7dp/preview', title:'Kimi to Koete Koi ni Naru T1 Cap 7' },
         }
+
       },
       "71": {
           "1": {
@@ -2516,11 +2517,6 @@
         },
           "5": {
           "1": { link:'https://drive.google.com/file/d/1lTKnN5_YwHWvzRqc-TNmg1qJanmjidoY/preview', link2:'', title:'Overlord Película 1: El Reino Sagrado' },
-        },
-      },
-      "72": {
-          "1": {
-          "1": { link:'https://drive.google.com/file/d/1OWitAmBd_VPhIX_kuAh2A3s2j_lgcu79/preview', link2:'', title:'Prueba Película 1: sdsfsf' },
         },
       }
 };
