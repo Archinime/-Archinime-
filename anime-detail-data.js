@@ -7922,24 +7922,6 @@ const data = {
         ]
     },
     "72": {
-        "title": "Prueba2",
-        "desc": "Afsdfsdf",
-        "cover": "overlord.avif",
-        "uploader": "lucioguapofeo@gmail.com",
-        "seasons": [
-            {
-                "num": 1,
-                "name": "Temporada 1",
-                "cover": "overlord.avif",
-                "eps": [
-                    {
-                        "title": "Capítulo 1"
-                    }
-                ]
-            }
-        ]
-    },
-    "73": {
         "title": "Prueba3",
         "desc": "Sfsdf",
         "cover": "overlord.avif",
