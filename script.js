@@ -151,7 +151,7 @@ function showProfileSetup() {
 function openProfileEditor() {
     document.getElementById('profileSetupModal').style.display = 'flex';
     document.getElementById('modalTitle').innerText = "Editar Perfil";
-    document.getElementById('modalDesc').innerText = "Esto actualizará tu nombre en TODOS tus animes subidos.";
+    document.getElementById('modalDesc').innerText = "AVISO: Al guardar, se actualizará tu nombre en TODOS los animes que hayas subido anteriormente.";
     document.getElementById('btnSaveProfile').innerText = 'ACTUALIZAR TODO';
     const btnCancel = document.getElementById('btnCancelProfile');
     if(btnCancel) btnCancel.style.display = 'block';
@@ -171,7 +171,7 @@ function updateProfilePreview(input) {
 }
 
 // ============================================
-// FUNCIÓN DE GUARDADO DE PERFIL POTENCIADA
+// FUNCIÓN DE GUARDADO DE PERFIL (ACTUALIZACIÓN MASIVA)
 // ============================================
 async function saveUserProfile() {
     const newNick = document.getElementById('setupNick').value.trim();
@@ -190,6 +190,7 @@ async function saveUserProfile() {
         }
     }
 
+    // Verificar si el nombre ya existe (excluyendo al usuario actual)
     const nickLower = newNick.toLowerCase();
     const isTaken = Object.entries(globalUsersData).some(([email, data]) => {
         return data.nick.toLowerCase() === nickLower && email !== currentUserEmail;
@@ -200,19 +201,18 @@ async function saveUserProfile() {
         return;
     }
 
-    // OBTENER NOMBRE ANTIGUO PARA BARRIDO MASIVO
+    // 1. OBTENER DATOS ANTIGUOS PARA BUSCAR Y REEMPLAZAR
     let oldNick = null;
-    let oldAvatar = null;
     if (globalUsersData[currentUserEmail]) {
         oldNick = globalUsersData[currentUserEmail].nick;
-        oldAvatar = globalUsersData[currentUserEmail].avatar;
     }
 
     btn.disabled = true;
+    logEl.style.display = 'block';
     
     try {
-        // 1. ACTUALIZAR BASE DE DATOS DE USUARIOS (users-data.js)
-        logEl.innerText = "1/3 Actualizando base de usuarios...";
+        // --- PASO 1: Actualizar Users-Data ---
+        logEl.innerHTML = "<i class='fas fa-sync fa-spin'></i> 1/3 Actualizando tu ficha de usuario...";
         globalUsersData[currentUserEmail] = { nick: newNick, avatar: newAvatar, social: newSocial };
         
         await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
@@ -220,68 +220,81 @@ async function saveUserProfile() {
             return `const usersData = ${jsonStr};`;
         });
 
-        // 2. ACTUALIZAR INDEX (index-data.js) SI CAMBIÓ NOMBRE O AVATAR
-        if (oldNick && (oldNick !== newNick || oldAvatar !== newAvatar)) {
-            logEl.innerText = "2/3 Actualizando tus animes en Inicio...";
+        // --- PASO 2: Actualizar Index-Data (Animes Generales) ---
+        // Solo si hay un cambio de nombre o hay un nick previo
+        if (oldNick && oldNick !== newNick) {
+            logEl.innerHTML = "<i class='fas fa-sync fa-spin'></i> 2/3 Reescribiendo historial en Index...";
+            
             await updateGithubFile(currentUserToken, OWNER, REPO, 'index-data.js', (content) => {
-                // Parseamos el contenido actual
-                let indexData = safeEval(content);
+                // Leemos el archivo actual
+                let currentAnimes = safeEval(content);
                 let changed = false;
-                // Recorremos y buscamos todos los animes del usuario antiguo
-                indexData.forEach(anime => {
+
+                // Recorremos y reemplazamos
+                currentAnimes.forEach(anime => {
                     if (anime.uploader === oldNick) {
                         anime.uploader = newNick;
-                        anime.uploaderImg = newAvatar;
+                        anime.uploaderImg = newAvatar; // Actualizamos también la foto
                         changed = true;
                     }
                 });
-                if (!changed) return content; // Si no hay cambios, no subimos nada nuevo
+
+                if (!changed) return content; // Si no hay nada que cambiar, no tocamos nada
+
+                // Reconstruimos el archivo manteniendo el formato JS
+                const jsonArray = JSON.stringify(currentAnimes, null, 2); 
+                // Añadimos el prefijo de variable para que sea un JS válido
+                return `const animes = ${jsonArray};`;
+            });
+        }
+
+        // --- PASO 3: Actualizar Anime-Detail-Data (Detalles) ---
+        if (oldNick && oldNick !== newNick) {
+            logEl.innerHTML = "<i class='fas fa-sync fa-spin'></i> 3/3 Sincronizando detalles de animes...";
+            
+            await updateGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js', (content) => {
+                // Leemos el archivo gigante
+                let detailsObj = safeEval(content);
+                let changed = false;
+
+                // Buscamos por claves
+                for (const id in detailsObj) {
+                    if (detailsObj[id].uploader === oldNick) {
+                        detailsObj[id].uploader = newNick;
+                        changed = true;
+                    }
+                }
+
+                if (!changed) return content;
 
                 // Reconstruimos el archivo
-                // Truco: Convertimos a string JSON y luego ajustamos formato
-                const itemsStr = indexData.map(item => {
-                    const genresStr = item.genres ? `[${item.genres.map(g=>`"${g}"`).join(',')}]` : "[]";
-                    const aliasesStr = item.aliases ? `, aliases: [${item.aliases.map(a=>`"${a}"`).join(',')}]` : "";
-                    const upImg = item.uploaderImg ? `, uploaderImg:"${item.uploaderImg}"` : "";
-                    // Reconstrucción manual para mantener el formato limpio
-                    return `      {id:${item.id}, title:"${item.title}"${aliasesStr}, img:"${item.img}", rating:${item.rating}, uploader:"${item.uploader}"${upImg}, genres:${genresStr}}`;
-                }).join(',\n');
-                
-                return `const animes = [\n${itemsStr}\n];`;
+                const jsonObj = JSON.stringify(detailsObj, null, 4);
+                return `const data = ${jsonObj};`;
             });
         }
 
-        // 3. ACTUALIZAR DETALLES (anime-detail-data.js) SI CAMBIÓ NOMBRE
-        if (oldNick && oldNick !== newNick) {
-            logEl.innerText = "3/3 Actualizando tus animes en Detalles...";
-            await updateGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js', (content) => {
-                // Como este archivo es gigante y complejo, haremos un reemplazo de texto seguro
-                // Buscamos: uploader: "ViejoNombre",
-                // Reemplazamos por: uploader: "NuevoNombre",
-                const regex = new RegExp(`uploader:\\s*"${oldNick}"`, 'g');
-                const newContent = content.replace(regex, `uploader: "${newNick}"`);
-                return newContent;
-            });
-        }
-
-        // Asegurar actualización de variables en sesión actual
+        // --- FINALIZAR ---
+        // Actualizamos las variables locales de sesión
         currentUserNick = newNick;
         currentUserAvatar = newAvatar;
 
-        logEl.innerText = "¡Todo actualizado correctamente!";
+        logEl.innerHTML = "<i class='fas fa-check'></i> ¡Todo sincronizado! Recargando...";
         
         setTimeout(() => {
             document.getElementById('profileSetupModal').style.display = 'none';
             btn.disabled = false;
             logEl.innerText = "";
             showCMS();
-            // Recargar caché local de búsqueda
-            loadIndexForSearch(); 
+            // IMPORTANTE: Forzar recarga de la lista local para ver cambios inmediatos
+            cachedIndex = []; 
+            if(document.getElementById('searchModal').style.display === 'flex') {
+                openSearchModal(); 
+            }
         }, 1500);
 
     } catch(e) {
         console.error(e);
-        logEl.innerText = "Error actualizando datos: " + e.message;
+        logEl.innerText = "Error crítico actualizando: " + e.message;
         btn.disabled = false;
     }
 }
