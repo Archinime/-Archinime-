@@ -4303,5 +4303,21 @@
             ]
           },
           ]
+    },
+    72: {
+        title: "Prueba",
+        desc: "Dfsdf",
+        cover: "kimitokoete.avif",
+        uploader: "lulu", 
+        seasons: [
+          {
+            num: 1,
+            name: "Película 1",
+            cover: "kimitokoete1.avif",
+            eps: [
+            { title: "sdsfsf"},
+            ]
+          },
+          ]
     }
 };
