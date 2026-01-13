@@ -151,8 +151,8 @@ function showProfileSetup() {
 function openProfileEditor() {
     document.getElementById('profileSetupModal').style.display = 'flex';
     document.getElementById('modalTitle').innerText = "Editar Perfil";
-    document.getElementById('modalDesc').innerText = "Actualiza tu nombre o red social.";
-    document.getElementById('btnSaveProfile').innerText = 'ACTUALIZAR DATOS';
+    document.getElementById('modalDesc').innerText = "Esto actualizará tu nombre en TODOS tus animes subidos.";
+    document.getElementById('btnSaveProfile').innerText = 'ACTUALIZAR TODO';
     const btnCancel = document.getElementById('btnCancelProfile');
     if(btnCancel) btnCancel.style.display = 'block';
 
@@ -170,24 +170,27 @@ function updateProfilePreview(input) {
     else img.src = "Logo_Archinime.avif";
 }
 
+// ============================================
+// FUNCIÓN DE GUARDADO DE PERFIL POTENCIADA
+// ============================================
 async function saveUserProfile() {
-    const nick = document.getElementById('setupNick').value.trim();
-    const avatar = document.getElementById('setupAvatar').value.trim();
-    const social = document.getElementById('setupSocial').value.trim();
+    const newNick = document.getElementById('setupNick').value.trim();
+    const newAvatar = document.getElementById('setupAvatar').value.trim();
+    const newSocial = document.getElementById('setupSocial').value.trim();
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
     
-    if(!nick) { alert("Debes elegir un nombre de usuario."); return; }
-    if(!avatar) { alert("Debes colocar una URL de avatar."); return; }
+    if(!newNick) { alert("Debes elegir un nombre de usuario."); return; }
+    if(!newAvatar) { alert("Debes colocar una URL de avatar."); return; }
 
-    if (nick.toLowerCase().includes("archinime")) {
+    if (newNick.toLowerCase().includes("archinime")) {
         if (currentUserEmail !== "archinime12@gmail.com") {
              alert("El nombre 'Archinime' está reservado y no puede ser utilizado.");
              return;
         }
     }
 
-    const nickLower = nick.toLowerCase();
+    const nickLower = newNick.toLowerCase();
     const isTaken = Object.entries(globalUsersData).some(([email, data]) => {
         return data.nick.toLowerCase() === nickLower && email !== currentUserEmail;
     });
@@ -197,34 +200,88 @@ async function saveUserProfile() {
         return;
     }
 
-    btn.disabled = true;
-    logEl.innerText = "Guardando perfil en GitHub...";
+    // OBTENER NOMBRE ANTIGUO PARA BARRIDO MASIVO
+    let oldNick = null;
+    let oldAvatar = null;
+    if (globalUsersData[currentUserEmail]) {
+        oldNick = globalUsersData[currentUserEmail].nick;
+        oldAvatar = globalUsersData[currentUserEmail].avatar;
+    }
 
+    btn.disabled = true;
+    
     try {
-        // ACTUALIZACIÓN DE DATOS LOCALES Y REMOTOS
-        globalUsersData[currentUserEmail] = { nick: nick, avatar: avatar, social: social };
+        // 1. ACTUALIZAR BASE DE DATOS DE USUARIOS (users-data.js)
+        logEl.innerText = "1/3 Actualizando base de usuarios...";
+        globalUsersData[currentUserEmail] = { nick: newNick, avatar: newAvatar, social: newSocial };
         
         await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
         });
 
-        // Asegurar actualización de variables en sesión actual
-        currentUserNick = nick;
-        currentUserAvatar = avatar;
+        // 2. ACTUALIZAR INDEX (index-data.js) SI CAMBIÓ NOMBRE O AVATAR
+        if (oldNick && (oldNick !== newNick || oldAvatar !== newAvatar)) {
+            logEl.innerText = "2/3 Actualizando tus animes en Inicio...";
+            await updateGithubFile(currentUserToken, OWNER, REPO, 'index-data.js', (content) => {
+                // Parseamos el contenido actual
+                let indexData = safeEval(content);
+                let changed = false;
+                // Recorremos y buscamos todos los animes del usuario antiguo
+                indexData.forEach(anime => {
+                    if (anime.uploader === oldNick) {
+                        anime.uploader = newNick;
+                        anime.uploaderImg = newAvatar;
+                        changed = true;
+                    }
+                });
+                if (!changed) return content; // Si no hay cambios, no subimos nada nuevo
 
-        logEl.innerText = "¡Perfil actualizado! Entrando...";
+                // Reconstruimos el archivo
+                // Truco: Convertimos a string JSON y luego ajustamos formato
+                const itemsStr = indexData.map(item => {
+                    const genresStr = item.genres ? `[${item.genres.map(g=>`"${g}"`).join(',')}]` : "[]";
+                    const aliasesStr = item.aliases ? `, aliases: [${item.aliases.map(a=>`"${a}"`).join(',')}]` : "";
+                    const upImg = item.uploaderImg ? `, uploaderImg:"${item.uploaderImg}"` : "";
+                    // Reconstrucción manual para mantener el formato limpio
+                    return `      {id:${item.id}, title:"${item.title}"${aliasesStr}, img:"${item.img}", rating:${item.rating}, uploader:"${item.uploader}"${upImg}, genres:${genresStr}}`;
+                }).join(',\n');
+                
+                return `const animes = [\n${itemsStr}\n];`;
+            });
+        }
+
+        // 3. ACTUALIZAR DETALLES (anime-detail-data.js) SI CAMBIÓ NOMBRE
+        if (oldNick && oldNick !== newNick) {
+            logEl.innerText = "3/3 Actualizando tus animes en Detalles...";
+            await updateGithubFile(currentUserToken, OWNER, REPO, 'anime-detail-data.js', (content) => {
+                // Como este archivo es gigante y complejo, haremos un reemplazo de texto seguro
+                // Buscamos: uploader: "ViejoNombre",
+                // Reemplazamos por: uploader: "NuevoNombre",
+                const regex = new RegExp(`uploader:\\s*"${oldNick}"`, 'g');
+                const newContent = content.replace(regex, `uploader: "${newNick}"`);
+                return newContent;
+            });
+        }
+
+        // Asegurar actualización de variables en sesión actual
+        currentUserNick = newNick;
+        currentUserAvatar = newAvatar;
+
+        logEl.innerText = "¡Todo actualizado correctamente!";
         
         setTimeout(() => {
             document.getElementById('profileSetupModal').style.display = 'none';
             btn.disabled = false;
             logEl.innerText = "";
             showCMS();
-        }, 1000);
+            // Recargar caché local de búsqueda
+            loadIndexForSearch(); 
+        }, 1500);
 
     } catch(e) {
         console.error(e);
-        logEl.innerText = "Error guardando datos.";
+        logEl.innerText = "Error actualizando datos: " + e.message;
         btn.disabled = false;
     }
 }
