@@ -10,8 +10,8 @@ const usersData = {
         "social": ""
     },
     "lucioguapofeo@gmail.com": {
-        "nick": "lulu",
+        "nick": "lulupro",
         "avatar": "https://avatars.githubusercontent.com/u/254288605?v=4",
-        "social": ""
+        "social": "https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox/FMfcgzQfBPzBsxbKWHjJHjwRqqQVGQzq"
     }
 };
