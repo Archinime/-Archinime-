@@ -43,15 +43,6 @@
             border: 2px solid #00f0ff; margin: 0 auto 20px; display: block; background: #000;
         }
 
-        /* ESTILO PARA INPUT BLOQUEADO */
-        input[readonly].locked-input {
-            background: #0a0a0c;
-            color: #666;
-            border-color: #333;
-            cursor: not-allowed;
-            font-style: italic;
-        }
-
         /* ESTILOS PARA LA VALORACIÓN DIVIDIDA */
         .rating-container {
             display: flex;
@@ -101,7 +92,7 @@
 
         <div class="p-input-group">
             <label>Avatar por defecto de GitHub <span>*</span></label>
-            <input type="text" id="setupAvatar" class="locked-input" placeholder="Se cargará automáticamente..." readonly>
+            <input type="text" id="setupAvatar" placeholder="Se obtiene automáticamente..." readonly style="background: #0a0a0c; color: #666; border-color: #222; cursor: not-allowed; user-select: none;">
         </div>
 
         <div class="p-input-group">
@@ -111,38 +102,38 @@
 
         <div style="display: flex; gap: 10px; margin-top: 40px;">
             <button class="btn btn-gen" id="btnSaveProfile" onclick="saveUserProfile()" style="margin-top: 0; flex: 1;">
-                GUARDAR PERFIL
+                 GUARDAR PERFIL
             </button>
             <button class="btn" id="btnCancelProfile" onclick="closeProfileModal()" style="margin-top: 0;
-            background: transparent; border: 1px solid #333; color: #aaa; width: auto;
-            display: none;">
+                background: transparent; border: 1px solid #333; color: #aaa; width: auto;
+                display: none;">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         <div id="profileLog" style="margin-top:10px;
-        color:#00f0ff; font-size:0.8em;"></div>
+            color:#00f0ff; font-size:0.8em;"></div>
     </div>
 </div>
 
 <div id="userHeader" class="user-header">
     <div class="header-profile" onclick="openProfileEditor()" style="cursor: pointer;" title="Clic para editar perfil">
         <img id="userAvatarImg" src="" style="width:36px;
-        height:36px; border-radius:50%; border:2px solid var(--primary);">
+            height:36px; border-radius:50%; border:2px solid var(--primary);">
         <div>
             <div class="user-badge">Verificado</div>
             <div id="userNameDisplay" class="user-name">Usuario</div>
         </div>
         <i class="fas fa-pen" style="font-size:0.7em;
-        color:#555; margin-left:5px;"></i>
+            color:#555; margin-left:5px;"></i>
     </div>
     <div style="display:flex;
-    gap:10px;">
+        gap:10px;">
         <button onclick="openSearchModal()" style="background:var(--primary); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold;
-        font-size:0.8em;">
+            font-size:0.8em;">
             <i class="fas fa-folder-open"></i> CARGAR / EDITAR
         </button>
         <button onclick="logout()" style="background:transparent;
-        color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
+            color:#fff; border:1px solid #333; padding:8px 12px; border-radius:8px; cursor:pointer;">
             <i class="fas fa-power-off"></i>
         </button>
     </div>
@@ -151,11 +142,11 @@
 <div id="searchModal" onclick="handleModalClick(event)">
     <div class="search-box">
         <div style="padding:15px;
-        border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
+            border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
             <h3 style="margin:0;
-            color:#fff;">📂 Cargar Anime</h3>
+                color:#fff;">📂 Cargar Anime</h3>
             <button onclick="closeSearchModal()" style="background:none; border:none; color:#ff4757; font-size:1.2em;
-            cursor:pointer;"><i class="fas fa-times"></i></button>
+                cursor:pointer;"><i class="fas fa-times"></i></button>
         </div>
         
         <div class="search-tabs">
@@ -163,14 +154,14 @@
                 <i class="fas fa-user-tag"></i> Mis Animes
             </button>
             <button class="tab-btn" id="tabGeneral" onclick="switchSearchTab('general')">
-                <i class="fas fa-globe"></i> General
+                  <i class="fas fa-globe"></i> General
             </button>
         </div>
 
         <div style="padding:10px;">
             <input type="text" id="searchInput" placeholder="Buscar por nombre..." style="margin:0;" oninput="filterSearch()">
             <div id="loadingSearch" style="color:var(--accent);
-            text-align:center; padding:10px; display:none;">Cargando índice...</div>
+                text-align:center; padding:10px; display:none;">Cargando índice...</div>
         </div>
         <div id="searchResults" class="search-results"></div>
     </div>
@@ -183,40 +174,40 @@
         <div id="editModeBar">
             <i class="fas fa-edit"></i> MODO EDICIÓN ACTIVADO (ID: <span id="editIdDisplay">0</span>)
             <div style="font-size:0.8em;
-            font-weight:normal; margin-top:5px;">Los cambios sobrescribirán el anime existente.</div>
+                font-weight:normal; margin-top:5px;">Los cambios sobrescribirán el anime existente.</div>
             <button onclick="exitEditMode()" style="background:rgba(0,0,0,0.3);
-            border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar Edición</button>
+                border:1px solid #fff; color:#fff; padding:4px 10px; border-radius:4px; margin-top:5px; cursor:pointer;">Cancelar Edición</button>
         </div>
 
         <h2><i class="fas fa-pen-to-square"></i> 1. Ficha Técnica</h2>
         
         <label>Título Principal <span>*</span></label>
         <input type="text" id="tituloAnime" placeholder="Ej: Dragon Ball Z" onblur="autoCap(this);
-        validate(this);" oninput="requestPreviewUpdate()">
+            validate(this);" oninput="requestPreviewUpdate()">
 
         <label>Alias Alternativos</label>
         <div id="aliasContainer"></div>
         <button class="btn btn-add" style="margin-top:10px;
-        padding:12px;" onclick="addAlias()">
+            padding:12px;" onclick="addAlias()">
             <i class="fas fa-plus"></i> AGREGAR ALIAS
         </button>
 
         <label style="margin-top:25px">URL Portada Vertical (.AVIF) <span>*</span></label>
         <div style="margin-bottom:5px;
-        font-size:0.8em; color:var(--accent);">
+            font-size:0.8em; color:var(--accent);">
             Permitido: 1000x1500, 1400x2100, 2000x3000, 2090x3135, 3412x5120
         </div>
         <div style="display:flex;
-        gap:15px; align-items: flex-start; flex-wrap: wrap;">
+            gap:15px; align-items: flex-start; flex-wrap: wrap;">
             <div style="flex:1;
-            min-width: 200px;">
+                min-width: 200px;">
                 <input type="text" id="portadaAnime" placeholder="https://..." oninput="checkCoverVisual(this);
-                requestPreviewUpdate()" onblur="validate(this); smartLinkConvert(this)">
+                    requestPreviewUpdate()" onblur="validate(this); smartLinkConvert(this)">
                 <div id="dimDisplay" style="color:var(--text-muted);
-                font-size:0.8em; margin-top:8px; font-family:'JetBrains Mono'"></div>
+                    font-size:0.8em; margin-top:8px; font-family:'JetBrains Mono'"></div>
             </div>
             <img id="mainCoverPreview" style="width:100px;
-            height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
+                height:140px; border-radius:10px; background:#111; object-fit:cover; display:none; border:1px solid var(--accent)">
         </div>
         
         <label>Géneros (Selecciona varios) <span>*</span></label>
@@ -224,29 +215,29 @@
 
         <label>Sinopsis <span>*</span></label>
         <textarea id="sinopsisAnime" rows="5" placeholder="Sinopsis oficial..." onblur="autoCap(this);
-        validate(this)" oninput="requestPreviewUpdate()"></textarea>
+            validate(this)" oninput="requestPreviewUpdate()"></textarea>
         
         <div class="row-flex">
             <div class="col-flex">
                 <label>Demografía <span>*</span></label>
                 <select id="demografiaAnime" onchange="requestPreviewUpdate()">
                     <option value="" disabled selected>Elegir Demografía...</option>
-                    <option value="Shōnen">Shōnen</option>
+                      <option value="Shōnen">Shōnen</option>
                     <option value="Seinen">Seinen</option>
                     <option value="Shōjo">Shōjo</option>
                     <option value="Josei">Josei</option>
                     <option value="Kodomo">Kodomo</option>
-                    <option value="Seijin">Seijin</option>
+                     <option value="Seijin">Seijin</option>
                 </select>
             </div>
             <div class="col-flex">
                 <label>Valoración (Ej: 4.5) <span>*</span></label>
                 <div class="rating-container">
-                    <input type="number" id="ratingInt" class="rating-box" min="1" max="5" placeholder="4" oninput="limitRating(this, 1, 5);
-                    requestPreviewUpdate()">
+                     <input type="number" id="ratingInt" class="rating-box" min="1" max="5" placeholder="4" oninput="limitRating(this, 1, 5);
+                        requestPreviewUpdate()">
                     <span class="rating-dot">.</span>
                     <input type="number" id="ratingDec" class="rating-box" min="0" max="9" placeholder="5" oninput="limitRating(this, 0, 9);
-                    requestPreviewUpdate()">
+                        requestPreviewUpdate()">
                 </div>
             </div>
         </div>
@@ -258,7 +249,7 @@
         <h2 style="margin-top:50px"><i class="fas fa-music"></i> 3. Banda Sonora</h2>
         <div id="musicContainer"></div>
         <button class="btn btn-add" style="border-color:var(--primary);
-        color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
+            color:var(--primary)" onclick="addMusic()"><i class="fas fa-music"></i> AGREGAR AUDIO</button>
 
         <button class="btn btn-gen" id="btnSaveAction" onclick="subirAGithHub()">
             <i class="fas fa-cloud-arrow-up"></i> <span id="btnActionText">COMPILAR Y SUBIR</span>
@@ -269,30 +260,30 @@
 
     <div class="preview-sidebar">
         <h3 style="color:var(--text-muted);
-        font-size:0.8em; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
+            font-size:0.8em; margin-bottom:15px; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Vista Previa App</h3>
         <div class="web-card">
             <img id="webCover" class="web-cover" src="https://via.placeholder.com/400x600/111/333?text=Cover">
             <div class="web-info">
                 <div id="webTitle" class="web-title">Título</div>
                 <div id="webAlias" class="web-alias">
                     <div>ID: 
-                    <span id="previewId">###</span></div>
+                        <span id="previewId">###</span></div>
                     <div id="previewAliasesList" style="margin-top:4px;
-                    font-style: italic; color:#777;"></div>
+                        font-style: italic; color:#777;"></div>
                 </div>
                 
                 <div style="display:flex;
-                justify-content:space-between; margin-top:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    justify-content:space-between; margin-top:15px; border-bottom:1px solid #333; padding-bottom:10px;">
                     <span id="webDemography" style="color:var(--accent);
-                    font-weight:700; font-size:0.8em">DEMO</span>
+                        font-weight:700; font-size:0.8em">DEMO</span>
                     <span id="webRating" style="color:#facc15;
-                    font-size:0.8em">⭐ --</span>
+                        font-size:0.8em">⭐ --</span>
                 </div>
                 <div id="webTags" style="display:flex;
-                flex-wrap:wrap; gap:6px; margin:15px 0;"></div>
+                    flex-wrap:wrap; gap:6px; margin:15px 0;"></div>
                 
                 <div style="font-size:0.7em;
-                font-weight:bold; color:#777; margin-top:20px; letter-spacing:1px;">COLECCIÓN:</div>
+                    font-weight:bold; color:#777; margin-top:20px; letter-spacing:1px;">COLECCIÓN:</div>
                 <div id="webSeasonsGrid" class="preview-seasons-grid"></div>
             </div>
         </div>
