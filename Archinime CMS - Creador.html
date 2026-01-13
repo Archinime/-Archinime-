@@ -139,12 +139,16 @@
       border-left:3px solid #0ff;
     }
 
-    /* --- UPLOADER INFO (NUEVO) --- */
+    /* --- UPLOADER INFO (MODIFICADO) --- */
     .uploader-info {
         text-align: right;
         margin-bottom: 30px;
         font-size: 0.9rem;
         color: #aaa;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
     }
     .uploader-btn {
         color: #0ff;
@@ -153,19 +157,30 @@
         transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
+        padding: 4px 10px;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-radius: 15px;
+        background: rgba(0, 255, 255, 0.05);
     }
     .uploader-btn:hover {
         color: #fff;
-        text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+        background: rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    }
+    .uploader-avatar-mini {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid #0ff;
     }
 
     /* --- TEMPORADAS --- */
     details {
       margin-bottom:12px;
-      background: #0d0214; /* Morado muy oscuro sólido */
+      background: #0d0214; 
       border: 1px solid #4a004a;
-      /* Borde morado */
       border-radius:8px;
       overflow:hidden;
     }
@@ -201,7 +216,7 @@
       display:flex; align-items: center;
       justify-content: center;
       padding:10px 4px;
-      background: #1a0525; /* Fondo sólido */
+      background: #1a0525; 
       border: 1px solid #330c4d;
       border-radius:4px;
       text-decoration:none; color:#ddd;
@@ -226,7 +241,6 @@
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
     }
     
-    /* 6 por fila en PC/Tablet */
     .rec-grid { 
         display: grid;
         grid-template-columns: repeat(6, 1fr);
@@ -248,10 +262,7 @@
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
     }
 
-    /* Para que el texto cambie a celeste al pasar el mouse sobre la tarjeta */
-    .rec-card:hover p {
-      color: #0ff;
-    }
+    .rec-card:hover p { color: #0ff; }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
     .rec-card p { padding:6px; font-size:0.8rem;
       text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
@@ -266,8 +277,7 @@
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
-        .video-list { grid-template-columns: repeat(3, 1fr);
-        }
+        .video-list { grid-template-columns: repeat(3, 1fr); }
     }
 
     @media (max-width: 600px) {
@@ -275,19 +285,10 @@
             width:100%;
             margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
         }
-        .video-list { grid-template-columns: repeat(2, 1fr);
-        gap: 6px; }
-        h1 { font-size:1.4rem;
-        }
-        
-        /* 3 por fila en MÓVILES */
-        .rec-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .uploader-info {
-            text-align: left;
-        }
+        .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        h1 { font-size:1.4rem; }
+        .rec-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .uploader-info { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -317,10 +318,13 @@
   </video>
   <div id="overlay"></div>
 
+  <script>
+      document.write('<script src="users-data.js?v=' + new Date().getTime() + '"><\/script>');
+  </script>
+  
   <script src="index-data.js"></script> 
   <script src="anime-detail-data.js"></script>
   <script src="musica-data.js"></script>
-  <script src="users-data.js"></script>
 
   <script>
     /* ----------------------------------------------------
@@ -365,10 +369,10 @@
         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
-   
             playTrack(currentTrackIndex);
         }
     }, { once: true });
+    
     /* ----------------------------------------------------
        3. Renderizado y Lógica Visual
        ---------------------------------------------------- */
@@ -383,14 +387,12 @@
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
-            // --- Lógica de Géneros Actualizada ---
-            // Buscamos el anime en la lista completa (index-data.js) para sacar los géneros
+            
+            // --- Lógica de Géneros ---
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
-                // Buscamos coincidencia por ID (número o texto)
                 const animeInfo = animes.find(a => String(a.id) === String(id));
                 if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
-                    // Creamos los chips separados
                     genreHtml = animeInfo.genres.map(g => 
                         `<span class="genre-chip">${escapeHtml(g)}</span>`
                     ).join('');
@@ -398,46 +400,61 @@
                     genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
                 }
             }
-            // -------------------------------------
 
-            // --- NUEVO: LÓGICA DE UPLOADER/SUBIDO POR ---
-            // Leemos el uploader del anime (que es el email)
-            let uploaderEmailOrName = anime.uploader || "Desconocido";
-            let displayNick = uploaderEmailOrName; // Por defecto mostramos el email o lo que haya
-            let uploaderHtml = "";
+            // --- LÓGICA DE UPLOADER MEJORADA (Búsqueda por Nick o Email) ---
+            let uploaderRaw = (anime.uploader || "Desconocido").trim();
+            let displayNick = uploaderRaw; 
+            let socialLink = "";
+            let uploaderAvatar = ""; // Opcional, si quisieras mostrar foto
 
-            // Verificamos si existe usersData y si encontramos el email
-            if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
-                const userData = usersData[uploaderEmailOrName];
-                displayNick = userData.nick; // Usamos el nick en lugar del correo
+            if (typeof usersData !== 'undefined') {
+                let userFound = null;
 
-                // Si tiene red social, creamos un enlace
-                if (userData.social && userData.social.trim() !== "") {
-                    uploaderHtml = `
-                        <div class="uploader-info">
-                            Subido por: 
-                            <a href="${userData.social}" target="_blank" class="uploader-btn">
-                                ${displayNick} <i class="fas fa-external-link-alt" style="font-size:0.8em"></i>
-                            </a>
-                        </div>
-                    `;
-                } else {
-                    // Si no tiene red social, solo mostramos el nick resaltado
-                    uploaderHtml = `
-                        <div class="uploader-info">
-                            Subido por: <span style="color:#0ff; font-weight:bold;">${displayNick}</span>
-                        </div>
-                    `;
+                // 1. Intento buscar directo por EMAIL (la clave del objeto)
+                if (usersData[uploaderRaw]) {
+                    userFound = usersData[uploaderRaw];
+                } 
+                // 2. Si falla, busco por NICK (recorriendo todos los usuarios)
+                else {
+                    const emails = Object.keys(usersData);
+                    for (let email of emails) {
+                        if (usersData[email].nick && usersData[email].nick.toLowerCase() === uploaderRaw.toLowerCase()) {
+                            userFound = usersData[email];
+                            break;
+                        }
+                    }
                 }
-            } else {
-                // Si no está en la base de datos de usuarios, mostramos el texto tal cual
+
+                // Si encontramos al usuario, actualizamos los datos
+                if (userFound) {
+                    displayNick = userFound.nick;
+                    socialLink = userFound.social || "";
+                    uploaderAvatar = userFound.avatar || "";
+                }
+            }
+
+            // Construir el HTML del Uploader
+            let uploaderHtml = "";
+            if (socialLink && socialLink.trim() !== "") {
+                // Si tiene link, lo hacemos botón
+                let avatarImg = uploaderAvatar ? `<img src="${uploaderAvatar}" class="uploader-avatar-mini" onerror="this.style.display='none'">` : '';
                 uploaderHtml = `
                     <div class="uploader-info">
-                        Subido por: <span>${displayNick}</span>
+                        Subido por: 
+                        <a href="${socialLink}" target="_blank" class="uploader-btn">
+                            ${avatarImg} ${escapeHtml(displayNick)} <i class="fas fa-external-link-alt" style="font-size:0.8em"></i>
+                        </a>
+                    </div>
+                `;
+            } else {
+                // Si no tiene link, solo texto resaltado
+                uploaderHtml = `
+                    <div class="uploader-info">
+                        Subido por: <span style="color:#0ff; font-weight:bold; margin-left:5px;">${escapeHtml(displayNick)}</span>
                     </div>
                 `;
             }
-            // ---------------------------------------------
+            // ------------------------------------------------------------
 
             let html = `
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
@@ -517,6 +534,7 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
+
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
