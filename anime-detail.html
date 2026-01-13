@@ -10,6 +10,7 @@
   <meta property="og:image" content="Logo_Archinime.avif">
 
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
   <style>
     /* ---------------------------
@@ -130,11 +131,33 @@
         background: rgba(0, 255, 255, 0.15);
     }
 
+    /* --- DESCRIPCIÓN --- */
     .desc{
-      margin-bottom:30px; line-height:1.6; color:#ddd; font-size: 1rem;
+      margin-bottom:20px; line-height:1.6; color:#ddd; font-size: 1rem;
       background:rgba(255,255,255,0.03); padding:15px;
       border-radius:8px;
       border-left:3px solid #0ff;
+    }
+
+    /* --- UPLOADER INFO (NUEVO) --- */
+    .uploader-info {
+        text-align: right;
+        margin-bottom: 30px;
+        font-size: 0.9rem;
+        color: #aaa;
+    }
+    .uploader-btn {
+        color: #0ff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .uploader-btn:hover {
+        color: #fff;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
     }
 
     /* --- TEMPORADAS --- */
@@ -196,51 +219,8 @@
       color: #000;
     }
 
-    /* --- UPLOADER CREDIT (BOTÓN LINK) --- */
-    .uploader-credit {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        margin-top: 35px;
-        background: rgba(0, 255, 255, 0.05);
-        /* Fondo sutil cyan */
-        border: 1px solid rgba(0, 255, 255, 0.2);
-        padding: 10px 25px;
-        border-radius: 50px;
-        width: fit-content;
-        margin-left: auto; 
-        backdrop-filter: blur(5px);
-        font-size: 0.9rem;
-        color: #ccc;
-        
-        /* Estilos de botón */
-        text-decoration: none;
-        cursor: pointer;
-        transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-    }
-    .uploader-credit:hover {
-        transform: scale(1.05);
-        background: rgba(0, 255, 255, 0.15);
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-    }
-    .uploader-credit span {
-        color: #0ff;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-    .uploader-avatar {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #0ff;
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
-
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px;
-      padding-top:20px;
+    .recommendations { margin-top:40px; padding-top:20px;
       border-top:1px solid #333;
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
@@ -305,6 +285,9 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
         }
+        .uploader-info {
+            text-align: left;
+        }
     }
   </style>
 </head>
@@ -334,26 +317,12 @@
   </video>
   <div id="overlay"></div>
 
-  <script src="index-data.js"></script> <script src="anime-detail-data.js"></script>
+  <script src="index-data.js"></script> 
+  <script src="anime-detail-data.js"></script>
   <script src="musica-data.js"></script>
+  <script src="users-data.js"></script>
 
   <script>
-    /* ----------------------------------------------------
-       0. MAPA DE AVATARES Y LINKS (Configuración)
-       ---------------------------------------------------- */
-    const AVATAR_MAP = {
-        "Archinime": "Logo_Archinime.avif",
-        "Alejandro": "https://via.placeholder.com/40",
-        "Lucio": "https://via.placeholder.com/40"
-    };
-
-    // --- NUEVO: MAPA DE LINKS DE YOUTUBE ---
-    const PROFILE_LINKS = {
-        "Archinime": "https://www.youtube.com/@Archinime-k2g",
-        "Alejandro": "https://www.youtube.com/watch?v=B_lP_sQpw_A",
-        "Lucio": "https://www.youtube.com/watch?v=nc2Z6_rhFz0"
-    };
-
     /* ----------------------------------------------------
        1. Gestión de Carga
        ---------------------------------------------------- */
@@ -397,7 +366,7 @@
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
    
-             playTrack(currentTrackIndex);
+            playTrack(currentTrackIndex);
         }
     }, { once: true });
     /* ----------------------------------------------------
@@ -414,11 +383,14 @@
 
         if (anime) {
             document.title = `${anime.title} - Archinime`;
-            // --- GÉNEROS ---
+            // --- Lógica de Géneros Actualizada ---
+            // Buscamos el anime en la lista completa (index-data.js) para sacar los géneros
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
+                // Buscamos coincidencia por ID (número o texto)
                 const animeInfo = animes.find(a => String(a.id) === String(id));
                 if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
+                    // Creamos los chips separados
                     genreHtml = animeInfo.genres.map(g => 
                         `<span class="genre-chip">${escapeHtml(g)}</span>`
                     ).join('');
@@ -426,47 +398,72 @@
                     genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
                 }
             }
-            
+            // -------------------------------------
+
+            // --- NUEVO: LÓGICA DE UPLOADER/SUBIDO POR ---
+            // Leemos el uploader del anime (que es el email)
+            let uploaderEmailOrName = anime.uploader || "Desconocido";
+            let displayNick = uploaderEmailOrName; // Por defecto mostramos el email o lo que haya
+            let uploaderHtml = "";
+
+            // Verificamos si existe usersData y si encontramos el email
+            if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
+                const userData = usersData[uploaderEmailOrName];
+                displayNick = userData.nick; // Usamos el nick en lugar del correo
+
+                // Si tiene red social, creamos un enlace
+                if (userData.social && userData.social.trim() !== "") {
+                    uploaderHtml = `
+                        <div class="uploader-info">
+                            Subido por: 
+                            <a href="${userData.social}" target="_blank" class="uploader-btn">
+                                ${displayNick} <i class="fas fa-external-link-alt" style="font-size:0.8em"></i>
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    // Si no tiene red social, solo mostramos el nick resaltado
+                    uploaderHtml = `
+                        <div class="uploader-info">
+                            Subido por: <span style="color:#0ff; font-weight:bold;">${displayNick}</span>
+                        </div>
+                    `;
+                }
+            } else {
+                // Si no está en la base de datos de usuarios, mostramos el texto tal cual
+                uploaderHtml = `
+                    <div class="uploader-info">
+                        Subido por: <span>${displayNick}</span>
+                    </div>
+                `;
+            }
+            // ---------------------------------------------
+
             let html = `
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
-        
+       
                 <p class="desc">${anime.desc}</p>
+                
+                ${uploaderHtml}
             `;
+            
             if(anime.seasons){
                 anime.seasons.forEach((s, index) => {
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
        
-                          <div class="season-content">
+                        <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-     
-         
-  
+              
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
-            
                 });
             }
-
-            // --- AÑADIR UPLOADER + LOGO AL FINAL (MODIFICADO) ---
-            const uploaderName = anime.uploader || "Archinime";
-            const avatarUrl = AVATAR_MAP[uploaderName] || AVATAR_MAP["Archinime"] || "https://via.placeholder.com/40";
-            
-            // Obtener link del perfil o usar fallback
-            const profileLink = PROFILE_LINKS[uploaderName] || PROFILE_LINKS["Archinime"] || "#";
-            
-            // AHORA ES UN <a> LINK CON TARGET _BLANK
-            html += `
-            <a href="${profileLink}" target="_blank" class="uploader-credit" title="Ver canal de ${escapeHtml(uploaderName)}">
-                Subido por: <span>${escapeHtml(uploaderName)}</span>
-                <img src="${avatarUrl}" class="uploader-avatar" alt="Avatar">
-            </a>`;
-            
             container.innerHTML = html;
             renderRecommendations(id);
         } else {
