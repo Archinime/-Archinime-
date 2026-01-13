@@ -4304,5 +4304,21 @@
             ]
           },
           ]
+    },
+    72: {
+        title: "Prueba",
+        desc: "Sdfdf",
+        cover: "overlord.avif",
+        uploader: "lulupro123", 
+        seasons: [
+          {
+            num: 1,
+            name: "Película 1",
+            cover: "overlord.avif",
+            eps: [
+            { title: "asfasf"},
+            ]
+          },
+          ]
     }
 };
