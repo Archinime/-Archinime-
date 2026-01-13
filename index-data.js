@@ -1179,17 +1179,6 @@ const animes = [
     },
     {
         "id": 72,
-        "title": "Prueba2",
-        "img": "overlord.avif",
-        "rating": 3.3,
-        "uploader": "lucioguapofeo@gmail.com",
-        "genres": [
-            "Harem",
-            "Seijin"
-        ]
-    },
-    {
-        "id": 73,
         "title": "Prueba3",
         "img": "overlord.avif",
         "rating": 5,
