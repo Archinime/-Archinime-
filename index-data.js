@@ -70,5 +70,6 @@ const animes = [
       {id:69, title:"Cars", aliases: ["Rayo McQueen"], img:"cars.avif", rating:4.7, uploader:"Archinime", genres:["Infantil","Familiar","Aventura","Animación","Comedia","Acción","Road Movie","Deportivo","Kodomo"]},
       {id:70, title:"Kimi to Koete Koi ni Naru", aliases: ["With You, Our Love Will Make It Through"], img:"kimitokoete.avif", rating:4.3, uploader:"Archinime", genres:["Comedia","Romance","Escolar","Slice of Life","Drama","Fantasía","Shōjo"]},
       {id:71, title:"Overlord", img:"overlord.avif", rating:4.9, uploader:"Archinime", uploaderImg:"Logo_Archinime.avif", genres:["Acción","Aventura","Comedia","Comedia oscura","Fantasía oscura","Isekai","Sobrenatural","Shōnen"]},
-      {id:72, title:"Prueba", aliases: ["hola"], img:"overlord.avif", rating:3.9, uploader:"lulupro123", uploaderImg:"https://avatars.githubusercontent.com/u/254288605?v=4", genres:["Fantasía oscura","Seijin"]}
+      {id:72, title:"Prueba", aliases: ["hola"], img:"overlord.avif", rating:3.9, uploader:"lulupro123", uploaderImg:"https://avatars.githubusercontent.com/u/254288605?v=4", genres:["Fantasía oscura","Seijin"]},
+      {id:73, title:"Prueba2", img:"overlord.avif", rating:3.3, uploader:"lucioguapofeo@gmail.com", uploaderImg:"https://avatars.githubusercontent.com/u/254288605?v=4", genres:["Harem","Seijin"]}
 ];
