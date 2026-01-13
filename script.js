@@ -81,8 +81,6 @@ async function checkAccess(user) {
     const logErr = document.getElementById('loginError');
     if(logErr) logErr.style.display = 'none';
 
-    // 1. CARGAMOS SIEMPRE LA BASE DE DATOS DE USUARIOS
-    // Esto es vital para poder "traducir" emails a nicks
     try {
         const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
         globalUsersData = safeEval(usersFile.content);
@@ -91,8 +89,6 @@ async function checkAccess(user) {
         globalUsersData = {}; 
     }
 
-    // 2. COMPROBACIÓN DE ACCESO
-    // Si es el dueño principal
     if (email === "archinime12@gmail.com") {
         currentUserNick = "Archinime";
         currentUserAvatar = "Logo_Archinime.avif";
@@ -100,7 +96,6 @@ async function checkAccess(user) {
         return;
     }
 
-    // Si es un aportador registrado
     try {
         if (globalUsersData[email]) {
             const userData = globalUsersData[email];
@@ -108,7 +103,6 @@ async function checkAccess(user) {
             currentUserAvatar = userData.avatar;
             showCMS();
         } else {
-            // Si está en la lista blanca pero no en el archivo users-data (primera vez)
             if (ALLOWED_USERS.includes(email)) {
                 showProfileSetup();
             } else {
@@ -200,9 +194,7 @@ async function saveUserProfile() {
     logEl.innerText = "Guardando perfil en GitHub...";
 
     try {
-        // ACTUALIZAMOS EL OBJETO GLOBAL
         globalUsersData[currentUserEmail] = { nick: nick, avatar: avatar, social: social };
-        
         await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
@@ -216,7 +208,7 @@ async function saveUserProfile() {
             document.getElementById('profileSetupModal').style.display = 'none';
             btn.disabled = false;
             logEl.innerText = "";
-            showCMS(); // Recargar interfaz con nuevos datos
+            showCMS();
         }, 1000);
     } catch(e) {
         console.error(e);
@@ -262,7 +254,6 @@ genresList.forEach(g => {
     gContainer.appendChild(label);
 });
 
-// LIMITAR VALORACIÓN EN TIEMPO REAL
 function limitRating(input, min, max) {
     if(input.value.length > 1) input.value = input.value.slice(0,1);
     const val = parseInt(input.value);
@@ -299,7 +290,6 @@ function log(msg) {
     el.scrollTop = el.scrollHeight;
 }
 
-// CONVERSOR DE LINKS
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
@@ -374,7 +364,6 @@ function addAlias(value = "") {
     container.appendChild(div);
 }
 
-// AUDIO PLAYER
 function addMusic(url = "") {
     const container = document.getElementById('musicContainer');
     const div = document.createElement('div');
@@ -404,7 +393,6 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS
 const colorPalette = ['#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'];
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
@@ -735,9 +723,6 @@ async function loadIndexForSearch() {
     }
 }
 
-// ----------------------------------------------------------------------
-// FUNCIÓN CLAVE 1: BUSCADOR QUE TRADUCE EMAIL -> NICK
-// ----------------------------------------------------------------------
 function filterSearch() {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => { _performFilter(); }, 300);
@@ -752,7 +737,6 @@ function _performFilter() {
         const matchesText = a.title.toLowerCase().includes(query);
         const storedUploader = a.uploader || "Archinime";
         
-        // Verificamos propiedad comparando con Email (nuevo) o Nick (viejo)
         if (currentSearchMode === 'mine') { 
             return matchesText && (storedUploader === currentUserEmail || storedUploader === currentUserNick); 
         } else { 
@@ -766,10 +750,6 @@ function _performFilter() {
         div.onclick = () => loadAnimeForEditing(anime.id);
         
         let extraInfo = "";
-        
-        // --- TRADUCCIÓN DINÁMICA ---
-        // Si el anime tiene guardado un email, mostramos el Nick de users-data
-        // Si tiene guardado un nick (viejo), lo mostramos tal cual
         let displayNick = anime.uploader;
         if(globalUsersData[anime.uploader]) {
             displayNick = globalUsersData[anime.uploader].nick;
@@ -822,6 +802,22 @@ async function loadAnimeForEditing(id) {
         const editModeBar = document.getElementById('editModeBar');
         if(editModeBar) editModeBar.style.display = 'block';
         
+        // --- INYECCIÓN DEL BOTÓN DE ELIMINAR ---
+        // Verificar si existe botón previo para no duplicar
+        const existingDelBtn = document.getElementById('btnDeleteAnime');
+        if(existingDelBtn) existingDelBtn.remove();
+
+        // Si es el Super Admin, agregar botón de Borrar
+        if(currentUserEmail === "archinime12@gmail.com") {
+             const delBtn = document.createElement('button');
+             delBtn.id = 'btnDeleteAnime';
+             delBtn.innerText = "🗑 ELIMINAR ANIME";
+             delBtn.style.cssText = "background: #ff4757; color: white; border: none; padding: 4px 10px; border-radius: 4px; margin-top: 5px; margin-left:10px; cursor: pointer; font-weight:bold;";
+             delBtn.onclick = () => deleteCurrentAnime(id);
+             editModeBar.appendChild(delBtn);
+        }
+        // ----------------------------------------
+
         const editIdEl = document.getElementById('editIdDisplay');
         if(editIdEl) editIdEl.innerText = id;
         
@@ -830,14 +826,9 @@ async function loadAnimeForEditing(id) {
 
         const indexEntry = cachedIndex.find(x => x.id === id);
         
-        // --- VERIFICACIÓN DE PERMISOS MEJORADA ---
         const storedUploader = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
         const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
         
-        // Eres dueño si:
-        // 1. El uploader guardado es tu Email
-        // 2. El uploader guardado es tu Nick (compatible con animes viejos)
-        // 3. Eres Super Admin
         const isOwner = (storedUploader === currentUserEmail) || 
                         (storedUploader === currentUserNick) || 
                         isSuperAdmin || 
@@ -854,7 +845,6 @@ async function loadAnimeForEditing(id) {
             saveBtn.style.opacity = '0.5';
         }
 
-        // Cargar datos al formulario
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
         document.getElementById('sinopsisAnime').value = targetDetail.desc;
@@ -918,6 +908,107 @@ async function loadAnimeForEditing(id) {
     }
 }
 
+// -------------------------------------------------------------
+// NUEVA FUNCIÓN: BORRAR ANIME Y REORDENAR IDS (SHIFTING)
+// -------------------------------------------------------------
+async function deleteCurrentAnime(idToDelete) {
+    if(currentUserEmail !== "archinime12@gmail.com") {
+        alert("Acción no permitida."); return;
+    }
+
+    const confirm1 = confirm(`⚠️ PELIGRO ⚠️\n\nEstás a punto de ELIMINAR PERMANENTEMENTE el anime con ID: ${idToDelete}.\n\nEsta acción:\n1. Borrará el anime de todas las bases de datos.\n2. Reordenará TODOS los IDs superiores (Ej: el 71 pasará a ser el 70).\n\n¿Estás seguro?`);
+    if(!confirm1) return;
+
+    const confirm2 = confirm(`ÚLTIMA ADVERTENCIA.\n\nVas a eliminar el anime ID ${idToDelete}.\n¿Confirmar borrado y reordenamiento de base de datos?`);
+    if(!confirm2) return;
+
+    showToast("Iniciando borrado masivo...", false);
+    const token = currentUserToken;
+    const logEl = document.getElementById('statusLog');
+    logEl.style.display = 'block';
+    
+    try {
+        log("1/5 Descargando bases de datos...");
+        
+        // Descargar TODO
+        const [indexFile, detailFile, playerFile, musicFile] = await Promise.all([
+            getGithubFile(token, OWNER, REPO, 'index-data.js'),
+            getGithubFile(token, OWNER, REPO, 'anime-detail-data.js'),
+            getGithubFile(token, OWNER, REPO, 'video-player-data.js'),
+            getGithubFile(token, OWNER, REPO, 'musica-data.js')
+        ]);
+
+        let indexData = safeEval(indexFile.content);
+        let detailData = safeEval(detailFile.content);
+        let playerData = safeEval(playerFile.content);
+        let musicData = safeEval(musicFile.content);
+
+        log("2/5 Procesando Index...");
+        // Filtrar y Shiftear Index
+        const newIndex = indexData.filter(item => item.id !== idToDelete).map(item => {
+            if (item.id > idToDelete) {
+                item.id = item.id - 1; // Restar 1 al ID
+            }
+            return item;
+        });
+
+        log("3/5 Procesando Detalles y Player...");
+        
+        // Función helper para shiftear objetos (Keys numéricas)
+        const shiftObjectKeys = (obj) => {
+            const newObj = {};
+            // Ordenar claves numéricamente para procesar en orden
+            const keys = Object.keys(obj).map(Number).sort((a,b) => a-b);
+            
+            keys.forEach(key => {
+                if (key === idToDelete) return; // Eliminar
+                if (key > idToDelete) {
+                    newObj[key - 1] = obj[key]; // Mover atrás
+                } else {
+                    newObj[key] = obj[key]; // Mantener
+                }
+            });
+            return newObj;
+        };
+
+        const newDetail = shiftObjectKeys(detailData);
+        const newPlayer = shiftObjectKeys(playerData);
+        const newMusic = shiftObjectKeys(musicData);
+
+        log("4/5 Subiendo cambios a GitHub...");
+        
+        // Subir Index
+        await updateGithubFile(token, OWNER, REPO, 'index-data.js', () => {
+             return `const animes = ${JSON.stringify(newIndex, null, 4)};`;
+        });
+
+        // Subir Detalles
+        await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', () => {
+             return `const data = ${JSON.stringify(newDetail, null, 4)};`;
+        });
+
+        // Subir Player
+        await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', () => {
+             return `const players = ${JSON.stringify(newPlayer, null, 4)};`;
+        });
+
+        // Subir Música
+        await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => {
+             return `const musica = ${JSON.stringify(newMusic, null, 4)};`;
+        });
+
+        log("✅ ¡ELIMINADO Y REORDENADO CORRECTAMENTE!");
+        alert("Anime eliminado. La base de datos ha sido reordenada.");
+        exitEditMode();
+
+    } catch(e) {
+        console.error(e);
+        log(`❌ ERROR FATAL: ${e.message}`);
+        alert("Error crítico durante el borrado. Revisa la consola.");
+    }
+}
+
+
 function exitEditMode() {
     isEditMode = false;
     currentEditingId = null;
@@ -930,9 +1021,6 @@ function exitEditMode() {
     location.reload();
 }
 
-// ----------------------------------------------------------------------
-// FUNCIÓN CLAVE 2: GENERAR DATOS GUARDANDO EMAIL (ID)
-// ----------------------------------------------------------------------
 function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
@@ -955,9 +1043,6 @@ function generateData() {
         rating: ratingVal,
         musica: [],
         temporadas: [],
-        
-        // AQUÍ ESTÁ LA SOLUCIÓN:
-        // Guardamos el EMAIL en lugar del NICK. El email es la "llave" que une todo.
         uploader: currentUserEmail, 
         uploaderAvatar: currentUserAvatar
     };
@@ -1056,7 +1141,6 @@ async function subirAGithHub() {
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
     
-    // Validación de Rating
     if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) {
         return showToast("Valoración inválida (Min: 1.0, Max: 5.0)", true);
     }
@@ -1104,7 +1188,6 @@ async function subirAGithHub() {
             const aliasesStr = nuevoAnime.aliases.length > 0 ?
             `, aliases: [${nuevoAnime.aliases.map(a => `"${a}"`).join(',')}]` : '';
             
-            // GARANTIZAMOS QUE SE GUARDE EL EMAIL (ID)
             const newEntry = `,\n      {id:${FINAL_ID}, title:"${nuevoAnime.titulo}"${aliasesStr}, img:"${nuevoAnime.portada}", rating:${nuevoAnime.rating}, uploader:"${nuevoAnime.uploader}", uploaderImg:"${nuevoAnime.uploaderAvatar}", genres:[${generosStr}]}`;
             return before + newEntry + "\n];";
         });
