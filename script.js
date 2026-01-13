@@ -31,7 +31,7 @@ let globalUsersData = {};
 // VARIABLES DE ESTADO
 let isEditMode = false;
 let currentEditingId = null;
-let currentAnimeUploader = null; // Variable nueva para recordar quién subió el anime
+let currentAnimeUploader = null; // Guardamos quién subió el anime originalmente
 let cachedIndex = [];
 let searchTimeout = null;
 let previewTimeout = null;
@@ -82,11 +82,12 @@ async function checkAccess(user) {
     const logErr = document.getElementById('loginError');
     if(logErr) logErr.style.display = 'none';
 
+    // CARGA OBLIGATORIA DE USERS-DATA PARA PODER TRADUCIR CORREOS A NICKS
     try {
         const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
         globalUsersData = safeEval(usersFile.content);
     } catch (e) {
-        console.warn("No se pudo cargar la DB de usuarios.");
+        console.warn("No se pudo cargar la DB de usuarios. La traducción de nombres podría fallar.");
         globalUsersData = {}; 
     }
 
@@ -616,15 +617,13 @@ function updateWebPreview() {
     let displayUploaderKey = (isEditMode && currentAnimeUploader) ? currentAnimeUploader : currentUserEmail;
     
     // Buscar en Users Data
-    let displayNick = "Desconocido";
+    let displayNick = displayUploaderKey; // Fallback inicial: mostrar el correo/key si falla
     let socialLink = "#";
     
     if (globalUsersData[displayUploaderKey]) {
+        // ¡EUREKA! Encontramos el usuario en la DB
         displayNick = globalUsersData[displayUploaderKey].nick;
         socialLink = globalUsersData[displayUploaderKey].social || "#";
-    } else {
-        // Fallback (por si es un anime viejo con nick)
-        displayNick = displayUploaderKey;
     }
 
     // Inyectar el HTML de "Subido por"
@@ -638,6 +637,7 @@ function updateWebPreview() {
         if(aliasBox) aliasBox.appendChild(uploaderContainer);
     }
     
+    // Generamos el HTML del enlace. Si socialLink es vacío, ponemos #
     uploaderContainer.innerHTML = `Subido por: <a href="${socialLink}" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:bold;">${displayNick} <i class="fas fa-external-link-alt" style="font-size:0.8em"></i></a>`;
 
     // PUNTUACIÓN EN PREVIEW
