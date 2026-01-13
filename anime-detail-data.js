@@ -7920,23 +7920,5 @@ const data = {
                 ]
             }
         ]
-    },
-    "72": {
-        "title": "Prueba3",
-        "desc": "Sfsdf",
-        "cover": "overlord.avif",
-        "uploader": "lucioguapofeo@gmail.com",
-        "seasons": [
-            {
-                "num": 1,
-                "name": "Película 1",
-                "cover": "overlord.avif",
-                "eps": [
-                    {
-                        "title": "Película 1"
-                    }
-                ]
-            }
-        ]
     }
 };
