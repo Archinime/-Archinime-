@@ -140,44 +140,46 @@
       border-left:3px solid #0ff;
     }
 
-    /* --- UPLOADER INFO (MEJORADO) --- */
-    .uploader-info {
+    /* --- UPLOADER INFO (DISEÑO MEJORADO) --- */
+    .uploader-container {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        gap: 8px;
+        justify-content: flex-end; /* Alineado a la derecha */
         margin-bottom: 30px;
-        font-size: 0.9rem;
+        gap: 10px;
+    }
+    .upload-label {
+        font-size: 0.85rem;
         color: #aaa;
     }
-    .uploader-badge {
-        display: inline-flex;
+    .uploader-chip {
+        display: flex;
         align-items: center;
         gap: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 6px 12px;
-        border-radius: 30px;
-        text-decoration: none;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 5px 12px 5px 5px; /* Padding ajustado */
+        border-radius: 50px;
         color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
         transition: all 0.3s ease;
     }
-    .uploader-badge:hover {
-        background: rgba(0, 240, 255, 0.1);
-        border-color: #00f0ff;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-        color: #fff;
+    .uploader-chip:hover {
+        background: rgba(0, 255, 255, 0.15);
+        border-color: #0ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
     }
-    .uploader-avatar-img {
-        width: 28px;
-        height: 28px;
+    .uploader-chip img {
+        width: 32px; height: 32px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1px solid #00f0ff;
+        border: 2px solid rgba(0, 255, 255, 0.5);
     }
-    .uploader-name {
-        color: #00f0ff;
-        font-weight: bold;
+    .uploader-chip span {
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
     }
 
     /* --- TEMPORADAS --- */
@@ -305,8 +307,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
         }
-        .uploader-info {
-            justify-content: flex-start; /* Alinear a izquierda en móvil */
+        .uploader-container {
+            justify-content: flex-start; /* En movil alineado a la izquierda */
         }
     }
   </style>
@@ -332,7 +334,8 @@
   <div id="toast" class="toast">Enlace copiado</div>
 
   <video id="bg-video" autoplay muted loop playsinline 
-    poster="galaxia-morado1.avif">
+  
+  poster="galaxia-morado1.avif">
     <source src="galaxia.mp4" type="video/mp4">
   </video>
   <div id="overlay"></div>
@@ -404,13 +407,10 @@
         if (anime) {
             document.title = `${anime.title} - Archinime`;
             // --- Lógica de Géneros Actualizada ---
-            // Buscamos el anime en la lista completa (index-data.js) para sacar los géneros
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
-                // Buscamos coincidencia por ID (número o texto)
                 const animeInfo = animes.find(a => String(a.id) === String(id));
                 if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
-                    // Creamos los chips separados
                     genreHtml = animeInfo.genres.map(g => 
                         `<span class="genre-chip">${escapeHtml(g)}</span>`
                    
@@ -421,47 +421,38 @@
             }
             // -------------------------------------
 
-            // --- NUEVO: LÓGICA DE UPLOADER/SUBIDO POR (CON AVATAR) ---
-            // Leemos el uploader del anime (que es el email)
+            // --- NUEVO: LÓGICA DE UPLOADER/SUBIDO POR ---
             let uploaderEmailOrName = anime.uploader || "Desconocido";
-            let displayNick = uploaderEmailOrName; // Por defecto mostramos el email o lo que haya
-            let uploaderAvatar = "Logo_Archinime.avif"; // Avatar por defecto
-            let socialLink = null;
+            let displayNick = uploaderEmailOrName; 
+            let uploaderHtml = "";
+            let userAvatar = "Logo_Archinime.avif"; // Avatar por defecto
 
-            // Verificamos si existe usersData y si encontramos el email
             if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
                 const userData = usersData[uploaderEmailOrName];
-                displayNick = userData.nick; 
-                uploaderAvatar = userData.avatar || "Logo_Archinime.avif";
-                if (userData.social && userData.social.trim() !== "") {
-                    socialLink = userData.social;
-                }
-            }
+                displayNick = userData.nick;
+                userAvatar = userData.avatar || "Logo_Archinime.avif";
 
-            let uploaderContent = `
-                <img src="${uploaderAvatar}" class="uploader-avatar-img">
-                <span class="uploader-name">${displayNick}</span>
-            `;
-
-            let uploaderHtml = "";
-            if (socialLink) {
-                 uploaderHtml = `
-                    <div class="uploader-info">
-                        Subido por: 
-                        <a href="${socialLink}" target="_blank" class="uploader-badge">
-                           ${uploaderContent} <i class="fas fa-external-link-alt" style="font-size:0.8em"></i>
+                // Estructura del botón moderno SIN EL ICONO DE LINK
+                uploaderHtml = `
+                    <div class="uploader-container">
+                        <span class="upload-label">Subido por:</span>
+                        <a href="${userData.social || '#'}" ${userData.social ? 'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
+                            <img src="${userAvatar}" alt="${displayNick}">
+                            <span>${displayNick}</span>
                         </a>
                     </div>
-                 `;
+                `;
             } else {
-                 uploaderHtml = `
-                    <div class="uploader-info">
-                        Subido por: 
-                        <span class="uploader-badge" style="cursor:default">
-                           ${uploaderContent}
-                        </span>
+                // Fallback si no está en la base de datos
+                uploaderHtml = `
+                    <div class="uploader-container">
+                        <span class="upload-label">Subido por:</span>
+                        <div class="uploader-chip" style="cursor:default">
+                            <img src="${userAvatar}" alt="User">
+                            <span>${displayNick}</span>
+                        </div>
                     </div>
-                 `;
+                `;
             }
             // ---------------------------------------------
 
@@ -470,6 +461,7 @@
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
        
+            
                 <p class="desc">${anime.desc}</p>
                 
                 ${uploaderHtml}
@@ -492,9 +484,9 @@
             }
             container.innerHTML = html;
             renderRecommendations(id);
-        } else {
+    } else {
             container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
-        }
+    }
     }
 
     /* ----------------------------------------------------
@@ -514,26 +506,26 @@
         
         let processed = 0;
         const CHUNK_SIZE = 40;
-        function processChunk() {
+    function processChunk() {
             const fragment = document.createDocumentFragment();
-            const limit = Math.min(processed + CHUNK_SIZE, total);
+        const limit = Math.min(processed + CHUNK_SIZE, total);
 
             for (let i = processed; i < limit; i++) {
                 const ep = episodes[i];
-                const a = document.createElement('a');
+        const a = document.createElement('a');
                 a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
                 a.className = 'ep-btn';
                 a.textContent = `▶ ${ep.title}`;
                 fragment.appendChild(a);
-            }
+        }
 
             listContainer.appendChild(fragment);
             processed += CHUNK_SIZE;
-            if (processed < total) {
+        if (processed < total) {
                 requestAnimationFrame(processChunk);
-            } else {
+        } else {
                 loadingMsg.style.display = 'none';
-            }
+        }
         }
         requestAnimationFrame(processChunk);
     }
@@ -549,7 +541,7 @@
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
-             return;
+        return;
         }
 
         grid.innerHTML = randomKeys.map(k => `
