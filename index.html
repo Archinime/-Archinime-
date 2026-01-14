@@ -12,28 +12,39 @@
        Variables globales y reset
        --------------------------- */
     :root {
-      --header-approx-height: 72px; 
+      --header-approx-height: 72px;
       --global-extra-gap: -6px; 
     }
 
     *{margin:0;padding:0;box-sizing:border-box;}
-    html,body{height:100%;overflow-x:hidden; overflow-y:auto; font-family:sans-serif; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    html,body{height:100%;overflow-x:hidden; overflow-y:auto; font-family:sans-serif; color:#fff; -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;}
 
     /* Fondo */
-    #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
-    #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-morado1.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
+    #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0;
+    transition:opacity .6s ease; background:#000; pointer-events:none;}
+    #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
+    background: url('galaxia-morado1.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease;
+    pointer-events:none;}
 
     /* Header */
     header{
-      position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap;
+      position:sticky; top:0; padding:1rem 2rem;
+      display:flex; align-items:center; gap:1rem; 
+      background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); 
+      z-index:40; transition:background .3s; flex-wrap:wrap;
       min-height: var(--header-approx-height);
-      justify-content: space-between; 
+      /* Modificación: Usamos justify-content space-between pero con trucos para centrar */
+      justify-content: space-between;
     }
 
     /* Título y logo */
     header h1{
-      cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:900;
-      white-space:nowrap; flex:0 0 auto; animation: hueShift 8s linear infinite;
+      cursor:default;
+      display:flex; align-items:center; justify-content: center; /* Centrar contenido interno */
+      gap:.6rem; font-size:1.8rem; font-weight:900;
+      white-space:nowrap; flex: 1; /* Ocupa el espacio disponible para empujar */
+      animation: hueShift 8s linear infinite;
       background: linear-gradient(90deg,
         #00fff7 0%,
         #7afcff 12%,
@@ -49,7 +60,15 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 1px 18px rgba(0,0,0,0.5);
+      /* Para asegurar centrado visual en PC, a veces se usa posición absoluta si los controles estorban,
+         pero flex:1 con text-align center suele bastar si los lados están equilibrados. 
+         Aquí forzamos que el H1 ocupe el centro visualmente. */
+       text-align: center;
     }
+    
+    /* Contenedor vacío para equilibrar el header en PC si fuera necesario, 
+       pero por ahora usaremos margin-auto en los controles */
+
     @keyframes hueShift {
       0% { background-position: 0% 50%; transform: translateY(0); }
       25% { background-position: 50% 100%; transform: translateY(-1px); }
@@ -60,38 +79,45 @@
     
     /* ESTILOS DEL LOGO CLICABLE */
     header h1 img#logo { 
-        width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; 
-        cursor:pointer; /* Manita al pasar por encima */
+        width:42px;
+        height:42px; object-fit:contain; border-radius:6px; display:block; 
+        cursor:pointer;
         transition: transform 0.2s;
     }
-    header h1 img#logo:hover {
-        transform: scale(1.1);
-    }
-    header h1 img#logo:active {
-        transform: scale(0.95);
-    }
+    header h1 img#logo:hover { transform: scale(1.1); }
+    header h1 img#logo:active { transform: scale(0.95); }
 
     /* Social inline */
     .social-inline { display:flex; align-items:center; gap:.5rem; margin-left:.4rem; flex:0 0 auto; }
     .social-inline button {
       width:44px; height:44px; border-radius:50%; border:none; padding:0; display:inline-flex;
-      align-items:center; justify-content:center; cursor:pointer; background:rgba(255,255,255,0.95);
+      align-items:center; justify-content:center;
+      cursor:pointer; background:rgba(255,255,255,0.95);
       color:#000; box-shadow:0 6px 18px rgba(0,0,0,0.28); overflow:hidden;
     }
     .social-inline img { width:70%; height:70%; object-fit:cover; display:block; border-radius:50%; image-rendering:auto; }
 
     /* Controles (selects + search) */
-    .controls { display:flex; align-items:center; gap:0.6rem; margin-left:auto; flex-wrap:wrap; }
+    .controls { 
+      display:flex; align-items:center; gap:0.6rem; 
+      /* margin-left:auto empuja los controles a la derecha */
+      margin-left:auto; 
+      flex-wrap:wrap; 
+      flex: 0 0 auto; /* No crecer */
+    }
     .controls select, .controls input {
       padding:.5rem .9rem;
-      border:none; border-radius:8px; font-size:1rem; background:rgba(255,255,255,0.95);
+      border:none; border-radius:8px; font-size:1rem;
+      background:rgba(255,255,255,0.95);
       color:#000; min-width:150px; -webkit-appearance:none; appearance:none;
       box-sizing:border-box;
     }
     #search { width:220px; min-width:120px; }
 
     /* Layout principal */
-    .container{ max-width:1200px; margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem; padding:0 1.6rem; z-index:6; position:relative; transition: margin-top .12s ease, padding-top .12s ease; }
+    .container{ max-width:1200px; margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem;
+    padding:0 1.6rem; z-index:6; position:relative; transition: margin-top .12s ease, padding-top .12s ease;
+    }
     main.container { padding-top: calc(var(--header-approx-height) + var(--global-extra-gap)); }
 
     .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.2rem; margin-top:0.3rem; }
@@ -102,18 +128,27 @@
     .card:hover .info{ transform:translateY(0); }
 
     /* Foreground container */
-    #fgContainer { position:fixed; z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center;
-    right:20px; bottom:20px; overflow:hidden; min-width:120px; min-height:80px; max-width:360px; max-height:640px; background:transparent; border-radius:10px; }
+    #fgContainer { position:fixed;
+    z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center;
+    right:20px; bottom:20px; overflow:hidden; min-width:120px; min-height:80px; max-width:360px; max-height:640px; background:transparent; border-radius:10px;
+    }
     @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; } }
     #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
 
     /* Decorations */
     #decorations { position:fixed; inset:0; pointer-events:none; z-index:36; }
-    .shooting-star { position:fixed; z-index:36; pointer-events:none; width: 18px; height: 18px; opacity: 0; transform: translate(-50%, -50%) rotate(12deg); filter: drop-shadow(0 6px 18px rgba(255,255,210,0.08)); }
-    .shooting-tail { position:absolute; left:0; top:50%; width: 160px; height: 4px; transform-origin:left center; opacity:0.95; pointer-events:none; filter: blur(1px); }
+    .shooting-star { position:fixed; z-index:36; pointer-events:none; width: 18px; height: 18px; opacity: 0; transform: translate(-50%, -50%) rotate(12deg);
+    filter: drop-shadow(0 6px 18px rgba(255,255,210,0.08)); }
+    .shooting-tail { position:absolute; left:0; top:50%; width: 160px; height: 4px; transform-origin:left center;
+    opacity:0.95; pointer-events:none; filter: blur(1px); }
 
     /* Popups móvil */
-    .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
+    .mobile-select-popup { position: absolute; z-index:1200;
+    background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); 
+    /* Forzamos tamaños fijos para evitar que crezcan raramente */
+    max-height: 220px; min-width: 140px; width: auto; 
+    overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch;
+    }
     .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
     .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
     .mobile-select-popup .opt:hover { background: rgba(255,255,255,0.04); }
@@ -128,10 +163,28 @@
 
     /* Adaptación móvil */
     @media (max-width:780px) {
-      header { padding:0.45rem 0.6rem; gap:0.4rem; align-items:center; flex-wrap: wrap; } 
+      header { 
+        padding:0.45rem 0.6rem;
+        gap:0.4rem; align-items:center; flex-wrap: wrap; 
+        justify-content: center; /* Centrado general */
+      } 
       
-      header h1 { order: 1; width: 100%; justify-content: space-between; }
-      .controls { order: 2; width: 100%; margin-left: 0; margin-top: 5px; }
+      /* En móvil el título va arriba y centrado */
+      header h1 { 
+        order: 1;
+        width: 100%; 
+        justify-content: center; /* Fuerza a "Archinime" a estar al medio */
+        margin-bottom: 5px;
+        flex: 0 0 100%;
+      }
+      
+      .controls { 
+        order: 2; 
+        width: 100%; 
+        margin-left: 0; 
+        margin-top: 0;
+        justify-content: center;
+      }
 
       .controls {
         display:grid;
@@ -168,7 +221,9 @@
       .card img { height: auto; }
     }
 
-    .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,9,2,1), box-shadow .2s; }
+    .no-results { grid-column:1 / -1; padding:2.6rem; border-radius:14px; display:flex; gap:1.25rem; align-items:center; justify-content:center; flex-direction:column;
+    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 18px 60px rgba(0,0,0,0.6); text-align:center; transition: transform .28s cubic-bezier(.2,9,2,1), box-shadow .2s; }
+    
     .play-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9; pointer-events:auto; display:none; }
     .play-btn{ background: rgba(0,0,0,0.7); color:#fff; border:2px solid #fff; padding:14px 22px; border-radius:12px; font-size:18px; cursor:pointer; }
   </style>
@@ -314,8 +369,7 @@
   </div>
 
   <script src="index-data.js"></script>
-
-  <script>
+  <script src="fondo-musica-data.js"></script> <script src="animaciones-data.js"></script>   <script>
     /* ----------------------------
        Renderizado grid
        ---------------------------- */
@@ -444,24 +498,26 @@
       }
     });
 
+    /* ----------------------------
+       LÓGICA DE MÚSICA (MODIFICADA)
+       ---------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('bg-music');
       const hints = getPerformanceHints();
-      const musicList = [
-        'Nightcore - How Do You Do (Remix) ✕.mp3',
-        'Nightcore - Battlecry (Heart of Courage) (Lyrics).mp3',
-        'Nightcore - Monster [NMV].mp3',
-        'Nightcore - PLAY x Unity x Faded  Alan Walker (Mashup  Switching Vocals) Lyrics.mp3',
-        'Nightcore - Sweet Little Bumblebee (lyric video).mp3',
-        'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
-        'Nightcore - When You Leave (Numa Numa).mp3',
-        'Nightcore - Thunder (Gabry Ponte, LUM!X, Prezioso) - (Lyrics).mp3',
-        'Nightcore - Yo y los que tuvieron etapa Vocaloid cuando suena 😼✨.mp3',
-      ];
+      
+      // Usamos la lista importada de fondo-musica-data.js
+      // Si no existe por algún error, fallback array vacío
+      const musicList = (typeof globalMusicList !== 'undefined') ? globalMusicList : [];
+      
+      if (musicList.length === 0) return;
+
+      // Empezar aleatoriamente
       let currentMusicIndex = Math.floor(Math.random() * musicList.length);
+
       function playByIndex(idx) {
-         if (!musicList || musicList.length === 0) return;
+         // Ajuste índice cíclico
          currentMusicIndex = ((idx % musicList.length) + musicList.length) % musicList.length;
+         
          audio.src = musicList[currentMusicIndex];
          audio.load();
          audio.volume = 0.75;
@@ -469,7 +525,13 @@
            audio.play().catch(()=> { document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); });
          }
       }
-      audio.addEventListener('ended', ()=> { currentMusicIndex = (currentMusicIndex + 1) % musicList.length; playByIndex(currentMusicIndex); });
+
+      // Al terminar, siguiente canción en orden (bucle secuencial)
+      audio.addEventListener('ended', ()=> { 
+          currentMusicIndex = (currentMusicIndex + 1) % musicList.length; 
+          playByIndex(currentMusicIndex); 
+      });
+
       playByIndex(currentMusicIndex);
     });
 
@@ -495,16 +557,9 @@
     let lastObjectUrl = null;
     let isAnimatingExplosion = false;
     let scheduledTimer = null;
-    const videoList = [
-      { id: 'hola', src: 'hola.mp4', preset: { threshold: 0.25, diff: 0, soft: 100 } },
-      { id: 'rem',  src: 'rem.mp4',  preset: { threshold: 0.10, diff: 0, soft: 100  } },
-      { id: 'animacionnavidad1', src: 'animacionnavidad1.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
-      { id: 'animacionnavidad2', src: 'animacionnavidad2.mp4', preset: { threshold: 0.06, diff: 8, soft: 60, }, keyColor: 'green' },
-      { id: 'animacionnavidad3', src: 'animacionnavidad3.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
-      { id: 'animacionnavidad4', src: 'animacionnavidad4.mp4', preset: { threshold: 0.10, diff: 0, soft: 100 }, keyColor: 'green' },
-      { id: 'animacionnavidad5', src: 'animacionnavidad5.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' },
-      { id: 'animacionnavidad6', src: 'animacionnavidad6.mp4', preset: { threshold: 0.12, diff: 0, soft: 100 }, keyColor: 'blue' }
-    ];
+    
+    // Usamos la lista importada de animaciones-data.js
+    const videoList = (typeof globalVideoList !== 'undefined') ? globalVideoList : [];
 
     function pickRandomVideo(excludeId){
       if (!videoList || videoList.length === 0) return null;
@@ -650,7 +705,8 @@
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
         return;
       }
-      const settings = infoObj && infoObj.preset ? infoObj.preset : { threshold:0.4, diff:30, soft:30 };
+      const settings = infoObj && infoObj.preset ?
+      infoObj.preset : { threshold:0.4, diff:30, soft:30 };
       const keyColor = infoObj && infoObj.keyColor ? infoObj.keyColor : 'green';
       const processed = applyChromaKey(frame, settings, keyColor);
       offCtx.putImageData(processed, 0, 0);
@@ -705,7 +761,6 @@
     }
     window.addEventListener('resize', resizeFireCanvas, {passive:true});
     setTimeout(resizeFireCanvas, 120);
-
     function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
       const hints = getPerformanceHints();
       const rect = fgContainer.getBoundingClientRect();
@@ -732,7 +787,7 @@
           age: 0,
           radius: rnd(1.6, 5.2),
           color: colors[Math.floor(Math.random()*colors.length)]
-        });
+         });
       }
 
       const safeTimeoutMs = Math.round(duration + 400);
@@ -746,7 +801,7 @@
             finished = true;
             try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
             resolve();
-          }
+           }
         }, safeTimeoutMs);
 
         function frame(now){
@@ -766,7 +821,6 @@
               p.x += p.vx * (dt/16.67);
               p.y += p.vy * (dt/16.67);
               p.vy += 0.16 * (dt/16.67);
-
               const alpha = Math.max(0, Math.min(1, lifeRatio));
               fctx.globalAlpha = alpha;
               fctx.beginPath();
@@ -795,7 +849,8 @@
             resolve();
           }
         }
-        try { requestAnimationFrame(frame); } 
+        try { requestAnimationFrame(frame);
+        } 
         catch (err) {
           clearTimeout(safeTimer);
           try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
@@ -874,14 +929,12 @@
       const next = pickRandomVideo(currentId);
       setTimeout(() => { playVideoClip(next); }, 420);
     });
-    
     document.getElementById('playBtn').addEventListener('click', ()=>{
       document.getElementById('playOverlay').style.display = 'none';
       bgVideo.play().catch(()=>{}); fgVideo.play().catch(()=>{});
       try { bgMusic.play().catch(()=>{}); } catch(e){}
       if (currentVideoObj) startChromaIntervalIfNeeded(currentVideoObj);
     });
-
     let resizeRaf = null;
     window.addEventListener('resize', ()=> {
       if (resizeRaf) return;
@@ -893,7 +946,6 @@
         resizeRaf = null;
       });
     }, {passive:true});
-
     document.addEventListener('visibilitychange', ()=> {
       if (document.hidden) {
         visibilityPaused = true;
@@ -907,7 +959,7 @@
     }, {passive:true});
 
     /* ----------------------------
-       POPUP MÓVIL PARA SELECTS (CON TOGGLE/CIERRE)
+       POPUP MÓVIL PARA SELECTS (CON TOGGLE MEJORADO)
        ---------------------------- */
     (function mobileSelectPopups() {
       const mobileQ = () => window.matchMedia('(max-width:780px)').matches;
@@ -929,28 +981,31 @@
       }
 
       function createPopupFor(selectEl) {
+        // Usamos 'click' general, y prevenimos default para evitar conflictos de doble apertura
         selectEl.addEventListener('click', function onClick(e){
           if (!mobileQ()) return;
           e.preventDefault();
           e.stopPropagation();
 
-          // LÓGICA DE TOGGLE: 
-          // Si el popup activo es de este mismo select, lo cerramos y no hacemos nada más.
+          // LÓGICA DE TOGGLE ACTUALIZADA:
+          // Si el popup activo es ESTE MISMO, lo cerramos y listo.
           if (activePopup && activePopup.dataset.ownerId === selectEl.id) {
             closePopup();
-          } else {
-            // Si no estaba abierto o era otro, abrimos este (openPopupFor cierra el anterior automáticamente)
-            openPopupFor(selectEl);
-          }
+            return;
+          } 
+          
+          // Si hay otro abierto, la función openPopupFor se encarga de cerrarlo antes.
+          openPopupFor(selectEl);
         });
         
+        // Mantener accesibilidad teclado
         selectEl.addEventListener('keydown', (e) => {
           if (!mobileQ()) return;
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             if (activePopup && activePopup.dataset.ownerId === selectEl.id) {
                 closePopup();
-            } else {
+             } else {
                 openPopupFor(selectEl);
             }
           }
@@ -959,6 +1014,7 @@
 
       function openPopupFor(selectEl) {
         closePopup(); // Asegura cerrar cualquier otro previo
+        
         const rect = selectEl.getBoundingClientRect();
         const docEl = document.documentElement;
         const winW = Math.max(docEl.clientWidth || 0, window.innerWidth || 0);
@@ -969,14 +1025,18 @@
         popup.setAttribute('role','listbox');
         popup.setAttribute('aria-label', selectEl.getAttribute('aria-label') || 'Opciones');
         
-        // MARCAMOS EL DUEÑO DEL POPUP
         popup.dataset.ownerId = selectEl.id;
-
         const pad = 8;
+        
+        // ARREGLO PARA QUE NO SE VEAN GIGANTES: Altura y ancho controlados
         const maxHeight = window.matchMedia('(max-width:420px)').matches ? 120 : 160;
         popup.style.maxHeight = maxHeight + 'px';
+        
+        // Ancho limitado al ancho de la pantalla menos un margen, o el ancho del select
         const width = Math.min(rect.width, Math.max(120, winW - 24));
         popup.style.minWidth = Math.max(110, width) + 'px';
+        // Importante: resetear width a auto para evitar estiramientos raros
+        popup.style.width = 'auto';
 
         let top = rect.bottom + 6;
         const estimatedHeight = Math.min(maxHeight, (selectEl.options ? selectEl.options.length * 36 : maxHeight));
@@ -1004,14 +1064,14 @@
               Array.from(selectEl.options).forEach(o => o.selected = (o.value === opt.value));
               const evCh = new Event('change', { bubbles: true });
               selectEl.dispatchEvent(evCh);
-            } catch(e){}
+             } catch(e){}
             closePopup();
              try { selectEl.focus(); } catch(e){}
           });
           
           d.addEventListener('keydown', (ev) => {
             if (ev.key === 'Enter' || ev.key === ' ') {
-              ev.preventDefault();
+               ev.preventDefault();
               d.click();
             } else if (ev.key === 'ArrowDown') {
               ev.preventDefault();
@@ -1058,7 +1118,7 @@
             const el = document.getElementById(id);
             if(el) createPopupFor(el);
           });
-          } catch(e) {}
+        } catch(e) {}
       }
 
       window.addEventListener('resize', function(){
