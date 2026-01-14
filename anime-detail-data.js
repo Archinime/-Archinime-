@@ -7920,26 +7920,5 @@ const data = {
                 "name": "Película 1"
             }
         ]
-    },
-    "72": {
-        "title": "Prueba",
-        "desc": "Sdfssdf",
-        "cover": "overlord.avif",
-        "uploader": "lucioguapofeo@gmail.com",
-        "seasons": [
-            {
-                "num": 1,
-                "cover": "overlord.avif",
-                "eps": [
-                    {
-                        "title": "Capítulo 1"
-                    },
-                    {
-                        "title": "Capítulo 2"
-                    }
-                ],
-                "name": "Temporada 1"
-            }
-        ]
     }
 };
