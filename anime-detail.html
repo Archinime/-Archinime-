@@ -158,7 +158,8 @@
         gap: 8px;
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 5px 12px 5px 5px; /* Padding ajustado */
+        padding: 5px 12px 5px 5px;
+        /* Padding ajustado */
         border-radius: 50px;
         color: #fff;
         text-decoration: none;
@@ -308,7 +309,8 @@
             gap: 6px;
         }
         .uploader-container {
-            justify-content: flex-start; /* En movil alineado a la izquierda */
+            justify-content: flex-start;
+            /* En movil alineado a la izquierda */
         }
     }
   </style>
@@ -333,9 +335,7 @@
 
   <div id="toast" class="toast">Enlace copiado</div>
 
-  <video id="bg-video" autoplay muted loop playsinline 
-  
-  poster="galaxia-morado1.avif">
+  <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
     <source src="galaxia.mp4" type="video/mp4">
   </video>
   <div id="overlay"></div>
@@ -350,10 +350,16 @@
        1. Gestión de Carga
        ---------------------------------------------------- */
     window.addEventListener('load', () => {
+        // --- PARCHE DE COMPATIBILIDAD ---
+        if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') {
+            window.audioPlaylists = musica;
+        }
+        // ---------------------------------
         const screen = document.getElementById('loading-screen');
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
+
     /* ----------------------------------------------------
        2. Lógica de Audio
        ---------------------------------------------------- */
@@ -381,6 +387,11 @@
     }
 
     document.addEventListener('click', () => {
+        // --- PARCHE DE COMPATIBILIDAD POR SI ACASO ---
+        if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') {
+            window.audioPlaylists = musica;
+        }
+
         if (typeof audioPlaylists === 'undefined' || currentAudio) return;
         const params = new URLSearchParams(location.search);
         const id = params.get('id');
@@ -388,10 +399,10 @@
         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
-   
             playTrack(currentTrackIndex);
         }
     }, { once: true });
+
     /* ----------------------------------------------------
        3. Renderizado y Lógica Visual
        ---------------------------------------------------- */
@@ -413,7 +424,6 @@
                 if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
                     genreHtml = animeInfo.genres.map(g => 
                         `<span class="genre-chip">${escapeHtml(g)}</span>`
-                   
                     ).join('');
                 } else {
                     genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
@@ -425,7 +435,8 @@
             let uploaderEmailOrName = anime.uploader || "Desconocido";
             let displayNick = uploaderEmailOrName; 
             let uploaderHtml = "";
-            let userAvatar = "Logo_Archinime.avif"; // Avatar por defecto
+            let userAvatar = "Logo_Archinime.avif";
+            // Avatar por defecto
 
             if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
                 const userData = usersData[uploaderEmailOrName];
@@ -460,10 +471,7 @@
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
-       
-            
                 <p class="desc">${anime.desc}</p>
-                
                 ${uploaderHtml}
             `;
             if(anime.seasons){
@@ -471,22 +479,19 @@
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-       
                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-       
                              <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
-               
                 });
             }
             container.innerHTML = html;
             renderRecommendations(id);
-    } else {
+        } else {
             container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
-    }
+        }
     }
 
     /* ----------------------------------------------------
@@ -506,26 +511,26 @@
         
         let processed = 0;
         const CHUNK_SIZE = 40;
-    function processChunk() {
+        function processChunk() {
             const fragment = document.createDocumentFragment();
-        const limit = Math.min(processed + CHUNK_SIZE, total);
+            const limit = Math.min(processed + CHUNK_SIZE, total);
 
             for (let i = processed; i < limit; i++) {
                 const ep = episodes[i];
-        const a = document.createElement('a');
+                const a = document.createElement('a');
                 a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
                 a.className = 'ep-btn';
                 a.textContent = `▶ ${ep.title}`;
                 fragment.appendChild(a);
-        }
+            }
 
             listContainer.appendChild(fragment);
             processed += CHUNK_SIZE;
-        if (processed < total) {
+            if (processed < total) {
                 requestAnimationFrame(processChunk);
-        } else {
+            } else {
                 loadingMsg.style.display = 'none';
-        }
+            }
         }
         requestAnimationFrame(processChunk);
     }
@@ -541,7 +546,7 @@
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
-        return;
+             return;
         }
 
         grid.innerHTML = randomKeys.map(k => `
