@@ -12,8 +12,8 @@
        Variables globales y reset
        --------------------------- */
     :root {
-      --header-approx-height: 72px; /* ajusta si tu header cambia de tamaño */
-      --global-extra-gap: -6px; /* valor por defecto (JS puede sobrescribir) */
+      --header-approx-height: 72px; 
+      --global-extra-gap: -6px; 
     }
 
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -23,14 +23,14 @@
     #bg-video{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; opacity:0; transition:opacity .6s ease; background:#000; pointer-events:none;}
     #overlay{position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: url('galaxia-morado1.avif') center/cover no-repeat, linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6)); opacity:1; transition:opacity .6s ease; pointer-events:none;}
 
-    /* Header: sticky + altura mínima para consistencia */
+    /* Header */
     header{
       position:sticky; top:0; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:40; transition:background .3s; flex-wrap:wrap;
       min-height: var(--header-approx-height);
-      justify-content: space-between; /* Para separar logo de controles si no hay botón admin */
+      justify-content: space-between; 
     }
 
-    /* título y logo con gradiente animado */
+    /* Título y logo */
     header h1{
       cursor:default; display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:900;
       white-space:nowrap; flex:0 0 auto; animation: hueShift 8s linear infinite;
@@ -57,9 +57,21 @@
       75% { background-position: 50% 0%; transform: translateY(1px); }
       100% { background-position: 0% 50%; transform: translateY(0); }
     }
-    header h1 img#logo { width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; cursor:pointer; }
+    
+    /* ESTILOS DEL LOGO CLICABLE */
+    header h1 img#logo { 
+        width:42px; height:42px; object-fit:contain; border-radius:6px; display:block; 
+        cursor:pointer; /* Manita al pasar por encima */
+        transition: transform 0.2s;
+    }
+    header h1 img#logo:hover {
+        transform: scale(1.1);
+    }
+    header h1 img#logo:active {
+        transform: scale(0.95);
+    }
 
-    /* Social inline next to title */
+    /* Social inline */
     .social-inline { display:flex; align-items:center; gap:.5rem; margin-left:.4rem; flex:0 0 auto; }
     .social-inline button {
       width:44px; height:44px; border-radius:50%; border:none; padding:0; display:inline-flex;
@@ -68,7 +80,7 @@
     }
     .social-inline img { width:70%; height:70%; object-fit:cover; display:block; border-radius:50%; image-rendering:auto; }
 
-    /* Controls (selects + search) */
+    /* Controles (selects + search) */
     .controls { display:flex; align-items:center; gap:0.6rem; margin-left:auto; flex-wrap:wrap; }
     .controls select, .controls input {
       padding:.5rem .9rem;
@@ -78,7 +90,7 @@
     }
     #search { width:220px; min-width:120px; }
 
-    /* layout principal */
+    /* Layout principal */
     .container{ max-width:1200px; margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem; padding:0 1.6rem; z-index:6; position:relative; transition: margin-top .12s ease, padding-top .12s ease; }
     main.container { padding-top: calc(var(--header-approx-height) + var(--global-extra-gap)); }
 
@@ -89,18 +101,18 @@
     .info{ position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7); padding:.75rem; transform:translateY(100%); transition:transform .3s; }
     .card:hover .info{ transform:translateY(0); }
 
-    /* Foreground container (fixed) */
+    /* Foreground container */
     #fgContainer { position:fixed; z-index:8; pointer-events:auto; display:flex; align-items:center; justify-content:center;
     right:20px; bottom:20px; overflow:hidden; min-width:120px; min-height:80px; max-width:360px; max-height:640px; background:transparent; border-radius:10px; }
     @media (max-width:420px){ #fgContainer { right:12px; bottom:12px; max-width:220px; max-height:360px; } }
     #fgContainer canvas#fgCanvas, #fgContainer video#fgVideo{ width:100%; height:100%; display:block; pointer-events:none; object-fit:contain; border-radius:8px; }
 
-    /* Decorations container */
+    /* Decorations */
     #decorations { position:fixed; inset:0; pointer-events:none; z-index:36; }
     .shooting-star { position:fixed; z-index:36; pointer-events:none; width: 18px; height: 18px; opacity: 0; transform: translate(-50%, -50%) rotate(12deg); filter: drop-shadow(0 6px 18px rgba(255,255,210,0.08)); }
     .shooting-tail { position:absolute; left:0; top:50%; width: 160px; height: 4px; transform-origin:left center; opacity:0.95; pointer-events:none; filter: blur(1px); }
 
-    /* mobile-select-popup and rest */
+    /* Popups móvil */
     .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6); max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
     .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer; color:#eaeaea; }
     .mobile-select-popup .opt[aria-selected="true"], .mobile-select-popup .opt.selected { font-weight:700; background: rgba(255,255,255,0.03); }
@@ -114,7 +126,7 @@
       .mobile-select-popup .opt { padding: .18rem .32rem; font-size:0.82rem; }
     }
 
-    /* compact mobile logic */
+    /* Adaptación móvil */
     @media (max-width:780px) {
       header { padding:0.45rem 0.6rem; gap:0.4rem; align-items:center; flex-wrap: wrap; } 
       
@@ -132,7 +144,6 @@
       .social-inline button { width:34px; height:34px; padding:0; }
       .social-inline img { width:66%; height:66%; }
 
-      /* Eliminamos márgenes en móvil */
       .container { margin-top: 0 !important; padding-top: 0 !important; }
       main.container { padding-top: 0 !important; }
       .grid { margin-top: 0 !important; gap:0.6rem !important; }
@@ -176,7 +187,7 @@
     <h1>
       <img id="logo" src="Logo_Archinime.avif" alt="Logo Archinime" onclick="openInNewTab('https://archinime.github.io/-Archinime-/Archinime%20CMS%20-%20Creador.html')" title="Ir al Creador CMS">
       
-      <span style="cursor:pointer;" onclick="openInNewTab('https://archinime.github.io/-Archinime-/Archinime%20CMS%20-%20Creador.html')" title="Ir al Creador CMS">Archinime</span>
+      <span>Archinime</span>
       
       <span class="social-inline" id="social-inline" title="Síguenos">
         <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.youtube.com/@Archinime-k2g'); })(event)">
@@ -276,7 +287,7 @@
       <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()" aria-label="Buscar anime">
     </div>
 
-    </header>
+  </header>
 
   <main class="container">
     <div class="grid" id="grid"></div>
@@ -896,7 +907,7 @@
     }, {passive:true});
 
     /* ----------------------------
-       POPUP MÓVIL PARA SELECTS (MEJORADO - TOGGLE FIX)
+       POPUP MÓVIL PARA SELECTS (CON TOGGLE/CIERRE)
        ---------------------------- */
     (function mobileSelectPopups() {
       const mobileQ = () => window.matchMedia('(max-width:780px)').matches;
@@ -923,11 +934,12 @@
           e.preventDefault();
           e.stopPropagation();
 
-          // LÓGICA DE TOGGLE: Si el popup activo es de este mismo select, lo cerramos.
+          // LÓGICA DE TOGGLE: 
+          // Si el popup activo es de este mismo select, lo cerramos y no hacemos nada más.
           if (activePopup && activePopup.dataset.ownerId === selectEl.id) {
             closePopup();
           } else {
-            // Si no, abrimos (esto cerrará cualquier otro popup activo primero)
+            // Si no estaba abierto o era otro, abrimos este (openPopupFor cierra el anterior automáticamente)
             openPopupFor(selectEl);
           }
         });
@@ -936,7 +948,6 @@
           if (!mobileQ()) return;
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            // Misma lógica toggle para teclado
             if (activePopup && activePopup.dataset.ownerId === selectEl.id) {
                 closePopup();
             } else {
@@ -947,7 +958,7 @@
       }
 
       function openPopupFor(selectEl) {
-        closePopup();
+        closePopup(); // Asegura cerrar cualquier otro previo
         const rect = selectEl.getBoundingClientRect();
         const docEl = document.documentElement;
         const winW = Math.max(docEl.clientWidth || 0, window.innerWidth || 0);
@@ -958,7 +969,7 @@
         popup.setAttribute('role','listbox');
         popup.setAttribute('aria-label', selectEl.getAttribute('aria-label') || 'Opciones');
         
-        // MARCAMOS EL POPUP CON EL DUEÑO
+        // MARCAMOS EL DUEÑO DEL POPUP
         popup.dataset.ownerId = selectEl.id;
 
         const pad = 8;
@@ -1025,6 +1036,8 @@
 
         outsideListener = function outsideHandler(ev){
           if (!activePopup) return;
+          // Si el clic es en el select, el listener del select se encarga del toggle.
+          // Aquí solo cerramos si el clic es FUERA del popup y FUERA del select.
           if (ev.target === selectEl || activePopup.contains(ev.target)) return;
           closePopup();
         };
