@@ -18,5 +18,10 @@ const usersData = {
         "nick": "E-Sul2007",
         "avatar": "https://avatars.githubusercontent.com/u/254942609?v=4",
         "social": ""
+    },
+    "caceres142355@gmail.com": {
+        "nick": "MAKILOVE",
+        "avatar": "https://avatars.githubusercontent.com/u/255010856?v=4",
+        "social": ""
     }
 };
