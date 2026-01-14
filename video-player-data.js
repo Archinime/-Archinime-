@@ -9621,31 +9621,48 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1OWitAmBd_VPhIX_kuAh2A3s2j_lgcu79/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1SFUdZv88tkye2rGskIRESCrdIbIbAiFF/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/19PmtQQ-1CLKhNXdKQuinJ_EotIvBwBJT/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/13f2ZR_n9dEYszbhQhy0vtW4u7b2QOFdh/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1bsaWH_Elnv76OPYrz3bK1JjfTHxf55Xu/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1D2SiUqtsac8MBIGOEP-ZdUHYlBsL7uEi/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/15QGfj-crIB9VCRqKl7yXIcI1KrHug7dp/preview",
+                "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1qmnscK5GyiioCnRVqB5qGi2IQJ-xtwgY/preview",
+                "link2": "",
+                "title": "Kimi to Koete Koi ni Naru T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1n8mXewtPceCA2llBnn_oQAZRyM15e0R5/preview",
+                "link2": "",
+                "title": "Kimi to Koete Koi ni Naru T1 Cap 9"
             }
         }
     },
