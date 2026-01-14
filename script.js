@@ -361,6 +361,7 @@ function addAlias(value = "") {
         <button class="btn-mini-del" onclick="this.parentElement.remove(); requestPreviewUpdate()"><i class="fas fa-times"></i></button>
     `;
     container.appendChild(div);
+    // Activamos preview update al agregar
     requestPreviewUpdate(); 
 }
 
@@ -378,6 +379,7 @@ function addMusic(url = "") {
     `;
     container.appendChild(div);
     if(url) updateAudioPreview(div.querySelector('.m-url'));
+    // Activamos preview update al agregar
     requestPreviewUpdate();
 }
 
@@ -454,6 +456,7 @@ function addSeason(data = null) {
         countInp.value = data.eps.length;
         renderChapters(countInp, data.eps);
     }
+    // Update preview al agregar
     requestPreviewUpdate();
 }
 
@@ -549,6 +552,7 @@ function renderChapters(input, existingEps = []) {
         let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
         
+        // AQUÍ ES DONDE AGREGAMOS LOS EVENTOS ONINPUT para que detecte cambios mínimos
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
             <div class="c-inputs-grid">
@@ -559,6 +563,7 @@ function renderChapters(input, existingEps = []) {
         `;
         list.appendChild(row);
     }
+    // Update preview también al renderizar
     requestPreviewUpdate();
 }
 
@@ -664,6 +669,7 @@ function safeEval(fileContent) {
         if (eqIndex === -1) throw new Error("No se encontró asignación de variable");
         let dataStr = fileContent.substring(eqIndex + 1).trim();
         if (dataStr.endsWith(';')) dataStr = dataStr.slice(0, -1);
+        // Clean comments potentially? Simple eval relies on valid JS syntax
         return eval('(' + dataStr + ')');
     } catch (e) {
         console.error("Error parseando JS:", e);
@@ -994,8 +1000,7 @@ async function deleteCurrentAnime(idToDelete) {
         });
         // Subir Música
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => {
-             // CORRECCIÓN: Mantener variable 'audioPlaylists'
-             return `const audioPlaylists = ${JSON.stringify(newMusic, null, 4)};`;
+             return `const musica = ${JSON.stringify(newMusic, null, 4)};`;
         });
 
         log("✅ ¡ELIMINADO Y REORDENADO CORRECTAMENTE!");
@@ -1288,8 +1293,7 @@ async function subirAGithHub() {
             // Asignamos array de musica al ID
             musicObj[FINAL_ID] = nuevoAnime.musica;
 
-            // **CORRECCIÓN CLAVE AQUÍ**: Usamos 'audioPlaylists' como nombre de variable
-            return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
+            return `const musica = ${JSON.stringify(musicObj, null, 4)};`;
         });
 
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
