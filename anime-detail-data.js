@@ -7914,7 +7914,7 @@ const data = {
                 "cover": "overlordp.avif",
                 "eps": [
                     {
-                        "title": "El Reino Sagrado."
+                        "title": "El Reino Sagrado"
                     }
                 ],
                 "name": "Película 1"
