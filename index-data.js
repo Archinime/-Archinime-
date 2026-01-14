@@ -1166,6 +1166,7 @@ const animes = [
         "img": "overlord.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
             "Aventura",
