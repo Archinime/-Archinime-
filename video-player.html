@@ -68,46 +68,37 @@
     /* NAVEGACIÓN SUPERIOR */
     .top-nav {
         display: flex;
-        /* Modificado: Solo queda un botón, así que flex-start o space-between da igual, 
-           pero space-between mantiene estructura si agregas algo a la derecha */
-        justify-content: flex-start; 
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        padding: 15px 20px; 
+        padding: 0 20px; 
+        flex-wrap: nowrap;
+        gap: 15px;
     }
 
-    /* BOTÓN VOLVER MEJORADO */
+    /* BOTÓN GENÉRICO ESTILO NEÓN (Ajustado tamaño) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
-      padding: 12px 25px;
-      border-radius: 50px;
+      color:#0ff;
+      text-decoration:none;
+      font-weight:bold;
+      font-size: 1rem; /* Reducido de 1.2rem */
+      transition:all .3s;
+      cursor:pointer;
+      background: rgba(0, 0, 0, 0.6); 
+      padding: 10px 20px; /* Reducido de 15px 25px */
+      border-radius: 30px;
       border: 2px solid var(--primary-color);
       white-space: nowrap;
-      box-shadow: 0 0 15px rgba(0, 255, 247, 0.1);
-      backdrop-filter: blur(5px); /* Efecto vidrio */
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
    
     .back-btn:hover {
-        background: var(--primary-color);
-        color: #000; /* Texto negro para contraste */
-        transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 0 25px rgba(0, 255, 247, 0.6);
-        border-color: var(--primary-color);
-    }
-
-    .back-btn span {
-        font-size: 1.2em;
-        line-height: 1;
+        background: rgba(0, 255, 247, 0.2);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
     }
    
     /* REPRODUCTOR (FULL WIDTH) */
@@ -134,7 +125,7 @@
     /* TEXTOS */
     h1 { 
         color: #fff; 
-        font-size: 2rem; 
+        font-size: 2rem; /* Ligeramente reducido */
         margin-top: 25px;
         text-align: center; 
         text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color);
@@ -151,18 +142,18 @@
         padding: 0 10px;
     }
     
-    /* BOTONES DE CONTROL */
+    /* BOTONES DE CONTROL (Ajustado tamaño) */
     .btn { 
-        padding: 12px 35px; 
+        padding: 12px 35px; /* Reducido de 20px 50px */
         background: rgba(0, 0, 0, 0.7); 
-        border: 2px solid var(--primary-color); 
+        border: 2px solid var(--primary-color); /* Borde un poco más fino */
         color: #fff; 
         text-decoration: none; 
         border-radius: 50px; 
         cursor: pointer; 
         transition: 0.3s;
         font-weight: 700;
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* Reducido de 1.5rem */
         text-shadow: 1px 1px 2px #000;
         display: inline-flex;
         align-items: center;
@@ -201,8 +192,8 @@
     }
    
     .opt-btn { 
-        font-size: 1rem; 
-        padding: 10px 20px; 
+        font-size: 1rem; /* Reducido */
+        padding: 10px 20px; /* Reducido */
         border: 2px solid #555; 
         background: rgba(0,0,0,0.8);
         color: #ddd;
@@ -277,19 +268,31 @@
         width: 100%;
     }
 
-    /* MEDIA QUERIES */
+    /* ----------------------------------------------------------------------- */
+    /* TRUCO PARA SIMULAR "MODO ESCRITORIO" EN MÓVIL (SOLO MÓVIL, NO TABLET) */
+    /* ----------------------------------------------------------------------- */
+    /* Cambiado de 768px a 550px para excluir Tablets */
     @media (max-width: 550px) {
         .comments-section {
             padding: 20px 0; 
         }
         
         .comments-box {
+            /* Forzamos ancho de PC */
             width: 800px !important;
             max-width: 800px !important;
+            
+            /* Altura mínima para que no desaparezca si no hay comentarios */
             min-height: 600px; 
+            
+            /* Centrado */
             margin-left: 50%;
+            
+            /* Escalado */
             transform: translateX(-50%) scale(0.45); 
             transform-origin: top center;
+            
+            /* Ajuste de margen inferior */
             margin-bottom: -400px; 
         }
 
@@ -298,6 +301,7 @@
             max-width: 100% !important;
         }
         
+        /* Ajuste para que el título se vea grande en móvil a pesar del scale */
         .comments-header h3 {
             font-size: 3rem; 
         }
@@ -318,8 +322,9 @@
   <div class="container">
    
     <div class="top-nav">
-       <a href="#" id="backLink" class="back-btn"><span>←</span> Volver al Anime</a>
-       </div>
+       <a href="#" id="backLink" class="back-btn">← Volver</a>
+       <a href="#" id="tabletBtn" class="back-btn" target="_self">Tablet 📱</a>
+    </div>
 
     <div class="player-wrapper" id="playerContainer"></div>
 
@@ -336,8 +341,8 @@
     <div class="comments-section">
         <div class="comments-box">
             <div class="comments-header">
-               <span class="comment-icon">💬</span>
-               <h3>Comentarios</h3>
+                <span class="comment-icon">💬</span>
+                <h3>Comentarios</h3>
             </div>
             <script src="https://utteranc.es/client.js"
                 repo="Archinime/Comentarios"
@@ -351,100 +356,54 @@
 
   </div>
 
-<script src="video-player-data.js"></script>
-<script>
-    // -----------------------------------------------------------
-    // 1. BASE DE DATOS (IMPORTADA DESDE video-player-data.js)
-    // -----------------------------------------------------------
-    // Asegúrate de que el archivo 'video-player-data.js' contiene:
-    // const players = { ... toda la data ... };
-    // Y que se carga antes de este script.
-    
-    // Si prefieres mantener la DB aquí dentro como estaba antes,
-    // descomenta la siguiente línea y pega todo el bloque DB:
-    // const DB = players; 
-    
-    // NOTA: Para que funcione con tu estructura actual donde el archivo 
-    // se llamaba 'video-player.txt' y tenía la DB incrustada, 
-    // usaré la variable DB directamente con los datos que proporcionaste.
-    
-    const DB = {
-      "1": {
-        "1": {
-          "1": { link:'https://drive.google.com/file/d/1IeHj6BHp8S3n8IY2ezkiOj8NrDMbesk-/preview', link2:'https://www.dropbox.com/scl/fi/91lzoa0pa9tf53qsrq87n/DAN-DA-DAN-Cap-1.mp4?rlkey=br7i2ynaofngd9jbzgtzk255f&st=h8pdnqfz&raw=1', title:'DAN DA DAN T1 Cap 1' },
-          "2": { link:'https://drive.google.com/file/d/1CY5GIs9TQW7k1RpcOs25afHfjsGYr1BN/preview', link2:'https://www.dropbox.com/scl/fi/i8gmhwj5oc09vxd64n8e9/DAN-DA-DAN-Cap-2.mp4?rlkey=cle7qfkf3kkoeqn7bgs5kv8v5&st=h9c2tiu5&raw=1', title:'DAN DA DAN T1 Cap 2' },
-          "3": { link:'https://drive.google.com/file/d/1JhpFlS0MHaTBgOY0FyG6QAg2ml2rn-Zt/preview', link2:'https://www.dropbox.com/scl/fi/cxy012kb4w17744rqpdyh/DAN-DA-DAN-Cap-3.mp4?rlkey=u31hr05a42xzqo79xbnny9mnn&st=8i6jequ2&raw=1', title:'DAN DA DAN T1 Cap 3' },
-          "4": { link:'https://drive.google.com/file/d/19fMhW9W19Jf5PU7rLx-unUGB5uGhGOPO/preview', link2:'https://www.dropbox.com/scl/fi/2lxcy0npcrg6nvwelvhca/DAN-DA-DAN-Cap-4.mp4?rlkey=lk147ebi39e308jcp4cn8u89u&st=5f9zgf9c&raw=1', title:'DAN DA DAN T1 Cap 4' },
-          "5": { link:'https://drive.google.com/file/d/1KLm7LdzUwrcqkFsy82EAZN5-l4yWWsBG/preview', link2:'https://www.dropbox.com/scl/fi/snuiwpza97pk7jz8ir4df/DAN-DA-DAN-Cap-5.mp4?rlkey=p7vids5ctlmzibfxuuu5xsfmm&st=hhqymy02&raw=1', title:'DAN DA DAN T1 Cap 5' },
-          "6": { link:'https://drive.google.com/file/d/131lZLasVSrxhQxs5eZXuA4RLLA1azgHv/preview', link2:'https://www.dropbox.com/scl/fi/e3jxd9g3yaa9tczfliwvt/DAN-DA-DAN-Cap-6.mp4?rlkey=65ym1fdd4o384c02m3jj3urt0&st=mltb1xje&raw=1', title:'DAN DA DAN T1 Cap 6' },
-          "7": { link:'https://drive.google.com/file/d/1M9y9vHOprEqfesR7yOlEONksk8RnK62s/preview', link2:'https://www.dropbox.com/scl/fi/zrh7a3lmyu65iexqvleky/DAN-DA-DAN-Cap-7.mp4?rlkey=qh1eeg9g8v42hcia5gjsqp7n3&st=zvpdvaeo&raw=1', title:'DAN DA DAN T1 Cap 7' },
-          "8": { link:'https://drive.google.com/file/d/18Ect3AjWbzaFf-uvvyHukSeOKUgIFHUP/preview', link2:'https://www.dropbox.com/scl/fi/uvwnog6tbz43gblarvl3p/DAN-DA-DAN-Cap-8.mp4?rlkey=pufbemussuuu5bhv10fwnincv&st=mdnqjwx9&raw=1', title:'DAN DA DAN T1 Cap 8' },
-          "9": { link:'https://drive.google.com/file/d/1DJ_865-0u8EjTMtPRCqLDNlK916IaKpD/preview', link2:'https://www.dropbox.com/scl/fi/bw2wvyxrazd6l8vhbczee/DAN-DA-DAN-Cap-9.mp4?rlkey=9uex19n1anunj3l40rzce9fuz&st=was5t5j7&raw=1', title:'DAN DA DAN T1 Cap 9' },
-          "10": { link:'https://drive.google.com/file/d/1IpHkf61SuPJW5XjZVcs2phbhGH-2unFu/preview', link2:'https://www.dropbox.com/scl/fi/kpdc4u4zkv5p6jxjbqmg9/DAN-DA-DAN-Cap-10.mp4?rlkey=j3glzy88o4ktgr5qzpm0w6u80&st=dyoqerh3&raw=1', title:'DAN DA DAN T1 Cap 10' },
-          "11": { link:'https://drive.google.com/file/d/1I8ism6iUaipXzkBjVBPzl-XCA2LKa7p4/preview', link2:'https://www.dropbox.com/scl/fi/xav52d0kilrer6d4j9uks/DAN-DA-DAN-Cap-111.mp4?rlkey=13otgp4nkxg4kxf5z70leil7d&st=ft3mtwrn&raw=1', title:'DAN DA DAN T1 Cap 11' },
-          "12": { link:'https://drive.google.com/file/d/1-H2Y9pWSwp6HzFqnvD7P7ZuUugdC_TdH/preview', link2:'https://www.dropbox.com/scl/fi/xthqgcir9wwfgo8ka9fbs/DAN-DA-DAN-Cap-12.mp4?rlkey=7b4preahkt3k7a7p35d1azac6&st=qi7fanj8&raw=1', title:'DAN DA DAN T1 Cap 12' },
-        },
-        "2": {
-          "1": { link:'https://drive.google.com/file/d/1LJxLy-qTXswhU_bZfmjjFcNRpzBxlIEJ/preview', link2:'https://www.dropbox.com/scl/fi/v4mcnpon5mo0wce4wjvmb/DAN-DA-DAN-T2-Cap-1.mp4?rlkey=qspzubpwr1ygbwa1p2lcswfgg&st=ayhv2p04&raw=1', title:'DAN DA DAN T2 Cap 1' },
-          "2": { link:'https://drive.google.com/file/d/1Q0apiXn56XN4aIFNY1gRDC5pR6xD-fl1/preview', link2:'https://www.dropbox.com/scl/fi/oqu9213qj9d2z4v93n0yx/DAN-DA-DAN-T2-Cap-2.mp4?rlkey=l4doynj03vzyrqvhf38a2fd81&st=dwd3qegm&raw=1', title:'DAN DA DAN T2 Cap 2' },
-          "3": { link:'https://drive.google.com/file/d/1g_XJseAcKcYG7-VDUlLpbfcloCS7XFY1/preview', link2:'https://www.dropbox.com/scl/fi/vogmosm4yn9bbh39lajgh/Dan-Da-Dan-T2-Cap-3.mp4?rlkey=ccefipzk2d5q3mx8t5fki3i2c&st=494i1yca&raw=1', title:'DAN DA DAN T2 Cap 3' },
-          "4": { link:'https://drive.google.com/file/d/1kXF5nzaIAb_3SEARXoW20jQ07mj96Ydz/preview', link2:'https://www.dropbox.com/scl/fi/eed4fvyr67oe7sdgd0ylr/DAN-DA-DAN-T2-Cap-4.mp4?rlkey=kvmpwye0fas4siunt202sw6v2&st=8k91pr7n&raw=1', title:'DAN DA DAN T2 Cap 4' },
-          "5": { link:'https://drive.google.com/file/d/1Pdawmsw10Kohzl2uQdbrNiZPI6LwwOeq/preview', link2:'https://www.dropbox.com/scl/fi/bja4u4qk5tt8ykfl24kmo/DAN-DA-DAN-T2-Cap-5.mp4?rlkey=e8kcor08nxfz7f5hnoxbxu3fv&st=bw0rjbh0&raw=1', title:'DAN DA DAN T2 Cap 5' },
-          "6": { link:'https://drive.google.com/file/d/1eiK2UIQFwz2ztTcVysUz9WdGpZQjagMn/preview', link2:'https://www.dropbox.com/scl/fi/7aini8cfrjrlv3fh9zd06/DAN-DA-DAN-T2-Cap-6.mp4?rlkey=hsf5o8o506kegfhlpocu1mffn&st=rzebnlkt&raw=1', title:'DAN DA DAN T2 Cap 6' },
-          "7": { link:'https://drive.google.com/file/d/18544atv-INagMyOlWNsAzospk3TuUZo3/preview', link2:'https://www.dropbox.com/scl/fi/7dahj8mn95vjqxpdkoqua/DAN-DA-DAN-T2-Cap-7.mp4?rlkey=94i1osas780y0d7ipvgu0x7j2&st=5tk1fa0o&raw=1', title:'DAN DA DAN T2 Cap 7' },
-          "8": { link:'https://drive.google.com/file/d/108Vq4T47umnOewAoY8H7r5OXh7tXsp8G/preview', link2:'https://www.dropbox.com/scl/fi/bsyg38ktp14z17ef1xgco/DAN-DA-DAN-T2-Cap-8.mp4?rlkey=q2ors3ape1yj7nurdq2nrzezv&st=05hi1o7l&raw=1', title:'DAN DA DAN T2 Cap 8' },
-          "9": { link:'https://drive.google.com/file/d/1vYZ9RC4wlkqsfW1dmMx_JUTtafWWCdrZ/preview', link2:'https://www.dropbox.com/scl/fi/guubes1mt50g1sih7ar90/DAN-DA-DAN-T2-Cap-9.mp4?rlkey=yvlgc6b461rgjkrt6qfuziekz&st=xq00noto&raw=1', title:'DAN DA DAN T2 Cap 9' },
-          "10": { link:'https://drive.google.com/file/d/1CfcMbLP_W--FnrCMzlE37SN43b9LbJV3/preview', link2:'https://www.dropbox.com/scl/fi/ll0vyhx3hah3paw6ba4l7/DAN-DA-DAN-T2-Cap-10.mp4?rlkey=n350hm7vpxvqb61zjial31uvw&st=p7nfkexi&raw=1', title:'DAN DA DAN T2 Cap 10' },
-          "11": { link:'https://drive.google.com/file/d/1SWu3bFYNQIaiePoNktFMJQTjZqi_rega/preview', link2:'https://www.dropbox.com/scl/fi/7hkpp0ak0xk3didyzhqbe/DAN-DA-DAN-T2-Cap-11.mp4?rlkey=01g5v32yuat68m26b7o7ldn88&st=tv1po8wi&raw=1', title:'DAN DA DAN T2 Cap 11' },
-          "12": { link:'https://drive.google.com/file/d/1EwaK1Jzutv4Pv2BXC-sozDHMlciduIMb/preview', link2:'https://www.dropbox.com/scl/fi/54fb658xyaaav0gv9pmmh/DAN-DA-DAN-T2-Cap-12.mp4?rlkey=jbkm74e7fhxy71deqpknjupjf&st=q2cz09u1&raw=1', title:'DAN DA DAN T2 Cap 12' },
-        }
-      },
-      
-      // ... RESTO DE LA BASE DE DATOS (MANTENIDA EXACTAMENTE IGUAL) ...
-      // Para ahorrar espacio en la respuesta, inserto aquí todo el contenido del objeto DB
-      // que estaba en el archivo original, ya que no se ha modificado.
-      // (Asumiendo que el script JS funciona si el archivo de datos no se carga)
-      // Si el archivo video-player-data.js no existe, descomentar el bloque siguiente y pegar toda la DB.
-    };
-    
-    // Si usas el archivo externo, asegúrate de que define 'const players' y descomenta esto:
-    // const DB = typeof players !== 'undefined' ? players : DB_LOCAL; 
+  <script src="video-player-data.js"></script>
 
+  <script>
     // -----------------------------------------------------------
     // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
     // -----------------------------------------------------------
     
-    const params = new URLSearchParams(location.search);
-    const animeId = params.get('anime');
-    const season = params.get('s');
-    const episode = params.get('e');
-    const epData = DB[animeId]?.[season]?.[episode];
+    // Esperamos a que el DB cargue del archivo externo
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(location.search);
+        const animeId = params.get('anime');
+        const season = params.get('s');
+        const episode = params.get('e');
+        
+        // Verificamos si DB existe (viene de video-player-data.js)
+        if (typeof DB === 'undefined') {
+            document.getElementById('epTitle').innerText = "Error: Base de datos no cargada.";
+            return;
+        }
 
-    // Asignar link de volver
-    const backLink = document.getElementById('backLink');
-    if (backLink) {
-       backLink.href = `anime-detail.html?id=${animeId}`;
-    }
+        const epData = DB[animeId]?.[season]?.[episode];
 
-    if (epData) {
-        document.title = `Ver ${epData.title} - Archinime`;
-        document.getElementById('epTitle').innerText = epData.title;
+        // Asignar link de volver
+        const backLink = document.getElementById('backLink');
+        if (backLink) {
+           backLink.href = `anime-detail.html?id=${animeId}`;
+        }
 
-        // Cargar video inicial
-        loadVideo(epData.link || epData.link2);
+        if (epData) {
+            document.title = `Ver ${epData.title} - Archinime`;
+            document.getElementById('epTitle').innerText = epData.title;
 
-        // Generar botones de servidores
-        if(epData.link) createOptionBtn("Opción 1", epData.link, true);
-        if(epData.link2) createOptionBtn("Opción 2", epData.link2, false);
+            // Cargar video inicial
+            loadVideo(epData.link || epData.link2);
 
-        // Actualizar botón de descarga inicial
-        updateDownloadButton(epData.link || epData.link2);
+            // Generar botones de servidores
+            if(epData.link) createOptionBtn("Opción 1", epData.link, true);
+            if(epData.link2) createOptionBtn("Opción 2", epData.link2, false);
 
-        // Navegación
-        setupNavigation();
-    } else {
-      document.getElementById('epTitle').innerText = "Episodio no encontrado.";
-    }
+            // Actualizar botón de descarga inicial
+            updateDownloadButton(epData.link || epData.link2);
+
+            // Navegación
+            setupNavigation(animeId, season, episode);
+        } else {
+          document.getElementById('epTitle').innerText = "Episodio no encontrado.";
+        }
+    });
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
@@ -459,7 +418,7 @@
     }
 
     function updateDownloadButton(url) {
-      const dlBtn = document.getElementById('downloadBtn');
+        const dlBtn = document.getElementById('downloadBtn');
         const directLink = generateDirectDownloadLink(url);
         dlBtn.href = directLink;
     }
@@ -482,7 +441,16 @@
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         
-        // --- ELIMINADA LA LÓGICA DEL BOTÓN TABLET ---
+        // Manejar visibilidad y enlace del botón "Para Tablet"
+        const tabletBtn = document.getElementById('tabletBtn');
+        if(tabletBtn) {
+          if (url) {
+                tabletBtn.href = url;
+                tabletBtn.style.display = 'inline-flex';
+            } else {
+                tabletBtn.style.display = 'none';
+            }
+         }
 
         const isDrive = url && url.includes('drive.google.com');
         
@@ -499,7 +467,7 @@
             container.appendChild(iframe);
         } else {
              // Reproductor nativo
-             const video = document.createElement('video');
+            const video = document.createElement('video');
             video.src = url;
             video.controls = true;
             video.autoplay = false; 
@@ -510,16 +478,16 @@
         }
     }
 
-    function setupNavigation() {
+    function setupNavigation(animeId, season, episode) {
         try {
             if (DB[animeId]) {
                 let flatList = [];
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
                 seasons.forEach(sKey => {
-                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
-                     episodes.forEach(eKey => {
+                    const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
+                    episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
-                     });
+                    });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
@@ -533,7 +501,7 @@
                 }
 
                 if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
-                     const nextItem = flatList[currentIndex + 1];
+                    const nextItem = flatList[currentIndex + 1];
                     nextBtn.classList.remove('btn-hidden');
                     nextBtn.style.display = 'inline-flex'; 
                     nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
@@ -543,5 +511,5 @@
         catch (e) { console.error(e); }
     }
   </script>
-  </body>
+</body>
 </html>
