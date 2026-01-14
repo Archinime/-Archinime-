@@ -9925,19 +9925,5 @@ const players = {
                 "title": "Overlord Película 1: El Reino Sagrado"
             }
         }
-    },
-    "72": {
-        "1": {
-            "1": {
-                "link": "https://drive.google.com/file/d/1daXDEuQX03_KoBSAcvCeCs3R3wviDT_4/preview",
-                "link2": "",
-                "title": "Prueba T1 Cap 1"
-            },
-            "2": {
-                "link": "https://drive.google.com/file/d/1daXDEuQX03_KoBSAcvCeCs3R3wviDT_4/preview",
-                "link2": "",
-                "title": "Prueba T1 Cap 2"
-            }
-        }
     }
 };
