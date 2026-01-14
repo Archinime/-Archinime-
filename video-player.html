@@ -10,8 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <script src="video-player-data.js"></script>
-
   <style>
     /* --- VARIABLES --- */
     :root {
@@ -31,7 +29,7 @@
         min-height: 100vh;
     }
    
-    /* --- FONDO DE VIDEO --- */
+    /* --- FONDO DE VIDEO (Background) --- */
     #bg-video { 
         position: fixed; 
         top: 0;
@@ -39,7 +37,7 @@
         width: 100%; height: 100%; 
         object-fit: cover;
         z-index: -10; 
-        opacity: 1;
+        opacity: 1; 
     }
 
     /* --- OVERLAY LIGERO --- */
@@ -62,50 +60,47 @@
         position: relative; 
         z-index: 10;
         background: transparent; 
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
     }
     
-    /* BOTÓN VOLVER MEJORADO */
-    .back-btn {
-        position: fixed; /* Fijo en la pantalla */
-        top: 20px;
-        left: 20px;
-        z-index: 1000;
-        
+    /* NAVEGACIÓN SUPERIOR */
+    .top-nav {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 8px;
-        
-        padding: 10px 25px;
-        background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
-        border: 2px solid var(--primary-color);
-        border-radius: 50px;
-        
-        color: var(--primary-color);
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        
-        backdrop-filter: blur(5px); /* Efecto vidrio */
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+        padding: 0 20px; 
+        flex-wrap: nowrap; 
+        gap: 15px;
+    }
+
+    /* BOTÓN GENÉRICO ESTILO NEÓN (Ajustado tamaño) */
+    .back-btn { 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color:#0ff;
+      text-decoration:none;
+      font-weight:bold;
+      font-size: 1rem; /* Reducido de 1.2rem */
+      transition:all .3s;
+      cursor:pointer;
+      background: rgba(0, 0, 0, 0.6); 
+      padding: 10px 20px; /* Reducido de 15px 25px */
+      border-radius: 30px;
+      border: 2px solid var(--primary-color);
+      white-space: nowrap;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
    
     .back-btn:hover {
-        background: var(--primary-color);
-        color: #000;
-        box-shadow: 0 0 20px var(--primary-color);
-        transform: translateY(-2px);
+        background: rgba(0, 255, 247, 0.2);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
     }
-
-    /* SVG del botón volver */
-    .back-btn svg {
-        width: 20px;
-        height: 20px;
-        stroke: currentColor;
-    }
-
+   
     /* REPRODUCTOR (FULL WIDTH) */
     .player-wrapper { 
         position: relative; 
@@ -115,21 +110,21 @@
         background: #000; 
         overflow: hidden; 
         z-index: 50;
+        border-radius: 0; 
+        border: none;
         box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        margin-top: 60px; /* Espacio para el botón volver en móviles */
     }
    
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute; top: 0;
         left: 0; width: 100%;
-        height: 100%;
-        border: none;
+        height: 100%; border: none;
     }
 
     /* TEXTOS */
     h1 { 
         color: #fff; 
-        font-size: 2rem; 
+        font-size: 2rem; /* Ligeramente reducido */
         margin-top: 25px;
         text-align: center; 
         text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color);
@@ -146,18 +141,18 @@
         padding: 0 10px;
     }
     
-    /* BOTONES DE CONTROL */
+    /* BOTONES DE CONTROL (Ajustado tamaño) */
     .btn { 
-        padding: 12px 35px;
+        padding: 12px 35px; /* Reducido de 20px 50px */
         background: rgba(0, 0, 0, 0.7); 
-        border: 2px solid var(--primary-color);
+        border: 2px solid var(--primary-color); /* Borde un poco más fino */
         color: #fff; 
         text-decoration: none; 
         border-radius: 50px; 
         cursor: pointer; 
         transition: 0.3s;
         font-weight: 700;
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* Reducido de 1.5rem */
         text-shadow: 1px 1px 2px #000;
         display: inline-flex;
         align-items: center;
@@ -196,12 +191,12 @@
     }
     
     .opt-btn { 
-        font-size: 1rem;
-        padding: 10px 20px;
+        font-size: 1rem; /* Reducido */
+        padding: 10px 20px; /* Reducido */
         border: 2px solid #555; 
         background: rgba(0,0,0,0.8);
         color: #ddd;
-        cursor: pointer;
+        cursor: pointer; 
         border-radius: 12px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
@@ -215,7 +210,7 @@
     }
   
     .opt-btn.active { 
-        border-color: var(--primary-color);
+        border-color: var(--primary-color); 
         color: #000;
         background: var(--primary-color); 
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.6);
@@ -272,30 +267,31 @@
         width: 100%;
     }
 
-    /* MODO MOVIL */
+    /* ----------------------------------------------------------------------- */
+    /* TRUCO PARA SIMULAR "MODO ESCRITORIO" EN MÓVIL (SOLO MÓVIL, NO TABLET) */
+    /* ----------------------------------------------------------------------- */
+    /* Cambiado de 768px a 550px para excluir Tablets */
     @media (max-width: 550px) {
-        .player-wrapper {
-             margin-top: 80px; /* Más espacio en móvil para que no tape el botón */
-        }
-        
-        .back-btn {
-            top: 15px;
-            left: 15px;
-            padding: 8px 18px;
-            font-size: 0.9rem;
-        }
-
         .comments-section {
-           padding: 20px 0; 
+            padding: 20px 0; 
         }
         
         .comments-box {
+            /* Forzamos ancho de PC */
             width: 800px !important;
             max-width: 800px !important;
+            
+            /* Altura mínima para que no desaparezca si no hay comentarios */
             min-height: 600px; 
+            
+            /* Centrado */
             margin-left: 50%;
+            
+            /* Escalado */
             transform: translateX(-50%) scale(0.45); 
             transform-origin: top center;
+            
+            /* Ajuste de margen inferior */
             margin-bottom: -400px; 
         }
 
@@ -304,6 +300,7 @@
             max-width: 100% !important;
         }
         
+        /* Ajuste para que el título se vea grande en móvil a pesar del scale */
         .comments-header h3 {
             font-size: 3rem; 
         }
@@ -321,15 +318,12 @@
 
   <div id="overlay"></div>
 
-  <a href="#" id="backLink" class="back-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-    </svg>
-    <span>Volver</span>
-  </a>
-
   <div class="container">
    
+    <div class="top-nav">
+       <a href="#" id="backLink" class="back-btn">← Volver</a>
+    </div>
+
     <div class="player-wrapper" id="playerContainer"></div>
 
     <div class="options" id="serverOptions"></div>
@@ -360,24 +354,20 @@
 
   </div>
 
-<script>
-    // -----------------------------------------------------------
-    // LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
-    // -----------------------------------------------------------
-    
-    // Verificamos si la base de datos externa cargó correctamente
-    if (typeof DB === 'undefined') {
-        console.error("Error: No se encontró la variable DB. Asegúrate de que 'video-player-data.js' existe y está cargado.");
-        document.getElementById('epTitle').innerText = "Error: Base de datos no cargada.";
-    }
+  <script src="video-player-data.js"></script>
 
+  <script>
+
+
+
+// -----------------------------------------------------------
+    // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
+    // -----------------------------------------------------------
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
-    
-    // Accedemos a la DB que ahora viene del archivo externo
-    const epData = (typeof DB !== 'undefined') ? DB[animeId]?.[season]?.[episode] : null;
+    const epData = DB[animeId]?.[season]?.[episode];
 
     // Asignar link de volver
     const backLink = document.getElementById('backLink');
@@ -401,7 +391,7 @@
 
         // Navegación
         setupNavigation();
-    } else if (typeof DB !== 'undefined') {
+    } else {
       document.getElementById('epTitle').innerText = "Episodio no encontrado.";
     }
 
@@ -418,7 +408,7 @@
     }
 
     function updateDownloadButton(url) {
-        const dlBtn = document.getElementById('downloadBtn');
+      const dlBtn = document.getElementById('downloadBtn');
         const directLink = generateDirectDownloadLink(url);
         dlBtn.href = directLink;
     }
@@ -437,10 +427,21 @@
         optContainer.appendChild(btn);
     }
 
-    function loadVideo(url) {
+     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         
+        // Manejar visibilidad y enlace del botón "Para Tablet"
+        const tabletBtn = document.getElementById('tabletBtn');
+        if(tabletBtn) {
+          if (url) {
+                tabletBtn.href = url;
+                tabletBtn.style.display = 'inline-flex';
+            } else {
+                tabletBtn.style.display = 'none';
+            }
+         }
+
         const isDrive = url && url.includes('drive.google.com');
         
         if (isDrive) {
@@ -455,7 +456,7 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
-            // Reproductor nativo
+             // Reproductor nativo
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
@@ -475,16 +476,15 @@
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
-                        flatList.push({ s: sKey, e: eKey });
-                    });
+                         flatList.push({ s: sKey, e: eKey });
+                     });
                 });
-
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
 
                 if (currentIndex > 0) {
-                    const prevItem = flatList[currentIndex - 1];
+                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
                     prevBtn.style.display = 'inline-flex';
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
