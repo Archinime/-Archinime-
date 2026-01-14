@@ -9925,5 +9925,4 @@ const players = {
                 "title": "Overlord Película 1: El Reino Sagrado."
             }
         }
-    }
 };
