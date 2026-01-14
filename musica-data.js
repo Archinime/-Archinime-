@@ -1,4 +1,4 @@
-const musica = {
+const audioPlaylists = {
     "1": [
         "dandadan.mp3"
     ],
@@ -219,6 +219,9 @@ const musica = {
         "kimitokoete.mp3"
     ],
     "71": [
+        "overlord.mp3"
+    ],
+    "72": [
         "overlord.mp3"
     ]
 };
