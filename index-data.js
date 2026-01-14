@@ -1176,6 +1176,5 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ]
-    },
-      {id:71, title:"Overlord1", img:"overlord.avif", rating:4.9, uploader:"archinime12@gmail.com", uploaderImg:"Logo_Archinime.avif", genres:["Acción","Aventura","Comedia","Comedia oscura","Fantasía oscura","Isekai","Sobrenatural","Shōnen"]}
+    }
 ];
