@@ -7680,42 +7680,34 @@ const data = {
                 "cover": "kimitokoete1.avif",
                 "eps": [
                     {
-                        "title": "Episodio 1"
+                        "title": "Capítulo 1"
                     },
                     {
-                        "title": "Episodio 2"
+                        "title": "Capítulo 2"
                     },
                     {
-                        "title": "Episodio 3"
+                        "title": "Capítulo 3"
                     },
                     {
-                        "title": "Episodio 4"
+                        "title": "Capítulo 4"
                     },
                     {
-                        "title": "Episodio 5"
+                        "title": "Capítulo 5"
                     },
                     {
-                        "title": "Episodio 6"
+                        "title": "Capítulo 6"
                     },
                     {
-                        "title": "Episodio 7"
+                        "title": "Capítulo 7"
                     },
                     {
-                        "title": "Episodio 8"
+                        "title": "Capítulo 8"
                     },
                     {
-                        "title": "Episodio 9"
-                    },
-                    {
-                        "title": "Episodio 10"
-                    },
-                    {
-                        "title": "Episodio 11"
-                    },
-                    {
-                        "title": "Episodio 12"
+                        "title": "Capítulo 9"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
