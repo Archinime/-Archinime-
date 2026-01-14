@@ -15,6 +15,7 @@ const ALLOWED_USERS = [
     "archinime12@gmail.com", 
     "alejandroarchi12@gmail.com",
     "lucioguapofeo@gmail.com",
+    "adrielchimoy252@gmail.com",
 ];
 
 // CONFIGURACIÓN GITHUB
