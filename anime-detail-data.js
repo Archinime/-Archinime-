@@ -7727,7 +7727,6 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "name": "Temporada 1",
                 "cover": "overlord1.avif",
                 "eps": [
                     {
@@ -7769,11 +7768,11 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Temporada 2",
                 "cover": "overlord2.avif",
                 "eps": [
                     {
@@ -7815,11 +7814,11 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "name": "Temporada 3",
                 "cover": "overlord3.avif",
                 "eps": [
                     {
@@ -7861,11 +7860,11 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 4,
-                "name": "Temporada 4",
                 "cover": "overlord4.avif",
                 "eps": [
                     {
@@ -7907,17 +7906,18 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 4"
             },
             {
                 "num": 5,
-                "name": "Película 1",
                 "cover": "overlordp.avif",
                 "eps": [
                     {
-                        "title": "El Reino Sagrado"
+                        "title": "El Reino Sagrado."
                     }
-                ]
+                ],
+                "name": "Película 1"
             }
         ]
     }
