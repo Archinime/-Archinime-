@@ -1144,20 +1144,21 @@ const animes = [
     {
         "id": 70,
         "title": "Kimi to Koete Koi ni Naru",
-        "aliases": [
-            "With You, Our Love Will Make It Through"
-        ],
         "img": "kimitokoete.avif",
         "rating": 4.3,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
-            "Romance",
-            "Escolar",
-            "Slice of Life",
             "Drama",
+            "Escolar",
             "Fantasía",
+            "Romance",
+            "Slice of Life",
             "Shōjo"
+        ],
+        "aliases": [
+            "With You, Our Love Will Make It Through"
         ]
     },
     {
