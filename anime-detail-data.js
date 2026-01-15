@@ -4066,33 +4066,26 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "name": "Ova 0",
                 "cover": "https://www.dropbox.com/scl/fi/e90mvl54sx6as45mlwlfr/unnamed-1.jpg?rlkey=w5y5f5vipr6b97cqrke3zow2p&st=qjqrvo8v&raw=1",
                 "eps": [
                     {
-                        "title": "Road to Hero Sub"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 0"
             },
             {
                 "num": 2,
-                "name": "Temporada 1",
                 "cover": "https://www.dropbox.com/scl/fi/gt6int1d0scu0qkbd2e79/onepunch1.jpg?rlkey=rd15zof6ij6uhkje9ckemlfw3&st=ps4vgrz6&raw=1",
                 "eps": [
                     {
                         "title": "Capítulo 1"
                     },
                     {
-                        "title": "Especial 1 Sub"
-                    },
-                    {
                         "title": "Capítulo 2"
                     },
                     {
                         "title": "Capítulo 3"
-                    },
-                    {
-                        "title": "Especial 2 Sub"
                     },
                     {
                         "title": "Capítulo 4"
@@ -4101,25 +4094,16 @@ const data = {
                         "title": "Capítulo 5"
                     },
                     {
-                        "title": "Especial 3 Sub"
-                    },
-                    {
                         "title": "Capítulo 6"
                     },
                     {
                         "title": "Capítulo 7"
                     },
                     {
-                        "title": "Especial 4 Sub"
-                    },
-                    {
                         "title": "Capítulo 8"
                     },
                     {
                         "title": "Capítulo 9"
-                    },
-                    {
-                        "title": "Especial 5 Sub"
                     },
                     {
                         "title": "Capítulo 10"
@@ -4131,21 +4115,30 @@ const data = {
                         "title": "Capítulo 12"
                     },
                     {
-                        "title": "Especial 6 Sub"
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
+                    },
+                    {
+                        "title": "Capítulo 17"
+                    },
+                    {
+                        "title": "Capítulo 18"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 3,
-                "name": "Temporada 2",
                 "cover": "https://www.dropbox.com/scl/fi/xx302drnrqurqrj7eggdc/gsdgsdgsdg-1.jpg?rlkey=ee9b8kqmq7kdbef8tqr622d5j&st=9qw1ilb1&raw=1",
                 "eps": [
-                    {
-                        "title": "Especial 1 Sub"
-                    },
-                    {
-                        "title": "Especial 2 Sub"
-                    },
                     {
                         "title": "Capítulo 1"
                     },
@@ -4153,16 +4146,7 @@ const data = {
                         "title": "Capítulo 2"
                     },
                     {
-                        "title": "Especial 3 Sub"
-                    },
-                    {
-                        "title": "Especial 4 Sub"
-                    },
-                    {
                         "title": "Capítulo 3"
-                    },
-                    {
-                        "title": "Especial 5 Sub"
                     },
                     {
                         "title": "Capítulo 4"
@@ -4192,13 +4176,28 @@ const data = {
                         "title": "Capítulo 12"
                     },
                     {
-                        "title": "Especial 6 Sub"
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
+                    },
+                    {
+                        "title": "Capítulo 17"
+                    },
+                    {
+                        "title": "Capítulo 18"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 4,
-                "name": "Temporada 3",
                 "cover": "https://www.dropbox.com/scl/fi/1r0djgkxmptdfe2ltkbk1/onepunch3.jpg?rlkey=4e2i0r1cvl5ufsh5f41fa2sqm&st=woghk9gy&raw=1",
                 "eps": [
                     {
@@ -4221,23 +4220,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 7"
-                    },
-                    {
-                        "title": "Capítulo 8"
-                    },
-                    {
-                        "title": "Capítulo 9"
-                    },
-                    {
-                        "title": "Capítulo 10"
-                    },
-                    {
-                        "title": "Capítulo 11"
-                    },
-                    {
-                        "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
