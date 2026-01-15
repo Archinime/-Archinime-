@@ -981,116 +981,117 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1CZrMCSoJtNnOo7EFMvtfP-JJQ8YYNkVD/preview",
-                "link2": "https://www.dropbox.com/scl/fi/ct7h9cw7zpyyq2vzm6wl3/Mushoku-Tensei-T1-Cap-1.mp4?rlkey=85zkfqqx471twhntnirmn1z27&st=ince4h30&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1KtjR8bMBJXXFF4a1dpzaYDoVM5j4EPnJ/preview",
-                "link2": "https://www.dropbox.com/scl/fi/fqjo0012vo75opsqyi20i/Mushoku-Tensei-T1-Cap-2.mp4?rlkey=s86t2jwzg5k3nrn7bojt9gswp&st=jz263opa&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1M73RcVINSQqFUDD1zPs1zZKrhWGbnKXr/preview",
-                "link2": "https://www.dropbox.com/scl/fi/mms5qpo1q59x4idei3exf/Mushoku-Tensei-T1-Cap-3.mp4?rlkey=hpq5wqfm6vuie4kzb1i272mlr&st=4b1s8fa1&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1HkUnLfdI8sX-wS48kTFmP2g954YijST1/preview",
-                "link2": "https://www.dropbox.com/scl/fi/idku940xq6arlmhrul47z/Mushoku-Tensei-T1-Cap-4.mp4?rlkey=5shwgegof2m2fidll1f96fudv&st=6n6lpqdb&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/19dzP52d1EsupC6fK_ltq_-4hzJPu2_SI/preview",
-                "link2": "https://www.dropbox.com/scl/fi/9cht3485c2d242gchq1m0/Mushoku-Tensei-T1-Cap-5.mp4?rlkey=4cjbc6tir9z42gm5htsdfb20w&st=23v886ts&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1el5i9VkZEEPdcodtxsw_QZxT3SbgPW6Y/preview",
-                "link2": "https://www.dropbox.com/scl/fi/mmg4m03tkbzxpd3dpjd6d/Mushoku-Tensei-T1-Cap-6.mp4?rlkey=czeui2baf553lhlzaneepxzcp&st=1vq94m6f&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1O3mKADd2V5HbHad_dUj6bgapDn-papwb/preview",
-                "link2": "https://www.dropbox.com/scl/fi/4dmo8e7vpixpw7u226ixj/Mushoku-Tensei-T1-Cap-7.mp4?rlkey=fabe81nrqfye8xzq2j0m6xpsx&st=d9scp9cu&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1c4xErleJxugBMAXc2_CDWr7_GkgO3-tB/preview",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1ejnCNV2m3dYEyMg7Lo6ofYND_mecw5b8/preview",
-                "link2": "https://www.dropbox.com/scl/fi/ccd7hgxpmwjiwltmlch06/Mushoku-Tensei-T1-Cap-9.mp4?rlkey=6xczugwsfc2vcseprzy9r1sk2&st=kguxy7ke&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1kd03dkpkuGnCDJkWXGDUQpd-SMc6vI38/preview",
-                "link2": "https://www.dropbox.com/scl/fi/1mg3ay0v8loq1qepxbyrd/Mushoku-Tensei-T1-Cap-10.mp4?rlkey=j1u88r9p7samczpy8hg1azbmx&st=844rbh0z&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1nxhY94_ZeOXH8gjCuCzDcOja8NVtvQTF/preview",
-                "link2": "https://www.dropbox.com/scl/fi/rys6xb1ltkodtj0fmpp7t/Mushoku-Tensei-T1-Cap-11.mp4?rlkey=1btmjhw4tw3xlh5tuf8z8zty4&st=qouruq4h&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1sIUXauGCmYhavf7tdCVd-bqg1bLHfWDB/preview",
-                "link2": "https://www.dropbox.com/scl/fi/ili9l6xgyptd53ekrfyok/Mushoku-Tensei-T1-Cap-12.mp4?rlkey=hd4shpm2jscdp82fvwm7k9urf&st=65vq3rv9&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1zQsb_O7kgctdjid-pfqOMEjcFN96pvja/preview",
-                "link2": "https://www.dropbox.com/scl/fi/75k3ayj111ifgmj9nj2jw/Mushoku-Tensei-T1-Cap-13.mp4?rlkey=2dfso53qubmo3jqr54rcqltkb&st=mt680w35&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1G7QvXBkkvVH-roUklXoJYHXckDRKSDMe/preview",
-                "link2": "https://www.dropbox.com/scl/fi/250vzlf0prhkyq83douxf/Mushoku-Tensei-T1-Cap-14.mp4?rlkey=dzoua26mb2q7bpl9dpbzy5obq&st=wtsf5i7s&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1--AUqBF2Sn2ocOYiMGKgCrRKQWGwYw7h/preview",
-                "link2": "https://www.dropbox.com/scl/fi/83vtzobfcyzhygzr12v4l/Mushoku-Tensei-T1-Cap-15.mp4?rlkey=85dbnhde2lhey98ifpysklwxc&st=7vyqlil3&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1YABUFK-9iOPMJ0Ns-Wdf3M1aVexaGdKq/preview",
-                "link2": "https://www.dropbox.com/scl/fi/g3ubel5mgp69vi0ilgnnx/Mushoku-Tensei-T1-Cap-16.mp4?rlkey=ozpmgqpyjx44vfanue3szkhwk&st=dxe6z9cy&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1KhL9lsBUbXD_7Mi9XtLHvhXc0hh7Mbz0/preview",
-                "link2": "https://www.dropbox.com/scl/fi/vts0dd0hvsk3fqftylyag/Mushoku-Tensei-T1-Cap-17.mp4?rlkey=xyn8tb5qo66o1qsyrhi5nssgk&st=h0l2gtgx&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1r7pmyvEOd9ITgK--6YwxnQh9YdnJSJ9H/preview",
-                "link2": "https://www.dropbox.com/scl/fi/z7wwpz6yf6dkxg0dyyp83/Mushoku-Tensei-T1-Cap-18.mp4?rlkey=np03zdl23ykud3vfahdei0qnx&st=m7342n6h&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1l8OBuPLYUn8zDJVQAOQU_O_Gw_ahJOcy/preview",
-                "link2": "https://www.dropbox.com/scl/fi/0rtivunhohu7covm7xjr3/Mushoku-Tensei-T1-Cap-19.mp4?rlkey=iby6q0n3jz7omh5579vaz1x30&st=ld15t3p8&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1ET0eFclQlkWJYPXZaDY4tCUjfyIKEsV1/preview",
-                "link2": "https://www.dropbox.com/scl/fi/l3ufu6ut8hmk7nifysu12/Mushoku-Tensei-T1-Cap-20.mp4?rlkey=j06z01pm7mfdzah6xro89towd&st=qf2mvmsx&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1oPcB2JvuXQvLWKCKR1n5gK-eSYj4hLKy/preview",
-                "link2": "https://www.dropbox.com/scl/fi/ht6e27z3869jt4t0p4f6s/Mushoku-Tensei-T1-Cap-21.mp4?rlkey=fw1k58fegjmxkipdq7avf2nns&st=jffzz2lv&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1IUQSqS10STS2x0XwyUK6Kz0RSDIXZnM0/preview",
-                "link2": "https://www.dropbox.com/scl/fi/9nqizaqof1qpp9h8gcmjv/Mushoku-Tensei-T1-Cap-22.mp4?rlkey=9vs60r9w8otsxjuru6fnzrpso&st=fikngonr&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/18-_HZ6XFRSbXJmjjpoWacIT7g_N8bwnx/preview",
-                "link2": "https://www.dropbox.com/scl/fi/kkhqhrxp3go9642e42ynk/Mushoku-Tensei-T1-Cap-23.mp4?rlkey=9pyjnufiyq7l5pl8old6cr369&st=b611fdza&raw=1",
+                "link2": "",
                 "title": "Mushoku Tensei T1 Cap 23"
             }
         },
@@ -1098,7 +1099,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1FRgvV4f103gREfoZe1VQjBWBtMLgawVR/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ddv6w7ezmo25gh3onasnd/Mushoku-Tensei-T1-Ova-1-Eris-la-cazaduendes.mp4?rlkey=iq6x0honjnmz7o5xjzfljqqcc&st=hbf9px27&raw=1",
-                "title": "Mushoku Tensei T1 OVA 1 \"Eris La Cazaduendes\""
+                "title": "Mushoku Tensei OVA 1 \"Eris, La Cazaduendes\""
             }
         },
         "3": {
@@ -1221,11 +1222,6 @@ const players = {
                 "link": "https://drive.google.com/file/d/1LeSUOhIf5Uf3pJThMIP96ItzdwiMV2LW/preview",
                 "link2": "https://www.dropbox.com/scl/fi/n74atkx1vksxpggveir1i/Mushoku-Tensei-T2-Cap-23.mp4?rlkey=4m78au6nhbk2kzbxw3wze93m1&st=orudxnz5&raw=1",
                 "title": "Mushoku Tensei T2 Cap 23"
-            },
-            "25": {
-                "link": "https://drive.google.com/file/d/1Y_CupxdUrZY_sl6pHU4EN_Kp5I6hK5vs/preview",
-                "link2": "https://www.dropbox.com/scl/fi/mcxy85cgd71cgxlwpnppg/Mushoku-Tensei-T2-Cap-24.mp4?rlkey=p8ea4i5r5fgvm8pgzw0n5dbx5&st=wb62g3v8&raw=1",
-                "title": "Mushoku Tensei T2 Cap 24"
             }
         }
     },
