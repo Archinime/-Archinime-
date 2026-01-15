@@ -5132,7 +5132,8 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
@@ -5174,21 +5175,21 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "name": "Película 1",
                 "cover": "spyxfamilypeli.jpg",
                 "eps": [
                     {
                         "title": "Code: White"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 4,
-                "name": "Temporada 3",
                 "cover": "https://www.dropbox.com/scl/fi/mtki74k5zzzywfdegb4ir/dfffffg.jpg?rlkey=g563wasphqjhhyep83qnq548r&st=9uw7j6kq&raw=1",
                 "eps": [
                     {
@@ -5220,17 +5221,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 10"
-                    },
-                    {
-                        "title": "Capítulo 11"
-                    },
-                    {
-                        "title": "Capítulo 12"
-                    },
-                    {
-                        "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
