@@ -9,28 +9,23 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
-
 // USUARIOS PERMITIDOS (Super Admins)
 const ALLOWED_USERS = [
     "archinime12@gmail.com", 
     "alejandroarchi12@gmail.com",
     "lucioguapofeo@gmail.com",
-    "adrielchimoy252@gmail.com",
 ];
-
 // CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-
 // FORZAR CIERRE DE SESIÓN AL CERRAR PESTAÑA
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 let currentUserToken = null;
 let globalUsersData = {};
-
 // VARIABLES DE ESTADO
 let isEditMode = false;
 let currentEditingId = null;
@@ -46,7 +41,6 @@ let currentUserEmail = "";
 
 // Variable para el modo de búsqueda ('mine' o 'general')
 let currentSearchMode = 'mine';
-
 // ============================================
 // AUTENTICACIÓN
 // ============================================
@@ -57,7 +51,6 @@ auth.onAuthStateChanged((user) => {
         showLogin();
     }
 });
-
 function signInWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
@@ -85,7 +78,6 @@ async function checkAccess(user) {
     if(errText) errText.innerText = "Verificando base de datos...";
     const logErr = document.getElementById('loginError');
     if(logErr) logErr.style.display = 'none';
-
     try {
         const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
         globalUsersData = safeEval(usersFile.content);
@@ -109,12 +101,7 @@ async function checkAccess(user) {
             showCMS();
         } else {
             // Si el usuario es permitido o simplemente nuevo, mostramos el setup
-            // NOTA: Se ha removido la restricción estricta de ALLOWED_USERS para permitir
-            // que cualquiera intente registrarse, pero fallará al guardar si no tiene permisos de GitHub.
-            // Si quieres restringir el acceso SOLO a la lista, descomenta el check de ALLOWED_USERS.
-            // if (ALLOWED_USERS.includes(email)) {
-                showProfileSetup();
-            // } else { throw new Error("No registrado."); }
+            showProfileSetup();
         }
     } catch (e) {
         console.error("Error acceso:", e);
@@ -128,7 +115,6 @@ function showProfileSetup() {
     document.getElementById('userHeader').style.display = 'none';
     document.getElementById('cmsContent').style.display = 'none';
     document.getElementById('profileSetupModal').style.display = 'flex';
-    
     document.getElementById('modalTitle').innerText = "Bienvenido/a";
     document.getElementById('modalDesc').innerText = "Es tu primera vez aquí. Configura tu cuenta para continuar.";
     document.getElementById('btnSaveProfile').innerText = 'GUARDAR PERFIL';
@@ -156,7 +142,6 @@ function openProfileEditor() {
     document.getElementById('btnSaveProfile').innerText = 'ACTUALIZAR DATOS';
     const btnCancel = document.getElementById('btnCancelProfile');
     if(btnCancel) btnCancel.style.display = 'block';
-    
     if(globalUsersData[currentUserEmail]) {
         document.getElementById('setupNick').value = globalUsersData[currentUserEmail].nick;
         document.getElementById('setupAvatar').value = globalUsersData[currentUserEmail].avatar;
@@ -178,8 +163,10 @@ async function saveUserProfile() {
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
     
-    if(!nick) { alert("Debes elegir un nombre de usuario."); return; }
-    if(!avatar) { alert("Debes colocar una URL de avatar."); return; }
+    if(!nick) { alert("Debes elegir un nombre de usuario.");
+        return; }
+    if(!avatar) { alert("Debes colocar una URL de avatar."); return;
+    }
 
     if (nick.toLowerCase().includes("archinime")) {
         if (currentUserEmail !== "archinime12@gmail.com") {
@@ -192,7 +179,6 @@ async function saveUserProfile() {
     const isTaken = Object.entries(globalUsersData).some(([email, data]) => {
         return data.nick.toLowerCase() === nickLower && email !== currentUserEmail;
     });
-
     if (isTaken) {
         alert("Este nombre ya ha sido registrado, elige otro por favor.");
         return;
@@ -210,7 +196,6 @@ async function saveUserProfile() {
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
         });
-        
         currentUserNick = nick;
         currentUserAvatar = avatar;
 
@@ -223,7 +208,6 @@ async function saveUserProfile() {
         }, 1000);
     } catch(e) {
         console.error(e);
-        // CAMBIO SOLICITADO: Mensaje personalizado
         logEl.innerText = "Aun no perteneces al grupo de aportadores";
         btn.disabled = false;
     }
@@ -266,12 +250,11 @@ genresList.forEach(g => {
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
-
 function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     if(!x) return;
     x.innerHTML = isError ?
-    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
@@ -412,6 +395,7 @@ function updateAudioPreview(input) {
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
+
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
@@ -448,8 +432,20 @@ function addSeason(data = null) {
         <label>Poster Bloque</label>
         <input type="text" class="s-img" placeholder="https://..." oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
         
-        <label>Cant. Capítulos</label>
-        <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
+        <div class="row-flex">
+            <div class="col-flex">
+                <label>Cant. Capítulos</label>
+                <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
+            </div>
+            <div class="col-flex">
+                <label>Numeración</label>
+                <select class="s-start-index" onchange="renderChapters(this)">
+                    <option value="1" selected>Desde Cap 1</option>
+                    <option value="0">Desde Cap 0</option>
+                </select>
+            </div>
+        </div>
+
         <div class="chapters-grid" style="margin-top:20px;"></div>
     `;
     container.appendChild(div);
@@ -469,6 +465,19 @@ function addSeason(data = null) {
         
         handleSeasonTypeChange(typeSel);
         
+        // Lógica para detectar si empieza en 0
+        const startSel = div.querySelector('.s-start-index');
+        if(data.eps && data.eps.length > 0) {
+            const firstTitle = data.eps[0].title || "";
+            // Heurística simple: si el título contiene "Capítulo 0" o similar
+            // O si es una Temporada/SpinOff y el primer elemento tiene título explícito "Capítulo 0"
+            if(firstTitle.includes(" 0") || firstTitle.includes("Capítulo 0")) {
+                startSel.value = "0";
+            } else {
+                startSel.value = "1";
+            }
+        }
+
         const countInp = div.querySelector('.s-count');
         countInp.value = data.eps.length;
         renderChapters(countInp, data.eps);
@@ -555,9 +564,15 @@ function renderChapters(input, existingEps = []) {
     const card = input.closest('.season-card');
     const typeSelect = card.querySelector('.s-type');
     const type = typeSelect ? typeSelect.value : "";
-    const count = parseInt(input.value);
+    const countInput = card.querySelector('.s-count');
+    const count = parseInt(countInput.value);
+    
+    // Obtener valor del selector de inicio (0 o 1)
+    const startSel = card.querySelector('.s-start-index');
+    const startNum = startSel ? parseInt(startSel.value) : 1;
+
     const list = card.querySelector('.chapters-grid');
-    // Guardar datos actuales
+    // Guardar datos actuales para no perder lo escrito si cambia la numeración
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
@@ -571,10 +586,12 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
+
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
+        
         if(existingEps[i]) {
              lat = existingEps[i].link || '';
              sub = existingEps[i].link2 || ''; 
@@ -585,11 +602,16 @@ function renderChapters(input, existingEps = []) {
              customTitle = currentData[i].title;
         }
 
+        // Calcular número a mostrar
+        let currentNum = startNum + i;
+
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
-        let titlePlaceholder = titleInputDisabled ? `Capítulo ${i+1}` : "Nombre (ej: El viaje...)";
-        if(titleInputDisabled) customTitle = `Capítulo ${i+1}`;
+        let titlePlaceholder = titleInputDisabled ? `Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
+        
+        if(titleInputDisabled) customTitle = `Capítulo ${currentNum}`;
+
         row.innerHTML = `
-            <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${i+1}</span></div>
+            <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${currentNum}</span></div>
             <div class="c-inputs-grid">
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
@@ -616,7 +638,6 @@ function checkForChanges() {
     if (!isEditMode) return;
     const btn = document.getElementById('btnSaveAction');
     if (!originalAnimeState) return;
-    
     // Comparar estado actual vs original
     const currentState = JSON.stringify(generateData());
     if (currentState !== originalAnimeState) {
@@ -642,7 +663,6 @@ function updateWebPreview() {
     const coverUrl = document.getElementById('portadaAnime').value;
     const webCover = document.getElementById('webCover');
     if(coverUrl && webCover) webCover.src = coverUrl;
-
     const prevId = document.getElementById('previewId');
     if(prevId) prevId.innerText = isEditMode ? currentEditingId : "###";
 
@@ -659,7 +679,6 @@ function updateWebPreview() {
     const rd = document.getElementById('ratingDec').value;
     const wRat = document.getElementById('webRating');
     if(wRat) wRat.innerText = `⭐ ${ri || 0}.${rd || 0}`;
-    
     const tagsContainer = document.getElementById('webTags');
     if(tagsContainer) {
         tagsContainer.innerHTML = '';
@@ -809,7 +828,6 @@ function _performFilter() {
             return matchesText; 
         }
     }).slice(0, 1000);
-
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
@@ -875,13 +893,11 @@ async function loadAnimeForEditing(id) {
         const targetMusic = musObj[id] || [];
 
         if(!targetDetail) throw new Error("Anime no encontrado en Details");
-
         isEditMode = true;
         currentEditingId = id;
         
         const editModeBar = document.getElementById('editModeBar');
         if(editModeBar) editModeBar.style.display = 'block';
-
         // --- INYECCIÓN DEL BOTÓN DE ELIMINAR ---
         const existingDelBtn = document.getElementById('btnDeleteAnime');
         if(existingDelBtn) existingDelBtn.remove();
@@ -900,10 +916,8 @@ async function loadAnimeForEditing(id) {
         
         const btnActEl = document.getElementById('btnActionText');
         if(btnActEl) btnActEl.innerText = "GUARDAR CAMBIOS";
-        
         // VERIFICACIÓN DE PROPIEDAD
         const indexEntry = cachedIndex.find(x => x.id === id);
-        
         // Prioridad: 
         // 1. detalle.uploader (email o nick)
         // 2. index.uploader (email o nick)
@@ -912,7 +926,7 @@ async function loadAnimeForEditing(id) {
         const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
         
         const isOwner = (storedUploader === currentUserEmail) || 
-                        (storedUploader === currentUserNick) || 
+                        (storedUploader === currentUserNick) ||
                         isSuperAdmin || 
                         (currentUserNick === "Archinime");
 
@@ -968,8 +982,15 @@ async function loadAnimeForEditing(id) {
             targetDetail.seasons.forEach(s => {
                 const seasonPlayer = targetPlayer[s.num] || {}; 
                 const fullEps = s.eps.map((e, idx) => {
-                    const epNum = idx + 1;
-                    const links = seasonPlayer[epNum] || {};
+                    // Si el título guardado incluye el número real del episodio (e.g. idx 0 pero titulo "Capítulo 0"),
+                    // necesitamos saber el offset real.
+                    // Pero la estructura player data usa claves '1', '2', '3'.
+                    // Asumimos que la clave player data SIEMPRE es 1-based index del array.
+                    // Ajuste: si el título dice "Capítulo 0", el índice en player data será 1?
+                    // Revisando generateData: player keys son 1, 2, 3... basado en loop idx+1.
+                    // Así que link siempre se busca con idx+1.
+                    const epKey = idx + 1;
+                    const links = seasonPlayer[epKey] || {};
                     return { title: e.title, link: links.link, link2: links.link2 };
                 });
                 addSeason({ name: s.name || `Temporada ${s.num}`, cover: s.cover, eps: fullEps });
@@ -981,7 +1002,6 @@ async function loadAnimeForEditing(id) {
 
         checkCoverVisual(document.getElementById('portadaAnime'));
         requestPreviewUpdate();
-
         // Guardar estado original para comparar cambios
         originalAnimeState = JSON.stringify(generateData());
         showToast("¡Datos cargados correctamente!");
@@ -1011,7 +1031,6 @@ async function deleteCurrentAnime(idToDelete) {
     const token = currentUserToken;
     const logEl = document.getElementById('statusLog');
     logEl.style.display = 'block';
-
     try {
         log("1/5 Descargando bases de datos...");
         const [indexFile, detailFile, playerFile, musicFile] = await Promise.all([
@@ -1020,7 +1039,6 @@ async function deleteCurrentAnime(idToDelete) {
             getGithubFile(token, OWNER, REPO, 'video-player-data.js'),
             getGithubFile(token, OWNER, REPO, 'musica-data.js')
         ]);
-
         let indexData = safeEval(indexFile.content);
         let detailData = safeEval(detailFile.content);
         let playerData = safeEval(playerFile.content);
@@ -1033,7 +1051,6 @@ async function deleteCurrentAnime(idToDelete) {
             }
             return item;
         });
-
         log("3/5 Procesando Detalles y Player...");
         
         // Helper para reordenar objetos con claves numéricas
@@ -1045,7 +1062,7 @@ async function deleteCurrentAnime(idToDelete) {
                 if (key > idToDelete) {
                     newObj[key - 1] = obj[key]; 
                 } else {
-                     newObj[key] = obj[key]; 
+                    newObj[key] = obj[key]; 
                 }
             });
             return newObj;
@@ -1072,7 +1089,6 @@ async function deleteCurrentAnime(idToDelete) {
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => {
              return `const audioPlaylists = ${JSON.stringify(newMusic, null, 4)};`;
         });
-
         log("✅ ¡ELIMINADO Y REORDENADO CORRECTAMENTE!");
         
         alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
@@ -1081,7 +1097,6 @@ async function deleteCurrentAnime(idToDelete) {
         document.getElementById('editModeBar').style.display = 'none';
         document.getElementById('btnSaveAction').disabled = true;
         document.getElementById('btnSaveAction').innerText = "ELIMINADO";
-
     } catch(e) {
         console.error(e);
         log(`❌ ERROR FATAL: ${e.message}`);
@@ -1114,7 +1129,6 @@ function generateData() {
     const ratingVal = parseFloat(iVal + "." + dVal);
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-
     // Aquí capturamos la info del usuario actual
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
@@ -1132,13 +1146,16 @@ function generateData() {
     };
     
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
-
     let globalOrder = 1, seasonCountVP = 0, ovaCountVP = 0, movieCountVP = 0, specialCountVP = 0, spinOffCount = 0;
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
         const sType = card.querySelector('.s-type').value;
         
+        // Obtener la numeración de inicio
+        const startSel = card.querySelector('.s-start-index');
+        const startNum = startSel ? parseInt(startSel.value) : 1;
+
         if(sType === 'Temporada') seasonCountVP++;
         if(sType === 'OVA') ovaCountVP++;
         if(sType === 'Pelicula') movieCountVP++;
@@ -1149,13 +1166,16 @@ function generateData() {
             const sub = row.querySelector('.c-link-sub').value.trim();
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             let playerTitle = "", detailTitle = ""; 
+            
+            // Número actual del episodio basado en el inicio (0 o 1)
+            let currentEpNum = startNum + idx;
 
             if (sType === 'Temporada') {
-                detailTitle = `Capítulo ${idx+1}`;
-                playerTitle = `${anime.titulo} T${seasonCountVP} Cap ${idx+1}`;
+                detailTitle = `Capítulo ${currentEpNum}`;
+                playerTitle = `${anime.titulo} T${seasonCountVP} Cap ${currentEpNum}`;
             } else if (sType === 'Spin-Off') {
-                detailTitle = `Capítulo ${idx+1}`;
-                playerTitle = `${anime.titulo} ${sName} Cap ${idx+1}`;
+                detailTitle = `Capítulo ${currentEpNum}`;
+                playerTitle = `${anime.titulo} ${sName} Cap ${currentEpNum}`;
             } else if (sType === 'OVA') {
                 detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} OVA ${ovaCountVP}` + (customTitleInput ? ` "${customTitleInput}"` : "");
@@ -1168,6 +1188,8 @@ function generateData() {
             }
 
             if(sub || lat) {
+                // Guardamos en 'num' el índice base 1 para el objeto de player (video-player-data.js)
+                // Pero el título refleja si es Cap 0 o Cap 1.
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
@@ -1221,7 +1243,6 @@ function highlightLogoutButton() {
 async function subirAGithHub() {
     const btn = document.getElementById('btnSaveAction');
     if(btn.disabled) return showToast("Edición Bloqueada o Sin Cambios", true);
-
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
     const nuevoAnime = generateData();
@@ -1229,14 +1250,12 @@ async function subirAGithHub() {
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
-    
     if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) {
         return showToast("Valoración inválida (Min: 1.0, Max: 5.0)", true);
     }
 
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
-
     // CONFIRMACIÓN PREVIA
     const confirmMsg = `¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?\n\n- Presiona 'Aceptar' para SÍ (Subir).\n- Presiona 'Cancelar' para AÚN NO (Seguir editando).`;
     if(!confirm(confirmMsg)) {
@@ -1290,7 +1309,6 @@ async function subirAGithHub() {
             }
             return `const animes = ${JSON.stringify(indexList, null, 4)};`;
         });
-        
         // ---------------------------------------------------------
         // 2. ACTUALIZAR DETAILS
         // ---------------------------------------------------------
@@ -1319,7 +1337,6 @@ async function subirAGithHub() {
             detailsObj[FINAL_ID] = newDetailEntry;
             return `const data = ${JSON.stringify(detailsObj, null, 4)};`;
         });
-
         // ---------------------------------------------------------
         // 3. ACTUALIZAR PLAYER
         // ---------------------------------------------------------
@@ -1341,7 +1358,6 @@ async function subirAGithHub() {
             playersObj[FINAL_ID] = newPlayerEntry;
             return `const players = ${JSON.stringify(playersObj, null, 4)};`;
         });
-
         // ---------------------------------------------------------
         // 4. ACTUALIZAR MÚSICA (CORREGIDO: usa audioPlaylists)
         // ---------------------------------------------------------
@@ -1352,10 +1368,8 @@ async function subirAGithHub() {
             // IMPORTANTE: Aquí se cambia 'const musica' por 'const audioPlaylists'
             return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
         });
-
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
         showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
-        
         // AVISAR
         alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
         highlightLogoutButton();
