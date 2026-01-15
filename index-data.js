@@ -811,22 +811,23 @@ const animes = [
     {
         "id": 51,
         "title": "My Hero Academia",
-        "aliases": [
-            "Boku no Hero"
-        ],
         "img": "sgsgsdseg.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Superhéroes",
+            "Acción",
+            "Aventura",
             "Ciencia ficción",
             "Comedia",
             "Drama",
-            "Acción",
-            "Fantasía",
             "Escolar",
-            "Aventura",
+            "Fantasía",
+            "Superhéroes",
             "Shōnen"
+        ],
+        "aliases": [
+            "Boku no Hero"
         ]
     },
     {
