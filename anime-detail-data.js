@@ -264,7 +264,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/p0r8u7687ctb0gborj1xz/jujutsukaisent3.jpg?rlkey=ok9566cz3v673sjq26dibuwrs&st=ztf57nog&raw=1",
+                "cover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
                 "eps": [
                     {
                         "title": "Capítulo 1"
