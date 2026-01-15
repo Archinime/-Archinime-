@@ -7541,32 +7541,52 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1C16zoogP1JPPZANScxJP0z67WTxZYgIq/preview",
                 "link2": "https://www.dropbox.com/scl/fi/sr54vz6tfaj7oqum850da/My-Hero-Academia-T8-Cap-1.mp4?rlkey=pzm4ztsdrcsj8kesrox9zlugi&st=oq2p9m3y&raw=1",
-                "title": "My Hero Academia T8 Cap 1"
+                "title": "My Hero Academia T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/15EYYksOimq9RBKI89LCdtqZ-CXWEFv3l/preview",
                 "link2": "https://www.dropbox.com/scl/fi/bnebnja6hlins0uim6eqx/My-Hero-Academia-T8-Cap-2.mp4?rlkey=n092mfb3wrjrm6w4h6p111ty2&st=xfbcbml9&raw=1",
-                "title": "My Hero Academia T8 Cap 2"
+                "title": "My Hero Academia T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1qT5zJg0WrrWvazqmC8eByOgJWl2hCcoJ/preview",
-                "title": "My Hero Academia T8 Cap 3"
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1DeZgMNC9P6-614PHPl8EMt6JHP35PONe/preview",
-                "title": "My Hero Academia T8 Cap 4"
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1-IiecYCX0Vwb4cub9dMOmhmAEa6evV-s/preview",
-                "title": "My Hero Academia T8 Cap 5"
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1WDzq_kVTBOzLad7g9Ai05s4vJrx2LmGq/preview",
-                "title": "My Hero Academia T8 Cap 6"
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1KypMnxjTPtQD-UhZHnR1dP0wmf4jZP7p/preview",
-                "title": "My Hero Academia T8 Cap 7"
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1qtywTEjC_lGpF1RNGhCXVwiI-ROnciiD/preview",
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1KvFAWmoVaO5O5Z2IYQSyBuUnQZcwnGMj/preview",
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1cssXoML_uUAKQgpqo9WAlXKwPt0B0qQ_/preview",
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 10"
             }
         }
     },
