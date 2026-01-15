@@ -2186,7 +2186,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1WBaar3HtVb12l8Mx0uxVU-VaEmjpz3WG/preview",
                 "link2": "https://www.dropbox.com/scl/fi/rszhbgyi24v6czvly276n/Demon-Slayer-Pel-cula-1-El-Tren-Infinito.mp4?rlkey=bfslbid9ps4x2dvgpukiuoy83&st=hmguvx3q&raw=1",
-                "title": "Demon Slayer Película: El Tren Infinito"
+                "title": "Demon Slayer Película 1: El Tren Infinito"
             }
         },
         "3": {
@@ -2347,8 +2347,9 @@ const players = {
         },
         "6": {
             "1": {
-                "link": "https://www.dropbox.com/scl/fi/w6kc166n3rfbvfkoex3et/Demon-Slayer-Castillo-Infinito-en-Espa-ol.mp4?rlkey=9cdzhsyadzsvlx81y7ftw5a33&st=v4e3l685&raw=1",
-                "title": "Demon Slayer Película: Castillo Infinito"
+                "link": "https://drive.google.com/file/d/1CNlxZe5Wb2pZ5yW9L58QCi04ZMW3wieh/preview",
+                "link2": "",
+                "title": "Demon Slayer Película 2: Castillo Infinito"
             }
         }
     },
