@@ -989,22 +989,21 @@ const animes = [
     {
         "id": 61,
         "title": "Ataque a los titanes",
-        "aliases": [
-            "Attack on Titan",
-            "Shingeki no Kyojin"
-        ],
         "img": "synt.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Fantasía oscura",
-            "Post-apocalíptico",
-            "Drama",
-            "Misterio",
             "Aventura",
-            "Thriller",
+            "Drama",
+            "Fantasía oscura",
+            "Misterio",
             "Shōnen"
+        ],
+        "aliases": [
+            "Attack on Titan",
+            "Shingeki no Kyojin"
         ]
     },
     {
