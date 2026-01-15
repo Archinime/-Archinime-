@@ -7175,9 +7175,6 @@ const data = {
                         "title": "Capítulo 8"
                     },
                     {
-                        "title": "Capítulo 9"
-                    },
-                    {
                         "title": "Capítulo 10"
                     },
                     {
@@ -7185,35 +7182,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 12"
-                    },
-                    {
-                        "title": "Capítulo 13"
-                    },
-                    {
-                        "title": "Capítulo 14"
-                    },
-                    {
-                        "title": "Capítulo 15"
-                    },
-                    {
-                        "title": "Capítulo 16"
-                    },
-                    {
-                        "title": "Capítulo 17"
-                    },
-                    {
-                        "title": "Capítulo 18"
-                    },
-                    {
-                        "title": "Capítulo 19"
-                    },
-                    {
-                        "title": "Capítulo 20"
-                    },
-                    {
-                        "title": "Capítulo 21"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
