@@ -20,11 +20,12 @@ const animes = [
         "img": "Jujutsu.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Sobrenatural",
-            "Fantasía oscura",
             "Acción",
+            "Fantasía oscura",
             "Nekketsu",
+            "Sobrenatural",
             "Shōnen"
         ]
     },
