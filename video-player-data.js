@@ -6786,7 +6786,8 @@ const players = {
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1luj7UDv7JHC9GRjGsYwQXr1n-2reNMUa/preview",
-                "title": "Spy × Family La Película - Code: White"
+                "link2": "",
+                "title": "Spy × Family Película 1: Code: White"
             }
         },
         "4": {
@@ -6812,39 +6813,33 @@ const players = {
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1n_aDJZIlhwYUf2-DxXKSqJ3wSfalI7Wv/preview",
+                "link2": "",
                 "title": "Spy × Family T3 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/16tVbRmoixbYBZhsRAoiPp5hevpvWG_OP/preview",
+                "link2": "",
                 "title": "Spy × Family T3 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1h8UGkStGKWmxobVXbuPFnq5k-2GuXw9l/preview",
+                "link2": "",
                 "title": "Spy × Family T3 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1f5A6tZfGfDr2WRP3rNGk2Jo8fcryyf0o/preview",
+                "link2": "",
                 "title": "Spy × Family T3 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1fqIbSta22wtJbQJbDWQVmAizuR-D9aq4/preview",
+                "link2": "",
                 "title": "Spy × Family T3 Cap 9"
             },
             "10": {
-                "link": "/preview",
+                "link": "https://drive.google.com/file/d/1udLVpGo-viFScIrNHryqs-XM5TrkyoNX/preview",
+                "link2": "",
                 "title": "Spy × Family T3 Cap 10"
-            },
-            "11": {
-                "link": "/preview",
-                "title": "Spy × Family T3 Cap 11"
-            },
-            "12": {
-                "link": "/preview",
-                "title": "Spy × Family T3 Cap 12"
-            },
-            "13": {
-                "link": "/preview",
-                "title": "Spy × Family T3 Cap 13"
             }
         }
     },
