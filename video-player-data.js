@@ -3626,7 +3626,7 @@ const players = {
     "24": {
         "1": {
             "1": {
-                "link": "https://drive.google.com/file/d/1jjNNOdVFwD-Oml7fCnSy5W-Y-ETtvBUl/preview",
+                "link": "https://drive.google.com/file/d/190DfZv9sVxzMbZsYowRj1KQVtvL47LPr/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fwqtnrekatv8s43ybnsij/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-1.mp4?rlkey=c6xr3abxovildtsrlg91nsz48&st=qxmt9xnf&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 1"
             },
@@ -3646,12 +3646,12 @@ const players = {
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 4"
             },
             "5": {
-                "link": "https://drive.google.com/file/d/1nsB5cf7PG2RbroCySHZWegHUXqdvvK-z/preview",
+                "link": "https://drive.google.com/file/d/1vmOwLq4M3SHUcagVQvp_EJZtCPHimfgL/preview",
                 "link2": "https://www.dropbox.com/scl/fi/w1ue8s4rolj6sowsisacf/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-5.mp4?rlkey=kw2d87lffevd9c9foccy1vwqh&st=66twpdeg&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 5"
             },
             "6": {
-                "link": "https://drive.google.com/file/d/143xVcT2uXe9YqizEvU_jHnkXVk3DKYqA/preview",
+                "link": "https://drive.google.com/file/d/1twFrQw0fZjV3RYNLFmSr0fNqyjqCmXHM/preview",
                 "link2": "https://www.dropbox.com/scl/fi/4omwo4xzybbwtvhx354vt/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-6.mp4?rlkey=fb3kxmlnq9wj1s4asuixtcv4u&st=n06kamft&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 6"
             },
@@ -3666,22 +3666,22 @@ const players = {
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 8"
             },
             "9": {
-                "link": "https://drive.google.com/file/d/1uPnOJgfdFHYyM08V-gjTGTKXXnvBs-LL/preview",
+                "link": "https://drive.google.com/file/d/18rYYX-ukU1Hkx0vpenDfkudgSJxXoN8Q/preview",
                 "link2": "https://www.dropbox.com/scl/fi/19iv51hsn9tc0a65osw15/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-9.mp4?rlkey=4mea5eypbwxmkv39oqnihcvpa&st=5iw2eymw&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 9"
             },
             "10": {
-                "link": "https://drive.google.com/file/d/1kbvnDG8K8CSus6suckkqqf8nNhtCIS2g/preview",
+                "link": "https://drive.google.com/file/d/19_wGUKIxzUpi3PHVWJnBu6dVlmf6EiJ2/preview",
                 "link2": "https://www.dropbox.com/scl/fi/s8mujn4if7fbfanhr42g6/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-10.mp4?rlkey=9xxpmpbr06m06ot3eaww8hk3a&st=sip0wy4k&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 10"
             },
             "11": {
-                "link": "https://drive.google.com/file/d/1pzT-2KBYEh7mdOoX6-fumIs5tQ8If3SW/preview",
+                "link": "https://drive.google.com/file/d/1aPndViO-_Zqf3cQr9eFkmdBTjGQOeSE1/preview",
                 "link2": "https://www.dropbox.com/scl/fi/npchlsfmg5fda4mjr7jeh/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-11.mp4?rlkey=ukpqg6jnq0jyce2bvexx823sz&st=62ckhm4f&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 11"
             },
             "12": {
-                "link": "https://drive.google.com/file/d/1M8NH8UYif2WhMQkshA_r4ABVnAL3CjZH/preview",
+                "link": "https://drive.google.com/file/d/1iXVkHLxQgzkYVPFaz53zd4aMVOGtM7u0/preview",
                 "link2": "https://www.dropbox.com/scl/fi/frx8aehj6l3co1bwx388o/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-12.mp4?rlkey=i3bbg2nz7zbtkh1a7iew42bkk&st=u3xqwosi&raw=1",
                 "title": "Definitivamente. ¡No me gusta mi hermano para nada! T1 Cap 12"
             }
@@ -3690,7 +3690,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1qCdZ32JOrl2-V-yh1teSPflwua3wapDh/preview",
                 "link2": "https://www.dropbox.com/scl/fi/17cump0o2h3jzciiwfsfr/Definitivamente.-No-me-gusta-mi-hermano-para-nada-Cap-13.mp4?rlkey=dm5o9fmucj5kyvzhl9coye744&st=s91a3r68&raw=1",
-                "title": "Definitivamente. ¡No me gusta mi hermano para nada! OVA"
+                "title": "Definitivamente. ¡No me gusta mi hermano para nada! Ova 1 Cap 1"
             }
         }
     },
