@@ -85,20 +85,21 @@ const animes = [
     {
         "id": 6,
         "title": "Tensei Shitara Slime Datta Ken",
-        "aliases": [
-            "That Time I Got Reincarnated as a Slime"
-        ],
         "img": "slime.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
-            "Isekai",
             "Acción",
             "Aventura",
+            "Comedia",
             "Fantasía",
+            "Isekai",
             "Slice of Life",
             "Shōnen"
+        ],
+        "aliases": [
+            "That Time I Got Reincarnated as a Slime"
         ]
     },
     {
