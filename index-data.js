@@ -632,19 +632,20 @@ const animes = [
     {
         "id": 40,
         "title": "One Punch-Man",
-        "aliases": [
-            "One-Punch Man"
-        ],
         "img": "onepunch.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
             "Acción",
-            "Fantasía",
             "Ciencia ficción",
+            "Comedia",
+            "Fantasía",
             "Superhéroes",
             "Seinen"
+        ],
+        "aliases": [
+            "One-Punch Man"
         ]
     },
     {
