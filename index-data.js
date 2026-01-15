@@ -571,10 +571,11 @@ const animes = [
         "img": "Gachiakuta.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
-            "Aventura",
             "Acción",
+            "Aventura",
+            "Fantasía",
             "Fantasía oscura",
             "Shōnen"
         ]
