@@ -786,12 +786,11 @@ const animes = [
         "img": "spy.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
             "Drama",
             "Fantasía",
-            "Familiar",
-            "Espionaje",
             "Shōnen"
         ]
     },
