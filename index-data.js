@@ -156,19 +156,20 @@ const animes = [
     {
         "id": 10,
         "title": "Demon Slayer",
-        "aliases": [
-            "Kimetsu no Yaiba"
-        ],
         "img": "demon.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Fantasía oscura",
             "Aventura",
-            "Sobrenatural",
             "Drama",
+            "Fantasía oscura",
+            "Sobrenatural",
             "Shōnen"
+        ],
+        "aliases": [
+            "Kimetsu no Yaiba"
         ]
     },
     {
