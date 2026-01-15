@@ -986,47 +986,47 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Ova 1",
                 "cover": "https://www.dropbox.com/scl/fi/k0ls4nfraabvcgnzabowj/slimeova1.jpg?rlkey=3fcrw6dxyx8rpqb4nlsfe01rq&st=fpul3ecd&raw=1",
                 "eps": [
                     {
-                        "title": "OVA 1"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             },
             {
                 "num": 3,
-                "name": "Ova 2",
                 "cover": "https://www.dropbox.com/scl/fi/7hkrogwhi7mmmf5ss3fhs/20241130-2.jpg?rlkey=ppye69mmc1cmp30usipi9idmv&st=bgk4g5gg&raw=1",
                 "eps": [
                     {
-                        "title": "OVA 2"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 2"
             },
             {
                 "num": 4,
-                "name": "Ova 3 - 5",
                 "cover": "https://www.dropbox.com/scl/fi/tqc17z3qar9pxfcgi9zya/1477001f0720aef9992b9cba9e12615f.jpg?rlkey=bi3zxk6w0k84jn5s0s1x73axk&st=q9fwy5fn&raw=1",
                 "eps": [
                     {
-                        "title": "OVA 3"
+                        "title": "Capítulo 1"
                     },
                     {
-                        "title": "OVA 4"
+                        "title": "Capítulo 2"
                     },
                     {
-                        "title": "OVA 5"
+                        "title": "Capítulo 3"
                     }
-                ]
+                ],
+                "name": "Ova 3 - 5"
             },
             {
                 "num": 5,
-                "name": "Especial 1 - 3",
                 "cover": "https://www.dropbox.com/scl/fi/kcs3irob5bxh8gakdytk7/MV5BMTU3MTIzN2UtMDhmOS00MjM1LWI5OWEtOWQ3MTZjOWFjMDM2XkEyXkFqcGc-._V1_FMjpg_UX1000_.jpg?rlkey=ddrnjyrra1mm5gp3qghiqz3w0&st=gah9qpka&raw=1",
                 "eps": [
                     {
@@ -1038,11 +1038,11 @@ const data = {
                     {
                         "title": "Coleus no Yume 3"
                     }
-                ]
+                ],
+                "name": "Especial 1 - 3"
             },
             {
                 "num": 6,
-                "name": "Tensura Nikki Tensei shitara Slime Datta Ken",
                 "cover": "https://www.dropbox.com/scl/fi/q8bum80iahn7gxh400ku9/ETsT4reUUAAeAPr-1.jpg?rlkey=x7fjm8om8jrxkl2nq7na0o70z&st=n4ev0cur&raw=1",
                 "eps": [
                     {
@@ -1081,11 +1081,11 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Tensura Nikki Tensei shitara Slime Datta Ken"
             },
             {
                 "num": 7,
-                "name": "Temporada 2",
                 "cover": "tensura22.jpg",
                 "eps": [
                     {
@@ -1160,23 +1160,26 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 8,
-                "name": "Película 1",
                 "cover": "https://www.dropbox.com/scl/fi/87tecbrxiwl4qv996wj2i/smilepelicula.jpg?rlkey=pabnkmf8j1i0hl5jeohvj0ihu&st=y0xxy6a4&raw=1",
                 "eps": [
                     {
                         "title": "El Vinculo Escarlata"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 9,
-                "name": "Temporada 3",
                 "cover": "tensura3.jpg",
                 "eps": [
+                    {
+                        "title": "Capítulo 0"
+                    },
                     {
                         "title": "Capítulo 1"
                     },
@@ -1249,7 +1252,8 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
