@@ -849,17 +849,18 @@ const animes = [
     {
         "id": 53,
         "title": "Futari Solo Camp",
-        "aliases": [
-            "Solo Camping for Two"
-        ],
         "img": "futaripor.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Romance",
             "Comedia",
+            "Romance",
             "Slice of Life",
             "Seinen"
+        ],
+        "aliases": [
+            "Solo Camping for Two"
         ]
     },
     {
