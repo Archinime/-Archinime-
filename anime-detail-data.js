@@ -5704,7 +5704,6 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "name": "Temporada 8",
                 "cover": "https://www.dropbox.com/scl/fi/1udlgl7s87fdvmwi7mp2l/Airbrush-IMAGE-ENHANCER-1762698551862-1762698551862.jpg?rlkey=e8rdhex2nwtlhyl6nume5oq9t&st=ojvzr0lg&raw=1",
                 "eps": [
                     {
@@ -5736,14 +5735,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 10"
-                    },
-                    {
-                        "title": "Capítulo 11"
-                    },
-                    {
-                        "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 8"
             }
         ]
     },
