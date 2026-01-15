@@ -8426,43 +8426,63 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1NpMl27On3MBjWk8FVSGI7PLgo7qCH4ai/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 1"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/129z4bRuiWpSArC0pgv8MNEx8sMa2nO2n/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 2"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1RIGtj50pR3zy7T5cOgNm-fftArydQIGN/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 3"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/10M_u0KhInxWuvvhW16_3-eAwj-1Ti9yg/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 4"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1EUF_ZSVcR-QGAGYY2PEgaw51XGknfawe/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 5"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1U5FcxO9X0_iAVY0_J2gwaG3qXEHxODBL/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 6"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1fbWAiIbXifd_EeWCq-hdxStTNLyGqSiF/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 7"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1FPkisn_nCXnA_-bFs_D4EZJyscJSppws/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 8"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1zjhbUaXk46PODve5MEsFmzzsUlhoofZ_/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 9"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1WctcIvfiF1jbM7cBvWT1-2osC-dhC_Bn/preview",
-                "title": "Akujiki Reijō to Kyōketsu Kōshaku T1 Cap 10"
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1IIXCQ6jie-tvlaXHHewZsBqG1qtjmcae/preview",
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1SturJTwDqJJvendX9F5aiMJdq6V939Lx/preview",
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 12"
             }
         }
     },
