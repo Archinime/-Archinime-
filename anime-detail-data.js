@@ -2726,17 +2726,18 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Ova 1",
                 "cover": "https://www.dropbox.com/scl/fi/1ds4mocfv035zgs7brobv/Definitivamente1.jpg?rlkey=xurw5jdgzeeww66ly0vmhiy6k&st=o8jyfz4c&raw=1",
                 "eps": [
                     {
-                        "title": "OVA 1"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             }
         ]
     },
