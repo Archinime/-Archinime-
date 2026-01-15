@@ -1362,110 +1362,110 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/15rzYcGcyctRpU_5GsqKcym0POnA_uFqQ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/dg1gihw1m9a4cx3ur9ynm/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-1.mp4?rlkey=om37eijsa86nctlw5jxqn13rm&st=fsaih6eh&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken OVA 1"
+                "title": "Tensei Shitara Slime Datta Ken Ova 1 Cap 1"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1ik2h2Uyuh7rNjXWb9-QcJ8dvsL-y7Dz_/preview",
                 "link2": "https://www.dropbox.com/scl/fi/eo6nnmc76ptcfdponu9iq/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-2.mp4?rlkey=vbh8tway6rpca2gag7zcakip1&st=mxxfapr6&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken OVA 2"
+                "title": "Tensei Shitara Slime Datta Ken Ova 2 Cap 1"
             }
         },
         "4": {
             "1": {
                 "link": "https://drive.google.com/file/d/1OLe6G49k_NzKOkuzyGOtQf-10QvnH_oc/preview",
                 "link2": "https://www.dropbox.com/scl/fi/qe68tplarmtxdk0rdgo7v/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-3.mp4?rlkey=swantjta9zwj59tfvuwa8gfie&st=scx8f532&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken OVA 3"
+                "title": "Tensei Shitara Slime Datta Ken Ova 3 - 5 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1TDojIN_T7V_Y6ki7onU1WQii13XJOMlN/preview",
                 "link2": "https://www.dropbox.com/scl/fi/h9haq0noqzt42uzchukyp/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-4.mp4?rlkey=niv26dx2iiuduetxn2q32r2ns&st=3q847623&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken OVA 4"
+                "title": "Tensei Shitara Slime Datta Ken Ova 3 - 5 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1gSGUZXCp7jAYM_6CLUBfBQ3F6VhC0gKZ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/c1m3ykx8rzhag5sqvqdb3/Tensei-Shitara-Slime-Datta-Ken-T1-Cap-OVA-5.mp4?rlkey=vj1p96f27j5ojxu8lskfp8yo5&st=fmmaj72k&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken OVA 5"
+                "title": "Tensei Shitara Slime Datta Ken Ova 3 - 5 Cap 3"
             }
         },
         "5": {
             "1": {
                 "link": "https://drive.google.com/file/d/1DAOXIRNPIVf5Hk0F7NUA8nKr7Hvr_BNm/preview",
                 "link2": "https://www.dropbox.com/scl/fi/wn1mj5866g19ru1oeflst/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-1.mp4?rlkey=qeve4wwo9h92jdt51dr12may6&st=vffdbn2n&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 1"
+                "title": "Tensei Shitara Slime Datta Ken Especial 1: Coleus no Yume 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1LVFc56_oCP4oQfJYEyZ2mKozJzvcGYXz/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ofego48zdjtnhh17guu81/Tensei-Shitara-Slime-Datta-Ken-Coleus-no-Yume-ESPECIAL-3.mp4?rlkey=ol4r0bsb3ir6d3da1f0pwlxcs&st=vc231rrf&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 2"
+                "title": "Tensei Shitara Slime Datta Ken Especial 1: Coleus no Yume 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/199mFTTI00pn3wn1OkT01RsUryA7Yhe0n/preview",
                 "link2": "https://www.dropbox.com/scl/fi/uybxp5xjjwx99ob2bb8ux/FDownloader.Net_AQOhjAIXNx3QiC6NQpKOxF6_qlOyAG1m_ua6kqDvbZXXc-yn26Qb0Sgp1r10GbmemSNKzhEN-6LhJhZQp8s3QFjsLfvvPsfhWE7NtbdlTuV7N4EyTWJN4DhcGXIQRpysOo8Bs1yiNw_720p_-HD.mp4?rlkey=6x2yal7i0h8ut1gdofw231pwa&st=y13ci5lv&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken Coleus no Yume ESPECIAL 3"
+                "title": "Tensei Shitara Slime Datta Ken Especial 1: Coleus no Yume 3"
             }
         },
         "6": {
             "1": {
                 "link": "https://drive.google.com/file/d/1HIkFIX-Icpt-dVz47PTQud8v7uipzV5Q/preview",
                 "link2": "https://www.dropbox.com/scl/fi/1xrcdui64y7a3bjmw9z9e/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-1.mp4?rlkey=2gekwanefsudfm8rv9vjrh5qb&st=kwhutwym&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 1"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1lxeZyVCNUpkcjj6z9yxc73Cq2-ZYQd8d/preview",
                 "link2": "https://www.dropbox.com/scl/fi/6bfo3d4qcmj6lrq1um8b8/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-2.mp4?rlkey=v0nibj1sqtdmhnhkqcsqp9knz&st=c8wn9gg3&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 2"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/16mVEtH6eGkD8JSUlhvmT-gbXm-0NQs81/preview",
                 "link2": "https://www.dropbox.com/scl/fi/git43h8dvs7wwxkbbvxsz/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-3.mp4?rlkey=kj4g50ipiuf4093b2icvzq025&st=q6w0k207&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 3"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1_UvJx5dyzgT3bHP85EdwM8z3-nOluQ1B/preview",
                 "link2": "https://www.dropbox.com/scl/fi/jws0kv356p7z293islwm7/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-4.mp4?rlkey=s3jyoyxzmauqe4ahrz85djtff&st=swpb9uvm&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 4"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/12ic46cglWGMF4gaFLYgwi5x3XZKImFre/preview",
                 "link2": "https://www.dropbox.com/scl/fi/nfcurywlcp4h70ei4ayy5/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-5.mp4?rlkey=3615nugl49n5h6jtozdn5g03x&st=51fzz1oo&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 5"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1b5u8-plyJw5VpSF2YfPGSLLYUhKwiWSX/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ncudv5n0gsp1bumlt0glo/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-6.mp4?rlkey=c5f7t40tgy9720d0m8fk9mda1&st=we4mpz6w&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 6"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/171cgTFhQkIQcrApNnXSfjmsib1-mMAKL/preview",
                 "link2": "https://www.dropbox.com/scl/fi/qoof6dse9tkr8cleo1ctb/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-7.mp4?rlkey=k271mflrhz0i8afyihtg7d073&st=obkxkn9x&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 7"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1abZ94IiVHO_VvfUhKuwFP2IprKUtqEZZ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/60i1vys3707mj843npxpt/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-8.mp4?rlkey=2a9qlzv0lyi0hk3xfoftbdi78&st=b42cnavc&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 8"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1yIFcXAlpM6-SDSWo3I3P20EOJLZMvDEG/preview",
                 "link2": "https://www.dropbox.com/scl/fi/qulfu68y06ngz7gz7ygwh/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-9.mp4?rlkey=wn3u2bycklpi6mvwnf1zieshb&st=nc4nf5pu&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 9"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1qv8wX8oHZ8IsT_Tod_gJQ6ObIUTO0VDH/preview",
                 "link2": "https://www.dropbox.com/scl/fi/2onspwn8hdebiuclw8l14/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-10.mp4?rlkey=wilbrwngn38qlsb8md9kh6aym&st=pclix4bp&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 10"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1Y-WGghDFYrO7CS3jU7WyCfXUPE776OdY/preview",
                 "link2": "https://www.dropbox.com/scl/fi/mn9vmddoweo1bf3yd715q/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-11.mp4?rlkey=peixn7mjh9qc3yc7adsnknx6l&st=d0l0inzy&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 11"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1kBbspc8xIPA1QevIAJy-T42dB824Y5i8/preview",
                 "link2": "https://www.dropbox.com/scl/fi/vjbhsoxhitcdgbujzo9rm/Tensura-Nikki-Tensei-shitara-Slime-Datta-Ken-Cap-12.mp4?rlkey=fgi9gn0an7jittqb68lqyv8l6&st=en0ppejy&raw=1",
-                "title": "Tensura Nikki Tensei shitara Slime Datta Ken Cap 12"
+                "title": "Tensei Shitara Slime Datta Ken Tensura Nikki Tensei shitara Slime Datta Ken Cap 12"
             }
         },
         "7": {
@@ -1536,6 +1536,7 @@ const players = {
             },
             "14": {
                 "link": "https://drive.google.com/file/d/18QIJ1ia4sWi5Hr8OSJfqbi6nKWGWUPKi/preview",
+                "link2": "",
                 "title": "Tensei Shitara Slime Datta Ken T2 Cap 14"
             },
             "15": {
@@ -1593,7 +1594,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1G6OdJPIg7dQlXKSGvIs5DmzjRcxgyDKM/preview",
                 "link2": "https://www.dropbox.com/scl/fi/m6566spuq1ogelsnd4fiz/Tensei-Shitara-Slime-Datta-Ken-T3-PELICULA-EL-VINCULO-ESCARLATA.mp4?rlkey=52hl9araz4b7gdhdldvr4y3cg&st=drxxxh1g&raw=1",
-                "title": "Tensei Shitara Slime Datta Ken  Pelicula 1 \"El Vinculo Escarlata\""
+                "title": "Tensei Shitara Slime Datta Ken Película 1: El Vinculo Escarlata"
             }
         },
         "9": {
@@ -1719,7 +1720,7 @@ const players = {
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1x6ta9lOhyThhp3qa1P48UYzoevwTSpKX/preview",
-                "link2": "https://www.dropbox.com/scl/fi/1n72d0vsqjeq75uwfi9eu/Tensei-Shitara-Slime-Datta-Ken-T3-Cap-24.mp4?rlkey=xc2uoanff1gd5bpj82j84ybws&st=88gvj1qt&raw=1",
+                "link2": "",
                 "title": "Tensei Shitara Slime Datta Ken T3 Cap 24"
             }
         }
