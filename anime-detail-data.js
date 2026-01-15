@@ -99,17 +99,16 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "name": "Película",
                 "cover": "https://www.dropbox.com/scl/fi/vqhp3mr9kij4hp558zmrg/5993750.jpg?rlkey=y3xyzpbcea49q0q26kdi04lxr&st=szjxzi55&raw=1",
                 "eps": [
                     {
                         "title": "Jujutsu Kaisen 0"
                     }
-                ]
+                ],
+                "name": "Película"
             },
             {
                 "num": 2,
-                "name": "Temporada 1",
                 "cover": "Jujutsu1.jpg",
                 "eps": [
                     {
@@ -184,11 +183,11 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 3,
-                "name": "Temporada 2",
                 "cover": "Jujutsu2.jpg",
                 "eps": [
                     {
@@ -260,17 +259,18 @@ const data = {
                     {
                         "title": "Capítulo 23"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 4,
-                "name": "Temporada 3",
                 "cover": "https://www.dropbox.com/scl/fi/p0r8u7687ctb0gborj1xz/jujutsukaisent3.jpg?rlkey=ok9566cz3v673sjq26dibuwrs&st=ztf57nog&raw=1",
                 "eps": [
                     {
-                        "title": "Jujutsu Kaisen T3 Trailer"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
