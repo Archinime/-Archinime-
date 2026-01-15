@@ -4640,23 +4640,38 @@ const players = {
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1_NhHoLfqhkantkwtzn3ekJTxAPo3sqUo/preview",
+                "link2": "",
                 "title": "To Your Eternity T3 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1J68mncT1iGJRA6hH2VVWk11sGIvAvaCC/preview",
+                "link2": "",
                 "title": "To Your Eternity T3 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/149LlvTrovgAQfJzmF07qGs_0vE_Yfmr7/preview",
+                "link2": "",
                 "title": "To Your Eternity T3 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1vjDi3GAqMrNN9R8frqgs42tVNUInuBz0/preview",
+                "link2": "",
                 "title": "To Your Eternity T3 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1WFloJQqSerLRK_sk6mlre7HSHzQ3A3mI/preview",
+                "link2": "",
                 "title": "To Your Eternity T3 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/16LIPcOYYnv4PaZ2C3RDO_IMxByQqAar5/preview",
+                "link2": "",
+                "title": "To Your Eternity T3 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1hHTGbal9jUaprJHc3S_6lUdK_Vp4olMY/preview",
+                "link2": "",
+                "title": "To Your Eternity T3 Cap 14"
             }
         }
     },
