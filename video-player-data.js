@@ -7952,23 +7952,38 @@ const players = {
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1h2Pk9Z-ZLzo_ULtRnbvzlamjrBfaA8-7/preview",
+                "link2": "",
                 "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1_gvtHRhB6n-4htLzhPvWyf_C97pHM4NU/preview",
+                "link2": "",
                 "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1pLLpO8OFSFH2USXg18NBEkOF009Qv-NZ/preview",
+                "link2": "",
                 "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1DScNneF7SSW6hnLSzPVnSNFEQm5gmAmw/preview",
+                "link2": "",
                 "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/158rWtg19QvAQ1qpZnQqVIsuIGVFxZmmH/preview",
+                "link2": "",
                 "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1z_MB8ydX-5mdsSPR-PngSQL3q32ERmiV/preview",
+                "link2": "",
+                "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/18i2LcSaiJeZmXv4h-OfN00qOkm7VWeiY/preview",
+                "link2": "",
+                "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 11"
             }
         }
     },
