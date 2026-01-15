@@ -7840,27 +7840,43 @@ const players = {
             },
             "17": {
                 "link": "https://drive.google.com/file/d/15J93sUxSY360H4hpANx7YG27VRSvv-mn/preview",
+                "link2": "",
                 "title": "Futari Solo Camp T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1ga1442E8p8D_lvleGPyHsI3F1XLM0hJp/preview",
+                "link2": "",
                 "title": "Futari Solo Camp T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1iNv6CV05PbPX1_S4aFWhiibJE9ovoP8G/preview",
+                "link2": "",
                 "title": "Futari Solo Camp T1 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1sPO8g9lkY2HpCTo6Yy1tgHGiNnLtm4_2/preview",
+                "link2": "",
                 "title": "Futari Solo Camp T1 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1IZL3j5tPJNVXtNyttkBgR7cQo3ZtWKaP/preview",
+                "link2": "",
                 "title": "Futari Solo Camp T1 Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1vuJZgv_pDodNhymV42soAxNMrRYMVUDh/preview",
+                "link2": "",
                 "title": "Futari Solo Camp T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1wEQsNqb5MLzHUzUOaFGpiu2hw34SMXyL/preview",
+                "link2": "",
+                "title": "Futari Solo Camp T1 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1YTZ_ZcKZnVzngl1gAOED03AcvW3w5Dga/preview",
+                "link2": "",
+                "title": "Futari Solo Camp T1 Cap 24"
             }
         }
     },
