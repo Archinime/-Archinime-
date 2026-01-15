@@ -882,17 +882,18 @@ const animes = [
     {
         "id": 55,
         "title": "Alma-chan wa Kazoku ni Naritai",
-        "aliases": [
-            "Alma-chan Wants to Be a Family!"
-        ],
         "img": "almachan.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Ciencia ficción",
             "Comedia",
             "Romance",
-            "Ciencia ficción",
             "Seinen"
+        ],
+        "aliases": [
+            "Alma-chan Wants to Be a Family!"
         ]
     },
     {
