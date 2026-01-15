@@ -484,18 +484,19 @@ const animes = [
     {
         "id": 31,
         "title": "To Your Eternity",
-        "aliases": [
-            "Fumetsu no Anata e"
-        ],
         "img": "fumetsuportada.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
-            "Drama",
             "Aventura",
+            "Drama",
+            "Fantasía",
             "Sobrenatural",
             "Shōnen"
+        ],
+        "aliases": [
+            "Fumetsu no Anata e"
         ]
     },
     {
