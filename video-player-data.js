@@ -5346,7 +5346,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1VqarAEIAiC7JjeMyWS3e_blEGywMMy4o/preview",
                 "link2": "https://www.dropbox.com/scl/fi/rj0ibd9be6y1s904g1hc4/One-Punch-Man-OVA-0-Road-to-Hero.mp4?rlkey=stvwfdtsz4h6n5qh9j1873pwy&st=0oopmlpu&raw=1",
-                "title": "One Punch-Man OVA 0 - Road to Hero"
+                "title": "One Punch-Man Ova 0 Cap 1"
             }
         },
         "2": {
@@ -5358,197 +5358,216 @@ const players = {
             "2": {
                 "link": "https://drive.google.com/file/d/1IH8UZnIm3hwi4D3wD5oQULhvE-KH__oA/preview",
                 "link2": "https://www.dropbox.com/scl/fi/e58nnwb7hd7wg3l3iw1vc/One-Punch-Man-T1-Especial-1.mp4?rlkey=17m36r0pdfvkx4uma52of3jf6&st=zquzxxvb&raw=1",
-                "title": "One Punch-Man T1 Especial 1"
+                "title": "One Punch-Man T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/12JLZfj8JHZJIT196-xHZPMNC-PrJPCIw/preview",
                 "link2": "https://www.dropbox.com/scl/fi/was7lseanav0m41t2rt7e/One-Punch-Man-T1-Cap-2.mp4?rlkey=imh58dm9o36uv8kv4cb7gtydv&st=z6vl7ej6&raw=1",
-                "title": "One Punch-Man T1 Cap 2"
+                "title": "One Punch-Man T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1iw-llcXcKRNuUfnoGBPWOuqO0PFfyJVw/preview",
                 "link2": "https://www.dropbox.com/scl/fi/5jbyyteducuicrln3ek6k/One-Punch-Man-T1-Cap-3.mkv?rlkey=lig5uefrvxwkbkb4a2ga7f22i&st=bsazt17s&raw=1",
-                "title": "One Punch-Man T1 Cap 3"
+                "title": "One Punch-Man T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1RY1u0rviZhDYSqXE9mPkhGOqld_-Doyz/preview",
                 "link2": "https://www.dropbox.com/scl/fi/k7k46dfzcb4q2usoiapga/One-Punch-Man-T1-Especial-2.mp4?rlkey=4kt5ni1lh92lkhhga54ode55b&st=j72j5gn9&raw=1",
-                "title": "One Punch-Man T1 Especial 2"
+                "title": "One Punch-Man T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1BWb2nve8h8fGJHQMCEiiS-2DhdgpIZWI/preview",
                 "link2": "https://www.dropbox.com/scl/fi/nq0hdbibejmrwvvvjxkqc/One-Punch-Man-T1-Cap-4.mp4?rlkey=4hbo53p4wfobbwzjsqwnz3wbn&st=50sk73ze&raw=1",
-                "title": "One Punch-Man T1 Cap 4"
+                "title": "One Punch-Man T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1OokCEokOn4SMAd_4J7wLG-nRRiUr_PiH/preview",
                 "link2": "https://www.dropbox.com/scl/fi/2b9gqguet2vyo5c0zyng4/One-Punch-Man-T1-Cap-5.mp4?rlkey=pansk0jqg64gbqruen887puh4&st=6evjs7rg&raw=1",
-                "title": "One Punch-Man T1 Cap 5"
+                "title": "One Punch-Man T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1fLNJ8S9LOH-8gN4MZU4ijVlDPDBpmtXm/preview",
                 "link2": "https://www.dropbox.com/scl/fi/0hkw5epg7l2u1yh3nc8ig/One-Punch-Man-T1-Especial-3.mp4?rlkey=5pnptbgus5oi3tl5kwedb8lf9&st=fpr9xpf5&raw=1",
-                "title": "One Punch-Man T1 Especial 3"
+                "title": "One Punch-Man T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1O_ZGYFql6dHFblouTLbE6Gxyhhc1oGLV/preview",
                 "link2": "https://www.dropbox.com/scl/fi/75ua33l8uglef07tnxcb1/One-Punch-Man-T1-Cap-6.mp4?rlkey=vbdgw9cart9x3fh5h8lom8kid&st=ep7do0cg&raw=1",
-                "title": "One Punch-Man T1 Cap 6"
+                "title": "One Punch-Man T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/16pjx_86qvwZ-IA3Sa7ABZ_4EsX9Sau84/preview",
                 "link2": "https://www.dropbox.com/scl/fi/sa0dbt2fr1a4cbkeqecqj/One-Punch-Man-T1-Cap-7.mp4?rlkey=mgzf3h2tbphloo2cmqxt6u1ix&st=fijyfvj8&raw=1",
-                "title": "One Punch-Man T1 Cap 7"
+                "title": "One Punch-Man T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1a3jHY7zMqjRjAsjPFZdc9BmqN6gTgGyo/preview",
                 "link2": "https://www.dropbox.com/scl/fi/xosy9lgh7dozuiz6w3jam/One-Punch-Man-T1-Especial-4.mp4?rlkey=5qhn8uhhuaspo8epz7l89e5dm&st=2m0fe0mr&raw=1",
-                "title": "One Punch-Man T1 Especial 4"
+                "title": "One Punch-Man T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/13Kq-67no8HISK_u-j9Mf6bvYTIATNu82/preview",
                 "link2": "https://www.dropbox.com/scl/fi/xa1w8hsxanu0d5tj8zf31/One-Punch-Man-T1-Cap-8.mp4?rlkey=tvzvtx6hbmjvp4r4h13l3c32w&st=qkmlhfph&raw=1",
-                "title": "One Punch-Man T1 Cap 8"
+                "title": "One Punch-Man T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1yHaA-HQwpk4k1UKbKCh0Acf1IXy5Iegv/preview",
                 "link2": "https://www.dropbox.com/scl/fi/att96u59d8s3htpq5mhpm/One-Punch-Man-T1-Cap-9.mp4?rlkey=21vnej2pp0h5pvli2ugssx8qh&st=dxsy8wm2&raw=1",
-                "title": "One Punch-Man T1 Cap 9"
+                "title": "One Punch-Man T1 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1NVajIQo1UQUGGIfXCdUhJpp4rI9mwZYj/preview",
                 "link2": "https://www.dropbox.com/scl/fi/gozkhx8wguuo9tu7zal4i/One-Punch-Man-T1-Especial-5.mp4?rlkey=0kxumzcvtvig5saxjyazskltu&st=wdwzmbdi&raw=1",
-                "title": "One Punch-Man T1 Especial 5"
+                "title": "One Punch-Man T1 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1g2QF2k74tYy9ks0_JyufyRLLE2diJrnA/preview",
                 "link2": "https://www.dropbox.com/scl/fi/c1g1j1qm9w1fnnjg4rkfr/One-Punch-Man-T1-Cap-10.mp4?rlkey=kgzaqs9xl2deunve6x37su9b3&st=zwwkt8td&raw=1",
-                "title": "One Punch-Man T1 Cap 10"
+                "title": "One Punch-Man T1 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1FPttw63SJ-dbBi0s0Mkqjt7O59ynbH9P/preview",
                 "link2": "https://www.dropbox.com/scl/fi/bhgl3xozvbnnk4c160xqp/One-Punch-Man-T1-Cap-11.mp4?rlkey=2x0amkmz3cmjvgp8r40nnbn7n&st=4uy1e06a&raw=1",
-                "title": "One Punch-Man T1 Cap 11"
+                "title": "One Punch-Man T1 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1fsOCCFYR7KVxx4ceCWK8OiJYVierF76B/preview",
                 "link2": "https://www.dropbox.com/scl/fi/28xgbr2bmb8etywhymsa2/One-Punch-Man-T1-Cap-12.mp4?rlkey=05tnva24707tfu7uvztj3him3&st=5gm9g6hs&raw=1",
-                "title": "One Punch-Man T1 Cap 12"
+                "title": "One Punch-Man T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1Fs5dCGVynPnOs3FzPCDH594U_w66fMVs/preview",
                 "link2": "https://www.dropbox.com/scl/fi/9i0tafawr0lu0c7iccsbr/One-Punch-Man-T1-Especial-6.mp4?rlkey=ti8nbqnz0rtrx5arrav03707x&st=7hrl0yrx&raw=1",
-                "title": "One Punch-Man T1 Especial 6"
+                "title": "One Punch-Man T1 Cap 18"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1cGvCOOP8rnPNTSdRHGSXDQvr36MAGNCJ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/uh0gtmfvrgs2uodl7jqzt/One-Punch-Man-T2-Especial-1.mp4?rlkey=queth07zlpf8yx6n3gcxio0d3&st=1c83pego&raw=1",
-                "title": "One Punch-Man T2 Especial 1"
+                "title": "One Punch-Man T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1lx0QPfh8r4dPQc1mu4DrgB69Pcb1EMb4/preview",
                 "link2": "https://www.dropbox.com/scl/fi/x7z972a8tbi32pognux2v/One-Punch-Man-T2-Especial-2.mp4?rlkey=upldd00b29bnwiy78rfgrky41&st=tvcc50kb&raw=1",
-                "title": "One Punch-Man T2 Especial 2"
+                "title": "One Punch-Man T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1FWlXVv7iE1IKZE9P4nuZPKhsyTInpSHp/preview",
                 "link2": "https://www.dropbox.com/scl/fi/4bcyv1wdgyl592gpzswdf/One-Punch-Man-T2-Cap-1.mp4?rlkey=ehuumchalk3vcfb50j49kjg6t&st=l7ky4do8&raw=1",
-                "title": "One Punch-Man T2 Cap 1"
+                "title": "One Punch-Man T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1i7g8YLdGDYF2dvEtNVZf--gqiKk-hM3t/preview",
                 "link2": "https://www.dropbox.com/scl/fi/q540qs998mn0kspa8k3jc/One-Punch-Man-T2-Cap-2.mp4?rlkey=trqcvwq6muf4m9elqkskzxq4g&st=wjw2qrsp&raw=1",
-                "title": "One Punch-Man T2 Cap 2"
+                "title": "One Punch-Man T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1Fgt6AxPZi6NgcbBk4YJLQewfSg_Spc6m/preview",
                 "link2": "https://www.dropbox.com/scl/fi/rqkv2prb0i9suc98a7qr8/One-Punch-Man-T2-Especial-3.mp4?rlkey=ff8962mswsxhhblsdt38zaj03&st=6o3yyf6g&raw=1",
-                "title": "One Punch-Man T2 Especial 3"
+                "title": "One Punch-Man T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1TGo8vmNavyrX_rIE9BPtgHGPmdfMKfnt/preview",
                 "link2": "https://www.dropbox.com/scl/fi/nn040c3tggvl2c3tmorda/One-Punch-Man-T2-Especial-4.mp4?rlkey=4qj9balan4pff7xt9jg2gvktj&st=4g7q03b4&raw=1",
-                "title": "One Punch-Man T2 Especial 4"
+                "title": "One Punch-Man T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1g-5zXQ1-h-9gGr1ieq07mtICj0MtD5HB/preview",
                 "link2": "https://www.dropbox.com/scl/fi/gwmt3zosg8qzq4l98lxa6/One-Punch-Man-T2-Cap-3.mp4?rlkey=y5g0suzugstl8bzp69tqpoiaz&st=r56l7wy1&raw=1",
-                "title": "One Punch-Man T2 Cap 3"
+                "title": "One Punch-Man T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/17bl0r6Cxxad-oF8A0c0jx9P8bGzMkjG6/preview",
                 "link2": "https://www.dropbox.com/scl/fi/k88drg9lqk46d4j9eyrq1/One-Punch-Man-T2-Especial-5.mp4?rlkey=vgy7j9g3rulb7k88v5tm038l5&st=yaqr1wyz&raw=1",
-                "title": "One Punch-Man T2 Especial 5"
+                "title": "One Punch-Man T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1MBUkFpJME6oUtU6lrbwBuP5ixY8iPsK5/preview",
                 "link2": "https://www.dropbox.com/scl/fi/0z5ujbxo4nadeyau8pp38/One-Punch-Man-T2-Cap-4.mp4?rlkey=4dm37ylajlydx0f2m3ij4scd3&st=r8qg2mvy&raw=1",
-                "title": "One Punch-Man T2 Cap 4"
+                "title": "One Punch-Man T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1vaJeYrhazkBkwIRu9ejAclZ0x-eCJ7g7/preview",
                 "link2": "https://www.dropbox.com/scl/fi/0tu0qnfqupj3uml5tz08n/One-Punch-Man-T2-Cap-5.mp4?rlkey=r6s7k4xtbzn22n3zjwthlwrm3&st=cx5swczg&raw=1",
-                "title": "One Punch-Man T2 Cap 5"
+                "title": "One Punch-Man T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1urvNABqDZ6dUGpWf3JxMT6AodtuwNMbA/preview",
                 "link2": "https://www.dropbox.com/scl/fi/7tlaiyrrbs575qov82umm/One-Punch-Man-T2-Cap-6.mp4?rlkey=rox3lj2lvejx3wz2vn03f8m9o&st=temji5ll&raw=1",
-                "title": "One Punch-Man T2 Cap 6"
+                "title": "One Punch-Man T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1bC9FuGwyxBp4T7zcYdlJLogPzg-3Vxq4/preview",
                 "link2": "https://www.dropbox.com/scl/fi/gzmpj2e2585f7v8zsrhe0/One-Punch-Man-T2-Cap-7.mp4?rlkey=1pkmrmkxs97wfkhsd2gitzjm9&st=klkkjwgx&raw=1",
-                "title": "One Punch-Man T2 Cap 7"
+                "title": "One Punch-Man T2 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1HKoxxoh0od1CgUdfMDZBpFgH4djWhl2I/preview",
                 "link2": "https://www.dropbox.com/scl/fi/gqixjyhgo8u5hwdz8tqh3/One-Punch-Man-T2-Cap-8.mp4?rlkey=8n0msz2htdrmt92eme6u5waur&st=8ytzjuhb&raw=1",
-                "title": "One Punch-Man T2 Cap 8"
+                "title": "One Punch-Man T2 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1GPNZpQnBlkkCpOjK4FcmkQOOQfN_4jlX/preview",
                 "link2": "https://www.dropbox.com/scl/fi/z2jyt98yfysyqwqtitast/One-Punch-Man-T2-Cap-9.mp4?rlkey=svg8gya3ep3jman1rlnyl2u4q&st=ivm4p2ju&raw=1",
-                "title": "One Punch-Man T2 Cap 9"
+                "title": "One Punch-Man T2 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1nc04SawQfvgr6P4sXV2FSik4HIkUsC_a/preview",
                 "link2": "https://www.dropbox.com/scl/fi/x5ns43iah7u8reza6r83b/One-Punch-Man-T2-Cap-10.mp4?rlkey=8e1mykc7igyk958km36tcktlx&st=vkxlu4j6&raw=1",
-                "title": "One Punch-Man T2 Cap 10"
+                "title": "One Punch-Man T2 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1aZiVT-_Vo-xCoNhYnIUFaNuU7-0KQGlt/preview",
                 "link2": "https://www.dropbox.com/scl/fi/y1nhgehdrad7z2ckw18sh/One-Punch-Man-T2-Cap-11.mp4?rlkey=azuprv7g22nhjrmil6dqysylz&st=52nhyg9p&raw=1",
-                "title": "One Punch-Man T2 Cap 11"
+                "title": "One Punch-Man T2 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/17DOBNt5qXI61hpzliGOHKtepCda1UyoS/preview",
                 "link2": "https://www.dropbox.com/scl/fi/jfq99ydch3ky2obnfq6zq/One-Punch-Man-T2-Cap-12.mp4?rlkey=d6ux6zf6rffcj3nfaw7qoaikw&st=67uuttj4&raw=1",
-                "title": "One Punch-Man T2 Cap 12"
+                "title": "One Punch-Man T2 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1PbTuaLRZz6a1sC6cRgtRt0Zjpi0KcCXS/preview",
                 "link2": "https://www.dropbox.com/scl/fi/o0vwaws7yufzvf0bs3s3v/One-Punch-Man-T2-Especial-6.mp4?rlkey=26ju0wkico88cwji2710lxqa2&st=zqq9tn0a&raw=1",
-                "title": "One Punch-Man T2 Especial 6"
+                "title": "One Punch-Man T2 Cap 18"
             }
         },
         "4": {
             "1": {
                 "link": "https://drive.google.com/file/d/16XcHfR5gJZPkhJ_6QpxOW1R71HcApwB-/preview",
+                "link2": "",
                 "title": "One Punch-Man T3 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1vx-GmwAj-HgvQ0FpfSDCm-NejRHhbNIk/preview",
+                "link2": "",
                 "title": "One Punch-Man T3 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1y1lrZ0db8QUNM-0IdYwVr5gYJKuo_KRS/preview",
+                "link2": "",
                 "title": "One Punch-Man T3 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1yWORKhIieHho_ZIAvRH6alrP2bydgxOd/preview",
+                "link2": "",
                 "title": "One Punch-Man T3 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1OEf4ZR43NHYXPWnYFD3yvM8gbYS0xJBP/preview",
+                "link2": "",
+                "title": "One Punch-Man T3 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1JR3kJBrwnY2ZRIAFUzcmAYnzOTQSu04R/preview",
+                "link2": "",
+                "title": "One Punch-Man T3 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1wFwDvSYALipCddDFxMkcEyCbrGNT6vLE/preview",
+                "link2": "",
+                "title": "One Punch-Man T3 Cap 7"
             }
         }
     },
