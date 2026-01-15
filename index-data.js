@@ -69,15 +69,16 @@ const animes = [
         "img": "mushoku.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Isekai",
-            "Ecchi",
-            "Romance",
-            "Harem",
             "Acción",
             "Aventura",
             "Drama",
+            "Ecchi",
             "Fantasía",
+            "Harem",
+            "Isekai",
+            "Romance",
             "Seinen"
         ]
     },
