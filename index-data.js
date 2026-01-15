@@ -380,12 +380,13 @@ const animes = [
         "img": "Oni.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
+            "Ecchi",
+            "Harem",
             "Romance",
             "Slice of Life",
-            "Harem",
-            "Ecchi",
             "Seinen"
         ]
     },
