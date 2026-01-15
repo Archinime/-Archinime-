@@ -980,117 +980,117 @@ const players = {
     "5": {
         "1": {
             "1": {
-                "link": "https://drive.google.com/file/d/1CZrMCSoJtNnOo7EFMvtfP-JJQ8YYNkVD/preview",
+                "link": "https://drive.google.com/file/d/1zpTDg2Rp2TBmVRdvDEv9S_6JUmmXatGR/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1KtjR8bMBJXXFF4a1dpzaYDoVM5j4EPnJ/preview",
+                "link": "https://drive.google.com/file/d/1wHQIa_zhFbeZs3cvSVwkfOlE8Ao_-m8X/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/1M73RcVINSQqFUDD1zPs1zZKrhWGbnKXr/preview",
+                "link": "https://drive.google.com/file/d/1kam_f6gFJbtpNpevZj5NysOoiNDj57Gg/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/1HkUnLfdI8sX-wS48kTFmP2g954YijST1/preview",
+                "link": "https://drive.google.com/file/d/158hvHzXDJS7RhR_8w-J8wR-T3U9fliuz/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 4"
             },
             "5": {
-                "link": "https://drive.google.com/file/d/19dzP52d1EsupC6fK_ltq_-4hzJPu2_SI/preview",
+                "link": "https://drive.google.com/file/d/1Ey_Qda0WoYpOj4hDKunZpiJ8LBzwGmo2/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 5"
             },
             "6": {
-                "link": "https://drive.google.com/file/d/1el5i9VkZEEPdcodtxsw_QZxT3SbgPW6Y/preview",
+                "link": "https://drive.google.com/file/d/1HlNcEsz3Tdrf8ABtAoGUwoXmAUsC0vyI/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 6"
             },
             "7": {
-                "link": "https://drive.google.com/file/d/1O3mKADd2V5HbHad_dUj6bgapDn-papwb/preview",
+                "link": "https://drive.google.com/file/d/1dNb1kmf6lTcjsC-AbkFGz4KqAjczjEO8/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 7"
             },
             "8": {
-                "link": "https://drive.google.com/file/d/1c4xErleJxugBMAXc2_CDWr7_GkgO3-tB/preview",
+                "link": "https://drive.google.com/file/d/10ahwyuUxSzDI4POwih-jdwYGfYPLviLS/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 8"
             },
             "9": {
-                "link": "https://drive.google.com/file/d/1ejnCNV2m3dYEyMg7Lo6ofYND_mecw5b8/preview",
+                "link": "https://drive.google.com/file/d/1uIB-jrFQgakDdmVpVfGblCMG9zgrn5RX/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 9"
             },
             "10": {
-                "link": "https://drive.google.com/file/d/1kd03dkpkuGnCDJkWXGDUQpd-SMc6vI38/preview",
+                "link": "https://drive.google.com/file/d/1elowli7HMcEgbsN_HejYQM2Fq8cSC-Up/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 10"
             },
             "11": {
-                "link": "https://drive.google.com/file/d/1nxhY94_ZeOXH8gjCuCzDcOja8NVtvQTF/preview",
+                "link": "https://drive.google.com/file/d/1lXYFJjEqzTHdmZ190LVt4agXGL8GvbFU/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 11"
             },
             "12": {
-                "link": "https://drive.google.com/file/d/1sIUXauGCmYhavf7tdCVd-bqg1bLHfWDB/preview",
+                "link": "https://drive.google.com/file/d/1v7TYoJPPkeLNTSYS7OEDG0HkMTYakkRM/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 12"
             },
             "13": {
-                "link": "https://drive.google.com/file/d/1zQsb_O7kgctdjid-pfqOMEjcFN96pvja/preview",
+                "link": "https://drive.google.com/file/d/1Vy1kLZ9i7rqiGJljIfBJpVRvsBH_Hpvz/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 13"
             },
             "14": {
-                "link": "https://drive.google.com/file/d/1G7QvXBkkvVH-roUklXoJYHXckDRKSDMe/preview",
+                "link": "https://drive.google.com/file/d/1b2_Nt2ddV_aFQUSbV1P-Y8Q7bxonWDJl/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 14"
             },
             "15": {
-                "link": "https://drive.google.com/file/d/1--AUqBF2Sn2ocOYiMGKgCrRKQWGwYw7h/preview",
+                "link": "https://drive.google.com/file/d/1mEFL0zboDVe4lktgHIpyJy5uCFS1Y_bz/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 15"
             },
             "16": {
-                "link": "https://drive.google.com/file/d/1YABUFK-9iOPMJ0Ns-Wdf3M1aVexaGdKq/preview",
+                "link": "https://drive.google.com/file/d/1awMH8lmSdGoTukTBBPoFWM-cM35D1dey/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 16"
             },
             "17": {
-                "link": "https://drive.google.com/file/d/1KhL9lsBUbXD_7Mi9XtLHvhXc0hh7Mbz0/preview",
+                "link": "https://drive.google.com/file/d/1CH6fH5UVANtlIFZWOmkz88csjWTJNUKd/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 17"
             },
             "18": {
-                "link": "https://drive.google.com/file/d/1r7pmyvEOd9ITgK--6YwxnQh9YdnJSJ9H/preview",
+                "link": "https://drive.google.com/file/d/11a1-hCQQL959GzPQSULFjjJ_1Qi5Gro_/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 18"
             },
             "19": {
-                "link": "https://drive.google.com/file/d/1l8OBuPLYUn8zDJVQAOQU_O_Gw_ahJOcy/preview",
+                "link": "https://drive.google.com/file/d/1tQEMfR1neCXMR_PpWqjV2gzKhaKoHsFd/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 19"
             },
             "20": {
-                "link": "https://drive.google.com/file/d/1ET0eFclQlkWJYPXZaDY4tCUjfyIKEsV1/preview",
+                "link": "https://drive.google.com/file/d/1RSUdDFzvH5Z6mn8bndlCqtnvp8Q7TCCf/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 20"
             },
             "21": {
-                "link": "https://drive.google.com/file/d/1oPcB2JvuXQvLWKCKR1n5gK-eSYj4hLKy/preview",
+                "link": "https://drive.google.com/file/d/1GaREGDynGNjP5FRdR-0HwVoE3KSPX3o3/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 21"
             },
             "22": {
-                "link": "https://drive.google.com/file/d/1IUQSqS10STS2x0XwyUK6Kz0RSDIXZnM0/preview",
+                "link": "https://drive.google.com/file/d/1wxKSKT8fVpPbTfc17_Yl9NOnHikwItQ-/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 22"
             },
             "23": {
-                "link": "https://drive.google.com/file/d/18-_HZ6XFRSbXJmjjpoWacIT7g_N8bwnx/preview",
+                "link": "https://drive.google.com/file/d/1bw6li2qH_S_F-A1ZnzDA5cEQgEqtDjRx/preview",
                 "link2": "",
                 "title": "Mushoku Tensei T1 Cap 23"
             }
@@ -1099,7 +1099,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1FRgvV4f103gREfoZe1VQjBWBtMLgawVR/preview",
                 "link2": "",
-                "title": "Mushoku Tensei OVA 1 \"Eris, La Cazaduendes\""
+                "title": "Mushoku Tensei Ova 1 Cap 1"
             }
         },
         "3": {
