@@ -804,22 +804,26 @@ const data = {
                     {
                         "title": "Capítulo 23"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Ova 1",
                 "cover": "mushokuova.jpg",
                 "eps": [
                     {
                         "title": "Eris, La Cazaduendes"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             },
             {
                 "num": 3,
                 "cover": "mushoku22.jpg",
                 "eps": [
+                    {
+                        "title": "Capítulo 0"
+                    },
                     {
                         "title": "Capítulo 1"
                     },
@@ -888,11 +892,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 23"
-                    },
-                    {
-                        "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
