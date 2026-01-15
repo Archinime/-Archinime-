@@ -6091,7 +6091,8 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
