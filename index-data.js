@@ -948,19 +948,20 @@ const animes = [
     },
     {
         "id": 59,
-        "title": "Akujiki Reijō to Kyōketsu Kōshaku",
-        "aliases": [
-            "Pass the Monster Meat, Milady!"
-        ],
+        "title": "Akujiki Reijou to Kyouketsu Koushaku",
         "img": "akujiki.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
-            "Comedia",
             "Cocina",
+            "Comedia",
+            "Fantasía",
             "Romance",
             "Shōjo"
+        ],
+        "aliases": [
+            "Pass the Monster Meat, Milady!"
         ]
     },
     {
