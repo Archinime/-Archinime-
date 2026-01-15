@@ -1048,13 +1048,12 @@ const animes = [
         "img": "gnosiap.avif",
         "rating": 4.4,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Ciencia ficción",
+            "Deducción Social",
             "Drama",
             "Misterio",
-            "Thriller",
-            "Deducción Social",
-            "RPG",
             "Seinen"
         ]
     },
