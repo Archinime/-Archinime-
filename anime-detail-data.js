@@ -1578,21 +1578,21 @@ const data = {
                     {
                         "title": "Capítulo 26"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Película: El Tren Infinito",
                 "cover": "https://www.dropbox.com/scl/fi/2gpxn6o5gz54vbn3u2u7z/Demon-Slayer-Pelicula-1.jpg?rlkey=8qn7pm6o3jfeq0lnjaj1xv9rk&st=x62180e8&raw=1",
                 "eps": [
                     {
                         "title": "El Tren Infinito"
                     }
-                ]
+                ],
+                "name": "Película: El Tren Infinito"
             },
             {
                 "num": 3,
-                "name": "Temporada 2",
                 "cover": "https://www.dropbox.com/scl/fi/4d3m150tzzhxb3tswn90z/Demon-Slayer-T2.jpeg?rlkey=6x82tdvfwol55eimna1wtwq24&st=e673iluu&raw=1",
                 "eps": [
                     {
@@ -1628,11 +1628,11 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 4,
-                "name": "Temporada 3",
                 "cover": "https://www.dropbox.com/scl/fi/2bh2sfcsj8g79qyxybp5h/Demon-Slayer-T3.jpg?rlkey=f2dg28acvd30m0grwbemzwkoc&st=ir9k5y6a&raw=1",
                 "eps": [
                     {
@@ -1668,11 +1668,11 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 5,
-                "name": "Temporada 4",
                 "cover": "https://www.dropbox.com/scl/fi/ojq9woi8mm516pvpn73mn/Demon-Slayer-Pelicula-3.jpg?rlkey=jtd9xw1i3pyttoev0o9cdhkq3&st=c706zo9r&raw=1",
                 "eps": [
                     {
@@ -1699,17 +1699,18 @@ const data = {
                     {
                         "title": "Capítulo 8"
                     }
-                ]
+                ],
+                "name": "Temporada 4"
             },
             {
                 "num": 6,
-                "name": "Película: Castillo Infinito",
                 "cover": "https://www.dropbox.com/scl/fi/ollpfsqskuvar6fg3zdza/Demon-Slayer-Pelicula-4.jpg?rlkey=trkr1eux9hwkpa1ryi7t3oxf8&st=0twpq5s7&raw=1",
                 "eps": [
                     {
                         "title": "Castillo Infinito"
                     }
-                ]
+                ],
+                "name": "Película: Castillo Infinito"
             }
         ]
     },
