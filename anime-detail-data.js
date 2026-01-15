@@ -3375,7 +3375,8 @@ const data = {
                     {
                         "title": "Capítulo 20"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
@@ -3441,7 +3442,8 @@ const data = {
                     {
                         "title": "Capítulo 20"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
@@ -3488,32 +3490,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 14"
-                    },
-                    {
-                        "title": "Capítulo 15"
-                    },
-                    {
-                        "title": "Capítulo 16"
-                    },
-                    {
-                        "title": "Capítulo 17"
-                    },
-                    {
-                        "title": "Capítulo 18"
-                    },
-                    {
-                        "title": "Capítulo 19"
-                    },
-                    {
-                        "title": "Capítulo 20"
-                    },
-                    {
-                        "title": "Capítulo 21"
-                    },
-                    {
-                        "title": "Capítulo 22"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
