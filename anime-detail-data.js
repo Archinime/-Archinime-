@@ -6666,41 +6666,41 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Ova 1",
                 "cover": "synova1.jpg",
                 "eps": [
                     {
-                        "title": "El cuaderno de Ilse"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             },
             {
                 "num": 3,
-                "name": "Ova 2",
                 "cover": "synova2.jpg",
                 "eps": [
                     {
-                        "title": "Un invitado inesperado"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 2"
             },
             {
                 "num": 4,
-                "name": "Ova 3",
                 "cover": "synova3.jpg",
                 "eps": [
                     {
-                        "title": "Complicaciones"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 3"
             },
             {
                 "num": 5,
-                "name": "Temporada 2",
                 "cover": "synt2.jpg",
                 "eps": [
                     {
@@ -6739,11 +6739,11 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 6,
-                "name": "Temporada 3",
                 "cover": "synt3.jpg",
                 "eps": [
                     {
@@ -6812,11 +6812,11 @@ const data = {
                     {
                         "title": "Capítulo 22"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 7,
-                "name": "Temporada 4",
                 "cover": "synt4.jpg",
                 "eps": [
                     {
@@ -6909,7 +6909,8 @@ const data = {
                     {
                         "title": "Capítulo 30"
                     }
-                ]
+                ],
+                "name": "Temporada 4"
             }
         ]
     },
