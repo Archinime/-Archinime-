@@ -5105,34 +5105,42 @@ const players = {
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1CP6xbNBo6vwjnym6RdCGm-0DoNWTEbpW/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1lgnKPlUlgYK8ft4YbZjoPpDSZXbh8w0z/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1Ce_4nCnzvhL6hnmfdGCbdVjRHoHyff9z/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1-qOrTxw-P5AidhxUYdHxyVe8tzrm7Ip0/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1mZTQL9NIfph7nwjO6azHPxiqiRA2bwYr/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 21"
             },
             "22": {
-                "link": "/preview",
+                "link": "https://drive.google.com/file/d/1HlUO2m-fnviMwqDnRLqSZG-i7UUdvrBd/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 22"
             },
             "23": {
-                "link": "/preview",
+                "link": "https://drive.google.com/file/d/1HajgSC2IseIfa0Y7lATLz5yH9RFIZK9w/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 23"
             },
             "24": {
-                "link": "/preview",
+                "link": "https://drive.google.com/file/d/18yE8WBCAlRVxsRMzOORVIqVxrasySJC7/preview",
+                "link2": "",
                 "title": "Gachiakuta T1 Cap 24"
             }
         }
