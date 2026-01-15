@@ -812,7 +812,7 @@ const data = {
                 "cover": "mushokuova.jpg",
                 "eps": [
                     {
-                        "title": "Eris, La Cazaduendes"
+                        "title": "Capítulo 1"
                     }
                 ],
                 "name": "Ova 1"
