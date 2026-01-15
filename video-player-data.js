@@ -9259,35 +9259,58 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1co2pNXCh2rBC0xuNXyVHzgGeixkFAkb6/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1bcZylPzAwPYUFfwC9ywAADytCIthXRdF/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1y9etjJklyNgjb5GhyOXyyETEsE2x6w3x/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/12rGFRgfgBFCNSy_Bx_BXAHRwhKv7tDzZ/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1181jozxcbYcYMIB7XyeUeWu9CP4un5-L/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1GlKCB4cpsYXqah-eeBRH7vvbXLFCueIE/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1AXFnLJD7TUnvR-zI0LqriRl9ShY7DW7y/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1xrHpdUq45LKrIahPCpH1n2hfYj2onYU1/preview",
+                "link2": "",
                 "title": "Gnosia T1 Cap 8"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1CRXR2NqmhF0XPk019s5G9p-UW8dBWER5/preview",
+                "link2": "",
+                "title": "Gnosia T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1NHBF-cbvkQbWVNscLCsxtI7fw9TlqY04/preview",
+                "link2": "",
+                "title": "Gnosia T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/107ELLYjGtdnc__ynDyG4WBU-pwnUtjDi/preview",
+                "link2": "",
+                "title": "Gnosia T1 Cap 12"
             }
         }
     },
