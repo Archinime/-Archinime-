@@ -8615,382 +8615,474 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1x-tMva8IPagCQV9fOlISZRmw1q8OvAOS/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1z7BjdCV_h1zar5DsFUo2F9AEL9xvzTZA/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1xt4y28bldDIPu4R2Pw36OyMy_KLcZftD/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1araSKt7hnVTXJ4r5jr9Y7qPsng5nciIq/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1zU62X0WXs-7mQiPjM6krn0rx4eBDza5q/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1ajD23EYlKz7TPBpwmjhcU6ynflosMYR7/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/19WiM7hwFYrpAsVWA-2p9_IjDFKa0vkh0/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1OxAKt1WiVhPgAReWF_5LVl8nMdhOBNsT/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1V1QjH4ALFxh5E-rSCHhtpIXdwCejE9Za/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1TExEId1WEGoHGISPrb6SFF5LEGTK-oIN/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1V3fQ6bzV4WEKQmAS3doUW1lDHG7A_TFg/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1qC_pwSKgMP5pBxpamJTuRQBVTMynJsqh/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1MAM603D1ExHbamZ977VaZabQQWGkdlYd/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/17aiJBMeTTjMyRYFcT6yHbGOcYxuJxxhX/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1d2gl2vX1ch6sIJhUxAPOVLgQvtXwbqQ-/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1Tf3AEL1cSgPkjX65Y8p7fzA4ykjPCgvn/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1oapgufGRmQyk9omzvjV3LSg2JzLGz0QG/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1NU2FqmdQCarbit7NGoGdVcr5pTRZyDiD/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1tUAAqVgSzVGQTZtpO6f_cepQ0w-EnwhA/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1ahdY351pXCluHpU5dpe2vlF4gfwRQG01/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1ARaws2ohPoqCTxJGuItNtlwQOZ6W9tsA/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1sriMs6oPwZ2Q_LvHe3SgpRZ2s6W_Ivrf/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/1cUvTmwJWWcMMb3ZZCQlMjj6kl1Te7cq1/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/1VjpUul8OEaC0uWiE334F8CIiBNEkEmXA/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/12Hjq7yGQ435reizBTrBL26LQLu5d69rd/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T1 Cap 25"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/17l6KPMy1GimYldh8pxF4jSuHKw1dnBr7/preview",
-                "title": "Ataque a los titanes OVA 1: El cuaderno de Ilse"
+                "link2": "",
+                "title": "Ataque a los titanes Ova 1 Cap 1"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1t2WKQtU6qWwtlYLRJKFwlYgxytovGntV/preview",
-                "title": "Ataque a los titanes OVA 2: Un invitado inesperado"
+                "link2": "",
+                "title": "Ataque a los titanes Ova 2 Cap 1"
             }
         },
         "4": {
             "1": {
                 "link": "https://drive.google.com/file/d/1aPVPAGXa653K5-CvAEi2hmTzxtmg9TEV/preview",
-                "title": "Ataque a los titanes OVA 3: Complicaciones"
+                "link2": "",
+                "title": "Ataque a los titanes Ova 3 Cap 1"
             }
         },
         "5": {
             "1": {
                 "link": "https://drive.google.com/file/d/1enG3tjnC1meuN5QlPEHfsKX7Le_F_wJ9/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1hMZa0BArAHtjwDPMeRmNdCUQ3l1aElSF/preview",
+                "link": "https://drive.google.com/file/d/1p1al7cACsWPkaR7riRZEMRHhbvjVFR4f/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/1OV_k4XaE-F-CW-OwCCOGpkFpaF12bB8E/preview",
+                "link": "https://drive.google.com/file/d/1gPsdaG3w57h9ibKbW0mBJCb2RpXe7Zu3/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/1tg8ioLS2LLfw4axzn5Bxpe7h_MWUowOx/preview",
+                "link": "https://drive.google.com/file/d/1xoABEyWLa0xZPrQKUJszUXpibuYa8Xua/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 4"
             },
             "5": {
-                "link": "https://drive.google.com/file/d/1_nqEhfVe0sqsydTA97pLRx5P0di317UJ/preview",
+                "link": "https://drive.google.com/file/d/1Yvx_m0BPkDaofOGBa4y4Ja9P-pJfgcZw/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 5"
             },
             "6": {
-                "link": "https://drive.google.com/file/d/1ICktyJ79exxRL83X8v1suOcKQ4_ZV8fe/preview",
+                "link": "https://drive.google.com/file/d/1BdnBgDFUvq6lqKC80L9C_AQke5Vsl8mE/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 6"
             },
             "7": {
-                "link": "https://drive.google.com/file/d/1stPSEWV_jDaOoH-aaJFl31sjnoywG5iY/preview",
+                "link": "https://drive.google.com/file/d/1_O2bNTBqKcOxOxUGVSAxzWWD-vhl3TB5/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 7"
             },
             "8": {
-                "link": "https://drive.google.com/file/d/1nPxcbDklsMBiWxRq5HS4txfpfQNzTPZO/preview",
+                "link": "https://drive.google.com/file/d/1VZfQwVKL4f3Z-FE3_LSR4pZTZK23qW19/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 8"
             },
             "9": {
-                "link": "https://drive.google.com/file/d/175T4sPo7z8khMmEh3nkEYuaewhSytc6i/preview",
+                "link": "https://drive.google.com/file/d/14WBFn9ITeRCURLmxGrguzb3pbuJDM3M_/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 9"
             },
             "10": {
-                "link": "https://drive.google.com/file/d/10AFVWJmF_wu1RuzpetleYVisHeecC6Ib/preview",
+                "link": "https://drive.google.com/file/d/1_UyZNYK5bLzLJKsCRfsBzm5FEhpXlvm-/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 10"
             },
             "11": {
-                "link": "https://drive.google.com/file/d/1cick9lHzI8Z0oZsixfadoWZcI1SAP5E-/preview",
+                "link": "https://drive.google.com/file/d/1uJs6e-VDZM-3r-DgZdp1G53nsEc6oxxC/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 11"
             },
             "12": {
-                "link": "https://drive.google.com/file/d/1cif0J5y9Z4NUUPsKAuiSn08zetyjyqBA/preview",
+                "link": "https://drive.google.com/file/d/1ne2xkQaqGhFDage0ermwBI3wZ4Q5SDeK/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T2 Cap 12"
             }
         },
         "6": {
             "1": {
-                "link": "https://drive.google.com/file/d/1VrB3QXkMogEIyr5oPAeMZRgH_o9XBo41/preview",
+                "link": "https://drive.google.com/file/d/1Ranx0sGiBcyXQqb_fX-TY3n2PXmgA9zs/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/14vEnS_TuS-oa8o2kwvVV8y3nJYzrqrrf/preview",
+                "link": "https://drive.google.com/file/d/1z5Ye4KrH2_lolTaxm4aK8xNeYs8gNOGG/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/1qYifdvQ8IMnI5uZytUHW3hmf5jJwdPF8/preview",
+                "link": "https://drive.google.com/file/d/1nSqhkFRIXIVG87v7GjApbRZGiLbThNlL/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/1mku8IXFDuME6ozjuwR9r3GyN8HTOGYVv/preview",
+                "link": "https://drive.google.com/file/d/1nd08SiQrNTZaJs9qTnlpZgS9teT7v6OT/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 4"
             },
             "5": {
-                "link": "https://drive.google.com/file/d/1sSkQA17-0jQzvRCoDHK3GqY3n6MXv1Zl/preview",
+                "link": "https://drive.google.com/file/d/1CBE4fRDoKnW32Vqtd6q7PebRLAYCu15_/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 5"
             },
             "6": {
-                "link": "https://drive.google.com/file/d/1Rk6jTzuVqDDcEvTGVzweA9_WjdY9BbIV/preview",
+                "link": "https://drive.google.com/file/d/1uOXokkcPhXDit61r5PBHeXURkKaOp2PW/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 6"
             },
             "7": {
-                "link": "https://drive.google.com/file/d/1LcGsG8VELrzgd0fCl_YA9MdiyMkkLJ-G/preview",
+                "link": "https://drive.google.com/file/d/13iEX5-QdPhkDvp01br7Wc_4LNLmtTlwh/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 7"
             },
             "8": {
-                "link": "https://drive.google.com/file/d/1jpWgrQU2m3ywaWM0ZZhSKjnizTrjZOTR/preview",
+                "link": "https://drive.google.com/file/d/1miGB__ksyKift7R0arbQD10Ym8O0IQJr/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 8"
             },
             "9": {
-                "link": "https://drive.google.com/file/d/1c6kYj8mBV7YanoH_isPLGLuRiOwkIU_N/preview",
+                "link": "https://drive.google.com/file/d/1ic5HPIN8Oumjl80h0y3Oqjc_AIXigMD6/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 9"
             },
             "10": {
-                "link": "https://drive.google.com/file/d/13SJ1S3iJMdVB03Tpgk6EzCaWn9UI-KFe/preview",
+                "link": "https://drive.google.com/file/d/1RaUOWoDh7zsErrxuHDL5lq7cKMVkr7e1/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 10"
             },
             "11": {
-                "link": "https://drive.google.com/file/d/1ZfqlNGzipFANJ_NH-IAMMrgxa8962bEA/preview",
+                "link": "https://drive.google.com/file/d/1mEMUieWaQExH-lYmrkxuSl3J3sWOhN3K/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 11"
             },
             "12": {
-                "link": "https://drive.google.com/file/d/1UKpPZKJWpG_1ol8ZD4aQg9WgVduyebWR/preview",
+                "link": "https://drive.google.com/file/d/1flTqxwGBxqJZen61ixSQDXrxqddomkqa/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 12"
             },
             "13": {
-                "link": "https://drive.google.com/file/d/1MPMnGdd8JJVfIY5ddBjYWun3o74ERLag/preview",
+                "link": "https://drive.google.com/file/d/16zvG9rcsJ_FIfrYtDViaxrMpwKDH8UJH/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 13"
             },
             "14": {
-                "link": "https://drive.google.com/file/d/1gTr6UhSmoB9D8XCSR9cZWMVvVujmlNjl/preview",
+                "link": "https://drive.google.com/file/d/1dBUDd23m07eURgFtWMp_K2N_xVx_LUHk/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 14"
             },
             "15": {
-                "link": "https://drive.google.com/file/d/185dXatdSrl-DSX0sok1zFfPm2m1XhhyT/preview",
+                "link": "https://drive.google.com/file/d/1YpOQdV74e44X3aTcG4JBAHdFjKwv38vU/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 15"
             },
             "16": {
-                "link": "https://drive.google.com/file/d/1Uk5q2aY-DHeBfNJ6XRJ_UeJAJLxrnAXK/preview",
+                "link": "https://drive.google.com/file/d/1Exh_z9eIkvqPuEVoESy49mxWW8PsHmi5/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 16"
             },
             "17": {
-                "link": "https://drive.google.com/file/d/1CLVayaAhlrKw9dA57xzpI1u5FFQOI6uP/preview",
+                "link": "https://drive.google.com/file/d/19frQ2PjIMstW_4lLUmvDOn0pkF7uynyz/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 17"
             },
             "18": {
-                "link": "https://drive.google.com/file/d/1rUSeYv_MMnDy_FObI04IGziNuoilldcm/preview",
+                "link": "https://drive.google.com/file/d/1TLuVBMQzeEeXCf0qgV7XEgTqjGa3xGUk/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 18"
             },
             "19": {
-                "link": "https://drive.google.com/file/d/1Avw1Gwo4d38UcuXNBWxs-x6o9hdTIFVj/preview",
+                "link": "https://drive.google.com/file/d/1Xir4SVNG0Yt9FlgExGFyeDAodjKC0O2g/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 19"
             },
             "20": {
-                "link": "https://drive.google.com/file/d/14QaWZ-HFewPAYBIvr-pVBr9gkCT6T1O9/preview",
+                "link": "https://drive.google.com/file/d/1htFUxv8RCIaxt-XHwCl4HMFt4_pm7M5I/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 20"
             },
             "21": {
-                "link": "https://drive.google.com/file/d/1x7S0hsD1FElBHe7qomxj7X7uf1Cfj6qG/preview",
+                "link": "https://drive.google.com/file/d/15r3c0b530-WO6JFNAPwj_6lB7VY4zXwo/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 21"
             },
             "22": {
-                "link": "https://drive.google.com/file/d/1twaKDmKjYN1dOOcgSXRUNObhZove0lJ7/preview",
+                "link": "https://drive.google.com/file/d/1heKkHrRwHx7PuyWlYMzVoVMwyT_16pz0/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T3 Cap 22"
             }
         },
         "7": {
             "1": {
                 "link": "https://drive.google.com/file/d/18PdUfRYOMB7Z59RoswIRTQki74xRCywc/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1nGYuFtPsaEkiBt3KnFJStXRbYq__sbdp/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1hcD6CffYvY6AXowVcCCsCK8NOM6_c2wI/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1cAhdYBFXZI0hSl6Jujgq7YplvRt79-S8/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1MFgBaCU00s44oOcwkw-E8fETWkT5xa1V/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1TVSqj0UamBQ0Lbg2MSHvSobnjzqFbqy2/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1MVY-pyNNARhTy3U1JNMnSbUumX84DzPs/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1DuRYbU-5OOxQ9ACZEf0ANnLED2_jTYdn/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1e44sclYG1IvUH_Hb35ubV5Y3fi3y5GwE/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/14PlaDdlqLRfXvKR0yAhR469QT94ID3On/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/18sm1RJd90oNPfbCjRYeLKUp7L-1mxdOD/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/12t-3C1wUHJ2Ct765uZutvu8rabmJrV3F/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/10a_vI4Pze3flXZqWz1_jM8OaiCKQ13wr/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1qaYAQYEFrYVjaP22W-qQyZHY9LxjGl3i/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1rHCl9Q31LXyl-Bbr0DyUPCnXJScX_JDN/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1TfxoH-RAxAn15IZUXrdTyN2p41aGq_LQ/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1GOD7lZEz72kMAXYkPMH7vkO1aENd0Xij/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/19Q8pJEPtBxXl5ORsNqg0f9nr9fLQSSr2/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1NcVwvENI9xoOePij7vHCMu4GBCtOxH0V/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1EJn1up2gXC3AMJRuXE-6xbXClpYdkKoz/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1ZjI5gisz-uO9lbcFezT8E6-N8ptfCAcX/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1khomaQw8Ea71OM1jQCURJGulfP6J7ZFT/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/1g8v5Wa-rqYE-bPgrcBPqrcN7_9N4KSTY/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/1miy7ROUMAV7R7fVj2dQ6Kgn6pCpJBOVK/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1XEYx2HOGXEFfFk6rsRMYPKniOlj7LQMl/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 25"
             },
             "26": {
                 "link": "https://drive.google.com/file/d/1mACsYgRFF31AwwdTHOzPBKGUvd3Kk_G9/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 26"
             },
             "27": {
                 "link": "https://drive.google.com/file/d/1w-v2LERPGSd3scQddNmMdnYQiETD8Qem/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 27"
             },
             "28": {
                 "link": "https://drive.google.com/file/d/18lix3F2jZxIprgi5NhoBTfLHDHf9XT6L/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 28"
             },
             "29": {
                 "link": "https://drive.google.com/file/d/133kSNPsD2JXtkCGh87JsHHctMyzMkQch/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 29"
             },
             "30": {
                 "link": "https://drive.google.com/file/d/1z1eUcg4z0snOcs9aqH2qWRV4-rOWKa7m/preview",
+                "link2": "",
                 "title": "Ataque a los titanes T4 Cap 30"
             }
         }
