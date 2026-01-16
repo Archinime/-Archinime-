@@ -105,7 +105,7 @@ function createPopupHTML(notif) {
     modal.id = 'eventModal';
     
     // Mensaje personalizado indie
-    const indieMessage = "La verdad no son muchos, solo soy yo, pero le pongo cariño. ¡Disfrútalo!";
+    const indieMessage = "Entra ahora y disfruta de las últimas novedades ya disponibles";
 
     // NOTA: Aquí usamos notif.img para ambas imágenes porque el CMS actual solo guarda una.
     // Si actualizas el CMS para guardar 'seasonCover', cambia el segundo src.
