@@ -10178,5 +10178,19 @@ const players = {
                 "title": "Seihantai na Kimi to Boku T1 Cap 1"
             }
         }
+    },
+    "73": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1BJHBN7Z2d9YJa0kVyTJ2BuZziNrV9CiN/preview",
+                "link2": "",
+                "title": "Sentenced to Be a Hero T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1aScRYKfFhXM3zrU-WXVUVo9rSpVJBh7c/preview",
+                "link2": "",
+                "title": "Sentenced to Be a Hero T1 Cap 2"
+            }
+        }
     }
 };
