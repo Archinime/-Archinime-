@@ -220,8 +220,5 @@ const audioPlaylists = {
     ],
     "71": [
         "overlord.mp3"
-    ],
-    "72": [
-        "https://www.dropbox.com/scl/fi/b9hd9pve2m5bb4lt8kbfx/Seihantai-na-Kimi-To-Boku-Opening-Megane-wo-Hazushite-by-Noa-gQtMev-oeus.mp3?rlkey=jrqq4ev3p5mlix9l4odjo5zlh&st=jwgf139z&raw=1"
     ]
 };
