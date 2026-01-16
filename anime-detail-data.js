@@ -7868,5 +7868,26 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "73": {
+        "title": "Sentenced to Be a Hero",
+        "desc": "En un mundo donde el heroísmo es un castigo, Xylo Forbartz, un asesino de diosas condenado, lucha contra hordas interminables de abominaciones monstruosas como parte de la Unidad de Héroes Penales 9004. La muerte no es una escapatoria, solo un ciclo de resurrección y combate implacable. Pero cuando Xylo se encuentra con una nueva y misteriosa diosa, su improbable alianza desencadena una rebelión.",
+        "cover": "https://www.dropbox.com/scl/fi/xfnznn3sp5r6ffzkbfadj/ImageToStl.com_fgdfgfdg.avif?rlkey=89wcv2sq8ro8lwpxmd1umh3ce&st=7acedkk4&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/g6gmcpr341z0eav70s8xa/C2P4K6XQ5BBNBAKHMAM5XBFAKE.avif?rlkey=8q1u5gev6iq55ndsts7m6s5ij&st=x46rl6r1&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
