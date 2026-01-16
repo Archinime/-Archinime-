@@ -1249,51 +1249,13 @@ async function subirAGithHub() {
         return;
     }
 
-/* =========================================================
-   EN EL ARCHIVO: script.js (CMS)
-   Reemplaza la lógica dentro de subirAGithHub con esto:
-   ========================================================= */
-
-    // ... (validaciones previas igual) ...
-
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
     try {
         let FINAL_ID = nuevoAnime.id;
-        let UPDATE_LABEL = "ESTRENO 🔥";
-
-        // --- LÓGICA DE METADATOS ESPECÍFICOS (SOLUCIÓN A TU PROBLEMA) ---
-        // 1. Detectar la última temporada agregada
-        let lastSeasonData = null;
-        if (nuevoAnime.temporadas.length > 0) {
-            lastSeasonData = nuevoAnime.temporadas[nuevoAnime.temporadas.length - 1];
-        }
-
-        // 2. Definir Portada Específica (Prioridad: Portada de Temp > Portada Anime)
-        let metaSeasonCover = nuevoAnime.portada; 
-        if (lastSeasonData && lastSeasonData.cover && lastSeasonData.cover.trim() !== "") {
-            metaSeasonCover = lastSeasonData.cover;
-        }
-
-        // 3. Definir Nombre del Bloque (Ej: "Temporada 2", "Película", "OVA 1")
-        let metaSeasonName = "Novedad";
-        if (lastSeasonData) {
-            if (lastSeasonData.type === 'Temporada') {
-                metaSeasonName = lastSeasonData.name || `Temporada ${lastSeasonData.num}`;
-            } else {
-                metaSeasonName = lastSeasonData.name || lastSeasonData.type;
-            }
-        }
-
-        // 4. Definir Nombre del Último Capítulo
-        let metaEpTitle = "Nuevo Contenido";
-        if (lastSeasonData && lastSeasonData.eps.length > 0) {
-            const lastEp = lastSeasonData.eps[lastSeasonData.eps.length - 1];
-            // Si el título es "Capítulo X", lo dejamos. Si tiene nombre propio, lo usamos.
-            metaEpTitle = lastEp.title || `Capítulo ${lastEp.num}`;
-        }
+        let UPDATE_LABEL = "ESTRENO 🔥"; // Valor por defecto para nuevos animes
 
         if (!isEditMode) {
-            // Lógica de nuevo ID (se mantiene igual)
+            log("1/6 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
             const indexData = safeEval(indexFile.content);
             let maxId = 0;
@@ -1302,12 +1264,42 @@ async function subirAGithHub() {
             log(`✅ ID: ${FINAL_ID}`);
         } else {
             log(`📝 Editando ID: ${FINAL_ID}`);
-            // Si es edición, asumimos que es una actualización
-            UPDATE_LABEL = "NUEVO 🔥";
+            // --- LÓGICA DE DETECCIÓN DE CAMBIOS PARA NOTIFICACIONES ---
+            log("🔎 Analizando tipo de actualización...");
+            try {
+                // Descargamos la versión vieja para comparar
+                const oldDetailFile = await getGithubFile(token, OWNER, REPO, 'anime-detail-data.js');
+                const oldDetailsObj = safeEval(oldDetailFile.content);
+                const oldAnimeData = oldDetailsObj[FINAL_ID];
+
+                if (oldAnimeData) {
+                    // Contar capítulos totales viejos vs nuevos
+                    let oldTotalEps = 0;
+                    let oldSeasonsCount = oldAnimeData.seasons.length;
+                    oldAnimeData.seasons.forEach(s => oldTotalEps += s.eps.length);
+
+                    let newTotalEps = 0;
+                    let newSeasonsCount = nuevoAnime.temporadas.length;
+                    nuevoAnime.temporadas.forEach(s => newTotalEps += s.eps.length);
+
+                    if (newSeasonsCount > oldSeasonsCount) {
+                        UPDATE_LABEL = "NUEVA TEMPORADA 📀";
+                    } else if (newTotalEps > oldTotalEps) {
+                        UPDATE_LABEL = "NUEVO EPISODIO 🚀";
+                    } else {
+                        // Si solo editaste texto o portadas, no lo marcamos como evento mayor
+                        UPDATE_LABEL = "ACTUALIZACIÓN 🛠️"; 
+                    }
+                }
+            } catch (errCheck) {
+                console.warn("No se pudo comparar versiones, asumiendo Actualización genérica", errCheck);
+                UPDATE_LABEL = "ACTUALIZACIÓN 🛠️";
+            }
+            log(`📢 Tipo de Evento: ${UPDATE_LABEL}`);
         }
 
         // ---------------------------------------------------------
-        // 1. ACTUALIZAR INDEX (CON LOS DATOS SEPARADOS)
+        // 1. ACTUALIZAR INDEX (Ahora incluye lastUpdate y updateType)
         // ---------------------------------------------------------
         log("2/6 Actualizando Index...");
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
@@ -1322,22 +1314,15 @@ async function subirAGithHub() {
             const newIndexEntry = {
                 id: FINAL_ID,
                 title: nuevoAnime.titulo,
-                img: nuevoAnime.portada, // Portada Principal (Fondo/Atrás)
+                img: nuevoAnime.portada,
                 rating: nuevoAnime.rating,
                 uploader: nuevoAnime.uploader,
-                uploaderImg: nuevoAnime.uploaderAvatar,
+                uploaderImg: nuevoAnime.uploaderAvatar, 
                 genres: finalGenres,
-                
-                // DATOS PARA LA NOTIFICACIÓN
-                lastUpdate: Date.now(),
-                updateType: UPDATE_LABEL,
-                
-                // AQUÍ ESTÁ LA MAGIA: Guardamos los datos específicos
-                metaSeasonCover: metaSeasonCover, // Portada de la Temp (Adelante)
-                metaSeasonName: metaSeasonName,   // Nombre del Bloque
-                metaEpTitle: metaEpTitle          // Nombre del Cap
+                // --- CAMPOS NUEVOS PARA LA NOTIFICACIÓN ---
+                lastUpdate: Date.now(), // Fecha exacta en milisegundos
+                updateType: UPDATE_LABEL // El texto que saldrá en el popup
             };
-            
             if(nuevoAnime.aliases.length > 0) newIndexEntry.aliases = nuevoAnime.aliases;
 
             const existingIdx = indexList.findIndex(x => x.id === FINAL_ID);
@@ -1348,56 +1333,74 @@ async function subirAGithHub() {
             }
             return `const animes = ${JSON.stringify(indexList, null, 4)};`;
         });
-
-        // ... (El resto: Details, Player y Music sigue IGUAL que antes) ...
-        // ... (Asegúrate de no borrar esa parte del código anterior) ...
-        
-        // (Código resumido del resto para contexto)
+        // ---------------------------------------------------------
+        // 2. ACTUALIZAR DETAILS
+        // ---------------------------------------------------------
         log("3/6 Actualizando Detalles...");
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
-             const detailsObj = safeEval(content);
-             const seasonsArr = nuevoAnime.temporadas.map(t => {
+            const detailsObj = safeEval(content);
+
+            const seasonsArr = nuevoAnime.temporadas.map(t => {
                 const epsArr = t.eps.map(e => ({ title: e.title }));
-                const sObj = { num: t.num, cover: t.cover, eps: epsArr }; // Aquí se guarda la cover en details
+                const sObj = {
+                    num: t.num,
+                    cover: t.cover,
+                    eps: epsArr
+                };
                 if(t.name) sObj.name = t.name;
                 return sObj;
-             });
-             const newDetailEntry = {
-                title: nuevoAnime.titulo, desc: nuevoAnime.sinopsis, cover: nuevoAnime.portada,
-                uploader: nuevoAnime.uploader, seasons: seasonsArr
-             };
-             detailsObj[FINAL_ID] = newDetailEntry;
-             return `const data = ${JSON.stringify(detailsObj, null, 4)};`;
-        });
+            });
 
+            const newDetailEntry = {
+                title: nuevoAnime.titulo,
+                desc: nuevoAnime.sinopsis,
+                cover: nuevoAnime.portada,
+                uploader: nuevoAnime.uploader,
+                seasons: seasonsArr
+            };
+            detailsObj[FINAL_ID] = newDetailEntry;
+            return `const data = ${JSON.stringify(detailsObj, null, 4)};`;
+        });
+        // ---------------------------------------------------------
+        // 3. ACTUALIZAR PLAYER
+        // ---------------------------------------------------------
         log("4/6 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
-             const playersObj = safeEval(content);
-             const newPlayerEntry = {};
-             nuevoAnime.temporadas.forEach(t => {
+            const playersObj = safeEval(content);
+            
+            const newPlayerEntry = {};
+            nuevoAnime.temporadas.forEach(t => {
                 newPlayerEntry[t.num] = {};
                 t.eps.forEach(e => {
-                    newPlayerEntry[t.num][e.num] = { link: e.link, link2: e.link2, title: e.playerTitle };
+                    newPlayerEntry[t.num][e.num] = { 
+                        link: e.link, 
+                        link2: e.link2, 
+                        title: e.playerTitle 
+                    };
                 });
-             });
-             playersObj[FINAL_ID] = newPlayerEntry;
-             return `const players = ${JSON.stringify(playersObj, null, 4)};`;
+            });
+            playersObj[FINAL_ID] = newPlayerEntry;
+            return `const players = ${JSON.stringify(playersObj, null, 4)};`;
         });
-
+        // ---------------------------------------------------------
+        // 4. ACTUALIZAR MÚSICA (CORREGIDO: usa audioPlaylists)
+        // ---------------------------------------------------------
         log("5/6 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
-             const musicObj = safeEval(content);
-             musicObj[FINAL_ID] = nuevoAnime.musica;
-             return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
+            const musicObj = safeEval(content);
+            musicObj[FINAL_ID] = nuevoAnime.musica;
+            // IMPORTANTE: Aquí se cambia 'const musica' por 'const audioPlaylists'
+            return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
         });
-
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
-        showToast("¡Datos subidos correctamente!", false);
-        alert("✅ Anime actualizado.\nLos cambios se reflejarán en la notificación la próxima vez que cargues la web principal.");
+        showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
+        // AVISAR
+        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
         highlightLogoutButton();
 
     } catch (e) {
         console.error(e);
         log(`❌ ERROR: ${e.message}`);
-        showToast("Error crítico", true);
+        showToast("Error crítico (ver log)", true);
     }
+}
