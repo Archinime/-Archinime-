@@ -10169,14 +10169,5 @@ const players = {
                 "title": "Overlord Película 1: El Reino Sagrado"
             }
         }
-    },
-    "72": {
-        "1": {
-            "1": {
-                "link": "https://drive.google.com/file/d/1JTk0b4DV637Eyd9OVRj2jAjI9_-58yM8/preview",
-                "link2": "",
-                "title": "Seihantai na Kimi to Boku T1 Cap 1"
-            }
-        }
     }
 };
