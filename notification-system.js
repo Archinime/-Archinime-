@@ -43,7 +43,7 @@ function checkForNewUpdates() {
 
     // Revisar cuáles no están en nuestro historial local
     let newItemsFound = [];
-
+    
     updatedAnimes.forEach(anime => {
         // Usamos el timestamp como ID único de la notificación
         const notifId = `${anime.id}_${anime.lastUpdate}`;
@@ -57,11 +57,17 @@ function checkForNewUpdates() {
                 notifId: notifId,
                 animeId: anime.id,
                 title: anime.title,
-                img: anime.img,
-                // Si tuvieras portadas específicas en el futuro, irían aquí:
-                seasonImg: anime.seasonCover || anime.img, 
-                // Si tuvieras nombre de cap específico:
+                img: anime.img, // Portada principal
+                
+                // --- NUEVOS CAMPOS ESPECÍFICOS ---
+                // Portada del bloque específico (o principal si no hay)
+                seasonCover: anime.latestSeasonCover || anime.img, 
+                // Nombre del bloque (Ej: Temporada 2)
+                blockName: anime.latestBlockName || "",
+                // Título del capítulo (Ej: Capítulo 12)
                 epTitle: anime.latestEpTitle || "Nuevo Contenido", 
+                // ---------------------------------
+
                 type: anime.updateType,
                 date: anime.lastUpdate,
                 seen: false // "seen" significa visto en pop-up
@@ -76,7 +82,6 @@ function checkForNewUpdates() {
     if (newItemsFound.length > 0) {
         // Limitamos el historial a 50 items para no saturar memoria
         if (notificationsHistory.length > 50) notificationsHistory = notificationsHistory.slice(0, 50);
-        
         saveHistoryToStorage();
         
         // Los nuevos van a la cola de pop-ups para mostrarse uno por uno
@@ -107,8 +112,13 @@ function createPopupHTML(notif) {
     // Mensaje personalizado indie
     const indieMessage = "Entra ahora y disfruta de las últimas novedades ya disponibles";
 
-    // NOTA: Aquí usamos notif.img para ambas imágenes porque el CMS actual solo guarda una.
-    // Si actualizas el CMS para guardar 'seasonCover', cambia el segundo src.
+    // Construir el string de información (Bloque - Capítulo)
+    // Ejemplo: "Temporada 2 - Capítulo 12" o solo "Capítulo 1" si no hay bloque
+    let infoString = notif.epTitle;
+    if (notif.blockName && notif.blockName !== "Novedad") {
+        infoString = `${notif.blockName} - ${notif.epTitle}`;
+    }
+
     modal.innerHTML = `
         <div class="event-card">
             <button class="event-close" onclick="closePopup()" title="Cerrar"><i class="fas fa-times"></i></button>
@@ -117,8 +127,9 @@ function createPopupHTML(notif) {
                 <img src="${notif.img}" class="bg-blur-cover">
                 
                 <div class="covers-wrapper">
-                    <img src="${notif.img}" class="main-cover-img" title="Anime">
-                    <img src="${notif.seasonImg}" class="season-cover-img" title="Novedad">
+                    <img src="${notif.img}" class="main-cover-img" title="${notif.title}">
+                    
+                    <img src="${notif.seasonCover}" class="season-cover-img" title="${notif.blockName || 'Novedad'}">
                 </div>
                 
                 <div class="event-badge">${notif.type}</div>
@@ -127,8 +138,9 @@ function createPopupHTML(notif) {
             <div class="event-inner">
                 <div class="event-details">
                     <div class="event-title">${notif.title}</div>
+                    
                     <div class="event-chapter-info">
-                        ${notif.epTitle === "Nuevo Contenido" ? "¡NUEVA ACTUALIZACIÓN DISPONIBLE!" : notif.epTitle}
+                        ${infoString}
                     </div>
                     
                     <p class="event-desc">${indieMessage}</p>
@@ -140,7 +152,7 @@ function createPopupHTML(notif) {
             </div>
         </div>
     `;
-
+    
     document.body.appendChild(modal);
     setTimeout(() => modal.classList.add('show'), 50);
 }
@@ -165,7 +177,7 @@ function closePopup() {
 function goToAnimeFromPopup(animeId, notifId) {
     markAsRead(notifId);
     // Limpiamos la cola porque el usuario ya decidió irse a ver algo
-    notificationQueue = []; 
+    notificationQueue = [];
     window.location.href = `anime-detail.html?id=${animeId}`;
 }
 
@@ -197,7 +209,7 @@ document.addEventListener('click', (e) => {
 function renderNotificationList() {
     const listContainer = document.getElementById('notifList');
     listContainer.innerHTML = '';
-
+    
     if (notificationsHistory.length === 0) {
         listContainer.innerHTML = '<div class="empty-notif">Sin novedades por ahora.</div>';
         return;
@@ -211,8 +223,7 @@ function renderNotificationList() {
         const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.getHours() + ':' + String(dateObj.getMinutes()).padStart(2, '0');
 
         div.innerHTML = `
-            <img src="${item.img}">
-            <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
+            <img src="${item.seasonCover}"> <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
                 <div class="notif-item-title">${item.title}</div>
                 <div class="notif-item-info">${item.type}</div>
                 <div class="notif-item-date">${dateStr}</div>
@@ -226,14 +237,7 @@ function renderNotificationList() {
 }
 
 function updateBellBadge() {
-    // Contar cuántos tienen seen: false (opcional, o simplemente si hay items recientes)
-    // Para simplificar: si hay historial, mostramos badge hasta que el usuario abra el menú.
-    // O mejor: contemos los "no leídos" reales si quisieras lógica compleja.
-    // Lógica simple: Si hay items en historial, mostramos badge si isMenuOpen es false.
-    // (Ajusta según prefieras).
-    
-    // Aquí: solo muestra badge si hay updates que llegaron en esta sesión (notificationQueue)
-    // O si hay items no leidos.
+    // Contar cuántos tienen seen: false
     const unread = notificationsHistory.filter(n => !n.seen).length;
     const badge = document.getElementById('notifBadge');
     if (unread > 0) {
