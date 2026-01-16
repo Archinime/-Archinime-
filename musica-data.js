@@ -223,5 +223,8 @@ const audioPlaylists = {
     ],
     "72": [
         "https://www.dropbox.com/scl/fi/b9hd9pve2m5bb4lt8kbfx/Seihantai-na-Kimi-To-Boku-Opening-Megane-wo-Hazushite-by-Noa-gQtMev-oeus.mp3?rlkey=jrqq4ev3p5mlix9l4odjo5zlh&st=jwgf139z&raw=1"
+    ],
+    "73": [
+        "https://www.dropbox.com/scl/fi/ts8eutbg0xpzv4fx6jzd8/Sentenced-to-Be-a-Hero-Opening-Kill-the-Noise-with-kanRomEn.mp3?rlkey=5ldhfiyth2mf6s4mdir95ka3u&st=g2f3vdwe&raw=1"
     ]
 };
