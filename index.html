@@ -6,7 +6,7 @@
   <title>Archinime</title>
   <link rel="icon" href="Logo_Archinime.avif" type="image/png">
   <link rel="preload" as="image" href="videoframe.jpg">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles-index.css">
 </head>
 <body>
@@ -30,88 +30,62 @@
       </span>
     </h1>
 
+    <div class="notif-wrapper">
+        <button id="notifBtn" class="notif-bell-btn" onclick="toggleNotifMenu()">
+            <i class="fas fa-bell"></i>
+            <span id="notifBadge" class="notif-badge" style="display:none"></span>
+        </button>
+        <div id="notifMenu" class="notif-dropdown">
+            <div class="notif-header">
+                <span>Actividad Reciente</span>
+                <button class="clear-all-btn" onclick="clearAllNotifications()">Limpiar todo</button>
+            </div>
+            <div id="notifList" class="notif-list">
+                <div class="empty-notif">Sin novedades por ahora.</div>
+            </div>
+        </div>
+    </div>
+
     <div class="controls" id="controls">
       <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
         <option>Acción</option>
-        <option>Animación</option>
         <option>Aventura</option>
-        <option>Ciencia ficción</option>
-        <option>Cocina</option>
         <option>Comedia</option>
-        <option>Comedia oscura</option>
-        <option>Cosplay</option>
-        <option>Cyberpunk</option>
-        <option>Deducción Social</option>
-        <option>Deportivo</option>
-        <option>Dibujo Animado</option>
-        <option>Divulgación Científica</option>
         <option>Drama</option>
         <option>Ecchi</option>
-        <option>Espionaje</option>
         <option>Escolar</option>
         <option>Fantasía</option>
-        <option>Fantasía oscura</option>
-        <option>Familiar</option>
-        <option>Gag</option>
-        <option>Gore</option>
         <option>Harem</option>
-        <option>Hentai</option>
-        <option>Histórico</option>
-        <option>Horror</option>
-        <option>Incesto</option>
-        <option>Infantil</option>
         <option>Isekai</option>
-        <option>Isekai Inverso</option>
-        <option>Kaiju</option>
-        <option>Mahō Shōjo</option>
         <option>Mecha</option>
-        <option>Militar</option>
-        <option>Mitología</option>
         <option>Misterio</option>
-        <option>Musical</option>
-        <option>Nekketsu</option>
-        <option>Parodia</option>
-        <option>Policial</option>
-        <option>Post-apocalíptico</option>
         <option>Psicológico</option>
-        <option>Reverse Harem</option>
-        <option>Road Movie</option>
         <option>Romance</option>
-        <option>RPG</option>
-        <option>Slice of Life</option>
-        <option>Sobrenatural</option>
-        <option>Steampunk</option>
-        <option>Superhéroes</option>
-        <option>Survival</option>
-        <option>Survival Game</option>
-        <option>Suspenso</option>
-        <option>Tentáculos</option>
-        <option>Terror</option>
-        <option>Terror psicológico</option>
-        <option>Thriller</option>
-        <option>Thriller psicológico</option>
-        <option>Tokusatsu</option>
-        <option>Tragedia</option>
-        <option>Yaoi</option>
-        <option>Yuri</option>
-      </select>
-
-      <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
-        <option value="">Todas las demografías</option>
-        <option>Gekiga</option>
-        <option>Josei</option>
-        <option>Kodomo</option>
-        <option>Seijin</option>
+        <option>Sci-Fi</option>
         <option>Seinen</option>
         <option>Shōjo</option>
         <option>Shōnen</option>
+        <option>Slice of Life</option>
+        <option>Sobrenatural</option>
+        <option>Terror</option>
+        <option>Yaoi</option>
+        <option>Yuri</option>
+        </select>
+
+      <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
+        <option value="">Todas las demografías</option>
+        <option>Seinen</option>
+        <option>Shōnen</option>
+        <option>Shōjo</option>
+        <option>Josei</option>
+        <option>Kodomo</option>
       </select>
 
       <select id="rating-select" onchange="filtro()" aria-label="Seleccionar valoración">
         <option value="">⭐ Todas</option>
-        <option value="excellent">⭐ Excelente (4.8–5.0)</option>
-        <option value="good">⭐ Buena (4.6–4.7)</option>
+        <option value="excellent">⭐ Excelente (4.8+)</option>
+        <option value="good">⭐ Buena (4.6+)</option>
         <option value="regular">⭐ Regular (&lt;4.5)</option>
       </select>
 
