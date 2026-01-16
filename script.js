@@ -164,7 +164,7 @@ async function saveUserProfile() {
     const btn = document.getElementById('btnSaveProfile');
     
     if(!nick) { alert("Debes elegir un nombre de usuario.");
-        return; }
+    return; }
     if(!avatar) { alert("Debes colocar una URL de avatar."); return;
     }
 
@@ -254,9 +254,10 @@ function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     if(!x) return;
     x.innerHTML = isError ?
-        `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+    `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ?
+    "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
 }
 
@@ -395,7 +396,6 @@ function updateAudioPreview(input) {
 const colorPalette = [
     '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
 ];
-
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
@@ -464,7 +464,6 @@ function addSeason(data = null) {
         div.querySelector('.s-img').value = data.cover;
         
         handleSeasonTypeChange(typeSel);
-        
         // Lógica para detectar si empieza en 0
         const startSel = div.querySelector('.s-start-index');
         if(data.eps && data.eps.length > 0) {
@@ -532,7 +531,7 @@ function updateAllBlockNames() {
                 spinOffCount++;
                 if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
             } else if (type === 'Pelicula') {
-                movieCount++;
+                 movieCount++;
                 nameInput.value = `Película ${movieCount}`;
             } else if (type === 'OVA') {
                 ovaCount++;
@@ -566,7 +565,6 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const countInput = card.querySelector('.s-count');
     const count = parseInt(countInput.value);
-    
     // Obtener valor del selector de inicio (0 o 1)
     const startSel = card.querySelector('.s-start-index');
     const startNum = startSel ? parseInt(startSel.value) : 1;
@@ -586,12 +584,10 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
-
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
         let sub = '', lat = '', customTitle = '';
-        
         if(existingEps[i]) {
              lat = existingEps[i].link || '';
              sub = existingEps[i].link2 || ''; 
@@ -604,18 +600,18 @@ function renderChapters(input, existingEps = []) {
 
         // Calcular número a mostrar
         let currentNum = startNum + i;
-
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
-        let titlePlaceholder = titleInputDisabled ? `Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
+        let titlePlaceholder = titleInputDisabled ?
+        `Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
         
         if(titleInputDisabled) customTitle = `Capítulo ${currentNum}`;
-
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${currentNum}</span></div>
             <div class="c-inputs-grid">
                 <input type="text" class="c-link-lat" value="${lat}" placeholder="🔗 Lat" oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
                 <input type="text" class="c-link-sub" value="${sub}" placeholder="🔗 Sub" oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
             </div>
+            
             <input type="text" class="c-title-ov" value="${customTitle}" ${titleInputDisabled} placeholder="${titlePlaceholder}" oninput="requestPreviewUpdate()" style="margin-top:10px; font-size:0.9em; border-color:#333; background:#111;">
         `;
         list.appendChild(row);
@@ -982,13 +978,6 @@ async function loadAnimeForEditing(id) {
             targetDetail.seasons.forEach(s => {
                 const seasonPlayer = targetPlayer[s.num] || {}; 
                 const fullEps = s.eps.map((e, idx) => {
-                    // Si el título guardado incluye el número real del episodio (e.g. idx 0 pero titulo "Capítulo 0"),
-                    // necesitamos saber el offset real.
-                    // Pero la estructura player data usa claves '1', '2', '3'.
-                    // Asumimos que la clave player data SIEMPRE es 1-based index del array.
-                    // Ajuste: si el título dice "Capítulo 0", el índice en player data será 1?
-                    // Revisando generateData: player keys son 1, 2, 3... basado en loop idx+1.
-                    // Así que link siempre se busca con idx+1.
                     const epKey = idx + 1;
                     const links = seasonPlayer[epKey] || {};
                     return { title: e.title, link: links.link, link2: links.link2 };
@@ -1169,7 +1158,6 @@ function generateData() {
             
             // Número actual del episodio basado en el inicio (0 o 1)
             let currentEpNum = startNum + idx;
-
             if (sType === 'Temporada') {
                 detailTitle = `Capítulo ${currentEpNum}`;
                 playerTitle = `${anime.titulo} T${seasonCountVP} Cap ${currentEpNum}`;
@@ -1189,7 +1177,6 @@ function generateData() {
 
             if(sub || lat) {
                 // Guardamos en 'num' el índice base 1 para el objeto de player (video-player-data.js)
-                // Pero el título refleja si es Cap 0 o Cap 1.
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
@@ -1265,8 +1252,10 @@ async function subirAGithHub() {
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
     try {
         let FINAL_ID = nuevoAnime.id;
+        let UPDATE_LABEL = "ESTRENO 🔥"; // Valor por defecto para nuevos animes
+
         if (!isEditMode) {
-            log("1/5 Calculando ID...");
+            log("1/6 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
             const indexData = safeEval(indexFile.content);
             let maxId = 0;
@@ -1275,12 +1264,44 @@ async function subirAGithHub() {
             log(`✅ ID: ${FINAL_ID}`);
         } else {
             log(`📝 Editando ID: ${FINAL_ID}`);
+            // --- LÓGICA DE DETECCIÓN DE CAMBIOS PARA NOTIFICACIONES ---
+            log("🔎 Analizando tipo de actualización...");
+            try {
+                // Descargamos la versión vieja para comparar
+                const oldDetailFile = await getGithubFile(token, OWNER, REPO, 'anime-detail-data.js');
+                const oldDetailsObj = safeEval(oldDetailFile.content);
+                const oldAnimeData = oldDetailsObj[FINAL_ID];
+
+                if (oldAnimeData) {
+                    // Contar capítulos totales viejos vs nuevos
+                    let oldTotalEps = 0;
+                    let oldSeasonsCount = oldAnimeData.seasons.length;
+                    oldAnimeData.seasons.forEach(s => oldTotalEps += s.eps.length);
+
+                    let newTotalEps = 0;
+                    let newSeasonsCount = nuevoAnime.temporadas.length;
+                    nuevoAnime.temporadas.forEach(s => newTotalEps += s.eps.length);
+
+                    if (newSeasonsCount > oldSeasonsCount) {
+                        UPDATE_LABEL = "NUEVA TEMPORADA 📀";
+                    } else if (newTotalEps > oldTotalEps) {
+                        UPDATE_LABEL = "NUEVO EPISODIO 🚀";
+                    } else {
+                        // Si solo editaste texto o portadas, no lo marcamos como evento mayor
+                        UPDATE_LABEL = "ACTUALIZACIÓN 🛠️"; 
+                    }
+                }
+            } catch (errCheck) {
+                console.warn("No se pudo comparar versiones, asumiendo Actualización genérica", errCheck);
+                UPDATE_LABEL = "ACTUALIZACIÓN 🛠️";
+            }
+            log(`📢 Tipo de Evento: ${UPDATE_LABEL}`);
         }
 
         // ---------------------------------------------------------
-        // 1. ACTUALIZAR INDEX
+        // 1. ACTUALIZAR INDEX (Ahora incluye lastUpdate y updateType)
         // ---------------------------------------------------------
-        log("2/5 Actualizando Index...");
+        log("2/6 Actualizando Index...");
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             const indexList = safeEval(content);
             
@@ -1297,7 +1318,10 @@ async function subirAGithHub() {
                 rating: nuevoAnime.rating,
                 uploader: nuevoAnime.uploader,
                 uploaderImg: nuevoAnime.uploaderAvatar, 
-                genres: finalGenres
+                genres: finalGenres,
+                // --- CAMPOS NUEVOS PARA LA NOTIFICACIÓN ---
+                lastUpdate: Date.now(), // Fecha exacta en milisegundos
+                updateType: UPDATE_LABEL // El texto que saldrá en el popup
             };
             if(nuevoAnime.aliases.length > 0) newIndexEntry.aliases = nuevoAnime.aliases;
 
@@ -1312,7 +1336,7 @@ async function subirAGithHub() {
         // ---------------------------------------------------------
         // 2. ACTUALIZAR DETAILS
         // ---------------------------------------------------------
-        log("3/5 Actualizando Detalles...");
+        log("3/6 Actualizando Detalles...");
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
             const detailsObj = safeEval(content);
 
@@ -1340,7 +1364,7 @@ async function subirAGithHub() {
         // ---------------------------------------------------------
         // 3. ACTUALIZAR PLAYER
         // ---------------------------------------------------------
-        log("4/5 Actualizando Player...");
+        log("4/6 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             const playersObj = safeEval(content);
             
@@ -1361,7 +1385,7 @@ async function subirAGithHub() {
         // ---------------------------------------------------------
         // 4. ACTUALIZAR MÚSICA (CORREGIDO: usa audioPlaylists)
         // ---------------------------------------------------------
-        log("5/5 Actualizando Música...");
+        log("5/6 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             const musicObj = safeEval(content);
             musicObj[FINAL_ID] = nuevoAnime.musica;

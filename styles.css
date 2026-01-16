@@ -321,7 +321,6 @@ audio { width: 100%;
 .btn-move:hover { background: #333; }
 
 .btn-del-section { 
-    /* Modificado para estar dentro del flex */
     position: static;
     background: rgba(255, 71, 87, 0.1); color: #ff4757;
     border: 1px solid #ff4757; padding: 6px 12px; border-radius: 20px;
@@ -431,8 +430,7 @@ audio { width: 100%;
     border-bottom: 2px solid transparent;
 }
 .tab-btn i { margin-right: 6px; }
-.tab-btn:hover { background: rgba(255,255,255,0.03);
-    color: #fff; }
+.tab-btn:hover { background: rgba(255,255,255,0.03); color: #fff; }
 .tab-btn.active {
     color: var(--accent);
     border-bottom-color: var(--accent);
@@ -448,13 +446,87 @@ audio { width: 100%;
     display: none; border: 1px solid #8c52ff;
 }
 
+/* =================================================================
+   ESTILOS DE LA NOTIFICACIÓN (Nuevo estilo para la Web Principal)
+   Esto es lo que verá el usuario cuando entre a la web.
+   ================================================================= */
+#eventModal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+}
+#eventModal.show { opacity: 1; pointer-events: auto; }
+
+.event-card {
+    background: #111;
+    width: 90%; max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #333;
+    box-shadow: 0 0 80px rgba(140, 82, 255, 0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#eventModal.show .event-card { transform: scale(1) translateY(0); }
+
+/* Decoración Neon */
+.event-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.3), transparent);
+    animation: rotate 6s linear infinite; pointer-events: none; z-index: 1;
+}
+.event-inner {
+    position: relative; z-index: 2; background: #0b0c10; margin: 2px;
+    border-radius: 18px; overflow: hidden;
+}
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+
+.event-cover-container {
+    position: relative; width: 100%; height: 250px;
+}
+.event-cover { width: 100%; height: 100%; object-fit: cover; mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+
+.event-badge {
+    position: absolute; top: 15px; right: 15px;
+    background: var(--gradient); color: #fff;
+    padding: 6px 12px; border-radius: 6px;
+    font-weight: 800; font-size: 0.8em; letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.5);
+    animation: pulseBadge 2s infinite;
+}
+@keyframes pulseBadge { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+.event-details { padding: 20px; text-align: center; margin-top: -40px; position: relative; }
+
+.event-title {
+    font-size: 1.8em; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(140, 82, 255, 0.8);
+}
+.event-subtitle { color: var(--accent); font-size: 0.9em; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
+
+.event-btn {
+    background: #fff; color: #000; border: none;
+    padding: 14px 24px; border-radius: 50px;
+    font-weight: 800; font-size: 1em; cursor: pointer;
+    width: 100%; margin-top: 15px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    transition: 0.3s;
+}
+.event-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.6); }
+.event-close {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(0,0,0,0.5); border: none; color: #fff;
+    width: 30px; height: 30px; border-radius: 50%; cursor: pointer; z-index: 10;
+}
+
 /* --- MOBILE RESPONSIVE --- */
 @media (max-width: 900px) {
     .main-wrapper { grid-template-columns: 1fr; padding: 15px; }
     .preview-sidebar { 
-        position: relative;
-        top: 0; order: 2;
-        margin-top: 40px; 
+        position: relative; top: 0; order: 2; margin-top: 40px; 
         max-height: none; overflow-y: visible;
     }
     .row-flex { flex-direction: column; gap: 0; }
