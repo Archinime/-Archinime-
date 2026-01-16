@@ -188,13 +188,59 @@ font-size:18px; cursor:pointer; }
 
 
 /* =================================================================
-   ESTILOS DE LA NOTIFICACIÓN V3 (DISEÑO MEJORADO)
+   ESTILOS DE LA NOTIFICACIÓN V4 (IMÁGENES SEPARADAS Y CAMPANA)
    ================================================================= */
 
-/* --- MODAL POP-UP --- */
+/* --- BOTÓN CAMPANA (VACAN/COOL) --- */
+.notif-wrapper {
+    position: relative;
+    margin-left: auto;
+    margin-right: 15px;
+    z-index: 1001;
+}
+
+.notif-bell-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; /* Tamaño del icono */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.notif-bell-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.15) rotate(15deg); /* Efecto al tocar */
+    color: #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.notif-bell-btn:active {
+    transform: scale(0.95);
+}
+
+/* Badge rojo */
+.notif-badge {
+    position: absolute;
+    top: 2px; right: 2px;
+    background: #ff4757;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    box-shadow: 0 0 8px #ff4757;
+    animation: pulseRed 2s infinite;
+}
+@keyframes pulseRed { 0% {box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);} 70% {box-shadow: 0 0 0 6px rgba(255, 71, 87, 0);} 100% {box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);} }
+
+
+/* --- MODAL POP-UP (CONTENEDOR) --- */
 #eventModal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
     z-index: 99999;
     display: flex; justify-content: center; align-items: center;
     opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
@@ -203,7 +249,7 @@ font-size:18px; cursor:pointer; }
 
 .event-card {
     background: #0b0c10;
-    width: 90%; max-width: 400px;
+    width: 90%; max-width: 420px;
     border-radius: 24px;
     overflow: hidden;
     position: relative;
@@ -215,81 +261,71 @@ font-size:18px; cursor:pointer; }
 }
 #eventModal.show .event-card { transform: scale(1) translateY(0); }
 
-/* --- ÁREA VISUAL SUPERIOR --- */
+/* --- ÁREA VISUAL 3D --- */
 .event-visuals {
     position: relative;
-    width: 100%; height: 280px;
+    width: 100%; height: 300px; /* Más altura para espacio */
     background: #000;
     overflow: hidden;
     display: flex; align-items: center; justify-content: center;
 }
 
-/* Imagen fondo borroso */
 .bg-blur-cover {
     position: absolute; top:0; left:0; width:100%; height:100%;
-    object-fit: cover; opacity: 0.4;
-    filter: blur(15px); transform: scale(1.2);
+    object-fit: cover; opacity: 0.3;
+    filter: blur(20px); transform: scale(1.2);
 }
 
-/* Contenedor de las portadas */
 .covers-wrapper {
     position: relative; z-index: 2;
     display: flex; align-items: center; justify-content: center;
     width: 100%; height: 100%;
-    perspective: 1000px; /* Para el efecto 3D */
+    perspective: 1200px; /* Profundidad 3D */
 }
 
-/* Portada Trasera (Principal - Anime) */
+/* PORTADA TRASERA (PRINCIPAL) - MÁS LEJOS Y OSCURA */
 .cover-box.back {
     position: absolute;
-    width: 140px; height: 200px;
-    transform: translateX(-40px) translateZ(-50px) rotateY(-15deg);
-    filter: brightness(0.5);
+    width: 140px; height: 210px;
+    /* Ajustes clave: Más a la izquierda, más atrás, más rotada */
+    transform: translateX(-60px) translateZ(-80px) rotateY(-25deg);
+    filter: brightness(0.4); /* Oscurecida para dar profundidad */
     border-radius: 8px; overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    box-shadow: 5px 10px 30px rgba(0,0,0,0.9);
     transition: 0.5s;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 .cover-box.back img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Portada Delantera (Específica - Temporada/Nuevo) */
+/* PORTADA DELANTERA (TEMPORADA) - DESTACADA */
 .cover-box.front {
     position: absolute;
-    width: 150px; height: 220px;
-    transform: translateX(30px) translateZ(20px) rotateY(5deg);
+    width: 160px; height: 240px;
+    /* Ajustes clave: Más a la derecha, al frente, ligera rotación opuesta */
+    transform: translateX(40px) translateZ(0) rotateY(-5deg);
     border-radius: 12px; overflow: hidden;
-    box-shadow: -10px 20px 40px rgba(0,0,0,0.6);
-    border: 2px solid var(--accent);
+    box-shadow: -15px 25px 50px rgba(0,0,0,0.8);
+    border: 2px solid #00f0ff; /* Borde neón */
     z-index: 10;
     animation: floatCover 6s ease-in-out infinite;
 }
 .cover-box.front img { width: 100%; height: 100%; object-fit: cover; }
 
 @keyframes floatCover {
-    0%, 100% { transform: translateX(30px) translateZ(20px) rotateY(5deg) translateY(0); }
-    50% { transform: translateX(30px) translateZ(20px) rotateY(5deg) translateY(-8px); }
+    0%, 100% { transform: translateX(40px) translateZ(0) rotateY(-5deg) translateY(0); }
+    50% { transform: translateX(40px) translateZ(0) rotateY(-5deg) translateY(-8px); }
 }
 
-/* Etiqueta "NUEVO" */
 .new-tag {
     position: absolute; top: 10px; right: 10px;
     background: #ff4757; color: white;
     font-size: 0.7rem; font-weight: 800;
     padding: 4px 8px; border-radius: 4px;
     box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
+    letter-spacing: 1px;
 }
 
-/* --- BOTÓN CERRAR --- */
-.event-close {
-    position: absolute; top: 15px; right: 15px;
-    background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2);
-    color: #fff; width: 32px; height: 32px;
-    border-radius: 50%; cursor: pointer; z-index: 50;
-    display: flex; align-items: center; justify-content: center;
-    transition: 0.2s; backdrop-filter: blur(4px);
-}
-.event-close:hover { background: #ff4757; border-color: #ff4757; transform: rotate(90deg); }
-
-/* --- DETALLES INFERIORES --- */
+/* --- TEXTOS E INFORMACIÓN --- */
 .event-inner {
     position: relative; z-index: 5;
     background: linear-gradient(to bottom, #101014 0%, #050507 100%);
@@ -299,7 +335,7 @@ font-size:18px; cursor:pointer; }
 }
 
 .event-title {
-    font-size: 1.6em; font-weight: 900;
+    font-size: 1.5em; font-weight: 900;
     color: #fff; line-height: 1.1; margin-bottom: 8px;
     text-transform: uppercase;
     text-shadow: 0 0 20px rgba(140, 82, 255, 0.5);
@@ -307,22 +343,22 @@ font-size:18px; cursor:pointer; }
 
 .event-meta-info {
     display: flex; justify-content: center; align-items: center; gap: 8px;
-    margin-bottom: 15px; color: var(--accent);
+    margin-bottom: 15px; color: #00f0ff;
     font-family: 'JetBrains Mono', monospace; font-size: 0.85em;
     font-weight: 700;
 }
-.meta-season { color: var(--primary); text-transform: uppercase; }
+.meta-season { color: #8c52ff; text-transform: uppercase; } /* Morado */
 .meta-sep { color: #555; }
 .meta-ep { color: #fff; }
 
 .event-desc {
-    color: #888; font-size: 0.9em; margin-bottom: 25px; line-height: 1.5;
+    color: #888; font-size: 0.9em; margin-bottom: 25px; line-height: 1.5; font-style: italic;
 }
 
 .event-btn {
-    background: var(--gradient);
+    background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%);
     color: white; border: none;
-    padding: 14px 20px; border-radius: 12px;
+    padding: 14px 20px; border-radius: 50px;
     font-weight: 800; font-size: 1em; cursor: pointer;
     width: 100%; letter-spacing: 1px; text-transform: uppercase;
     box-shadow: 0 10px 30px rgba(140, 82, 255, 0.3);
@@ -334,11 +370,21 @@ font-size:18px; cursor:pointer; }
     box-shadow: 0 15px 40px rgba(140, 82, 255, 0.5);
 }
 
+.event-close {
+    position: absolute; top: 15px; right: 15px;
+    background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer; z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.2s; backdrop-filter: blur(4px);
+}
+.event-close:hover { background: #ff4757; border-color: #ff4757; transform: rotate(90deg); }
+
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 480px) {
     .event-card { width: 95%; max-width: 360px; }
-    .event-visuals { height: 240px; }
-    .cover-box.back { width: 110px; height: 160px; transform: translateX(-30px) translateZ(-50px) rotateY(-15deg); }
-    .cover-box.front { width: 120px; height: 180px; transform: translateX(20px) translateZ(20px) rotateY(5deg); }
+    .event-visuals { height: 260px; }
+    .cover-box.back { width: 110px; height: 165px; transform: translateX(-40px) translateZ(-80px) rotateY(-25deg); }
+    .cover-box.front { width: 130px; height: 195px; transform: translateX(30px) translateZ(0) rotateY(-5deg); }
     .event-title { font-size: 1.3em; }
 }

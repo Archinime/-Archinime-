@@ -5,10 +5,7 @@ let notificationsHistory = [];
 let isMenuOpen = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (typeof animes === 'undefined') {
-        console.warn('Sistema de Notificaciones: index-data.js no cargado.');
-        return;
-    }
+    if (typeof animes === 'undefined') return;
     loadHistoryFromStorage();
     checkForNewUpdates();
     renderNotificationList();
@@ -29,7 +26,6 @@ function saveHistoryToStorage() {
 }
 
 function checkForNewUpdates() {
-    // Filtramos solo los que tienen fecha de actualización
     const updatedAnimes = animes.filter(a => a.lastUpdate);
     updatedAnimes.sort((a, b) => b.lastUpdate - a.lastUpdate);
 
@@ -40,26 +36,25 @@ function checkForNewUpdates() {
         const exists = notificationsHistory.find(n => n.notifId === notifId);
         
         if (!exists) {
-            // === AQUÍ CAPTURAMOS LOS DATOS NUEVOS ===
             const newNotif = {
                 notifId: notifId,
                 animeId: anime.id,
                 title: anime.title,
                 
-                // Imagen Principal (Anime completo)
+                // IMAGEN PRINCIPAL (FONDO/ATRÁS)
                 mainImg: anime.img, 
                 
-                // Imagen Específica (Temporada/Peli nueva) - Fallback a mainImg si no existe
+                // IMAGEN NUEVA TEMPORADA (ADELANTE)
+                // Si metaSeasonCover existe, úsala. Si no, usa la principal.
                 seasonImg: anime.metaSeasonCover || anime.img, 
                 
-                // Textos Específicos
-                seasonName: anime.metaSeasonName || "Actualización",
+                // TEXTOS
+                seasonName: anime.metaSeasonName || anime.updateType || "Nuevo",
                 epTitle: anime.metaEpTitle || "Nuevo Contenido",
                 
                 date: anime.lastUpdate,
                 seen: false 
             };
-            
             notificationsHistory.unshift(newNotif);
             newItemsFound.push(newNotif);
         }
@@ -86,7 +81,7 @@ function createPopupHTML(notif) {
     const modal = document.createElement('div');
     modal.id = 'eventModal';
 
-    // Construcción del HTML con doble imagen y textos detallados
+    // HTML ACTUALIZADO: Muestra textos correctos y estructura 3D
     modal.innerHTML = `
         <div class="event-card">
             <button class="event-close" onclick="closePopup()" title="Cerrar"><i class="fas fa-times"></i></button>
@@ -116,7 +111,7 @@ function createPopupHTML(notif) {
                         <span class="meta-ep">${notif.epTitle}</span>
                     </div>
                     
-                    <p class="event-desc">¡Ya disponible! Entra ahora para ver el nuevo contenido recién salido del horno.</p>
+                    <p class="event-desc">Ya disponible en la plataforma. ¡Disfrútalo!</p>
                     
                     <button class="event-btn" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')">
                         <i class="fas fa-play"></i> VER AHORA
@@ -148,9 +143,7 @@ function goToAnimeFromPopup(animeId, notifId) {
     window.location.href = `anime-detail.html?id=${animeId}`;
 }
 
-// --- MENÚ DE LISTA (CAMPANITA) ---
-// (Esta parte se mantiene similar, solo actualizamos los datos visuales)
-
+// --- Lógica Menú Campana ---
 function toggleNotifMenu() {
     const menu = document.getElementById('notifMenu');
     isMenuOpen = !isMenuOpen;
@@ -183,16 +176,15 @@ function renderNotificationList() {
         const div = document.createElement('div');
         div.className = 'notif-item';
         const dateObj = new Date(item.date);
-        const dateStr = dateObj.toLocaleDateString();
-
+        
         div.innerHTML = `
             <img src="${item.seasonImg}" style="object-fit:cover;">
             <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
                 <div class="notif-item-title">${item.title}</div>
                 <div class="notif-item-info">
-                    <span style="color:var(--accent)">${item.seasonName}</span> - ${item.epTitle}
+                    <span style="color:#00f0ff">${item.seasonName}</span> - ${item.epTitle}
                 </div>
-                <div class="notif-item-date">${dateStr}</div>
+                <div class="notif-item-date">Hace un momento</div>
             </div>
             <button class="notif-item-del" onclick="deleteSingleNotif('${item.notifId}')">
                 <i class="fas fa-times"></i>
@@ -205,8 +197,7 @@ function renderNotificationList() {
 function updateBellBadge() {
     const unread = notificationsHistory.filter(n => !n.seen).length;
     const badge = document.getElementById('notifBadge');
-    if (unread > 0) badge.style.display = 'block';
-    else badge.style.display = 'none';
+    badge.style.display = unread > 0 ? 'block' : 'none';
 }
 
 function markAsRead(notifId) {
@@ -215,7 +206,7 @@ function markAsRead(notifId) {
 }
 
 function clearAllNotifications() {
-    if(confirm("¿Borrar todo el historial?")) {
+    if(confirm("¿Borrar todo?")) {
         notificationsHistory = [];
         saveHistoryToStorage();
         renderNotificationList();
