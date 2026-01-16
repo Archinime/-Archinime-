@@ -222,15 +222,14 @@ function renderNotificationList() {
         const dateObj = new Date(item.date);
         const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.getHours() + ':' + String(dateObj.getMinutes()).padStart(2, '0');
 
+        // AQUÍ ES DONDE QUITAMOS EL BOTÓN X
         div.innerHTML = `
-            <img src="${item.seasonCover}"> <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
+            <img src="${item.seasonCover}"> 
+            <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
                 <div class="notif-item-title">${item.title}</div>
                 <div class="notif-item-info">${item.type}</div>
                 <div class="notif-item-date">${dateStr}</div>
             </div>
-            <button class="notif-item-del" onclick="deleteSingleNotif('${item.notifId}')">
-                <i class="fas fa-times"></i>
-            </button>
         `;
         listContainer.appendChild(div);
     });
