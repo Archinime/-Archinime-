@@ -1187,5 +1187,25 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ]
+    },
+    {
+        "id": 72,
+        "title": "Seihantai na Kimi to Boku",
+        "img": "https://www.dropbox.com/scl/fi/tj525d996dhx67ybfo85f/ImageToStl.com_MV5BNGI4NzhiZmMtNWY2Mi00MTFhLTgyOTktZTk1YjRlZmU5NzkxXkEyXkFqcGc._V1_FMjpg_UX1000.avif?rlkey=3so7gb70li05txtrk86ppisen&st=thjnvset&raw=1",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Shōnen"
+        ],
+        "lastUpdate": 1768531038804,
+        "updateType": "ESTRENO 🔥",
+        "aliases": [
+            "You And I Are Polar Opposites"
+        ]
     }
 ];
