@@ -10192,5 +10192,19 @@ const players = {
                 "title": "Sentenced to Be a Hero T1 Cap 2"
             }
         }
+    },
+    "74": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1xDz0YUxjQ1mGG1qdiWLecffzm5jNKjc_/preview",
+                "link2": "",
+                "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1p9Vuqr7aeBWzh8X_J3xJ0zmceXZkA_mW/preview",
+                "link2": "",
+                "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 2"
+            }
+        }
     }
 };
