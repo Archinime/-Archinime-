@@ -85,7 +85,13 @@ const animes = [
             "Isekai",
             "Romance",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1768679209491,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "mushoku22.jpg",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false
     },
     {
         "id": 6,
