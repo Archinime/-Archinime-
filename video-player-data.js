@@ -7892,12 +7892,12 @@ const players = {
                 "title": "Futari Solo Camp T1 Cap 22"
             },
             "23": {
-                "link": "https://drive.google.com/file/d/1wEQsNqb5MLzHUzUOaFGpiu2hw34SMXyL/preview",
+                "link": "https://drive.google.com/file/d/18eqy4bwMKpenVknxSZQS92t_z_GFmJCO/preview",
                 "link2": "",
                 "title": "Futari Solo Camp T1 Cap 23"
             },
             "24": {
-                "link": "https://drive.google.com/file/d/1YTZ_ZcKZnVzngl1gAOED03AcvW3w5Dga/preview",
+                "link": "https://drive.google.com/file/d/1cdq8NPelkbDPKE0QXasGJsuqF9UamaqF/preview",
                 "link2": "",
                 "title": "Futari Solo Camp T1 Cap 24"
             }
