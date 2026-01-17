@@ -285,7 +285,7 @@ const genresList = [
     "Policial", "Post-apocalíptico", "Psicológico", "Reverse Harem", "Romance", "RPG", 
     "Slice of Life", "Sobrenatural", "Steampunk", "Superhéroes", "Survival", 
     "Survival Game", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
-    "Thriller psicológico", "Tokusatsu", "Tragedia", "Yaoi", "Yuri", "Seijin"
+    "Thriller psicológico", "Tokusatsu", "Tragedia", "Yaoi", "Yuri"
 ];
 
 const gContainer = document.getElementById('genresContainer');
@@ -300,7 +300,6 @@ const demoSelectCMS = document.getElementById('demografiaAnime');
 if(demoSelectCMS) {
     demoSelectCMS.innerHTML = `
         <option value="" disabled selected>Seleccionar...</option>
-        <option>Gekiga</option>
         <option>Josei</option>
         <option>Kodomo</option>
         <option>Seijin</option>
