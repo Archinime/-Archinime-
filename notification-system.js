@@ -105,7 +105,7 @@ function createPopupHTML(notif) {
     // --- LÓGICA IMAGEN FINAL (MODIFICADA) ---
     let finalImgHTML = '';
     if (notif.isFinal) {
-        // Estilo modificado: Más grande (150px), más abajo (bottom: -15px), centrado (left: 50% + transform)
+        // Estilo modificado: Más grande (150px), más abajo (bottom: -12px), centrado (left: 50% + transform)
         finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: -15px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
     }
 
