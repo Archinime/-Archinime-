@@ -30,11 +30,11 @@ function saveHistoryToStorage() {
 
 function checkForNewUpdates() {
     const updatedAnimes = animes.filter(a => a.lastUpdate && a.updateType);
+    // Ordenar animes del JS por fecha para detectar los últimos
     updatedAnimes.sort((a, b) => b.lastUpdate - a.lastUpdate);
 
     let newItemsFound = [];
     updatedAnimes.forEach(anime => {
-        // FILTRO: No mostrar actualizaciones menores ni "Ninguna"
         if (anime.updateType.includes("ACTUALIZACIÓN")) return;
         if (anime.updateType === "Ninguna") return; 
 
@@ -51,7 +51,7 @@ function checkForNewUpdates() {
                 blockName: anime.latestBlockName || "",
                 epTitle: anime.latestEpTitle || "Nuevo Contenido", 
                 type: anime.updateType,
-                date: anime.lastUpdate,
+                date: anime.lastUpdate, // Guardamos la fecha/timestamp
                 seen: false,
                 isFinal: anime.isFinal || false
             };
@@ -64,7 +64,6 @@ function checkForNewUpdates() {
         if (notificationsHistory.length > 50) notificationsHistory = notificationsHistory.slice(0, 50);
         saveHistoryToStorage();
         
-        // LIMITAR A MAXIMO 5 POPUPS AL INICIO
         if (newItemsFound.length > 5) {
             newItemsFound = newItemsFound.slice(0, 5);
         }
@@ -93,19 +92,17 @@ function createPopupHTML(notif) {
         infoString = `${notif.blockName} - ${notif.epTitle}`;
     }
 
-    // --- LÓGICA DE COLORES ---
-    let badgeStyle = "background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%); color: #fff;"; // Morado
+    let badgeStyle = "background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%); color: #fff;";
     
     if (notif.type.includes("ESTRENO")) {
-        badgeStyle = "background: #ff0000; color: #fff; box-shadow: 0 0 10px rgba(255,0,0,0.5);"; // Rojo
+        badgeStyle = "background: #ff0000; color: #fff; box-shadow: 0 0 10px rgba(255,0,0,0.5);";
     } else if (notif.type.includes("PRÓXIMAMENTE")) {
-        badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;"; // Amarillo
+        badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;";
     }
 
-    // --- LÓGICA IMAGEN FINAL ---
     let finalImgHTML = '';
     if (notif.isFinal) {
-        // AJUSTE: bottom: 15px (Subido más arriba)
+        // Mantengo el ajuste de altura que te gustó (15px)
         finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: 15px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
     }
 
@@ -161,7 +158,7 @@ function toggleNotifMenu() {
     isMenuOpen = !isMenuOpen;
     if (isMenuOpen) {
         menu.classList.add('active');
-        renderNotificationList();
+        renderNotificationList(); // Al abrir, renderiza con el nuevo orden
         document.getElementById('notifBadge').style.display = 'none';
     } else {
         menu.classList.remove('active');
@@ -185,7 +182,10 @@ function renderNotificationList() {
         return;
     }
 
-    notificationsHistory.forEach(item => {
+    // --- CAMBIO AQUÍ: Ordenar por fecha descendente (Más reciente primero) ---
+    const sortedHistory = [...notificationsHistory].sort((a, b) => b.date - a.date);
+
+    sortedHistory.forEach(item => {
         const div = document.createElement('div');
         div.className = 'notif-item';
         
@@ -194,14 +194,13 @@ function renderNotificationList() {
             infoString = `${item.blockName} - ${item.epTitle}`;
         }
 
-        let smallBadgeStyle = "color: #8c52ff;"; // Morado
+        let smallBadgeStyle = "color: #8c52ff;";
         if (item.type.includes("ESTRENO")) {
-            smallBadgeStyle = "color: #ff4757; font-weight: 800;"; // Rojo
+            smallBadgeStyle = "color: #ff4757; font-weight: 800;";
         } else if (item.type.includes("PRÓXIMAMENTE")) {
-            smallBadgeStyle = "color: #f1c40f; font-weight: 800;"; // Amarillo
+            smallBadgeStyle = "color: #f1c40f; font-weight: 800;";
         }
 
-        // Etiqueta FINAL en rojo en la lista
         let finalLabel = "";
         if (item.isFinal) {
             finalLabel = `<span style="color: #ff0000; font-weight: 800; margin-left: 6px;">FINAL</span>`;
