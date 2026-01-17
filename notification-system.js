@@ -34,9 +34,9 @@ function checkForNewUpdates() {
 
     let newItemsFound = [];
     updatedAnimes.forEach(anime => {
-        // FILTRO: No mostrar actualizaciones menores ni la opción "Ninguna"
+        // FILTRO: No mostrar actualizaciones menores ni "Ninguna"
         if (anime.updateType.includes("ACTUALIZACIÓN")) return;
-        if (anime.updateType === "Ninguna") return; // Si es "Ninguna", no notificar
+        if (anime.updateType === "Ninguna") return; 
 
         const notifId = `${anime.id}_${anime.lastUpdate}`;
         const exists = notificationsHistory.find(n => n.notifId === notifId);
@@ -105,8 +105,8 @@ function createPopupHTML(notif) {
     // --- LÓGICA IMAGEN FINAL ---
     let finalImgHTML = '';
     if (notif.isFinal) {
-        // AJUSTE REALIZADO AQUÍ: bottom: 40px (antes era -15px)
-        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
+        // AJUSTE: bottom: 15px (Subido más arriba)
+        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: 15px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
     }
 
     modal.innerHTML = `
