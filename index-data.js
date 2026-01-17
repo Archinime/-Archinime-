@@ -1010,12 +1010,12 @@ const animes = [
             "Romance",
             "Shōjo"
         ],
-        "lastUpdate": 1768678841747,
+        "lastUpdate": 1768678905514,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "akujiki1.jpg",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 10",
-        "isFinal": false,
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true,
         "aliases": [
             "Pass the Monster Meat, Milady!"
         ]
