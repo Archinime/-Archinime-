@@ -924,11 +924,11 @@ const animes = [
             "Romance",
             "Seinen"
         ],
-        "lastUpdate": 1768672174888,
-        "updateType": "ACTUALIZACIÓN 🛠️",
+        "lastUpdate": 1768672215669,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/en905hoqulm0ih9epmjcf/almachan1.jpg?rlkey=dm7s8l0lhplo8eshfsgj7fdyk&st=ji8mmsmi&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 9",
+        "latestEpTitle": "Capítulo 11",
         "aliases": [
             "Alma-chan Wants to Be a Family!"
         ]
