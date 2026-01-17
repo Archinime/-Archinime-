@@ -7997,6 +7997,16 @@ const players = {
                 "link": "https://drive.google.com/file/d/158rWtg19QvAQ1qpZnQqVIsuIGVFxZmmH/preview",
                 "link2": "",
                 "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1kQ5-b1U_oJnir8s1wkDYeNJFO5JmRAJ8/preview",
+                "link2": "",
+                "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1plb6Vf885qwzHicIQyWRxRrICux3rX5q/preview",
+                "link2": "",
+                "title": "Alma-chan wa Kazoku ni Naritai T1 Cap 11"
             }
         }
     },
