@@ -86,8 +86,8 @@ const animes = [
             "Romance",
             "Seinen"
         ],
-        "lastUpdate": 1768679209491,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1768680632384,
+        "updateType": "Ninguna",
         "latestSeasonCover": "mushoku22.jpg",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 24",
