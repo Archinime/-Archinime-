@@ -896,6 +896,12 @@ const animes = [
             "Slice of Life",
             "Seinen"
         ],
+        "lastUpdate": 1768678787339,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/tmonp4atoj90k87ojxtdf/Airbrush-IMAGE-ENHANCER-1763472470283-1763472470284.jpg?rlkey=ctc7gslr2ttsotj67parqf8ai&st=n96z3g28&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false,
         "aliases": [
             "Solo Camping for Two"
         ]
