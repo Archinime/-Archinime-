@@ -214,6 +214,9 @@ function showCMS() {
     document.getElementById('cmsContent').style.display = 'grid';
     document.getElementById('userAvatarImg').src = currentUserAvatar;
     document.getElementById('userNameDisplay').innerText = currentUserNick;
+    
+    // Inyectar el selector de Estado si no existe
+    injectStateSelect();
 }
 
 function showLogin() {
@@ -232,6 +235,46 @@ function logout() {
 // ============================================
 // LÓGICA DE INTERFAZ Y FORMULARIO
 // ============================================
+
+// Función para inyectar el Bloque de Estado dinámicamente
+function injectStateSelect() {
+    if(document.getElementById('estadoAnime')) return; 
+    
+    const genresContainer = document.getElementById('genresContainer');
+    if(!genresContainer) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.style.marginBottom = "25px";
+    wrapper.innerHTML = `
+        <h2><i class="fas fa-fire"></i> Estado del Anime</h2>
+        <select id="estadoAnime" onchange="requestPreviewUpdate()">
+            <option value="ESTRENO 🚨" selected>ESTRENO 🚨</option>
+            <option value="NUEVO 🔥">NUEVO 🔥</option>
+            <option value="PRÓXIMAMENTE ⏳">PRÓXIMAMENTE ⏳</option>
+        </select>
+    `;
+    
+    // Insertar antes del contenedor de géneros (que suele estar después de demografía)
+    // O mejor, insertarlo antes de la sinopsis o demografía si se prefiere, 
+    // pero aquí lo pondremos antes de Géneros para que sea visible.
+    genresContainer.parentNode.insertBefore(wrapper, genresContainer);
+    
+    // Aplicar estilos del select para que coincida con el CSS
+    const sel = document.getElementById('estadoAnime');
+    sel.style.width = "100%";
+    sel.style.padding = "14px 16px";
+    sel.style.background = "#181920";
+    sel.style.border = "1px solid #2a2b35";
+    sel.style.color = "white";
+    sel.style.borderRadius = "12px";
+    sel.style.fontSize = "16px";
+    sel.style.appearance = "none";
+    sel.style.backgroundImage = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b8d96'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E\")";
+    sel.style.backgroundRepeat = "no-repeat";
+    sel.style.backgroundPosition = "right 15px center";
+    sel.style.backgroundSize = "16px";
+}
+
 const genresList = [
     "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", 
     "Comedia oscura", "Cosplay", "Cyberpunk", "Deducción Social", "Deportivo", 
@@ -242,7 +285,7 @@ const genresList = [
     "Policial", "Post-apocalíptico", "Psicológico", "Reverse Harem", "Romance", "RPG", 
     "Slice of Life", "Sobrenatural", "Steampunk", "Superhéroes", "Survival", 
     "Survival Game", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
-    "Thriller psicológico", "Tokusatsu", "Tragedia", "Yaoi", "Yuri"
+    "Thriller psicológico", "Tokusatsu", "Tragedia", "Yaoi", "Yuri", "Seijin"
 ];
 
 const gContainer = document.getElementById('genresContainer');
@@ -252,7 +295,7 @@ genresList.forEach(g => {
     gContainer.appendChild(label);
 });
 
-// Actualizar lista de demografías en el CMS también si es necesario, aunque en HTML es un select
+// Actualizar demografías
 const demoSelectCMS = document.getElementById('demografiaAnime');
 if(demoSelectCMS) {
     demoSelectCMS.innerHTML = `
@@ -320,14 +363,12 @@ function smartLinkConvert(input) {
         }
     }
     
-    // Si cambió el link, forzamos la re-verificación inmediata para quitar el error
+    // Si cambió el link, forzamos la re-verificación inmediata
     if(changed) {
         if(input.id === 'portadaAnime') {
             checkCoverVisual(input);
         } else if (input.classList.contains('m-url')) {
             updateAudioPreview(input);
-        } else if (input.classList.contains('s-img')) {
-            // Si es imagen de temporada
         }
         requestPreviewUpdate();
     }
@@ -450,7 +491,7 @@ function addSeason(data = null) {
         <div class="row-flex">
             <div class="col-flex">
                 <label>Cant. Capítulos</label>
-                <input type="number" class="s-count" min="1" onchange="renderChapters(this)">
+                <input type="number" class="s-count" min="1" onchange="renderChapters(this); checkAutoState();">
             </div>
             <div class="col-flex">
                 <label>Numeración</label>
@@ -489,6 +530,31 @@ function addSeason(data = null) {
         renderChapters(countInp, data.eps);
     }
     requestPreviewUpdate();
+    checkAutoState();
+}
+
+function checkAutoState() {
+    const stateSel = document.getElementById('estadoAnime');
+    if(!stateSel) return;
+    
+    // Si el usuario eligió Próximamente manualmente, tratamos de respetar,
+    // pero la petición dice "automáticamente el bloque... se pondrá la opción...".
+    // Así que calculamos siempre que se cambie algo.
+    
+    let totalCaps = 0;
+    document.querySelectorAll('.s-count').forEach(inp => {
+        const val = parseInt(inp.value);
+        if(!isNaN(val) && !inp.disabled) totalCaps += val;
+        // Peliculas/OVAs suelen ser 1 cap, el input está disabled pero value=1
+        if(inp.disabled) totalCaps += 1;
+    });
+
+    if (totalCaps === 1) {
+        stateSel.value = "ESTRENO 🚨";
+    } else if (totalCaps > 1) {
+        stateSel.value = "NUEVO 🔥";
+    }
+    // Si totalCaps es 0 o indefinido, no tocamos (podría ser Próximamente)
 }
 
 function moveSeason(btn, direction) {
@@ -511,6 +577,7 @@ function moveSeason(btn, direction) {
 function removeSeasonBlock(btn) {
     btn.closest('.season-card').remove();
     updateAllBlockNames();
+    checkAutoState();
     requestPreviewUpdate();
     document.querySelectorAll('.season-card').forEach((card, idx) => {
         const color = colorPalette[idx % colorPalette.length];
@@ -550,6 +617,7 @@ function handleSeasonTypeChange(select) {
     }
     if(!select.dataset.loading) updateAllBlockNames();
     if(countInput.value) renderChapters(countInput);
+    checkAutoState();
     requestPreviewUpdate();
 }
 
@@ -895,7 +963,7 @@ async function loadAnimeForEditing(id) {
 
         if(indexEntry && indexEntry.genres && indexEntry.genres.length > 0) {
             let loadedGenres = [...indexEntry.genres];
-            // Intentar detectar la demografía en los géneros guardados
+            // Detectar demografia
             const demoOptions = ["Gekiga", "Josei", "Kodomo", "Seijin", "Seinen", "Shōjo", "Shōnen"];
             const foundDemo = loadedGenres.find(g => demoOptions.includes(g));
             
@@ -903,7 +971,6 @@ async function loadAnimeForEditing(id) {
                 document.getElementById('demografiaAnime').value = foundDemo;
                 loadedGenres = loadedGenres.filter(g => g !== foundDemo);
             }
-            
             document.querySelectorAll('#genresContainer input').forEach(cb => {
                 cb.checked = loadedGenres.includes(cb.value);
             });
@@ -936,6 +1003,12 @@ async function loadAnimeForEditing(id) {
         checkCoverVisual(document.getElementById('portadaAnime'));
         requestPreviewUpdate();
         originalAnimeState = JSON.stringify(generateData());
+        
+        // Verificar estado si es edición (leer updateType anterior o dejar el defecto)
+        // Como no guardamos el estado explícito en details, lo dejaremos que el usuario lo vea
+        // o se recalcule. El usuario puede cambiarlo manualmente.
+        checkAutoState();
+        
         showToast("¡Datos cargados correctamente!");
     } catch(e) {
         console.error(e);
@@ -1025,6 +1098,12 @@ function generateData() {
     const ratingVal = parseFloat(iVal + "." + dVal);
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
+    
+    // Obtener estado seleccionado
+    let selectedState = "ESTRENO 🚨";
+    const stEl = document.getElementById('estadoAnime');
+    if(stEl) selectedState = stEl.value;
+
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
@@ -1037,7 +1116,8 @@ function generateData() {
         musica: [],
         temporadas: [],
         uploader: currentUserEmail, 
-        uploaderAvatar: currentUserAvatar
+        uploaderAvatar: currentUserAvatar,
+        estado: selectedState // Guardamos el estado en el objeto temporal
     };
     
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
@@ -1081,6 +1161,8 @@ function generateData() {
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
+        // Si hay episodios o es Próximamente (permitimos vacíos si es proximamente luego en validación, pero aquí creamos la estructura)
+        // La estructura interna requiere temporadas para visualización, si está vacío no crea temporada.
         if(eps.length > 0) {
             anime.temporadas.push({ num: globalOrder++, name: sName, type: sType, cover: card.querySelector('.s-img').value, eps: eps });
         }
@@ -1130,13 +1212,19 @@ async function subirAGithHub() {
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
     if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) return showToast("Valoración inválida", true);
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
-    if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
+    
+    // Validación de contenido: Si NO es Próximamente, exigimos capítulos.
+    if(nuevoAnime.estado !== 'PRÓXIMAMENTE ⏳') {
+        if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
+    }
+
     if(!confirm(`¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?`)) return;
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
     try {
         let FINAL_ID = nuevoAnime.id;
-        let UPDATE_LABEL = "NUEVO 🔥"; // Por defecto, si es nuevo (pero validaremos caps)
+        // Usamos el estado seleccionado manualmente
+        let UPDATE_LABEL = nuevoAnime.estado; 
 
         if (!isEditMode) {
             log("1/6 Calculando ID...");
@@ -1146,47 +1234,11 @@ async function subirAGithHub() {
             indexData.forEach(item => { if(item.id > maxId) maxId = item.id; });
             FINAL_ID = maxId + 1;
             log(`✅ ID: ${FINAL_ID}`);
-            
-            // --- NUEVA LÓGICA ESTRENO vs NUEVO ---
-            let totalEps = 0;
-            nuevoAnime.temporadas.forEach(s => totalEps += s.eps.length);
-            // Si solo hay 1 cap subido inicialmente -> ESTRENO
-            // Si hay 2 o más -> NUEVO (maratón o resubida)
-            if (totalEps === 1) {
-                UPDATE_LABEL = "ESTRENO 🚨";
-            } else {
-                UPDATE_LABEL = "NUEVO 🔥";
-            }
-            // -------------------------------------
-
         } else {
             log(`📝 Editando ID: ${FINAL_ID}`);
-            log("🔎 Analizando tipo de actualización...");
-            try {
-                const oldDetailFile = await getGithubFile(token, OWNER, REPO, 'anime-detail-data.js');
-                const oldDetailsObj = safeEval(oldDetailFile.content);
-                const oldAnimeData = oldDetailsObj[FINAL_ID];
-
-                if (oldAnimeData) {
-                    let oldTotalEps = 0;
-                    oldAnimeData.seasons.forEach(s => oldTotalEps += s.eps.length);
-                    let newTotalEps = 0;
-                    nuevoAnime.temporadas.forEach(s => newTotalEps += s.eps.length);
-                    // LÓGICA DE ETIQUETAS:
-                    // Si tiene más caps que antes -> NUEVO 🔥
-                    // Si es igual -> ACTUALIZACIÓN 🛠️
-                    if (newTotalEps > oldTotalEps) {
-                         UPDATE_LABEL = "NUEVO 🔥";
-                    } else {
-                        UPDATE_LABEL = "ACTUALIZACIÓN 🛠️";
-                    }
-                }
-            } catch (errCheck) {
-                console.warn("No se pudo comparar versiones", errCheck);
-                UPDATE_LABEL = "ACTUALIZACIÓN 🛠️";
-            }
-            log(`📢 Tipo de Evento: ${UPDATE_LABEL}`);
         }
+        
+        log(`📢 Tipo de Evento: ${UPDATE_LABEL}`);
 
         let lastSeasonCover = nuevoAnime.portada;
         let lastBlockName = "Novedad";
@@ -1279,3 +1331,5 @@ async function subirAGithHub() {
         showToast("Error crítico (ver log)", true);
     }
 }
+// Inicializar la inyección del select
+injectStateSelect();
