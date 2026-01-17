@@ -261,16 +261,6 @@ const data = {
                     }
                 ],
                 "name": "Temporada 2"
-            },
-            {
-                "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
-                "eps": [
-                    {
-                        "title": "Capítulo 1"
-                    }
-                ],
-                "name": "Temporada 3"
             }
         ]
     },
