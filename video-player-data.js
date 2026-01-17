@@ -5142,21 +5142,6 @@ const players = {
                 "link": "https://drive.google.com/file/d/1mZTQL9NIfph7nwjO6azHPxiqiRA2bwYr/preview",
                 "link2": "",
                 "title": "Gachiakuta T1 Cap 21"
-            },
-            "22": {
-                "link": "https://drive.google.com/file/d/1HlUO2m-fnviMwqDnRLqSZG-i7UUdvrBd/preview",
-                "link2": "",
-                "title": "Gachiakuta T1 Cap 22"
-            },
-            "23": {
-                "link": "https://drive.google.com/file/d/1HajgSC2IseIfa0Y7lATLz5yH9RFIZK9w/preview",
-                "link2": "",
-                "title": "Gachiakuta T1 Cap 23"
-            },
-            "24": {
-                "link": "https://drive.google.com/file/d/18yE8WBCAlRVxsRMzOORVIqVxrasySJC7/preview",
-                "link2": "",
-                "title": "Gachiakuta T1 Cap 24"
             }
         }
     },
