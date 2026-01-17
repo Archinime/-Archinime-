@@ -5576,21 +5576,6 @@ const players = {
                 "link": "https://drive.google.com/file/d/1yWORKhIieHho_ZIAvRH6alrP2bydgxOd/preview",
                 "link2": "",
                 "title": "One Punch-Man T3 Cap 4"
-            },
-            "5": {
-                "link": "https://drive.google.com/file/d/1OEf4ZR43NHYXPWnYFD3yvM8gbYS0xJBP/preview",
-                "link2": "",
-                "title": "One Punch-Man T3 Cap 5"
-            },
-            "6": {
-                "link": "https://drive.google.com/file/d/1JR3kJBrwnY2ZRIAFUzcmAYnzOTQSu04R/preview",
-                "link2": "",
-                "title": "One Punch-Man T3 Cap 6"
-            },
-            "7": {
-                "link": "https://drive.google.com/file/d/1wFwDvSYALipCddDFxMkcEyCbrGNT6vLE/preview",
-                "link2": "",
-                "title": "One Punch-Man T3 Cap 7"
             }
         }
     },
