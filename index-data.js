@@ -798,7 +798,12 @@ const animes = [
             "Drama",
             "Fantasía",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1768670274892,
+        "updateType": "ACTUALIZACIÓN 🛠️",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/mtki74k5zzzywfdegb4ir/dfffffg.jpg?rlkey=g563wasphqjhhyep83qnq548r&st=9uw7j6kq&raw=1",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 9"
     },
     {
         "id": 50,
