@@ -51,7 +51,8 @@ function checkForNewUpdates() {
                 epTitle: anime.latestEpTitle || "Nuevo Contenido", 
                 type: anime.updateType,
                 date: anime.lastUpdate,
-                seen: false 
+                seen: false,
+                isFinal: anime.isFinal || false // Leer si es FINAL
             };
             notificationsHistory.unshift(newNotif); 
             newItemsFound.push(newNotif);
@@ -91,13 +92,19 @@ function createPopupHTML(notif) {
     }
 
     // --- LÓGICA DE COLORES ---
-    let badgeStyle = "background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%); color: #fff;"; // Morado (NUEVO 🔥 / ACTUALIZACIÓN 🛠️)
+    let badgeStyle = "background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%); color: #fff;"; // Morado
     
     if (notif.type.includes("ESTRENO")) {
-        badgeStyle = "background: #ff0000; color: #fff; box-shadow: 0 0 10px rgba(255,0,0,0.5);"; // Rojo (ESTRENO 🚨)
+        badgeStyle = "background: #ff0000; color: #fff; box-shadow: 0 0 10px rgba(255,0,0,0.5);"; // Rojo
     } else if (notif.type.includes("PRÓXIMAMENTE")) {
-        // Fondo Amarillo, texto negro
-        badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;"; 
+        badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;"; // Amarillo
+    }
+
+    // --- LÓGICA IMAGEN FINAL ---
+    let finalImgHTML = '';
+    if (notif.isFinal) {
+        // Estilo inline para asegurar posicionamiento
+        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; right: -10px; top: 50%; transform: translateY(-50%); z-index: 100; width: 90px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));">`;
     }
 
     modal.innerHTML = `
@@ -110,7 +117,7 @@ function createPopupHTML(notif) {
                     <img src="${notif.seasonCover}" class="season-cover-img" title="${notif.blockName || 'Novedad'}">
                 </div>
                 <div class="event-badge" style="${badgeStyle}">${notif.type}</div>
-            </div>
+                ${finalImgHTML} </div>
             <div class="event-inner">
                  <div class="event-details">
                     <div class="event-title">${notif.title}</div>

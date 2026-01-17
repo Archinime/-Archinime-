@@ -215,8 +215,9 @@ function showCMS() {
     document.getElementById('userAvatarImg').src = currentUserAvatar;
     document.getElementById('userNameDisplay').innerText = currentUserNick;
     
-    // Inyectar el selector de Estado si no existe
+    // Inyectar elementos adicionales (Estado y Final)
     injectStateSelect();
+    injectFinalBlock();
 }
 
 function showLogin() {
@@ -253,13 +254,9 @@ function injectStateSelect() {
             <option value="PRÓXIMAMENTE ⏳">PRÓXIMAMENTE ⏳</option>
         </select>
     `;
-    
-    // Insertar antes del contenedor de géneros (que suele estar después de demografía)
-    // O mejor, insertarlo antes de la sinopsis o demografía si se prefiere, 
-    // pero aquí lo pondremos antes de Géneros para que sea visible.
     genresContainer.parentNode.insertBefore(wrapper, genresContainer);
     
-    // Aplicar estilos del select para que coincida con el CSS
+    // Estilos inline para asegurar consistencia
     const sel = document.getElementById('estadoAnime');
     sel.style.width = "100%";
     sel.style.padding = "14px 16px";
@@ -273,6 +270,65 @@ function injectStateSelect() {
     sel.style.backgroundRepeat = "no-repeat";
     sel.style.backgroundPosition = "right 15px center";
     sel.style.backgroundSize = "16px";
+}
+
+// Función para inyectar el Bloque "Final" antes de Música
+function injectFinalBlock() {
+    if(document.getElementById('finalToggle')) return;
+    
+    const musicContainer = document.getElementById('musicContainer');
+    // El contenedor de Musica tiene un H2 antes, buscamos el padre del contenedor y el elemento previo
+    if(!musicContainer) return;
+    const parent = musicContainer.parentNode; // editor-panel
+    
+    // Buscamos el H2 de música para insertar ANTES de él
+    // El H2 de música suele estar justo antes del musicContainer
+    const musicHeader = musicContainer.previousElementSibling;
+    
+    const wrapper = document.createElement('div');
+    wrapper.style.marginBottom = "25px";
+    wrapper.style.padding = "20px";
+    wrapper.style.background = "#131419";
+    wrapper.style.borderRadius = "16px";
+    wrapper.style.border = "1px solid #2a2b35";
+    wrapper.style.display = "flex";
+    wrapper.style.alignItems = "center";
+    wrapper.style.justifyContent = "space-between";
+
+    wrapper.innerHTML = `
+        <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:10px;">
+            <i class="fas fa-flag-checkered" style="color:var(--accent)"></i> MARCAR COMO FINAL
+        </div>
+        <label class="switch" style="margin:0; width:auto; background:none; border:none;">
+            <input type="checkbox" id="finalToggle">
+            <span class="slider round" style="position:relative; display:inline-block; width:50px; height:26px; background-color:#333; border-radius:34px; transition:.4s;">
+                <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background-color:white; border-radius:50%; transition:.4s;" id="sliderCircle"></span>
+            </span>
+        </label>
+    `;
+    
+    // Lógica visual del toggle (hack rápido inline)
+    const checkbox = wrapper.querySelector('#finalToggle');
+    const slider = wrapper.querySelector('.slider');
+    const circle = wrapper.querySelector('#sliderCircle');
+    
+    checkbox.addEventListener('change', () => {
+        if(checkbox.checked) {
+            slider.style.backgroundColor = "#00f0ff";
+            circle.style.transform = "translateX(24px)";
+        } else {
+            slider.style.backgroundColor = "#333";
+            circle.style.transform = "translateX(0)";
+        }
+        requestPreviewUpdate();
+    });
+
+    // Insertar antes del título de música (o del container si no encuentra título)
+    if (musicHeader && musicHeader.tagName === 'H2') {
+        parent.insertBefore(wrapper, musicHeader);
+    } else {
+        parent.insertBefore(wrapper, musicContainer);
+    }
 }
 
 const genresList = [
@@ -528,6 +584,8 @@ function addSeason(data = null) {
         countInp.value = data.eps.length;
         renderChapters(countInp, data.eps);
     }
+    // Aseguramos que se actualicen los nombres automáticamente al agregar
+    updateAllBlockNames();
     requestPreviewUpdate();
     checkAutoState();
 }
@@ -535,10 +593,6 @@ function addSeason(data = null) {
 function checkAutoState() {
     const stateSel = document.getElementById('estadoAnime');
     if(!stateSel) return;
-    
-    // Si el usuario eligió Próximamente manualmente, tratamos de respetar,
-    // pero la petición dice "automáticamente el bloque... se pondrá la opción...".
-    // Así que calculamos siempre que se cambie algo.
     
     let totalCaps = 0;
     document.querySelectorAll('.s-count').forEach(inp => {
@@ -548,12 +602,14 @@ function checkAutoState() {
         if(inp.disabled) totalCaps += 1;
     });
 
-    if (totalCaps === 1) {
-        stateSel.value = "ESTRENO 🚨";
-    } else if (totalCaps > 1) {
-        stateSel.value = "NUEVO 🔥";
+    // Solo cambiamos automáticamente si no está en Próximamente (para respetar si el user lo puso)
+    if (stateSel.value !== 'PRÓXIMAMENTE ⏳') {
+        if (totalCaps === 1) {
+            stateSel.value = "ESTRENO 🚨";
+        } else if (totalCaps > 1) {
+            stateSel.value = "NUEVO 🔥";
+        }
     }
-    // Si totalCaps es 0 o indefinido, no tocamos (podría ser Próximamente)
 }
 
 function moveSeason(btn, direction) {
@@ -588,18 +644,36 @@ function removeSeasonBlock(btn) {
 function updateAllBlockNames() {
     const cards = document.querySelectorAll('.season-card');
     let tempCount = 0, movieCount = 0, ovaCount = 0, specialCount = 0, spinOffCount = 0;
+    
+    // Iteramos en orden del DOM para asignar nombres secuenciales
     cards.forEach(card => {
         const typeSelect = card.querySelector('.s-type');
         const nameInput = card.querySelector('.s-name');
         const type = typeSelect.value;
         if (!type) return;
+        
         nameInput.disabled = (type !== 'Spin-Off');
-        if(!isEditMode) { 
+        
+        // CORRECCION: Rellenar siempre si es automático (disabled) o está vacío
+        // Esto permite que al reordenar se actualicen los números (Temp 1, Temp 2...)
+        if (nameInput.disabled || nameInput.value.trim() === "") {
              if (type === 'Temporada') { tempCount++; nameInput.value = `Temporada ${tempCount}`; }
-             else if (type === 'Spin-Off') { spinOffCount++; if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; }
              else if (type === 'Pelicula') { movieCount++; nameInput.value = `Película ${movieCount}`; }
              else if (type === 'OVA') { ovaCount++; nameInput.value = `OVA ${ovaCount}`; }
              else if (type === 'Especial') { specialCount++; nameInput.value = `Especial ${specialCount}`; }
+             else if (type === 'Spin-Off') { 
+                 spinOffCount++; 
+                 // Solo ponemos nombre por defecto si está vacío, el SpinOff es editable
+                 if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
+             }
+        } else {
+             // Si el usuario escribió un nombre personalizado en un Spin-Off, no lo tocamos.
+             // Pero sí incrementamos los contadores para que los siguientes sigan la secuencia correcta si fuera necesario.
+             if (type === 'Temporada') tempCount++;
+             else if (type === 'Pelicula') movieCount++;
+             else if (type === 'OVA') ovaCount++;
+             else if (type === 'Especial') specialCount++;
+             else if (type === 'Spin-Off') spinOffCount++;
         }
     });
 }
@@ -614,7 +688,10 @@ function handleSeasonTypeChange(select) {
     } else {
         countInput.disabled = false;
     }
-    if(!select.dataset.loading) updateAllBlockNames();
+    
+    // Forzar actualización inmediata de nombres al cambiar tipo
+    updateAllBlockNames();
+    
     if(countInput.value) renderChapters(countInput);
     checkAutoState();
     requestPreviewUpdate();
@@ -999,13 +1076,23 @@ async function loadAnimeForEditing(id) {
         document.getElementById('musicContainer').innerHTML = '';
         targetMusic.forEach(url => addMusic(url));
 
+        // Cargar estado de "FINAL" si existe en indexEntry
+        if(indexEntry && indexEntry.isFinal) {
+            const toggle = document.getElementById('finalToggle');
+            if(toggle) {
+                toggle.checked = true;
+                const evt = new Event('change');
+                toggle.dispatchEvent(evt); // Forzar actualizacion visual
+            }
+        } else {
+             const toggle = document.getElementById('finalToggle');
+             if(toggle) { toggle.checked = false; toggle.dispatchEvent(new Event('change')); }
+        }
+
         checkCoverVisual(document.getElementById('portadaAnime'));
         requestPreviewUpdate();
         originalAnimeState = JSON.stringify(generateData());
         
-        // Verificar estado si es edición (leer updateType anterior o dejar el defecto)
-        // Como no guardamos el estado explícito en details, lo dejaremos que el usuario lo vea
-        // o se recalcule. El usuario puede cambiarlo manualmente.
         checkAutoState();
         
         showToast("¡Datos cargados correctamente!");
@@ -1098,10 +1185,14 @@ function generateData() {
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
     
-    // Obtener estado seleccionado
     let selectedState = "ESTRENO 🚨";
     const stEl = document.getElementById('estadoAnime');
     if(stEl) selectedState = stEl.value;
+
+    // Obtener estado FINAL
+    let isFinal = false;
+    const finalTog = document.getElementById('finalToggle');
+    if(finalTog) isFinal = finalTog.checked;
 
     const anime = {
         id: isEditMode ? currentEditingId : 0, 
@@ -1116,7 +1207,8 @@ function generateData() {
         temporadas: [],
         uploader: currentUserEmail, 
         uploaderAvatar: currentUserAvatar,
-        estado: selectedState // Guardamos el estado en el objeto temporal
+        estado: selectedState,
+        isFinal: isFinal // Guardar booleano de Final
     };
     
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
@@ -1160,8 +1252,6 @@ function generateData() {
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
-        // Si hay episodios o es Próximamente (permitimos vacíos si es proximamente luego en validación, pero aquí creamos la estructura)
-        // La estructura interna requiere temporadas para visualización, si está vacío no crea temporada.
         if(eps.length > 0) {
             anime.temporadas.push({ num: globalOrder++, name: sName, type: sType, cover: card.querySelector('.s-img').value, eps: eps });
         }
@@ -1212,7 +1302,6 @@ async function subirAGithHub() {
     if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) return showToast("Valoración inválida", true);
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
     
-    // Validación de contenido: Si NO es Próximamente, exigimos capítulos.
     if(nuevoAnime.estado !== 'PRÓXIMAMENTE ⏳') {
         if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
     }
@@ -1222,7 +1311,6 @@ async function subirAGithHub() {
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
     try {
         let FINAL_ID = nuevoAnime.id;
-        // Usamos el estado seleccionado manualmente
         let UPDATE_LABEL = nuevoAnime.estado; 
 
         if (!isEditMode) {
@@ -1273,7 +1361,8 @@ async function subirAGithHub() {
                 updateType: UPDATE_LABEL, 
                 latestSeasonCover: lastSeasonCover, 
                 latestBlockName: lastBlockName,     
-                latestEpTitle: lastEpTitle          
+                latestEpTitle: lastEpTitle,
+                isFinal: nuevoAnime.isFinal // Guardar propiedad isFinal
             };
             if(nuevoAnime.aliases.length > 0) newIndexEntry.aliases = nuevoAnime.aliases;
             const existingIdx = indexList.findIndex(x => x.id === FINAL_ID);
@@ -1330,5 +1419,6 @@ async function subirAGithHub() {
         showToast("Error crítico (ver log)", true);
     }
 }
-// Inicializar la inyección del select
+// Inicializar la inyección
 injectStateSelect();
+injectFinalBlock();
