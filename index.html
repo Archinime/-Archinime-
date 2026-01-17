@@ -4,7 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Archinime</title>
+  
   <link rel="icon" href="Logo_Archinime.avif" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8c52ff">
+  
   <link rel="preload" as="image" href="videoframe.jpg">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles-index.css">
@@ -30,17 +34,23 @@
       </span>
     </h1>
 
-    <div class="notif-wrapper">
-        <button id="notifBtn" class="notif-bell-btn" onclick="toggleNotifMenu()">
-            <i class="fas fa-bell"></i>
-            <span id="notifBadge" class="notif-badge" style="display:none"></span>
+    <div class="header-actions">
+        <button id="installBtn" class="nav-icon-btn install-pulse" style="display:none;" title="Instalar App">
+            <i class="fas fa-download"></i>
         </button>
-        <div id="notifMenu" class="notif-dropdown">
-            <div class="notif-header">
-                <span style="width: 100%; text-align: center;">Notificaciones</span>
-            </div>
-            <div id="notifList" class="notif-list">
-                <div class="empty-notif">Sin novedades por ahora.</div>
+
+        <div class="notif-wrapper">
+            <button id="notifBtn" class="nav-icon-btn" onclick="toggleNotifMenu()">
+                <i class="fas fa-bell"></i>
+                <span id="notifBadge" class="notif-badge" style="display:none"></span>
+            </button>
+            <div id="notifMenu" class="notif-dropdown">
+                <div class="notif-header">
+                    <span style="width: 100%; text-align: center;">Notificaciones</span>
+                </div>
+                <div id="notifList" class="notif-list">
+                    <div class="empty-notif">Sin novedades por ahora.</div>
+                </div>
             </div>
         </div>
     </div>
@@ -116,13 +126,30 @@
     </svg>
   </div>
 
+  <div id="iosInstallModal" class="ios-modal">
+      <div class="ios-content">
+          <span class="ios-close" onclick="closeIosModal()">&times;</span>
+          <p>Para instalar <strong>Archinime</strong> en tu iPhone/iPad:</p>
+          <p>1. Pulsa el botón <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
+          <p>2. Selecciona <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
+      </div>
+  </div>
+
   <script src="index-data.js"></script>
   <script src="animaciones.js"></script>
   <script src="musica_fondo.js"></script>
-  
   <script src="notification-system.js"></script>
-  
   <script src="script-index.js"></script>
+  <script src="pwa-handler.js"></script> <script>
+      // Registrar Service Worker
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('sw.js')
+                  .then(registration => console.log('SW registrado: ', registration.scope))
+                  .catch(err => console.log('SW fallo: ', err));
+          });
+      }
+  </script>
 
 </body>
 </html>

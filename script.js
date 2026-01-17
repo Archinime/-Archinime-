@@ -9,24 +9,20 @@ const firebaseConfig = {
     messagingSenderId: "938164660242",
     appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
 };
-// USUARIOS PERMITIDOS (Super Admins)
 const ALLOWED_USERS = [
     "archinime12@gmail.com", 
     "alejandroarchi12@gmail.com",
     "lucioguapofeo@gmail.com",
 ];
-// CONFIGURACIÓN GITHUB
 const OWNER = "Archinime";
 const REPO = "-Archinime-";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-// FORZAR CIERRE DE SESIÓN AL CERRAR PESTAÑA
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 let currentUserToken = null;
 let globalUsersData = {};
-// VARIABLES DE ESTADO
 let isEditMode = false;
 let currentEditingId = null;
 let cachedIndex = [];
@@ -34,13 +30,11 @@ let searchTimeout = null;
 let previewTimeout = null;
 let originalAnimeState = null;
 
-// DATOS DEL USUARIO ACTUAL
 let currentUserNick = "Usuario"; 
 let currentUserAvatar = "Logo_Archinime.avif";
 let currentUserEmail = "";
-
-// Variable para el modo de búsqueda ('mine' o 'general')
 let currentSearchMode = 'mine';
+
 // ============================================
 // AUTENTICACIÓN
 // ============================================
@@ -73,7 +67,6 @@ function signInWithGitHub() {
 async function checkAccess(user) {
     const email = user.email;
     currentUserEmail = email;
-    
     const errText = document.getElementById('errorText');
     if(errText) errText.innerText = "Verificando base de datos...";
     const logErr = document.getElementById('loginError');
@@ -162,10 +155,8 @@ async function saveUserProfile() {
     const logEl = document.getElementById('profileLog');
     const btn = document.getElementById('btnSaveProfile');
     
-    if(!nick) { alert("Debes elegir un nombre de usuario.");
-        return; }
-    if(!avatar) { alert("Debes colocar una URL de avatar."); return;
-    }
+    if(!nick) { alert("Debes elegir un nombre de usuario."); return; }
+    if(!avatar) { alert("Debes colocar una URL de avatar."); return; }
 
     if (nick.toLowerCase().includes("archinime")) {
         if (currentUserEmail !== "archinime12@gmail.com") {
@@ -255,8 +246,7 @@ function showToast(msg, isError = false) {
     x.innerHTML = isError ?
     `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
-    x.style.borderColor = isError ?
-    "#ff4757" : "var(--accent)";
+    x.style.borderColor = isError ? "#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
 }
 
@@ -285,7 +275,6 @@ function log(msg) {
     el.scrollTop = el.scrollHeight;
 }
 
-// CONVERSOR DE LINKS
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
@@ -303,7 +292,6 @@ function smartLinkConvert(input) {
             showToast("Link Drive convertido a /preview");
         }
     }
-
     if(changed && input.id === 'portadaAnime') {
         checkCoverVisual(input);
         requestPreviewUpdate();
@@ -357,7 +345,6 @@ function addAlias(value = "") {
     requestPreviewUpdate();
 }
 
-// AUDIO PLAYER
 function addMusic(url = "") {
     const container = document.getElementById('musicContainer');
     const div = document.createElement('div');
@@ -391,20 +378,14 @@ function updateAudioPreview(input) {
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
-// SEASONS & CHAPTERS - PALETA DE COLORES
-const colorPalette = [
-    '#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'
-];
+const colorPalette = ['#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'];
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
     div.className = 'season-card';
     const count = document.querySelectorAll('.season-card').length;
     const color = colorPalette[count % colorPalette.length];
-    div.style.cssText = `
-        border-left: 4px solid ${color};
-        background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);
-    `;
+    div.style.cssText = `border-left: 4px solid ${color}; background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);`;
     div.innerHTML = `
         <div class="card-controls">
             <button class="btn-move" onclick="moveSeason(this, -1)" title="Mover Atrás/Arriba"><i class="fas fa-arrow-up"></i></button>
@@ -430,7 +411,6 @@ function addSeason(data = null) {
         </div>
         <label>Poster Bloque</label>
         <input type="text" class="s-img" placeholder="https://..." oninput="requestPreviewUpdate()" onblur="smartLinkConvert(this)">
-        
         <div class="row-flex">
             <div class="col-flex">
                 <label>Cant. Capítulos</label>
@@ -444,7 +424,6 @@ function addSeason(data = null) {
                 </select>
             </div>
         </div>
-
         <div class="chapters-grid" style="margin-top:20px;"></div>
     `;
     container.appendChild(div);
@@ -461,19 +440,14 @@ function addSeason(data = null) {
         const nameInp = div.querySelector('.s-name');
         nameInp.value = data.name;
         div.querySelector('.s-img').value = data.cover;
-        
         handleSeasonTypeChange(typeSel);
-        // Lógica para detectar si empieza en 0
+        
         const startSel = div.querySelector('.s-start-index');
         if(data.eps && data.eps.length > 0) {
             const firstTitle = data.eps[0].title || "";
-            if(firstTitle.includes(" 0") || firstTitle.includes("Capítulo 0")) {
-                startSel.value = "0";
-            } else {
-                startSel.value = "1";
-            }
+            if(firstTitle.includes(" 0") || firstTitle.includes("Capítulo 0")) startSel.value = "0";
+            else startSel.value = "1";
         }
-
         const countInp = div.querySelector('.s-count');
         countInp.value = data.eps.length;
         renderChapters(countInp, data.eps);
@@ -517,26 +491,13 @@ function updateAllBlockNames() {
         const nameInput = card.querySelector('.s-name');
         const type = typeSelect.value;
         if (!type) return;
-
         nameInput.disabled = (type !== 'Spin-Off');
-
         if(!isEditMode) { 
-             if (type === 'Temporada') {
-                tempCount++;
-                nameInput.value = `Temporada ${tempCount}`;
-            } else if (type === 'Spin-Off') {
-                spinOffCount++;
-                if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; 
-            } else if (type === 'Pelicula') {
-                movieCount++;
-                nameInput.value = `Película ${movieCount}`;
-            } else if (type === 'OVA') {
-                ovaCount++;
-                nameInput.value = `OVA ${ovaCount}`;
-            } else if (type === 'Especial') {
-                specialCount++;
-                nameInput.value = `Especial ${specialCount}`;
-            }
+             if (type === 'Temporada') { tempCount++; nameInput.value = `Temporada ${tempCount}`; }
+             else if (type === 'Spin-Off') { spinOffCount++; if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`; }
+             else if (type === 'Pelicula') { movieCount++; nameInput.value = `Película ${movieCount}`; }
+             else if (type === 'OVA') { ovaCount++; nameInput.value = `OVA ${ovaCount}`; }
+             else if (type === 'Especial') { specialCount++; nameInput.value = `Especial ${specialCount}`; }
         }
     });
 }
@@ -562,12 +523,10 @@ function renderChapters(input, existingEps = []) {
     const type = typeSelect ? typeSelect.value : "";
     const countInput = card.querySelector('.s-count');
     const count = parseInt(countInput.value);
-    // Obtener valor del selector de inicio (0 o 1)
     const startSel = card.querySelector('.s-start-index');
     const startNum = startSel ? parseInt(startSel.value) : 1;
 
     const list = card.querySelector('.chapters-grid');
-    // Guardar datos actuales
     let currentData = [];
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
@@ -595,12 +554,9 @@ function renderChapters(input, existingEps = []) {
              customTitle = currentData[i].title;
         }
 
-        // Calcular número a mostrar
         let currentNum = startNum + i;
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
-        let titlePlaceholder = titleInputDisabled ?
-        `Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
-        
+        let titlePlaceholder = titleInputDisabled ? `Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${currentNum}`;
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${currentNum}</span></div>
@@ -615,7 +571,6 @@ function renderChapters(input, existingEps = []) {
     requestPreviewUpdate();
 }
 
-// THROTTLE PARA VISTA PREVIA (ANTI-LAG)
 function requestPreviewUpdate() {
     if (!previewTimeout) {
         previewTimeout = requestAnimationFrame(() => {
@@ -630,7 +585,6 @@ function checkForChanges() {
     if (!isEditMode) return;
     const btn = document.getElementById('btnSaveAction');
     if (!originalAnimeState) return;
-    // Comparar estado actual vs original
     const currentState = JSON.stringify(generateData());
     if (currentState !== originalAnimeState) {
         if (btn.disabled && !btn.innerHTML.includes("BLOQUEADA")) {
@@ -702,9 +656,6 @@ function updateWebPreview() {
     }
 }
 
-// ============================================
-// API GITHUB Y PARSEO SEGURO
-// ============================================
 async function getGithubFile(token, owner, repo, path) {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     const response = await fetch(url, {
@@ -747,17 +698,11 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
     if (!response.ok) throw new Error(`Error subiendo ${path}`);
 }
 
-// ============================================
-// CARGA Y EDICIÓN (CON PESTAÑAS)
-// ============================================
 function openSearchModal() {
     document.getElementById('searchModal').style.display = 'flex';
     document.getElementById('searchInput').value = ""; 
     document.getElementById('searchResults').innerHTML = "";
-    
-    // Default a 'mine' al abrir
     switchSearchTab('mine');
-
     if(cachedIndex.length === 0) loadIndexForSearch();
     else filterSearch();
 }
@@ -774,11 +719,8 @@ function closeSearchModal() {
 
 function switchSearchTab(mode) {
     currentSearchMode = mode;
-    // Update visual
     document.getElementById('tabMine').className = mode === 'mine' ? 'tab-btn active' : 'tab-btn';
     document.getElementById('tabGeneral').className = mode === 'general' ? 'tab-btn active' : 'tab-btn';
-
-    // Refilter
     if(cachedIndex.length > 0) filterSearch();
 }
 
@@ -810,13 +752,9 @@ function _performFilter() {
     
     const filtered = cachedIndex.filter(a => {
         const matchesText = a.title.toLowerCase().includes(query);
-        const storedUploader = a.uploader || "Archinime";
-        
-        // CORREGIDO: Lógica estricta para "Mis Animes"
         if (currentSearchMode === 'mine') { 
-            return matchesText && (storedUploader === currentUserEmail || storedUploader === currentUserNick); 
+            return matchesText && (a.uploader === currentUserEmail || a.uploader === currentUserNick); 
         } else { 
-            // General: muestra todo
             return matchesText; 
         }
     }).slice(0, 1000);
@@ -828,13 +766,10 @@ function _performFilter() {
         let extraInfo = "";
         let displayNick = anime.uploader;
         let uploaderImg = "Logo_Archinime.avif"; 
-
-        // Intentar obtener foto/nombre del objeto global de usuarios
         if(globalUsersData[anime.uploader]) {
              displayNick = globalUsersData[anime.uploader].nick;
              uploaderImg = globalUsersData[anime.uploader].avatar;
         }
-
         if (currentSearchMode === 'general') { 
             extraInfo = ` | Subido por: <img src="${uploaderImg}" style="width:16px; height:16px; border-radius:50%; vertical-align:middle; margin:0 4px; object-fit:cover; border:1px solid #555;"> <span style="color:var(--primary)">${displayNick || "Desconocido"}</span>`; 
         }
@@ -842,30 +777,16 @@ function _performFilter() {
         div.innerHTML = `
             <img src="${anime.img}" class="s-result-img" onerror="this.src='https://via.placeholder.com/50'">
             <div>
-                <div style="font-weight:bold;
-color:#fff;">${anime.title}</div>
-                <div style="color:#777;
-font-size:0.8em">ID: ${anime.id}${extraInfo}</div>
+                <div style="font-weight:bold; color:#fff;">${anime.title}</div>
+                <div style="color:#777; font-size:0.8em">ID: ${anime.id}${extraInfo}</div>
             </div>
         `;
         results.appendChild(div);
     });
 
     if(filtered.length === 0) {
-        let emptyMsg = "";
-        if (currentSearchMode === 'mine') {
-            emptyMsg = `No se encontraron animes subidos por <b>${currentUserNick}</b>.`;
-        } else {
-            emptyMsg = "No se encontraron resultados en el catálogo general.";
-        }
-
-        results.innerHTML = `
-            <div style="padding:20px;
-color:#777; text-align:center">
-                <i class="fas fa-folder-open" style="font-size:2em;
-margin-bottom:10px;"></i><br>
-                ${emptyMsg}
-            </div>`;
+        let emptyMsg = currentSearchMode === 'mine' ? `No se encontraron animes subidos por <b>${currentUserNick}</b>.` : "No se encontraron resultados.";
+        results.innerHTML = `<div style="padding:20px; color:#777; text-align:center"><i class="fas fa-folder-open" style="font-size:2em; margin-bottom:10px;"></i><br>${emptyMsg}</div>`;
     }
 }
 
@@ -894,7 +815,6 @@ async function loadAnimeForEditing(id) {
         
         const editModeBar = document.getElementById('editModeBar');
         if(editModeBar) editModeBar.style.display = 'block';
-        // --- INYECCIÓN DEL BOTÓN DE ELIMINAR ---
         const existingDelBtn = document.getElementById('btnDeleteAnime');
         if(existingDelBtn) existingDelBtn.remove();
 
@@ -909,23 +829,13 @@ async function loadAnimeForEditing(id) {
         
         const editIdEl = document.getElementById('editIdDisplay');
         if(editIdEl) editIdEl.innerText = id;
-        
         const btnActEl = document.getElementById('btnActionText');
         if(btnActEl) btnActEl.innerText = "GUARDAR CAMBIOS";
-        // VERIFICACIÓN DE PROPIEDAD
-        const indexEntry = cachedIndex.find(x => x.id === id);
-        // Prioridad: 
-        // 1. detalle.uploader (email o nick)
-        // 2. index.uploader (email o nick)
-        // 3. "Archinime"
-        const storedUploader = targetDetail.uploader ||
-        (indexEntry ? indexEntry.uploader : "Archinime");
-        const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
         
-        const isOwner = (storedUploader === currentUserEmail) || 
-                        (storedUploader === currentUserNick) ||
-                        isSuperAdmin || 
-                        (currentUserNick === "Archinime");
+        const indexEntry = cachedIndex.find(x => x.id === id);
+        const storedUploader = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
+        const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
+        const isOwner = (storedUploader === currentUserEmail) || (storedUploader === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
 
         const saveBtn = document.getElementById('btnSaveAction');
         if (!isOwner) {
@@ -933,7 +843,6 @@ async function loadAnimeForEditing(id) {
             saveBtn.innerHTML = '<i class="fas fa-lock"></i> EDICIÓN BLOQUEADA (Solo Lectura)';
             showToast("Modo Lectura: No eres el autor de este anime", true);
         } else {
-            // Habilitado pero esperando cambios
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-check"></i> Sin cambios pendientes';
             saveBtn.style.opacity = '0.5';
@@ -942,7 +851,6 @@ async function loadAnimeForEditing(id) {
         document.getElementById('tituloAnime').value = targetDetail.title;
         document.getElementById('portadaAnime').value = targetDetail.cover;
         document.getElementById('sinopsisAnime').value = targetDetail.desc;
-        
         document.getElementById('aliasContainer').innerHTML = '';
         if(indexEntry && indexEntry.aliases) indexEntry.aliases.forEach(a => addAlias(a));
 
@@ -960,7 +868,6 @@ async function loadAnimeForEditing(id) {
                     loadedGenres = loadedGenres.filter(g => g !== foundDemo);
                 }
             }
-
             document.querySelectorAll('#genresContainer input').forEach(cb => {
                 cb.checked = loadedGenres.includes(cb.value);
             });
@@ -992,7 +899,6 @@ async function loadAnimeForEditing(id) {
 
         checkCoverVisual(document.getElementById('portadaAnime'));
         requestPreviewUpdate();
-        // Guardar estado original para comparar cambios
         originalAnimeState = JSON.stringify(generateData());
         showToast("¡Datos cargados correctamente!");
     } catch(e) {
@@ -1002,20 +908,10 @@ async function loadAnimeForEditing(id) {
     }
 }
 
-// -------------------------------------------------------------
-// BORRAR ANIME
-// -------------------------------------------------------------
 async function deleteCurrentAnime(idToDelete) {
-    if(currentUserEmail !== "archinime12@gmail.com") {
-        alert("Acción no permitida.");
-        return;
-    }
-
-    const confirm1 = confirm(`⚠️ PELIGRO ⚠️\n\nEstás a punto de ELIMINAR PERMANENTEMENTE el anime con ID: ${idToDelete}.\n\nEsta acción:\n1. Borrará el anime de todas las bases de datos.\n2. Reordenará TODOS los IDs superiores (Ej: el 71 pasará a ser el 70).\n\n¿Estás seguro?`);
-    if(!confirm1) return;
-
-    const confirm2 = confirm(`ÚLTIMA ADVERTENCIA.\n\nVas a eliminar el anime ID ${idToDelete}.\n¿Confirmar borrado y reordenamiento de base de datos?`);
-    if(!confirm2) return;
+    if(currentUserEmail !== "archinime12@gmail.com") { alert("Acción no permitida."); return; }
+    if(!confirm(`⚠️ PELIGRO ⚠️\n\n¿Eliminar anime ID: ${idToDelete}?`)) return;
+    if(!confirm(`ÚLTIMA ADVERTENCIA.\n¿Confirmar borrado?`)) return;
 
     showToast("Iniciando borrado masivo...", false);
     const token = currentUserToken;
@@ -1036,64 +932,42 @@ async function deleteCurrentAnime(idToDelete) {
 
         log("2/5 Procesando Index...");
         const newIndex = indexData.filter(item => item.id !== idToDelete).map(item => {
-            if (item.id > idToDelete) {
-                item.id = item.id - 1; 
-            }
+            if (item.id > idToDelete) item.id = item.id - 1; 
             return item;
         });
         log("3/5 Procesando Detalles y Player...");
-        
-        // Helper para reordenar objetos con claves numéricas
         const shiftObjectKeys = (obj) => {
             const newObj = {};
             const keys = Object.keys(obj).map(Number).sort((a,b) => a-b);
             keys.forEach(key => {
                 if (key === idToDelete) return; 
-                if (key > idToDelete) {
-                    newObj[key - 1] = obj[key]; 
-                } else {
-                    newObj[key] = obj[key]; 
-                }
+                if (key > idToDelete) newObj[key - 1] = obj[key]; 
+                else newObj[key] = obj[key]; 
             });
             return newObj;
         };
-
         const newDetail = shiftObjectKeys(detailData);
         const newPlayer = shiftObjectKeys(playerData);
         const newMusic = shiftObjectKeys(musicData);
 
         log("4/5 Subiendo cambios a GitHub...");
-        // Subir Index
-        await updateGithubFile(token, OWNER, REPO, 'index-data.js', () => {
-             return `const animes = ${JSON.stringify(newIndex, null, 4)};`;
-        });
-        // Subir Detalles
-        await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', () => {
-             return `const data = ${JSON.stringify(newDetail, null, 4)};`;
-        });
-        // Subir Player
-        await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', () => {
-             return `const players = ${JSON.stringify(newPlayer, null, 4)};`;
-        });
-        // Subir Música (CORREGIDO: usa audioPlaylists)
-        await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => {
-             return `const audioPlaylists = ${JSON.stringify(newMusic, null, 4)};`;
-        });
+        await updateGithubFile(token, OWNER, REPO, 'index-data.js', () => `const animes = ${JSON.stringify(newIndex, null, 4)};`);
+        await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', () => `const data = ${JSON.stringify(newDetail, null, 4)};`);
+        await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', () => `const players = ${JSON.stringify(newPlayer, null, 4)};`);
+        await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => `const audioPlaylists = ${JSON.stringify(newMusic, null, 4)};`);
         log("✅ ¡ELIMINADO Y REORDENADO CORRECTAMENTE!");
         
-        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
+        alert("✅ Cambios guardados correctamente.\nPor favor, cierra sesión.");
         highlightLogoutButton();
-        
         document.getElementById('editModeBar').style.display = 'none';
         document.getElementById('btnSaveAction').disabled = true;
         document.getElementById('btnSaveAction').innerText = "ELIMINADO";
     } catch(e) {
         console.error(e);
         log(`❌ ERROR FATAL: ${e.message}`);
-        alert("Error crítico durante el borrado. Revisa la consola.");
+        alert("Error crítico durante el borrado.");
     }
 }
-
 
 function exitEditMode() {
     isEditMode = false;
@@ -1107,9 +981,6 @@ function exitEditMode() {
     location.reload();
 }
 
-// ============================================
-// GENERACIÓN Y SUBIDA
-// ============================================
 function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
@@ -1119,10 +990,8 @@ function generateData() {
     const ratingVal = parseFloat(iVal + "." + dVal);
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
-    // Aquí capturamos la info del usuario actual
     const anime = {
-        id: isEditMode ?
-        currentEditingId : 0, 
+        id: isEditMode ? currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
         aliases: aliasList,
         portada: document.getElementById('portadaAnime').value.trim(),
@@ -1142,8 +1011,6 @@ function generateData() {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
         const sType = card.querySelector('.s-type').value;
-        
-        // Obtener la numeración de inicio
         const startSel = card.querySelector('.s-start-index');
         const startNum = startSel ? parseInt(startSel.value) : 1;
 
@@ -1156,10 +1023,7 @@ function generateData() {
             const lat = row.querySelector('.c-link-lat').value.trim();
             const sub = row.querySelector('.c-link-sub').value.trim();
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
-            let playerTitle = "", detailTitle = 
-            ""; 
-            
-            // Número actual del episodio basado en el inicio (0 o 1)
+            let playerTitle = "", detailTitle = ""; 
             let currentEpNum = startNum + idx;
             if (sType === 'Temporada') {
                 detailTitle = `Capítulo ${currentEpNum}`;
@@ -1168,39 +1032,27 @@ function generateData() {
                 detailTitle = `Capítulo ${currentEpNum}`;
                 playerTitle = `${anime.titulo} ${sName} Cap ${currentEpNum}`;
             } else if (sType === 'OVA') {
-                detailTitle = customTitleInput ||
-                sName;
+                detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} OVA ${ovaCountVP}` + (customTitleInput ? ` "${customTitleInput}"` : "");
             } else if (sType === 'Pelicula') {
-                detailTitle = customTitleInput ||
-                sName;
+                detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} Película ${movieCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             } else if (sType === 'Especial') {
-                detailTitle = customTitleInput ||
-                sName;
+                detailTitle = customTitleInput || sName;
                 playerTitle = `${anime.titulo} Especial ${specialCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             }
 
             if(sub || lat) {
-                // Guardamos en 'num' el índice base 1 para el objeto de player (video-player-data.js)
                 eps.push({ num: idx + 1, link: lat, link2: sub, title: detailTitle, playerTitle: playerTitle });
             }
         });
         if(eps.length > 0) {
-            anime.temporadas.push({
-                num: globalOrder++,
-                name: sName,
-                type: sType,
-                cover: card.querySelector('.s-img').value,
-                eps: eps
-            });
+            anime.temporadas.push({ num: globalOrder++, name: sName, type: sType, cover: card.querySelector('.s-img').value, eps: eps });
         }
     });
-
     return anime;
 }
 
-// FUNCIÓN PARA RESALTAR EL BOTÓN DE LOGOUT
 function highlightLogoutButton() {
     const headerBtns = document.querySelectorAll('#userHeader button');
     const logoutBtn = Array.from(headerBtns).find(btn => btn.getAttribute('onclick') === 'logout()');
@@ -1210,13 +1062,11 @@ function highlightLogoutButton() {
         logoutBtn.style.boxShadow = '0 0 20px #00f0ff, inset 0 0 10px #00f0ff';
         logoutBtn.style.color = '#00f0ff';
         logoutBtn.style.transform = 'scale(1.2)';
-        // Animación simple de parpadeo
         let visible = true;
         setInterval(() => {
             logoutBtn.style.opacity = visible ? '0.5' : '1';
             visible = !visible;
         }, 500);
-        // Mensaje flotante
         const tip = document.createElement('div');
         tip.innerHTML = "⬇ CLIC AQUÍ ⬇";
         tip.style.position = 'absolute';
@@ -1243,22 +1093,15 @@ async function subirAGithHub() {
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
     if(!nuevoAnime.sinopsis) return showToast("Falta Sinopsis", true);
     if(!nuevoAnime.demografia) return showToast("Elige Demografía", true);
-    if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) {
-        return showToast("Valoración inválida (Min: 1.0, Max: 5.0)", true);
-    }
-
+    if(nuevoAnime.rating < 1.0 || nuevoAnime.rating > 5.0) return showToast("Valoración inválida", true);
     if(nuevoAnime.generos.length === 0) return showToast("Elige Géneros", true);
     if(nuevoAnime.temporadas.length === 0) return showToast("Agrega contenido", true);
-    // CONFIRMACIÓN PREVIA
-    const confirmMsg = `¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?\n\n- Presiona 'Aceptar' para SÍ (Subir).\n- Presiona 'Cancelar' para AÚN NO (Seguir editando).`;
-    if(!confirm(confirmMsg)) {
-        return;
-    }
+    if(!confirm(`¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?`)) return;
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
     try {
         let FINAL_ID = nuevoAnime.id;
-        let UPDATE_LABEL = "ESTRENO 🚨"; // Por defecto para nuevos animes
+        let UPDATE_LABEL = "ESTRENO 🚨"; 
 
         if (!isEditMode) {
             log("1/6 Calculando ID...");
@@ -1267,76 +1110,59 @@ async function subirAGithHub() {
             let maxId = 0;
             indexData.forEach(item => { if(item.id > maxId) maxId = item.id; });
             FINAL_ID = maxId + 1;
-            // SI ES NUEVO, SE QUEDA COMO "ESTRENO 🚨"
             log(`✅ ID: ${FINAL_ID}`);
         } else {
             log(`📝 Editando ID: ${FINAL_ID}`);
-            // --- LÓGICA DE DETECCIÓN DE CAMBIOS PARA NOTIFICACIONES ---
             log("🔎 Analizando tipo de actualización...");
             try {
-                // Descargamos la versión vieja para comparar
                 const oldDetailFile = await getGithubFile(token, OWNER, REPO, 'anime-detail-data.js');
                 const oldDetailsObj = safeEval(oldDetailFile.content);
                 const oldAnimeData = oldDetailsObj[FINAL_ID];
 
                 if (oldAnimeData) {
-                    // Contar capítulos totales viejos vs nuevos
                     let oldTotalEps = 0;
-                    let oldSeasonsCount = oldAnimeData.seasons.length;
                     oldAnimeData.seasons.forEach(s => oldTotalEps += s.eps.length);
-
                     let newTotalEps = 0;
-                    let newSeasonsCount = nuevoAnime.temporadas.length;
                     nuevoAnime.temporadas.forEach(s => newTotalEps += s.eps.length);
 
-                    // Si hay más temporadas o más capítulos, es "NUEVO 🔥"
-                    if (newSeasonsCount > oldSeasonsCount || newTotalEps > oldTotalEps) {
+                    // LÓGICA DE ETIQUETAS:
+                    // Si tiene más caps que antes -> NUEVO 🔥
+                    // Si es igual -> ACTUALIZACIÓN 🛠️
+                    if (newTotalEps > oldTotalEps) {
                         UPDATE_LABEL = "NUEVO 🔥";
                     } else {
-                        // Si solo editaste texto o portadas, es una actualización menor
                         UPDATE_LABEL = "ACTUALIZACIÓN 🛠️";
                     }
                 }
             } catch (errCheck) {
-                console.warn("No se pudo comparar versiones, asumiendo Actualización genérica", errCheck);
+                console.warn("No se pudo comparar versiones", errCheck);
                 UPDATE_LABEL = "ACTUALIZACIÓN 🛠️";
             }
             log(`📢 Tipo de Evento: ${UPDATE_LABEL}`);
         }
 
-        // --- DETECTAR ÚLTIMO BLOQUE Y CAPÍTULO PARA NOTIFICACIÓN ---
         let lastSeasonCover = nuevoAnime.portada;
-        // Por defecto portada principal
         let lastBlockName = "Novedad";
         let lastEpTitle = "Nuevo Contenido";
 
         if (nuevoAnime.temporadas && nuevoAnime.temporadas.length > 0) {
-            // Obtenemos el último bloque agregado
             const lastSeason = nuevoAnime.temporadas[nuevoAnime.temporadas.length - 1];
-            // Portada del bloque (si tiene, sino usa la principal)
             if (lastSeason.cover) lastSeasonCover = lastSeason.cover;
-            // Nombre del bloque
             if (lastSeason.name) lastBlockName = lastSeason.name;
-            // Último capítulo de ese bloque
             if (lastSeason.eps && lastSeason.eps.length > 0) {
                 const lastEp = lastSeason.eps[lastSeason.eps.length - 1];
                 if (lastEp.title) lastEpTitle = lastEp.title;
             }
         }
 
-        // ---------------------------------------------------------
-        // 1. ACTUALIZAR INDEX (Ahora incluye lastUpdate y updateType)
-        // ---------------------------------------------------------
         log("2/6 Actualizando Index...");
         await updateGithubFile(token, OWNER, REPO, 'index-data.js', (content) => {
             const indexList = safeEval(content);
-            
             let finalGenres = [...nuevoAnime.generos];
             if(nuevoAnime.demografia) {
                  finalGenres = finalGenres.filter(g => g !== nuevoAnime.demografia);
                  finalGenres.push(nuevoAnime.demografia);
             }
-
             const newIndexEntry = {
                 id: FINAL_ID,
                 title: nuevoAnime.titulo,
@@ -1345,42 +1171,28 @@ async function subirAGithHub() {
                 uploader: nuevoAnime.uploader,
                 uploaderImg: nuevoAnime.uploaderAvatar, 
                 genres: finalGenres,
-                // --- CAMPOS NUEVOS PARA LA NOTIFICACIÓN ---
-                lastUpdate: Date.now(), // Fecha exacta en milisegundos
-                updateType: UPDATE_LABEL, // ESTRENO 🚨, NUEVO 🔥 o ACTUALIZACIÓN 🛠️
-                // --- NUEVOS CAMPOS ESPECÍFICOS ---
-                latestSeasonCover: lastSeasonCover, // Portada específica del último bloque
-                latestBlockName: lastBlockName,     // Nombre del bloque (Ej: Temporada 2)
-                latestEpTitle: lastEpTitle          // Nombre del último cap (Ej: Capítulo 12)
+                lastUpdate: Date.now(), 
+                updateType: UPDATE_LABEL, 
+                latestSeasonCover: lastSeasonCover, 
+                latestBlockName: lastBlockName,     
+                latestEpTitle: lastEpTitle          
             };
             if(nuevoAnime.aliases.length > 0) newIndexEntry.aliases = nuevoAnime.aliases;
-
             const existingIdx = indexList.findIndex(x => x.id === FINAL_ID);
-            if (existingIdx !== -1) {
-                indexList[existingIdx] = newIndexEntry;
-            } else {
-                indexList.push(newIndexEntry);
-            }
+            if (existingIdx !== -1) indexList[existingIdx] = newIndexEntry;
+            else indexList.push(newIndexEntry);
             return `const animes = ${JSON.stringify(indexList, null, 4)};`;
         });
-        // ---------------------------------------------------------
-        // 2. ACTUALIZAR DETAILS
-        // ---------------------------------------------------------
+
         log("3/6 Actualizando Detalles...");
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', (content) => {
             const detailsObj = safeEval(content);
-
             const seasonsArr = nuevoAnime.temporadas.map(t => {
                 const epsArr = t.eps.map(e => ({ title: e.title }));
-                const sObj = {
-                    num: t.num,
-                    cover: t.cover,
-                    eps: epsArr
-                };
+                const sObj = { num: t.num, cover: t.cover, eps: epsArr };
                 if(t.name) sObj.name = t.name;
                 return sObj;
             });
-
             const newDetailEntry = {
                 title: nuevoAnime.titulo,
                 desc: nuevoAnime.sinopsis,
@@ -1391,41 +1203,30 @@ async function subirAGithHub() {
             detailsObj[FINAL_ID] = newDetailEntry;
             return `const data = ${JSON.stringify(detailsObj, null, 4)};`;
         });
-        // ---------------------------------------------------------
-        // 3. ACTUALIZAR PLAYER
-        // ---------------------------------------------------------
+
         log("4/6 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             const playersObj = safeEval(content);
-            
             const newPlayerEntry = {};
             nuevoAnime.temporadas.forEach(t => {
                 newPlayerEntry[t.num] = {};
                 t.eps.forEach(e => {
-                    newPlayerEntry[t.num][e.num] = { 
-                        link: e.link, 
-                        link2: e.link2, 
-                        title: e.playerTitle 
-                    };
+                    newPlayerEntry[t.num][e.num] = { link: e.link, link2: e.link2, title: e.playerTitle };
                 });
             });
             playersObj[FINAL_ID] = newPlayerEntry;
             return `const players = ${JSON.stringify(playersObj, null, 4)};`;
         });
-        // ---------------------------------------------------------
-        // 4. ACTUALIZAR MÚSICA (CORREGIDO: usa audioPlaylists)
-        // ---------------------------------------------------------
+
         log("5/6 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             const musicObj = safeEval(content);
             musicObj[FINAL_ID] = nuevoAnime.musica;
-            // IMPORTANTE: Aquí se cambia 'const musica' por 'const audioPlaylists'
             return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
         });
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
         showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
-        // AVISAR
-        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN' y vuelve a entrar para ver los cambios o editar otro anime.");
+        alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN'.");
         highlightLogoutButton();
 
     } catch (e) {
