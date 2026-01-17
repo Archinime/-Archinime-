@@ -388,7 +388,12 @@ const animes = [
             "Romance",
             "Slice of Life",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1768622729150,
+        "updateType": "ACTUALIZACIÓN 🛠️",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1ds4mocfv035zgs7brobv/Definitivamente1.jpg?rlkey=xurw5jdgzeeww66ly0vmhiy6k&st=o8jyfz4c&raw=1",
+        "latestBlockName": "Ova 1",
+        "latestEpTitle": "Capítulo 1"
     },
     {
         "id": 25,
