@@ -16,7 +16,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Evita que Chrome muestre el prompt nativo inmediatamente
   e.preventDefault();
   deferredPrompt = e;
-  // Mostrar nuestro botón personalizado
+  // Mostrar nuestro botón personalizado (esto funciona en PC también)
   installBtn.style.display = 'flex';
 });
 
@@ -30,7 +30,8 @@ installBtn.addEventListener('click', () => {
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
                 console.log('Usuario aceptó instalar');
-                installBtn.style.display = 'none';
+                // MODIFICADO: NO ocultamos el botón para que se quede ahí siempre
+                // installBtn.style.display = 'none'; 
             }
             deferredPrompt = null;
         });

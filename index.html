@@ -18,7 +18,7 @@
   <video id="bg-video" poster="galaxia-morado1.avif" autoplay muted loop playsinline preload="metadata">
     <source src="galaxia.mp4" type="video/mp4">
     Tu navegador no soporta vídeo.
-  </video>
+</video>
   <div id="overlay" aria-hidden="true"></div>
 
   <audio id="bg-music" autoplay></audio>
@@ -35,6 +35,7 @@
     </h1>
 
     <div class="header-actions">
+  
         <button id="installBtn" class="nav-icon-btn install-pulse" style="display:none;" title="Instalar App">
             <i class="fas fa-download"></i>
         </button>
@@ -44,6 +45,7 @@
                 <i class="fas fa-bell"></i>
                 <span id="notifBadge" class="notif-badge" style="display:none"></span>
             </button>
+    
             <div id="notifMenu" class="notif-dropdown">
                 <div class="notif-header">
                     <span style="width: 100%; text-align: center;">Notificaciones</span>
@@ -59,36 +61,76 @@
       <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
         <option>Acción</option>
+        <option>Animación</option>
         <option>Aventura</option>
+        <option>Ciencia ficción</option>
+        <option>Cocina</option>
         <option>Comedia</option>
+        <option>Comedia oscura</option>
+        <option>Cosplay</option>
+        <option>Cyberpunk</option>
+        <option>Deducción Social</option>
+        <option>Deportivo</option>
+        <option>Divulgación Científica</option>
         <option>Drama</option>
         <option>Ecchi</option>
+        <option>Espionaje</option>
         <option>Escolar</option>
         <option>Fantasía</option>
+        <option>Fantasía oscura</option>
+        <option>Familiar</option>
+        <option>Gag</option>
+        <option>Gore</option>
         <option>Harem</option>
+        <option>Hentai</option>
+        <option>Histórico</option>
+        <option>Horror</option>
+        <option>Incesto</option>
+        <option>Infantil</option>
         <option>Isekai</option>
+        <option>Isekai Inverso</option>
+        <option>Kaiju</option>
+        <option>Mahō Shōjo</option>
         <option>Mecha</option>
+        <option>Militar</option>
+        <option>Mitología</option>
         <option>Misterio</option>
+        <option>Musical</option>
+        <option>Nekketsu</option>
+        <option>Parodia</option>
+        <option>Policial</option>
+        <option>Post-apocalíptico</option>
         <option>Psicológico</option>
+        <option>Reverse Harem</option>
         <option>Romance</option>
-        <option>Sci-Fi</option>
-        <option>Seinen</option>
-        <option>Shōjo</option>
-        <option>Shōnen</option>
+        <option>RPG</option>
         <option>Slice of Life</option>
         <option>Sobrenatural</option>
+        <option>Steampunk</option>
+        <option>Superhéroes</option>
+        <option>Survival</option>
+        <option>Survival Game</option>
+        <option>Tentáculos</option>
         <option>Terror</option>
+        <option>Terror psicológico</option>
+        <option>Thriller</option>
+        <option>Thriller psicológico</option>
+        <option>Tokusatsu</option>
+        <option>Tragedia</option>
         <option>Yaoi</option>
         <option>Yuri</option>
-        </select>
+        <option>Seijin</option>
+      </select>
 
       <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
         <option value="">Todas las demografías</option>
-        <option>Seinen</option>
-        <option>Shōnen</option>
-        <option>Shōjo</option>
+        <option>Gekiga</option>
         <option>Josei</option>
         <option>Kodomo</option>
+        <option>Seijin</option>
+        <option>Seinen</option>
+        <option>Shōjo</option>
+        <option>Shōnen</option>
       </select>
 
       <select id="rating-select" onchange="filtro()" aria-label="Seleccionar valoración">
@@ -140,7 +182,8 @@
   <script src="musica_fondo.js"></script>
   <script src="notification-system.js"></script>
   <script src="script-index.js"></script>
-  <script src="pwa-handler.js"></script> <script>
+  <script src="pwa-handler.js"></script> 
+  <script>
       // Registrar Service Worker
       if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
