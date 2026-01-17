@@ -6850,6 +6850,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1fqIbSta22wtJbQJbDWQVmAizuR-D9aq4/preview",
                 "link2": "",
                 "title": "Spy × Family T3 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1bbfhoTeTHud3_wSFOgAtb26XCMe1q1YF/preview",
+                "link2": "",
+                "title": "Spy × Family T3 Cap 10"
             }
         }
     },
