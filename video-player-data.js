@@ -7590,6 +7590,21 @@ const players = {
                 "link": "https://drive.google.com/file/d/1KypMnxjTPtQD-UhZHnR1dP0wmf4jZP7p/preview",
                 "link2": "",
                 "title": "My Hero Academia T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/15IDjkdTGmf9G_c4G_dHoQIqALWtZjBtT/preview",
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/19ufiAVWMLm_jwc0gCfEcmS5dDH_355Wy/preview",
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1L9WBt7CiK2-pZxW88KroHBTdfWA9CVCg/preview",
+                "link2": "",
+                "title": "My Hero Academia T1 Cap 10"
             }
         }
     },
