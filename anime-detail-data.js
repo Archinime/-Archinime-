@@ -7889,5 +7889,26 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "74": {
+        "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales",
+        "desc": "Con solo diecisiete años, Yuki es una jugadora profesional de juegos mortales. Ha sobrevivido a suficientes rondas como para saber que la supervivencia es cuestión de cálculo, no de suerte, y que el fracaso es irreversible. Para la mayoría de los jugadores, los juegos son una pesadilla sin escapatoria. Para Yuki, son simplemente un negocio.",
+        "cover": "https://www.dropbox.com/scl/fi/fx5zw1358e8zykeh8qku1/ImageToStl.com_MV5BMzVmOTUyMTktZjg1ZC00ZjljLWE3MjEtNTRjMDc2Yjg1NzZiXkEyXkFqcGc._V1_-1.avif?rlkey=ejl6szzppyol14lq9nvcjgw4m&st=ipj0pclp&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/lxizxk8vjgtw98rlqs0gs/ImageToStl.com_MV5BMjhjNDQwYzEtY2EzNy00Zjk2LThmMjgtNGI2ODdlZDAxYzllXkEyXkFqcGc-._V1.avif?rlkey=evoiqoezadb87f7hqfqufabvg&st=qfm4dc84&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
