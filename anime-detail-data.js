@@ -5699,15 +5699,6 @@ const data = {
                     },
                     {
                         "title": "Capítulo 7"
-                    },
-                    {
-                        "title": "Capítulo 8"
-                    },
-                    {
-                        "title": "Capítulo 9"
-                    },
-                    {
-                        "title": "Capítulo 10"
                     }
                 ],
                 "name": "Temporada 8"
