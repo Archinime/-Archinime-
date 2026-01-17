@@ -36,7 +36,7 @@ function checkForNewUpdates() {
     updatedAnimes.forEach(anime => {
         // FILTRO: No mostrar actualizaciones menores ni la opción "Ninguna"
         if (anime.updateType.includes("ACTUALIZACIÓN")) return;
-        if (anime.updateType === "Ninguna") return; // NUEVO: Si es "Ninguna", no notificar
+        if (anime.updateType === "Ninguna") return; // Si es "Ninguna", no notificar
 
         const notifId = `${anime.id}_${anime.lastUpdate}`;
         const exists = notificationsHistory.find(n => n.notifId === notifId);
@@ -53,7 +53,7 @@ function checkForNewUpdates() {
                 type: anime.updateType,
                 date: anime.lastUpdate,
                 seen: false,
-                isFinal: anime.isFinal || false // Leer si es FINAL
+                isFinal: anime.isFinal || false
             };
             notificationsHistory.unshift(newNotif); 
             newItemsFound.push(newNotif);
@@ -102,11 +102,11 @@ function createPopupHTML(notif) {
         badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;"; // Amarillo
     }
 
-    // --- LÓGICA IMAGEN FINAL (MODIFICADA) ---
+    // --- LÓGICA IMAGEN FINAL ---
     let finalImgHTML = '';
     if (notif.isFinal) {
-        // Estilo modificado: Más grande (150px), más abajo (bottom: -12px), centrado (left: 50% + transform)
-        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: -15px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
+        // AJUSTE REALIZADO AQUÍ: bottom: -5px (antes era -15px)
+        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
     }
 
     modal.innerHTML = `
@@ -201,7 +201,7 @@ function renderNotificationList() {
             smallBadgeStyle = "color: #f1c40f; font-weight: 800;"; // Amarillo
         }
 
-        // NUEVO: Lógica para mostrar etiqueta FINAL en rojo al lado del estado
+        // Etiqueta FINAL en rojo en la lista
         let finalLabel = "";
         if (item.isFinal) {
             finalLabel = `<span style="color: #ff0000; font-weight: 800; margin-left: 6px;">FINAL</span>`;
