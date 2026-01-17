@@ -837,6 +837,11 @@ const animes = [
             "Superhéroes",
             "Shōnen"
         ],
+        "lastUpdate": 1768671135151,
+        "updateType": "ACTUALIZACIÓN 🛠️",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1udlgl7s87fdvmwi7mp2l/Airbrush-IMAGE-ENHANCER-1762698551862-1762698551862.jpg?rlkey=e8rdhex2nwtlhyl6nume5oq9t&st=ojvzr0lg&raw=1",
+        "latestBlockName": "Temporada 8",
+        "latestEpTitle": "Capítulo 7",
         "aliases": [
             "Boku no Hero"
         ]
