@@ -34,8 +34,9 @@ function checkForNewUpdates() {
 
     let newItemsFound = [];
     updatedAnimes.forEach(anime => {
-        // FILTRO: No mostrar actualizaciones menores en el popup (si quieres)
+        // FILTRO: No mostrar actualizaciones menores ni la opción "Ninguna"
         if (anime.updateType.includes("ACTUALIZACIÓN")) return;
+        if (anime.updateType === "Ninguna") return; // NUEVO: Si es "Ninguna", no notificar
 
         const notifId = `${anime.id}_${anime.lastUpdate}`;
         const exists = notificationsHistory.find(n => n.notifId === notifId);
@@ -85,6 +86,7 @@ function createPopupHTML(notif) {
 
     const modal = document.createElement('div');
     modal.id = 'eventModal';
+
     const indieMessage = "Entra ahora y disfruta de las últimas novedades ya disponibles";
     let infoString = notif.epTitle;
     if (notif.blockName && notif.blockName !== "Novedad") {
@@ -100,11 +102,11 @@ function createPopupHTML(notif) {
         badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;"; // Amarillo
     }
 
-    // --- LÓGICA IMAGEN FINAL ---
+    // --- LÓGICA IMAGEN FINAL (MODIFICADA) ---
     let finalImgHTML = '';
     if (notif.isFinal) {
-        // Estilo inline para asegurar posicionamiento
-        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; right: -10px; top: 50%; transform: translateY(-50%); z-index: 100; width: 90px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));">`;
+        // Estilo modificado: Más grande (150px), más abajo (bottom: -15px), centrado (left: 50% + transform)
+        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: -15px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
     }
 
     modal.innerHTML = `
@@ -117,14 +119,15 @@ function createPopupHTML(notif) {
                     <img src="${notif.seasonCover}" class="season-cover-img" title="${notif.blockName || 'Novedad'}">
                 </div>
                 <div class="event-badge" style="${badgeStyle}">${notif.type}</div>
-                ${finalImgHTML} </div>
+                ${finalImgHTML} 
+            </div>
             <div class="event-inner">
                  <div class="event-details">
                     <div class="event-title">${notif.title}</div>
                     <div class="event-chapter-info">${infoString}</div>
                     <p class="event-desc">${indieMessage}</p>
                     <button class="event-btn" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')">
-                         <i class="fas fa-play"></i> VER AHORA
+                        <i class="fas fa-play"></i> VER AHORA
                     </button>
                 </div>
             </div>
@@ -176,6 +179,7 @@ document.addEventListener('click', (e) => {
 function renderNotificationList() {
     const listContainer = document.getElementById('notifList');
     listContainer.innerHTML = '';
+    
     if (notificationsHistory.length === 0) {
         listContainer.innerHTML = '<div class="empty-notif">Sin novedades por ahora.</div>';
         return;
@@ -197,11 +201,17 @@ function renderNotificationList() {
             smallBadgeStyle = "color: #f1c40f; font-weight: 800;"; // Amarillo
         }
 
+        // NUEVO: Lógica para mostrar etiqueta FINAL en rojo al lado del estado
+        let finalLabel = "";
+        if (item.isFinal) {
+            finalLabel = `<span style="color: #ff0000; font-weight: 800; margin-left: 6px;">FINAL</span>`;
+        }
+
         div.innerHTML = `
             <img src="${item.seasonCover}"> 
             <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
                 <div class="notif-item-title">${item.title}</div>
-                 <div class="notif-item-info" style="${smallBadgeStyle}">${item.type}</div>
+                 <div class="notif-item-info" style="${smallBadgeStyle}">${item.type}${finalLabel}</div>
                 <div class="notif-item-date" style="color:#aaa; font-style:italic;">${infoString}</div>
             </div>
         `;
