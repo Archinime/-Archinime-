@@ -27,7 +27,12 @@ const animes = [
             "Nekketsu",
             "Sobrenatural",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1768676634382,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "Jujutsu2.jpg",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 23"
     },
     {
         "id": 3,
