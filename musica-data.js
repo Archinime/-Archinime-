@@ -226,5 +226,8 @@ const audioPlaylists = {
     ],
     "73": [
         "https://www.dropbox.com/scl/fi/ts8eutbg0xpzv4fx6jzd8/Sentenced-to-Be-a-Hero-Opening-Kill-the-Noise-with-kanRomEn.mp3?rlkey=5ldhfiyth2mf6s4mdir95ka3u&st=g2f3vdwe&raw=1"
+    ],
+    "74": [
+        "https://www.dropbox.com/scl/fi/t4ldbl0zgb2e7if44bs4r/Shibou-Yuugi-de-Meshi-wo-Kuu-OP-Full-Hikari-e-Hashire-TV.mp3?rlkey=azeb2akcdtciomenr3upn4kii&st=tp2wxrl6&raw=1"
     ]
 };
