@@ -371,13 +371,6 @@ const players = {
                 "link2": "",
                 "title": "Jujutsu Kaisen T2 Cap 23"
             }
-        },
-        "4": {
-            "1": {
-                "link": "https://drive.google.com/file/d/1OeW9Ny5Lh2NJ_-bWOhju4k536R-0K-Rb/preview",
-                "link2": "",
-                "title": "Jujutsu Kaisen T3 Cap 1"
-            }
         }
     },
     "3": {
