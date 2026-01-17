@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNotificationList();
     updateBellBadge();
 });
-
 // --- LÓGICA PRINCIPAL ---
 
 function loadHistoryFromStorage() {
@@ -37,14 +36,14 @@ function saveHistoryToStorage() {
 function checkForNewUpdates() {
     // Buscar animes que tengan fecha de actualización
     const updatedAnimes = animes.filter(a => a.lastUpdate && a.updateType);
-    
     // Ordenar por fecha (más reciente primero)
     updatedAnimes.sort((a, b) => b.lastUpdate - a.lastUpdate);
-
     // Revisar cuáles no están en nuestro historial local
     let newItemsFound = [];
-    
     updatedAnimes.forEach(anime => {
+        // FILTRO IMPORTANTE: Si es solo ACTUALIZACIÓN, no lo mostramos en notificaciones
+        if (anime.updateType.includes("ACTUALIZACIÓN")) return;
+
         // Usamos el timestamp como ID único de la notificación
         const notifId = `${anime.id}_${anime.lastUpdate}`;
         
@@ -72,7 +71,6 @@ function checkForNewUpdates() {
                 date: anime.lastUpdate,
                 seen: false // "seen" significa visto en pop-up
             };
-            
             notificationsHistory.unshift(newNotif); // Agregar al inicio de la lista
             newItemsFound.push(newNotif);
         }
@@ -86,7 +84,6 @@ function checkForNewUpdates() {
         
         // Los nuevos van a la cola de pop-ups para mostrarse uno por uno
         notificationQueue = newItemsFound;
-        
         // Iniciar la secuencia de pop-ups
         showNextPopup();
     }
@@ -97,7 +94,8 @@ function checkForNewUpdates() {
 function showNextPopup() {
     if (notificationQueue.length === 0) return;
 
-    const notif = notificationQueue[0]; // Tomar el primero
+    const notif = notificationQueue[0];
+    // Tomar el primero
     createPopupHTML(notif);
 }
 
@@ -108,15 +106,21 @@ function createPopupHTML(notif) {
 
     const modal = document.createElement('div');
     modal.id = 'eventModal';
-    
     // Mensaje personalizado indie
     const indieMessage = "Entra ahora y disfruta de las últimas novedades ya disponibles";
-
     // Construir el string de información (Bloque - Capítulo)
     // Ejemplo: "Temporada 2 - Capítulo 12" o solo "Capítulo 1" si no hay bloque
     let infoString = notif.epTitle;
     if (notif.blockName && notif.blockName !== "Novedad") {
         infoString = `${notif.blockName} - ${notif.epTitle}`;
+    }
+
+    // --- LÓGICA DE COLORES ---
+    // Si es ESTRENO -> Rojo
+    // Si es NUEVO -> Gradiente Morado (default)
+    let badgeStyle = "background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%); color: #fff;"; // Default Purple
+    if (notif.type.includes("ESTRENO")) {
+        badgeStyle = "background: #ff0000; color: #fff; box-shadow: 0 0 10px rgba(255,0,0,0.5);"; // Rojo
     }
 
     modal.innerHTML = `
@@ -132,7 +136,7 @@ function createPopupHTML(notif) {
                     <img src="${notif.seasonCover}" class="season-cover-img" title="${notif.blockName || 'Novedad'}">
                 </div>
                 
-                <div class="event-badge">${notif.type}</div>
+                <div class="event-badge" style="${badgeStyle}">${notif.type}</div>
             </div>
             
             <div class="event-inner">
@@ -152,7 +156,6 @@ function createPopupHTML(notif) {
             </div>
         </div>
     `;
-    
     document.body.appendChild(modal);
     setTimeout(() => modal.classList.add('show'), 50);
 }
@@ -189,7 +192,8 @@ function toggleNotifMenu() {
     
     if (isMenuOpen) {
         menu.classList.add('active');
-        renderNotificationList(); // Re-renderizar para asegurar frescura
+        renderNotificationList();
+        // Re-renderizar para asegurar frescura
         // Al abrir, quitamos el punto rojo (badge) visualmente
         document.getElementById('notifBadge').style.display = 'none';
     } else {
@@ -205,11 +209,9 @@ document.addEventListener('click', (e) => {
         document.getElementById('notifMenu').classList.remove('active');
     }
 });
-
 function renderNotificationList() {
     const listContainer = document.getElementById('notifList');
     listContainer.innerHTML = '';
-    
     if (notificationsHistory.length === 0) {
         listContainer.innerHTML = '<div class="empty-notif">Sin novedades por ahora.</div>';
         return;
@@ -218,17 +220,25 @@ function renderNotificationList() {
     notificationsHistory.forEach(item => {
         const div = document.createElement('div');
         div.className = 'notif-item';
-        // Formatear fecha simple
-        const dateObj = new Date(item.date);
-        const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.getHours() + ':' + String(dateObj.getMinutes()).padStart(2, '0');
+        
+        // Construir infoString para la lista también (Bloque - Capitulo)
+        let infoString = item.epTitle;
+        if (item.blockName && item.blockName !== "Novedad") {
+            infoString = `${item.blockName} - ${item.epTitle}`;
+        }
 
-        // AQUÍ ES DONDE QUITAMOS EL BOTÓN X
+        // Estilo badge pequeño en la lista
+        let smallBadgeStyle = "color: #8c52ff;";
+        if (item.type.includes("ESTRENO")) {
+            smallBadgeStyle = "color: #ff4757; font-weight: 800;";
+        }
+
         div.innerHTML = `
             <img src="${item.seasonCover}"> 
             <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
                 <div class="notif-item-title">${item.title}</div>
-                <div class="notif-item-info">${item.type}</div>
-                <div class="notif-item-date">${dateStr}</div>
+                <div class="notif-item-info" style="${smallBadgeStyle}">${item.type}</div>
+                <div class="notif-item-date" style="color:#aaa; font-style:italic;">${infoString}</div>
             </div>
         `;
         listContainer.appendChild(div);
