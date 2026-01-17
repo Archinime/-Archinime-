@@ -4662,16 +4662,6 @@ const players = {
                 "link": "https://drive.google.com/file/d/1WFloJQqSerLRK_sk6mlre7HSHzQ3A3mI/preview",
                 "link2": "",
                 "title": "To Your Eternity T3 Cap 12"
-            },
-            "13": {
-                "link": "https://drive.google.com/file/d/16LIPcOYYnv4PaZ2C3RDO_IMxByQqAar5/preview",
-                "link2": "",
-                "title": "To Your Eternity T3 Cap 13"
-            },
-            "14": {
-                "link": "https://drive.google.com/file/d/1hHTGbal9jUaprJHc3S_6lUdK_Vp4olMY/preview",
-                "link2": "",
-                "title": "To Your Eternity T3 Cap 14"
             }
         }
     },
