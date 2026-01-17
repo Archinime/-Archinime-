@@ -1099,7 +1099,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1FRgvV4f103gREfoZe1VQjBWBtMLgawVR/preview",
                 "link2": "",
-                "title": "Mushoku Tensei Ova 1 Cap 1"
+                "title": "Mushoku Tensei OVA 1 \"Eris, La Cazaduendes\""
             }
         },
         "3": {
