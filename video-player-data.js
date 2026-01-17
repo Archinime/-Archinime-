@@ -8527,6 +8527,16 @@ const players = {
                 "link": "https://drive.google.com/file/d/1WctcIvfiF1jbM7cBvWT1-2osC-dhC_Bn/preview",
                 "link2": "",
                 "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1xBfq2fG2rDfvVNdelxqr0mjSRpN__0vC/preview",
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/10xJkqDkX-43OSJIMrsyreZzWapSyoPj-/preview",
+                "link2": "",
+                "title": "Akujiki Reijou to Kyouketsu Koushaku T1 Cap 12"
             }
         }
     },
