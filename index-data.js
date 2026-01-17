@@ -28,11 +28,11 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1768676634382,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "Jujutsu2.jpg",
-        "latestBlockName": "Temporada 2",
-        "latestEpTitle": "Capítulo 23"
+        "lastUpdate": 1768676764112,
+        "updateType": "PRÓXIMAMENTE ⏳",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 1"
     },
     {
         "id": 3,
