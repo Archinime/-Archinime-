@@ -3484,12 +3484,6 @@ const data = {
                     },
                     {
                         "title": "Capítulo 12"
-                    },
-                    {
-                        "title": "Capítulo 13"
-                    },
-                    {
-                        "title": "Capítulo 14"
                     }
                 ],
                 "name": "Temporada 3"
