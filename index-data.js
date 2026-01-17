@@ -589,7 +589,12 @@ const animes = [
             "Fantasía",
             "Fantasía oscura",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1768672042095,
+        "updateType": "ACTUALIZACIÓN 🛠️",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/xlkbrayxyel3kiyepr1r2/Gachiakuta1.jpg?rlkey=q5g6jlo0cv4e5z7znj70vtyor&st=uh2bwp30&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 21"
     },
     {
         "id": 37,
