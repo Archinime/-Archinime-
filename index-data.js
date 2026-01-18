@@ -5,14 +5,21 @@ const animes = [
         "img": "dan.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Sobrenatural",
             "Comedia",
-            "Romance",
             "Comedia oscura",
+            "Romance",
+            "Sobrenatural",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1768745863080,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "dan2.jpg",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 2,
