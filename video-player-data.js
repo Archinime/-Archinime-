@@ -7602,7 +7602,7 @@ const players = {
                 "title": "My Hero Academia T1 Cap 10"
             },
             "11": {
-                "link": "https://drive.google.com/file/d/13gPYbb5WC8_0Xdra63m1WkDU_INPCHB7/preview",
+                "link": "https://drive.google.com/file/d/18NwUY4BbrTH1sExJUofzGd2tdoIerBNs/preview",
                 "link2": "",
                 "title": "My Hero Academia T1 Cap 11"
             }
