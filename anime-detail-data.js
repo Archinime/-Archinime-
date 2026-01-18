@@ -8137,5 +8137,56 @@ const data = {
                 "name": "Temporada 5"
             }
         ]
+    },
+    "76": {
+        "title": "Let's Play",
+        "desc": "Samara \"Sam\" Young es una desarrolladora de Los Ángeles a punto de cumplir su sueño con su primer videojuego, \"Ruminate\". Eso es… hasta que un streamer famoso le dedica una crítica demoledora. Para colmo, Sam descubre que ese problemático crítico es ahora su nuevo vecino. Sumérgete en una historia cómica, romántica y terriblemente real sobre videojuegos, memes y ansiedad social.",
+        "cover": "https://www.dropbox.com/scl/fi/p8ym5q7jf3n25bh2x2aok/letsplay.avif?rlkey=byvltt6ghhpit0mutgbogn9qi&st=j3sx3sfp&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/hy1r4mrzb32etx0b34i65/letsplay1.avif?rlkey=ium82ha2azfcozjljkipa7iwi&st=0tdmrzz8&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
