@@ -3,124 +3,124 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1IeHj6BHp8S3n8IY2ezkiOj8NrDMbesk-/preview",
-                "link2": "https://www.dropbox.com/scl/fi/91lzoa0pa9tf53qsrq87n/DAN-DA-DAN-Cap-1.mp4?rlkey=br7i2ynaofngd9jbzgtzk255f&st=h8pdnqfz&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1CY5GIs9TQW7k1RpcOs25afHfjsGYr1BN/preview",
-                "link2": "https://www.dropbox.com/scl/fi/i8gmhwj5oc09vxd64n8e9/DAN-DA-DAN-Cap-2.mp4?rlkey=cle7qfkf3kkoeqn7bgs5kv8v5&st=h9c2tiu5&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1JhpFlS0MHaTBgOY0FyG6QAg2ml2rn-Zt/preview",
-                "link2": "https://www.dropbox.com/scl/fi/cxy012kb4w17744rqpdyh/DAN-DA-DAN-Cap-3.mp4?rlkey=u31hr05a42xzqo79xbnny9mnn&st=8i6jequ2&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/19fMhW9W19Jf5PU7rLx-unUGB5uGhGOPO/preview",
-                "link2": "https://www.dropbox.com/scl/fi/2lxcy0npcrg6nvwelvhca/DAN-DA-DAN-Cap-4.mp4?rlkey=lk147ebi39e308jcp4cn8u89u&st=5f9zgf9c&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1KLm7LdzUwrcqkFsy82EAZN5-l4yWWsBG/preview",
-                "link2": "https://www.dropbox.com/scl/fi/snuiwpza97pk7jz8ir4df/DAN-DA-DAN-Cap-5.mp4?rlkey=p7vids5ctlmzibfxuuu5xsfmm&st=hhqymy02&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/131lZLasVSrxhQxs5eZXuA4RLLA1azgHv/preview",
-                "link2": "https://www.dropbox.com/scl/fi/e3jxd9g3yaa9tczfliwvt/DAN-DA-DAN-Cap-6.mp4?rlkey=65ym1fdd4o384c02m3jj3urt0&st=mltb1xje&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1M9y9vHOprEqfesR7yOlEONksk8RnK62s/preview",
-                "link2": "https://www.dropbox.com/scl/fi/zrh7a3lmyu65iexqvleky/DAN-DA-DAN-Cap-7.mp4?rlkey=qh1eeg9g8v42hcia5gjsqp7n3&st=zvpdvaeo&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/18Ect3AjWbzaFf-uvvyHukSeOKUgIFHUP/preview",
-                "link2": "https://www.dropbox.com/scl/fi/uvwnog6tbz43gblarvl3p/DAN-DA-DAN-Cap-8.mp4?rlkey=pufbemussuuu5bhv10fwnincv&st=mdnqjwx9&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1DJ_865-0u8EjTMtPRCqLDNlK916IaKpD/preview",
-                "link2": "https://www.dropbox.com/scl/fi/bw2wvyxrazd6l8vhbczee/DAN-DA-DAN-Cap-9.mp4?rlkey=9uex19n1anunj3l40rzce9fuz&st=was5t5j7&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1IpHkf61SuPJW5XjZVcs2phbhGH-2unFu/preview",
-                "link2": "https://www.dropbox.com/scl/fi/kpdc4u4zkv5p6jxjbqmg9/DAN-DA-DAN-Cap-10.mp4?rlkey=j3glzy88o4ktgr5qzpm0w6u80&st=dyoqerh3&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1I8ism6iUaipXzkBjVBPzl-XCA2LKa7p4/preview",
-                "link2": "https://www.dropbox.com/scl/fi/xav52d0kilrer6d4j9uks/DAN-DA-DAN-Cap-111.mp4?rlkey=13otgp4nkxg4kxf5z70leil7d&st=ft3mtwrn&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1-H2Y9pWSwp6HzFqnvD7P7ZuUugdC_TdH/preview",
-                "link2": "https://www.dropbox.com/scl/fi/xthqgcir9wwfgo8ka9fbs/DAN-DA-DAN-Cap-12.mp4?rlkey=7b4preahkt3k7a7p35d1azac6&st=qi7fanj8&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T1 Cap 12"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1LJxLy-qTXswhU_bZfmjjFcNRpzBxlIEJ/preview",
-                "link2": "https://www.dropbox.com/scl/fi/v4mcnpon5mo0wce4wjvmb/DAN-DA-DAN-T2-Cap-1.mp4?rlkey=qspzubpwr1ygbwa1p2lcswfgg&st=ayhv2p04&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1Q0apiXn56XN4aIFNY1gRDC5pR6xD-fl1/preview",
-                "link2": "https://www.dropbox.com/scl/fi/oqu9213qj9d2z4v93n0yx/DAN-DA-DAN-T2-Cap-2.mp4?rlkey=l4doynj03vzyrqvhf38a2fd81&st=dwd3qegm&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1g_XJseAcKcYG7-VDUlLpbfcloCS7XFY1/preview",
-                "link2": "https://www.dropbox.com/scl/fi/vogmosm4yn9bbh39lajgh/Dan-Da-Dan-T2-Cap-3.mp4?rlkey=ccefipzk2d5q3mx8t5fki3i2c&st=494i1yca&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1kXF5nzaIAb_3SEARXoW20jQ07mj96Ydz/preview",
-                "link2": "https://www.dropbox.com/scl/fi/eed4fvyr67oe7sdgd0ylr/DAN-DA-DAN-T2-Cap-4.mp4?rlkey=kvmpwye0fas4siunt202sw6v2&st=8k91pr7n&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1Pdawmsw10Kohzl2uQdbrNiZPI6LwwOeq/preview",
-                "link2": "https://www.dropbox.com/scl/fi/bja4u4qk5tt8ykfl24kmo/DAN-DA-DAN-T2-Cap-5.mp4?rlkey=e8kcor08nxfz7f5hnoxbxu3fv&st=bw0rjbh0&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1eiK2UIQFwz2ztTcVysUz9WdGpZQjagMn/preview",
-                "link2": "https://www.dropbox.com/scl/fi/7aini8cfrjrlv3fh9zd06/DAN-DA-DAN-T2-Cap-6.mp4?rlkey=hsf5o8o506kegfhlpocu1mffn&st=rzebnlkt&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/18544atv-INagMyOlWNsAzospk3TuUZo3/preview",
-                "link2": "https://www.dropbox.com/scl/fi/7dahj8mn95vjqxpdkoqua/DAN-DA-DAN-T2-Cap-7.mp4?rlkey=94i1osas780y0d7ipvgu0x7j2&st=5tk1fa0o&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/108Vq4T47umnOewAoY8H7r5OXh7tXsp8G/preview",
-                "link2": "https://www.dropbox.com/scl/fi/bsyg38ktp14z17ef1xgco/DAN-DA-DAN-T2-Cap-8.mp4?rlkey=q2ors3ape1yj7nurdq2nrzezv&st=05hi1o7l&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1vYZ9RC4wlkqsfW1dmMx_JUTtafWWCdrZ/preview",
-                "link2": "https://www.dropbox.com/scl/fi/guubes1mt50g1sih7ar90/DAN-DA-DAN-T2-Cap-9.mp4?rlkey=yvlgc6b461rgjkrt6qfuziekz&st=xq00noto&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1CfcMbLP_W--FnrCMzlE37SN43b9LbJV3/preview",
-                "link2": "https://www.dropbox.com/scl/fi/ll0vyhx3hah3paw6ba4l7/DAN-DA-DAN-T2-Cap-10.mp4?rlkey=n350hm7vpxvqb61zjial31uvw&st=p7nfkexi&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1SWu3bFYNQIaiePoNktFMJQTjZqi_rega/preview",
-                "link2": "https://www.dropbox.com/scl/fi/7hkpp0ak0xk3didyzhqbe/DAN-DA-DAN-T2-Cap-11.mp4?rlkey=01g5v32yuat68m26b7o7ldn88&st=tv1po8wi&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1EwaK1Jzutv4Pv2BXC-sozDHMlciduIMb/preview",
-                "link2": "https://www.dropbox.com/scl/fi/54fb658xyaaav0gv9pmmh/DAN-DA-DAN-T2-Cap-12.mp4?rlkey=jbkm74e7fhxy71deqpknjupjf&st=q2cz09u1&raw=1",
+                "link2": "",
                 "title": "DAN DA DAN T2 Cap 12"
             }
         }
