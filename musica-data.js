@@ -232,5 +232,8 @@ const audioPlaylists = {
     ],
     "75": [
         "https://www.dropbox.com/scl/fi/vtc97fwkrlczovfdke95z/I-swear.mp3?rlkey=4ltjfx1xizi9ub24u8epkd8qq&st=h1hynhwo&raw=1"
+    ],
+    "76": [
+        "https://www.dropbox.com/scl/fi/nmtq5a2n2ipoognughtr5/Lets-Play-1-2-Play.mp3?rlkey=24qh32l9mgt5xdn8s2l78y4d2&st=sorxydgl&raw=1"
     ]
 };
