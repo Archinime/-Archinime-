@@ -871,8 +871,8 @@ const animes = [
             "Superhéroes",
             "Shōnen"
         ],
-        "lastUpdate": 1768746203364,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1768755604711,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/1udlgl7s87fdvmwi7mp2l/Airbrush-IMAGE-ENHANCER-1762698551862-1762698551862.jpg?rlkey=e8rdhex2nwtlhyl6nume5oq9t&st=ojvzr0lg&raw=1",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 11",
