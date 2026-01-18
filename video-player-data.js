@@ -7937,27 +7937,43 @@ const players = {
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1LGTe12Pezs-4VVuV4Zkz4XRTeXszP6vv/preview",
+                "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1H0sq3zKrJxnLIAF_MlmuI1-cUAtom07M/preview",
+                "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1MXYNnpSIKUMuIr1nVgGVi-aM4Z2DA5Pz/preview",
+                "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1cgwwaDUEhG-QBsXgK5anjCw-pb1T8lTO/preview",
+                "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/10jEXAorQKgqzuiksXcst8f40-GBJZe9M/preview",
+                "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/16kHo1LyyVlPO5MlbLZ64VQaTias5lA6p/preview",
+                "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1NktFfrbhZncSlrpiRe_0QInwv_Z0YLAd/preview",
+                "link2": "",
+                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1PpNoNB5_LoKhsGvwL0NWL5BrQOF8k0HP/preview",
+                "link2": "",
+                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 12"
             }
         }
     },
