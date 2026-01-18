@@ -6847,7 +6847,7 @@ const players = {
                 "title": "Spy × Family T3 Cap 11"
             },
             "12": {
-                "link": "https://drive.google.com/file/d/1w5weKbYzK86q8gLiqTC_jer8WoW1IamF/preview",
+                "link": "https://drive.google.com/file/d/1JVtg83zuaCklHrMjqsJyLySykn06dj5E/preview",
                 "link2": "",
                 "title": "Spy × Family T3 Cap 12"
             }
