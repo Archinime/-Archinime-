@@ -832,11 +832,12 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1768670562234,
+        "lastUpdate": 1768746036419,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/mtki74k5zzzywfdegb4ir/dfffffg.jpg?rlkey=g563wasphqjhhyep83qnq548r&st=9uw7j6kq&raw=1",
         "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 10"
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 50,
