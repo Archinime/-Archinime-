@@ -923,17 +923,24 @@ const animes = [
     {
         "id": 54,
         "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai",
-        "aliases": [
-            "Tojima Wants to Be a Kamen Rider"
-        ],
         "img": "tojima1.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
             "Acción",
+            "Comedia",
             "Tokusatsu",
             "Seinen"
+        ],
+        "lastUpdate": 1768746155439,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1acwpuwtsx2f20urv44eo/Airbrush-IMAGE-ENHANCER-1763730194883-1763730194884.jpg?rlkey=ornue772yaoazcagrsinqj1fc&st=nlz517kl&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Tojima Wants to Be a Kamen Rider"
         ]
     },
     {
