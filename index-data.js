@@ -1354,5 +1354,26 @@ const animes = [
         "latestBlockName": "Temporada 5",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
+    },
+    {
+        "id": 76,
+        "title": "Let's Play",
+        "img": "https://www.dropbox.com/scl/fi/p8ym5q7jf3n25bh2x2aok/letsplay.avif?rlkey=byvltt6ghhpit0mutgbogn9qi&st=j3sx3sfp&raw=1",
+        "rating": 4.2,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Drama",
+            "Romance",
+            "Slice of Life",
+            "Shōnen"
+        ],
+        "lastUpdate": 1768753115346,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/hy1r4mrzb32etx0b34i65/letsplay1.avif?rlkey=ium82ha2azfcozjljkipa7iwi&st=0tdmrzz8&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true
     }
 ];
