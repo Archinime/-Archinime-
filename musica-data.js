@@ -229,5 +229,8 @@ const audioPlaylists = {
     ],
     "74": [
         "https://www.dropbox.com/scl/fi/t4ldbl0zgb2e7if44bs4r/Shibou-Yuugi-de-Meshi-wo-Kuu-OP-Full-Hikari-e-Hashire-TV.mp3?rlkey=azeb2akcdtciomenr3upn4kii&st=tp2wxrl6&raw=1"
+    ],
+    "75": [
+        "https://www.dropbox.com/scl/fi/vtc97fwkrlczovfdke95z/I-swear.mp3?rlkey=4ltjfx1xizi9ub24u8epkd8qq&st=h1hynhwo&raw=1"
     ]
 };
