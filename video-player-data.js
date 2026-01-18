@@ -6840,6 +6840,16 @@ const players = {
                 "link": "https://drive.google.com/file/d/1bbfhoTeTHud3_wSFOgAtb26XCMe1q1YF/preview",
                 "link2": "",
                 "title": "Spy × Family T3 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/12-TbCdQevy3Ki-aNqXMkSQ2SgNdVV-yJ/preview",
+                "link2": "",
+                "title": "Spy × Family T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1w5weKbYzK86q8gLiqTC_jer8WoW1IamF/preview",
+                "link2": "",
+                "title": "Spy × Family T3 Cap 12"
             }
         }
     },
