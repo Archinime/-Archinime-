@@ -10557,5 +10557,69 @@ const players = {
                 "title": "Date a Live T5 Cap 12"
             }
         }
+    },
+    "76": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1W293IdYVgnZHyz4HdNjAmFWyAbRSPnkR/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1Ah_w5AC3j5QZ8igFI8esM5VA7pSXqmiz/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1bM-vChaBfVoJ-kA3fIQAeF0sGK2QH1fU/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1H5GD2m1Zw4zP0ozFxq-EpSlvWdjWZ8Aj/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1cqaOV7a4ZlJ3v2P8Tac7FZojMqKAOraI/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/13s6oST_77w1tB1nOkfDHAKQBsE51cxoy/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1Cyejc63CXhVi6B0yAMwzhQHXbW7gMCLa/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1GtE7U_hFMmYB9Ot-Rv97OAtylIj6nNAU/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1cTOXiFWnz8NQVSKFpnieo8ZbZKkxD3Gd/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1mbUzx8om5ciMDx-qIeeDn-iqdKFmSfvM/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1SbHi315vLW0yCF5l4bedxA5QEtc9EAXd/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1Zz7orc9OoEoyn6_0BqwWVSz56E9UgEf7/preview",
+                "link2": "",
+                "title": "Let's Play T1 Cap 12"
+            }
+        }
     }
 };
