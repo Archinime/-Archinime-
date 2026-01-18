@@ -10191,5 +10191,340 @@ const players = {
                 "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 2"
             }
         }
+    },
+    "75": {
+        "1": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1Ml00mKRnESaCoftQ_QtayQ9nH_IzNzvZ/preview",
+                "title": "Date a Live T1 Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1sZFbxuzgJU5_-FDw08AtdeyJ8t65_4Oq/preview",
+                "title": "Date a Live T1 Cap 2"
+            },
+            "3": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1Ewpst_Aax6MS60sAyKy5Il_L_XJWVfax/preview",
+                "title": "Date a Live T1 Cap 3"
+            },
+            "4": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1HFB1Rr2XNMmr4y3Xof1lJvaDEzRt6v9_/preview",
+                "title": "Date a Live T1 Cap 4"
+            },
+            "5": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1QdNjAOClINJ97SDnle-2IVBtCRnKADXO/preview",
+                "title": "Date a Live T1 Cap 5"
+            },
+            "6": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1iKICasgAw_1QC1E7GoKikRPBVn9KJDoA/preview",
+                "title": "Date a Live T1 Cap 6"
+            },
+            "7": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1b6avPiAmwg23zmRGNT7CCMcIUfJGbEI5/preview",
+                "title": "Date a Live T1 Cap 7"
+            },
+            "8": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1WCpHzsFVCazou_wk0JUwYjbCo_ACuh_C/preview",
+                "title": "Date a Live T1 Cap 8"
+            },
+            "9": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1tkDIn7y4LD7BLPDOeH_cXTmnOqsviZVM/preview",
+                "title": "Date a Live T1 Cap 9"
+            },
+            "10": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1NeMEjuXkCS61cm9BA8GllIxAS5yMjj9_/preview",
+                "title": "Date a Live T1 Cap 10"
+            },
+            "11": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1ZAC-S91S9JjkJ4cFQDSjY0Mvd9msJu-A/preview",
+                "title": "Date a Live T1 Cap 11"
+            },
+            "12": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1ZTooDtpgL8UVwhzOQ_8nvhioBNF3kS0_/preview",
+                "title": "Date a Live T1 Cap 12"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1k-1itz0Q7jvFZSct7y1VeT4TIMq4Rphm/preview",
+                "title": "Date a Live OVA 1 \"Date to Date\""
+            }
+        },
+        "3": {
+            "1": {
+                "link": "https://drive.google.com/file/d/15hH7SJMkkh1gRqV8XgoEOQg8FmJipSBh/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1EnZUsgi41jDvEgkIFW6MQE7Y9Zjr3N4t/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/10HrcSnxaKKZGozZxi9p50m2g7OGwClRX/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1e7bs84NGUmbdnhzXhTVnfwE4xmS9FFxw/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1t9fNX7ZRVefHWPkdH_wn8Sp2KIFfruZw/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1bRsXkF0NGiuwUuZ-1FBTqriyunZxPUAS/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1dQgE_OC-xbmnQjDlPQiDSq0kxnugVKlU/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1T-nuIEKb-lsCCB07sLqOKGh7h0VTMaKF/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1dUthRv356TeJyZoG3sV_vW2IOsRd9VZT/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1KW-qeBQYtDPWknJfw7bEP0uiQozDPf3i/preview",
+                "link2": "",
+                "title": "Date a Live T2 Cap 10"
+            }
+        },
+        "4": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1yrGGIB8x0KwELYv2cWuiroa9mq-pTtis/preview",
+                "title": "Date a Live OVA 2 \"Kurumi Star Festival\""
+            }
+        },
+        "5": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1Ypiah2Wm97E9Ird4OZe9oLbQRCbCDmjC/preview",
+                "title": "Date a Live Película 1: Mayuri Judgement"
+            }
+        },
+        "6": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1CcbrEIgm_oFo-7ALQEL48FS1v0Y7piaE/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1jDvO77vAiOWt0t7U7WjHNJE-eDxfsIJx/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1c3LOEq8punHLhEwzhJx5NSlaA7qcQyn0/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1munS7KKqKCUTAgRuGBjWv5w2Pmv09HXF/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1s2TT9FsnCaene1xQQnfRXSiup-QpRyV0/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1fQe3f5s2ejffiCZRlggKJoo_c4ScC7Eh/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1vT0i3IEdcjBDAJe9iLGAmcI6inec0CJD/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1Cko4NUZ98W2lz2jBqigUEd2JIJFcbpJ1/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1FaDlWgRZsgvr3zMRyU5bDZZxurXoaqcX/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1MuOTX7cYqaQxprdyXdU3phqLMI2-CZ93/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/11eDmaKudMA6GsNANgtKfmO153u9Q2pV-/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1gAlnqJhZf_bAChxkfb0QG2gFFHlAu4A1/preview",
+                "link2": "",
+                "title": "Date a Live T3 Cap 12"
+            }
+        },
+        "7": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/185F6lydJF_e9g2u7J97iNh3xN06aOkll/preview",
+                "title": "Date a Live Date A Bullet Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/15pJ_EdlyrN5fo8X4fzIXo44h2LGWC0ZH/preview",
+                "title": "Date a Live Date A Bullet Cap 2"
+            }
+        },
+        "8": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1CCvoRs_yU4QNrC-nCO1oMYSJR3Kiv6-m/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1mdTIQI43ztZnB02PjMmUvOb00RJWXg0y/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1FsiknVMfs0uceB7yNpb6rCm8E5HhQJ7O/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/18LjCEhki_OvsqaROeUP0XouXBH7NkZHu/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1xBCBrACGoPM3A6esGc2Gs9b-DPFMi52e/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1EfQACKYojbZ9eoxlQWq-gqjROOcLbDED/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1MAgKkD31geqpmdabV1HO_nrEhqFgJhc-/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/12QIwQBoiH05luSsllTdcKDVyn2kCVkhc/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1hZq3YLUMIKFFHEyFeBEuHzJ3TA2kNAHa/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1RiXU7h_HV4qNf5bfxEwE2t6Y9rFXLC1X/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1mWF8AqMYPzJSYM5zXZxigyvbACtBxslo/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1Nhg2s-GPBLpL7uwYLvMFPEUOF0dflZKK/preview",
+                "link2": "",
+                "title": "Date a Live T4 Cap 12"
+            }
+        },
+        "9": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1rDwWYlZGEt79DZ0CgywGGc-aB5yFJTiV/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1PhLcsDJHFahc8kj0J0Yb3cyftOflu26P/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1d7j5ccrZdDIxixdsFGf5uKbYTnM17YJk/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1DYR5Zvsyx6WUOugelAS4ORjih_NfxbqT/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/19z8zx8LDQQKqNTdpoumxASLYKVxfOD-I/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/16gvDJ4Oc5pmuydC1jSzak4QHR2jTgg-L/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1X8c_Ssr7KFyx5WppYr5Gd8V8gDyGWcP1/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1rrAX4DAAOHI-KF_9MPpEZOxWkAclPZG1/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1klHABueiUmBVwGcnXnRoDXnyewfLr369/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1b06x4sXo2ZNAV_rOUVMYEvG9qMDGd70X/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1YfG_yDKHjmiOZ6i5q175IShWWwDD2yI5/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1ZfXMx_X1bzJZ9Ai3-RwSfAPyChIiYVJG/preview",
+                "link2": "",
+                "title": "Date a Live T5 Cap 12"
+            }
+        }
     }
 };
