@@ -5193,6 +5193,12 @@ const data = {
                     },
                     {
                         "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
                     }
                 ],
                 "name": "Temporada 3"
