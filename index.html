@@ -36,7 +36,7 @@
 
     <div class="header-actions">
   
-        <button id="installBtn" class="nav-icon-btn install-pulse" title="Instalar App">
+        <button id="installBtn" class="nav-icon-btn install-pulse" title="Descargar App">
             <i class="fas fa-download"></i>
         </button>
 
@@ -166,12 +166,20 @@
     </svg>
   </div>
 
-  <div id="iosInstallModal" class="ios-modal">
+  <div id="universalInstallModal" class="ios-modal">
       <div class="ios-content">
-          <span class="ios-close" onclick="closeIosModal()">&times;</span>
-          <p>Para instalar <strong>Archinime</strong> en tu iPhone/iPad:</p>
-          <p>1. Pulsa el botón <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
-          <p>2. Selecciona <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
+          <span class="ios-close" onclick="closeInstallModal()">&times;</span>
+          <div id="modalTextIos" style="display:none;">
+              <p>Para instalar en <strong>iPhone/iPad</strong>:</p>
+              <p>1. Pulsa <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
+              <p>2. Elige <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
+          </div>
+          <div id="modalTextPc" style="display:none;">
+              <p style="margin-bottom:10px; font-size:1.1em;"><strong>Instalar Aplicación</strong></p>
+              <p>Si la ventana automática no aparece, búscala en tu navegador:</p>
+              <p>1. Mira en la barra de direcciones (icono <i class="fas fa-desktop"></i> o <i class="fas fa-plus-circle"></i>).</p>
+              <p>2. O ve al menú (3 puntos) &rarr; <strong>"Instalar Archinime"</strong>.</p>
+          </div>
       </div>
   </div>
 
@@ -182,12 +190,12 @@
   <script src="script-index.js"></script>
   <script src="pwa-handler.js"></script> 
   <script>
-      // Registrar Service Worker
+      // Registro del Service Worker mejorado
       if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
               navigator.serviceWorker.register('sw.js')
-                  .then(registration => console.log('SW registrado: ', registration.scope))
-                  .catch(err => console.log('SW fallo: ', err));
+                  .then(reg => console.log('SW listo:', reg.scope))
+                  .catch(err => console.log('SW error:', err));
           });
       }
   </script>
