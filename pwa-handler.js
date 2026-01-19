@@ -55,7 +55,7 @@ installBtn.addEventListener('click', () => {
     } else {
         // FALLBACK: Si no hay prompt (porque ya se usó o el navegador no lo da)
         // pero seguimos en móvil, mostramos una alerta de ayuda.
-        alert("Para instalar la App:\nBusca en el menú de tu navegador la opción 'Instalar aplicación' o 'Agregar a la pantalla principal'.");
+        alert("🧠 Buen intento\nPero la app ya está instalada 😉");
     }
 });
 
