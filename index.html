@@ -166,13 +166,39 @@
     </svg>
   </div>
 
-  <div id="iosInstallModal" class="ios-modal">
-      <div class="ios-content">
-          <span class="ios-close" onclick="closeIosModal()">&times;</span>
-          <p>Para instalar <strong>Archinime</strong> en tu iPhone/iPad:</p>
-          <p>1. Pulsa el botón <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
-          <p>2. Selecciona <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
+<div id="iosInstallModal" class="app-modal" aria-hidden="true">
+      <button class="app-modal-close" onclick="closeAppModal('iosInstallModal')">&times;</button>
+      
+      <div class="modal-icon-header">
+        <i class="fab fa-apple"></i>
       </div>
+      
+      <h3>Instalar en iOS</h3>
+      <p>Para añadir <strong>Archinime</strong> a tu pantalla de inicio:</p>
+      
+      <div class="instruction-step">
+          <span>1. Pulsa el botón <strong>Compartir</strong></span>
+          <i class="fas fa-share-square"></i>
+      </div>
+      
+      <div class="instruction-step">
+          <span>2. Selecciona <strong>"Agregar a Inicio"</strong></span>
+          <i class="far fa-plus-square"></i>
+      </div>
+  </div>
+
+  <div id="fallbackModal" class="app-modal" aria-hidden="true">
+      <button class="app-modal-close" onclick="closeAppModal('fallbackModal')">&times;</button>
+      
+      <div class="modal-icon-header">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      
+      <h3>¡Ya la tienes! 😄</h3>
+      <p>La App ya está instalada o tu navegador no soporta la instalación automática.</p>
+      <p>Ábrela directamente desde tu <strong>Pantalla de Inicio</strong>.</p>
+      
+      <button class="modal-action-btn" onclick="closeAppModal('fallbackModal')">Entendido</button>
   </div>
 
   <script src="index-data.js"></script>

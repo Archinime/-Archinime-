@@ -152,18 +152,133 @@ margin-bottom: 2px; }
 .empty-notif { padding: 20px;
 text-align: center; color: #555; font-size: 0.9rem; font-style: italic; }
 
-/* MODAL iOS (NUEVO) */
-.ios-modal {
-    display: none;
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    width: 90%; max-width: 320px; background: rgba(30, 30, 30, 0.95);
-    border: 1px solid #444; border-radius: 12px; padding: 20px;
-    z-index: 10000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    text-align: center; font-size: 0.9rem;
+/* ----------------------------------------------------
+   MODALES DE INSTALACIÓN (REDISEÑO GALÁCTICO)
+   ---------------------------------------------------- */
+.app-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 380px;
+    z-index: 10000;
+    
+    /* Estilo Glassmorphism / Galaxia */
+    background: rgba(11, 12, 16, 0.90);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(140, 82, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(140, 82, 255, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    
+    padding: 25px;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.ios-content p { margin: 10px 0; color: #ddd; }
-.ios-close { position: absolute; top: 5px; right: 10px; font-size: 1.5rem; cursor: pointer;
-color: #aaa; }
+
+/* Clase para mostrar el modal */
+.app-modal.active {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Botón de cerrar (Estilo unificado con eventModal) */
+.app-modal-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: #ff4757;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #1a1a1a;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.2s ease, background 0.2s;
+    z-index: 20;
+}
+.app-modal-close:hover {
+    background: #ff2e40;
+    transform: scale(1.1) rotate(90deg);
+}
+
+/* Contenido del modal */
+.modal-icon-header {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #00f0ff 0%, #8c52ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(140, 82, 255, 0.4));
+}
+
+.app-modal h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.app-modal p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.app-modal strong {
+    color: var(--accent); /* #00f0ff */
+    font-weight: 700;
+}
+
+/* Instrucciones visuales (Iconos pequeños) */
+.instruction-step {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.instruction-step i {
+    font-size: 1.2rem;
+    color: var(--accent);
+}
+
+/* Botón de acción (para el modal genérico) */
+.modal-action-btn {
+    background: var(--gradient);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.modal-action-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(140, 82, 255, 0.6);
+}
 
 /* Layout Grid */
 .container{ max-width:1200px; margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem; padding:0 1.6rem; z-index:6; position:relative;

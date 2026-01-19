@@ -3,6 +3,7 @@
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 const iosModal = document.getElementById('iosInstallModal');
+const fallbackModal = document.getElementById('fallbackModal'); // Nuevo modal
 
 // 1. Detectar si es iOS (iPhone/iPad)
 const isIos = () => {
@@ -20,11 +21,32 @@ const isMobile = () => window.matchMedia('(max-width: 780px)').matches;
 function checkInstallButtonVisibility() {
     // Solo mostrar si es Móvil Y NO está ya instalada en modo app
     if (isMobile() && !isInStandaloneMode()) {
-        installBtn.style.display = 'flex';
+        if (installBtn) installBtn.style.display = 'flex';
     } else {
         // En PC o si ya está instalada, lo ocultamos
-        installBtn.style.display = 'none';
+        if (installBtn) installBtn.style.display = 'none';
     }
+}
+
+// Función auxiliar para cerrar modales (global para poder llamarla desde el HTML)
+window.closeAppModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); // Esperar a la animación CSS
+    }
+}
+
+// Función auxiliar para abrir modales con animación
+function openAppModal(modalElement) {
+    if (!modalElement) return;
+    modalElement.style.display = 'block';
+    // Pequeño delay para permitir que el navegador renderice antes de añadir opacidad (para la transición)
+    setTimeout(() => {
+        modalElement.classList.add('active');
+    }, 10);
 }
 
 // 4. Manejo del evento nativo (Android / PC Chrome)
@@ -32,39 +54,36 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Evita que Chrome muestre el prompt nativo inmediatamente y lo guarda
   e.preventDefault();
   deferredPrompt = e;
-  // Actualizamos visibilidad (por seguridad)
+  // Actualizamos visibilidad
   checkInstallButtonVisibility();
 });
 
 // 5. Click en el botón de instalar
-installBtn.addEventListener('click', () => {
-    if (isIos()) {
-        // iOS: Mostrar instrucciones manuales (modal)
-        iosModal.style.display = 'block';
-    } else if (deferredPrompt) {
-        // Android: Si tenemos el prompt guardado, lo lanzamos
-        deferredPrompt.prompt();
-        
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Usuario aceptó instalar');
-            }
-            // NO ocultamos el botón aunque acepte o cancele, para que persista
-            deferredPrompt = null;
-        });
-    } else {
-        // FALLBACK: Si no hay prompt (porque ya se usó o el navegador no lo da)
-        // pero seguimos en móvil, mostramos una alerta de ayuda.
-        alert("Para instalar la App:\nBusca en el menú de tu navegador la opción 'Instalar aplicación' o 'Agregar a la pantalla principal'.");
-    }
-});
-
-function closeIosModal() {
-    iosModal.style.display = 'none';
+if (installBtn) {
+    installBtn.addEventListener('click', () => {
+        if (isIos()) {
+            // iOS: Mostrar instrucciones manuales con el nuevo diseño
+            openAppModal(iosModal);
+        } else if (deferredPrompt) {
+            // Android: Si tenemos el prompt guardado, lo lanzamos (Nativo del navegador, no estilizable)
+            deferredPrompt.prompt();
+            
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('Usuario aceptó instalar');
+                }
+                deferredPrompt = null;
+            });
+        } else {
+            // FALLBACK: Si no hay prompt (ya instalada o no soportado)
+            // Mostramos el nuevo Modal Genérico en lugar de alert()
+            openAppModal(fallbackModal);
+        }
+    });
 }
 
 // Inicialización: Comprobar al cargar la página
 window.addEventListener('DOMContentLoaded', checkInstallButtonVisibility);
 
-// Comprobar si cambia el tamaño de ventana (por si giran el móvil o redimensionan)
+// Comprobar si cambia el tamaño de ventana
 window.addEventListener('resize', checkInstallButtonVisibility);
