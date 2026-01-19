@@ -1,45 +1,55 @@
-/* Archivo: pwa-handler.js */
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
-const installModal = document.getElementById('universalInstallModal');
+const iosModal = document.getElementById('iosInstallModal');
 
-// Detectar si ya es app
-const isApp = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+// 1. Detectar si es iOS (iPhone/iPad) [cite: 2]
+const isIos = () => {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test(userAgent);
+};
 
-// Mostrar botón siempre
-if (installBtn) installBtn.style.display = 'flex';
+// 2. Detectar si ya está instalada (Standalone) [cite: 3]
+const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
+// 3. Manejo para Android / PC (Chrome, Edge) [cite: 4]
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Evitar que Chrome lo haga solo
+  // Evita que Chrome muestre el prompt nativo inmediatamente [cite: 4]
   e.preventDefault();
   deferredPrompt = e;
-  console.log('PC lista para instalar');
+  // Mostrar nuestro botón personalizado [cite: 4]
+  installBtn.style.display = 'flex';
 });
 
-if (installBtn) {
-  installBtn.addEventListener('click', async () => {
-    if (isApp()) {
-      alert("¡Ya estás usando la aplicación!");
-      return;
+installBtn.addEventListener('click', () => {
+    if (isIos()) {
+        // En iOS mostramos instrucciones [cite: 5]
+        iosModal.style.display = 'block';
+    } else if (deferredPrompt) {
+        // En Android/PC lanzamos el prompt nativo [cite: 5]
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuario aceptó instalar'); [cite: 6]
+            }
+            // Mantenemos deferredPrompt o lo reseteamos según prefieras, 
+            // pero NO ocultamos el botón visualmente. [cite: 6]
+            deferredPrompt = null; 
+        });
     }
+});
 
-    // Si el navegador nos da permiso (Evento activo)
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') deferredPrompt = null;
-    } 
-    else {
-      // SI NO FUNCIONA EL AUTOMÁTICO EN PC:
-      // Mostramos el modal que explica dónde está el botón nativo de Chrome/Edge
-      if (installModal) {
-          document.getElementById('modalTextPc').style.display = 'block';
-          installModal.style.display = 'block';
-      }
+// Mostrar botón siempre si no está en modo standalone (App abierta) [cite: 7]
+function checkDisplayBtn() {
+    if (!isInStandaloneMode()) {
+        installBtn.style.display = 'flex';
+    } else {
+        installBtn.style.display = 'none'; // Se oculta solo si ya estás DENTRO de la app instalada
     }
-  });
 }
 
-window.closeInstallModal = () => {
-  if (installModal) installModal.style.display = 'none';
-};
+// Ejecutar al cargar
+checkDisplayBtn(); [cite: 7, 8]
+
+function closeIosModal() {
+    iosModal.style.display = 'none'; [cite: 8]
+}
