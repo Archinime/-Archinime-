@@ -4,77 +4,67 @@ let deferredPrompt = null;
 const installBtn = document.getElementById('installBtn');
 const iosModal = document.getElementById('iosInstallModal');
 
-// 1. Detectar si es iOS (iPhone/iPad)
+// 1. Detectar si es iOS
 const isIos = () => {
   const userAgent = window.navigator.userAgent.toLowerCase();
   return /iphone|ipad|ipod/.test(userAgent);
 }
 
-// 2. Detectar si ya está instalada (Standalone)
-// Comprueba tanto la propiedad navigator.standalone (iOS) como display-mode (Android/PC)
+// 2. Detectar si ya estamos DENTRO de la app instalada
 const isInStandaloneMode = () => {
     return ('standalone' in window.navigator) && (window.navigator.standalone) 
            || window.matchMedia('(display-mode: standalone)').matches;
 };
 
-// 3. Inicialización: Mostrar el botón SIEMPRE, excepto si ya estamos dentro de la App instalada
-// Esto garantiza que en PC aparezca siempre que entres a la web.
-if (!isInStandaloneMode()) {
-    if(installBtn) installBtn.style.display = 'flex';
-} else {
-    // Si ya es la app, lo ocultamos para que no estorbe
-    if(installBtn) installBtn.style.display = 'none';
-}
-
-// 4. Capturar el evento 'beforeinstallprompt' (Chrome/Edge en PC y Android)
+// 3. Capturar el evento de instalación (CRUCIAL para PC y Android)
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Evita que Chrome muestre el prompt nativo inmediatamente y lo guardamos
+  // Prevenir que Chrome muestre su barra automática (la controlaremos nosotros)
   e.preventDefault();
   deferredPrompt = e;
-  console.log('Evento de instalación capturado');
-  
-  // Aseguramos que el botón sea visible (por si acaso)
-  if(installBtn) installBtn.style.display = 'flex';
+  console.log('Evento de instalación capturado y listo.');
 });
 
-// 5. Manejar el click del botón
+// 4. Lógica del botón
 if(installBtn) {
-    installBtn.addEventListener('click', async () => {
-        // CASO A: iOS
-        if (isIos()) {
-            iosModal.style.display = 'block';
-            return;
-        } 
+    // Aseguramos que el botón sea visible si NO estamos dentro de la app
+    // Si quieres que aparezca INCLUSO dentro de la app instalada, borra el "if" y deja solo la linea del display.
+    if (!isInStandaloneMode()) {
+        installBtn.style.display = 'flex'; 
+    }
 
-        // CASO B: Tenemos el prompt automático (PC o Android compatible)
+    installBtn.addEventListener('click', async () => {
+        // Opción A: Es iOS (iPhone/iPad) -> Mostrar instrucciones
+        if (isIos()) {
+            if(iosModal) iosModal.style.display = 'block';
+            return;
+        }
+
+        // Opción B: Tenemos el evento guardado (PC o Android) -> LANZAR INSTALADOR
         if (deferredPrompt) {
-            deferredPrompt.prompt();
+            deferredPrompt.prompt(); // <-- Esto abre la ventanita nativa en PC
+            
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Usuario escogió: ${outcome}`);
+            console.log(`Usuario decidió: ${outcome}`);
             
-            // Nota: deferredPrompt solo sirve una vez. Lo limpiamos.
+            // Nota: deferredPrompt solo sirve una vez. Se reinicia.
             deferredPrompt = null;
-            
-            // NO ocultamos el botón aquí, para cumplir tu requisito de "nunca desaparezca"
-            // (a menos que recargues la página ya instalada).
         } 
-        // CASO C: No hay prompt automático (PC cuando ya se intentó antes, o navegadores no compatibles)
+        // Opción C: No hay evento (Ya está instalada o el navegador no soporta PWA)
         else {
-            // Aquí mostramos una alerta o instrucción manual para PC,
-            // simulando la ayuda que pediste tipo "ver en los 3 puntitos".
-            alert('Para instalar la aplicación en PC:\n\n1. Busca el menú de tu navegador (los 3 puntos o líneas en la esquina).\n2. Selecciona "Instalar aplicación" o "Guardar y compartir" > "Instalar Archinime".\n\n(Si ya la tienes instalada, búscala en tu escritorio o menú de inicio).');
+             // Solo aquí mostramos ayuda, por si el botón no responde
+             alert('Parece que la instalación automática no está disponible ahora (o ya tienes la App instalada).\n\nEn PC: Busca el icono (+) o "Instalar" en la barra de direcciones arriba a la derecha.');
         }
     });
 }
 
-// Función global para cerrar el modal de iOS
+// Función para cerrar modal iOS
 window.closeIosModal = function() {
     if(iosModal) iosModal.style.display = 'none';
 }
 
-// Detectar cambios de estado (si el usuario instala y vuelve a la pestaña sin recargar)
-window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
-    if (evt.matches) {
-        if(installBtn) installBtn.style.display = 'none';
-    }
+// Escuchar si se instaló con éxito (Opcional: solo para registro)
+window.addEventListener('appinstalled', () => {
+  console.log('Aplicación instalada con éxito');
+  deferredPrompt = null;
+  // NO ocultamos el botón, como pediste.
 });
