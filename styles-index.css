@@ -88,10 +88,10 @@ justify-content:center; cursor:pointer; background:rgba(255,255,255,0.95);
     box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
-/* FIX: El botÃģn de instalar se oculta por CSS en desktop para evitar parpadeos */
+/* FIX: El botón de instalar se oculta por CSS en desktop para evitar parpadeos */
 #installBtn { display: none; }
 
-/* AnimaciÃģn de pulso para el botÃģn de instalar */
+/* Animación de pulso para el botón de instalar */
 .install-pulse {
     animation: pulseGlow 2s infinite;
 }
@@ -199,7 +199,7 @@ filter: drop-shadow(0 6px 18px rgba(255,255,210,0.08)); }
 .shooting-tail { position:absolute; left:0; top:50%; width: 160px; height: 4px; transform-origin:left center; opacity:0.95; pointer-events:none; filter: blur(1px);
 }
 
-/* Popups select mÃģvil */
+/* Popups select móvil */
 .mobile-select-popup { position: absolute; z-index:1200; background: rgba(2,2,6,0.98); border:1px solid rgba(255,255,255,0.06); border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.6);
 max-height: 220px; min-width: 140px; overflow:auto; padding:0.2rem; font-size:0.92rem; -webkit-overflow-scrolling:touch; }
 .mobile-select-popup .opt { padding: .26rem .5rem; border-radius:6px; margin:.06rem 0; font-size:0.92rem; line-height:1.05; cursor:pointer;
@@ -292,113 +292,4 @@ left: 10px; width: auto; }
 }
   .card { min-height: 0; }
   .card img { height: auto; }
-}
-/* --- ESTILOS PARA LA VENTANA DE INSTALACIÓN (MODAL) --- */
-.manual-modal {
-  display: none; /* Oculto por defecto */
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
-  z-index: 10000;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.manual-modal.active {
-  display: flex;
-  opacity: 1;
-}
-
-.modal-content {
-  background: linear-gradient(145deg, #1a1a20, #0b0c10);
-  width: 90%;
-  max-width: 360px;
-  border-radius: 16px;
-  padding: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 30px rgba(140, 82, 255, 0.25); /* Glow morado suave */
-  text-align: center;
-  transform: scale(0.95);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-}
-
-.manual-modal.active .modal-content {
-  transform: scale(1);
-}
-
-/* Decoración superior */
-.modal-content::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--gradient);
-}
-
-.modal-header {
-  margin-bottom: 20px;
-}
-
-.modal-header i {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(140, 82, 255, 0.5));
-}
-
-.modal-header h3 {
-  font-size: 1.4rem;
-  color: #fff;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.modal-body p {
-  color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-.instruction-step {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 10px;
-  border-radius: 8px;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-.instruction-step i {
-  color: var(--accent);
-  font-size: 1.1rem;
-}
-
-.modal-close-btn {
-  background: var(--gradient);
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
-  width: 100%;
-  box-shadow: 0 5px 15px rgba(140, 82, 255, 0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.modal-close-btn:active {
-  transform: scale(0.96);
 }
