@@ -64,20 +64,20 @@ justify-content:center; cursor:pointer; background:rgba(255,255,255,0.95);
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-left: auto; /* Empuja a la derecha */
+margin-left: auto; /* Empuja a la derecha */
     margin-right: 10px;
 }
 
 /* Estilo unificado para botones redondos del header (Campana y Descarga) */
 .nav-icon-btn {
     background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
+border: 1px solid rgba(255,255,255,0.2);
     color: #fff;
     width: 42px; height: 42px;
     border-radius: 50%;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
+font-size: 1.2rem;
     transition: all 0.2s ease;
     position: relative;
 }
@@ -85,11 +85,12 @@ justify-content:center; cursor:pointer; background:rgba(255,255,255,0.95);
     background: rgba(255,255,255,0.2);
     transform: scale(1.05);
     color: var(--accent);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
 /* FIX: El botón de instalar se oculta por CSS en desktop para evitar parpadeos */
-#installBtn { display: none; }
+#installBtn { display: none;
+}
 
 /* Animación de pulso para el botón de instalar */
 .install-pulse {
@@ -118,7 +119,7 @@ box-sizing:border-box;
 .notif-wrapper { position: relative; }
 .notif-badge {
     position: absolute; top: -2px;
-    right: -2px;
+right: -2px;
     background: #ff4757; width: 12px; height: 12px;
     border-radius: 50%; border: 2px solid #000;
     box-shadow: 0 0 5px #ff4757;
@@ -126,10 +127,10 @@ box-sizing:border-box;
 .notif-dropdown {
     position: absolute; top: 55px; right: -10px; width: 300px;
     background: #0b0c10; border: 1px solid #333;
-    border-radius: 12px;
+border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8); opacity: 0; pointer-events: none;
     transform: translateY(-10px); transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-    overflow: hidden; display: flex; flex-direction: column; z-index: 1002;
+overflow: hidden; display: flex; flex-direction: column; z-index: 1002;
 }
 .notif-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0);
 }
@@ -160,28 +161,33 @@ text-align: center; color: #555; font-size: 0.9rem; font-style: italic; }
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.95);
     width: 90%;
     max-width: 380px;
     z-index: 10000;
     
-    /* Estilo Glassmorphism / Galaxia */
-    background: rgba(11, 12, 16, 0.90);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(140, 82, 255, 0.3);
-    border-radius: 16px;
-    box-shadow: 0 0 40px rgba(140, 82, 255, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    /* Estilo Glassmorphism Galáctico */
+    background: rgba(11, 12, 16, 0.92); /* Fondo casi negro translúcido */
+    backdrop-filter: blur(16px);         /* Desenfoque del fondo */
+    -webkit-backdrop-filter: blur(16px);
     
-    padding: 25px;
+    /* Bordes y brillos */
+    border: 1px solid rgba(140, 82, 255, 0.3); /* Borde morado tenue */
+    border-radius: 20px;
+    box-shadow: 
+        0 0 0 1px rgba(0, 0, 0, 0.5), /* Sombra interna borde */
+        0 10px 40px rgba(0, 0, 0, 0.8), /* Sombra profunda */
+        0 0 30px rgba(140, 82, 255, 0.15); /* Resplandor morado externo */
+    
+    padding: 30px 20px;
     text-align: center;
     color: #fff;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Clase para mostrar el modal */
+/* Estado activo (visible) */
 .app-modal.active {
     display: block;
     opacity: 1;
@@ -189,96 +195,101 @@ text-align: center; color: #555; font-size: 0.9rem; font-style: italic; }
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Botón de cerrar (Estilo unificado con eventModal) */
+/* Botón de cerrar (X) */
 .app-modal-close {
     position: absolute;
-    top: -12px;
-    right: -12px;
-    background: #ff4757;
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid #1a1a1a;
-    font-size: 1.2rem;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: transform 0.2s ease, background 0.2s;
+    line-height: 1;
+    transition: color 0.3s, transform 0.3s;
     z-index: 20;
+    padding: 5px;
 }
 .app-modal-close:hover {
-    background: #ff2e40;
+    color: #ff4757;
     transform: scale(1.1) rotate(90deg);
 }
 
-/* Contenido del modal */
+/* Icono principal del modal */
 .modal-icon-header {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 15px;
-    background: linear-gradient(135deg, #00f0ff 0%, #8c52ff 100%);
+    background: var(--gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(140, 82, 255, 0.4));
+    filter: drop-shadow(0 0 15px rgba(140, 82, 255, 0.3));
 }
 
+/* Títulos y textos */
 .app-modal h3 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    font-weight: 700;
     color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 0.5px;
 }
 
 .app-modal p {
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.6;
     color: #ccc;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .app-modal strong {
-    color: var(--accent); /* #00f0ff */
-    font-weight: 700;
+    color: var(--accent);
+    font-weight: 600;
 }
 
-/* Instrucciones visuales (Iconos pequeños) */
+/* Pasos de instrucción (iOS) */
 .instruction-step {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 8px;
-    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px;
+    border-radius: 12px;
+    margin: 10px 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    justify-content: space-between; /* Texto a la izq, icono a la derecha */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.instruction-step span {
+    text-align: left;
+    font-size: 0.9rem;
 }
 .instruction-step i {
     font-size: 1.2rem;
     color: var(--accent);
+    margin-left: 10px;
 }
 
-/* Botón de acción (para el modal genérico) */
+/* Botón de acción (Entendido) */
 .modal-action-btn {
     background: var(--gradient);
     border: none;
-    padding: 10px 24px;
+    padding: 12px 30px;
     border-radius: 50px;
     color: #fff;
     font-weight: bold;
     font-size: 1rem;
     cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.4);
+    margin-top: 5px;
+    box-shadow: 0 4px 15px rgba(140, 82, 255, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
 }
 .modal-action-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(140, 82, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(140, 82, 255, 0.5);
 }
+.modal-action-btn:active {
+    transform: translateY(0);
+}
+
 
 /* Layout Grid */
 .container{ max-width:1200px; margin: calc(var(--header-approx-height) + var(--global-extra-gap)) auto 1.5rem; padding:0 1.6rem; z-index:6; position:relative;

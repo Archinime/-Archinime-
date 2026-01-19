@@ -18,7 +18,7 @@
   <video id="bg-video" poster="galaxia-morado1.avif" autoplay muted loop playsinline preload="metadata">
     <source src="galaxia.mp4" type="video/mp4">
     Tu navegador no soporta vídeo.
-</video>
+  </video>
   <div id="overlay" aria-hidden="true"></div>
 
   <audio id="bg-music" autoplay></audio>
@@ -35,7 +35,6 @@
     </h1>
 
     <div class="header-actions">
-  
         <button id="installBtn" class="nav-icon-btn install-pulse" style="display:none;" title="Instalar App">
             <i class="fas fa-download"></i>
         </button>
@@ -45,7 +44,6 @@
                 <i class="fas fa-bell"></i>
                 <span id="notifBadge" class="notif-badge" style="display:none"></span>
             </button>
-    
             <div id="notifMenu" class="notif-dropdown">
                 <div class="notif-header">
                     <span style="width: 100%; text-align: center;">Notificaciones</span>
@@ -166,37 +164,37 @@
     </svg>
   </div>
 
-<div id="iosInstallModal" class="app-modal" aria-hidden="true">
-      <button class="app-modal-close" onclick="closeAppModal('iosInstallModal')">&times;</button>
+  <div id="iosInstallModal" class="app-modal" aria-hidden="true">
+      <button class="app-modal-close" onclick="closeAppModal('iosInstallModal')" aria-label="Cerrar">&times;</button>
       
       <div class="modal-icon-header">
         <i class="fab fa-apple"></i>
       </div>
       
       <h3>Instalar en iOS</h3>
-      <p>Para añadir <strong>Archinime</strong> a tu pantalla de inicio:</p>
+      <p>Añade <strong>Archinime</strong> a tu pantalla de inicio para la mejor experiencia.</p>
       
       <div class="instruction-step">
-          <span>1. Pulsa el botón <strong>Compartir</strong></span>
+          <span>1. Toca el botón <strong>Compartir</strong></span>
           <i class="fas fa-share-square"></i>
       </div>
       
       <div class="instruction-step">
-          <span>2. Selecciona <strong>"Agregar a Inicio"</strong></span>
+          <span>2. Elige <strong>"Agregar a Inicio"</strong></span>
           <i class="far fa-plus-square"></i>
       </div>
   </div>
 
   <div id="fallbackModal" class="app-modal" aria-hidden="true">
-      <button class="app-modal-close" onclick="closeAppModal('fallbackModal')">&times;</button>
+      <button class="app-modal-close" onclick="closeAppModal('fallbackModal')" aria-label="Cerrar">&times;</button>
       
       <div class="modal-icon-header">
         <i class="fas fa-check-circle"></i>
       </div>
       
-      <h3>¡Ya la tienes! 😄</h3>
-      <p>La App ya está instalada o tu navegador no soporta la instalación automática.</p>
-      <p>Ábrela directamente desde tu <strong>Pantalla de Inicio</strong>.</p>
+      <h3>¡Ya la tienes!</h3>
+      <p>La App ya está instalada o tu navegador no permite la instalación automática.</p>
+      <p>Búscala en tu lista de aplicaciones como <strong>Archinime</strong>.</p>
       
       <button class="modal-action-btn" onclick="closeAppModal('fallbackModal')">Entendido</button>
   </div>

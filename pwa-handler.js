@@ -3,7 +3,7 @@
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 const iosModal = document.getElementById('iosInstallModal');
-const fallbackModal = document.getElementById('fallbackModal'); // Nuevo modal
+const fallbackModal = document.getElementById('fallbackModal');
 
 // 1. Detectar si es iOS (iPhone/iPad)
 const isIos = () => {
@@ -17,7 +17,29 @@ const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.n
 // 3. Detectar si es Móvil (coincidiendo con tu CSS de 780px)
 const isMobile = () => window.matchMedia('(max-width: 780px)').matches;
 
-// FUNCIÓN PRINCIPAL: Controlar visibilidad del botón
+// FUNCIÓN AUXILIAR: Abrir Modal con animación
+function openAppModal(modalElement) {
+    if (!modalElement) return;
+    modalElement.style.display = 'block';
+    // Pequeño retraso para permitir que el navegador procese el display:block antes de la opacidad
+    setTimeout(() => {
+        modalElement.classList.add('active');
+    }, 10);
+}
+
+// FUNCIÓN AUXILIAR: Cerrar Modal (Global para llamarla desde HTML)
+window.closeAppModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        // Esperar a que termine la transición CSS (0.3s) antes de ocultar
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+}
+
+// FUNCIÓN PRINCIPAL: Controlar visibilidad del botón de descarga
 function checkInstallButtonVisibility() {
     // Solo mostrar si es Móvil Y NO está ya instalada en modo app
     if (isMobile() && !isInStandaloneMode()) {
@@ -26,27 +48,6 @@ function checkInstallButtonVisibility() {
         // En PC o si ya está instalada, lo ocultamos
         if (installBtn) installBtn.style.display = 'none';
     }
-}
-
-// Función auxiliar para cerrar modales (global para poder llamarla desde el HTML)
-window.closeAppModal = function(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.remove('active');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300); // Esperar a la animación CSS
-    }
-}
-
-// Función auxiliar para abrir modales con animación
-function openAppModal(modalElement) {
-    if (!modalElement) return;
-    modalElement.style.display = 'block';
-    // Pequeño delay para permitir que el navegador renderice antes de añadir opacidad (para la transición)
-    setTimeout(() => {
-        modalElement.classList.add('active');
-    }, 10);
 }
 
 // 4. Manejo del evento nativo (Android / PC Chrome)
@@ -65,7 +66,7 @@ if (installBtn) {
             // iOS: Mostrar instrucciones manuales con el nuevo diseño
             openAppModal(iosModal);
         } else if (deferredPrompt) {
-            // Android: Si tenemos el prompt guardado, lo lanzamos (Nativo del navegador, no estilizable)
+            // Android: Si tenemos el prompt guardado, lo lanzamos
             deferredPrompt.prompt();
             
             deferredPrompt.userChoice.then((choiceResult) => {
@@ -75,8 +76,8 @@ if (installBtn) {
                 deferredPrompt = null;
             });
         } else {
-            // FALLBACK: Si no hay prompt (ya instalada o no soportado)
-            // Mostramos el nuevo Modal Genérico en lugar de alert()
+            // FALLBACK: Si no hay prompt (ya instalada o navegador no compatible)
+            // Mostramos el modal bonito en lugar de alert()
             openAppModal(fallbackModal);
         }
     });
