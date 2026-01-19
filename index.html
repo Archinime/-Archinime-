@@ -166,14 +166,19 @@
     </svg>
   </div>
 
-  <div id="iosInstallModal" class="ios-modal">
-      <div class="ios-content">
-          <span class="ios-close" onclick="closeIosModal()">&times;</span>
-          <p>Para instalar <strong>Archinime</strong> en tu iPhone/iPad:</p>
-          <p>1. Pulsa el botón <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
-          <p>2. Selecciona <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
+<div id="manualInstallModal" class="manual-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <i class="fas fa-download"></i>
+      <h3>Instalar App</h3>
+    </div>
+    
+    <div id="modalBody" class="modal-body">
       </div>
+
+    <button class="modal-close-btn" onclick="closeManualModal()">Entendido</button>
   </div>
+</div>
 
   <script src="index-data.js"></script>
   <script src="animaciones.js"></script>
