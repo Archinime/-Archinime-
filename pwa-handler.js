@@ -1,70 +1,45 @@
 /* Archivo: pwa-handler.js */
-
-let deferredPrompt = null;
+let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
-const iosModal = document.getElementById('iosInstallModal');
+const installModal = document.getElementById('universalInstallModal');
 
-// 1. Detectar si es iOS
-const isIos = () => {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  return /iphone|ipad|ipod/.test(userAgent);
-}
+// Detectar si ya es app
+const isApp = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-// 2. Detectar si ya estamos DENTRO de la app instalada
-const isInStandaloneMode = () => {
-    return ('standalone' in window.navigator) && (window.navigator.standalone) 
-           || window.matchMedia('(display-mode: standalone)').matches;
-};
+// Mostrar botón siempre
+if (installBtn) installBtn.style.display = 'flex';
 
-// 3. Capturar el evento de instalación (CRUCIAL para PC y Android)
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevenir que Chrome muestre su barra automática (la controlaremos nosotros)
+  // Evitar que Chrome lo haga solo
   e.preventDefault();
   deferredPrompt = e;
-  console.log('Evento de instalación capturado y listo.');
+  console.log('PC lista para instalar');
 });
 
-// 4. Lógica del botón
-if(installBtn) {
-    // Aseguramos que el botón sea visible si NO estamos dentro de la app
-    // Si quieres que aparezca INCLUSO dentro de la app instalada, borra el "if" y deja solo la linea del display.
-    if (!isInStandaloneMode()) {
-        installBtn.style.display = 'flex'; 
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (isApp()) {
+      alert("¡Ya estás usando la aplicación!");
+      return;
     }
 
-    installBtn.addEventListener('click', async () => {
-        // Opción A: Es iOS (iPhone/iPad) -> Mostrar instrucciones
-        if (isIos()) {
-            if(iosModal) iosModal.style.display = 'block';
-            return;
-        }
-
-        // Opción B: Tenemos el evento guardado (PC o Android) -> LANZAR INSTALADOR
-        if (deferredPrompt) {
-            deferredPrompt.prompt(); // <-- Esto abre la ventanita nativa en PC
-            
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`Usuario decidió: ${outcome}`);
-            
-            // Nota: deferredPrompt solo sirve una vez. Se reinicia.
-            deferredPrompt = null;
-        } 
-        // Opción C: No hay evento (Ya está instalada o el navegador no soporta PWA)
-        else {
-             // Solo aquí mostramos ayuda, por si el botón no responde
-             alert('Parece que la instalación automática no está disponible ahora (o ya tienes la App instalada).\n\nEn PC: Busca el icono (+) o "Instalar" en la barra de direcciones arriba a la derecha.');
-        }
-    });
+    // Si el navegador nos da permiso (Evento activo)
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') deferredPrompt = null;
+    } 
+    else {
+      // SI NO FUNCIONA EL AUTOMÁTICO EN PC:
+      // Mostramos el modal que explica dónde está el botón nativo de Chrome/Edge
+      if (installModal) {
+          document.getElementById('modalTextPc').style.display = 'block';
+          installModal.style.display = 'block';
+      }
+    }
+  });
 }
 
-// Función para cerrar modal iOS
-window.closeIosModal = function() {
-    if(iosModal) iosModal.style.display = 'none';
-}
-
-// Escuchar si se instaló con éxito (Opcional: solo para registro)
-window.addEventListener('appinstalled', () => {
-  console.log('Aplicación instalada con éxito');
-  deferredPrompt = null;
-  // NO ocultamos el botón, como pediste.
-});
+window.closeInstallModal = () => {
+  if (installModal) installModal.style.display = 'none';
+};
