@@ -10992,5 +10992,19 @@ const players = {
                 "title": "Hana-Kimi T1 Cap 4"
             }
         }
+    },
+    "79": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1ehlUaz2HIIh4Gwk5bVmVkh9SpGN_NLSE/preview",
+                "link2": "",
+                "title": "Dark Moon: The Blood Altar T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/13IKUoof3I67Gc8l2r3BJnh1Ds7upULVi/preview",
+                "link2": "",
+                "title": "Dark Moon: The Blood Altar T1 Cap 2"
+            }
+        }
     }
 };
