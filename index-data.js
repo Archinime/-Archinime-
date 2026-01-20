@@ -1375,5 +1375,29 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
+    },
+    {
+        "id": 77,
+        "title": "Fire Force",
+        "img": "https://www.dropbox.com/scl/fi/yb4ceq87w77dc9tfv6hck/fireforce.avif?rlkey=vqtcwroglk2w1xksclu3fzy6k&st=x4wng0o2&raw=1",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Ciencia ficción",
+            "Comedia",
+            "Drama",
+            "Fantasía",
+            "Misterio",
+            "Sobrenatural",
+            "Shōnen"
+        ],
+        "lastUpdate": 1768920378577,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1vev0mnfqzgdkb64yehck/fireforce3.avif?rlkey=26ytp6sdp69ilxsr5wcxwifah&st=rnme9z8u&raw=1",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 14",
+        "isFinal": false
     }
 ];
