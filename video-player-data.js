@@ -9429,6 +9429,11 @@ const players = {
                 "link2": "",
                 "title": "Gnosia T1 Cap 8"
             },
+            "9": {
+                "link": "https://drive.google.com/file/d/1PONSH3lxW8LpSUN_tjorR0_tfBOWpyIU/preview",
+                "link2": "",
+                "title": "Gnosia T1 Cap 9"
+            },
             "10": {
                 "link": "https://drive.google.com/file/d/1CRXR2NqmhF0XPk019s5G9p-UW8dBWER5/preview",
                 "link2": "",
@@ -9440,7 +9445,7 @@ const players = {
                 "title": "Gnosia T1 Cap 11"
             },
             "12": {
-                "link": "https://drive.google.com/file/d/107ELLYjGtdnc__ynDyG4WBU-pwnUtjDi/preview",
+                "link": "https://drive.google.com/file/d/1euFbDqIy1MsHMB_TcgkoyHMmvQH498o3/preview",
                 "link2": "",
                 "title": "Gnosia T1 Cap 12"
             }
