@@ -9615,115 +9615,150 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/13Np4CEoeUt-h_eUhxdU7HHx0zbG4yemH/preview",
-                "title": "Frieren T1 Cap 1"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/11r5zXgEGtFnNZtBBh7QZn9qGLRdkcGl8/preview",
-                "title": "Frieren T1 Cap 2"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1M2gCKJLozaaZ_woX5BSCwghT5A4IIFnG/preview",
-                "title": "Frieren T1 Cap 3"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1HXSV_bFX-uC2JZvLEnaVYj5XligjKROA/preview",
-                "title": "Frieren T1 Cap 4"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/16jMPlEB8fFZ8k5OqVCI3ECtZ9EPCc_YL/preview",
-                "title": "Frieren T1 Cap 5"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1lo4ZGP43A7ItHGEBPFg0l8jb3ZmAbjuQ/preview",
-                "title": "Frieren T1 Cap 6"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1krinn03_30GMzq4URvmTx6I-SZhucRBK/preview",
-                "title": "Frieren T1 Cap 7"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/15zqf5LHlQS3TE-CQZAqQAyGbV-n-v3y_/preview",
-                "title": "Frieren T1 Cap 8"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/168DQHyqOxxAwpze6ckmSY_dXSE0eiPzx/preview",
-                "title": "Frieren T1 Cap 9"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1wLVSy7tE_sgEcgbC3ptBTFY-nBrBOBFt/preview",
-                "title": "Frieren T1 Cap 10"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1gXwA8cCuhBfsQmIvt5io_LM08l0An91Y/preview",
-                "title": "Frieren T1 Cap 11"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1HsioY_a1vFuttog-jQWmacFkUKmul1DR/preview",
-                "title": "Frieren T1 Cap 12"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1tBM1AHPO319rQV0b1yICH4BrKl7CZxkk/preview",
-                "title": "Frieren T1 Cap 13"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/18JIU0jl6VV4Grpqo3DxU3CwlTKopvoYi/preview",
-                "title": "Frieren T1 Cap 14"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1pIiWOon8IpvRbUKUT-EqIB5kXR8PyzdZ/preview",
-                "title": "Frieren T1 Cap 15"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1V9nOqVT9IvCcM8EUsz42uzhvOf78TWQA/preview",
-                "title": "Frieren T1 Cap 16"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1xfvxaNtMKxmeZMs5wbz1ZmW7gc9dcFBv/preview",
-                "title": "Frieren T1 Cap 17"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/18lxM7ZFgOwSsgpDaLVVly78lR7pkQLbZ/preview",
-                "title": "Frieren T1 Cap 18"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1n1iKFPRKqTwsdNJBrsVlwHmr_TynZoDe/preview",
-                "title": "Frieren T1 Cap 19"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1ri7skTlzInJP3cwXzQPp7dG4tnw2Wuzs/preview",
-                "title": "Frieren T1 Cap 20"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1NSDEnaLLt6RolOlhKnyPNUiY1GKsvlNZ/preview",
-                "title": "Frieren T1 Cap 21"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1vhqg-6RdanhBrS4ip0ZLL6BFAqa93Fa7/preview",
-                "title": "Frieren T1 Cap 22"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/12NHRQNTC7MGuMShkYAy5V1mcpL39u74t/preview",
-                "title": "Frieren T1 Cap 23"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/10_Sf9iachis6Y_Ci1qYx8rUERr8mNGH7/preview",
-                "title": "Frieren T1 Cap 24"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1sB6qVgqF29D2p7e37cpeIHo4X2tLlacU/preview",
-                "title": "Frieren T1 Cap 25"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 25"
             },
             "26": {
                 "link": "https://drive.google.com/file/d/1oS35kcIj269Rwc4xZYmHQ1pJizqrHTFF/preview",
-                "title": "Frieren T1 Cap 26"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 26"
             },
             "27": {
                 "link": "https://drive.google.com/file/d/10tT2Ex4SrQO6tPWS2jK3yM8sD2auNjf5/preview",
-                "title": "Frieren T1 Cap 27"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 27"
             },
             "28": {
                 "link": "https://drive.google.com/file/d/1C_9fB7oBrzzvE-kre-zyLu3ILGcMoOp6/preview",
-                "title": "Frieren T1 Cap 28"
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T1 Cap 28"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1yQ08r89x_QGkrAOCVcLs7yKGV4ddxnGd/preview",
+                "title": "Frieren: Más allá del final del viaje T2 Cap 1"
             }
         }
     },
