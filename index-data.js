@@ -1428,5 +1428,28 @@ const animes = [
         "aliases": [
             "Hanazakari no kimitachi e"
         ]
+    },
+    {
+        "id": 79,
+        "title": "Dark Moon: The Blood Altar",
+        "img": "https://www.dropbox.com/scl/fi/ypv720n8l5jvhd47c77ei/68HcRvCpiajsPhKn1MnV4hqeCAN.avif?rlkey=yulou1xyoa1ocvhu9nd0pfjxk&st=cswxzs4u&raw=1",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Escolar",
+            "Fantasía oscura",
+            "Misterio",
+            "Reverse Harem",
+            "Romance",
+            "Sobrenatural",
+            "Shōjo"
+        ],
+        "lastUpdate": 1768945828059,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/2ji05um3swkxlqysdr70h/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1768945509924-1768945509924.avif?rlkey=5cvtzsgy67fktx4om4qrphlco&st=ue9uf0aq&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 2",
+        "isFinal": false
     }
 ];
