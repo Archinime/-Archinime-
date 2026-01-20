@@ -8188,5 +8188,220 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "77": {
+        "title": "Fire Force",
+        "desc": "Tokio está ardiendo y los ciudadanos sufren misteriosas combustiones espontáneas por toda la ciudad. La responsable de apagar este infierno es la Brigada Especial Antiincendios y Shinra está listo para unirse a su lucha. Ahora, como parte del 8.º Escuadrón, usará sus poderes para evitar que la ciudad acabe reducida a cenizas.Sin embargo, un secreto de su pasado podría prenderlo todo.",
+        "cover": "https://www.dropbox.com/scl/fi/yb4ceq87w77dc9tfv6hck/fireforce.avif?rlkey=vqtcwroglk2w1xksclu3fzy6k&st=x4wng0o2&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/8qk3g1d7l5jz5w00y6fhs/fireforce1.avif?rlkey=sw2jpbkkue0i2azgswqtvswje&st=qbpro3i8&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
+                    },
+                    {
+                        "title": "Capítulo 17"
+                    },
+                    {
+                        "title": "Capítulo 18"
+                    },
+                    {
+                        "title": "Capítulo 19"
+                    },
+                    {
+                        "title": "Capítulo 20"
+                    },
+                    {
+                        "title": "Capítulo 21"
+                    },
+                    {
+                        "title": "Capítulo 22"
+                    },
+                    {
+                        "title": "Capítulo 23"
+                    },
+                    {
+                        "title": "Capítulo 24"
+                    }
+                ],
+                "name": "Temporada 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://www.dropbox.com/scl/fi/yr1ue000zew17acj05fvh/fireforce2.avif?rlkey=bv4t186a6hlfgs1srwtspeaph&st=3x9mbj4r&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
+                    },
+                    {
+                        "title": "Capítulo 17"
+                    },
+                    {
+                        "title": "Capítulo 18"
+                    },
+                    {
+                        "title": "Capítulo 19"
+                    },
+                    {
+                        "title": "Capítulo 20"
+                    },
+                    {
+                        "title": "Capítulo 21"
+                    },
+                    {
+                        "title": "Capítulo 22"
+                    },
+                    {
+                        "title": "Capítulo 23"
+                    },
+                    {
+                        "title": "Capítulo 24"
+                    }
+                ],
+                "name": "Temporada 2"
+            },
+            {
+                "num": 3,
+                "cover": "https://www.dropbox.com/scl/fi/1vev0mnfqzgdkb64yehck/fireforce3.avif?rlkey=26ytp6sdp69ilxsr5wcxwifah&st=rnme9z8u&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    }
+                ],
+                "name": "Temporada 3"
+            }
+        ]
     }
 };
