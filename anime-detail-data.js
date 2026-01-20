@@ -8459,5 +8459,26 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "79": {
+        "title": "Dark Moon: The Blood Altar",
+        "desc": "En la ciudad costera de Riverfield se encuentra la Academia Decelis, hogar de siete chicos misteriosos que comparten el mismo secreto: son vampiros y ocultan su turbio pasado. Cuando Sooha, una estudiante que odia a los vampiros, se transfiere a la academia, los chicos se sienten irresistiblemente atraídos por ella. A medida que extraños sucesos sacuden la ciudad, viejos pecados y secretos enterrados resurgen, y su mundo comienza a fracturarse.",
+        "cover": "https://www.dropbox.com/scl/fi/ypv720n8l5jvhd47c77ei/68HcRvCpiajsPhKn1MnV4hqeCAN.avif?rlkey=yulou1xyoa1ocvhu9nd0pfjxk&st=cswxzs4u&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/2ji05um3swkxlqysdr70h/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1768945509924-1768945509924.avif?rlkey=5cvtzsgy67fktx4om4qrphlco&st=ue9uf0aq&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
