@@ -35,7 +35,7 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1768946186939,
+        "lastUpdate": 1768946653494,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
         "latestBlockName": "Temporada 3",
