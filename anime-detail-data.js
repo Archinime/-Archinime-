@@ -7428,7 +7428,18 @@ const data = {
                     {
                         "title": "Capítulo 28"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://www.dropbox.com/scl/fi/68met98fq4br4u8cd7594/frieren2.avif?rlkey=w5jv3dne0ffs2ponw3ai1kgt0&st=uqyu2mmm&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
