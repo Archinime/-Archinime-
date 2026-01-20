@@ -4054,7 +4054,7 @@ const data = {
                         "title": "Capítulo 1"
                     }
                 ],
-                "name": "Ova 0"
+                "name": "OVA 1"
             },
             {
                 "num": 2,
@@ -4095,30 +4095,37 @@ const data = {
                     },
                     {
                         "title": "Capítulo 12"
-                    },
-                    {
-                        "title": "Capítulo 13"
-                    },
-                    {
-                        "title": "Capítulo 14"
-                    },
-                    {
-                        "title": "Capítulo 15"
-                    },
-                    {
-                        "title": "Capítulo 16"
-                    },
-                    {
-                        "title": "Capítulo 17"
-                    },
-                    {
-                        "title": "Capítulo 18"
                     }
                 ],
                 "name": "Temporada 1"
             },
             {
                 "num": 3,
+                "cover": "https://www.dropbox.com/scl/fi/gb5c5qs9vk8urqfgu2cnz/asfasf.avif?rlkey=riiqywxtk4ocat1oy879m46il&st=f9sl6b6d&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    }
+                ],
+                "name": "Especial 1 - 6"
+            },
+            {
+                "num": 4,
                 "cover": "https://www.dropbox.com/scl/fi/xx302drnrqurqrj7eggdc/gsdgsdgsdg-1.jpg?rlkey=ee9b8kqmq7kdbef8tqr622d5j&st=9qw1ilb1&raw=1",
                 "eps": [
                     {
@@ -4156,30 +4163,37 @@ const data = {
                     },
                     {
                         "title": "Capítulo 12"
-                    },
-                    {
-                        "title": "Capítulo 13"
-                    },
-                    {
-                        "title": "Capítulo 14"
-                    },
-                    {
-                        "title": "Capítulo 15"
-                    },
-                    {
-                        "title": "Capítulo 16"
-                    },
-                    {
-                        "title": "Capítulo 17"
-                    },
-                    {
-                        "title": "Capítulo 18"
                     }
                 ],
                 "name": "Temporada 2"
             },
             {
-                "num": 4,
+                "num": 5,
+                "cover": "https://www.dropbox.com/scl/fi/whxth23vsbdxykczed7fp/sdafssfd.avif?rlkey=2enj7arpalqyogu9fzir3etf3&st=hvbj3t83&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    }
+                ],
+                "name": "Especial 7 - 12"
+            },
+            {
+                "num": 6,
                 "cover": "https://www.dropbox.com/scl/fi/1r0djgkxmptdfe2ltkbk1/onepunch3.jpg?rlkey=4e2i0r1cvl5ufsh5f41fa2sqm&st=woghk9gy&raw=1",
                 "eps": [
                     {
@@ -4193,6 +4207,18 @@ const data = {
                     },
                     {
                         "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
                     }
                 ],
                 "name": "Temporada 3"
