@@ -1158,18 +1158,25 @@ const animes = [
     },
     {
         "id": 66,
-        "title": "Frieren",
-        "aliases": [
-            "Sōsō no Frieren"
-        ],
+        "title": "Frieren: Más allá del final del viaje",
         "img": "ff.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
             "Aventura",
             "Drama",
+            "Fantasía",
             "Shōnen"
+        ],
+        "lastUpdate": 1768946118595,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/68met98fq4br4u8cd7594/frieren2.avif?rlkey=w5jv3dne0ffs2ponw3ai1kgt0&st=uqyu2mmm&raw=1",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Sōsō no Frieren"
         ]
     },
     {
