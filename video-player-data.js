@@ -10621,5 +10621,323 @@ const players = {
                 "title": "Let's Play T1 Cap 12"
             }
         }
+    },
+    "77": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1lsxCitzY_uSge7-j8F93j6PJgniDvYUP/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1GeHNRaIPc1zZrdK9t6FV0VBUMYYFZqiQ/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/13-P9CXL-qkkoMBSrJfHWHVFHTabr9rry/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1rZFeY7-mIVkoz2eHp5lN-8UGrMsF3CZO/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1jguSpfT2ISji39KJPgLcflHIkY9xpgce/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1wU58eAEeJ8oXP3whzVtdzc37ntJMuJH6/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1rxSYDg0YCVHAmaOR6Ca5glLr3qau6Qjz/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1smm4AEjGkPC_o5QpC9aNaGyNWeaMes6I/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1ndzDQ1opxNR_b-Ccnq0oJF6DfRLfsf1T/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/14G5nkgs1MMgrmeuhjUmIYObtMZSCoTvA/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1tGxHgQhQLyN7p0SrivT0M2wXEpRP-8pq/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/11dcSS22J912-7q_pkiN65AZoNOAEAa8L/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1QTQevUBIfqspby6-CzAEVn7v0stcIK7h/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/162KGaOqVe5Dspb170JaDdD7bkp6onhn4/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1qmvv5C-QdgSAVaixIN174qH2j-_Ugnx1/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1vONDd76u7xVf_mAzDZbBppwXtlKtILsd/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1DZICvoJvIhdffEYlPxnAppZ-tDvKr1X7/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1t6HmqQy9Er2mtW35TY2p0mkGIrDiPwgq/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1Zf51TCc17uoYToH5pKxt84mVEGitHhm4/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1ahZQzPGKYDylJcF9SZeThrO4Q0G7lb1l/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1rPYXhjYoqeujJx0zpkVPHD_us7K12pvr/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/16juFonlbBdA13cwHoWFSOqOVMj4FBCOO/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1krBIFMEEF1v6tSgFzTngm6OLawwbo1ww/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1FBxmkM0-EQ5SSyPKOe0_FjSCbEYw6vcU/preview",
+                "link2": "",
+                "title": "Fire Force T1 Cap 24"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/18Al-IFHp-IvPGRKaoji0__YNV-LGlGPG/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/18cv5S-CVB3mcN6HZWy9mjm4c2FH94aGN/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1eSxcG8H9vg-Iw3pRmb7aYe2RaOX66fYe/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1yup3HY0RGLoW8vEx-zkYawSAKA8B1vbg/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/16ile1jimeazE6Xl0d7cD1CY8TA9jnLfx/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/17Bx4sS6LVe-V0HENmQvulBF9nSWD8H3Y/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1VG8fYJ_UuI-Df4JHVFOt7TwsOIsWtMHu/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1o37QpkC_OF-sxW3Dt5wOdKUplyt3Muz2/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1djbI46oIKWHTH41ZLHolyP-MQQqrKlzX/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1YBDUVzbM9zW-mGGbS4EIOpAzGB6i_uKU/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1AnLcToGf6F5xG3ZdMp1-fqgmqFw1De_9/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1D1PpYQLP6WnoCR8kbHSV0hBh2rI-Mch_/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1FUpjoTBJbJ2zSdLzMik0jJVkF5agWr1x/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1MZojNedUNFFShQLOvWQe6sCASNv8R2xU/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1U_QuG2LH_tJzzxLuHDMqzyC6o7rdnwts/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1U3RnANlBO8_VhPXeA8XegK65_FPSOEJ3/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1kS8AHLh2Q95-iGv-Rw8GR7Udj573x3HK/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1Qk5c-OYDsRWvTyy6687x8Oz8IQk1YNYO/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1tNpr16ZRYcSoM4t5FqtXgoy3fAM1G41m/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1V9bGVV2vbWAmcQiJDIh04P2zX0V1XS3Z/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1zHuqGPF2EdMz5wgP6qtSAqLPxHN2jLG0/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1mD2MMKjxmYzNphZZQuFHiRKUcBp-gpdo/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/15iwG0fWHWSQWd7Twa_DOql1w5PNMicHg/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1rOvIA9SixX4TbncA6bKEX-oGeG1DH7NM/preview",
+                "link2": "",
+                "title": "Fire Force T2 Cap 24"
+            }
+        },
+        "3": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1l7frkX_Qm5v6z7VREZKILwZwiSzfB5EX/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1no4Vt8I9NjhjeyEHGZ5ikmEBskXrBlQu/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1HgZUMIRd3umRE_9uKA7HjhxKaG4rc-2T/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1T3xDCVj7CQcvCBPY328mMLZw6PMOFvhK/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1mkuAQl1GZNoe7Tg8kioQKcsKUpWpBB2L/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1AOCqyP1_laa86WSQ4SW_ULZfmPEjnsis/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1qgI1i9APkiOSLvtH4QLZ5Kn-52NrlBig/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1HMwojZbuY3ZFyJ07DdPBA0IrtG3fRzEy/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/197ZJy6rZw-ARhBIkqnI3QfylV7ofjsm_/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1WVe5xk49ZkHu2-U1eENoCgiwjtihS1Yg/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1NvSAGC7OfyK4gEaEgaqIGgx-zqyT_liz/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1zvF5uLmhOnH2TnZ-vDcYIgGZVnmfBY5L/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1WyaPsMnLPPHfuMHylXzQ5jbA0epK4fR3/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1MOL368jflme2nq0jc1pZPpXIRMCMzAf7/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 14"
+            }
+        }
     }
 };
