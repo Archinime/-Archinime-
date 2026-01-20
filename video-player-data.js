@@ -10968,5 +10968,29 @@ const players = {
                 "title": "Fire Force T3 Cap 14"
             }
         }
+    },
+    "78": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/15kMYP5mD-YZvXhzse9hDOYDWc8M9BTh4/preview",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1knwjpcm8deZ7NK6j6J_d8GaRVOCDxS7F/preview",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/15aHVss8VADnfVC5jdyCXlgWTbCPJCmS5/preview",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/15XSgwYDGX-7K9_FeixnlVBfSEYnO9tsx/preview",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 4"
+            }
+        }
     }
 };
