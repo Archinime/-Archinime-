@@ -8432,5 +8432,32 @@ const data = {
                 "name": "Temporada 3"
             }
         ]
+    },
+    "78": {
+        "title": "Hana-Kimi",
+        "desc": "Mizuki Ashiya tiene una misión: disfrazarse de chico e inscribirse en un internado masculino para conocer a su ídolo, la estrella del salto de altura Izumi Sano. Pero tras infiltrarse con éxito en la escuela, descubre que él ha abandonado el deporte. Ahora Mizuki debe esquivar las sospechas, proteger su tapadera y, como pueda, llegar hasta el chico por el que ha recorrido todo este camino.",
+        "cover": "https://www.dropbox.com/scl/fi/pjimk877gp2f1gq1fur0f/ImageToStl.com_Hana-Kimi-1.avif?rlkey=e0wi3l2w6v5vjy753cyag3sup&st=89tv9fxr&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/e5dwv24trzd8zpcexo20i/asfafsaf.avif?rlkey=3jjrm0xy6q0xui8e6cwrgqs0e&st=xhbepgng&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
