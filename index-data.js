@@ -1129,7 +1129,13 @@ const animes = [
             "Drama",
             "Misterio",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1768945911848,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "gnosia1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 65,
