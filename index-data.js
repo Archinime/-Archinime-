@@ -787,19 +787,26 @@ const animes = [
     {
         "id": 47,
         "title": "Hazbin Hotel",
-        "aliases": [
-            "Hotel Hazbin"
-        ],
         "img": "hhzz.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
-            "Musical",
-            "Drama",
             "Animación",
+            "Comedia",
+            "Drama",
+            "Musical",
             "Policial",
             "Seijin"
+        ],
+        "lastUpdate": 1769033282341,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/iz2jt0avm2d625tjb8trq/Airbrush-Image-Enhancer-1761697102126.jpg?rlkey=isj2usvel3oh22io1o620lfoi&st=8laf3wdv&raw=1",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 8",
+        "isFinal": false,
+        "aliases": [
+            "Hotel Hazbin"
         ]
     },
     {
