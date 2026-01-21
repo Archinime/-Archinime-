@@ -6378,85 +6378,85 @@ const players = {
     "47": {
         "1": {
             "1": {
-                "link": "https://drive.google.com/file/d/1sOks_ypzfmJ4xmy0Ge5hjOz3vrPNBaA8/preview",
-                "link2": "https://www.dropbox.com/scl/fi/46lqzcwpqfn7slbmvy9hp/Hazbin-Hotel-T1-Cap-1.mp4?rlkey=1g6jfctjgm02d0m6xja11x5ut&st=hjt833fa&raw=1",
+                "link": "https://drive.google.com/file/d/1YAwbZee91LYnZiQQI8DHdar57UDkbVcg/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1uRUEwZrNU2DguP6nUX5NPCAH5WPoj4L6/preview",
-                "link2": "https://www.dropbox.com/scl/fi/6s26ds3cbfsimz7asxwnn/Hazbin-Hotel-T1-Cap-2.mp4?rlkey=5gvu2ouhb1hgkqeuwikchbgey&st=7hsity9h&raw=1",
+                "link": "https://drive.google.com/file/d/1tc2RKGs_cDksisU3UIPMzNJlUy2vfr7T/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/18rpDNT1J-m-pXN6LH-rQFJifOgrDwXwi/preview",
-                "link2": "https://www.dropbox.com/scl/fi/v4dwycqbmzv7x19hu5rfo/Hazbin-Hotel-T1-Cap-3.mp4?rlkey=d6cp0nbqvm2jalm8cqo6frf89&st=0gfag8l0&raw=1",
+                "link": "https://drive.google.com/file/d/1n5ilPzej_1LAwa7luzk4g8tlf64ZjxaQ/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/17zsKiqAWCxGKhKsuEzYST3MYYjOEtEZV/preview",
-                "link2": "https://www.dropbox.com/scl/fi/pqkhcf5nmlw1e3w94r6s9/Hazbin-Hotel-T1-Cap-4.mp4?rlkey=7qzl7rlxlgwfovpwirkor72bt&st=9bm15l3c&raw=1",
+                "link": "https://drive.google.com/file/d/1IAkBbBy3bsTEPwIpiZJAr_SKLRDXlw1s/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 4"
             },
             "5": {
-                "link": "https://drive.google.com/file/d/1BLZVhZFP3ObxANFSFXtv8gnAWDXqmluV/preview",
-                "link2": "https://www.dropbox.com/scl/fi/8xwg65uxueist8uhyhr4y/Hazbin-Hotel-T1-Cap-5.mp4?rlkey=zm5rju5z259ixwlv8iw1y3c6k&st=vd82j5tx&raw=1",
+                "link": "https://drive.google.com/file/d/1CnyGq7dRlVWH_YvFJwOmcbG1bpsgUgBJ/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 5"
             },
             "6": {
-                "link": "https://drive.google.com/file/d/1EZysktzf40vdEB-EOF069h_T__2PgAvD/preview",
-                "link2": "https://www.dropbox.com/scl/fi/6vs69gv6ei4wgq8ks09p4/Hazbin-Hotel-T1-Cap-6.mp4?rlkey=wzfpjoh2oqldejlzmushsmfyu&st=znjkjjg4&raw=1",
+                "link": "https://drive.google.com/file/d/15smVU936EvJ95krxKlfOyKpfVt4a97hO/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 6"
             },
             "7": {
-                "link": "https://drive.google.com/file/d/1Mx0hi7Q4iN7MQh430VZRtjzKZ9FeSFIV/preview",
-                "link2": "https://www.dropbox.com/scl/fi/b0ezysupjd009qu0ubiqt/Hazbin-Hotel-T1-Cap-7.mp4?rlkey=k93e64wowpyx5mk6g05gyqkk0&st=v3hph3ab&raw=1",
+                "link": "https://drive.google.com/file/d/16CoP0JdlElGAcw0p1u7Fl6CHNtGV6Kkp/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 7"
             },
             "8": {
-                "link": "https://drive.google.com/file/d/1j0T4P1DfDqiznB_Nr8DtlBENFBJPTPGf/preview",
-                "link2": "https://www.dropbox.com/scl/fi/2kz30t1t2cw5xwrlawc52/Hazbin-Hotel-T1-Cap-8.mp4?rlkey=2wde6yt3i9zrsgggbw00fqd4p&st=v6kz9xj7&raw=1",
+                "link": "https://drive.google.com/file/d/1zxxB6p6_o9cPpuFPTgLGqBSfYrADvv1x/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T1 Cap 8"
             }
         },
         "2": {
             "1": {
-                "link": "https://drive.google.com/file/d/1Yn-9-IT_S8RwP548XkI8LYNkH2Ed_LtR/preview",
-                "link2": "https://www.dropbox.com/scl/fi/0ggizvmq6zobtqoyzdrxl/Hazbin-Hotel-T2-Cap-1.mp4?rlkey=b5xpmmn5v10fxqcbvuboskw6x&st=djwu6vpa&raw=1",
+                "link": "https://drive.google.com/file/d/1vC4PVGtUQ-pMsfHN92gfC9dc_mCg9WmA/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1nE3fYvVd4eiQBXIDe52UmJBjQoFX2lWl/preview",
-                "link2": "https://www.dropbox.com/scl/fi/0us3wx7ai0znjqo0w87kh/Hazbin-Hotel-T2-Cap-2.mp4?rlkey=ionw8la37kfsyik2n7mmz8fuq&st=04nk8vrj&raw=1",
+                "link": "https://drive.google.com/file/d/1ri7RimcqFo_lROiOPOHANu5T10B_IkU7/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/1uWrWj437JyO0WkpGqYMBG2nOR3aDaTY0/preview",
-                "link2": "https://www.dropbox.com/scl/fi/4o7bynf1j33h3hi5nepay/Hazbin-Hotel-T2-Cap-3.mp4?rlkey=cr1dwwqb9ahsndgmdjk7fwj9h&st=n5b37mx8&raw=1",
+                "link": "https://drive.google.com/file/d/1-LI4CVobMQfj6Wj1VzTQaTFcALb9ZTcS/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/1oOrg4o34qT953F1kp1B1e5rOmWY6ObyW/preview",
-                "link2": "https://www.dropbox.com/scl/fi/nrxcwryni2fikbblxd3nm/Hazbin-Hotel-T2-Cap-4.mp4?rlkey=zl9wdxx5oug6qvzxl8uaelwv5&st=7ifzrod4&raw=1",
+                "link": "https://drive.google.com/file/d/1CQWzeIkGVAhlG9MCa2qtO_WRD5q-nSAg/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 4"
             },
             "5": {
-                "link": "https://drive.google.com/file/d/13QI-7v7cQNa6Uh1yaiUAxxuf7WyqaPJH/preview",
-                "link2": "https://www.dropbox.com/scl/fi/p6z6m56sldza22e22nwh2/Hazbin-Hotel-T2-Cap-5.mp4?rlkey=woym5ldevjetcnt09oin34qne&st=rz8ijg58&raw=1",
+                "link": "https://drive.google.com/file/d/1vYcwEDlx989WPadyEI9Bk3LqrAXMSkxY/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 5"
             },
             "6": {
-                "link": "https://drive.google.com/file/d/1DFntXDbWuSX3WHaXNOYIw-r87yM7msih/preview",
-                "link2": "https://www.dropbox.com/scl/fi/rixjs96lkxen1y28io9ac/Hazbin-Hotel-T2-Cap-6.mp4?rlkey=d6n5lx3rnj5f2rqay9o6t9x03&st=c7qlrk1c&raw=1",
+                "link": "https://drive.google.com/file/d/1UzKj_nD5T_Epal4utLUcaYIc1mT_mhXn/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 6"
             },
             "7": {
-                "link": "https://drive.google.com/file/d/1yG92Cc02uusR3cBjwsLdBNc7W9PJrsi9/preview",
-                "link2": "https://www.dropbox.com/scl/fi/gw9rksr71srpkj22ji26e/Hazbin-Hotel-T2-Cap-7.mp4?rlkey=np0sqlrzvg45ohi3iflum08mn&st=6caee4r2&raw=1",
+                "link": "https://drive.google.com/file/d/1po9J45KJFvbbkZOuZgyHErZTf7uqDeE2/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 7"
             },
             "8": {
-                "link": "https://drive.google.com/file/d/1jkI24TmUtvOa83XnDhGWFp0Fqfs2Yzf6/preview",
-                "link2": "https://www.dropbox.com/scl/fi/0snb7xz2od7bvx6ofdnd1/Hazbin-Hotel-T2-Cap-8.mp4?rlkey=q48ef41xf3g2n5dre8ju2pvdp&st=chy0mgjb&raw=1",
+                "link": "https://drive.google.com/file/d/1RqDQte2inHaxUQogMMfiB-rXn6C2-xQz/preview",
+                "link2": "",
                 "title": "Hazbin Hotel T2 Cap 8"
             }
         }
