@@ -106,7 +106,7 @@
         padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
         height: 0; 
         width: 100%; 
-        background: #000; 
+        background: #000;
         overflow: hidden;
         z-index: 50;
         border-radius: 16px; 
@@ -201,7 +201,8 @@
         justify-content: center;
         gap: 8px;
         backdrop-filter: blur(5px);
-        min-width: 140px; /* Ancho mínimo para consistencia */
+        min-width: 140px;
+        /* Ancho mínimo para consistencia */
     }
     
     /* Botón Descarga Específico */
@@ -227,7 +228,7 @@
    
     .btn-hidden { display: none !important; }
 
-    /* --- COMENTARIOS --- */
+    /* --- COMENTARIOS (SIN BLUR PARA EVITAR LAG) --- */
     .comments-section { 
         margin-top: 50px;
         border-top: 1px solid rgba(255,255,255,0.1); 
@@ -236,10 +237,12 @@
     }
 
     .comments-box {
-        background: rgba(0,0,0,0.5); 
+        /* Se oscurece más para compensar la falta de blur */
+        background: rgba(0,0,0,0.85);
         border-radius: 20px;
         padding: 20px;
-        backdrop-filter: blur(10px);
+        /* Blur eliminado para mejorar rendimiento */
+        /* backdrop-filter: blur(10px); */ 
         border: 1px solid rgba(255,255,255,0.05);
         max-width: 1000px;
         margin: 0 auto;
@@ -270,7 +273,8 @@
         }
 
         .player-wrapper {
-            border-radius: 12px; /* Menos borde en móvil */
+            border-radius: 12px;
+            /* Menos borde en móvil */
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -281,8 +285,8 @@
             white-space: nowrap;
             padding: 15px;
             /* Scrollbar oculta pero funcional */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
         .options::-webkit-scrollbar {
             display: none;
@@ -301,12 +305,11 @@
             width: 100%;
         }
 
-        /* El botón de descarga ocupa toda la fila de abajo si es necesario, 
-           o se ajusta según el layout. Aquí forzamos orden */
+        /* El botón de descarga ocupa toda la fila de abajo si es necesario */
         #prevBtn { grid-column: 1; order: 1; min-width: auto; }
         #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { 
-            grid-column: 1 / span 2; 
+            grid-column: 1 / span 2;
             order: 3; 
             width: 100%;
             margin-top: 5px;
@@ -342,7 +345,7 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-        </div>
+      </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -374,10 +377,8 @@
                     const animeId = params.get('anime');
                     const season = params.get('s');
                     const episode = params.get('e');
-
                     // URL Canónica
                     this.page.url = window.location.href;
-                    
                     // ID Único
                     if(animeId && season && episode) {
                         this.page.identifier = `${animeId}-s${season}-e${episode}`;
@@ -385,7 +386,6 @@
                         this.page.identifier = 'archinime-player-general';
                     }
                 };
-
                 (function() { 
                 var d = document, s = d.createElement('script');
                 s.src = 'https://archinime.disqus.com/embed.js';
@@ -417,7 +417,6 @@
 
     // Buscar datos
     const epData = DB[animeId]?.[season]?.[episode];
-
     // Configurar botón volver
     const backLink = document.getElementById('backLink');
     if (backLink) {
@@ -430,10 +429,8 @@
 
         // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
-
         // Cargar video inicial
         loadVideo(initialLink);
-        
         // Botones de servidores
         // Nota: Limpiamos el contenedor antes por si acaso
         const optContainer = document.getElementById('serverOptions');
@@ -441,10 +438,8 @@
         
         if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-
         // Actualizar descarga
         updateDownloadButton(initialLink);
-        
         // Navegación
         setupNavigation();
     } else {
@@ -455,7 +450,6 @@
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
-        
         // Google Drive
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
@@ -507,7 +501,6 @@
 
         // Detección Google Drive Preview
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
-        
         if (isDrive) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
@@ -525,7 +518,7 @@
             video.src = url;
             video.controls = true;
             // No autoplay en móviles para ahorrar datos/batería por defecto
-            video.autoplay = false; 
+            video.autoplay = false;
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
@@ -555,18 +548,15 @@
                 let flatList = [];
                 // Ordenar temporadas y episodios
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
-                
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
                     });
                 });
-
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
-
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
