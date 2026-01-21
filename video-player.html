@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -15,237 +15,233 @@
     :root {
         --primary-color: #00fff7; /* Cian Neón */
         --secondary-color: #7b2cbf; /* Morado */
+        --accent-color: #ff0055; /* Rosa Neón para destacados */
         --text-color: #ffffff;
-        --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+        --glass-bg: rgba(0, 0, 0, 0.6);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px rgba(0, 255, 247, 0.5);
     }
 
     /* --- ESTILOS GENERALES --- */
     body { 
         margin: 0;
-        background: #000; 
+        background: #050505; 
         color: var(--text-color); 
         font-family: 'Poppins', sans-serif; 
         overflow-x: hidden; 
         min-height: 100vh;
-        /* Mejora el scroll en móviles */
-        -webkit-overflow-scrolling: touch;
+        -webkit-tap-highlight-color: transparent;
     }
    
-    /* --- FONDO DE VIDEO (OPTIMIZADO) --- */
+    /* --- FONDO DE VIDEO --- */
     #bg-video { 
         position: fixed;
-        top: 0;
-        left: 0; 
+        top: 0; left: 0; 
         width: 100%; height: 100%; 
         object-fit: cover;
         z-index: -10; 
-        opacity: 1;
-        /* TRUCO DE RENDIMIENTO: Fuerza la aceleración de hardware */
-        transform: translateZ(0);
-        will-change: transform; 
-        pointer-events: none;
+        opacity: 0.6; /* Un poco más oscuro para resaltar contenido */
     }
 
-    /* --- OVERLAY LIGERO --- */
+    /* --- OVERLAY MEJORADO --- */
     #overlay {
       position: fixed;
-      top: 0;
-      left: 0; 
+      top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.7) 100%);
+      background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 90%);
+      backdrop-filter: blur(3px); /* Efecto difuminado sutil */
       pointer-events: none;
-      /* Optimización para evitar repintado al hacer scroll */
-      transform: translateZ(0);
     }
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
         width: 100%;
-        max-width: none; 
-        margin: 0;
-        padding: 10px 0; 
+        max-width: 1200px; /* Limite en PC para que no se estire demasiado */
+        margin: 0 auto;
+        padding: 20px 15px; 
         position: relative; 
         z-index: 10;
-        background: transparent; 
-        border: none;
-        box-shadow: none;
-        backdrop-filter: none;
+        box-sizing: border-box;
     }
     
     /* NAVEGACIÓN SUPERIOR */
     .top-nav {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         margin-bottom: 20px;
-        padding: 0 20px; 
-        flex-wrap: nowrap; 
-        gap: 15px;
     }
 
-    /* BOTÓN GENÉRICO ESTILO NEÓN */
+    /* BOTÓN VOLVER (Estilo Glass) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color:#0ff;
-      text-decoration:none;
-      font-weight:bold;
-      font-size: 1rem; 
-      transition:all .3s;
-      cursor:pointer;
-      background: rgba(0, 0, 0, 0.6); 
-      padding: 10px 20px;
-      border-radius: 30px;
-      border: 2px solid var(--primary-color);
-      white-space: nowrap;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem; 
+      transition: all .3s ease;
+      cursor: pointer;
+      background: var(--glass-bg); 
+      backdrop-filter: blur(10px);
+      padding: 10px 25px;
+      border-radius: 50px;
+      border: var(--glass-border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-   
+    
     .back-btn:hover {
-        background: rgba(0, 255, 247, 0.2);
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
+        background: rgba(0, 255, 247, 0.15);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px var(--primary-color);
+        transform: translateY(-2px);
     }
    
-    /* REPRODUCTOR (FULL WIDTH) */
+    /* REPRODUCTOR (Responsive Real) */
     .player-wrapper { 
         position: relative;
-        padding-bottom: 56.25%; /* 16:9 */
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
         height: 0; 
         width: 100%; 
         background: #000; 
         overflow: hidden;
         z-index: 50;
-        border-radius: 0; 
-        border: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        /* Evita parpadeos en renderizado */
-        transform: translate3d(0,0,0);
+        border-radius: 16px; 
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(123, 44, 191, 0.3);
     }
    
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute;
-        top: 0;
-        left: 0; width: 100%;
-        height: 100%; border: none;
+        top: 0; left: 0; 
+        width: 100%; height: 100%; 
+        border: none;
     }
 
-    /* TEXTOS */
-    h1 { 
-        color: #fff;
-        font-size: 2rem; 
-        margin-top: 25px;
-        text-align: center;
-        text-shadow: 2px 2px 4px #000, 0 0 20px var(--primary-color);
-        padding: 0 15px;
-    }
-    
-    /* CONTROLES */
-    .controls { 
-        margin-top: 30px;
-        display: flex; 
-        justify-content: center; 
-        gap: 20px; 
-        flex-wrap: wrap; 
-        padding: 0 10px;
-    }
-    
-    /* BOTONES DE CONTROL */
-    .btn { 
-        padding: 12px 35px;
-        background: rgba(0, 0, 0, 0.7);
-        border: 2px solid var(--primary-color);
-        color: #fff;
-        text-decoration: none; 
-        border-radius: 50px; 
-        cursor: pointer; 
-        transition: 0.3s;
-        font-weight: 700;
-        font-size: 1.1rem;
-        text-shadow: 1px 1px 2px #000;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    #downloadBtn {
-        background: rgba(0, 0, 0, 0.7);
-        border: 2px solid #ff1493;
-        color: #ffffff;
-    }
-
-    #downloadBtn:hover {
-        background: #ff1493;
-        color: #fff;
-        box-shadow: 0 0 20px #ff1493;
-    }
-   
-    .btn:hover { 
-        background: var(--primary-color);
-        color: #000;
-        box-shadow: 0 0 20px var(--primary-color);
-        text-shadow: none;
-    }
-   
-    .btn-hidden { display: none; }
-    
-    /* Opciones de Servidor */
+    /* OPCIONES DE SERVIDOR (Scroll horizontal en móvil) */
     .options { 
-        margin-top: 25px;
+        margin-top: 20px;
         display: flex; 
-        gap: 15px;
+        gap: 10px;
         justify-content: center; 
         flex-wrap: wrap;
-        padding: 0 10px;
+        padding: 10px;
+        background: rgba(0,0,0,0.3);
+        border-radius: 20px;
+        backdrop-filter: blur(5px);
     }
     
     .opt-btn { 
-        font-size: 1rem;
-        padding: 10px 20px;
-        border: 2px solid #555; 
-        background: rgba(0,0,0,0.8);
+        font-size: 0.9rem;
+        padding: 8px 18px;
+        border: 1px solid rgba(255,255,255,0.2); 
+        background: rgba(255,255,255,0.05);
         color: #ddd;
         cursor: pointer;
-        border-radius: 12px;
+        border-radius: 8px;
         transition: all 0.3s;
         font-family: 'Poppins', sans-serif;
-        font-weight: bold;
+        font-weight: 500;
+        white-space: nowrap;
     }
    
     .opt-btn:hover {
-        background: #333;
-        border-color: #fff;
+        background: rgba(255,255,255,0.1);
         color: #fff;
+        border-color: #fff;
     }
   
     .opt-btn.active { 
         border-color: var(--primary-color);
         color: #000;
         background: var(--primary-color); 
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.6);
+        font-weight: 700;
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
     }
 
-    /* --- COMENTARIOS (OPTIMIZADO) --- */
+    /* TÍTULO DEL EPISODIO */
+    h1 { 
+        color: #fff;
+        font-size: 1.8rem; 
+        margin: 25px 0 15px 0;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        line-height: 1.3;
+    }
+    
+    /* CONTROLES (Grid para móvil) */
+    .controls { 
+        margin-top: 20px;
+        display: flex; 
+        justify-content: center; 
+        gap: 15px; 
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
+    /* BOTONES DE CONTROL */
+    .btn { 
+        padding: 14px 30px;
+        background: var(--glass-bg);
+        border: var(--glass-border);
+        color: #fff;
+        text-decoration: none; 
+        border-radius: 50px; 
+        cursor: pointer; 
+        transition: 0.3s;
+        font-weight: 600;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        backdrop-filter: blur(5px);
+        min-width: 140px; /* Ancho mínimo para consistencia */
+    }
+    
+    /* Botón Descarga Específico */
+    #downloadBtn {
+        border-color: var(--accent-color);
+        background: rgba(255, 0, 85, 0.1);
+    }
+
+    #downloadBtn:hover {
+        background: var(--accent-color);
+        color: #fff;
+        box-shadow: 0 0 25px rgba(255, 0, 85, 0.6);
+        transform: translateY(-3px);
+    }
+   
+    .btn:not(#downloadBtn):hover { 
+        background: var(--primary-color);
+        color: #000;
+        box-shadow: 0 0 25px rgba(0, 255, 247, 0.6);
+        border-color: var(--primary-color);
+        transform: translateY(-3px);
+    }
+   
+    .btn-hidden { display: none !important; }
+
+    /* --- COMENTARIOS --- */
     .comments-section { 
-        margin-top: 60px;
-        border-top: 1px solid rgba(255,255,255,0.2); 
-        padding: 40px 20px; 
+        margin-top: 50px;
+        border-top: 1px solid rgba(255,255,255,0.1); 
+        padding-top: 40px;
         width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
-        /* Propiedad CLAVE para rendimiento: aísla el renderizado */
-        contain: content; 
     }
 
     .comments-box {
-        background: transparent; 
-        border-radius: 0;
-        padding: 0;
-        border: none;
-        box-shadow: none;
-        max-width: 1200px;
+        background: rgba(0,0,0,0.5); 
+        border-radius: 20px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.05);
+        max-width: 1000px;
         margin: 0 auto;
     }
 
@@ -253,66 +249,77 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 15px;
-        margin-bottom: 30px;
+        gap: 10px;
+        margin-bottom: 25px;
         padding-bottom: 15px;
-        border-bottom: 3px solid var(--primary-color);
-        width: 100%;
+        border-bottom: 2px solid var(--primary-color);
     }
 
     .comments-header h3 {
         color: #fff;
         margin: 0;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         text-transform: uppercase;
         letter-spacing: 2px;
-        text-shadow: 2px 2px 4px #000, 0 0 10px var(--primary-color);
     }
 
-    .comment-icon {
-        font-size: 1.8rem; 
-        color: var(--primary-color);
-        filter: drop-shadow(0 0 5px var(--primary-color));
-    }
-    
-    /* Estilo para Disqus */
-    #disqus_thread {
-        width: 100%;
-        min-height: 300px; /* Evita saltos de layout mientras carga */
-    }
+    /* MEDIA QUERIES (ADAPTACIÓN MÓVIL PROFUNDA) */
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px 10px;
+        }
 
-    /* MEDIA QUERIES */
-    @media (max-width: 550px) {
-        .comments-section {
-            padding: 20px 0;
+        .player-wrapper {
+            border-radius: 12px; /* Menos borde en móvil */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        
-        .comments-box {
-            width: 100% !important;
-            max-width: 100% !important;
-            min-height: auto;
-            margin-left: 0;
-            transform: none; 
-            margin-bottom: 0;
+
+        /* En móvil, los servidores scroll horizontal */
+        .options {
+            justify-content: flex-start;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 15px;
+            /* Scrollbar oculta pero funcional */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
-        
+        .options::-webkit-scrollbar {
+            display: none;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            margin: 20px 0;
+        }
+
+        /* Controles en móvil: Grid de 2 columnas + Descarga full width */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* El botón de descarga ocupa toda la fila de abajo si es necesario, 
+           o se ajusta según el layout. Aquí forzamos orden */
+        #prevBtn { grid-column: 1; order: 1; min-width: auto; }
+        #nextBtn { grid-column: 2; order: 2; min-width: auto; }
+        #downloadBtn { 
+            grid-column: 1 / span 2; 
+            order: 3; 
+            width: 100%;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+
         .comments-header h3 {
-            font-size: 1.5rem;
-        }
-        .comment-icon {
-            font-size: 1.5rem;
-        }
-
-        /* Reducir sombras en móvil para ganar FPS */
-        h1, .btn, .back-btn {
-             text-shadow: 1px 1px 2px #000; /* Sombra más simple */
-             box-shadow: none !important; /* Quitar box-shadow pesado al scroll */
-             border-width: 1px;
-        }
-        
-        /* Devolver un poco de brillo pero optimizado */
-        .btn.active, .opt-btn.active {
-            box-shadow: 0 0 5px var(--primary-color) !important;
+            font-size: 1.2rem;
         }
     }
   </style>
@@ -328,10 +335,14 @@
   <div class="container">
    
     <div class="top-nav">
-       <a href="#" id="backLink" class="back-btn">← Volver</a>
+       <a href="#" id="backLink" class="back-btn">
+         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+         Volver
+       </a>
     </div>
 
-    <div class="player-wrapper" id="playerContainer"></div>
+    <div class="player-wrapper" id="playerContainer">
+        </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -339,7 +350,9 @@
 
     <div class="controls">
         <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank" download>⬇ Descargar</a>
+        <a id="downloadBtn" class="btn" href="#" target="_blank" download>
+            ⬇ Descargar
+        </a>
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
@@ -351,21 +364,21 @@
             </div>
             
             <div id="disqus_thread"></div>
+            
             <script>
                 /**
-                * CONFIGURACIÓN DE DISQUS
+                * Configuración de Disqus
                 */
                 var disqus_config = function () {
-                    // 1. Obtener parámetros de la URL
                     const params = new URLSearchParams(window.location.search);
                     const animeId = params.get('anime');
                     const season = params.get('s');
                     const episode = params.get('e');
 
-                    // 2. Definir la URL Canónica
+                    // URL Canónica
                     this.page.url = window.location.href;
-
-                    // 3. Definir el ID Único
+                    
+                    // ID Único
                     if(animeId && season && episode) {
                         this.page.identifier = `${animeId}-s${season}-e${episode}`;
                     } else {
@@ -380,8 +393,8 @@
                 (d.head || d.body).appendChild(s);
                 })();
             </script>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-            </div>
+            <noscript>Activa JavaScript para ver los <a href="https://disqus.com/?ref_noscript">comentarios.</a></noscript>
+        </div>
     </div>
 
   </div>
@@ -390,19 +403,22 @@
 
   <script>
     // -----------------------------------------------------------
-    // BASE DE DATOS Y LÓGICA
+    // LÓGICA DEL REPRODUCTOR (JAVASCRIPT ORIGINAL MEJORADO)
     // -----------------------------------------------------------
+    
+    // Base de datos segura
     const DB = (typeof players !== 'undefined') ? players : {};
     
+    // Obtener parámetros URL
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
 
-    // Obtener datos del episodio
+    // Buscar datos
     const epData = DB[animeId]?.[season]?.[episode];
 
-    // Configurar botón Volver
+    // Configurar botón volver
     const backLink = document.getElementById('backLink');
     if (backLink) {
        backLink.href = `anime-detail.html?id=${animeId}`;
@@ -417,23 +433,29 @@
 
         // Cargar video inicial
         loadVideo(initialLink);
-
-        // Generar botones
-        if(epData.link) createOptionBtn("Latino", epData.link, true);
-        if(epData.link2) createOptionBtn("Subtitulado", epData.link2, false);
+        
+        // Botones de servidores
+        // Nota: Limpiamos el contenedor antes por si acaso
+        const optContainer = document.getElementById('serverOptions');
+        optContainer.innerHTML = '';
+        
+        if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
+        if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
 
         // Actualizar descarga
         updateDownloadButton(initialLink);
-
+        
         // Navegación
         setupNavigation();
     } else {
         console.error("No se encontraron datos para:", animeId, season, episode);
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
+        document.getElementById('playerContainer').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;">Video no disponible</div>';
     }
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
+        
         // Google Drive
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
@@ -441,10 +463,12 @@
                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
+        
         // Dropbox
         if (url.includes("dropbox.com") && url.includes("dl=0")) {
              return url.replace('dl=0', 'dl=1');
         }
+        
         return url;
     }
 
@@ -458,8 +482,12 @@
         const optContainer = document.getElementById('serverOptions');
         const btn = document.createElement('button');
         
+        // Lógica de clase activa
+        // Si no hay botones aún y se pide activo, o si es el primer botón creado
         const isFirst = optContainer.children.length === 0;
-        btn.className = 'opt-btn' + (isActive && isFirst ? ' active' : '');
+        const shouldBeActive = isActive || isFirst;
+
+        btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
         
         btn.innerText = label;
         btn.onclick = () => {
@@ -477,7 +505,9 @@
         
         if (!url) return;
 
+        // Detección Google Drive Preview
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
+        
         if (isDrive) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
@@ -490,16 +520,18 @@
             iframe.style.border = "none";
             container.appendChild(iframe);
         } else {
+            // Reproductor Nativo HTML5
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
+            // No autoplay en móviles para ahorrar datos/batería por defecto
             video.autoplay = false; 
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
             
             video.onerror = function() {
-                console.log("Error al cargar video nativo, intentando iframe.");
+                console.log("Error nativo, fallback a iframe.");
                 container.innerHTML = '';
                 const iframe = document.createElement('iframe');
                 iframe.src = url;
@@ -521,28 +553,30 @@
         try {
             if (DB[animeId]) {
                 let flatList = [];
+                // Ordenar temporadas y episodios
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
+                
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
                     });
                 });
+
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
-                
+
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
-                    prevBtn.style.display = 'inline-flex';
+                    // Usamos display flex definido en CSS, solo quitamos la clase hidden
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
                 if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
                     const nextItem = flatList[currentIndex + 1];
                     nextBtn.classList.remove('btn-hidden');
-                    nextBtn.style.display = 'inline-flex'; 
                     nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
                 }
             }
