@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="monetag" content="490404697b7d9182bf44c34f9a0fa115">
+  
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
@@ -226,7 +228,8 @@
         transform: translateY(-3px);
     }
    
-    .btn-hidden { display: none !important; }
+    .btn-hidden { display: none !important;
+    }
 
     /* --- COMENTARIOS (SIN BLUR PARA EVITAR LAG) --- */
     .comments-section { 
@@ -285,8 +288,10 @@
             white-space: nowrap;
             padding: 15px;
             /* Scrollbar oculta pero funcional */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
         .options::-webkit-scrollbar {
             display: none;
@@ -306,8 +311,10 @@
         }
 
         /* El botón de descarga ocupa toda la fila de abajo si es necesario */
-        #prevBtn { grid-column: 1; order: 1; min-width: auto; }
-        #nextBtn { grid-column: 2; order: 2; min-width: auto; }
+        #prevBtn { grid-column: 1;
+        order: 1; min-width: auto; }
+        #nextBtn { grid-column: 2; order: 2; min-width: auto;
+        }
         #downloadBtn { 
             grid-column: 1 / span 2;
             order: 3; 
@@ -345,7 +352,8 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-        </div>
+   
+    </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -362,14 +370,15 @@
     <div class="comments-section">
         <div class="comments-box">
     
-            <div class="comments-header">
+         <div class="comments-header">
                 <span class="comment-icon">💬</span>
                 <h3>Comentarios</h3>
             </div>
             
             <div id="disqus_thread"></div>
             
-            <script>
+         
+           <script>
                 /**
                 * Configuración de Disqus
                 */
@@ -404,11 +413,12 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR
+    // LÓGICA DEL REPRODUCTOR (JAVASCRIPT ORIGINAL MEJORADO)
     // -----------------------------------------------------------
     
     // Base de datos segura
-    const DB = (typeof players !== 'undefined') ? players : {};
+    const DB = (typeof players !== 'undefined') ?
+    players : {};
     
     // Obtener parámetros URL
     const params = new URLSearchParams(location.search);
@@ -433,6 +443,7 @@
         // Cargar video inicial
         loadVideo(initialLink);
         // Botones de servidores
+        // Nota: Limpiamos el contenedor antes por si acaso
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
         
@@ -457,10 +468,12 @@
                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
+        
         // Dropbox
         if (url.includes("dropbox.com") && url.includes("dl=0")) {
              return url.replace('dl=0', 'dl=1');
         }
+        
         return url;
     }
 
@@ -475,6 +488,7 @@
         const btn = document.createElement('button');
         
         // Lógica de clase activa
+        // Si no hay botones aún y se pide activo, o si es el primer botón creado
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
 
@@ -514,6 +528,7 @@
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
+            // No autoplay en móviles para ahorrar datos/batería por defecto
             video.autoplay = false;
             video.playsInline = true; 
             video.style.width = "100%";
@@ -548,6 +563,7 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
+                   
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
@@ -556,6 +572,7 @@
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
+                    // Usamos display flex definido en CSS, solo quitamos la clase hidden
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
@@ -572,19 +589,5 @@
   </script>
   
   <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('sw.js')
-            .then(function(registration) {
-                console.log('SW registrado correctamente:', registration.scope);
-            })
-            .catch(function(err) {
-                console.log('Error al registrar SW:', err);
-            });
-        });
-    }
-  </script>
 </body>
 </html>

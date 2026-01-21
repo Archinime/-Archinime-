@@ -1,23 +1,9 @@
-/* ==========================================
-   1. CÓDIGO DE PUBLICIDAD (PropellerAds)
-   ========================================== */
-self.options = {
-    "domain": "5gvci.com",
-    "zoneId": 10499066
-};
-self.lary = "";
-importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
-
-/* ==========================================
-   2. CÓDIGO DE CACHÉ (PWA / Offline)
-   ========================================== */
 const CACHE_NAME = 'archinime-cache-v1';
 const urlsToCache = [
   './',
   'index.html',
   'styles-index.css',
-  // He cambiado .avif a .png para que coincida con tu HTML
-  'Logo_Archinime.png' 
+  'Logo_Archinime.avif'
 ];
 
 self.addEventListener('install', event => {
