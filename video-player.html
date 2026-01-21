@@ -88,7 +88,7 @@
       transition:all .3s;
       cursor:pointer;
       background: rgba(0, 0, 0, 0.6); 
-      padding: 10px 20px; 
+      padding: 10px 20px;
       border-radius: 30px;
       border: 2px solid var(--primary-color);
       white-space: nowrap;
@@ -263,9 +263,16 @@
         filter: drop-shadow(0 0 5px var(--primary-color));
     }
     
+    /* El estilo .utterances ya no es necesario pero no estorba */
     .utterances {
         max-width: 100%;
         width: 100%;
+    }
+
+    /* Estilo para Disqus */
+    #disqus_thread {
+        width: 100%;
+        min-height: 200px;
     }
 
     /* MEDIA QUERIES */
@@ -275,25 +282,19 @@
         }
         
         .comments-box {
-            width: 800px !important;
-            max-width: 800px !important;
-            min-height: 600px;
-            margin-left: 50%;
-            transform: translateX(-50%) scale(0.45); 
-            transform-origin: top center;
-            margin-bottom: -400px;
-        }
-
-        .utterances {
             width: 100% !important;
             max-width: 100% !important;
+            min-height: auto;
+            margin-left: 0;
+            transform: none; 
+            margin-bottom: 0;
         }
         
         .comments-header h3 {
-            font-size: 3rem;
+            font-size: 1.5rem;
         }
         .comment-icon {
-            font-size: 3rem;
+            font-size: 1.5rem;
         }
     }
   </style>
@@ -331,15 +332,40 @@
                 <h3>Comentarios</h3>
             </div>
             
-            <script src="https://utteranc.es/client.js"
-                repo="Archinime/Comentarios"
-                issue-term="url"
-                theme="icy-dark"
-                crossorigin="anonymous"
-                async>
+            <div id="disqus_thread"></div>
+            <script>
+                /**
+                * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                
+                var disqus_config = function () {
+                    // 1. Obtener parámetros de la URL para identificar el episodio único
+                    const params = new URLSearchParams(window.location.search);
+                    const animeId = params.get('anime');
+                    const season = params.get('s');
+                    const episode = params.get('e');
+
+                    // 2. Definir la URL Canónica
+                    this.page.url = window.location.href;  
+                    
+                    // 3. Definir el ID Único (para que los comentarios no se mezclen entre caps)
+                    if(animeId && season && episode) {
+                        this.page.identifier = `${animeId}-s${season}-e${episode}`; 
+                    } else {
+                        // ID por defecto si faltan datos
+                        this.page.identifier = 'archinime-player-general';
+                    }
+                };
+                
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://archinime.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
             </script>
-       
-        </div>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
     </div>
 
   </div>
@@ -350,10 +376,8 @@
     // -----------------------------------------------------------
     // ARREGLO PRINCIPAL: Asignar 'players' a 'DB'
     // -----------------------------------------------------------
-    // El archivo de datos usa 'players', pero el código de abajo usaba 'DB'.
-    // Esta línea conecta ambas variables.
     const DB = (typeof players !== 'undefined') ? players : {};
-
+    
     // -----------------------------------------------------------
     // 2. LÓGICA DE REPRODUCTOR Y NAVEGACIÓN
     // -----------------------------------------------------------
@@ -364,7 +388,7 @@
     
     // Intenta obtener los datos del episodio de forma segura
     const epData = DB[animeId]?.[season]?.[episode];
-
+    
     // Asignar link de volver
     const backLink = document.getElementById('backLink');
     if (backLink) {
@@ -380,14 +404,14 @@
 
         // Cargar video inicial
         loadVideo(initialLink);
-
+        
         // Generar botones de servidores
         if(epData.link) createOptionBtn("Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Subtitulado", epData.link2, false);
-
+        
         // Actualizar botón de descarga inicial
         updateDownloadButton(initialLink);
-
+        
         // Navegación (Anterior / Siguiente)
         setupNavigation();
     } else {
@@ -397,13 +421,11 @@
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
-        
         // Manejo especial para Google Drive
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
-               const id = match[1];
-               return `https://drive.google.com/uc?export=download&id=${id}`;
+               return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
         
@@ -427,7 +449,6 @@
         const btn = document.createElement('button');
         
         // Si es el primer botón y isActive es true, ponle la clase active
-        // O si ya hay botones, el nuevo no debe ser active por defecto a menos que se fuerce
         const isFirst = optContainer.children.length === 0;
         btn.className = 'opt-btn' + (isActive && isFirst ? ' active' : '');
         
@@ -449,7 +470,6 @@
 
         // Detección para Google Drive (Preview usa iframe)
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
-        
         if (isDrive) {
             const iframe = document.createElement('iframe');
             iframe.src = url;
@@ -470,7 +490,6 @@
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
-            
             // Manejo de errores en el video
             video.onerror = function() {
                 console.log("Error al cargar video nativo, intentando iframe como respaldo.");
@@ -497,7 +516,6 @@
                 let flatList = [];
                 // Ordenar temporadas numéricamente
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
-                
                 seasons.forEach(sKey => {
                     // Ordenar episodios numéricamente
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
@@ -505,11 +523,9 @@
                          flatList.push({ s: sKey, e: eKey });
                     });
                 });
-
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
-
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
@@ -529,5 +545,7 @@
         }
     }
   </script>
+  
+  <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
 </body>
 </html>
