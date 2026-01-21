@@ -345,7 +345,7 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-      </div>
+        </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -361,6 +361,7 @@
 
     <div class="comments-section">
         <div class="comments-box">
+    
             <div class="comments-header">
                 <span class="comment-icon">💬</span>
                 <h3>Comentarios</h3>
@@ -403,7 +404,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR (JAVASCRIPT ORIGINAL MEJORADO)
+    // LÓGICA DEL REPRODUCTOR
     // -----------------------------------------------------------
     
     // Base de datos segura
@@ -432,7 +433,6 @@
         // Cargar video inicial
         loadVideo(initialLink);
         // Botones de servidores
-        // Nota: Limpiamos el contenedor antes por si acaso
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
         
@@ -457,12 +457,10 @@
                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
-        
         // Dropbox
         if (url.includes("dropbox.com") && url.includes("dl=0")) {
              return url.replace('dl=0', 'dl=1');
         }
-        
         return url;
     }
 
@@ -477,7 +475,6 @@
         const btn = document.createElement('button');
         
         // Lógica de clase activa
-        // Si no hay botones aún y se pide activo, o si es el primer botón creado
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
 
@@ -517,7 +514,6 @@
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
-            // No autoplay en móviles para ahorrar datos/batería por defecto
             video.autoplay = false;
             video.playsInline = true; 
             video.style.width = "100%";
@@ -560,7 +556,6 @@
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
-                    // Usamos display flex definido en CSS, solo quitamos la clase hidden
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
@@ -577,5 +572,19 @@
   </script>
   
   <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js')
+            .then(function(registration) {
+                console.log('SW registrado correctamente:', registration.scope);
+            })
+            .catch(function(err) {
+                console.log('Error al registrar SW:', err);
+            });
+        });
+    }
+  </script>
 </body>
 </html>
