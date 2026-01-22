@@ -285,26 +285,6 @@ left: 10px; width: auto; }
   .grid { margin-top: 0 !important; gap:0.5rem !important; grid-template-columns: repeat(3, 1fr);
 }
 }
-/* Estilo para la etiqueta FINAL en las tarjetas */
-.final-badge {
-    position: absolute;
-    z-index: 5;
-    /* Ajusta la posición según prefieras */
-    top: -5px;       
-    right: -5px;     
-    /* Tamaño de la imagen final.png */
-    width: 65px;     
-    height: auto;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
-    pointer-events: none; /* Para que el clic pase a la tarjeta */
-}
-
-/* Ajuste opcional para móviles para que no tape mucho */
-@media (max-width: 420px) {
-    .final-badge {
-        width: 50px;
-    }
-}
 
 @media (max-width:767px) {
   .container { padding: 0 1rem; }
