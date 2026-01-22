@@ -11135,5 +11135,131 @@ const players = {
                 "title": "Hell's Paradise T1 Cap 13"
             }
         }
+    },
+    "81": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1opTIOZBVQbeC9VSATqVZq6yGwrErxl7s/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1tr2hrurj91TxHh1jfcKoyklH_sOenwJP/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/178Yv-_AFwb5ZO6ZZaPbjjloNFYpqd6Uz/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1wk_3KKXUu1T7Ygi-gr9y0QGy-P3aitA_/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/15ZFA7SgqgmHlIck9sa50rM22hoWm9Aym/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1TwqQUJz5XkV1F1DvB_znOv00sh79bPCz/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1rEGrIF8U2XS77SxKCWoBmvz4AMQjXoaX/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1cbyBETSGmPjyNdnaDzB8uIqiCDK3mQiK/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1KCI_wX_-1Pu2mRRpd0sXG-tGmPXyOihb/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1O5F2r3ClGxvW8dXJTpBLA7eEvJIzr_LK/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1Sjq6J1UooRNlP2hoxAmHwvQpLkPO8k75/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1VnWItyx0mCX7Liee3J5f3XiMhTBQwL8_/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T1 Cap 12"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1GeGpDgKJIHOMEW50ng8mBxSxkJq5cDom/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1qSwRzIZvcLDHXR7fY36pAOg_gdtxUM7C/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1CoNCI3L_nPv2H6gUGso6jjIvdaFG_8bI/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1RwEykti-FlxNtj_2lvjSawjh4lrNYwi_/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/17tmJNjgRUWF0cMFssPuadRBo4sM_oBGh/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1dsDhZufAu7YyfO8KfftoWCWUZ_fptxR0/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1BUXfGK6RMbRQiGBds9bWOJXbT-IV21hk/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1iPyCGR-nx7xEbCX_8DrPC2VTfShS08VD/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1nIbJGI-QNnjtQLSlUjlqNApyDwfSbC9-/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/11dZ9V5TLhWnxVhKSUib5xNYoHJGxqdlX/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1Wi174ab6GX1Mkq5CWAwwW4n0lOBQqcNU/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1mIlQS0trkV_IbAwEx1CI2ePkR_FhxwKt/preview",
+                "link2": "",
+                "title": "NieR: Automata Ver1.1a T2 Cap 12"
+            }
+        }
     }
 };
