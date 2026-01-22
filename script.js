@@ -344,7 +344,7 @@ const genresList = [
     "Mecha", "Militar", "Mitología", "Misterio", "Musical", "Nekketsu", "Parodia", 
     "Policial", "Post-apocalíptico", "Psicológico", "Reverse Harem", "Romance", "RPG", 
     "Slice of Life", "Sobrenatural", "Steampunk", "Superhéroes", "Survival", 
-    "Survival Game", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
+    "Survival Game", "Suspenso", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
     "Thriller psicológico", "Tokusatsu", "Tragedia", "Yaoi", "Yuri"
 ];
 
