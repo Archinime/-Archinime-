@@ -14,11 +14,8 @@
     /* --- VARIABLES --- */
     :root {
         --primary-color: #00fff7;
-        [cite_start]/* Cian Neón [cite: 2] */
         --secondary-color: #7b2cbf;
-        [cite_start]/* Morado [cite: 3] */
         --accent-color: #ff0055;
-        [cite_start]/* Rosa Neón para destacados [cite: 4] */
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.6);
         --glass-border: 1px solid rgba(255, 255, 255, 0.1);
@@ -44,7 +41,6 @@
         object-fit: cover;
         z-index: -10; 
         opacity: 0.6;
-        [cite_start]/* Un poco más oscuro para resaltar contenido [cite: 10] */
     }
 
     /* --- OVERLAY MEJORADO --- */
@@ -55,14 +51,13 @@
       z-index: -5;
       background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 90%);
       backdrop-filter: blur(3px);
-      [cite_start]/* Efecto difuminado sutil [cite: 13] */
       pointer-events: none;
     }
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
         width: 100%;
-        max-width: 1200px; [cite_start]/* Limite en PC para que no se estire demasiado [cite: 15] */
+        max-width: 1200px;
         margin: 0 auto;
         padding: 20px 15px; 
         position: relative; 
@@ -78,7 +73,7 @@
         margin-bottom: 20px;
     }
 
-    /* BOTÓN VOLVER (Estilo Glass) */
+    /* BOTÓN VOLVER */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -105,10 +100,10 @@
         transform: translateY(-2px);
     }
    
-    /* REPRODUCTOR (Responsive Real) */
+    /* REPRODUCTOR */
     .player-wrapper { 
         position: relative;
-        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        padding-bottom: 56.25%; /* 16:9 */
         height: 0; 
         width: 100%; 
         background: #000;
@@ -126,7 +121,7 @@
         border: none;
     }
 
-    /* OPCIONES DE SERVIDOR (Scroll horizontal en móvil) */
+    /* OPCIONES DE SERVIDOR */
     .options { 
         margin-top: 20px;
         display: flex; 
@@ -167,7 +162,6 @@
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
     }
 
-    /* TÍTULO DEL EPISODIO */
     h1 { 
         color: #fff;
         font-size: 1.8rem; 
@@ -179,7 +173,6 @@
         line-height: 1.3;
     }
     
-    /* CONTROLES (Grid para móvil) */
     .controls { 
         margin-top: 20px;
         display: flex; 
@@ -189,7 +182,6 @@
         align-items: center;
     }
     
-    /* BOTONES DE CONTROL */
     .btn { 
         padding: 14px 30px;
         background: var(--glass-bg);
@@ -207,10 +199,8 @@
         gap: 8px;
         backdrop-filter: blur(5px);
         min-width: 140px;
-        [cite_start]/* Ancho mínimo para consistencia [cite: 41] */
     }
     
-    /* Botón Descarga Específico */
     #downloadBtn {
         border-color: var(--accent-color);
         background: rgba(255, 0, 85, 0.1);
@@ -233,7 +223,7 @@
    
     .btn-hidden { display: none !important; }
 
-    /* --- ESTILO PARA CONTENEDOR DE PUBLICIDAD --- */
+    /* PUBLICIDAD */
     .ad-container {
         margin: 40px auto 20px auto;
         padding: 15px;
@@ -244,11 +234,11 @@
         justify-content: center;
         align-items: center;
         max-width: 1000px;
-        overflow: hidden; /* Importante para móvil */
+        overflow: hidden; 
         backdrop-filter: blur(5px);
     }
     
-    /* --- COMENTARIOS (SIN BLUR PARA EVITAR LAG) --- */
+    /* COMENTARIOS */
     .comments-section { 
         margin-top: 30px;
         border-top: 1px solid rgba(255,255,255,0.1); 
@@ -257,7 +247,6 @@
     }
 
     .comments-box {
-        /* Se oscurece más para compensar la falta de blur */
         background: rgba(0,0,0,0.85);
         border-radius: 20px;
         padding: 20px;
@@ -284,48 +273,26 @@
         letter-spacing: 2px;
     }
 
-    /* MEDIA QUERIES (ADAPTACIÓN MÓVIL PROFUNDA) */
+    /* MEDIA QUERIES */
     @media (max-width: 768px) {
-        .container {
-            padding: 15px 10px;
-        }
-
-        .player-wrapper {
-            border-radius: 12px;
-            [cite_start]/* Menos borde en móvil [cite: 56] */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* En móvil, los servidores scroll horizontal */
+        .container { padding: 15px 10px; }
+        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .options {
             justify-content: flex-start;
             overflow-x: auto;
             white-space: nowrap;
             padding: 15px;
-            /* Scrollbar oculta pero funcional */
             -ms-overflow-style: none;
-            [cite_start]/* IE and Edge [cite: 59] */
             scrollbar-width: none;
-            [cite_start]/* Firefox [cite: 60] */
         }
-        .options::-webkit-scrollbar {
-            display: none;
-        }
-
-        h1 {
-            font-size: 1.3rem;
-            margin: 20px 0;
-        }
-
-        /* Controles en móvil: Grid de 2 columnas + Descarga full width */
+        .options::-webkit-scrollbar { display: none; }
+        h1 { font-size: 1.3rem; margin: 20px 0; }
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             width: 100%;
         }
-
-        /* El botón de descarga ocupa toda la fila de abajo si es necesario */
         #prevBtn { grid-column: 1; order: 1; min-width: auto; }
         #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { 
@@ -335,25 +302,15 @@
             margin-top: 5px;
             box-sizing: border-box;
         }
-
-        .btn {
-            padding: 12px;
-            font-size: 0.9rem;
-        }
-
-        .comments-header h3 {
-            font-size: 1.2rem;
-        }
-        
-        /* Ajuste para publicidad en móvil */
-        .ad-container {
-            padding: 5px;
-            margin: 25px 0;
-        }
+        .btn { padding: 12px; font-size: 0.9rem; }
+        .comments-header h3 { font-size: 1.2rem; }
+        .ad-container { padding: 5px; margin: 25px 0; }
     }
   </style>
 </head>
 <body>
+
+  <script src="https://pl28535757.effectivegatecpm.com/25/1e/93/251e93f9d871f76154e659a0fdd7e66b.js"></script>
 
   <video id="bg-video" autoplay muted loop playsinline poster="galaxia-morado1.avif">
     <source src="galaxia.mp4" type="video/mp4">
@@ -371,7 +328,7 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-       </div>
+        </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -397,6 +354,7 @@
         </script>
         <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
     </div>
+
     <div class="comments-section">
         <div class="comments-box">
             <div class="comments-header">
@@ -407,17 +365,15 @@
             <div id="disqus_thread"></div>
             
             <script>
-                /**
-                * Configuración de Disqus
-                */
+                /* Configuración de Disqus */
                 var disqus_config = function () {
                     const params = new URLSearchParams(window.location.search);
                     const animeId = params.get('anime');
                     const season = params.get('s');
                     const episode = params.get('e');
-                    [cite_start]// URL Canónica [cite: 73]
+                    
                     this.page.url = window.location.href;
-                    [cite_start]// ID Único [cite: 74]
+                    
                     if(animeId && season && episode) {
                         this.page.identifier = `${animeId}-s${season}-e${episode}`;
                     } else {
@@ -441,7 +397,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR (JAVASCRIPT ORIGINAL MEJORADO)
+    // LÓGICA DEL REPRODUCTOR CORREGIDA
     // -----------------------------------------------------------
     
     // Base de datos segura
@@ -453,13 +409,18 @@
     const season = params.get('s');
     const episode = params.get('e');
 
-    // Buscar datos
-    const epData = DB[animeId]?.[season]?.[episode];
-    [cite_start]// Configurar botón volver [cite: 81]
+    // [CORRECCIÓN] Configurar botón volver independientemente de si hay datos del episodio
     const backLink = document.getElementById('backLink');
     if (backLink) {
-       backLink.href = `anime-detail.html?id=${animeId}`;
+        if (animeId) {
+            backLink.href = `anime-detail.html?id=${animeId}`;
+        } else {
+            backLink.href = 'index.html'; // Fallback por si entran directo
+        }
     }
+
+    // Buscar datos
+    const epData = DB[animeId]?.[season]?.[episode];
 
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
@@ -467,39 +428,40 @@
 
         // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
-        [cite_start]// Cargar video inicial [cite: 85]
+        
         loadVideo(initialLink);
-        [cite_start]// Botones de servidores [cite: 86]
+
+        // Botones de servidores
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
-        
         if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-        [cite_start]// Actualizar descarga [cite: 88]
+
         updateDownloadButton(initialLink);
-        [cite_start]// Navegación [cite: 89]
         setupNavigation();
     } else {
         console.error("No se encontraron datos para:", animeId, season, episode);
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
-        document.getElementById('playerContainer').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;">Video no disponible</div>';
+        document.getElementById('playerContainer').innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;flex-direction:column;gap:10px;">
+                <span>Video no disponible.</span>
+                <small style="color:#aaa;">Verifica la URL o el archivo de datos.</small>
+            </div>`;
     }
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
-        [cite_start]// Google Drive [cite: 93]
+        // Google Drive
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
-        
         // Dropbox
         if (url.includes("dropbox.com") && url.includes("dl=0")) {
              return url.replace('dl=0', 'dl=1');
         }
-        
         return url;
     }
 
@@ -512,13 +474,10 @@
     function createOptionBtn(label, url, isActive) {
         const optContainer = document.getElementById('serverOptions');
         const btn = document.createElement('button');
-        
-        // Lógica de clase activa
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
 
         btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
-        
         btn.innerText = label;
         btn.onclick = () => {
             document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
@@ -529,60 +488,56 @@
         optContainer.appendChild(btn);
     }
 
-     function loadVideo(url) {
+    // [CORRECCIÓN] Función mejorada para detectar iframes vs videos nativos
+    function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
-        
         if (!url) return;
 
-        // Detección Google Drive Preview
+        // 1. Detectar si es un archivo de video directo (mp4, m3u8, etc)
+        const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
+        // 2. Detectar si es Google Drive Preview
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
-        if (isDrive) {
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.setAttribute("allow", "autoplay; fullscreen");
-            iframe.setAttribute("allowfullscreen", "true");
-            iframe.style.position = "absolute";
-            iframe.style.top = "0"; iframe.style.left = "0";
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            container.appendChild(iframe);
-        } else {
-            // Reproductor Nativo HTML5
+
+        // Si es video archivo directo y NO es drive preview, usar <video> tag
+        if (isVideoFile && !isDrive) {
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
-            [cite_start]// No autoplay en móviles [cite: 107]
             video.autoplay = false;
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
             
+            // Fallback por si falla la carga nativa
             video.onerror = function() {
-                console.log("Error nativo, fallback a iframe.");
-                container.innerHTML = '';
-                const iframe = document.createElement('iframe');
-                iframe.src = url;
-                iframe.setAttribute("allow", "autoplay; fullscreen");
-                iframe.setAttribute("allowfullscreen", "true");
-                iframe.style.position = "absolute";
-                iframe.style.top = "0"; iframe.style.left = "0";
-                iframe.style.width = "100%";
-                iframe.style.height = "100%";
-                iframe.style.border = "none";
-                container.appendChild(iframe);
+                loadAsIframe(url, container);
             };
-
             container.appendChild(video);
+        } else {
+            // Para todo lo demás (Drive, Mega, Ok.ru, Fembed, etc), usar Iframe
+            loadAsIframe(url, container);
         }
+    }
+
+    function loadAsIframe(url, container) {
+        container.innerHTML = '';
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
+        iframe.setAttribute("allowfullscreen", "true");
+        iframe.style.position = "absolute";
+        iframe.style.top = "0"; iframe.style.left = "0";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        container.appendChild(iframe);
     }
 
     function setupNavigation() {
         try {
             if (DB[animeId]) {
                 let flatList = [];
-                [cite_start]// Ordenar temporadas y episodios [cite: 112]
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
@@ -593,6 +548,7 @@
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
+                
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
@@ -612,7 +568,5 @@
   </script>
   
   <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
-
-  <script src="https://pl28535757.effectivegatecpm.com/25/1e/93/251e93f9d871f76154e659a0fdd7e66b.js"></script> 
 </body>
 </html>
