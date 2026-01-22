@@ -397,7 +397,7 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR
+    // LÓGICA DEL REPRODUCTOR CORREGIDA
     // -----------------------------------------------------------
     
     // Base de datos segura
@@ -409,17 +409,17 @@
     const season = params.get('s');
     const episode = params.get('e');
 
-    // Botón volver
+    // [CORRECCIÓN] Configurar botón volver independientemente de si hay datos del episodio
     const backLink = document.getElementById('backLink');
     if (backLink) {
         if (animeId) {
             backLink.href = `anime-detail.html?id=${animeId}`;
         } else {
-            backLink.href = 'index.html';
+            backLink.href = 'index.html'; // Fallback por si entran directo
         }
     }
 
-    // Cargar datos
+    // Buscar datos
     const epData = DB[animeId]?.[season]?.[episode];
 
     if (epData) {
@@ -428,6 +428,7 @@
 
         // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
+        
         loadVideo(initialLink);
 
         // Botones de servidores
@@ -444,6 +445,7 @@
         document.getElementById('playerContainer').innerHTML = `
             <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;flex-direction:column;gap:10px;">
                 <span>Video no disponible.</span>
+                <small style="color:#aaa;">Verifica la URL o el archivo de datos.</small>
             </div>`;
     }
 
@@ -486,14 +488,18 @@
         optContainer.appendChild(btn);
     }
 
+    // [CORRECCIÓN] Función mejorada para detectar iframes vs videos nativos
     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         if (!url) return;
 
+        // 1. Detectar si es un archivo de video directo (mp4, m3u8, etc)
         const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
+        // 2. Detectar si es Google Drive Preview
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
 
+        // Si es video archivo directo y NO es drive preview, usar <video> tag
         if (isVideoFile && !isDrive) {
             const video = document.createElement('video');
             video.src = url;
@@ -502,11 +508,14 @@
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
+            
+            // Fallback por si falla la carga nativa
             video.onerror = function() {
                 loadAsIframe(url, container);
             };
             container.appendChild(video);
         } else {
+            // Para todo lo demás (Drive, Mega, Ok.ru, Fembed, etc), usar Iframe
             loadAsIframe(url, container);
         }
     }
@@ -559,25 +568,5 @@
   </script>
   
   <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
-
-  <script>
-    (function() {
-        // Tu Direct Link
-        const directAdUrl = "https://www.effectivegatecpm.com/gfdij30e?key=ed8ae98c38ff0041ae5dce42d1226c55";
-        let adTriggered = false;
-
-        // Función que abre el anuncio
-        function openDirectAd() {
-            if (!adTriggered) {
-                adTriggered = true;
-                window.open(directAdUrl, '_blank');
-            }
-        }
-
-        // Se activa con el primer clic en cualquier parte del cuerpo de la página
-        document.body.addEventListener('click', openDirectAd, { once: true });
-    })();
-  </script>
-
 </body>
 </html>
