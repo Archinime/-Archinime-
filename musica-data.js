@@ -247,5 +247,8 @@ const audioPlaylists = {
     ],
     "80": [
         "https://www.dropbox.com/scl/fi/u7v0jl0iipu8cf7ll694a/Jigokuraku-OP.-Full-WORK-Sub.-Espa-ol-AMV.mp3?rlkey=pzsy2kth2ibchlgv3qtzinelb&st=707mmoc0&raw=1"
+    ],
+    "81": [
+        "https://www.dropbox.com/scl/fi/w5j4gmrjtjmtkcgi8eo3q/NieRAutomata-Ver1.1a-Season-2-Ending-Full-Hai-to-Inori-Sub-Espa-ol-AMV.mp3?rlkey=1fmp1g26rlnvjr1wozqskgvjs&st=s70ilkpy&raw=1"
     ]
 };
