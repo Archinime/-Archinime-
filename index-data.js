@@ -1484,5 +1484,32 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 2",
         "isFinal": false
+    },
+    {
+        "id": 80,
+        "title": "Hell's Paradise",
+        "img": "https://www.dropbox.com/scl/fi/w5est8ffkgk3w7af0c4i0/ImageToStl.com_MV5BZjhmMjhkNjUtMGU2MC00N2IzLTg1YzItZDk5ODMxMDYxODc0XkEyXkFqcGc._V1.avif?rlkey=ytkpz6jwh00o8ikvdyf95l4pq&st=9mxw44sm&raw=1",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Fantasía oscura",
+            "Histórico",
+            "Sobrenatural",
+            "Terror",
+            "Thriller",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769091768974,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/4iij3tyeimrpuebnc5q4o/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769090129026-1769090129026.avif?rlkey=29h5a26ijg29zfiduxabse183&st=vk9p270n&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 13",
+        "isFinal": false,
+        "aliases": [
+            "Jigokuraku"
+        ]
     }
 ];
