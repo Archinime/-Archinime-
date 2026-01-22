@@ -11261,5 +11261,14 @@ const players = {
                 "title": "NieR: Automata Ver1.1a T2 Cap 12"
             }
         }
+    },
+    "82": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1mIlQS0trkV_IbAwEx1CI2ePkR_FhxwKt/preview",
+                "link2": "",
+                "title": "TSUKIMICHI -Moonlit Fantasy- T1 Cap 1"
+            }
+        }
     }
 };
