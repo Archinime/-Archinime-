@@ -1502,14 +1502,14 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1769091768974,
+        "lastUpdate": 1769094965400,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/4iij3tyeimrpuebnc5q4o/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769090129026-1769090129026.avif?rlkey=29h5a26ijg29zfiduxabse183&st=vk9p270n&raw=1",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 13",
         "isFinal": false,
         "aliases": [
-            "Jigokuraku"
+            "Jigokuraku."
         ]
     }
 ];
