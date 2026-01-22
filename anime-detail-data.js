@@ -8656,5 +8656,23 @@ const data = {
                 "name": "Temporada 2"
             }
         ]
+    },
+    "82": {
+        "title": "TSUKIMICHI -Moonlit Fantasy-",
+        "desc": "Makoto Misumi era un adolescente normal y corriente que de repente fue invocado a otro mundo como \"héroe\". Pero la diosa de este mundo le llamó feo y le quitó su condición de héroe, enviándolo a los confines del mundo. En los páramos, se encuentra con dragones, arañas, orcos, enanos y muchas otras razas no humanas. Makoto consigue mostrarse promoetedor en el uso de la magia y combatiendo, lo que no habría podido hacer en su anterior mundo. Tiene numerosos encuentros, pero ¿será capaz de sobrevivir a este nuevo mundo?",
+        "cover": "https://www.dropbox.com/scl/fi/e56h2qp9qlauoosf1h7hk/ImageToStl.com_1726486-1.avif?rlkey=ib1bvbj4pprxe9kvqcado5n9e&st=gx3w71pk&raw=1",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://www.dropbox.com/scl/fi/e56h2qp9qlauoosf1h7hk/ImageToStl.com_1726486-1.avif?rlkey=ib1bvbj4pprxe9kvqcado5n9e&st=nz54r30v&raw=1",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
