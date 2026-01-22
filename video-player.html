@@ -224,7 +224,8 @@
         transform: translateY(-3px);
     }
    
-    .btn-hidden { display: none !important; }
+    .btn-hidden { display: none !important;
+    }
 
     /* --- ESTILO PARA CONTENEDOR DE PUBLICIDAD --- */
     .ad-container {
@@ -278,8 +279,10 @@
 
     /* MEDIA QUERIES (Móvil) */
     @media (max-width: 768px) {
-        .container { padding: 15px 10px; }
-        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .container { padding: 15px 10px;
+        }
+        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
         .options {
             justify-content: flex-start;
             overflow-x: auto;
@@ -288,16 +291,20 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        .options::-webkit-scrollbar { display: none; }
-        h1 { font-size: 1.3rem; margin: 20px 0; }
+        .options::-webkit-scrollbar { display: none;
+        }
+        h1 { font-size: 1.3rem; margin: 20px 0;
+        }
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             width: 100%;
         }
-        #prevBtn { grid-column: 1; order: 1; min-width: auto; }
-        #nextBtn { grid-column: 2; order: 2; min-width: auto; }
+        #prevBtn { grid-column: 1;
+        order: 1; min-width: auto; }
+        #nextBtn { grid-column: 2; order: 2; min-width: auto;
+        }
         #downloadBtn { 
             grid-column: 1 / span 2;
             order: 3; 
@@ -305,9 +312,12 @@
             margin-top: 5px;
             box-sizing: border-box;
         }
-        .btn { padding: 12px; font-size: 0.9rem; }
-        .comments-header h3 { font-size: 1.2rem; }
-        .ad-container { padding: 5px; margin: 25px 0; }
+        .btn { padding: 12px;
+        font-size: 0.9rem; }
+        .comments-header h3 { font-size: 1.2rem;
+        }
+        .ad-container { padding: 5px; margin: 25px 0;
+        }
     }
   </style>
 </head>
@@ -329,7 +339,8 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-        </div>
+   
+      </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -345,7 +356,8 @@
 
     <div class="ad-container">
         <script type="text/javascript">
-          atOptions = {
+  
+         atOptions = {
             'key' : '1f072201cddab551b2b65315f6c1643e',
             'format' : 'iframe',
             'height' : 90,
@@ -362,7 +374,8 @@
                 <h3>Comentarios</h3>
             </div>
             
-            <div id="disqus_thread"></div>
+  
+           <div id="disqus_thread"></div>
             
             <script>
                 var disqus_config = function () {
@@ -397,7 +410,8 @@
     // LÓGICA DEL REPRODUCTOR (CORREGIDA Y ACTUALIZADA)
     // -----------------------------------------------------------
     
-    const DB = (typeof players !== 'undefined') ? players : {};
+    const DB = (typeof players !== 'undefined') ?
+    players : {};
     
     // Obtener parámetros URL
     const params = new URLSearchParams(location.search);
@@ -406,6 +420,7 @@
     const episode = params.get('e');
 
     // --- CORRECCIÓN 1: Lógica del botón Volver ---
+    // Esta parte asegura que si tienes el ID del anime, vuelvas al detalle de ESE anime.
     const backLink = document.getElementById('backLink');
     if (backLink) {
         // Si hay ID de anime, vuelve al detalle, si no, al inicio
@@ -418,24 +433,18 @@
 
     // Buscar datos
     const epData = DB[animeId]?.[season]?.[episode];
-
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
-
         // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
-        
         // Cargar video inicial
         loadVideo(initialLink);
-        
         // Botones de servidores
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
-        
         if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-        
         // Actualizar descarga
         updateDownloadButton(initialLink);
         // Navegación
@@ -476,7 +485,6 @@
         
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
-
         btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
         btn.innerText = label;
         btn.onclick = () => {
@@ -499,7 +507,6 @@
         // La mayoría de servidores de streaming NO son archivos directos, son embeds.
         const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
-
         // Si es un archivo de video REAL y NO es Drive Preview
         if (isVideoFile && !isDrive) {
             const video = document.createElement('video');
@@ -509,7 +516,6 @@
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
-            
             // Si falla el video nativo, intentar iframe como último recurso
             video.onerror = function() {
                 console.log("Error nativo, intentando modo iframe...");
@@ -523,7 +529,8 @@
     }
 
     function loadAsIframe(url, container) {
-        container.innerHTML = ''; // Limpiar por si acaso
+        container.innerHTML = '';
+        // Limpiar por si acaso
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
@@ -545,12 +552,12 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
+          
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
-                
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
@@ -571,6 +578,5 @@
   
   <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
 
-  <script src="https://pl28535757.effectivegatecpm.com/25/1e/93/251e93f9d871f76154e659a0fdd7e66b.js"></script> 
 </body>
 </html>
