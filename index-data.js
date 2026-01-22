@@ -117,6 +117,12 @@ const animes = [
             "Slice of Life",
             "Shōnen"
         ],
+        "lastUpdate": 1769090734634,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "tensura3.jpg",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false,
         "aliases": [
             "That Time I Got Reincarnated as a Slime"
         ]
