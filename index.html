@@ -176,13 +176,15 @@
       </div>
   </div>
 
-  <script src="index-data.js"></script>
-  <script src="animaciones.js"></script>
-  <script src="musica_fondo.js"></script>
-  <script src="notification-system.js"></script>
-  <script src="script-index.js"></script>
-  <script src="pwa-handler.js"></script> 
-  <script>
+<script>
+  var version = new Date().getTime();
+  document.write('<script src="index-data.js?v=' + version + '"><\/script>');
+</script>
+
+<script src="animaciones.js"></script>
+<script src="musica_fondo.js"></script>
+<script src="notification-system.js"></script>
+<script src="script-index.js"></script>
       // Registrar Service Worker
       if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
