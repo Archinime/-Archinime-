@@ -1177,8 +1177,8 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1769090464954,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1769090494470,
+        "updateType": "ESTRENO 🚨",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/68met98fq4br4u8cd7594/frieren2.avif?rlkey=w5jv3dne0ffs2ponw3ai1kgt0&st=uqyu2mmm&raw=1",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 1",
