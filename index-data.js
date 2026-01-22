@@ -1537,5 +1537,23 @@ const animes = [
         "aliases": [
             "Automata"
         ]
+    },
+    {
+        "id": 82,
+        "title": "TSUKIMICHI -Moonlit Fantasy-",
+        "img": "https://www.dropbox.com/scl/fi/e56h2qp9qlauoosf1h7hk/ImageToStl.com_1726486-1.avif?rlkey=ib1bvbj4pprxe9kvqcado5n9e&st=gx3w71pk&raw=1",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769115069719,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/e56h2qp9qlauoosf1h7hk/ImageToStl.com_1726486-1.avif?rlkey=ib1bvbj4pprxe9kvqcado5n9e&st=nz54r30v&raw=1",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     }
 ];
