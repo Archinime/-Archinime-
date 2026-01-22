@@ -375,17 +375,17 @@ const players = {
         "4": {
             "1": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/1UKvlsgo-YbupczhlGIhPUlrJn5o9U3CD/preview",
+                "link2": "https://drive.google.com/file/d/1IudtlGHsyEVRiuuYCregYlvYZH4irQnM/preview",
                 "title": "Jujutsu Kaisen T3 Cap 1"
             },
             "2": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/13x4GypBOfppFXUBIljSSFR6Dp8rb6_VT/preview",
+                "link2": "https://drive.google.com/file/d/1lVYIm5Dxwpz84n4Miuhqihid1LbHLpwd/preview",
                 "title": "Jujutsu Kaisen T3 Cap 2"
             },
             "3": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/1c-xhGwdyjsrOcV5THx3FO8MfskWBh4-w/preview",
+                "link2": "https://drive.google.com/file/d/1AM7h8NztVymwGxzESfuLKafCQtAD1MuR/preview",
                 "title": "Jujutsu Kaisen T3 Cap 3"
             }
         }
