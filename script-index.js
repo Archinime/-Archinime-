@@ -25,23 +25,14 @@ function render(list) {
         return;
     }
 
-// Render sencillo modificado para mostrar FINAL
-    grid.innerHTML = list.map(a => {
-        // Lógica para crear la etiqueta de final si corresponde
-        const finalBadge = a.isFinal 
-            ? `<img src="final.png" class="final-badge" alt="Finalizado">` 
-            : '';
-
-        return `
-        <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
-            ${finalBadge} <img src="${a.img}" alt="${a.title}">
-            <div class="info">
-                <strong>${a.title}</strong>
-                <span>⭐ ${a.rating ? (a.rating.toFixed ? a.rating.toFixed(1) : a.rating) : '—'}</span>
-            </div>
-        </div>
-        `;
-    }).join('');
+    // Render sencillo
+    grid.innerHTML = list.map(a => `
+    <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
+        <img src="${a.img}" alt="${a.title}">
+        <div class="info"><strong>${a.title}</strong><span>⭐ ${a.rating ? (a.rating.toFixed? a.rating.toFixed(1): a.rating) : '—'}</span></div>
+    </div>
+    `).join('');
+}
 
 function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
 
