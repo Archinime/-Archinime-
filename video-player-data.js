@@ -9980,6 +9980,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1n8mXewtPceCA2llBnn_oQAZRyM15e0R5/preview",
                 "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1KTCQWhWDa92Apyk6mMbB6P-dTeGuy7xO/preview",
+                "link2": "",
+                "title": "Kimi to Koete Koi ni Naru T1 Cap 10"
             }
         }
     },
