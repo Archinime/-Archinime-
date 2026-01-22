@@ -1038,13 +1038,13 @@ const data = {
                 "cover": "https://www.dropbox.com/scl/fi/kcs3irob5bxh8gakdytk7/MV5BMTU3MTIzN2UtMDhmOS00MjM1LWI5OWEtOWQ3MTZjOWFjMDM2XkEyXkFqcGc-._V1_FMjpg_UX1000_.jpg?rlkey=ddrnjyrra1mm5gp3qghiqz3w0&st=gah9qpka&raw=1",
                 "eps": [
                     {
-                        "title": "Coleus no Yume 1"
+                        "title": "Capítulo 1"
                     },
                     {
-                        "title": "Coleus no Yume 2"
+                        "title": "Capítulo 2"
                     },
                     {
-                        "title": "Coleus no Yume 3"
+                        "title": "Capítulo 3"
                     }
                 ],
                 "name": "Especial 1 - 3"
