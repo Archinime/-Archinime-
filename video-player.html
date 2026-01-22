@@ -13,9 +13,12 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7; /* Cian Neón */
-        --secondary-color: #7b2cbf; /* Morado */
-        --accent-color: #ff0055; /* Rosa Neón para destacados */
+        --primary-color: #00fff7;
+        [cite_start]/* Cian Neón [cite: 2] */
+        --secondary-color: #7b2cbf;
+        [cite_start]/* Morado [cite: 3] */
+        --accent-color: #ff0055;
+        [cite_start]/* Rosa Neón para destacados [cite: 4] */
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.6);
         --glass-border: 1px solid rgba(255, 255, 255, 0.1);
@@ -40,7 +43,8 @@
         width: 100%; height: 100%; 
         object-fit: cover;
         z-index: -10; 
-        opacity: 0.6; /* Un poco más oscuro para resaltar contenido */
+        opacity: 0.6;
+        [cite_start]/* Un poco más oscuro para resaltar contenido [cite: 10] */
     }
 
     /* --- OVERLAY MEJORADO --- */
@@ -50,14 +54,15 @@
       width: 100%; height: 100%; 
       z-index: -5;
       background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 90%);
-      backdrop-filter: blur(3px); /* Efecto difuminado sutil */
+      backdrop-filter: blur(3px);
+      [cite_start]/* Efecto difuminado sutil [cite: 13] */
       pointer-events: none;
     }
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
         width: 100%;
-        max-width: 1200px; /* Limite en PC para que no se estire demasiado */
+        max-width: 1200px; [cite_start]/* Limite en PC para que no se estire demasiado [cite: 15] */
         margin: 0 auto;
         padding: 20px 15px; 
         position: relative; 
@@ -202,7 +207,7 @@
         gap: 8px;
         backdrop-filter: blur(5px);
         min-width: 140px;
-        /* Ancho mínimo para consistencia */
+        [cite_start]/* Ancho mínimo para consistencia [cite: 41] */
     }
     
     /* Botón Descarga Específico */
@@ -228,9 +233,24 @@
    
     .btn-hidden { display: none !important; }
 
+    /* --- ESTILO PARA CONTENEDOR DE PUBLICIDAD --- */
+    .ad-container {
+        margin: 40px auto 20px auto;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 1000px;
+        overflow: hidden; /* Importante para móvil */
+        backdrop-filter: blur(5px);
+    }
+    
     /* --- COMENTARIOS (SIN BLUR PARA EVITAR LAG) --- */
     .comments-section { 
-        margin-top: 50px;
+        margin-top: 30px;
         border-top: 1px solid rgba(255,255,255,0.1); 
         padding-top: 40px;
         width: 100%;
@@ -241,8 +261,6 @@
         background: rgba(0,0,0,0.85);
         border-radius: 20px;
         padding: 20px;
-        /* Blur eliminado para mejorar rendimiento */
-        /* backdrop-filter: blur(10px); */ 
         border: 1px solid rgba(255,255,255,0.05);
         max-width: 1000px;
         margin: 0 auto;
@@ -274,7 +292,7 @@
 
         .player-wrapper {
             border-radius: 12px;
-            /* Menos borde en móvil */
+            [cite_start]/* Menos borde en móvil [cite: 56] */
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -285,8 +303,10 @@
             white-space: nowrap;
             padding: 15px;
             /* Scrollbar oculta pero funcional */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;
+            [cite_start]/* IE and Edge [cite: 59] */
+            scrollbar-width: none;
+            [cite_start]/* Firefox [cite: 60] */
         }
         .options::-webkit-scrollbar {
             display: none;
@@ -324,6 +344,12 @@
         .comments-header h3 {
             font-size: 1.2rem;
         }
+        
+        /* Ajuste para publicidad en móvil */
+        .ad-container {
+            padding: 5px;
+            margin: 25px 0;
+        }
     }
   </style>
 </head>
@@ -345,7 +371,7 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-      </div>
+       </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -359,6 +385,18 @@
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
+    <div class="ad-container">
+        <script type="text/javascript">
+          atOptions = {
+            'key' : '1f072201cddab551b2b65315f6c1643e',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
+    </div>
     <div class="comments-section">
         <div class="comments-box">
             <div class="comments-header">
@@ -377,9 +415,9 @@
                     const animeId = params.get('anime');
                     const season = params.get('s');
                     const episode = params.get('e');
-                    // URL Canónica
+                    [cite_start]// URL Canónica [cite: 73]
                     this.page.url = window.location.href;
-                    // ID Único
+                    [cite_start]// ID Único [cite: 74]
                     if(animeId && season && episode) {
                         this.page.identifier = `${animeId}-s${season}-e${episode}`;
                     } else {
@@ -417,7 +455,7 @@
 
     // Buscar datos
     const epData = DB[animeId]?.[season]?.[episode];
-    // Configurar botón volver
+    [cite_start]// Configurar botón volver [cite: 81]
     const backLink = document.getElementById('backLink');
     if (backLink) {
        backLink.href = `anime-detail.html?id=${animeId}`;
@@ -429,18 +467,17 @@
 
         // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
-        // Cargar video inicial
+        [cite_start]// Cargar video inicial [cite: 85]
         loadVideo(initialLink);
-        // Botones de servidores
-        // Nota: Limpiamos el contenedor antes por si acaso
+        [cite_start]// Botones de servidores [cite: 86]
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
         
         if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-        // Actualizar descarga
+        [cite_start]// Actualizar descarga [cite: 88]
         updateDownloadButton(initialLink);
-        // Navegación
+        [cite_start]// Navegación [cite: 89]
         setupNavigation();
     } else {
         console.error("No se encontraron datos para:", animeId, season, episode);
@@ -450,7 +487,7 @@
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
-        // Google Drive
+        [cite_start]// Google Drive [cite: 93]
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
@@ -477,7 +514,6 @@
         const btn = document.createElement('button');
         
         // Lógica de clase activa
-        // Si no hay botones aún y se pide activo, o si es el primer botón creado
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
 
@@ -517,7 +553,7 @@
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
-            // No autoplay en móviles para ahorrar datos/batería por defecto
+            [cite_start]// No autoplay en móviles [cite: 107]
             video.autoplay = false;
             video.playsInline = true; 
             video.style.width = "100%";
@@ -546,7 +582,7 @@
         try {
             if (DB[animeId]) {
                 let flatList = [];
-                // Ordenar temporadas y episodios
+                [cite_start]// Ordenar temporadas y episodios [cite: 112]
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
@@ -560,7 +596,6 @@
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
-                    // Usamos display flex definido en CSS, solo quitamos la clase hidden
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
 
@@ -577,5 +612,7 @@
   </script>
   
   <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
+
+  <script src="https://pl28535757.effectivegatecpm.com/25/1e/93/251e93f9d871f76154e659a0fdd7e66b.js"></script> 
 </body>
 </html>
