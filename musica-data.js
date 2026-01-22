@@ -244,5 +244,8 @@ const audioPlaylists = {
     ],
     "79": [
         "https://www.dropbox.com/scl/fi/4ngz61g7k9s87o2rb2q3f/DARK-MOON-ENHYPEN-One-In-A-Billion-Japanese-Ver..mp3?rlkey=e8jj4bofrtrbi9gio0oqto2zc&st=lg79kept&raw=1"
+    ],
+    "80": [
+        "https://www.dropbox.com/scl/fi/u7v0jl0iipu8cf7ll694a/Jigokuraku-OP.-Full-WORK-Sub.-Espa-ol-AMV.mp3?rlkey=pzsy2kth2ibchlgv3qtzinelb&st=707mmoc0&raw=1"
     ]
 };
