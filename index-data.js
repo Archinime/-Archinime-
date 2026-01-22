@@ -1528,11 +1528,14 @@ const animes = [
             "Psicológico",
             "Seinen"
         ],
-        "lastUpdate": 1769104924606,
+        "lastUpdate": 1769105148079,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/8r1nblzvbi56izp0v7kog/ImageToStl.com_sadfsf.avif?rlkey=dqr0neuyaiwp4tnhc9t8e2jcf&st=2ij9738d&raw=1",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 12",
-        "isFinal": true
+        "isFinal": true,
+        "aliases": [
+            "Automata"
+        ]
     }
 ];
