@@ -11066,5 +11066,74 @@ const players = {
                 "title": "Dark Moon: The Blood Altar T1 Cap 2"
             }
         }
+    },
+    "80": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1NrKGNuNRLBF6s_JZckR5vHgTc31fxwqM/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1njP9h2cRgtnL0iAxJSzxAVJ8qjwN2DdM/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1wlNXX1k70lrGmwJu7Da70bJapuztCAK-/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1mWugVQRZaoBOyxm-E4UUgW6wmZ9QYvFl/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1kEVb86yt3leoTGZR4sPQBfLk34qjFOQ8/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1qpD6P9QPgoQJKNd2ugw2d6jQpRGG2NfR/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1a5ephggKHTy_aXlpI6Km5CDrjpefyYkJ/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1gmO2kLSZk0x9awkW5MYl_ER_05XONWm0/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1y816eENXasQek_UbqZvPHMG6up-1KOCc/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/18_M53GMv6jtVr51RkmkmSZzLAzfK5EH7/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1cSlWBjj6TlFWnoRrULPjN9rGt6a0oFkY/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1AuAsaAZ9Op7jHxzOLDufiVzx72Hk3vuJ/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1jW7bp7QNzhy-rXe3hYsL9sS2FY5dszcK/preview",
+                "link2": "",
+                "title": "Hell's Paradise T1 Cap 13"
+            }
+        }
     }
 };
