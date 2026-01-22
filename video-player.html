@@ -13,12 +13,9 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7;
-        [cite_start]/* Cian Neón [cite: 2] */
-        --secondary-color: #7b2cbf;
-        [cite_start]/* Morado [cite: 3] */
-        --accent-color: #ff0055;
-        [cite_start]/* Rosa Neón para destacados [cite: 4] */
+        --primary-color: #00fff7; /* Cian Neón */
+        --secondary-color: #7b2cbf; /* Morado */
+        --accent-color: #ff0055; /* Rosa Neón */
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.6);
         --glass-border: 1px solid rgba(255, 255, 255, 0.1);
@@ -44,7 +41,6 @@
         object-fit: cover;
         z-index: -10; 
         opacity: 0.6;
-        [cite_start]/* Un poco más oscuro para resaltar contenido [cite: 10] */
     }
 
     /* --- OVERLAY MEJORADO --- */
@@ -55,14 +51,13 @@
       z-index: -5;
       background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 90%);
       backdrop-filter: blur(3px);
-      [cite_start]/* Efecto difuminado sutil [cite: 13] */
       pointer-events: none;
     }
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
         width: 100%;
-        max-width: 1200px; [cite_start]/* Limite en PC para que no se estire demasiado [cite: 15] */
+        max-width: 1200px;
         margin: 0 auto;
         padding: 20px 15px; 
         position: relative; 
@@ -78,7 +73,7 @@
         margin-bottom: 20px;
     }
 
-    /* BOTÓN VOLVER (Estilo Glass) */
+    /* BOTÓN VOLVER (REPARADO) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -126,7 +121,7 @@
         border: none;
     }
 
-    /* OPCIONES DE SERVIDOR (Scroll horizontal en móvil) */
+    /* OPCIONES DE SERVIDOR */
     .options { 
         margin-top: 20px;
         display: flex; 
@@ -179,7 +174,7 @@
         line-height: 1.3;
     }
     
-    /* CONTROLES (Grid para móvil) */
+    /* CONTROLES */
     .controls { 
         margin-top: 20px;
         display: flex; 
@@ -207,10 +202,8 @@
         gap: 8px;
         backdrop-filter: blur(5px);
         min-width: 140px;
-        [cite_start]/* Ancho mínimo para consistencia [cite: 41] */
     }
     
-    /* Botón Descarga Específico */
     #downloadBtn {
         border-color: var(--accent-color);
         background: rgba(255, 0, 85, 0.1);
@@ -244,11 +237,11 @@
         justify-content: center;
         align-items: center;
         max-width: 1000px;
-        overflow: hidden; /* Importante para móvil */
+        overflow: hidden; 
         backdrop-filter: blur(5px);
     }
     
-    /* --- COMENTARIOS (SIN BLUR PARA EVITAR LAG) --- */
+    /* --- COMENTARIOS --- */
     .comments-section { 
         margin-top: 30px;
         border-top: 1px solid rgba(255,255,255,0.1); 
@@ -257,7 +250,6 @@
     }
 
     .comments-box {
-        /* Se oscurece más para compensar la falta de blur */
         background: rgba(0,0,0,0.85);
         border-radius: 20px;
         padding: 20px;
@@ -284,48 +276,26 @@
         letter-spacing: 2px;
     }
 
-    /* MEDIA QUERIES (ADAPTACIÓN MÓVIL PROFUNDA) */
+    /* MEDIA QUERIES (Móvil) */
     @media (max-width: 768px) {
-        .container {
-            padding: 15px 10px;
-        }
-
-        .player-wrapper {
-            border-radius: 12px;
-            [cite_start]/* Menos borde en móvil [cite: 56] */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* En móvil, los servidores scroll horizontal */
+        .container { padding: 15px 10px; }
+        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .options {
             justify-content: flex-start;
             overflow-x: auto;
             white-space: nowrap;
             padding: 15px;
-            /* Scrollbar oculta pero funcional */
             -ms-overflow-style: none;
-            [cite_start]/* IE and Edge [cite: 59] */
             scrollbar-width: none;
-            [cite_start]/* Firefox [cite: 60] */
         }
-        .options::-webkit-scrollbar {
-            display: none;
-        }
-
-        h1 {
-            font-size: 1.3rem;
-            margin: 20px 0;
-        }
-
-        /* Controles en móvil: Grid de 2 columnas + Descarga full width */
+        .options::-webkit-scrollbar { display: none; }
+        h1 { font-size: 1.3rem; margin: 20px 0; }
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             width: 100%;
         }
-
-        /* El botón de descarga ocupa toda la fila de abajo si es necesario */
         #prevBtn { grid-column: 1; order: 1; min-width: auto; }
         #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { 
@@ -335,21 +305,9 @@
             margin-top: 5px;
             box-sizing: border-box;
         }
-
-        .btn {
-            padding: 12px;
-            font-size: 0.9rem;
-        }
-
-        .comments-header h3 {
-            font-size: 1.2rem;
-        }
-        
-        /* Ajuste para publicidad en móvil */
-        .ad-container {
-            padding: 5px;
-            margin: 25px 0;
-        }
+        .btn { padding: 12px; font-size: 0.9rem; }
+        .comments-header h3 { font-size: 1.2rem; }
+        .ad-container { padding: 5px; margin: 25px 0; }
     }
   </style>
 </head>
@@ -364,14 +322,14 @@
   <div class="container">
    
     <div class="top-nav">
-       <a href="#" id="backLink" class="back-btn">
+       <a href="index.html" id="backLink" class="back-btn">
          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
          Volver
        </a>
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-       </div>
+        </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -407,17 +365,12 @@
             <div id="disqus_thread"></div>
             
             <script>
-                /**
-                * Configuración de Disqus
-                */
                 var disqus_config = function () {
                     const params = new URLSearchParams(window.location.search);
                     const animeId = params.get('anime');
                     const season = params.get('s');
                     const episode = params.get('e');
-                    [cite_start]// URL Canónica [cite: 73]
                     this.page.url = window.location.href;
-                    [cite_start]// ID Único [cite: 74]
                     if(animeId && season && episode) {
                         this.page.identifier = `${animeId}-s${season}-e${episode}`;
                     } else {
@@ -441,10 +394,9 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR (JAVASCRIPT ORIGINAL MEJORADO)
+    // LÓGICA DEL REPRODUCTOR (CORREGIDA Y ACTUALIZADA)
     // -----------------------------------------------------------
     
-    // Base de datos segura
     const DB = (typeof players !== 'undefined') ? players : {};
     
     // Obtener parámetros URL
@@ -453,13 +405,19 @@
     const season = params.get('s');
     const episode = params.get('e');
 
-    // Buscar datos
-    const epData = DB[animeId]?.[season]?.[episode];
-    [cite_start]// Configurar botón volver [cite: 81]
+    // --- CORRECCIÓN 1: Lógica del botón Volver ---
     const backLink = document.getElementById('backLink');
     if (backLink) {
-       backLink.href = `anime-detail.html?id=${animeId}`;
+        // Si hay ID de anime, vuelve al detalle, si no, al inicio
+        if (animeId) {
+            backLink.href = `anime-detail.html?id=${animeId}`;
+        } else {
+            backLink.href = `index.html`;
+        }
     }
+
+    // Buscar datos
+    const epData = DB[animeId]?.[season]?.[episode];
 
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
@@ -467,39 +425,42 @@
 
         // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
-        [cite_start]// Cargar video inicial [cite: 85]
+        
+        // Cargar video inicial
         loadVideo(initialLink);
-        [cite_start]// Botones de servidores [cite: 86]
+        
+        // Botones de servidores
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
         
         if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-        [cite_start]// Actualizar descarga [cite: 88]
+        
+        // Actualizar descarga
         updateDownloadButton(initialLink);
-        [cite_start]// Navegación [cite: 89]
+        // Navegación
         setupNavigation();
     } else {
         console.error("No se encontraron datos para:", animeId, season, episode);
         document.getElementById('epTitle').innerText = "Episodio no encontrado.";
-        document.getElementById('playerContainer').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;">Video no disponible</div>';
+        document.getElementById('playerContainer').innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;flex-direction:column;gap:10px;">
+                <span>Video no disponible o enlace roto.</span>
+                <small style="color:#aaa;">Verifica el archivo video-player-data.js</small>
+            </div>`;
     }
 
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
-        [cite_start]// Google Drive [cite: 93]
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
-        
-        // Dropbox
         if (url.includes("dropbox.com") && url.includes("dl=0")) {
              return url.replace('dl=0', 'dl=1');
         }
-        
         return url;
     }
 
@@ -513,12 +474,10 @@
         const optContainer = document.getElementById('serverOptions');
         const btn = document.createElement('button');
         
-        // Lógica de clase activa
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
 
         btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
-        
         btn.innerText = label;
         btn.onclick = () => {
             document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
@@ -529,60 +488,58 @@
         optContainer.appendChild(btn);
     }
 
-     function loadVideo(url) {
+    // --- CORRECCIÓN 2: Lógica de carga de Video (Soporte Iframes) ---
+    function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         
         if (!url) return;
 
-        // Detección Google Drive Preview
+        // Detectar si es un archivo de video directo (MP4, MKV, etc)
+        // La mayoría de servidores de streaming NO son archivos directos, son embeds.
+        const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
-        if (isDrive) {
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.setAttribute("allow", "autoplay; fullscreen");
-            iframe.setAttribute("allowfullscreen", "true");
-            iframe.style.position = "absolute";
-            iframe.style.top = "0"; iframe.style.left = "0";
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            container.appendChild(iframe);
-        } else {
-            // Reproductor Nativo HTML5
+
+        // Si es un archivo de video REAL y NO es Drive Preview
+        if (isVideoFile && !isDrive) {
             const video = document.createElement('video');
             video.src = url;
             video.controls = true;
-            [cite_start]// No autoplay en móviles [cite: 107]
             video.autoplay = false;
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
             
+            // Si falla el video nativo, intentar iframe como último recurso
             video.onerror = function() {
-                console.log("Error nativo, fallback a iframe.");
-                container.innerHTML = '';
-                const iframe = document.createElement('iframe');
-                iframe.src = url;
-                iframe.setAttribute("allow", "autoplay; fullscreen");
-                iframe.setAttribute("allowfullscreen", "true");
-                iframe.style.position = "absolute";
-                iframe.style.top = "0"; iframe.style.left = "0";
-                iframe.style.width = "100%";
-                iframe.style.height = "100%";
-                iframe.style.border = "none";
-                container.appendChild(iframe);
+                console.log("Error nativo, intentando modo iframe...");
+                loadAsIframe(url, container);
             };
-
             container.appendChild(video);
+        } else {
+            // Para todo lo demás (Fembed, Streamtape, Ok.ru, Drive, etc.) usamos IFRAME
+            loadAsIframe(url, container);
         }
+    }
+
+    function loadAsIframe(url, container) {
+        container.innerHTML = ''; // Limpiar por si acaso
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
+        iframe.setAttribute("allowfullscreen", "true");
+        iframe.style.position = "absolute";
+        iframe.style.top = "0"; iframe.style.left = "0";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        container.appendChild(iframe);
     }
 
     function setupNavigation() {
         try {
             if (DB[animeId]) {
                 let flatList = [];
-                [cite_start]// Ordenar temporadas y episodios [cite: 112]
                 const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
                 seasons.forEach(sKey => {
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
@@ -593,6 +550,7 @@
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
+                
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
