@@ -1537,5 +1537,31 @@ const animes = [
         "aliases": [
             "Automata"
         ]
+    },
+    {
+        "id": 82,
+        "title": "TSUKIMICHI -Moonlit Fantasy-",
+        "img": "https://www.dropbox.com/scl/fi/e56h2qp9qlauoosf1h7hk/ImageToStl.com_1726486-1.avif?rlkey=ib1bvbj4pprxe9kvqcado5n9e&st=y5m4yxqn&raw=1",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Comedia",
+            "Fantasía",
+            "Harem",
+            "Isekai",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769140612459,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/v8bqukkk1hnrttxesdelv/aSdasd.avif?rlkey=6mvurri42mf2tl9vzjq7akzj9&st=3pyfls2p&raw=1",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 25",
+        "isFinal": true,
+        "aliases": [
+            "Tsuki ga Michibiku Isekai Dōchū"
+        ]
     }
 ];
