@@ -749,14 +749,32 @@
   <script src="script-index.js"></script>
   
   <script>
-    // --- PWA SERVICE WORKER ---
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then(r => console.log('SW Link: OK'))
-                .catch(e => console.log('SW Error:', e));
-        });
-    }
+// --- PWA SERVICE WORKER: AUTO-UPDATE ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('SW Registrado: OK');
+            
+            // ESTO ES LA CLAVE: 
+            // Cada vez que abras la app, busca si hay un sw.js nuevo en GitHub
+            registration.update(); 
+
+            // Si encuentra una actualización, recarga la página automáticamente
+            registration.onupdatefound = () => {
+                const installingWorker = registration.installing;
+                installingWorker.onstatechange = () => {
+                    if (installingWorker.state === 'installed') {
+                        if (navigator.serviceWorker.controller) {
+                            // Nueva actualización disponible -> Recargar
+                            console.log('Nueva versión encontrada. Recargando...');
+                            window.location.reload();
+                        }
+                    }
+                };
+            };
+        }).catch(e => console.log('SW Error:', e));
+    });
+}
 
     // --- PWA INSTALL HANDLER ---
     let deferredPrompt;
