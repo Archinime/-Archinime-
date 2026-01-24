@@ -31,7 +31,6 @@ function saveHistoryToStorage() {
 
 function checkForNewUpdates() {
     const updatedAnimes = animes.filter(a => a.lastUpdate && a.updateType);
-    
     // Ordenar animes por fecha (más reciente primero)
     updatedAnimes.sort((a, b) => b.lastUpdate - a.lastUpdate);
 
@@ -58,7 +57,7 @@ function checkForNewUpdates() {
                 isFinal: anime.isFinal || false
             };
             // Agregamos al inicio del historial
-            notificationsHistory.unshift(newNotif); 
+            notificationsHistory.unshift(newNotif);
             newItemsFound.push(newNotif);
         }
     });
@@ -74,9 +73,16 @@ function checkForNewUpdates() {
         }
 
         notificationQueue = newItemsFound;
-        showNextPopup();
+        
+        // MODIFICACIÓN: Ya no llamamos a showNextPopup() aquí inmediatamente.
+        // Esperamos a que la página cargue (ver index.html).
     }
 }
+
+// NUEVA FUNCIÓN: Se llama desde index.html cuando desaparece el loader
+window.startNotificationSequence = function() {
+    showNextPopup();
+};
 
 /* --- LÓGICA DEL POPUP (MODAL DE INICIO) --- */
 function showNextPopup() {
@@ -103,10 +109,10 @@ function createPopupHTML(notif) {
     if (notif.type.includes("ESTRENO")) badgeClass = "badge-estreno";
     else if (notif.type.includes("PRÓXIMAMENTE")) badgeClass = "badge-prox";
 
-    // Imagen de "FINAL" si aplica
+    // Imagen de "FINAL" si aplica (MODIFICADO A FINALIZADO)
     let finalImgHTML = '';
     if (notif.isFinal) {
-        finalImgHTML = `<div class="final-stamp">FINAL</div>`;
+        finalImgHTML = `<div class="final-stamp">FINALIZADO</div>`;
     }
 
     modal.innerHTML = `
@@ -138,7 +144,6 @@ function createPopupHTML(notif) {
             </div>
         </div>
     `;
-    
     document.body.appendChild(modal);
     // Pequeño delay para permitir la transición CSS
     setTimeout(() => modal.classList.add('show'), 50);
@@ -160,7 +165,8 @@ function closePopup() {
 
 function goToAnimeFromPopup(animeId, notifId) {
     markAsRead(notifId);
-    notificationQueue = []; // Limpiar cola si el usuario ya hizo clic
+    notificationQueue = [];
+    // Limpiar cola si el usuario ya hizo clic
     window.location.href = `anime-detail.html?id=${animeId}`;
 }
 
@@ -175,7 +181,6 @@ function toggleNotifMenu() {
         // Ocultar badge al abrir
         const badge = document.getElementById('notifBadge');
         if(badge) badge.style.display = 'none';
-        
         // Marcar todas las visibles como vistas (opcional, o hacerlo una por una)
         notificationsHistory.forEach(n => n.seen = true);
         saveHistoryToStorage();
@@ -201,14 +206,12 @@ function renderNotificationList() {
     if (!listContainer) return;
     
     listContainer.innerHTML = '';
-    
     if (notificationsHistory.length === 0) {
         listContainer.innerHTML = '<div class="empty-notif"><i class="fas fa-satellite-dish"></i><br>Sin novedades por ahora.</div>';
         return;
     }
 
     const sortedHistory = [...notificationsHistory].sort((a, b) => b.date - a.date);
-    
     sortedHistory.forEach(item => {
         const div = document.createElement('div');
         div.className = 'notif-item';
@@ -223,7 +226,7 @@ function renderNotificationList() {
         if (item.type.includes("ESTRENO")) typeColor = "var(--neon-pink)";
         else if (item.type.includes("PRÓXIMAMENTE")) typeColor = "var(--neon-yellow)";
 
-        let finalLabel = item.isFinal ? `<span class="tag-final">FINAL</span>` : "";
+        let finalLabel = item.isFinal ? `<span class="tag-final">FINALIZADO</span>` : "";
 
         div.innerHTML = `
             <div class="notif-img-box">
@@ -237,11 +240,9 @@ function renderNotificationList() {
                 <div class="n-meta">${infoString}</div>
             </div>
         `;
-        
         div.addEventListener('click', () => {
             window.location.href = `anime-detail.html?id=${item.animeId}`;
         });
-        
         listContainer.appendChild(div);
     });
 }
