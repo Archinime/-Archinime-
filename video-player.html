@@ -224,8 +224,7 @@
         transform: translateY(-3px);
     }
    
-    .btn-hidden { display: none !important;
-    }
+    .btn-hidden { display: none !important; }
 
     /* --- ESTILO PARA CONTENEDOR DE PUBLICIDAD --- */
     .ad-container {
@@ -242,47 +241,10 @@
         backdrop-filter: blur(5px);
     }
     
-    /* --- COMENTARIOS --- */
-    .comments-section { 
-        margin-top: 30px;
-        border-top: 1px solid rgba(255,255,255,0.1); 
-        padding-top: 40px;
-        width: 100%;
-    }
-
-    .comments-box {
-        background: rgba(0,0,0,0.85);
-        border-radius: 20px;
-        padding: 20px;
-        border: 1px solid rgba(255,255,255,0.05);
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    .comments-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 25px;
-        padding-bottom: 15px;
-        border-bottom: 2px solid var(--primary-color);
-    }
-
-    .comments-header h3 {
-        color: #fff;
-        margin: 0;
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
     /* MEDIA QUERIES (Móvil) */
     @media (max-width: 768px) {
-        .container { padding: 15px 10px;
-        }
-        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        .container { padding: 15px 10px; }
+        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .options {
             justify-content: flex-start;
             overflow-x: auto;
@@ -291,20 +253,16 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        .options::-webkit-scrollbar { display: none;
-        }
-        h1 { font-size: 1.3rem; margin: 20px 0;
-        }
+        .options::-webkit-scrollbar { display: none; }
+        h1 { font-size: 1.3rem; margin: 20px 0; }
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             width: 100%;
         }
-        #prevBtn { grid-column: 1;
-        order: 1; min-width: auto; }
-        #nextBtn { grid-column: 2; order: 2; min-width: auto;
-        }
+        #prevBtn { grid-column: 1; order: 1; min-width: auto; }
+        #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { 
             grid-column: 1 / span 2;
             order: 3; 
@@ -312,12 +270,8 @@
             margin-top: 5px;
             box-sizing: border-box;
         }
-        .btn { padding: 12px;
-        font-size: 0.9rem; }
-        .comments-header h3 { font-size: 1.2rem;
-        }
-        .ad-container { padding: 5px; margin: 25px 0;
-        }
+        .btn { padding: 12px; font-size: 0.9rem; }
+        .ad-container { padding: 5px; margin: 25px 0; }
     }
   </style>
 </head>
@@ -339,7 +293,7 @@
     </div>
 
     <div class="player-wrapper" id="playerContainer">
-      </div>
+    </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -355,61 +309,28 @@
 
     <div class="ad-container">
         <script type="text/javascript">
-         atOptions = {
+            atOptions = {
             'key' : '1f072201cddab551b2b65315f6c1643e',
             'format' : 'iframe',
             'height' : 90,
             'width' : 728,
             'params' : {}
-          };
+            };
         </script>
         <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
     </div>
 
     <div class="ad-container">
         <script type="text/javascript">
-          atOptions = {
+            atOptions = {
             'key' : '1904483365c7a7ab9f83e49d32b7d237',
             'format' : 'iframe',
             'height' : 60,
             'width' : 468,
             'params' : {}
-          };
+            };
         </script>
         <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
-    </div>
-
-    <div class="comments-section">
-        <div class="comments-box">
-            <div class="comments-header">
-                <span class="comment-icon">💬</span>
-                <h3>Comentarios</h3>
-            </div>
-            
-           <div id="disqus_thread"></div>
-            
-            <script>
-                var disqus_config = function () {
-                    const params = new URLSearchParams(window.location.search);
-                    const animeId = params.get('anime');
-                    const season = params.get('s');
-                    const episode = params.get('e');
-                    this.page.url = window.location.href;
-                    if(animeId && season && episode) {
-                        this.page.identifier = `${animeId}-s${season}-e${episode}`;
-                    } else {
-                        this.page.identifier = 'archinime-player-general';
-                    }
-                };
-                (function() { 
-                var d = document, s = d.createElement('script');
-                s.src = 'https://archinime.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-            </script>
-            <noscript>Activa JavaScript para ver los <a href="https://disqus.com/?ref_noscript">comentarios.</a></noscript>
-        </div>
     </div>
 
   </div>
@@ -421,8 +342,7 @@
     // LÓGICA DEL REPRODUCTOR (CORREGIDA Y ACTUALIZADA)
     // -----------------------------------------------------------
     
-    const DB = (typeof players !== 'undefined') ?
-    players : {};
+    const DB = (typeof players !== 'undefined') ? players : {};
     
     // Obtener parámetros URL
     const params = new URLSearchParams(location.search);
@@ -563,7 +483,6 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
-          
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
@@ -586,8 +505,5 @@
         }
     }
   </script>
-  
-  <script id="dsq-count-scr" src="//archinime.disqus.com/count.js" async></script>
-
 </body>
 </html>
