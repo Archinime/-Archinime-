@@ -5,6 +5,7 @@ let notificationsHistory = [];
 let isMenuOpen = false;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Verificar si existe la base de datos
     if (typeof animes === 'undefined') {
         console.warn('Sistema de Notificaciones: index-data.js no cargado.');
         return;
@@ -30,12 +31,13 @@ function saveHistoryToStorage() {
 
 function checkForNewUpdates() {
     const updatedAnimes = animes.filter(a => a.lastUpdate && a.updateType);
-    // Ordenar animes del JS por fecha para detectar los últimos
+    
+    // Ordenar animes por fecha (más reciente primero)
     updatedAnimes.sort((a, b) => b.lastUpdate - a.lastUpdate);
 
     let newItemsFound = [];
     updatedAnimes.forEach(anime => {
-        if (anime.updateType.includes("ACTUALIZACIÓN")) return;
+        if (anime.updateType.includes("ACTUALIZACIÓN")) return; // Ignorar actualizaciones menores si deseas
         if (anime.updateType === "Ninguna") return; 
 
         const notifId = `${anime.id}_${anime.lastUpdate}`;
@@ -51,19 +53,22 @@ function checkForNewUpdates() {
                 blockName: anime.latestBlockName || "",
                 epTitle: anime.latestEpTitle || "Nuevo Contenido", 
                 type: anime.updateType,
-                date: anime.lastUpdate, // Guardamos la fecha/timestamp
+                date: anime.lastUpdate, 
                 seen: false,
                 isFinal: anime.isFinal || false
             };
+            // Agregamos al inicio del historial
             notificationsHistory.unshift(newNotif); 
             newItemsFound.push(newNotif);
         }
     });
 
     if (newItemsFound.length > 0) {
+        // Limitar historial a 50 elementos
         if (notificationsHistory.length > 50) notificationsHistory = notificationsHistory.slice(0, 50);
         saveHistoryToStorage();
         
+        // Solo mostrar popup de los 5 más recientes para no saturar
         if (newItemsFound.length > 5) {
             newItemsFound = newItemsFound.slice(0, 5);
         }
@@ -73,6 +78,7 @@ function checkForNewUpdates() {
     }
 }
 
+/* --- LÓGICA DEL POPUP (MODAL DE INICIO) --- */
 function showNextPopup() {
     if (notificationQueue.length === 0) return;
     const notif = notificationQueue[0];
@@ -85,52 +91,56 @@ function createPopupHTML(notif) {
 
     const modal = document.createElement('div');
     modal.id = 'eventModal';
-
-    const indieMessage = "Entra ahora y disfruta de las últimas novedades ya disponibles";
+    
+    const indieMessage = "¡Ya disponible en la plataforma! Disfruta del estreno.";
     let infoString = notif.epTitle;
     if (notif.blockName && notif.blockName !== "Novedad") {
-        infoString = `${notif.blockName} - ${notif.epTitle}`;
+        infoString = `${notif.blockName} • ${notif.epTitle}`;
     }
 
-    let badgeStyle = "background: linear-gradient(135deg, #8c52ff 0%, #5e17eb 100%); color: #fff;";
-    
-    if (notif.type.includes("ESTRENO")) {
-        badgeStyle = "background: #ff0000; color: #fff; box-shadow: 0 0 10px rgba(255,0,0,0.5);";
-    } else if (notif.type.includes("PRÓXIMAMENTE")) {
-        badgeStyle = "background: #f1c40f; color: #000; box-shadow: 0 0 10px rgba(241, 196, 15, 0.5); font-weight:900;";
-    }
+    // Definir estilos de etiqueta según el tipo
+    let badgeClass = "badge-default";
+    if (notif.type.includes("ESTRENO")) badgeClass = "badge-estreno";
+    else if (notif.type.includes("PRÓXIMAMENTE")) badgeClass = "badge-prox";
 
+    // Imagen de "FINAL" si aplica
     let finalImgHTML = '';
     if (notif.isFinal) {
-        // Mantengo el ajuste de altura que te gustó (15px)
-        finalImgHTML = `<img src="final.png" alt="FINAL" style="position: absolute; left: 50%; bottom: 15px; transform: translateX(-50%); z-index: 100; width: 150px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)); pointer-events:none;">`;
+        finalImgHTML = `<div class="final-stamp">FINAL</div>`;
     }
 
     modal.innerHTML = `
         <div class="event-card">
-            <button class="event-close" onclick="closePopup()" title="Cerrar"><i class="fas fa-times"></i></button>
+            <button class="event-close" onclick="closePopup()" aria-label="Cerrar">
+                <i class="fas fa-times"></i>
+            </button>
+            
             <div class="event-visuals">
-                <img src="${notif.img}" class="bg-blur-cover">
-                <div class="covers-wrapper">
-                    <img src="${notif.img}" class="main-cover-img" title="${notif.title}">
-                    <img src="${notif.seasonCover}" class="season-cover-img" title="${notif.blockName || 'Novedad'}">
+                <div class="visual-bg" style="background-image: url('${notif.img}');"></div>
+                
+                <div class="covers-container">
+                    <img src="${notif.img}" class="cover-back" alt="Poster">
+                    <img src="${notif.seasonCover}" class="cover-front" alt="Season">
                 </div>
-                <div class="event-badge" style="${badgeStyle}">${notif.type}</div>
-                ${finalImgHTML} 
+                
+                <div class="event-type-badge ${badgeClass}">${notif.type}</div>
+                ${finalImgHTML}
             </div>
-            <div class="event-inner">
-                 <div class="event-details">
-                    <div class="event-title">${notif.title}</div>
-                    <div class="event-chapter-info">${infoString}</div>
-                    <p class="event-desc">${indieMessage}</p>
-                    <button class="event-btn" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')">
-                        <i class="fas fa-play"></i> VER AHORA
-                    </button>
-                </div>
+            
+            <div class="event-info">
+                <h2 class="event-title">${notif.title}</h2>
+                <div class="event-meta">${infoString}</div>
+                <p class="event-desc">${indieMessage}</p>
+                
+                <button class="event-btn" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')">
+                    <i class="fas fa-play"></i> VER AHORA
+                </button>
             </div>
         </div>
     `;
+    
     document.body.appendChild(modal);
+    // Pequeño delay para permitir la transición CSS
     setTimeout(() => modal.classList.add('show'), 50);
 }
 
@@ -140,8 +150,9 @@ function closePopup() {
         modal.classList.remove('show');
         setTimeout(() => {
             modal.remove();
+            // Marcar como visto el actual y pasar al siguiente
             const processed = notificationQueue.shift();
-            markAsRead(processed.notifId);
+            if (processed) markAsRead(processed.notifId);
             showNextPopup();
         }, 300);
     }
@@ -149,71 +160,88 @@ function closePopup() {
 
 function goToAnimeFromPopup(animeId, notifId) {
     markAsRead(notifId);
-    notificationQueue = [];
+    notificationQueue = []; // Limpiar cola si el usuario ya hizo clic
     window.location.href = `anime-detail.html?id=${animeId}`;
 }
 
+/* --- LÓGICA DEL MENÚ DE NOTIFICACIONES (CAMPANA) --- */
 function toggleNotifMenu() {
     const menu = document.getElementById('notifMenu');
     isMenuOpen = !isMenuOpen;
+    
     if (isMenuOpen) {
         menu.classList.add('active');
-        renderNotificationList(); // Al abrir, renderiza con el nuevo orden
-        document.getElementById('notifBadge').style.display = 'none';
+        renderNotificationList();
+        // Ocultar badge al abrir
+        const badge = document.getElementById('notifBadge');
+        if(badge) badge.style.display = 'none';
+        
+        // Marcar todas las visibles como vistas (opcional, o hacerlo una por una)
+        notificationsHistory.forEach(n => n.seen = true);
+        saveHistoryToStorage();
+        
     } else {
         menu.classList.remove('active');
     }
 }
 
+// Cerrar menú si se hace clic fuera
 document.addEventListener('click', (e) => {
     const wrapper = document.querySelector('.notif-wrapper');
+    const menu = document.getElementById('notifMenu');
+    // Si el clic no fue dentro del wrapper y el menú está abierto
     if (wrapper && !wrapper.contains(e.target) && isMenuOpen) {
         isMenuOpen = false;
-        document.getElementById('notifMenu').classList.remove('active');
+        if(menu) menu.classList.remove('active');
     }
 });
 
 function renderNotificationList() {
     const listContainer = document.getElementById('notifList');
+    if (!listContainer) return;
+    
     listContainer.innerHTML = '';
     
     if (notificationsHistory.length === 0) {
-        listContainer.innerHTML = '<div class="empty-notif">Sin novedades por ahora.</div>';
+        listContainer.innerHTML = '<div class="empty-notif"><i class="fas fa-satellite-dish"></i><br>Sin novedades por ahora.</div>';
         return;
     }
 
-    // --- CAMBIO AQUÍ: Ordenar por fecha descendente (Más reciente primero) ---
     const sortedHistory = [...notificationsHistory].sort((a, b) => b.date - a.date);
-
+    
     sortedHistory.forEach(item => {
         const div = document.createElement('div');
         div.className = 'notif-item';
         
         let infoString = item.epTitle;
         if (item.blockName && item.blockName !== "Novedad") {
-            infoString = `${item.blockName} - ${item.epTitle}`;
+            infoString = `${item.blockName}`;
         }
 
-        let smallBadgeStyle = "color: #8c52ff;";
-        if (item.type.includes("ESTRENO")) {
-            smallBadgeStyle = "color: #ff4757; font-weight: 800;";
-        } else if (item.type.includes("PRÓXIMAMENTE")) {
-            smallBadgeStyle = "color: #f1c40f; font-weight: 800;";
-        }
+        // Color del texto según tipo
+        let typeColor = "var(--neon-purple)";
+        if (item.type.includes("ESTRENO")) typeColor = "var(--neon-pink)";
+        else if (item.type.includes("PRÓXIMAMENTE")) typeColor = "var(--neon-yellow)";
 
-        let finalLabel = "";
-        if (item.isFinal) {
-            finalLabel = `<span style="color: #ff0000; font-weight: 800; margin-left: 6px;">FINAL</span>`;
-        }
+        let finalLabel = item.isFinal ? `<span class="tag-final">FINAL</span>` : "";
 
         div.innerHTML = `
-            <img src="${item.seasonCover}"> 
-            <div class="notif-item-content" onclick="window.location.href='anime-detail.html?id=${item.animeId}'">
-                <div class="notif-item-title">${item.title}</div>
-                 <div class="notif-item-info" style="${smallBadgeStyle}">${item.type}${finalLabel}</div>
-                <div class="notif-item-date" style="color:#aaa; font-style:italic;">${infoString}</div>
+            <div class="notif-img-box">
+                <img src="${item.seasonCover}" alt="cover">
+            </div>
+            <div class="notif-content">
+                <div class="notif-header-line">
+                    <span class="n-title">${item.title}</span>
+                </div>
+                <div class="n-type" style="color:${typeColor}">${item.type} ${finalLabel}</div>
+                <div class="n-meta">${infoString}</div>
             </div>
         `;
+        
+        div.addEventListener('click', () => {
+            window.location.href = `anime-detail.html?id=${item.animeId}`;
+        });
+        
         listContainer.appendChild(div);
     });
 }
@@ -221,10 +249,14 @@ function renderNotificationList() {
 function updateBellBadge() {
     const unread = notificationsHistory.filter(n => !n.seen).length;
     const badge = document.getElementById('notifBadge');
-    if (unread > 0) {
-        badge.style.display = 'block';
-    } else {
-        badge.style.display = 'none';
+    if (badge) {
+        if (unread > 0) {
+            badge.style.display = 'block';
+            badge.textContent = unread > 9 ? '+9' : unread; // Opcional: poner número
+            // Si prefieres solo punto: badge.textContent = '';
+        } else {
+            badge.style.display = 'none';
+        }
     }
 }
 

@@ -1,65 +1,630 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Archinime</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archinime OS | Next Gen Platform</title>
   
   <link rel="icon" href="Logo_Archinime.avif" type="image/png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#8c52ff">
-  
-  <link rel="preload" as="image" href="videoframe.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles-index.css">
+
+<style>
+  /* --- VARIABLES CYBERPUNK --- */
+  :root {
+    --neon-cyan: #00f3ff;
+    --neon-purple: #bc13fe;
+    --neon-pink: #ff0055;
+    --neon-yellow: #f1c40f;
+    --dark-bg: #050505;
+    --glass-bg: rgba(10, 12, 16, 0.75);
+    --text: #ffffff;
+    --header-height: 72px;
+  }
+
+  /* --- RESET & BASICOS --- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body { 
+    background-color: var(--dark-bg);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- SCROLLBAR CYBERPUNK --- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #020202; }
+  ::-webkit-scrollbar-thumb { 
+    background: linear-gradient(180deg, var(--neon-purple), var(--neon-cyan)); 
+    border-radius: 4px;
+  }
+
+  /* --- LOADER --- */
+  #page-loader {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000; z-index: 99999;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    transition: opacity 0.5s ease-out, visibility 0.5s;
+  }
+  .loader-glitch {
+    font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: white;
+    text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
+    animation: glitch 0.8s infinite;
+    letter-spacing: 4px;
+  }
+  .loader-line {
+    width: 0; height: 3px; background: var(--neon-cyan); margin-top: 15px;
+    box-shadow: 0 0 10px var(--neon-cyan);
+    animation: loadLine 1.5s forwards ease-in-out;
+  }
+
+  /* --- FONDO (Video y Overlay) --- */
+  #bg-video {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: -5; opacity: 0;
+    filter: contrast(1.1) brightness(0.7);
+    transition: opacity 1.2s ease;
+  }
+  #overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(188, 19, 254, 0.08) 0%, rgba(0,0,0,0.85) 90%);
+    z-index: -4; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  #scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5));
+    background-size: 100% 3px;
+    z-index: -3; pointer-events: none; opacity: 0.15;
+  }
+
+  /* --- NAVBAR CYBERPUNK --- */
+  .cyber-nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 10px 3%;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: 0.3s;
+    height: var(--header-height);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .cyber-nav::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), transparent);
+    background-size: 200% 100%;
+    animation: borderFlow 4s linear infinite;
+    opacity: 0.7;
+  }
+
+  /* LOGO */
+  .nav-logo { 
+    display: flex; align-items: center; gap: 12px; 
+    text-decoration: none; cursor: pointer;
+  }
+  .nav-logo img { 
+    height: 42px; width: 42px; object-fit: contain; border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(188, 19, 254, 0.3);
+    transition: transform 0.3s;
+  }
+  .nav-logo:hover img { transform: rotate(10deg) scale(1.1); }
+  
+  .nav-logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900; 
+    font-size: 1.4rem; letter-spacing: 1px;
+    background: linear-gradient(90deg, #fff, var(--neon-cyan), #fff);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+  }
+
+  /* BUSCADOR */
+  .search-wrapper { position: relative; margin: 0 25px; flex-grow: 1; max-width: 450px; }
+  .search-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 10px 20px 10px 45px;
+    color: white; outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Poppins'; font-size: 0.9rem; letter-spacing: 0.5px;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+  .search-input:focus {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.15), inset 0 0 10px rgba(0, 243, 255, 0.05);
+    transform: scale(1.02);
+  }
+  .search-icon { 
+    position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+    color: rgba(255,255,255,0.5); transition: 0.3s; font-size: 0.9rem;
+  }
+  .search-input:focus + .search-icon { color: var(--neon-cyan); }
+
+  /* BOTONES DE ACCIÓN */
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  
+  .cyber-btn-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #ccc; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease; position: relative;
+    font-size: 1.1rem; overflow: hidden;
+  }
+  .cyber-btn-icon::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
+    background: var(--neon-purple); z-index: -1; transition: 0.3s; opacity: 0.2;
+  }
+  .cyber-btn-icon:hover {
+    color: white; border-color: var(--neon-purple);
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+    transform: translateY(-2px);
+  }
+  .cyber-btn-icon:hover::before { width: 100%; }
+  
+  /* Botón Instalar (PWA) */
+  #installBtn { display: none; }
+  .install-pulse { 
+    animation: pulseBorder 2s infinite; 
+    color: var(--neon-cyan); border-color: rgba(0, 243, 255, 0.3);
+  }
+
+  /* =========================================
+     NOTIFICACIONES (CORREGIDO PARA EVITAR DISTORSIÓN)
+     ========================================= */
+  .notif-wrapper { position: relative; }
+
+  .notif-badge {
+    position: absolute; top: -3px; right: -3px;
+    background: var(--neon-pink);
+    min-width: 10px; height: 10px; padding: 0 3px; font-size: 9px;
+    border-radius: 10px; box-shadow: 0 0 8px var(--neon-pink);
+    border: 1px solid #000; color: #fff; display: flex; align-items: center; justify-content: center;
+  }
+
+  .notif-dropdown {
+    position: absolute; top: 55px; right: -10px;
+    width: 360px; /* Ancho suficiente */
+    background: #0f0f13; /* Fondo sólido para legibilidad */
+    border: 1px solid var(--neon-purple); border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+    opacity: 0; pointer-events: none; transform: translateY(-10px) scale(0.95);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2000; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .notif-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+
+  .notif-header {
+    padding: 12px; background: rgba(188, 19, 254, 0.1);
+    color: var(--neon-cyan); font-family: 'Orbitron'; font-size: 0.85rem;
+    text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: 2px;
+  }
+
+  .notif-list { max-height: 400px; overflow-y: auto; }
+  .notif-list::-webkit-scrollbar { width: 5px; }
+  .notif-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+  .notif-item {
+    display: flex; gap: 15px; padding: 12px 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s; cursor: pointer; position: relative;
+    align-items: center;
+  }
+  .notif-item:hover { background: rgba(255,255,255,0.05); }
+
+  /* CAJA DE IMAGEN CORREGIDA */
+  .notif-img-box {
+    width: 50px; height: 70px; flex-shrink: 0;
+    border-radius: 4px; overflow: hidden; position: relative;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .notif-img-box img {
+    width: 100%; height: 100%; object-fit: cover; /* Evita distorsión */
+  }
+
+  .notif-content { flex: 1; min-width: 0; }
+  .notif-header-line { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; }
+  .n-title {
+    font-size: 0.9rem; font-weight: 600; color: white;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+  }
+  .n-type { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+  .n-meta { font-size: 0.75rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  .tag-final { background: #ff0000; color: white; padding: 1px 4px; border-radius: 2px; font-size: 0.6em; }
+  .empty-notif { padding: 30px; text-align: center; color: #666; font-style: italic; }
+
+  /* =======================================================
+     POPUP SELECT MÓVIL (Corrección: Estilo Cyberpunk añadido)
+     ======================================================= */
+  .mobile-select-popup {
+      position: fixed; /* Fixed es más seguro para asegurar que flote sobre todo */
+      z-index: 10000;
+      background: #0b0c10;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.95);
+      max-height: 250px;
+      min-width: 160px;
+      overflow-y: auto;
+      padding: 5px;
+      font-family: 'Poppins', sans-serif;
+      animation: fadeInPopup 0.2s ease-out;
+  }
+  @keyframes fadeInPopup { from{opacity:0; transform: translateY(5px);} to{opacity:1; transform:translateY(0);} }
+
+  .mobile-select-popup .opt {
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin: 2px 0;
+      color: #ddd;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+  }
+  .mobile-select-popup .opt:hover {
+      background: rgba(255,255,255,0.05);
+  }
+  .mobile-select-popup .opt[aria-selected="true"],
+  .mobile-select-popup .opt.selected {
+      background: rgba(188, 19, 254, 0.15);
+      color: white;
+      font-weight: 700;
+      border-left: 2px solid var(--neon-purple);
+  }
+  
+  /* Scrollbar para el popup móvil */
+  .mobile-select-popup::-webkit-scrollbar { width: 4px; }
+  .mobile-select-popup::-webkit-scrollbar-thumb { background: var(--neon-purple); border-radius: 2px; }
+
+  /* --- BARRA DE FILTROS --- */
+  .controls-container {
+    padding: 15px 3%;
+    display: flex;
+    gap: 15px; flex-wrap: wrap; justify-content: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+    margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  
+  select {
+    background: rgba(10, 12, 16, 0.8);
+    color: #bbb;
+    border: 1px solid rgba(188, 19, 254, 0.3);
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.5px;
+    cursor: pointer; outline: none;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bc13fe' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 30px;
+    min-width: 140px;
+  }
+  select:hover, select:focus {
+    color: white;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f3ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  }
+
+  /* --- GRID DE ANIME --- */
+  .container { max-width: 1600px; margin: 0 auto; padding: 10px 20px 80px; }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+  }
+
+  /* TARJETAS 3D */
+  .card {
+    position: relative;
+    border-radius: 12px; overflow: hidden;
+    aspect-ratio: 2/3; cursor: pointer;
+    transition: transform 0.1s ease-out, box-shadow 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    background: #111;
+    transform-style: preserve-3d;
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    z-index: 2; pointer-events: none; transition: 0.3s;
+  }
+  .card:hover { z-index: 10; }
+  .card:hover::before {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.2) inset;
+  }
+
+  .card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .card:hover img { transform: scale(1.08); }
+
+  .card .info {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, #000 0%, rgba(5,5,5,0.95) 60%, transparent 100%);
+    padding: 70px 15px 15px;
+    display: flex; flex-direction: column; gap: 4px;
+    z-index: 5;
+    transform: translateY(10px); opacity: 0.9;
+    transition: 0.3s;
+  }
+  .card:hover .info { transform: translateY(0); opacity: 1; }
+
+  .card .info strong {
+    font-size: 1rem; color: white; line-height: 1.2;
+    text-shadow: 0 2px 4px black; font-weight: 700;
+  }
+  .card .info span {
+    font-size: 0.75rem; color: var(--neon-cyan);
+    font-weight: 600;
+    font-family: 'Orbitron'; letter-spacing: 1px;
+    display: inline-block; margin-top: 5px;
+  }
+
+  /* --- CHROMA / STAGE --- */
+  .stage { pointer-events: none; position: fixed; inset: 0; z-index: 8; }
+  #fgContainer {
+    position: absolute; pointer-events: auto;
+    display: flex; align-items: center; justify-content: center;
+    right: 20px; bottom: 20px; overflow: hidden;
+    background: transparent; border-radius: 10px;
+    filter: drop-shadow(0 0 10px rgba(0,243,255,0.2));
+  }
+  #fgCanvas, #fgVideo { width: 100%; height: 100%; display: block; object-fit: contain; }
+  
+  .play-overlay { 
+    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+    z-index: 900; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  }
+  .play-btn {
+    padding: 15px 40px; border-radius: 4px;
+    border: 1px solid var(--neon-cyan);
+    background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); 
+    font-weight: 800; font-family: 'Orbitron'; letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    transition: 0.3s; text-transform: uppercase;
+  }
+  .play-btn:hover {
+    background: var(--neon-cyan); color: #000;
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.6);
+    transform: scale(1.05);
+  }
+
+  /* =========================================
+     MODAL DE ESTRENO/POPUP (CORREGIDO)
+     ========================================= */
+  #eventModal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
+    z-index: 99999; display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none; transition: 0.4s; padding: 20px;
+  }
+  #eventModal.show { opacity: 1; pointer-events: auto; }
+
+  .event-card {
+    background: #0b0c10; width: 100%; max-width: 400px; /* Ancho fijo */
+    border: 1px solid var(--neon-cyan); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 0 60px rgba(0, 243, 255, 0.15);
+    transform: scale(0.95) translateY(20px);
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex; flex-direction: column; position: relative;
+  }
+  #eventModal.show .event-card { transform: scale(1) translateY(0); }
+
+  .event-visuals {
+    position: relative; width: 100%; height: 240px;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    background: #000;
+  }
+  /* Fondo borroso para ambiente */
+  .visual-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: center;
+    filter: blur(15px) brightness(0.4); transform: scale(1.1);
+  }
+
+  .covers-container {
+    position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: center;
+    height: 100%; padding-bottom: 20px;
+  }
+  /* Portadas centradas */
+  .cover-back {
+    width: 100px; height: 150px; object-fit: cover;
+    border-radius: 6px; opacity: 0.7; transform: translateX(20px) rotate(-5deg) scale(0.9);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+  .cover-front {
+    width: 120px; height: 180px; object-fit: cover;
+    border-radius: 8px; border: 2px solid var(--neon-cyan);
+    transform: translateX(-20px) rotate(3deg); z-index: 5;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+
+  .event-type-badge {
+    position: absolute; top: 15px; left: 15px; z-index: 10;
+    padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6); text-transform: uppercase;
+  }
+  .badge-default { background: linear-gradient(135deg, #8c52ff, #5e17eb); color: white; }
+  .badge-estreno { background: #ff0055; color: white; box-shadow: 0 0 10px rgba(255, 0, 85, 0.4); }
+  .badge-prox { background: var(--neon-yellow); color: black; }
+
+  .final-stamp {
+    position: absolute; bottom: 10px; right: 10px; z-index: 20;
+    color: red; border: 2px solid red; padding: 2px 8px;
+    font-weight: 900; font-size: 1rem; transform: rotate(-15deg);
+    text-shadow: 0 0 5px black; background: rgba(0,0,0,0.5);
+  }
+
+  .event-close {
+    position: absolute; top: 15px; right: 15px; z-index: 50;
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3); color: white;
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: 0.3s;
+  }
+  .event-close:hover { background: var(--neon-pink); border-color: var(--neon-pink); transform: rotate(90deg); }
+
+  .event-info {
+    background: #111; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative; z-index: 5;
+  }
+  .event-title {
+    font-size: 1.3rem; font-weight: 800; color: white; margin-bottom: 5px; line-height: 1.2;
+  }
+  .event-meta {
+    color: var(--neon-cyan); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px;
+  }
+  .event-desc {
+    color: #999; font-size: 0.85rem; font-style: italic; margin-bottom: 20px;
+  }
+  .event-btn {
+    background: white; color: black; border: none; padding: 12px; width: 100%;
+    border-radius: 30px; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: 0.3s;
+  }
+  .event-btn:hover {
+    background: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan); transform: scale(1.02);
+  }
+
+  /* --- MODAL iOS --- */
+  .ios-modal { 
+    display: none; position: fixed;
+    bottom: 30px; left: 50%; transform: translateX(-50%); 
+    width: 90%; max-width: 340px; background: rgba(20,20,25,0.95); 
+    border: 1px solid #444; border-radius: 16px; padding: 25px;
+    z-index: 10000; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  }
+  .ios-content p { color: #ddd; margin: 10px 0; font-size: 0.95rem; }
+  .ios-content i { color: var(--neon-cyan); }
+  .ios-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #888; cursor: pointer; }
+
+  /* --- ANIMACIONES --- */
+  @keyframes glitch {
+    0% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan); }
+    20% { text-shadow: -2px 2px 0px var(--neon-pink), 2px -2px 0px var(--neon-cyan); }
+    40% { text-shadow: 2px -2px 0px var(--neon-pink), -2px 2px 0px var(--neon-cyan); }
+    60% { text-shadow: -2px -2px 0px var(--neon-pink), 2px 2px 0px var(--neon-cyan); }
+    80% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan); }
+    100% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan); }
+  }
+  @keyframes loadLine { to { width: 100%; } }
+  @keyframes borderFlow { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+  @keyframes pulseBorder {
+    0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 768px) {
+    .cyber-nav { flex-wrap: wrap; height: auto; padding: 12px 15px; gap: 10px; }
+    .nav-logo { order: 1; flex: 1; }
+    .nav-actions { order: 2; gap: 8px; }
+    .search-wrapper { order: 3; width: 100%; max-width: 100%; margin: 5px 0 0; }
+    .search-input { padding: 8px 15px 8px 40px; font-size: 0.85rem; }
+    
+    .controls-container { padding: 10px 15px; gap: 8px; justify-content: space-between; }
+    select { flex: 1 1 45%; min-width: 0; font-size: 0.75rem; padding: 6px 10px; }
+    
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 10px 80px; }
+    
+    /* Ajuste Dropdown móvil */
+    .notif-dropdown { position: fixed; top: 65px; left: 10px; right: 10px; width: auto; max-width: none; }
+    
+    .card .info { padding: 40px 8px 8px; }
+    .card .info strong { font-size: 0.85rem; }
+    .card .info span { font-size: 0.65rem; }
+  }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .nav-logo-text { font-size: 1.1rem; }
+    .event-card { width: 95%; }
+  }
+
+</style>
 </head>
 <body>
 
+  <div id="page-loader">
+    <div class="loader-glitch">SYSTEM_OS_V2</div>
+    <div style="width: 220px; height: 3px; background: #222; margin-top: 15px; overflow: hidden; border-radius: 2px;">
+      <div class="loader-line"></div>
+    </div>
+  </div>
+
   <video id="bg-video" poster="galaxia-morado1.avif" autoplay muted loop playsinline preload="metadata">
     <source src="galaxia.mp4" type="video/mp4">
-    Tu navegador no soporta vídeo.
-</video>
+  </video>
   <div id="overlay" aria-hidden="true"></div>
+  <div id="scanlines"></div>
+  <audio id="bg-music"></audio> 
 
-  <audio id="bg-music" autoplay></audio>
+  <nav class="cyber-nav">
+    <a href="https://archinime.github.io/-Archinime-/Archinime%20CMS%20-%20Creador.html" target="_blank" class="nav-logo" title="Ir al Creador CMS">
+      <img id="logo" src="Logo_Archinime.avif" alt="Logo Archinime">
+      <span class="nav-logo-text">ARCHINIME</span>
+    </a>
 
-  <header>
-    <h1>
-      <img id="logo" src="Logo_Archinime.avif" alt="Logo Archinime" onclick="openInNewTab('https://archinime.github.io/-Archinime-/Archinime%20CMS%20-%20Creador.html')" title="Ir al Creador CMS">
-      Archinime
-      <span class="social-inline" id="social-inline" title="Síguenos">
-        <button id="youtube-btn" type="button" aria-label="Abrir YouTube en nueva pestaña" onclick="(function(e){ e.stopPropagation(); openInNewTab('https://www.youtube.com/@Archinime-k2g'); })(event)">
-          <img src="youtube.avif" alt="YouTube">
-        </button>
-      </span>
-    </h1>
-
-    <div class="header-actions">
-  
-        <button id="installBtn" class="nav-icon-btn install-pulse" style="display:none;" title="Instalar App">
-            <i class="fas fa-download"></i>
-        </button>
-
-        <div class="notif-wrapper">
-            <button id="notifBtn" class="nav-icon-btn" onclick="toggleNotifMenu()">
-                <i class="fas fa-bell"></i>
-                <span id="notifBadge" class="notif-badge" style="display:none"></span>
-            </button>
-    
-            <div id="notifMenu" class="notif-dropdown">
-                <div class="notif-header">
-                    <span style="width: 100%; text-align: center;">Notificaciones</span>
-                </div>
-                <div id="notifList" class="notif-list">
-                    <div class="empty-notif">Sin novedades por ahora.</div>
-                </div>
-            </div>
-        </div>
+    <div class="search-wrapper">
+      <input id="search" class="search-input" placeholder="Acceder a base de datos..." aria-label="Buscar anime">
+      <i class="fas fa-search search-icon"></i>
     </div>
 
-    <div class="controls" id="controls">
-      <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
-        <option value="">Todos los géneros</option>
+    <div class="nav-actions header-actions">
+      <button id="installBtn" class="cyber-btn-icon install-pulse" title="Instalar App">
+        <i class="fas fa-download"></i>
+      </button>
+
+      <div class="notif-wrapper">
+        <button id="notifBtn" class="cyber-btn-icon" onclick="toggleNotifMenu()" title="Centro de Control">
+           <i class="fas fa-bell"></i>
+          <span id="notifBadge" class="notif-badge" style="display:none"></span>
+        </button>
+        
+        <div id="notifMenu" class="notif-dropdown">
+            <div class="notif-header">
+                <i class="fas fa-network-wired"></i> TRANSMISIONES
+            </div>
+            <div id="notifList" class="notif-list">
+                <div class="empty-notif" style="padding:20px; text-align:center; color:#666;">Buscando señal...</div>
+            </div>
+        </div>
+      </div>
+      
+      <button class="cyber-btn-icon" onclick="window.open('https://www.youtube.com/@Archinime-k2g', '_blank')" title="YouTube">
+        <img src="youtube.avif" alt="YT" style="width:20px; border-radius:50%; opacity:0.8;">
+      </button>
+    </div>
+  </nav>
+
+  <div class="controls-container controls" id="controls">
+    <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
+        <option value="">📂 TODOS LOS DATOS</option>
         <option>Acción</option>
         <option>Animación</option>
         <option>Aventura</option>
@@ -120,31 +685,29 @@
         <option>Tragedia</option>
         <option>Yaoi</option>
         <option>Yuri</option>
-      </select>
+    </select>
 
-      <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
-        <option value="">Todas las demografías</option>
-        <option>Josei</option>
-        <option>Kodomo</option>
-        <option>Seijin</option>
-        <option>Seinen</option>
-        <option>Shōjo</option>
-        <option>Shōnen</option>
-      </select>
+    <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
+      <option value="">👥 DEMOGRAFÍA</option>
+      <option>Josei</option>
+      <option>Kodomo</option>
+      <option>Seijin</option>
+      <option>Seinen</option>
+      <option>Shōjo</option>
+      <option>Shōnen</option>
+    </select>
 
-      <select id="rating-select" onchange="filtro()" aria-label="Seleccionar valoración">
-        <option value="">⭐ Todas</option>
-        <option value="excellent">⭐ Excelente (4.8+)</option>
-        <option value="good">⭐ Buena (4.6+)</option>
-        <option value="regular">⭐ Regular (&lt;4.5)</option>
-      </select>
-
-      <input id="search" placeholder="🔍 Buscar anime…" oninput="debouncedFiltro()" aria-label="Buscar anime">
-    </div>
-  </header>
+    <select id="rating-select" onchange="filtro()" aria-label="Seleccionar valoración">
+      <option value="">⭐ RANKING GLOBAL</option>
+      <option value="excellent">S-TIER (4.8+)</option>
+      <option value="good">A-TIER (4.6+)</option>
+      <option value="regular">B-TIER (&lt;4.5)</option>
+    </select>
+  </div>
 
   <main class="container">
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid">
+      </div>
   </main>
 
   <div class="stage" aria-hidden="true">
@@ -152,47 +715,126 @@
       <canvas id="fgCanvas"></canvas>
       <video id="fgVideo" muted loop playsinline></video>
     </div>
-
-    <div class="play-overlay" id="playOverlay" style="display:none;">
-      <button class="play-btn" id="playBtn">Pulsar para iniciar</button>
+    <div class="play-overlay" id="playOverlay">
+      <button class="play-btn" id="playBtn">▶ INICIAR ENLACE</button>
     </div>
   </div>
 
-  <div id="decorations" aria-hidden="true">
-    <svg id="star-template" class="shooting-star decor-hidden-mobile" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
-      <g>
-        <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.98"></circle>
-        <rect class="shooting-tail" x="8" y="3" width="160" height="4"></rect>
-      </g>
-    </svg>
+  <div id="decorations" aria-hidden="true" style="position:fixed; inset:0; pointer-events:none; z-index:1;">
+     <svg id="star-template" class="shooting-star" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.9"></circle>
+        <rect class="shooting-tail" x="8" y="3" width="100" height="2"></rect>
+     </svg>
   </div>
 
   <div id="iosInstallModal" class="ios-modal">
       <div class="ios-content">
           <span class="ios-close" onclick="closeIosModal()">&times;</span>
-          <p>Para instalar <strong>Archinime</strong> en tu iPhone/iPad:</p>
-          <p>1. Pulsa el botón <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
-          <p>2. Selecciona <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
+          <h3 style="color:white; margin-bottom:10px;">Instalar Sistema</h3>
+          <p>Para añadir <strong>Archinime</strong> a iOS:</p>
+          <p>1. Toca <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
+          <p>2. Elige <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
       </div>
   </div>
 
-<script>
-  var version = new Date().getTime();
-  document.write('<script src="index-data.js?v=' + version + '"><\/script>');
-</script>
+  <script>
+    var version = new Date().getTime();
+    document.write('<script src="index-data.js?v=' + version + '"><\/script>');
+  </script>
 
-<script src="animaciones.js"></script>
-<script src="musica_fondo.js"></script>
-<script src="notification-system.js"></script>
-<script src="script-index.js"></script>
-      // Registrar Service Worker
-      if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-              navigator.serviceWorker.register('sw.js')
-                  .then(registration => console.log('SW registrado: ', registration.scope))
-                  .catch(err => console.log('SW fallo: ', err));
+  <script src="animaciones.js"></script>
+  <script src="musica_fondo.js"></script>
+  <script src="notification-system.js"></script>
+  <script src="script-index.js"></script>
+  
+  <script>
+    // --- PWA SERVICE WORKER ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(r => console.log('SW Link: OK'))
+                .catch(e => console.log('SW Error:', e));
+        });
+    }
+
+    // --- PWA INSTALL HANDLER ---
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+    const iosModal = document.getElementById('iosInstallModal');
+    
+    const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+    const isMobile = () => window.matchMedia('(max-width: 780px)').matches;
+
+    function checkInstallVisibility() {
+        // Mostrar solo en móvil si no está instalada
+        if (isMobile() && !isInStandaloneMode()) {
+            installBtn.style.display = 'flex';
+        } else {
+            installBtn.style.display = 'none';
+        }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      checkInstallVisibility();
+    });
+
+    installBtn.addEventListener('click', () => {
+        if (isIos()) {
+            iosModal.style.display = 'block';
+        } else if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((res) => {
+                deferredPrompt = null;
+            });
+        } else {
+            alert("App ya instalada o no soportada en este navegador.");
+        }
+    });
+
+    function closeIosModal() { iosModal.style.display = 'none'; }
+    window.addEventListener('DOMContentLoaded', checkInstallVisibility);
+    window.addEventListener('resize', checkInstallVisibility);
+
+    // --- LOADER ---
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('page-loader');
+      setTimeout(() => { 
+        loader.style.opacity = '0'; 
+        setTimeout(() => loader.style.visibility = 'hidden', 500);
+      }, 800);
+    });
+
+    // --- EFECTO TILT 3D PARA CARDS DINÁMICAS ---
+    const gridObserver = new MutationObserver(() => {
+       const cards = document.querySelectorAll('.card');
+       cards.forEach(card => {
+          if(card.dataset.tiltInit) return;
+          card.dataset.tiltInit = "true";
+          
+          card.addEventListener('mousemove', (e) => {
+             const rect = card.getBoundingClientRect();
+             const x = e.clientX - rect.left;
+             const y = e.clientY - rect.top;
+             const centerX = rect.width / 2;
+             const centerY = rect.height / 2;
+             // Limitamos rotación a 8deg para suavidad
+             const rotateX = ((y - centerY) / centerY) * -8;
+             const rotateY = ((x - centerX) / centerX) * 8;
+             
+             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
           });
-      }
+          
+          card.addEventListener('mouseleave', () => {
+             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+          });
+       });
+    });
+    
+    const gridEl = document.getElementById('grid');
+    if(gridEl) gridObserver.observe(gridEl, { childList: true });
   </script>
 
 </body>
