@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Archinime OS | Next Gen Platform</title>
   
   <link rel="icon" href="Logo_Archinime.avif" type="image/png">
@@ -136,7 +136,6 @@
   .nav-logo-text {
     font-family: 'Orbitron', sans-serif; font-weight: 900; 
     font-size: 1.4rem; letter-spacing: 1px;
-    
     /* MODIFICACIÓN: Gradiente multicolor brillante */
     background: linear-gradient(
         90deg, 
@@ -155,14 +154,17 @@
     background-size: 400% 400%;
     animation: rainbowNeon 5s ease infinite; /* Animación de movimiento */
 
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   }
 
   /* BUSCADOR */
-  .search-wrapper { position: relative; margin: 0 25px; flex-grow: 1; max-width: 450px; }
+  .search-wrapper { position: relative;
+    margin: 0 25px; flex-grow: 1; max-width: 450px; }
   .search-input {
-    width: 100%; background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255,255,255,0.15); border-radius: 4px;
     padding: 10px 20px 10px 45px; color: white; outline: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -247,7 +249,8 @@
 
   .notif-list { max-height: 400px; overflow-y: auto; }
   .notif-list::-webkit-scrollbar { width: 5px; }
-  .notif-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+  .notif-list::-webkit-scrollbar-thumb { background: #333;
+    border-radius: 4px; }
 
   .notif-item {
     display: flex; gap: 15px; padding: 12px 15px;
@@ -280,12 +283,15 @@
   .tag-final { background: #ff0000; color: white; padding: 1px 4px; border-radius: 2px; font-size: 0.55em; }
   .empty-notif { padding: 30px; text-align: center; color: #666; font-style: italic; }
 
-  /* --- BARRA DE FILTROS --- */
+  /* --- BARRA DE FILTROS (FIXED: Added z-index) --- */
   .controls-container {
     padding: 15px 3%; display: flex;
     gap: 15px; flex-wrap: wrap; justify-content: center;
     background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
     margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.03);
+    /* SOLUCIÓN AL PROBLEMA DE CAPAS EN MÓVIL: */
+    position: relative;
+    z-index: 500;
   }
   
   select {
@@ -308,7 +314,8 @@
   }
 
   /* --- GRID DE ANIME --- */
-  .container { max-width: 1600px; margin: 0 auto; padding: 10px 20px 80px; }
+  .container { max-width: 1600px; margin: 0 auto;
+    padding: 10px 20px 80px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
   /* TARJETAS 3D */
@@ -357,7 +364,8 @@
   }
 
   /* --- CHROMA / STAGE --- */
-  .stage { pointer-events: none; position: fixed; inset: 0; z-index: 8; }
+  .stage { pointer-events: none;
+    position: fixed; inset: 0; z-index: 8; }
   #fgContainer {
     position: absolute; pointer-events: auto; display: flex;
     align-items: center; justify-content: center;
@@ -435,9 +443,6 @@
   }
   
   /* --- SEPARACIÓN DE IMAGENES --- */
-  /* NOTA: Usamos absolute + left:50% para garantizar que el centro
-     sea matemáticamente perfecto sin importar el ancho de cada imagen.
-  */
   .cover-back {
     position: absolute;
     bottom: 25px;
@@ -491,8 +496,10 @@
     backdrop-filter: blur(5px);
   }
   .badge-default { background: linear-gradient(135deg, #8c52ff, #5e17eb); color: white; border: 1px solid rgba(255,255,255,0.3); }
-  .badge-estreno { background: #ff0055; color: white; box-shadow: 0 0 15px rgba(255, 0, 85, 0.6); border: 1px solid #ff5588; }
-  .badge-prox { background: var(--neon-yellow); color: black; border: 1px solid #fff; }
+  .badge-estreno { background: #ff0055;
+    color: white; box-shadow: 0 0 15px rgba(255, 0, 85, 0.6); border: 1px solid #ff5588; }
+  .badge-prox { background: var(--neon-yellow);
+    color: black; border: 1px solid #fff; }
 
   /* Final Stamp - Nuevo Estilo */
   .final-stamp {
@@ -501,7 +508,8 @@
     left: 50%;
     /* MODIFICADO: De -15deg a -25deg (mas inclinado) */
     transform: translate(-50%, -50%) rotate(-25deg) scale(0);
-    z-index: 20; color: #ff0000;
+    z-index: 20;
+    color: #ff0000;
     border: 3px solid #ff0000; padding: 5px 15px;
     font-weight: 900;
     font-size: 1.2rem;
@@ -586,9 +594,11 @@
     border: 1px solid #444; border-radius: 16px; padding: 25px;
     z-index: 10000; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
   }
-  .ios-content p { color: #ddd; margin: 10px 0; font-size: 0.95rem; }
+  .ios-content p { color: #ddd; margin: 10px 0;
+    font-size: 0.95rem; }
   .ios-content i { color: var(--neon-cyan); }
-  .ios-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #888; cursor: pointer; }
+  .ios-close { position: absolute; top: 10px; right: 15px;
+    font-size: 1.5rem; color: #888; cursor: pointer; }
 
   /* --- ANIMACIONES --- */
   @keyframes glitch {
@@ -609,14 +619,23 @@
 
   /* --- RESPONSIVE --- */
   @media (max-width: 768px) {
-    .cyber-nav { flex-wrap: wrap; height: auto; padding: 12px 15px; gap: 10px; }
+    .cyber-nav { flex-wrap: wrap;
+    height: auto; padding: 12px 15px; gap: 10px; }
     .nav-logo { order: 1; flex: 1; }
     .nav-actions { order: 2; gap: 8px; }
-    .search-wrapper { order: 3; width: 100%; max-width: 100%; margin: 5px 0 0; }
+    .search-wrapper { order: 3; width: 100%;
+    max-width: 100%; margin: 5px 0 0; }
     .search-input { padding: 8px 15px 8px 40px; font-size: 0.85rem; }
     
     .controls-container { padding: 10px 15px; gap: 8px; justify-content: space-between; }
-    select { flex: 1 1 45%; min-width: 0; font-size: 0.75rem; padding: 6px 10px; }
+    
+    /* FIX: Aumentar tamaño de fuente a 16px (1rem) para evitar zoom en iOS y asegurar área táctil */
+    select { 
+      flex: 1 1 45%; 
+      min-width: 0; 
+      font-size: 1rem !important; /* IMPORTANTE: 1rem = 16px evita zoom */
+      padding: 8px 10px; 
+    }
     
     .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 10px 80px; }
     
@@ -625,7 +644,8 @@
     top: 65px; left: 10px; right: 10px; width: auto; max-width: none; }
     
     /* Ajuste responsive del popup nuevo */
-    .event-card { width: 90%; max-height: 90vh; overflow-y: auto; }
+    .event-card { width: 90%;
+    max-height: 90vh; overflow-y: auto; }
     
     /* CAMBIO MOVIL: Posicionamiento absoluto centrado */
     .cover-back { transform: translateX(-50%) rotate(0deg) scale(0.8); }
@@ -832,8 +852,8 @@
                 console.log('SW Registrado: OK');
                 registration.update(); 
                 registration.onupdatefound = () => {
-                  const installingWorker = registration.installing;
-                  installingWorker.onstatechange = () => {
+                    const installingWorker = registration.installing;
+                    installingWorker.onstatechange = () => {
                         if (installingWorker.state === 'installed') {
                             if (navigator.serviceWorker.controller) {
                                 console.log('Nueva versión encontrada. Recargando...');
