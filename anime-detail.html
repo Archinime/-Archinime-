@@ -9,7 +9,7 @@
   <meta property="og:title" content="Archinime">
   <meta property="og:image" content="Logo_Archinime.avif">
 
-  <link rel="icon" href="Logo_Archinime.png" type="image/png">
+  <link rel="icon" href="Logo_Archinime.avif" type="image/png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
   <style>
@@ -19,40 +19,30 @@
     *{box-sizing:border-box;margin:0;padding:0}
     
     html, body {
-      height: 100%;
-      overflow-x: hidden;
+      height: 100%; overflow-x: hidden;
       font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      background: transparent;
+      color: #fff; background: transparent;
     }
 
     /* Fondo vídeo */
     #bg-video {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -1;
+      object-fit: cover; z-index: -1;
       background: url('galaxia-morado1.avif') center/cover no-repeat,
                   linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
-      opacity: 1; 
-      transition: opacity 0.8s ease;
-      pointer-events: none;
+      opacity: 1; transition: opacity 0.8s ease; pointer-events: none;
     }
     
     /* Overlay */
     #overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -5;
-      background: rgba(0,0,0,0.6);
-      pointer-events: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -5; background: rgba(0,0,0,0.6); pointer-events: none;
     }
     
     /* Pantalla de carga inicial */
     #loading-screen {
-        position: fixed;
-        top:0; left:0; width:100%; height:100%;
+        position: fixed; top:0; left:0; width:100%; height:100%;
         background: #000; z-index: 9999;
         display:flex; justify-content:center; align-items:center;
         transition: opacity 0.5s;
@@ -60,13 +50,10 @@
 
     /* --- CONTENEDOR PRINCIPAL --- */
     .container{
-      position:relative;
-      z-index:0;
-      max-width:1000px;
-      margin:80px auto; padding:20px;
+      position:relative; z-index:0;
+      max-width:1000px; margin:80px auto; padding:20px;
       background: rgba(0, 0, 0, 0.85);
-      border-radius:12px;
-      box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);
       animation:fadeIn 0.5s ease-out;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transform: translateZ(0);
@@ -75,243 +62,159 @@
 
     /* --- BOTONES SUPERIORES --- */
     .top-buttons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
+        display: flex; justify-content: space-between;
+        align-items: center; gap: 10px; margin-bottom: 20px;
     }
 
     .back, .share-detail {
-      display: inline-flex;
-      align-items: center; justify-content: center;
+      display: inline-flex; align-items: center; justify-content: center;
       color:#0ff;text-decoration:none;font-weight:bold;font-size:0.9rem;
       transition:background .2s;cursor:pointer;
       background: rgba(0, 255, 255, 0.1);
-      padding: 8px 12px;
-      border-radius: 20px;
+      padding: 8px 12px; border-radius: 20px;
     }
-    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3);
-    }
+    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
 
     /* --- PORTADA --- */
-    .anime-cover { text-align: center; margin-bottom: 25px;
-    }
+    .anime-cover { text-align: center; margin-bottom: 25px; }
     .anime-cover img {
       max-height: 400px; width: auto; max-width: 100%;
-      border-radius: 12px;
-      object-fit: contain;
+      border-radius: 12px; object-fit: contain;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     h1{
-      margin: 10px 0 15px;
-      text-align: center;
+      margin: 10px 0 15px; text-align: center;
       font-size: 1.8rem; color: #fff;
       text-shadow: 0 0 5px rgba(0, 255, 247, 0.5);
     }
 
     /* --- GÉNEROS --- */
     .genres-wrap {
-      display: flex;
-      flex-wrap: wrap; gap: 8px;
+      display: flex; flex-wrap: wrap; gap: 8px;
       justify-content: center; margin-bottom: 20px;
     }
     .genre-chip {
-      padding: 6px 12px;
-      font-size: 0.85rem; font-weight: 700;
+      padding: 6px 12px; font-size: 0.85rem; font-weight: 700;
       border-radius: 20px;
       border: 1px solid rgba(0, 255, 255, 0.4);
       background: rgba(0, 255, 255, 0.05);
-      color: #e0ffff;
-      cursor: default; 
-      user-select: none;
+      color: #e0ffff; cursor: default; user-select: none;
     }
-    .genre-chip:hover {
-        background: rgba(0, 255, 255, 0.15);
-    }
+    .genre-chip:hover { background: rgba(0, 255, 255, 0.15); }
 
     /* --- DESCRIPCIÓN --- */
     .desc{
       margin-bottom:20px; line-height:1.6;
       color:#ddd; font-size: 1rem;
       background:rgba(255,255,255,0.03); padding:15px;
-      border-radius:8px;
-      border-left:3px solid #0ff;
+      border-radius:8px; border-left:3px solid #0ff;
     }
 
-    /* --- UPLOADER INFO (DISEÑO MEJORADO) --- */
+    /* --- UPLOADER INFO --- */
     .uploader-container {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end; /* Alineado a la derecha */
-        margin-bottom: 30px;
-        gap: 10px;
+        display: flex; align-items: center;
+        justify-content: flex-end; margin-bottom: 30px; gap: 10px;
     }
-    .upload-label {
-        font-size: 0.85rem;
-        color: #aaa;
-    }
+    .upload-label { font-size: 0.85rem; color: #aaa; }
     .uploader-chip {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        display: flex; align-items: center; gap: 8px;
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 5px 12px 5px 5px;
-        /* Padding ajustado */
-        border-radius: 50px;
-        color: #fff;
-        text-decoration: none;
+        padding: 5px 12px 5px 5px; border-radius: 50px;
+        color: #fff; text-decoration: none;
         transition: all 0.3s ease;
     }
     .uploader-chip:hover {
-        background: rgba(0, 255, 255, 0.15);
-        border-color: #0ff;
+        background: rgba(0, 255, 255, 0.15); border-color: #0ff;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
     }
     .uploader-chip img {
-        width: 32px; height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid rgba(0, 255, 255, 0.5);
+        width: 32px; height: 32px; border-radius: 50%;
+        object-fit: cover; border: 2px solid rgba(0, 255, 255, 0.5);
     }
-    .uploader-chip span {
-        font-weight: 600;
-        font-size: 0.95rem;
-        letter-spacing: 0.5px;
-    }
+    .uploader-chip span { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.5px; }
 
     /* --- TEMPORADAS --- */
     details {
-      margin-bottom:12px;
-      background: #0d0214; /* Morado muy oscuro sólido */
-      border: 1px solid #4a004a;
-      /* Borde morado */
-      border-radius:8px;
-      overflow:hidden;
+      margin-bottom:12px; background: #0d0214;
+      border: 1px solid #4a004a; border-radius:8px; overflow:hidden;
     }
-    details[open] { background: #0d0214;
-    }
+    details[open] { background: #0d0214; }
     
     summary {
       padding:15px; cursor:pointer; font-weight:bold; color:#0ff;
-      display:flex;
-      justify-content:space-between; align-items:center;
-      list-style:none; user-select: none;
-      touch-action: manipulation;
+      display:flex; justify-content:space-between; align-items:center;
+      list-style:none; user-select: none; touch-action: manipulation;
     }
-    summary::-webkit-details-marker { display:none;
-    }
+    summary::-webkit-details-marker { display:none; }
     summary::after { content:'▼'; font-size:1.5rem; }
-    details[open] summary::after { content:'▲';
-    }
+    details[open] summary::after { content:'▲'; }
 
-    .season-content { 
-        padding: 10px; 
-        display: block;
-    }
+    .season-content { padding: 10px; display: block; }
 
     /* --- LISTA DE VIDEOS --- */
     .video-list { 
-        display: grid;
-        gap: 8px;
+        display: grid; gap: 8px;
         grid-template-columns: repeat(4, 1fr);
     }
 
     .ep-btn {
-      display:flex; align-items: center;
-      justify-content: center;
-      padding:10px 4px;
-      background: #1a0525; /* Fondo sólido */
-      border: 1px solid #330c4d;
-      border-radius:4px;
+      display:flex; align-items: center; justify-content: center;
+      padding:10px 4px; background: #1a0525;
+      border: 1px solid #330c4d; border-radius:4px;
       text-decoration:none; color:#ddd;
-      font-size:0.8rem; text-align:center;
-      min-height: 45px;
+      font-size:0.8rem; text-align:center; min-height: 45px;
       transition: all 0.2s;
     }
     .ep-btn:hover {
-      background: #2a0a3d;
-      border-color: #0ff;
-      color: #0ff;
-      box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+      background: #2a0a3d; border-color: #0ff;
+      color: #0ff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
-    .ep-btn:active { background: #0ff;
-      color: #000;
-    }
+    .ep-btn:active { background: #0ff; color: #000; }
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px; padding-top:20px;
-      border-top:1px solid #333;
-    }
-    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
-    }
+    .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333; }
+    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
     
-    /* 6 por fila en PC/Tablet */
-    .rec-grid { 
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 10px; 
-    }
+    .rec-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
 
     .rec-card { 
-      background: #1a0525;
-      border: 1.5px solid #330c4d;
-      border-radius: 6px; 
-      overflow: hidden;
-      transition: all 0.2s;
+      background: #1a0525; border: 1.5px solid #330c4d;
+      border-radius: 6px; overflow: hidden; transition: all 0.2s;
     }
-
     .rec-card:hover {
-      transform: translateY(-3px);
-      background: #2a0a3d; 
-      border-color: #0ff;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      transform: translateY(-3px); background: #2a0a3d; 
+      border-color: #0ff; box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
     }
-
-    /* Para que el texto cambie a celeste al pasar el mouse sobre la tarjeta */
-    .rec-card:hover p {
-      color: #0ff;
-    }
+    .rec-card:hover p { color: #0ff; }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
-    .rec-card p { padding:6px; font-size:0.8rem;
-      text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+    .rec-card p { 
+        padding:6px; font-size:0.8rem; text-align:center; 
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; 
+    }
 
     /* --- TOAST --- */
     .toast {
-      position:fixed;
-      bottom:50px; left:50%; transform:translateX(-50%);
+      position:fixed; bottom:50px; left:50%; transform:translateX(-50%);
       background:#0ff; color:#000; padding:8px 20px; border-radius:20px;
       display:none; z-index:999; font-weight:bold; box-shadow:0 0 10px rgba(0,0,0,0.5);
     }
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
-        .video-list { grid-template-columns: repeat(3, 1fr);
-        }
+        .video-list { grid-template-columns: repeat(3, 1fr); }
     }
 
     @media (max-width: 600px) {
         .container { 
-            width:100%;
-            margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
+            width:100%; margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
         }
-        .video-list { grid-template-columns: repeat(2, 1fr);
-        gap: 6px; }
-        h1 { font-size:1.4rem;
-        }
-        
-        /* 3 por fila en MÓVILES */
-        .rec-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .uploader-container {
-            justify-content: flex-start;
-            /* En movil alineado a la izquierda */
-        }
+        .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        h1 { font-size:1.4rem; }
+        .rec-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .uploader-container { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -340,29 +243,45 @@
   </video>
   <div id="overlay"></div>
 
-  <script src="index-data.js"></script> 
-  <script src="anime-detail-data.js"></script>
-  <script src="musica-data.js"></script>
-  <script src="users-data.js"></script>
+  <script>
+    // 1. AUTO-VERSIONADO: Genera un ID único basado en la fecha para evitar caché
+    var autoVersion = new Date().getTime();
+
+    function loadScript(src) {
+      document.write('<script src="' + src + '?v=' + autoVersion + '"><\/script>');
+    }
+
+    // Cargamos los datos con la versión forzada
+    loadScript('index-data.js'); 
+    loadScript('anime-detail-data.js');
+    loadScript('musica-data.js');
+    loadScript('users-data.js');
+
+    // 2. REGISTRO DEL SERVICE WORKER (Para asegurar actualizaciones aunque entren directo aquí)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(reg => {
+                // Forzamos la actualización del SW si hay uno nuevo
+                reg.update(); 
+            }).catch(err => console.log('SW Error:', err));
+        });
+    }
+  </script>
 
   <script>
     /* ----------------------------------------------------
-       1. Gestión de Carga
+       Lógica de Renderizado
        ---------------------------------------------------- */
     window.addEventListener('load', () => {
-        // --- PARCHE DE COMPATIBILIDAD ---
+        // Parche compatibilidad
         if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') {
             window.audioPlaylists = musica;
         }
-        // ---------------------------------
         const screen = document.getElementById('loading-screen');
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
 
-    /* ----------------------------------------------------
-       2. Lógica de Audio
-       ---------------------------------------------------- */
     let currentAudio = null;
     let playlist = [];
     let currentTrackIndex = -1;
@@ -372,7 +291,6 @@
             currentAudio.pause();
             currentAudio.onended = null;
         }
-
         const trackUrl = playlist[index];
         currentAudio = new Audio(trackUrl);
         currentAudio.volume = 0.4;
@@ -382,16 +300,13 @@
             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
             playTrack(currentTrackIndex);
         };
-
-        currentAudio.play().catch(e => console.log("Reproducción automática bloqueada o error:", e));
+        currentAudio.play().catch(e => console.log("Audio autoplay bloqueado:", e));
     }
 
     document.addEventListener('click', () => {
-        // --- PARCHE DE COMPATIBILIDAD POR SI ACASO ---
         if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') {
             window.audioPlaylists = musica;
         }
-
         if (typeof audioPlaylists === 'undefined' || currentAudio) return;
         const params = new URLSearchParams(location.search);
         const id = params.get('id');
@@ -403,100 +318,90 @@
         }
     }, { once: true });
 
-    /* ----------------------------------------------------
-       3. Renderizado y Lógica Visual
-       ---------------------------------------------------- */
-    
-    if (typeof data === 'undefined') {
-        document.getElementById('contenido').innerHTML = "<h2 style='text-align:center; padding:50px; color:red;'>Error: No se pudo cargar el archivo de datos (anime-detail-data.js).</h2>";
-    } else {
-        const params = new URLSearchParams(location.search);
-        const id = params.get('id');
-        const anime = data[id];
-        const container = document.getElementById('contenido');
-
-        if (anime) {
-            document.title = `${anime.title} - Archinime`;
-            // --- Lógica de Géneros Actualizada ---
-            let genreHtml = '';
-            if (typeof animes !== 'undefined') {
-                const animeInfo = animes.find(a => String(a.id) === String(id));
-                if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
-                    genreHtml = animeInfo.genres.map(g => 
-                        `<span class="genre-chip">${escapeHtml(g)}</span>`
-                    ).join('');
-                } else {
-                    genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
-                }
-            }
-            // -------------------------------------
-
-            // --- NUEVO: LÓGICA DE UPLOADER/SUBIDO POR ---
-            let uploaderEmailOrName = anime.uploader || "Desconocido";
-            let displayNick = uploaderEmailOrName; 
-            let uploaderHtml = "";
-            let userAvatar = "Logo_Archinime.avif";
-            // Avatar por defecto
-
-            if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
-                const userData = usersData[uploaderEmailOrName];
-                displayNick = userData.nick;
-                userAvatar = userData.avatar || "Logo_Archinime.avif";
-
-                // Estructura del botón moderno SIN EL ICONO DE LINK
-                uploaderHtml = `
-                    <div class="uploader-container">
-                        <span class="upload-label">Subido por:</span>
-                        <a href="${userData.social || '#'}" ${userData.social ? 'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
-                            <img src="${userAvatar}" alt="${displayNick}">
-                            <span>${displayNick}</span>
-                        </a>
-                    </div>
-                `;
-            } else {
-                // Fallback si no está en la base de datos
-                uploaderHtml = `
-                    <div class="uploader-container">
-                        <span class="upload-label">Subido por:</span>
-                        <div class="uploader-chip" style="cursor:default">
-                            <img src="${userAvatar}" alt="User">
-                            <span>${displayNick}</span>
-                        </div>
-                    </div>
-                `;
-            }
-            // ---------------------------------------------
-
-            let html = `
-                <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
-                <h1>${anime.title}</h1>
-                <div class="genres-wrap" id="genres-container">${genreHtml}</div>
-                <p class="desc">${anime.desc}</p>
-                ${uploaderHtml}
-            `;
-            if(anime.seasons){
-                anime.seasons.forEach((s, index) => {
-                    html += `
-                    <details ontoggle="toggleSeason(this, ${id}, ${index})">
-                        <summary>${s.name || 'Temporada ' + s.num}</summary>
-                        <div class="season-content">
-                            ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
-                            <div class="video-list" id="list-${index}"></div>
-                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
-                        </div>
-                    </details>`;
-                });
-            }
-            container.innerHTML = html;
-            renderRecommendations(id);
+    // Renderizado principal
+    // Nota: Usamos setTimeout 0 para asegurar que los scripts cargados con document.write estén listos
+    setTimeout(() => {
+        if (typeof data === 'undefined') {
+            document.getElementById('contenido').innerHTML = "<h2 style='text-align:center; padding:50px; color:red;'>Cargando datos... Si esto persiste, recarga.</h2>";
         } else {
-            container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
-        }
-    }
+            const params = new URLSearchParams(location.search);
+            const id = params.get('id');
+            const anime = data[id];
+            const container = document.getElementById('contenido');
 
-    /* ----------------------------------------------------
-       4. Funciones Auxiliares
-       ---------------------------------------------------- */
+            if (anime) {
+                document.title = `${anime.title} - Archinime`;
+                
+                let genreHtml = '';
+                if (typeof animes !== 'undefined') {
+                    const animeInfo = animes.find(a => String(a.id) === String(id));
+                    if (animeInfo && animeInfo.genres && animeInfo.genres.length > 0) {
+                        genreHtml = animeInfo.genres.map(g => 
+                            `<span class="genre-chip">${escapeHtml(g)}</span>`
+                        ).join('');
+                    } else {
+                        genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
+                    }
+                }
+
+                let uploaderEmailOrName = anime.uploader || "Desconocido";
+                let displayNick = uploaderEmailOrName; 
+                let uploaderHtml = "";
+                let userAvatar = "Logo_Archinime.avif";
+
+                if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
+                    const userData = usersData[uploaderEmailOrName];
+                    displayNick = userData.nick;
+                    userAvatar = userData.avatar || "Logo_Archinime.avif";
+                    uploaderHtml = `
+                        <div class="uploader-container">
+                            <span class="upload-label">Subido por:</span>
+                            <a href="${userData.social || '#'}" ${userData.social ? 'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
+                                <img src="${userAvatar}" alt="${displayNick}">
+                                <span>${displayNick}</span>
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    uploaderHtml = `
+                        <div class="uploader-container">
+                            <span class="upload-label">Subido por:</span>
+                            <div class="uploader-chip" style="cursor:default">
+                                <img src="${userAvatar}" alt="User">
+                                <span>${displayNick}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                let html = `
+                    <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
+                    <h1>${anime.title}</h1>
+                    <div class="genres-wrap" id="genres-container">${genreHtml}</div>
+                    <p class="desc">${anime.desc}</p>
+                    ${uploaderHtml}
+                `;
+                if(anime.seasons){
+                    anime.seasons.forEach((s, index) => {
+                        html += `
+                        <details ontoggle="toggleSeason(this, ${id}, ${index})">
+                            <summary>${s.name || 'Temporada ' + s.num}</summary>
+                            <div class="season-content">
+                                ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
+                                <div class="video-list" id="list-${index}"></div>
+                                <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
+                            </div>
+                        </details>`;
+                    });
+                }
+                container.innerHTML = html;
+                renderRecommendations(id);
+            } else {
+                container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
+            }
+        }
+    }, 100);
+
     function toggleSeason(details, animeId, seasonIndex) {
         if (!details.open) return;
         const listContainer = document.getElementById(`list-${seasonIndex}`);
@@ -518,6 +423,7 @@
             for (let i = processed; i < limit; i++) {
                 const ep = episodes[i];
                 const a = document.createElement('a');
+                // Añadimos un pequeño timestamp al enlace para evitar caché al navegar
                 a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
                 a.className = 'ep-btn';
                 a.textContent = `▶ ${ep.title}`;
@@ -540,6 +446,7 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
+
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
