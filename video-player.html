@@ -164,7 +164,7 @@
     }
     .btn-hidden { display: none !important; }
 
-    /* --- BLOQUE DE PUBLICIDAD --- */
+    /* --- BLOQUE DE PUBLICIDAD (General) --- */
     .ads-block-container {
         margin: 40px auto 20px auto;
         padding: 0; 
@@ -172,7 +172,9 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px; backdrop-filter: blur(10px);
         box-shadow: 0 0 30px rgba(0,0,0,0.6);
-        max-width: 1000px; overflow: hidden;
+        max-width: 1000px; 
+        /* Importante: Visible para que se vean banners grandes */
+        overflow: visible; 
     }
     .ads-title {
         text-align: center;
@@ -194,21 +196,19 @@
         box-sizing: border-box; text-align: center;
         position: relative;
     }
-    .ad-slot > div, .ad-slot iframe { display: inline-block; vertical-align: middle;
-    }
+    .ad-slot > div, .ad-slot iframe { display: inline-block; vertical-align: middle; }
     .span-all {
         column-span: all; border-bottom: 1px solid rgba(255,255,255,0.05);
         padding: 10px 0; display: block;
     }
-    .ad-slot:hover { background: rgba(255, 255, 255, 0.05); z-index: 2;
-    }
+    .ad-slot:hover { background: rgba(255, 255, 255, 0.05); z-index: 2; }
 
     /* --- MEDIA QUERIES (RESPONSIVE) --- */
     @media (max-width: 1024px) { 
         .ads-masonry { column-count: 2; } 
     }
 
-    /* ESTILOS PARA MÓVIL CORREGIDOS */
+    /* ESTILOS PARA MÓVIL (CORREGIDO PARA VISIBILIDAD) */
     @media (max-width: 768px) {
         .container { padding: 15px 10px; }
         
@@ -231,34 +231,46 @@
         #prevBtn { grid-column: 1; order: 1; min-width: auto; }
         #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { grid-column: 1 / span 2; order: 3; width: 100%; margin-top: 5px; box-sizing: border-box; }
-        
         .btn { padding: 12px; font-size: 0.9rem; }
         
-        /* CORRECCIÓN DE VISIBILIDAD DE ANUNCIOS EN MÓVIL */
+        /* --- ARREGLO DE ANUNCIOS MÓVIL --- */
         .ads-block-container {
-            /* Permitimos que el contenido sea visible si se necesita scroll */
-            overflow: visible;
-            background: rgba(0, 0, 0, 0.5); /* Fondo más ligero en móvil */
+            width: 100%;
+            /* Forzar visibilidad */
+            display: block !important; 
+            background: #000; /* Fondo negro sólido para contraste */
+            border: 1px solid var(--secondary-color); /* Borde para ver donde empieza */
+            z-index: 100;
         }
+        
         .ads-masonry { 
-            column-count: 1; 
+            /* Desactivar columnas, usar bloque normal */
+            column-count: 1 !important; 
             display: flex; 
             flex-direction: column;
-            gap: 10px;
+            gap: 15px; /* Espacio entre anuncios */
+            padding: 10px;
         }
+        
         .ad-slot { 
-            display: flex; 
-            justify-content: center; /* Centrar contenido */
-            align-items: center;
-            padding: 15px 0; 
-            border: 1px solid rgba(255,255,255,0.05);
+            display: block; 
             width: 100%;
-            /* ESTO ES CLAVE: Permite scroll horizontal si el banner es muy ancho */
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+            /* Altura mínima para que se vea el hueco aunque el anuncio cargue lento */
+            min-height: 80px; 
+            padding: 10px 0;
+            background: rgba(255,255,255,0.05); /* Fondo gris claro */
+            
+            /* Habilitar scroll horizontal DENTRO de cada anuncio */
+            overflow-x: auto; 
+            white-space: nowrap;
+            text-align: center;
         }
-        /* Ocultamos la barra de scroll para que se vea limpio pero funcione */
-        .ad-slot::-webkit-scrollbar { height: 0px; background: transparent; }
+        
+        /* Asegurar que el iframe no se encoja */
+        .ad-slot iframe {
+            max-width: none !important;
+            display: inline-block;
+        }
     }
   </style>
 </head>
@@ -299,30 +311,35 @@
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
             </div>
+            
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = { 'key' : '190984de4e16fc6eded87c1cb7a9bc83', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
             </div>
+            
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = { 'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
             </div>
+            
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = { 'key' : '49281ce83eb56f120e34ad617cfd6996', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
             </div>
-             <div class="ad-slot">
+            
+            <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = { 'key' : '1904483365c7a7ab9f83e49d32b7d237', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
             </div>
+            
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = { 'key' : '6ecb40404fef8f9daf755244f9c4d753', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
@@ -352,14 +369,11 @@
     // -----------------------------------------------------------
     // LÓGICA DEL REPRODUCTOR
     // -----------------------------------------------------------
-    // Esperamos a que video-player-data.js cargue (gracias al document.write es secuencial)
-    
     setTimeout(() => {
         const DB = (typeof players !== 'undefined') ? players : {};
         
         // Obtener parámetros URL
         const params = new URLSearchParams(location.search);
-      
         const animeId = params.get('anime');
         const season = params.get('s');
         const episode = params.get('e');
@@ -369,7 +383,6 @@
         if (backLink) {
             if (animeId) {
                 backLink.href = `anime-detail.html?id=${animeId}`;
-        
             } else {
                 backLink.href = `index.html`;
             }
@@ -478,8 +491,7 @@
                     seasons.forEach(sKey => {
                         const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                         episodes.forEach(eKey => {
-                            flatList.push({ s: sKey, 
-                            e: eKey });
+                            flatList.push({ s: sKey, e: eKey });
                         });
                     });
                     const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
@@ -496,8 +508,7 @@
                         nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
                     }
                 }
-            } catch (e) { console.error("Error en navegación:", e);
-            }
+            } catch (e) { console.error("Error en navegación:", e); }
         }
     }, 100);
   </script>
