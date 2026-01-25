@@ -1,27 +1,28 @@
-const CACHE_NAME = 'archinime-os-dynamic';
+/* --- sw.js AUTOMÁTICO (Network First) --- */
+const CACHE_NAME = 'archinime-os-auto';
 const urlsToCache = [
   './',
   'index.html',
-  'styles-index.css',
+  'manifest.json',
   'Logo_Archinime.avif'
+  // No cacheamos JS ni CSS aquí para forzar su actualización en vivo
 ];
 
-// 1. INSTALACIÓN: Cachea lo básico, pero no bloquea
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Forza al SW a activarse de inmediato
+  self.skipWaiting(); // Activar inmediatamente
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
-// 2. ACTIVACIÓN: Limpia cachés viejas automáticamente
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-           // Borra cualquier caché que no sea la actual
+          // Limpiamos cualquier caché vieja que no sea la actual
           if (cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
@@ -29,28 +30,31 @@ self.addEventListener('activate', event => {
       );
     })
   );
-  return self.clients.claim(); // Toma control de la página inmediatamente
+  return self.clients.claim();
 });
 
-// 3. FETCH: ESTRATEGIA NETWORK FIRST (La magia)
 self.addEventListener('fetch', event => {
+  // Solo interceptamos peticiones GET (lectura)
+  if (event.request.method !== 'GET') return;
+  if (!event.request.url.startsWith(self.location.origin)) return;
+
+  // ESTRATEGIA: NETWORK FIRST (RED PRIMERO)
+  // Intenta ir a internet primero. Si funciona, actualiza la caché y muestra lo nuevo.
+  // Si falla (offline), muestra lo guardado.
   event.respondWith(
     fetch(event.request)
       .then(networkResponse => {
-        // Si hay internet y respuesta válida:
-        // 1. Clonamos la respuesta (porque se consume al leerla)
-        const responseClone = networkResponse.clone();
-        
-        // 2. Actualizamos la caché con lo NUEVO que acabamos de bajar
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseClone);
-        });
-
-        // 3. Entregamos la versión nueva al usuario
+        // Si la respuesta es válida, la guardamos en caché para la próxima vez que estemos offline
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+        }
         return networkResponse;
       })
       .catch(() => {
-        // Si falla internet (catch), entregamos lo que haya en caché
+        // Si no hay internet, devolvemos lo que tengamos en caché
         return caches.match(event.request);
       })
   );
