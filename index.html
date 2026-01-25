@@ -13,6 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles-index.css">
 
 <style>
   /* --- VARIABLES CYBERPUNK (Actualizadas) --- */
@@ -160,8 +162,7 @@
   }
 
   /* BUSCADOR */
-  .search-wrapper { position: relative;
-    margin: 0 25px; flex-grow: 1; max-width: 450px; }
+  .search-wrapper { position: relative; margin: 0 25px; flex-grow: 1; max-width: 450px; }
   .search-input {
     width: 100%;
     background: rgba(0, 0, 0, 0.3);
@@ -249,8 +250,7 @@
 
   .notif-list { max-height: 400px; overflow-y: auto; }
   .notif-list::-webkit-scrollbar { width: 5px; }
-  .notif-list::-webkit-scrollbar-thumb { background: #333;
-    border-radius: 4px; }
+  .notif-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
   .notif-item {
     display: flex; gap: 15px; padding: 12px 15px;
@@ -285,7 +285,8 @@
 
   /* --- BARRA DE FILTROS (FIXED: Added z-index) --- */
   .controls-container {
-    padding: 15px 3%; display: flex;
+    padding: 15px 3%;
+    display: flex;
     gap: 15px; flex-wrap: wrap; justify-content: center;
     background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
     margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -314,8 +315,7 @@
   }
 
   /* --- GRID DE ANIME --- */
-  .container { max-width: 1600px; margin: 0 auto;
-    padding: 10px 20px 80px; }
+  .container { max-width: 1600px; margin: 0 auto; padding: 10px 20px 80px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
 
   /* TARJETAS 3D */
@@ -449,7 +449,8 @@
     left: 50%;
     /* Punto de partida exacto al centro */
     
-    width: 110px; height: 165px;
+    width: 110px;
+    height: 165px;
     object-fit: cover;
     border-radius: 8px; opacity: 0.8;
     
@@ -594,8 +595,7 @@
     border: 1px solid #444; border-radius: 16px; padding: 25px;
     z-index: 10000; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
   }
-  .ios-content p { color: #ddd; margin: 10px 0;
-    font-size: 0.95rem; }
+  .ios-content p { color: #ddd; margin: 10px 0; font-size: 0.95rem; }
   .ios-content i { color: var(--neon-cyan); }
   .ios-close { position: absolute; top: 10px; right: 15px;
     font-size: 1.5rem; color: #888; cursor: pointer; }
@@ -619,33 +619,29 @@
 
   /* --- RESPONSIVE --- */
   @media (max-width: 768px) {
-    .cyber-nav { flex-wrap: wrap;
-    height: auto; padding: 12px 15px; gap: 10px; }
+    .cyber-nav { flex-wrap: wrap; height: auto; padding: 12px 15px; gap: 10px; }
     .nav-logo { order: 1; flex: 1; }
     .nav-actions { order: 2; gap: 8px; }
-    .search-wrapper { order: 3; width: 100%;
-    max-width: 100%; margin: 5px 0 0; }
+    .search-wrapper { order: 3; width: 100%; max-width: 100%; margin: 5px 0 0; }
     .search-input { padding: 8px 15px 8px 40px; font-size: 0.85rem; }
     
     .controls-container { padding: 10px 15px; gap: 8px; justify-content: space-between; }
     
     /* FIX: Aumentar tamaño de fuente a 16px (1rem) para evitar zoom en iOS y asegurar área táctil */
     select { 
-      flex: 1 1 45%; 
+      flex: 1 1 45%;
       min-width: 0; 
       font-size: 1rem !important; /* IMPORTANTE: 1rem = 16px evita zoom */
-      padding: 8px 10px; 
+      padding: 8px 10px;
     }
     
     .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 10px 80px; }
     
     /* Ajuste Dropdown móvil */
-    .notif-dropdown { position: fixed;
-    top: 65px; left: 10px; right: 10px; width: auto; max-width: none; }
+    .notif-dropdown { position: fixed; top: 65px; left: 10px; right: 10px; width: auto; max-width: none; }
     
     /* Ajuste responsive del popup nuevo */
-    .event-card { width: 90%;
-    max-height: 90vh; overflow-y: auto; }
+    .event-card { width: 90%; max-height: 90vh; overflow-y: auto; }
     
     /* CAMBIO MOVIL: Posicionamiento absoluto centrado */
     .cover-back { transform: translateX(-50%) rotate(0deg) scale(0.8); }
@@ -852,8 +848,8 @@
                 console.log('SW Registrado: OK');
                 registration.update(); 
                 registration.onupdatefound = () => {
-                    const installingWorker = registration.installing;
-                    installingWorker.onstatechange = () => {
+                  const installingWorker = registration.installing;
+                  installingWorker.onstatechange = () => {
                         if (installingWorker.state === 'installed') {
                             if (navigator.serviceWorker.controller) {
                                 console.log('Nueva versión encontrada. Recargando...');
@@ -917,7 +913,7 @@
                     bgVideo.classList.add('loaded'); 
                 })
                 .catch(error => {
-                    console.log("Autoplay bloqueado. Esperando interacción.");
+                     console.log("Autoplay bloqueado. Esperando interacción.");
                     // Listener al primer toque/click
                     document.body.addEventListener('click', () => {
                         bgVideo.play();

@@ -24,7 +24,7 @@ function render(list) {
         filtro();
         document.getElementById('search').focus();
         });
-    return;
+        return;
     }
 
     // Render sencillo
@@ -39,7 +39,7 @@ function render(list) {
 function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
 
 function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t);
-t=setTimeout(()=>fn(...a), wait); }; }
+    t=setTimeout(()=>fn(...a), wait); }; }
 
 const debouncedFiltro = debounce(filtro, 200);
 function normalizeText(s){
@@ -51,7 +51,7 @@ function normalizeText(s){
 }
 
 function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []);
-const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
+    const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
 
 function filtro(){
     const qRaw = document.getElementById('search').value || '';
@@ -96,7 +96,7 @@ function filtro(){
 
 // inicial -> orden aleatorio en la grid
 function shuffleArray(arr){ const a = arr.slice();
-for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 if (typeof animes !== 'undefined') {
     render(shuffleArray(animes));
@@ -112,8 +112,7 @@ document.getElementById('search').addEventListener('keydown', (e)=>{ if(e.key ==
     Helpers de rendimiento
     ---------------------------- */
 function getPerformanceHints() {
-    let cores = navigator.hardwareConcurrency ||
-    4;
+    let cores = navigator.hardwareConcurrency || 4;
     let deviceMem = navigator.deviceMemory || 4;
     let prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let processingScale = 1.0;
@@ -144,7 +143,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }, { once: true });
     }
 });
-
 /* ----------------------------
    Lógica de Música: 
    Inicio Aleatorio -> Luego Secuencial
@@ -170,7 +168,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (hints.processingScale >= 0.6) {
             audio.play().catch(()=> { 
          
-       document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); 
+        document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); 
             });
     }
     }
@@ -185,7 +183,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 // función utilitaria para abrir en nueva pestaña
 function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus();
-}catch(e){} }
+    }catch(e){} }
 
 /* ----------------------------
     Chroma + FG logic
@@ -470,7 +468,6 @@ function frame(now){
     if (dt < frameInterval) {
         requestAnimationFrame(frame);
         return;
-   
     }
     lastFrameTime = now;
 
@@ -496,7 +493,7 @@ function frame(now){
         fctx.fillStyle = p.color;
         fctx.arc(p.x, p.y, (p.radius * 5) * (0.22 + (1 - lifeRatio) * 0.9), 0, Math.PI*2);
         fctx.fill();
-        }
+}
 
     fctx.globalAlpha = 1;
     if (t < duration) {
@@ -651,6 +648,7 @@ document.addEventListener('visibilitychange', ()=> {
         try { activePopup.remove(); } catch(e){}
         activePopup = null;
     }
+  
     if 
     (outsideListener) { document.removeEventListener('pointerdown', outsideListener, true); outsideListener = null; }
     if (resizeListener) { window.removeEventListener('resize', resizeListener); resizeListener = null; }
@@ -681,10 +679,11 @@ document.addEventListener('visibilitychange', ()=> {
             closePopup();
             return;
         }
+        
         openPopupFor(selectEl);
         }
     });
-    }
+}
 
     function openPopupFor(selectEl) {
     closePopup();
@@ -692,13 +691,11 @@ document.addEventListener('visibilitychange', ()=> {
     const docEl = document.documentElement;
     const winW = Math.max(docEl.clientWidth || 0, window.innerWidth || 0);
     const winH = Math.max(docEl.clientHeight || 0, window.innerHeight || 0);
-    
     // Crear el DIV
     const popup = document.createElement('div');
     popup.className = 'mobile-select-popup';
     popup.setAttribute('role','listbox');
     popup.setAttribute('aria-label', selectEl.getAttribute('aria-label') || 'Opciones');
-    
     // Marcar quién abrió este popup (para el toggle)
     popup.dataset.owner = selectEl.id;
 
@@ -707,13 +704,11 @@ document.addEventListener('visibilitychange', ()=> {
     popup.style.maxHeight = maxHeight + 'px';
     const width = Math.min(rect.width, Math.max(140, winW - 24));
     popup.style.minWidth = Math.max(130, width) + 'px';
-
     // Cálculo de posición corregido (scrollY)
     const scrollY = window.scrollY || window.pageYOffset;
     let top = rect.bottom + scrollY + 6;
     
     const estimatedHeight = Math.min(maxHeight, (selectEl.options ? selectEl.options.length * 42 : maxHeight));
-    
     // Si se sale por abajo de la pantalla, mostrarlo arriba
     if ((rect.bottom + estimatedHeight + pad) > winH) {
         // Calcular posición "arriba"
@@ -722,7 +717,6 @@ document.addEventListener('visibilitychange', ()=> {
     
     popup.style.left = Math.max(pad, rect.left) + 'px';
     popup.style.top = top + 'px';
-
     const opts = Array.from(selectEl.options);
     opts.forEach((opt, idx) => {
         const d = document.createElement('div');
@@ -735,7 +729,8 @@ document.addEventListener('visibilitychange', ()=> {
 
         d.addEventListener('click', (ev) => {
         ev.stopPropagation();
-      
+  
+    
         try {
             selectEl.value = opt.value;
             Array.from(selectEl.options).forEach(o => o.selected = (o.value === opt.value));
@@ -743,7 +738,8 @@ document.addEventListener('visibilitychange', ()=> {
             selectEl.dispatchEvent(evCh);
         } catch(e){}
         closePopup();
-            try { selectEl.focus();
+      
+        try { selectEl.focus();
   
         } catch(e){}
         });
@@ -751,7 +747,7 @@ document.addEventListener('visibilitychange', ()=> {
         if (ev.key === 'Enter' || ev.key === ' ') {
             ev.preventDefault();
             d.click();
-        } else if (ev.key === 'ArrowDown') {
+} else if (ev.key === 'ArrowDown') {
             ev.preventDefault();
             const next = d.nextElementSibling;
             if (next) next.focus();
@@ -790,7 +786,7 @@ document.addEventListener('visibilitychange', ()=> {
         closePopup();
     };
     window.addEventListener('scroll', scrollListener, true);
-    }
+}
 
     function init() {
         try {
