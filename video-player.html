@@ -39,7 +39,7 @@
         z-index: -10; opacity: 0.6;
     }
 
-    /* --- OVERLAY MEJORADO --- */
+    /* --- OVERLAY --- */
     #overlay {
       position: fixed;
       top: 0; left: 0; 
@@ -164,7 +164,7 @@
     }
     .btn-hidden { display: none !important; }
 
-    /* --- BLOQUE DE PUBLICIDAD (General) --- */
+    /* --- BLOQUE DE PUBLICIDAD GENERAL --- */
     .ads-block-container {
         margin: 40px auto 20px auto;
         padding: 0; 
@@ -173,8 +173,6 @@
         border-radius: 12px; backdrop-filter: blur(10px);
         box-shadow: 0 0 30px rgba(0,0,0,0.6);
         max-width: 1000px; 
-        /* Importante: Visible para que se vean banners grandes */
-        overflow: visible; 
     }
     .ads-title {
         text-align: center;
@@ -201,75 +199,74 @@
         column-span: all; border-bottom: 1px solid rgba(255,255,255,0.05);
         padding: 10px 0; display: block;
     }
-    .ad-slot:hover { background: rgba(255, 255, 255, 0.05); z-index: 2; }
 
-    /* --- MEDIA QUERIES (RESPONSIVE) --- */
+    /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) { 
         .ads-masonry { column-count: 2; } 
     }
 
-    /* ESTILOS PARA MÓVIL (CORREGIDO PARA VISIBILIDAD) */
+    /* --- ESTILOS AGRESIVOS PARA MÓVIL (SOLUCIÓN DEFINITIVA) --- */
     @media (max-width: 768px) {
         .container { padding: 15px 10px; }
         
         .player-wrapper { 
-            border-radius: 12px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
         
-        .options {
-            justify-content: flex-start;
-            overflow-x: auto;
-            white-space: nowrap; padding: 15px;
-            -ms-overflow-style: none; scrollbar-width: none;
-        }
-        .options::-webkit-scrollbar { display: none; }
-        
-        h1 { font-size: 1.3rem; margin: 20px 0; }
-        
+        /* Ajuste de controles */
         .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
         #prevBtn { grid-column: 1; order: 1; min-width: auto; }
         #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { grid-column: 1 / span 2; order: 3; width: 100%; margin-top: 5px; box-sizing: border-box; }
         .btn { padding: 12px; font-size: 0.9rem; }
         
-        /* --- ARREGLO DE ANUNCIOS MÓVIL --- */
+        /* Ajuste Opciones */
+        .options {
+            justify-content: flex-start; overflow-x: auto; white-space: nowrap; padding: 15px;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .options::-webkit-scrollbar { display: none; }
+        h1 { font-size: 1.3rem; margin: 20px 0; }
+
+        /* --- ARREGLO DE ANUNCIOS --- */
         .ads-block-container {
-            width: 100%;
-            /* Forzar visibilidad */
-            display: block !important; 
-            background: #000; /* Fondo negro sólido para contraste */
-            border: 1px solid var(--secondary-color); /* Borde para ver donde empieza */
-            z-index: 100;
+            display: block !important;
+            height: auto !important;
+            background: #000 !important; /* Fondo negro fuerte */
+            border: 1px solid #333 !important;
+            padding: 10px !important;
         }
-        
-        .ads-masonry { 
-            /* Desactivar columnas, usar bloque normal */
-            column-count: 1 !important; 
-            display: flex; 
+
+        .ads-masonry {
+            column-count: 1 !important; /* Una sola columna */
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
+        }
+
+        .ad-slot {
+            display: flex !important;
             flex-direction: column;
-            gap: 15px; /* Espacio entre anuncios */
-            padding: 10px;
-        }
-        
-        .ad-slot { 
-            display: block; 
-            width: 100%;
-            /* Altura mínima para que se vea el hueco aunque el anuncio cargue lento */
-            min-height: 80px; 
-            padding: 10px 0;
-            background: rgba(255,255,255,0.05); /* Fondo gris claro */
+            align-items: center;
+            justify-content: center;
+            width: 100% !important;
             
-            /* Habilitar scroll horizontal DENTRO de cada anuncio */
-            overflow-x: auto; 
-            white-space: nowrap;
-            text-align: center;
+            /* Esto es lo que hace que se vea aunque el anuncio falle */
+            min-height: 100px !important; 
+            background: rgba(255, 255, 255, 0.1) !important; /* Fondo gris visible */
+            border: 2px dashed rgba(255, 255, 255, 0.2) !important; /* Borde visible */
+            margin-bottom: 15px !important;
+            
+            /* Permite scroll si el anuncio es gigante */
+            overflow-x: auto !important; 
+            overflow-y: hidden !important;
         }
-        
-        /* Asegurar que el iframe no se encoja */
+
+        /* Forzamos que el iframe tenga fondo blanco por si tiene letras negras */
         .ad-slot iframe {
-            max-width: none !important;
-            display: inline-block;
+            background-color: #fff !important; 
+            display: block !important;
+            max-width: none !important; /* Que no se encoja */
         }
     }
   </style>
@@ -305,42 +302,43 @@
     <div class="ads-block-container">
         <div class="ads-title">Sponsors</div>
         <div class="ads-masonry">
-            <div class="ad-slot span-all">
+            
+            <div class="ad-slot span-all" style="min-height: 90px;">
                 <script type="text/javascript">
                     atOptions = { 'key' : '1f072201cddab551b2b65315f6c1643e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
             </div>
             
-            <div class="ad-slot">
+            <div class="ad-slot" style="min-height: 600px;">
                 <script type="text/javascript">
                     atOptions = { 'key' : '190984de4e16fc6eded87c1cb7a9bc83', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
             </div>
             
-            <div class="ad-slot">
+            <div class="ad-slot" style="min-height: 250px;">
                 <script type="text/javascript">
                     atOptions = { 'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
             </div>
             
-            <div class="ad-slot">
+            <div class="ad-slot" style="min-height: 300px;">
                 <script type="text/javascript">
                     atOptions = { 'key' : '49281ce83eb56f120e34ad617cfd6996', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
             </div>
-            
-            <div class="ad-slot">
+             
+            <div class="ad-slot" style="min-height: 60px;">
                 <script type="text/javascript">
                     atOptions = { 'key' : '1904483365c7a7ab9f83e49d32b7d237', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
             </div>
             
-            <div class="ad-slot">
+            <div class="ad-slot" style="min-height: 50px;">
                 <script type="text/javascript">
                     atOptions = { 'key' : '6ecb40404fef8f9daf755244f9c4d753', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
                 </script>
@@ -355,7 +353,7 @@
     var autoVersion = new Date().getTime();
     document.write('<script src="video-player-data.js?v=' + autoVersion + '"><\/script>');
     
-    // REGISTRO SERVICE WORKER: Para que funcione el Network First incluso aquí
+    // REGISTRO SERVICE WORKER
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js').then(reg => {
