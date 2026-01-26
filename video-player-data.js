@@ -11075,6 +11075,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/15XSgwYDGX-7K9_FeixnlVBfSEYnO9tsx/preview",
                 "link2": "",
                 "title": "Hana-Kimi T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1YARXfQWU20-k93AP99uPA_dlQZS6HqFh/preview",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 5"
             }
         }
     },
