@@ -5236,6 +5236,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
                     }
                 ],
                 "name": "Temporada 3"
