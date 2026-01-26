@@ -11051,6 +11051,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1MOL368jflme2nq0jc1pZPpXIRMCMzAf7/preview",
                 "link2": "",
                 "title": "Fire Force T3 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1C_8xaLCTIjKWCo-7rFktFApGOAw8oNSY/preview",
+                "link2": "",
+                "title": "Fire Force T3 Cap 15"
             }
         }
     },
