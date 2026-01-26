@@ -253,5 +253,8 @@ const audioPlaylists = {
     ],
     "82": [
         "https://www.dropbox.com/scl/fi/3vfig1wo2afaq4ybyg423/Tsuki-ga-Michibiku-Isekai-Douchuu-Season-2-OP.-2-Full-Sub-espa-ol-Rom-Reversal-Syudou.mp3?rlkey=tq0kcg5gnxsqjm333ftcxbfgz&st=7ums4zwn&raw=1"
+    ],
+    "83": [
+        "https://www.dropbox.com/scl/fi/i5wgx9wafu7o7nkmt2xr8/Mairimashita-Iruma-kun-Season-3-OP-Full-Girigiri-Ride-It-Out-Sub-Espa-ol-Romaji-AMV.mp3?rlkey=u8xvcv0u5nlwqnt51scufakh8&st=wb2mj4fm&raw=1"
     ]
 };
