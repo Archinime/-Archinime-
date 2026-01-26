@@ -11477,5 +11477,338 @@ const players = {
                 "title": "TSUKIMICHI -Moonlit Fantasy- T2 Cap 25"
             }
         }
+    },
+    "83": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1YPPDQ004jnWzPRI4ziJ5bpYzbGrG_9wt/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/16KddwhP2RV29DhcPnqIRXQINnVHgXzuX/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1cocpUNO7KO9PTRsQKNk2oQAmZJSdNRCV/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1-cFP_g3qmIwaWHmGZfV9_sH9KoxYmovs/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1k5rJDzbbWqi9TT2p6l5MXRbHiHD9R7Ws/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1gsy6kKkec6EDArka61SF-NjJvfSlukbn/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1CCl_svofOM0pKhWPTlWRJwvTXXtvth3V/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/12q-WrTlRRJQp2WZ7hL9fG_lwz3UjULEk/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1XU6fJOlcBx5lBKUWMxYwvrsGds9E_e5Q/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1uN3yn644ugGg7ct-JM-ilAkM-fd8RkV2/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1soX3JIvoLz178whWIl2LGOVJUMApcjvx/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1E74IJMCHvrgb1N1-l8-m3His07lsdxd8/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1swO8mS--eD-LaOegLHxI4Gump0HDuFom/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1lI8sWTy75iMcRGJ_cMUTXZEYlWIyznm7/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/132A1-qx6-QlgHc3Ps41apx24UFqnjBT1/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1AXvIR0jV9rWAB90d4aeNPIIEj4p_u2ki/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1Ei--JaRBfCqttApQiAlaVL00MaJWL8nL/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1W19v7E4FbFyYJ4ybKxVS5Se3eU5mZe3I/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1yJtQxpjI2bZ_ZCYwIxJQTAa4IxVS-gJR/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1gIYTissR5hNdmgqSm9ulrzk8-kqvgQdu/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1RliS52zq9-6JxkZt1usiDM5e6YO2wTup/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1Ry3x90yoNF8H53981Ly1x90nsjr2PUkg/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1VktmIbW48cg5c_Ll12GPDu8RP8kUFqcy/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T1 Cap 23"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1csyc1VSMO966yrEpDVDwCkOZbm8m5CQc/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1CK-aMRlnqQnwbLT5y6OFtRQOen6XuJne/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1rV0yaQmQx-RlXJgyOCAE_NYeuTqtLHm_/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1E9j_KVQmNhxebOHLxYVp_f0gEf3q5HHH/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1qu57Hs5anW8_Lfkekrf29Wf2UIAcIwgc/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1W3LG9LRWc6yAb_-WDHfxTxSTbIFH2VN8/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1Y8BL4nMNt2Ierohmh21MdJjAvZnt6lff/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1wNmAQg8W2zMGI889zZ2LPM-kt8L8Ivx0/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1d5SW1G_jiuWV9MS-L1aqx7LvA6PZjiK_/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1jTDOpMI7LObWDYhv0DkS5rtvn_dBLbR_/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/18x-hiOIQviTq7dZKs3utXNG-eEqMq_CU/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1Sgc7WsM78t8UsmRdVBhrheI_7xSuPm4X/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1f5H0VW67_twX6XLENKPCYhOn55A1cSH0/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1QzbeGCWp03aEJBwzlD_yVn1OC1Nqunyx/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1s_4aOwn8P0jy5YKF5k3hbw9FryUHld7R/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1QiE4X-y52WOLefk7tOXacTTjbjYH58dh/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1l7BhBI_RtYi5Kqf0Jvs5tzXKAu7Ijd4_/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1wWac3dVUBdjSv-Wc_CH_zkkgU-gNCcYr/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1zY-qmEmY6Uh67UeIhDN1os3X4Vl2Utxt/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1xUMXtIny3JTwx5D8EQRyzPjPTFXPM5de/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1-jngKZ2H-o_d1jI0Hk5ni1GD7sITYpXp/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T2 Cap 21"
+            }
+        },
+        "3": {
+            "1": {
+                "link": "https://drive.google.com/file/d/10P_8x6Em1muDZOCnwjDDBVJwmv_qVoow/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1uwNo-p-Yed_tSJncAdUVGajTVF5UABJD/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1Rcv3tpbRLk6s-AKDuUsldhiiYoTa7qNf/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1IY39iIuBUHU9vhuJYdVq6VA3eH8ohCS6/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1NLgU6n-G_uFwt8SkUhUA0ihSE-Wv11Dc/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1oQreyXTMrUFYdDXMFQ_OExl7qPXF7EqT/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/16041Q1QOl23MNUvdONNNoX8b_39afQkM/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1O9cj-nPUOkZy1OFiN9O_CQ8Oi_ndYQ-C/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1Bqfws9D9trBYQLI5MRNe5NQpJAr1rhIo/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1P8EVqmpdIh713DyIumTm_96VxE1WdiEs/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1fhTYppRnHkdHu6gN-Ad1cxurlVQXbbhq/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1lZ5m3jVJo11CAEvJqj2CohbYDkAb-t2W/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1guFuTOFNmrZoqhLI7v5bikH4vmPtTgqb/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1IrAjYXCAbwDzVjx90ZxfITVKfFe_uIOr/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1V9EzN7-9otLGNMBckqaK2SFpuGYIuKDu/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1pK9wCZ4R6NexsgXphu5RCXcFhql5Su_h/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/14hc9uJ1fst-zS3MhtPA3qIZmO1oXv0EQ/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1bsPFjkCrUdPZ6mITy2ibCFBFDct6owYv/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1nYolKOg9EvTgAysxFSGhEoIIBTsGX_SA/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/10QP5w7hMDNSn-fDeP36vLb75KvW4XQM_/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1Mh3bI0k62BQHAscYgcvdFA8AvUqCF50A/preview",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T3 Cap 21"
+            }
+        }
     }
 };
