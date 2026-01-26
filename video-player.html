@@ -13,13 +13,11 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7;
-        --secondary-color: #7b2cbf;
-        --accent-color: #ff0055;
+        --primary-color: #00fff7;   /* Celeste Fluorescente */
+        --accent-color: #ff0055;    /* Rosado Fluorescente */
         --text-color: #ffffff;
-        --glass-bg: rgba(0, 0, 0, 0.6);
+        --glass-bg: rgba(0, 0, 0, 0.85);
         --glass-border: 1px solid rgba(255, 255, 255, 0.1);
-        --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px rgba(0, 255, 247, 0.5);
     }
 
     /* --- ESTILOS GENERALES --- */
@@ -43,34 +41,39 @@
         opacity: 0.6;
     }
 
-    /* --- OVERLAY MEJORADO --- */
+    /* --- OVERLAY --- */
     #overlay {
       position: fixed;
       top: 0; left: 0; 
       width: 100%; height: 100%; 
       z-index: -5;
-      background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 90%);
-      backdrop-filter: blur(3px);
+      background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 95%);
+      backdrop-filter: blur(5px);
       pointer-events: none;
     }
     
-    /* --- CONTENEDOR PRINCIPAL --- */
+    /* --- CONTENEDOR PRINCIPAL COMPACTO --- */
     .container { 
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px 15px; 
-        position: relative; 
+        padding: 10px 10px;
+        position: relative;
         z-index: 10;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
     
-    /* NAVEGACIÓN SUPERIOR */
+    /* NAVEGACIÓN SUPERIOR (MODIFICADA) */
     .top-nav {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between; /* Separa Volver a la izq y Opciones a la der */
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     /* BOTÓN VOLVER */
@@ -78,25 +81,24 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.95rem; 
-      transition: all .3s ease;
-      cursor: pointer;
+      font-size: 0.8rem;
       background: var(--glass-bg); 
       backdrop-filter: blur(10px);
-      padding: 10px 25px;
+      padding: 6px 15px;
       border-radius: 50px;
       border: var(--glass-border);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      transition: all 0.3s ease; /* Transición suave */
     }
-    
+
+    /* EFECTO HOVER CELESTE (VOLVER) */
     .back-btn:hover {
-        background: rgba(0, 255, 247, 0.15);
-        border-color: var(--primary-color);
         box-shadow: 0 0 15px var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
         transform: translateY(-2px);
     }
    
@@ -109,9 +111,9 @@
         background: #000;
         overflow: hidden;
         z-index: 50;
-        border-radius: 16px; 
+        border-radius: 12px; 
         border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(123, 44, 191, 0.3);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
    
     .player-wrapper iframe, .player-wrapper video { 
@@ -121,226 +123,208 @@
         border: none;
     }
 
-    /* OPCIONES DE SERVIDOR */
+    /* OPCIONES DE SERVIDOR (AHORA EN LA ESQUINA SUPERIOR) */
     .options { 
-        margin-top: 20px;
-        display: flex; 
-        gap: 10px;
-        justify-content: center; 
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end; /* Alineado a la derecha */
         flex-wrap: wrap;
-        padding: 10px;
-        background: rgba(0,0,0,0.3);
-        border-radius: 20px;
-        backdrop-filter: blur(5px);
+        padding: 0; /* Sin padding extra */
+        background: transparent; /* Fondo transparente para integrarse arriba */
+        margin-bottom: 0;
     }
     
     .opt-btn { 
-        font-size: 0.9rem;
-        padding: 8px 18px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
         border: 1px solid rgba(255,255,255,0.2); 
-        background: rgba(255,255,255,0.05);
+        background: rgba(0, 0, 0, 0.6); /* Fondo semi-oscuro para legibilidad */
         color: #ddd;
         cursor: pointer;
-        border-radius: 8px;
-        transition: all 0.3s;
+        border-radius: 6px;
+        transition: all 0.2s;
         font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-        white-space: nowrap;
     }
-   
-    .opt-btn:hover {
-        background: rgba(255,255,255,0.1);
-        color: #fff;
-        border-color: #fff;
-    }
-  
+    
     .opt-btn.active { 
         border-color: var(--primary-color);
         color: #000;
         background: var(--primary-color); 
         font-weight: 700;
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
+        box-shadow: 0 0 10px var(--primary-color); /* Pequeño brillo al activo */
     }
 
-    /* TÍTULO DEL EPISODIO */
+    /* TÍTULO DEL EPISODIO (AHORA DEBAJO DEL PLAYER) */
     h1 { 
         color: #fff;
-        font-size: 1.8rem; 
-        margin: 25px 0 15px 0;
+        font-size: 1.2rem; 
+        margin: 5px 0 10px 0; /* Un poco de margen abajo */
         text-align: center;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-shadow: 0 4px 10px rgba(0,0,0,0.8);
-        line-height: 1.3;
+        font-weight: 600;
+        line-height: 1.2;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
-    
-    /* CONTROLES */
-    .controls { 
-        margin-top: 20px;
-        display: flex; 
-        justify-content: center; 
-        gap: 15px; 
-        flex-wrap: wrap;
+
+    /* --- BLOQUE DE PUBLICIDAD --- */
+    .ads-block-container {
+        margin: 5px 0;
+        padding: 5px 0;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    /* GRID INTELIGENTE PARA ADS */
+    .ads-masonry {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        justify-items: center;
         align-items: center;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .ad-slot {
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 4px;
+        padding: 2px;
+        box-sizing: border-box;
     }
     
-    /* BOTONES DE CONTROL */
+    .span-full {
+        grid-column: 1 / -1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        margin-bottom: 5px;
+    }
+    
+    /* CONTROLES (ABAJO DE LA PUBLICIDAD) */
+    .controls { 
+        display: flex;
+        justify-content: center; 
+        gap: 15px; /* Más espacio para los efectos */
+        flex-wrap: wrap;
+        margin-top: 5px;
+        padding-bottom: 40px;
+    }
+    
     .btn { 
-        padding: 14px 30px;
+        padding: 10px 25px;
         background: var(--glass-bg);
         border: var(--glass-border);
         color: #fff;
         text-decoration: none; 
         border-radius: 50px; 
-        cursor: pointer; 
-        transition: 0.3s;
-        font-weight: 600;
-        font-size: 1rem;
+        font-size: 0.9rem;
         display: inline-flex;
         align-items: center;
-        justify-content: center;
         gap: 8px;
-        backdrop-filter: blur(5px);
-        min-width: 140px;
+        transition: all 0.3s ease; /* Transición suave para el brillo */
+        font-weight: 600;
     }
     
+    /* EFECTO HOVER CELESTE (ANTERIOR / SIGUIENTE) */
+    #prevBtn:hover, #nextBtn:hover {
+        box-shadow: 0 0 20px var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        transform: scale(1.05);
+    }
+
+    /* ESTILO ESPECÍFICO DESCARGAR */
     #downloadBtn {
-        border-color: var(--accent-color);
+        border-color: rgba(255, 0, 85, 0.5);
         background: rgba(255, 0, 85, 0.1);
     }
 
+    /* EFECTO HOVER ROSADO (DESCARGAR) */
     #downloadBtn:hover {
-        background: var(--accent-color);
-        color: #fff;
-        box-shadow: 0 0 25px rgba(255, 0, 85, 0.6);
-        transform: translateY(-3px);
-    }
-   
-    .btn:not(#downloadBtn):hover { 
-        background: var(--primary-color);
-        color: #000;
-        box-shadow: 0 0 25px rgba(0, 255, 247, 0.6);
-        border-color: var(--primary-color);
-        transform: translateY(-3px);
-    }
-   
-    .btn-hidden { display: none !important;
+        box-shadow: 0 0 20px var(--accent-color);
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+        background: rgba(255, 0, 85, 0.2);
+        transform: scale(1.05);
     }
 
-    /* --- BLOQUE DE PUBLICIDAD (MASONRY COMPACTO) --- */
-    .ads-block-container {
-        margin: 40px auto 20px auto;
-        padding: 0; 
-        background: rgba(0, 0, 0, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 30px rgba(0,0,0,0.6);
-        max-width: 1000px;
-        overflow: hidden;
-    }
+    .btn-hidden { display: none !important; }
 
-    .ads-title {
-        text-align: center;
-        color: #888;
-        font-size: 0.7rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 8px 0;
-        background: rgba(255,255,255,0.03);
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    /* SISTEMA DE COLUMNAS ESTILO PERIODICO */
-    .ads-masonry {
-        column-count: 3; /* 3 Columnas por defecto (PC) */
-        column-gap: 0;
-        width: 100%;
-        line-height: 0;
-    }
-
-    .ad-slot {
-        break-inside: avoid;
-        display: inline-block;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255,255,255,0.05);
-        box-sizing: border-box; 
-        text-align: center;
-        position: relative;
-    }
-
-    .ad-slot > div, .ad-slot iframe {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .span-all {
-        column-span: all;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        padding: 10px 0; 
-        display: block;
-    }
-    
-    .ad-slot:hover {
-        background: rgba(255, 255, 255, 0.05);
-        z-index: 2; 
-    }
-
-    /* --- MEDIA QUERIES (AQUÍ ESTÁ LA CORRECCIÓN) --- */
-    
-    /* TABLETS Y PANTALLAS MEDIANAS */
-    @media (max-width: 1024px) {
-        .ads-masonry {
-            /* CAMBIO IMPORTANTE: */
-            column-count: 1; /* Forzamos 1 columna para que quepan los banners de 468px y 728px */
-        }
-    }
-
-    /* MÓVILES */
+    /* --- MEDIA QUERIES --- */
     @media (max-width: 768px) {
-        .container { padding: 15px 10px; }
-        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
+        .container { padding: 8px 5px; }
+
+        .top-nav {
+            /* En móvil mantenemos el espacio entre elementos */
+            justify-content: space-between; 
+        }
+
         .options {
-            justify-content: flex-start;
+            justify-content: flex-end;
             overflow-x: auto;
             white-space: nowrap;
-            padding: 15px;
+            /* Scroll oculto pero funcional si hay muchas opciones */
             -ms-overflow-style: none;
             scrollbar-width: none;
+            max-width: 60%; /* Evita que choque con el botón volver */
         }
         .options::-webkit-scrollbar { display: none; }
+
+        .ads-masonry {
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+
+        .span-full-mobile {
+            grid-column: 1 / -1;
+            transform-origin: center top;
+        }
+
+        .ad-slot iframe {
+            transform-origin: center center;
+        }
+
+        .banner-728 {
+            transform: scale(0.42);
+            margin: -25px 0;
+        }
+
+        .banner-468 {
+            transform: scale(0.65);
+            margin: -10px 0;
+        }
+
+        .grid-item-mobile {
+            transform: scale(0.65);
+            margin: -30px -10px;
+            max-height: 180px;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
         
-        h1 { font-size: 1.3rem; margin: 20px 0; }
-        
+        .banner-320 {
+             transform: scale(0.95);
+        }
+
+        /* CONTROLES EN GRID COMPACTO */
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
             width: 100%;
+            gap: 10px;
         }
-        #prevBtn { grid-column: 1; order: 1; min-width: auto; }
-        #nextBtn { grid-column: 2; order: 2; min-width: auto; }
         #downloadBtn { 
-            grid-column: 1 / span 2;
-            order: 3; 
-            width: 100%;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        .btn { padding: 12px; font-size: 0.9rem; }
-        
-        /* Ajuste Publicidad Móvil (redundante pero seguro) */
-        .ads-masonry {
-            column-count: 1;
-        }
-        .ad-slot {
-            padding: 10px 0;
-            border-left: none;
-            border-right: none;
+            grid-column: 1 / -1;
+            text-align: center; 
+            justify-content: center;
         }
     }
   </style>
@@ -357,58 +341,51 @@
    
     <div class="top-nav">
        <a href="index.html" id="backLink" class="back-btn">
-         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
          Volver
        </a>
+
+       <div class="options" id="serverOptions"></div>
     </div>
 
     <div class="player-wrapper" id="playerContainer"></div>
 
-    <div class="options" id="serverOptions"></div>
-
-    <h1 id="epTitle">Cargando episodio...</h1>
-
-    <div class="controls">
-        <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank" download>
-            ⬇ Descargar
-        </a>
-        <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
-    </div>
+    <h1 id="epTitle">Cargando...</h1>
 
     <div class="ads-block-container">
-        <div class="ads-title">Sponsors</div>
-        
         <div class="ads-masonry">
             
-            <div class="ad-slot span-all">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : '1f072201cddab551b2b65315f6c1643e',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                
-                   };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
+            <div class="ad-slot span-full-mobile">
+                <div class="banner-320">
+                    <script type="text/javascript">
+                        atOptions = {
+                        'key' : '6ecb40404fef8f9daf755244f9c4d753',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="https://www.highperformanceformat.com/6ecb40404fef8f9daf755244f9c4d753/invoke.js"></script>
+                </div>
             </div>
 
-            <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                     'key' : '190984de4e16fc6eded87c1cb7a9bc83',
-                    'format' : 'iframe',
-                    'height' : 600,
-                    'width' : 160,
-                    'params' : {}
+            <div class="ad-slot span-full-mobile">
+                <div class="banner-728">
+                    <script type="text/javascript">
+                        atOptions = {
+                        'key' : '1f072201cddab551b2b65315f6c1643e',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
                     };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
+                    </script>
+                    <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
+                </div>
             </div>
 
-            <div class="ad-slot">
+            <div class="ad-slot grid-item-mobile">
                 <script type="text/javascript">
                     atOptions = {
                      'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65',
@@ -416,15 +393,15 @@
                     'height' : 250,
                     'width' : 300,
                     'params' : {}
-                    };
+                     };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
             </div>
 
-            <div class="ad-slot">
+            <div class="ad-slot grid-item-mobile">
                 <script type="text/javascript">
                     atOptions = {
-                     'key' : '49281ce83eb56f120e34ad617cfd6996',
+                    'key' : '49281ce83eb56f120e34ad617cfd6996',
                     'format' : 'iframe',
                     'height' : 300,
                     'width' : 160,
@@ -433,34 +410,44 @@
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
             </div>
-
-             <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                     'key' : '1904483365c7a7ab9f83e49d32b7d237',
-                    'format' : 'iframe',
-                    'height' : 60,
-                    'width' : 468,
-                    'params' : {}
-                   };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
+            
+            <div class="ad-slot span-full-mobile">
+                <div class="banner-468">
+                    <script type="text/javascript">
+                        atOptions = {
+                        'key' : '1904483365c7a7ab9f83e49d32b7d237',
+                        'format' : 'iframe',
+                        'height' : 60,
+                        'width' : 468,
+                        'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
+                </div>
             </div>
 
-            <div class="ad-slot">
+             <div class="ad-slot grid-item-mobile">
                 <script type="text/javascript">
                     atOptions = {
-                     'key' : '6ecb40404fef8f9daf755244f9c4d753',
+                     'key' : '190984de4e16fc6eded87c1cb7a9bc83',
                     'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                    };
+                    'height' : 600,
+                    'width' : 160,
+                     'params' : {}
+                     };
                 </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/6ecb40404fef8f9daf755244f9c4d753/invoke.js"></script>
+                <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
             </div>
 
         </div>
+    </div>
+
+    <div class="controls">
+        <a id="prevBtn" class="btn btn-hidden">⏮ Ant.</a>
+        <a id="nextBtn" class="btn btn-hidden">Sig. ⏭</a>
+        <a id="downloadBtn" class="btn" href="#" target="_blank" download>
+            ⬇ Descargar
+        </a>
     </div>
 
   </div>
@@ -469,18 +456,15 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR (CORREGIDA Y ACTUALIZADA)
+    // LÓGICA DEL REPRODUCTOR (INTACTA)
     // -----------------------------------------------------------
     
     const DB = (typeof players !== 'undefined') ? players : {};
     
-    // Obtener parámetros URL
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
     const season = params.get('s');
     const episode = params.get('e');
-
-    // Lógica del botón Volver
     const backLink = document.getElementById('backLink');
     if (backLink) {
         if (animeId) {
@@ -490,7 +474,6 @@
         }
     }
 
-    // Buscar datos
     const epData = DB[animeId]?.[season]?.[episode];
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
@@ -500,19 +483,14 @@
         
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
-        if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
-        if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
+        // Textos más cortos para ahorrar espacio en móvil
+        if(epData.link) createOptionBtn("Latino", epData.link, true);
+        if(epData.link2) createOptionBtn("Sub", epData.link2, !epData.link);
         
         updateDownloadButton(initialLink);
         setupNavigation();
     } else {
-        console.error("No se encontraron datos para:", animeId, season, episode);
-        document.getElementById('epTitle').innerText = "Episodio no encontrado.";
-        document.getElementById('playerContainer').innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;flex-direction:column;gap:10px;">
-                <span>Video no disponible o enlace roto.</span>
-                <small style="color:#aaa;">Verifica el archivo video-player-data.js</small>
-            </div>`;
+        document.getElementById('epTitle').innerText = "No encontrado";
     }
 
     function generateDirectDownloadLink(url) {
@@ -538,7 +516,6 @@
     function createOptionBtn(label, url, isActive) {
         const optContainer = document.getElementById('serverOptions');
         const btn = document.createElement('button');
-        
         const isFirst = optContainer.children.length === 0;
         const shouldBeActive = isActive || isFirst;
         btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
@@ -555,9 +532,7 @@
     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
-        
         if (!url) return;
-
         const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
         if (isVideoFile && !isDrive) {
@@ -568,10 +543,7 @@
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
-            video.onerror = function() {
-                console.log("Error nativo, intentando modo iframe...");
-                loadAsIframe(url, container);
-            };
+            video.onerror = function() { loadAsIframe(url, container); };
             container.appendChild(video);
         } else {
             loadAsIframe(url, container);
@@ -602,7 +574,6 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
-          
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
@@ -613,16 +584,13 @@
                     prevBtn.classList.remove('btn-hidden');
                     prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
                 }
-
                 if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
                     const nextItem = flatList[currentIndex + 1];
                     nextBtn.classList.remove('btn-hidden');
                     nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
                 }
             }
-        } catch (e) { 
-            console.error("Error en navegación:", e);
-        }
+        } catch (e) { console.error(e); }
     }
   </script>
 </body>
