@@ -13,9 +13,9 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7;
-        --secondary-color: #7b2cbf;
-        --accent-color: #ff0055;
+        --primary-color: #00fff7; /* Cian Neón */
+        --secondary-color: #7b2cbf; /* Morado */
+        --accent-color: #ff0055; /* Rosa Neón */
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.6);
         --glass-border: 1px solid rgba(255, 255, 255, 0.1);
@@ -73,7 +73,7 @@
         margin-bottom: 20px;
     }
 
-    /* BOTÓN VOLVER */
+    /* BOTÓN VOLVER (REPARADO) */
     .back-btn { 
       display: inline-flex;
       align-items: center;
@@ -100,7 +100,7 @@
         transform: translateY(-2px);
     }
    
-    /* REPRODUCTOR */
+    /* REPRODUCTOR (Responsive Real) */
     .player-wrapper { 
         position: relative;
         padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
@@ -226,85 +226,25 @@
    
     .btn-hidden { display: none !important; }
 
-    /* --- BLOQUE DE PUBLICIDAD (MASONRY COMPACTO) --- */
-    .ads-block-container {
+    /* --- ESTILO PARA CONTENEDOR DE PUBLICIDAD --- */
+    .ad-container {
         margin: 40px auto 20px auto;
-        padding: 0; /* Sin padding interno para que los bordes toquen */
-        background: rgba(0, 0, 0, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 30px rgba(0,0,0,0.6);
-        max-width: 1000px; /* Ancho controlado */
-        overflow: hidden; /* Recorta los bordes rectos de los hijos */
-    }
-
-    .ads-title {
-        text-align: center;
-        color: #888;
-        font-size: 0.7rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 8px 0;
-        background: rgba(255,255,255,0.03);
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    /* SISTEMA DE COLUMNAS ESTILO PERIODICO */
-    .ads-masonry {
-        column-count: 3; /* 3 Columnas por defecto */
-        column-gap: 0;   /* Sin espacio entre columnas */
-        width: 100%;
-        line-height: 0;  /* Elimina espacios verticales extra */
-    }
-
-    .ad-slot {
-        break-inside: avoid; /* Evita que un anuncio se parta en dos columnas */
-        display: inline-block; /* Necesario para que funcione el column-count */
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        
-        /* Estética "Tetris" */
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255,255,255,0.05);
-        box-sizing: border-box; /* Incluye el borde en el ancho */
-        
-        /* Centrado del contenido */
-        text-align: center;
-        position: relative;
-    }
-
-    /* Centrar verticalmente el iframe dentro del slot */
-    .ad-slot > div, .ad-slot iframe {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    /* Clase especial para que el banner largo ocupe todo el ancho arriba */
-    .span-all {
-        column-span: all;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        padding: 10px 0; /* Un poco de aire para el banner principal */
-        display: block; /* Fuerza bloque para span-all */
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 1000px;
+        overflow: hidden; 
+        backdrop-filter: blur(5px);
     }
     
-    .ad-slot:hover {
-        background: rgba(255, 255, 255, 0.05);
-        z-index: 2; /* Se eleva sobre los bordes vecinos */
-    }
-
-    /* MEDIA QUERIES */
-    @media (max-width: 1024px) {
-        .ads-masonry {
-            column-count: 2; /* Tablet: 2 columnas */
-        }
-    }
-
+    /* MEDIA QUERIES (Móvil) */
     @media (max-width: 768px) {
         .container { padding: 15px 10px; }
         .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        
         .options {
             justify-content: flex-start;
             overflow-x: auto;
@@ -314,9 +254,7 @@
             scrollbar-width: none;
         }
         .options::-webkit-scrollbar { display: none; }
-        
         h1 { font-size: 1.3rem; margin: 20px 0; }
-        
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -333,16 +271,7 @@
             box-sizing: border-box;
         }
         .btn { padding: 12px; font-size: 0.9rem; }
-        
-        /* Ajuste Publicidad Móvil */
-        .ads-masonry {
-            column-count: 1; /* Móvil: 1 sola columna apilada */
-        }
-        .ad-slot {
-            padding: 10px 0; /* Un poco de aire en móvil */
-            border-left: none;
-            border-right: none;
-        }
+        .ad-container { padding: 5px; margin: 25px 0; }
     }
   </style>
 </head>
@@ -363,7 +292,8 @@
        </a>
     </div>
 
-    <div class="player-wrapper" id="playerContainer"></div>
+    <div class="player-wrapper" id="playerContainer">
+    </div>
 
     <div class="options" id="serverOptions"></div>
 
@@ -377,90 +307,30 @@
         <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
     </div>
 
-    <div class="ads-block-container">
-        <div class="ads-title">Sponsors</div>
-        
-        <div class="ads-masonry">
-            
-            <div class="ad-slot span-all">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : '1f072201cddab551b2b65315f6c1643e',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                   };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
-            </div>
+    <div class="ad-container">
+        <script type="text/javascript">
+            atOptions = {
+            'key' : '1f072201cddab551b2b65315f6c1643e',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
+    </div>
 
-            <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : '190984de4e16fc6eded87c1cb7a9bc83',
-                    'format' : 'iframe',
-                    'height' : 600,
-                    'width' : 160,
-                    'params' : {}
-                 };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
-            </div>
-
-            <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                 };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
-            </div>
-
-            <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : '49281ce83eb56f120e34ad617cfd6996',
-                    'format' : 'iframe',
-                    'height' : 300,
-                    'width' : 160,
-                    'params' : {}
-                 };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
-            </div>
-
-             <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : '1904483365c7a7ab9f83e49d32b7d237',
-                    'format' : 'iframe',
-                    'height' : 60,
-                    'width' : 468,
-                    'params' : {}
-                  };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
-            </div>
-
-            <div class="ad-slot">
-                <script type="text/javascript">
-                    atOptions = {
-                    'key' : '6ecb40404fef8f9daf755244f9c4d753',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                 };
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/6ecb40404fef8f9daf755244f9c4d753/invoke.js"></script>
-            </div>
-
-        </div>
+    <div class="ad-container">
+        <script type="text/javascript">
+            atOptions = {
+            'key' : '1904483365c7a7ab9f83e49d32b7d237',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
     </div>
 
   </div>
@@ -480,9 +350,11 @@
     const season = params.get('s');
     const episode = params.get('e');
 
-    // Lógica del botón Volver
+    // --- CORRECCIÓN 1: Lógica del botón Volver ---
+    // Esta parte asegura que si tienes el ID del anime, vuelvas al detalle de ESE anime.
     const backLink = document.getElementById('backLink');
     if (backLink) {
+        // Si hay ID de anime, vuelve al detalle, si no, al inicio
         if (animeId) {
             backLink.href = `anime-detail.html?id=${animeId}`;
         } else {
@@ -495,15 +367,18 @@
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
+        // Prioridad de enlaces
         const initialLink = epData.link || epData.link2;
+        // Cargar video inicial
         loadVideo(initialLink);
-        
+        // Botones de servidores
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
         if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-        
+        // Actualizar descarga
         updateDownloadButton(initialLink);
+        // Navegación
         setupNavigation();
     } else {
         console.error("No se encontraron datos para:", animeId, season, episode);
@@ -552,14 +427,18 @@
         optContainer.appendChild(btn);
     }
 
+    // --- CORRECCIÓN 2: Lógica de carga de Video (Soporte Iframes) ---
     function loadVideo(url) {
         const container = document.getElementById('playerContainer');
         container.innerHTML = ''; 
         
         if (!url) return;
 
+        // Detectar si es un archivo de video directo (MP4, MKV, etc)
+        // La mayoría de servidores de streaming NO son archivos directos, son embeds.
         const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
+        // Si es un archivo de video REAL y NO es Drive Preview
         if (isVideoFile && !isDrive) {
             const video = document.createElement('video');
             video.src = url;
@@ -568,25 +447,27 @@
             video.playsInline = true; 
             video.style.width = "100%";
             video.style.height = "100%";
+            // Si falla el video nativo, intentar iframe como último recurso
             video.onerror = function() {
                 console.log("Error nativo, intentando modo iframe...");
                 loadAsIframe(url, container);
             };
             container.appendChild(video);
         } else {
+            // Para todo lo demás (Fembed, Streamtape, Ok.ru, Drive, etc.) usamos IFRAME
             loadAsIframe(url, container);
         }
     }
 
     function loadAsIframe(url, container) {
         container.innerHTML = '';
+        // Limpiar por si acaso
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
         iframe.setAttribute("allowfullscreen", "true");
         iframe.style.position = "absolute";
-        iframe.style.top = "0";
-        iframe.style.left = "0";
+        iframe.style.top = "0"; iframe.style.left = "0";
         iframe.style.width = "100%";
         iframe.style.height = "100%";
         iframe.style.border = "none";
