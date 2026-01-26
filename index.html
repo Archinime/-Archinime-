@@ -14,41 +14,644 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-  <script>
-    // Crea una versión única basada en la hora actual
-    // Esto obliga al navegador a descargar el archivo nuevo SIEMPRE
-    var autoVersion = new Date().getTime(); 
-    document.write('<link rel="stylesheet" href="styles-index.css?v=' + autoVersion + '">');
-  </script>
-  <noscript><link rel="stylesheet" href="styles-index.css"></noscript>
+<style>
+  /* --- VARIABLES CYBERPUNK (Actualizadas) --- */
+  :root {
+    --neon-cyan: #00f3ff;
+    --neon-purple: #bc13fe;
+    --neon-pink: #ff0055;
+    --neon-yellow: #f1c40f;
+    --dark-bg: #050505;
+    --glass-bg: rgba(10, 12, 16, 0.75);
+    --text: #ffffff;
+    --header-height: 72px;
+  }
 
-  <style>
-    /* Estilos críticos para el loader */
-    :root { --neon-cyan: #00f3ff; --dark-bg: #050505; }
-    #page-loader {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #000; z-index: 99999;
-        display: flex; justify-content: center; align-items: center; flex-direction: column;
-        transition: opacity 0.5s ease-out, visibility 0.5s;
-    }
-    .loader-glitch {
-        font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: white;
-        text-shadow: 2px 2px 0px #ff0055, -2px -2px 0px #00f3ff;
-        animation: glitch 0.8s infinite; letter-spacing: 4px;
-    }
-    @keyframes glitch {
-        0% { text-shadow: 2px 2px 0px #ff0055, -2px -2px 0px #00f3ff; }
-        50% { text-shadow: -2px -2px 0px #ff0055, 2px 2px 0px #00f3ff; }
-        100% { text-shadow: 2px 2px 0px #ff0055, -2px -2px 0px #00f3ff; }
-    }
-  </style>
+  /* --- RESET & BASICOS --- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body { 
+    background-color: var(--dark-bg);
+    /* IMAGEN DE RESPALDO */
+    background-image: url('galaxia-morado1.avif');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- SCROLLBAR CYBERPUNK --- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #020202; }
+  ::-webkit-scrollbar-thumb { 
+    background: linear-gradient(180deg, var(--neon-purple), var(--neon-cyan)); 
+    border-radius: 4px;
+  }
+
+  /* --- LOADER --- */
+  #page-loader {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000; z-index: 99999;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    transition: opacity 0.5s ease-out, visibility 0.5s;
+  }
+  .loader-glitch {
+    font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: white;
+    text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
+    animation: glitch 0.8s infinite;
+    letter-spacing: 4px;
+  }
+  .loader-line {
+    width: 0; height: 3px; background: var(--neon-cyan); margin-top: 15px;
+    box-shadow: 0 0 10px var(--neon-cyan);
+    animation: loadLine 1.5s forwards ease-in-out;
+  }
+
+  /* --- FONDO (Video y Overlay) --- */
+  #bg-video {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: -5; opacity: 0;
+    filter: contrast(1.1) brightness(0.7);
+    transition: opacity 1.2s ease;
+    /* RESPALDO EN EL TAG VIDEO */
+    background: url('galaxia-morado1.avif') no-repeat center center / cover;
+  }
+  /* Clase para mostrar el video cuando cargue */
+  #bg-video.loaded { opacity: 1; }
+
+  #overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(188, 19, 254, 0.08) 0%, rgba(0,0,0,0.85) 90%);
+    z-index: -4; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  #scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5));
+    background-size: 100% 3px;
+    z-index: -3; pointer-events: none; opacity: 0.15;
+  }
+
+  /* --- NAVBAR CYBERPUNK --- */
+  .cyber-nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 10px 3%;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: 0.3s;
+    height: var(--header-height);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .cyber-nav::after {
+    content: ''; position: absolute; bottom: -1px;
+    left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), transparent);
+    background-size: 200% 100%;
+    animation: borderFlow 4s linear infinite;
+    opacity: 0.7;
+  }
+
+  /* LOGO */
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
+  .nav-logo img { 
+    height: 42px; width: 42px; object-fit: contain; border-radius: 8px;
+    box-shadow: 0 0 10px rgba(188, 19, 254, 0.3); transition: transform 0.3s;
+  }
+  .nav-logo:hover img { transform: rotate(10deg) scale(1.1); }
+  
+  /* NUEVA ANIMACIÓN DE TEXTO MULTICOLOR */
+  @keyframes rainbowNeon {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+  }
+
+  .nav-logo-text {
+    font-family: 'Orbitron', sans-serif; font-weight: 900; 
+    font-size: 1.4rem; letter-spacing: 1px;
+    
+    /* MODIFICACIÓN: Gradiente multicolor brillante */
+    background: linear-gradient(
+        90deg, 
+        #ff0055, /* Neon Pink */
+        #ff0000, /* Red */
+        #ff9900, /* Orange */
+        #ffff00, /* Yellow */
+        #33ff00, /* Lime */
+        #00ff99, /* Cyan-Green */
+        #00f3ff, /* Cyan */
+        #0000ff, /* Blue */
+        #9900ff, /* Purple */
+        #ff00cc, /* Magenta */
+        #ff0055  /* Back to Neon Pink */
+    );
+    background-size: 400% 400%;
+    animation: rainbowNeon 5s ease infinite; /* Animación de movimiento */
+
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  /* BUSCADOR */
+  .search-wrapper { position: relative; margin: 0 25px; flex-grow: 1; max-width: 450px; }
+  .search-input {
+    width: 100%; background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 4px;
+    padding: 10px 20px 10px 45px; color: white; outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Poppins'; font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+  .search-input:focus {
+    background: rgba(0, 0, 0, 0.6); border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.15), inset 0 0 10px rgba(0, 243, 255, 0.05);
+    transform: scale(1.02);
+  }
+  .search-icon { 
+    position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+    color: rgba(255,255,255,0.5); transition: 0.3s;
+    font-size: 0.9rem;
+  }
+  .search-input:focus + .search-icon { color: var(--neon-cyan); }
+
+  /* BOTONES DE ACCIÓN */
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  
+  .cyber-btn-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #ccc; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease; position: relative;
+    font-size: 1.1rem; overflow: visible;
+  }
+  .cyber-btn-icon::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 0%; height: 100%;
+    background: var(--neon-purple); z-index: -1; transition: 0.3s; opacity: 0.2;
+    border-radius: 8px; overflow: hidden;
+  }
+  .cyber-btn-icon:hover {
+    color: white; border-color: var(--neon-purple);
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+    transform: translateY(-2px);
+  }
+  .cyber-btn-icon:hover::before { width: 100%; }
+  
+  /* Botón Instalar (PWA) */
+  #installBtn { display: none; }
+  .install-pulse { 
+    animation: pulseBorder 2s infinite; 
+    color: var(--neon-cyan); border-color: rgba(0, 243, 255, 0.3);
+  }
+
+  /* --- NOTIFICACIONES --- */
+  .notif-wrapper { position: relative; overflow: visible; }
+
+  .notif-badge {
+    position: absolute; top: -6px; right: -6px; z-index: 10;
+    background: var(--neon-pink); min-width: 16px;
+    height: 16px; 
+    padding: 0 3px; font-size: 9px; border-radius: 10px; 
+    box-shadow: 0 0 8px var(--neon-pink); border: 1px solid #000;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .notif-dropdown {
+    position: absolute; top: 55px; right: -10px;
+    width: 360px;
+    background: #0f0f13; border: 1px solid var(--neon-purple); border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.9); opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2000; display: flex; flex-direction: column; overflow: hidden;
+  }
+  .notif-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+
+  .notif-header {
+    padding: 12px;
+    background: rgba(188, 19, 254, 0.1);
+    color: var(--neon-cyan); font-family: 'Orbitron'; font-size: 0.85rem;
+    text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: 2px;
+  }
+
+  .notif-list { max-height: 400px; overflow-y: auto; }
+  .notif-list::-webkit-scrollbar { width: 5px; }
+  .notif-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+  .notif-item {
+    display: flex; gap: 15px; padding: 12px 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s; cursor: pointer; position: relative; align-items: center;
+  }
+  .notif-item:hover { background: rgba(255,255,255,0.05); }
+
+  .notif-img-box {
+    width: 50px; height: 70px; flex-shrink: 0;
+    border-radius: 4px; overflow: hidden; position: relative;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .notif-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+  .notif-content { flex: 1; min-width: 0; }
+  .notif-header-line { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; }
+  .n-title {
+    font-size: 0.9rem; font-weight: 600; color: white;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    display: block;
+  }
+  .n-type { 
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
+    letter-spacing: 0.5px; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 5px; 
+  }
+  .n-meta { font-size: 0.75rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  .tag-final { background: #ff0000; color: white; padding: 1px 4px; border-radius: 2px; font-size: 0.55em; }
+  .empty-notif { padding: 30px; text-align: center; color: #666; font-style: italic; }
+
+  /* --- BARRA DE FILTROS --- */
+  .controls-container {
+    padding: 15px 3%; display: flex;
+    gap: 15px; flex-wrap: wrap; justify-content: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+    margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  
+  select {
+    background: rgba(10, 12, 16, 0.8); color: #bbb;
+    border: 1px solid rgba(188, 19, 254, 0.3); padding: 8px 15px;
+    border-radius: 6px; font-family: 'Orbitron', sans-serif; 
+    font-size: 0.8rem; letter-spacing: 0.5px;
+    cursor: pointer; outline: none; backdrop-filter: blur(10px);
+    transition: 0.3s; appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bc13fe' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px; padding-right: 30px; min-width: 140px;
+  }
+  select:hover, select:focus {
+    color: white;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f3ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  }
+
+  /* --- GRID DE ANIME --- */
+  .container { max-width: 1600px; margin: 0 auto; padding: 10px 20px 80px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
+
+  /* TARJETAS 3D */
+  .card {
+    position: relative; border-radius: 12px; overflow: hidden;
+    aspect-ratio: 2/3;
+    cursor: pointer;
+    transition: transform 0.1s ease-out, box-shadow 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    background: #111; transform-style: preserve-3d;
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    z-index: 2; pointer-events: none; transition: 0.3s;
+  }
+  .card:hover { z-index: 10; }
+  .card:hover::before {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.2) inset;
+  }
+
+  .card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .card:hover img { transform: scale(1.08); }
+
+  .card .info {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, #000 0%, rgba(5,5,5,0.95) 60%, transparent 100%);
+    padding: 70px 15px 15px; display: flex; flex-direction: column; gap: 4px;
+    z-index: 5; transform: translateY(10px); opacity: 0.9; transition: 0.3s;
+  }
+  .card:hover .info { transform: translateY(0); opacity: 1; }
+
+  .card .info strong {
+    font-size: 1rem; color: white; line-height: 1.2;
+    text-shadow: 0 2px 4px black;
+    font-weight: 700;
+  }
+  .card .info span {
+    font-size: 0.75rem; color: var(--neon-cyan);
+    font-weight: 600; font-family: 'Orbitron';
+    letter-spacing: 1px; display: inline-block; margin-top: 5px;
+  }
+
+  /* --- CHROMA / STAGE --- */
+  .stage { pointer-events: none; position: fixed; inset: 0; z-index: 8; }
+  #fgContainer {
+    position: absolute; pointer-events: auto; display: flex;
+    align-items: center; justify-content: center;
+    right: 20px; bottom: 20px; overflow: hidden;
+    background: transparent; border-radius: 10px;
+    filter: drop-shadow(0 0 10px rgba(0,243,255,0.2));
+  }
+  #fgCanvas, #fgVideo { width: 100%; height: 100%; display: block; object-fit: contain; }
+  
+  .play-overlay { 
+    position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+    z-index: 900; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  }
+  .play-btn {
+    padding: 15px 40px; border-radius: 4px;
+    border: 1px solid var(--neon-cyan);
+    background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); 
+    font-weight: 800; font-family: 'Orbitron'; letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    transition: 0.3s; text-transform: uppercase;
+  }
+  .play-btn:hover {
+    background: var(--neon-cyan); color: #000;
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.6);
+    transform: scale(1.05);
+  }
+
+  /* =========================================
+     MODAL DE ESTRENO/POPUP (DISEÑO MEJORADO)
+     ========================================= */
+  #eventModal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+    z-index: 99999; display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none; transition: all 0.5s ease-in-out; padding: 20px;
+  }
+  #eventModal.show { opacity: 1; pointer-events: auto; }
+
+  .event-card {
+    background: rgba(11, 12, 16, 0.95); width: 100%; max-width: 420px;
+    /* Borde brillante animado */
+    border: 1px solid transparent;
+    background-image: linear-gradient(#0b0c10, #0b0c10), linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 0 80px rgba(188, 19, 254, 0.15), 0 20px 40px rgba(0,0,0,0.8);
+    transform: scale(0.9) translateY(40px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+    display: flex; flex-direction: column; position: relative;
+  }
+  #eventModal.show .event-card { transform: scale(1) translateY(0); }
+
+  .event-visuals {
+    position: relative; width: 100%;
+    height: 260px;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    background: #000; border-bottom: 2px solid var(--neon-cyan);
+  }
+  .visual-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: center;
+    filter: blur(20px) brightness(0.5) saturate(1.2);
+    transform: scale(1.2); transition: transform 6s ease;
+  }
+  #eventModal.show .visual-bg { transform: scale(1); }
+
+  .covers-container {
+    position: relative; z-index: 2;
+    /* Cambiado para soportar positioning absoluto centrado */
+    width: 100%; height: 100%;
+    display: flex; justify-content: center;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+  }
+  
+  /* --- SEPARACIÓN DE IMAGENES --- */
+  /* NOTA: Usamos absolute + left:50% para garantizar que el centro
+     sea matemáticamente perfecto sin importar el ancho de cada imagen.
+  */
+  .cover-back {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    /* Punto de partida exacto al centro */
+    
+    width: 110px; height: 165px;
+    object-fit: cover;
+    border-radius: 8px; opacity: 0.8;
+    
+    /* Estado inicial: Centrado (translateX -50% compensa su propio ancho) */
+    transform: translateX(-50%) rotate(-10deg) scale(0.95);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;
+  }
+  .cover-front {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    /* Punto de partida exacto al centro */
+    
+    width: 130px; height: 195px;
+    object-fit: cover;
+    border-radius: 10px; border: 2px solid var(--neon-cyan);
+    
+    /* Estado inicial: Centrado */
+    transform: translateX(-50%) rotate(5deg) scale(1);
+    z-index: 5;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  /* Animación de entrada: SEPARACIÓN SIMÉTRICA */
+  /* MODIFICADO: Reducido de 80px a 70px para acercarlas un poco */
+  #eventModal.show .cover-back { 
+      transform: translateX(calc(-50% + 70px)) rotate(-10deg) scale(0.95);
+  }
+  #eventModal.show .cover-front { 
+      transform: translateX(calc(-50% - 70px)) rotate(5deg) scale(1);
+  }
+
+  .event-type-badge {
+    position: absolute; top: 15px;
+    left: 15px; z-index: 10;
+    padding: 6px 14px; border-radius: 30px;
+    font-size: 0.75rem; font-weight: 900; letter-spacing: 1.5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    text-transform: uppercase;
+    backdrop-filter: blur(5px);
+  }
+  .badge-default { background: linear-gradient(135deg, #8c52ff, #5e17eb); color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .badge-estreno { background: #ff0055; color: white; box-shadow: 0 0 15px rgba(255, 0, 85, 0.6); border: 1px solid #ff5588; }
+  .badge-prox { background: var(--neon-yellow); color: black; border: 1px solid #fff; }
+
+  /* Final Stamp - Nuevo Estilo */
+  .final-stamp {
+    position: absolute;
+    top: 60%; /* MODIFICADO: De 50% a 60% (mas abajo) */
+    left: 50%;
+    /* MODIFICADO: De -15deg a -25deg (mas inclinado) */
+    transform: translate(-50%, -50%) rotate(-25deg) scale(0);
+    z-index: 20; color: #ff0000;
+    border: 3px solid #ff0000; padding: 5px 15px;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-shadow: 0 0 15px black; background: rgba(0,0,0,0.85);
+    text-transform: uppercase; pointer-events: none;
+    box-shadow: 0 0 30px rgba(255,0,0,0.4);
+    letter-spacing: 2px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition-delay: 0.3s;
+  }
+  #eventModal.show .final-stamp { 
+    /* MODIFICADO: Asegurar que el estado activo mantenga la nueva inclinación */
+    transform: translate(-50%, -50%) rotate(-25deg) scale(1);
+  }
+
+  .event-close {
+    position: absolute;
+    top: 15px; right: 15px; z-index: 50;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.2); 
+    color: white; width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease; backdrop-filter: blur(4px);
+  }
+  .event-close:hover { 
+    background: var(--neon-pink); border-color: var(--neon-pink);
+    transform: rotate(90deg) scale(1.1); box-shadow: 0 0 15px var(--neon-pink);
+  }
+
+  .event-info {
+    background: linear-gradient(to bottom, #111, #050505);
+    padding: 25px; text-align: center; position: relative; z-index: 5;
+  }
+  .event-title {
+    font-family: 'Orbitron', sans-serif; font-size: 1.5rem;
+    font-weight: 900; 
+    color: white; margin-bottom: 8px; line-height: 1.1;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  }
+  .event-meta {
+    display: inline-block; color: var(--neon-cyan); font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase; margin-bottom: 20px;
+    background: rgba(0, 243, 255, 0.1); padding: 4px 12px; border-radius: 12px;
+    border: 1px solid rgba(0, 243, 255, 0.2); letter-spacing: 1px;
+  }
+  .event-desc {
+    color: #aaa; font-size: 0.9rem;
+    font-style: italic; margin-bottom: 25px;
+    line-height: 1.4;
+    border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;
+  }
+  .event-btn {
+    background: white; color: black; border: none;
+    padding: 14px; width: 100%;
+    border-radius: 30px;
+    font-weight: 900; font-size: 1rem;
+    font-family: 'Orbitron', sans-serif; letter-spacing: 1px;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative; overflow: hidden;
+  }
+  .event-btn::before {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    transition: 0.5s;
+  }
+  .event-btn:hover { 
+    background: var(--neon-cyan); color: #000;
+    box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px rgba(0, 243, 255, 0.4); 
+    transform: scale(1.03); 
+  }
+  .event-btn:hover::before { left: 100%; }
+
+  /* --- MODAL iOS --- */
+  .ios-modal { 
+    display: none; position: fixed;
+    bottom: 30px; left: 50%; transform: translateX(-50%); 
+    width: 90%; max-width: 340px; background: rgba(20,20,25,0.95); 
+    border: 1px solid #444; border-radius: 16px; padding: 25px;
+    z-index: 10000; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  }
+  .ios-content p { color: #ddd; margin: 10px 0; font-size: 0.95rem; }
+  .ios-content i { color: var(--neon-cyan); }
+  .ios-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #888; cursor: pointer; }
+
+  /* --- ANIMACIONES --- */
+  @keyframes glitch {
+    0% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan); }
+    20% { text-shadow: -2px 2px 0px var(--neon-pink), 2px -2px 0px var(--neon-cyan); }
+    40% { text-shadow: 2px -2px 0px var(--neon-pink), -2px 2px 0px var(--neon-cyan); }
+    60% { text-shadow: -2px -2px 0px var(--neon-pink), 2px 2px 0px var(--neon-cyan); }
+    80% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan); }
+    100% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan); }
+  }
+  @keyframes loadLine { to { width: 100%; } }
+  @keyframes borderFlow { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+  @keyframes pulseBorder {
+    0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 768px) {
+    .cyber-nav { flex-wrap: wrap; height: auto; padding: 12px 15px; gap: 10px; }
+    .nav-logo { order: 1; flex: 1; }
+    .nav-actions { order: 2; gap: 8px; }
+    .search-wrapper { order: 3; width: 100%; max-width: 100%; margin: 5px 0 0; }
+    .search-input { padding: 8px 15px 8px 40px; font-size: 0.85rem; }
+    
+    .controls-container { padding: 10px 15px; gap: 8px; justify-content: space-between; }
+    select { flex: 1 1 45%; min-width: 0; font-size: 0.75rem; padding: 6px 10px; }
+    
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 10px 80px; }
+    
+    /* Ajuste Dropdown móvil */
+    .notif-dropdown { position: fixed;
+    top: 65px; left: 10px; right: 10px; width: auto; max-width: none; }
+    
+    /* Ajuste responsive del popup nuevo */
+    .event-card { width: 90%; max-height: 90vh; overflow-y: auto; }
+    
+    /* CAMBIO MOVIL: Posicionamiento absoluto centrado */
+    .cover-back { transform: translateX(-50%) rotate(0deg) scale(0.8); }
+    .cover-front { transform: translateX(-50%) rotate(0deg) scale(0.8); }
+    
+    /* CAMBIO MOVIL: Se separan igual desde el centro (50px en vez de 60px) */
+    #eventModal.show .cover-back { transform: translateX(calc(-50% + 50px)) rotate(-8deg) scale(0.9); }
+    #eventModal.show .cover-front { transform: translateX(calc(-50% - 50px)) rotate(5deg); }
+
+    .card .info { padding: 40px 8px 8px; }
+    .card .info strong { font-size: 0.85rem; }
+    .card .info span { font-size: 0.65rem; }
+  }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .nav-logo-text { font-size: 1.1rem; }
+    .event-card { width: 95%; }
+  }
+</style>
 </head>
 <body>
 
   <div id="page-loader">
     <div class="loader-glitch">Archinime</div>
     <div style="width: 220px; height: 3px; background: #222; margin-top: 15px; overflow: hidden; border-radius: 2px;">
-      <div style="width: 100%; height: 100%; background: #00f3ff; animation: loadLine 1.5s forwards ease-in-out;"></div>
+      <div class="loader-line"></div>
     </div>
   </div>
 
@@ -80,10 +683,13 @@
           <i class="fas fa-bell"></i>
           <span id="notifBadge" class="notif-badge" style="display:none"></span>
         </button>
+        
         <div id="notifMenu" class="notif-dropdown">
-            <div class="notif-header"><i class="fas fa-network-wired"></i> TRANSMISIONES</div>
+            <div class="notif-header">
+                <i class="fas fa-network-wired"></i> TRANSMISIONES
+            </div>
             <div id="notifList" class="notif-list">
-                <div class="empty-notif" style="padding:20px; text-align:center; color:#666;">Buscando señal...</div>
+              <div class="empty-notif" style="padding:20px; text-align:center; color:#666;">Buscando señal...</div>
             </div>
         </div>
       </div>
@@ -97,21 +703,77 @@
   <div class="controls-container controls" id="controls">
     <select id="genre-select" onchange="filtro()" aria-label="Seleccionar género">
         <option value="">Todos los géneros</option>
-        <option>Acción</option><option>Aventura</option><option>Ciencia ficción</option>
-        <option>Comedia</option><option>Cyberpunk</option><option>Drama</option>
-        <option>Ecchi</option><option>Escolar</option><option>Fantasía</option>
-        <option>Harem</option><option>Horror</option><option>Isekai</option>
-        <option>Mecha</option><option>Misterio</option><option>Psicológico</option>
-        <option>Romance</option><option>Seinen</option><option>Shōnen</option>
-        <option>Slice of Life</option><option>Sobrenatural</option><option>Terror</option>
-        <option>Yuri</option><option>Yaoi</option>
-    </select>
+        <option>Acción</option>
+        <option>Animación</option>
+        <option>Aventura</option>
+        <option>Ciencia ficción</option>
+        <option>Cocina</option>
+        <option>Comedia</option>
+        <option>Comedia oscura</option>
+        <option>Cosplay</option>
+        <option>Cyberpunk</option>
+        <option>Deducción Social</option>
+        <option>Deportivo</option>
+        <option>Divulgación Científica</option>
+        <option>Drama</option>
+        <option>Ecchi</option>
+        <option>Espionaje</option>
+        <option>Escolar</option>
+        <option>Fantasía</option>
+        <option>Fantasía oscura</option>
+        <option>Familiar</option>
+        <option>Gag</option>
+        <option>Gore</option>
+        <option>Harem</option>
+        <option>Hentai</option>
+        <option>Histórico</option>
+        <option>Horror</option>
+        <option>Incesto</option>
+        <option>Infantil</option>
+        <option>Isekai</option>
+        <option>Isekai Inverso</option>
+        <option>Kaiju</option>
+        <option>Mahō Shōjo</option>
+        <option>Mecha</option>
+        <option>Militar</option>
+        <option>Mitología</option>
+        <option>Misterio</option>
+        <option>Musical</option>
+        <option>Nekketsu</option>
+        <option>Parodia</option>
+        <option>Policial</option>
+        <option>Post-apocalíptico</option>
+        <option>Psicológico</option>
+        <option>Reverse Harem</option>
+        <option>Romance</option>
+        <option>RPG</option>
+        <option>Slice of Life</option>
+        <option>Sobrenatural</option>
+        <option>Steampunk</option>
+        <option>Superhéroes</option>
+        <option>Survival</option>
+        <option>Survival Game</option>
+        <option>Suspenso</option>
+        <option>Tentáculos</option>
+        <option>Terror</option>
+        <option>Terror psicológico</option>
+        <option>Thriller</option>
+        <option>Thriller psicológico</option>
+        <option>Tokusatsu</option>
+        <option>Tragedia</option>
+        <option>Yaoi</option>
+        <option>Yuri</option>
+      </select>
 
-    <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
+      <select id="demographic-select" onchange="filtro()" aria-label="Seleccionar demografía">
         <option value="">Todas las demografías</option>
-        <option>Josei</option><option>Kodomo</option><option>Seijin</option>
-        <option>Seinen</option><option>Shōjo</option><option>Shōnen</option>
-    </select>
+        <option>Josei</option>
+        <option>Kodomo</option>
+        <option>Seijin</option>
+        <option>Seinen</option>
+        <option>Shōjo</option>
+        <option>Shōnen</option>
+      </select>
 
     <select id="rating-select" onchange="filtro()" aria-label="Seleccionar valoración">
       <option value="">⭐ RANKING GLOBAL</option>
@@ -135,7 +797,12 @@
     </div>
   </div>
 
-  <div id="decorations" aria-hidden="true" style="position:fixed; inset:0; pointer-events:none; z-index:1;"></div>
+  <div id="decorations" aria-hidden="true" style="position:fixed; inset:0; pointer-events:none; z-index:1;">
+     <svg id="star-template" class="shooting-star" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.9"></circle>
+        <rect class="shooting-tail" x="8" y="3" width="100" height="2"></rect>
+     </svg>
+  </div>
 
   <div id="iosInstallModal" class="ios-modal">
       <div class="ios-content">
@@ -147,57 +814,39 @@
       </div>
   </div>
 
-  <div id="eventModal">
-      <div class="event-card">
-          <div class="event-close" onclick="closeEventModal()"><i class="fas fa-times"></i></div>
-          <div class="event-visuals">
-             <div class="visual-bg" id="evBg"></div>
-             <div class="covers-container">
-                 <img src="" class="cover-back" id="evCoverBack">
-                 <img src="" class="cover-front" id="evCoverFront">
-             </div>
-             <div class="event-type-badge" id="evBadge">ESTRENO</div>
-             <div class="final-stamp">DISPONIBLE</div>
-          </div>
-          <div class="event-info">
-             <div class="event-meta" id="evMeta">NUEVO EPISODIO</div>
-             <h2 class="event-title" id="evTitle">Titulo Anime</h2>
-             <p class="event-desc" id="evDesc">Descripción breve...</p>
-             <button class="event-btn" id="evBtn">VER AHORA <i class="fas fa-play"></i></button>
-          </div>
-      </div>
-  </div>
-
   <script>
-    // Esta función usa la misma versión automática para los scripts
-    function loadScript(src) {
-      document.write('<script src="' + src + '?v=' + autoVersion + '"><\/script>');
-    }
-    
-    // Carga tus scripts aquí
-    loadScript('index-data.js');
-    loadScript('animaciones.js');
-    loadScript('musica_fondo.js');
-    loadScript('notification-system.js');
-    loadScript('script-index.js');
-    // Si tienes el pwa-handler en archivo aparte:
-    // loadScript('pwa-handler.js'); 
+    var version = new Date().getTime();
+    document.write('<script src="index-data.js?v=' + version + '"><\/script>');
   </script>
 
+  <script src="animaciones.js"></script>
+  <script src="musica_fondo.js"></script>
+  <script src="notification-system.js"></script>
+  <script src="script-index.js"></script>
+  
   <script>
-    /* REGISTRO SW AUTOMÁTICO */
+    // --- PWA SERVICE WORKER: AUTO-UPDATE ---
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-            .then(reg => {
-                console.log('SW Auto-Update activo');
-                // Buscar actualizaciones cada vez que se carga la página
-                reg.update(); 
-            });
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                console.log('SW Registrado: OK');
+                registration.update(); 
+                registration.onupdatefound = () => {
+                  const installingWorker = registration.installing;
+                  installingWorker.onstatechange = () => {
+                        if (installingWorker.state === 'installed') {
+                            if (navigator.serviceWorker.controller) {
+                                console.log('Nueva versión encontrada. Recargando...');
+                                window.location.reload();
+                            }
+                        }
+                    };
+                };
+            }).catch(e => console.log('SW Error:', e));
         });
     }
 
-    /* PWA INSTALL HANDLER */
+    // --- PWA INSTALL HANDLER ---
     let deferredPrompt;
     const installBtn = document.getElementById('installBtn');
     const iosModal = document.getElementById('iosInstallModal');
@@ -205,10 +854,12 @@
     const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
     const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
     const isMobile = () => window.matchMedia('(max-width: 780px)').matches;
-
     function checkInstallVisibility() {
-        if (isMobile() && !isInStandaloneMode()) installBtn.style.display = 'flex';
-        else installBtn.style.display = 'none';
+        if (isMobile() && !isInStandaloneMode()) {
+            installBtn.style.display = 'flex';
+        } else {
+            installBtn.style.display = 'none';
+        }
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -216,41 +867,91 @@
       deferredPrompt = e;
       checkInstallVisibility();
     });
-
-    if(installBtn) {
-        installBtn.addEventListener('click', () => {
-            if (isIos()) iosModal.style.display = 'block';
-            else if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => deferredPrompt = null);
-            } else {
-                alert("App ya instalada o no soportada.");
-            }
-        });
-    }
-    
+    installBtn.addEventListener('click', () => {
+        if (isIos()) {
+            iosModal.style.display = 'block';
+        } else if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((res) => {
+                deferredPrompt = null;
+            });
+        } else {
+            alert("App ya instalada o no soportada en este navegador.");
+        }
+    });
     function closeIosModal() { iosModal.style.display = 'none'; }
     window.addEventListener('DOMContentLoaded', checkInstallVisibility);
-
-    /* INICIO Y VIDEO */
+    window.addEventListener('resize', checkInstallVisibility);
+    // --- LOADER & VIDEO AUTOPLAY FIX ---
     window.addEventListener('load', () => {
       const loader = document.getElementById('page-loader');
       const bgVideo = document.getElementById('bg-video');
-      
-      if(bgVideo) {
-          bgVideo.muted = true;
-          bgVideo.play().catch(() => {
-              document.body.addEventListener('click', () => bgVideo.play(), {once:true});
-          });
-      }
+
+      // Función forzada para reproducir video
+      const forcePlayVideo = () => {
+        if (bgVideo) {
+            bgVideo.muted = true; // Crucial para navegadores modernos
+            let playPromise = bgVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    bgVideo.classList.add('loaded'); 
+                })
+                .catch(error => {
+                    console.log("Autoplay bloqueado. Esperando interacción.");
+                    // Listener al primer toque/click
+                    document.body.addEventListener('click', () => {
+                        bgVideo.play();
+                        bgVideo.classList.add('loaded');
+                    }, { once: true });
+                    document.body.addEventListener('touchstart', () => {
+                        bgVideo.play();
+                        bgVideo.classList.add('loaded');
+                    }, { once: true });
+                });
+            }
+        }
+      };
+      forcePlayVideo();
+
+      // Ocultar Loader
       setTimeout(() => { 
         loader.style.opacity = '0'; 
         setTimeout(() => {
             loader.style.visibility = 'hidden';
-            if (window.startNotificationSequence) window.startNotificationSequence();
+            if (window.startNotificationSequence) {
+                window.startNotificationSequence();
+            }
         }, 500);
       }, 800);
     });
+
+    // --- EFECTO TILT 3D PARA CARDS ---
+    const gridObserver = new MutationObserver(() => {
+       const cards = document.querySelectorAll('.card');
+       cards.forEach(card => {
+          if(card.dataset.tiltInit) return;
+          card.dataset.tiltInit = "true";
+          
+          card.addEventListener('mousemove', (e) => {
+             const rect = card.getBoundingClientRect();
+             const x = e.clientX - rect.left;
+             const y = e.clientY - rect.top;
+             const centerX = rect.width / 2;
+             const centerY = rect.height / 2;
+             const rotateX = ((y - centerY) / centerY) * -8;
+             const rotateY = ((x - centerX) / centerX) * 8;
+             
+             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+          });
+          
+          card.addEventListener('mouseleave', () => {
+             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+          });
+       });
+    });
+    const gridEl = document.getElementById('grid');
+    if(gridEl) gridObserver.observe(gridEl, { childList: true });
   </script>
+
 </body>
 </html>
