@@ -4128,7 +4128,7 @@ const data = {
                         "title": "Capítulo 6"
                     }
                 ],
-                "name": "Especial 1 - 6"
+                "name": "Especial 1"
             },
             {
                 "num": 4,
@@ -4196,7 +4196,7 @@ const data = {
                         "title": "Capítulo 6"
                     }
                 ],
-                "name": "Especial 7 - 12"
+                "name": "Especial 2"
             },
             {
                 "num": 6,
@@ -4225,6 +4225,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
                     }
                 ],
                 "name": "Temporada 3"
