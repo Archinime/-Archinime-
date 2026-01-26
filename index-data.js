@@ -1454,11 +1454,11 @@ const animes = [
             "Slice of Life",
             "Shōjo"
         ],
-        "lastUpdate": 1768944926256,
+        "lastUpdate": 1769444192195,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/e5dwv24trzd8zpcexo20i/asfafsaf.avif?rlkey=3jjrm0xy6q0xui8e6cwrgqs0e&st=xhbepgng&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 4",
+        "latestEpTitle": "Capítulo 5",
         "isFinal": false,
         "aliases": [
             "Hanazakari no kimitachi e"
