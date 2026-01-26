@@ -224,19 +224,20 @@
         transform: translateY(-3px);
     }
    
-    .btn-hidden { display: none !important; }
+    .btn-hidden { display: none !important;
+    }
 
     /* --- BLOQUE DE PUBLICIDAD (MASONRY COMPACTO) --- */
     .ads-block-container {
         margin: 40px auto 20px auto;
-        padding: 0; /* Sin padding interno para que los bordes toquen */
+        padding: 0; 
         background: rgba(0, 0, 0, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         backdrop-filter: blur(10px);
         box-shadow: 0 0 30px rgba(0,0,0,0.6);
-        max-width: 1000px; /* Ancho controlado */
-        overflow: hidden; /* Recorta los bordes rectos de los hijos */
+        max-width: 1000px;
+        overflow: hidden;
     }
 
     .ads-title {
@@ -252,55 +253,53 @@
 
     /* SISTEMA DE COLUMNAS ESTILO PERIODICO */
     .ads-masonry {
-        column-count: 3; /* 3 Columnas por defecto */
-        column-gap: 0;   /* Sin espacio entre columnas */
+        column-count: 3; /* 3 Columnas por defecto (PC) */
+        column-gap: 0;
         width: 100%;
-        line-height: 0;  /* Elimina espacios verticales extra */
+        line-height: 0;
     }
 
     .ad-slot {
-        break-inside: avoid; /* Evita que un anuncio se parta en dos columnas */
-        display: inline-block; /* Necesario para que funcione el column-count */
+        break-inside: avoid;
+        display: inline-block;
         width: 100%;
         margin: 0;
         padding: 0;
-        
-        /* Estética "Tetris" */
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255,255,255,0.05);
-        box-sizing: border-box; /* Incluye el borde en el ancho */
-        
-        /* Centrado del contenido */
+        box-sizing: border-box; 
         text-align: center;
         position: relative;
     }
 
-    /* Centrar verticalmente el iframe dentro del slot */
     .ad-slot > div, .ad-slot iframe {
         display: inline-block;
         vertical-align: middle;
     }
 
-    /* Clase especial para que el banner largo ocupe todo el ancho arriba */
     .span-all {
         column-span: all;
         border-bottom: 1px solid rgba(255,255,255,0.05);
-        padding: 10px 0; /* Un poco de aire para el banner principal */
-        display: block; /* Fuerza bloque para span-all */
+        padding: 10px 0; 
+        display: block;
     }
     
     .ad-slot:hover {
         background: rgba(255, 255, 255, 0.05);
-        z-index: 2; /* Se eleva sobre los bordes vecinos */
+        z-index: 2; 
     }
 
-    /* MEDIA QUERIES */
+    /* --- MEDIA QUERIES (AQUÍ ESTÁ LA CORRECCIÓN) --- */
+    
+    /* TABLETS Y PANTALLAS MEDIANAS */
     @media (max-width: 1024px) {
         .ads-masonry {
-            column-count: 2; /* Tablet: 2 columnas */
+            /* CAMBIO IMPORTANTE: */
+            column-count: 1; /* Forzamos 1 columna para que quepan los banners de 468px y 728px */
         }
     }
 
+    /* MÓVILES */
     @media (max-width: 768px) {
         .container { padding: 15px 10px; }
         .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -334,12 +333,12 @@
         }
         .btn { padding: 12px; font-size: 0.9rem; }
         
-        /* Ajuste Publicidad Móvil */
+        /* Ajuste Publicidad Móvil (redundante pero seguro) */
         .ads-masonry {
-            column-count: 1; /* Móvil: 1 sola columna apilada */
+            column-count: 1;
         }
         .ad-slot {
-            padding: 10px 0; /* Un poco de aire en móvil */
+            padding: 10px 0;
             border-left: none;
             border-right: none;
         }
@@ -390,6 +389,7 @@
                     'height' : 90,
                     'width' : 728,
                     'params' : {}
+                
                    };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
@@ -398,12 +398,12 @@
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = {
-                    'key' : '190984de4e16fc6eded87c1cb7a9bc83',
+                     'key' : '190984de4e16fc6eded87c1cb7a9bc83',
                     'format' : 'iframe',
                     'height' : 600,
                     'width' : 160,
                     'params' : {}
-                 };
+                    };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
             </div>
@@ -411,12 +411,12 @@
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = {
-                    'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65',
+                     'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65',
                     'format' : 'iframe',
                     'height' : 250,
                     'width' : 300,
                     'params' : {}
-                 };
+                    };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
             </div>
@@ -424,12 +424,12 @@
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = {
-                    'key' : '49281ce83eb56f120e34ad617cfd6996',
+                     'key' : '49281ce83eb56f120e34ad617cfd6996',
                     'format' : 'iframe',
                     'height' : 300,
                     'width' : 160,
                     'params' : {}
-                 };
+                    };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
             </div>
@@ -437,12 +437,12 @@
              <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = {
-                    'key' : '1904483365c7a7ab9f83e49d32b7d237',
+                     'key' : '1904483365c7a7ab9f83e49d32b7d237',
                     'format' : 'iframe',
                     'height' : 60,
                     'width' : 468,
                     'params' : {}
-                  };
+                   };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
             </div>
@@ -450,12 +450,12 @@
             <div class="ad-slot">
                 <script type="text/javascript">
                     atOptions = {
-                    'key' : '6ecb40404fef8f9daf755244f9c4d753',
+                     'key' : '6ecb40404fef8f9daf755244f9c4d753',
                     'format' : 'iframe',
                     'height' : 50,
                     'width' : 320,
                     'params' : {}
-                 };
+                    };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/6ecb40404fef8f9daf755244f9c4d753/invoke.js"></script>
             </div>
@@ -602,6 +602,7 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
+          
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
