@@ -5448,32 +5448,32 @@ const players = {
             "1": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1IH8UZnIm3hwi4D3wD5oQULhvE-KH__oA/preview",
-                "title": "One Punch-Man Especial 1 - 6 Cap 1"
+                "title": "One Punch-Man Especial 1: Capítulo 1"
             },
             "2": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1RY1u0rviZhDYSqXE9mPkhGOqld_-Doyz/preview",
-                "title": "One Punch-Man Especial 1 - 6 Cap 2"
+                "title": "One Punch-Man Especial 1: Capítulo 2"
             },
             "3": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1fLNJ8S9LOH-8gN4MZU4ijVlDPDBpmtXm/preview",
-                "title": "One Punch-Man Especial 1 - 6 Cap 3"
+                "title": "One Punch-Man Especial 1: Capítulo 3"
             },
             "4": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1a3jHY7zMqjRjAsjPFZdc9BmqN6gTgGyo/preview",
-                "title": "One Punch-Man Especial 1 - 6 Cap 4"
+                "title": "One Punch-Man Especial 1: Capítulo 4"
             },
             "5": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1NVajIQo1UQUGGIfXCdUhJpp4rI9mwZYj/preview",
-                "title": "One Punch-Man Especial 1 - 6 Cap 5"
+                "title": "One Punch-Man Especial 1: Capítulo 5"
             },
             "6": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1Fs5dCGVynPnOs3FzPCDH594U_w66fMVs/preview",
-                "title": "One Punch-Man Especial 1 - 6 Cap 6"
+                "title": "One Punch-Man Especial 1: Capítulo 6"
             }
         },
         "4": {
@@ -5542,32 +5542,32 @@ const players = {
             "1": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1cGvCOOP8rnPNTSdRHGSXDQvr36MAGNCJ/preview",
-                "title": "One Punch-Man Especial 7 - 12 Cap 1"
+                "title": "One Punch-Man Especial 2: Capítulo 1"
             },
             "2": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1lx0QPfh8r4dPQc1mu4DrgB69Pcb1EMb4/preview",
-                "title": "One Punch-Man Especial 7 - 12 Cap 2"
+                "title": "One Punch-Man Especial 2: Capítulo 2"
             },
             "3": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1Fgt6AxPZi6NgcbBk4YJLQewfSg_Spc6m/preview",
-                "title": "One Punch-Man Especial 7 - 12 Cap 3"
+                "title": "One Punch-Man Especial 2: Capítulo 3"
             },
             "4": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1TGo8vmNavyrX_rIE9BPtgHGPmdfMKfnt/preview",
-                "title": "One Punch-Man Especial 7 - 12 Cap 4"
+                "title": "One Punch-Man Especial 2: Capítulo 4"
             },
             "5": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/17bl0r6Cxxad-oF8A0c0jx9P8bGzMkjG6/preview",
-                "title": "One Punch-Man Especial 7 - 12 Cap 5"
+                "title": "One Punch-Man Especial 2: Capítulo 5"
             },
             "6": {
                 "link": "",
                 "link2": "https://drive.google.com/file/d/1PbTuaLRZz6a1sC6cRgtRt0Zjpi0KcCXS/preview",
-                "title": "One Punch-Man Especial 7 - 12 Cap 6"
+                "title": "One Punch-Man Especial 2: Capítulo 6"
             }
         },
         "6": {
@@ -5610,6 +5610,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1YmcHS0TxL-puzmgD2iFh6LYbmgzIYP-n/preview",
                 "link2": "",
                 "title": "One Punch-Man T3 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/159tuRfNL3KSmwXVMJ5UKaH2hAQbne89U/preview",
+                "link2": "",
+                "title": "One Punch-Man T3 Cap 9"
             }
         }
     },
