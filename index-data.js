@@ -1565,5 +1565,30 @@ const animes = [
         "aliases": [
             "Tsuki ga Michibiku Isekai Dōchū"
         ]
+    },
+    {
+        "id": 83,
+        "title": "Mairimashita! Iruma-kun",
+        "img": "https://www.dropbox.com/scl/fi/1jwtfdr7fniisbyk86ufq/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769436697375-1769436697376-1.avif?rlkey=7ykuw4c34w1dkr6wlnt2hmx82&st=nbyyeq8a&raw=1",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Escolar",
+            "Fantasía",
+            "Isekai",
+            "Sobrenatural",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769437840855,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/oqkpyyqku4fr3ghwhzcr0/iruma3.avif?rlkey=g4yh1imo1v86ubsaeb4k541nk&st=2yuirrws&raw=1",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 21",
+        "isFinal": true,
+        "aliases": [
+            "Welcome to Demon School! Iruma-kun"
+        ]
     }
 ];
