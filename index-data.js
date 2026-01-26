@@ -686,11 +686,11 @@ const animes = [
             "Superhéroes",
             "Seinen"
         ],
-        "lastUpdate": 1768943974219,
+        "lastUpdate": 1769402807866,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/1r0djgkxmptdfe2ltkbk1/onepunch3.jpg?rlkey=4e2i0r1cvl5ufsh5f41fa2sqm&st=woghk9gy&raw=1",
         "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 8",
+        "latestEpTitle": "Capítulo 9",
         "isFinal": false,
         "aliases": [
             "One-Punch Man"
