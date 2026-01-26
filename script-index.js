@@ -8,12 +8,14 @@ function render(list) {
     if (!list || list.length === 0) {
         grid.innerHTML = `
         <div class="no-results" role="status" aria-live="polite">
-        <div class="title shimmer">¡Ups! No se encontraron resultados que coincidan con la búsqueda.</div>
-        <div class="subtitle">¿No lo encuentras? Puede que lo hayas escrito con un error o que todavía no lo haya subido.</div>
+        <div class="title shimmer">¡Ups!
+        No se encontraron resultados que coincidan con la búsqueda.</div>
+        <div class="subtitle">¿No lo encuentras?
+        Puede que lo hayas escrito con un error o que todavía no lo haya subido.</div>
         <div class="sparkles"><button class="btn-reset" id="btn-reset">Entiendo</button></div>
         </div>
     `;
-        const btn = document.getElementById('btn-reset');
+    const btn = document.getElementById('btn-reset');
         if (btn) btn.addEventListener('click', () => {
         document.getElementById('search').value = '';
         document.getElementById('genre-select').value = '';
@@ -22,7 +24,7 @@ function render(list) {
         filtro();
         document.getElementById('search').focus();
         });
-        return;
+    return;
     }
 
     // Render sencillo
@@ -36,7 +38,8 @@ function render(list) {
 
 function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
 
-function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
+function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t);
+    t=setTimeout(()=>fn(...a), wait); }; }
 
 const debouncedFiltro = debounce(filtro, 200);
 function normalizeText(s){
@@ -47,7 +50,8 @@ function normalizeText(s){
     }
 }
 
-function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []); const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
+function getBestTitleForSort(a){ const titles = [a.title].concat(a.aliases || []);
+    const norm = titles.map(t=>normalizeText(t)); norm.sort(); return norm[0]; }
 
 function filtro(){
     const qRaw = document.getElementById('search').value || '';
@@ -66,7 +70,8 @@ function filtro(){
     if (cat==='excellent') byRating = a.rating >= 4.8;
     else if (cat==='good') byRating = a.rating >= 4.6 && a.rating < 4.8;
     else if (cat==='regular') byRating = a.rating < 4.6;
-    return matchesText && byGenre && byDemo && byRating;
+   
+     return matchesText && byGenre && byDemo && byRating;
     });
     let resultList = filtrados.slice();
     if (qn) {
@@ -78,7 +83,8 @@ function filtro(){
         if (aStarts !== bStarts) return aStarts ? -1 : 1;
         const na = getBestTitleForSort(A); const 
         nb = getBestTitleForSort(B);
-        return na < nb ? -1 : na > nb ? 1 : 0;
+        return na 
+        < nb ? -1 : na > nb ? 1 : 0;
     });
     } else {
     resultList.sort((A,B)=> normalizeText(A.title) < normalizeText(B.title) ? -1 : normalizeText(A.title) > normalizeText(B.title) ? 1 : 0);
@@ -89,7 +95,8 @@ function filtro(){
 }
 
 // inicial -> orden aleatorio en la grid
-function shuffleArray(arr){ const a = arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function shuffleArray(arr){ const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 if (typeof animes !== 'undefined') {
     render(shuffleArray(animes));
@@ -129,29 +136,27 @@ window.addEventListener('DOMContentLoaded', () => {
     try { video.preload = video.getAttribute('preload') || 'metadata'; } catch(e){ console.warn(e); }
     video.muted = true; video.playsInline = true;
     const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
-    overlay.addEventListener('transitionend', (ev) => { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; });
+    overlay.addEventListener('transitionend', (ev) => 
+    { if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; });
     video.addEventListener('playing', () => { revealVideo(); }, { once: true });
     video.addEventListener('canplaythrough', () => { video.play().catch(()=>{}); }, { once: true });
-    video.addEventListener('loadeddata', () => { video.play().catch(()=>{}); }, { once: true });
+    video.addEventListener('loadeddata', () => { video.play().catch(()=>{});
+    }, { once: true });
     }
 });
 
 /* ----------------------------
-   Lógica de Música: 
-   Inicio Aleatorio -> Luego Secuencial
+   Lógica de Música
 ---------------------------- */
 window.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('bg-music');
     const hints = getPerformanceHints();
     
-    // Si no hay música cargada desde musica_fondo.js, salimos
     if (typeof musicList === 'undefined' || musicList.length === 0) return;
 
-    // 1. Elegimos un índice aleatorio solo para la primera canción
     let currentMusicIndex = Math.floor(Math.random() * musicList.length);
 
     function playByIndex(idx) {
-        // Aseguramos que el índice esté dentro del rango (bucle)
         currentMusicIndex = ((idx % musicList.length) + musicList.length) % musicList.length;
         audio.src = musicList[currentMusicIndex];
         audio.load();
@@ -164,18 +169,15 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Cuando termina la canción, pasamos a la SIGUIENTE (+1) en orden
     audio.addEventListener('ended', ()=> { 
         currentMusicIndex = currentMusicIndex + 1; 
         playByIndex(currentMusicIndex); 
     });
-
-    // Reproducir la primera (que fue aleatoria)
     playByIndex(currentMusicIndex);
 });
 
-// función utilitaria para abrir en nueva pestaña
-function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus(); }catch(e){} }
+function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus();
+    }catch(e){} }
 
 /* ----------------------------
     Chroma + FG logic
@@ -331,7 +333,8 @@ function processFrame(video, infoObj){
     if (!offCtx) return;
     try { offCtx.drawImage(video, 0, 0, off.width, off.height);
     } catch (err) {
-    usingChroma = false; fgCanvas.style.display = 'none'; fgVideo.style.display = 'block';
+    usingChroma = false; fgCanvas.style.display = 'none';
+    fgVideo.style.display = 'block';
     fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
     return;
     }
@@ -342,7 +345,8 @@ function processFrame(video, infoObj){
     fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
     return;
     }
-    const settings = infoObj && infoObj.preset ? infoObj.preset : { threshold:0.4, diff:30, soft:30 };
+    const settings = infoObj && infoObj.preset ?
+    infoObj.preset : { threshold:0.4, diff:30, soft:30 };
     const keyColor = infoObj && infoObj.keyColor ? infoObj.keyColor : 'green';
     const processed = applyChromaKey(frame, settings, keyColor);
     offCtx.putImageData(processed, 0, 0);
@@ -361,11 +365,13 @@ function stopChromaInterval(){
     if (chromaIntervalId) { clearInterval(chromaIntervalId); chromaIntervalId = null; }
 }
 
-function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter'); }
+function showContainer(){ fgContainer.style.display = 'flex'; fgContainer.classList.remove('exit'); fgContainer.classList.add('enter');
+}
 function hideContainerInstantlyForTransition(){ fgContainer.classList.remove('enter'); fgContainer.classList.add('exit'); }
 
 function scheduleNextVideo(afterSeconds = 3, excludeId = null){
-    if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null; }
+    if (scheduledTimer){ clearTimeout(scheduledTimer); scheduledTimer = null;
+    }
     hideContainerInstantlyForTransition();
     scheduledTimer = setTimeout(()=>{ const next = pickRandomVideo(excludeId); if (!next) return; playVideoClip(next); }, afterSeconds*1000);
 }
@@ -404,7 +410,6 @@ function resizeFireCanvas(){
 }
 window.addEventListener('resize', resizeFireCanvas, {passive:true});
 setTimeout(resizeFireCanvas, 120);
-
 function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
 const hints = getPerformanceHints();
 const rect = fgContainer.getBoundingClientRect();
@@ -418,7 +423,8 @@ const targetFps = hints.processingScale >= 0.85 ? 50 : hints.processingScale >= 
 const frameInterval = 1000 / targetFps;
 
 const particles = [];
-function rnd(min, max){ return Math.random()*(max-min)+min; }
+function rnd(min, max){ return Math.random()*(max-min)+min;
+}
 
 for (let i = 0; i < effectiveCount; i++) {
 const angle = rnd(0, Math.PI*2);
@@ -436,7 +442,6 @@ particles.push({
 
 const safeTimeoutMs = Math.round(duration + 400);
 const start = performance.now();
-
 return new Promise(resolve => {
 let lastFrameTime = 0;
 let finished = false;
@@ -469,7 +474,8 @@ function frame(now){
         p.y += p.vy * (dt/16.67);
         p.vy += 0.16 * (dt/16.67);
 
-        const alpha = Math.max(0, Math.min(1, lifeRatio));
+        const 
+        alpha = Math.max(0, Math.min(1, lifeRatio));
         fctx.globalAlpha = alpha;
         fctx.beginPath();
         fctx.fillStyle = p.color;
@@ -480,7 +486,7 @@ function frame(now){
         fctx.fillStyle = p.color;
         fctx.arc(p.x, p.y, (p.radius * 5) * (0.22 + (1 - lifeRatio) * 0.9), 0, Math.PI*2);
         fctx.fill();
-    }
+        }
 
     fctx.globalAlpha = 1;
     if (t < duration) {
@@ -495,13 +501,15 @@ function frame(now){
     } catch (err) {
     finished = true;
     clearTimeout(safeTimer);
-    try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+    try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+    } catch(e){}
     resolve();
     }
 }
 try { requestAnimationFrame(frame); } catch (err) {
     clearTimeout(safeTimer);
-    try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height); } catch(e){}
+    try { fctx.clearRect(0,0,fireCanvas.width,fireCanvas.height);
+    } catch(e){}
     resolve();
 }
 });
@@ -512,7 +520,8 @@ async function doFireworkThenHide(){
     isAnimatingExplosion = true;
     try {
     await new Promise(r => setTimeout(r, 8));
-    try { fgVideo.pause(); } catch(e){}
+    try { fgVideo.pause();
+    } catch(e){}
     const rect = fgContainer.getBoundingClientRect();
     const cx = rect.width / 2;
     const cy = rect.height / 2;
@@ -547,7 +556,8 @@ async function playVideoClip(infoObj){
     fgVideo.load();
     const onMeta = () => {
     fgVideo.removeEventListener('loadedmetadata', onMeta);
-    if (infoObj.id === 'hola') { fgContainer.style.bottom = '0px'; }
+    if (infoObj.id === 'hola') { fgContainer.style.bottom = '0px';
+    }
     else { fgContainer.style.bottom = '20px'; }
     placeRandomSide(infoObj);
     adjustContainerToVideo(fgVideo, infoObj);
@@ -617,7 +627,7 @@ document.addEventListener('visibilitychange', ()=> {
 {passive:true});
 
 /* ----------------------------
-    POPUP MÓVIL
+    POPUP MÓVIL (FIX: Estilos aplicados en CSS)
     ---------------------------- */
 (function mobileSelectPopups() {
     const mobileQ = () => window.matchMedia('(max-width:780px)').matches;
@@ -632,18 +642,31 @@ document.addEventListener('visibilitychange', ()=> {
         try { activePopup.remove(); } catch(e){}
         activePopup = null;
     }
-    if (outsideListener) { document.removeEventListener('pointerdown', outsideListener, true); outsideListener = null; }
+    if 
+    (outsideListener) { document.removeEventListener('pointerdown', outsideListener, true); outsideListener = null; }
     if (resizeListener) { window.removeEventListener('resize', resizeListener); resizeListener = null; }
     if (scrollListener) { window.removeEventListener('scroll', scrollListener, true); scrollListener = null; }
     }
 
     function createPopupFor(selectEl) {
     selectEl.addEventListener('click', function onClick(e){
-        if (!mobileQ()) return; 
+        if (!mobileQ()) return;
         e.preventDefault();
         e.stopPropagation();
         openPopupFor(selectEl);
     });
+    // Añadir soporte para Touchend si el click falla en algunos móviles
+    selectEl.addEventListener('touchend', function onTouch(e){
+        if (!mobileQ()) return;
+        // Pequeño delay para no interferir con scroll
+        setTimeout(() => {
+            if (document.activeElement === selectEl) return;
+             e.preventDefault();
+             e.stopPropagation();
+             openPopupFor(selectEl);
+        }, 10);
+    }, {passive:false});
+
     selectEl.addEventListener('keydown', (e) => {
         if (!mobileQ()) return;
         if (e.key === 'Enter' || e.key === ' ') {
@@ -659,20 +682,19 @@ document.addEventListener('visibilitychange', ()=> {
     const docEl = document.documentElement;
     const winW = Math.max(docEl.clientWidth || 0, window.innerWidth || 0);
     const winH = Math.max(docEl.clientHeight || 0, window.innerHeight || 0);
-
     const popup = document.createElement('div');
-    popup.className = 'mobile-select-popup';
+    popup.className = 'mobile-select-popup'; // CLASE IMPORTANTE (Ahora tiene CSS)
     popup.setAttribute('role','listbox');
     popup.setAttribute('aria-label', selectEl.getAttribute('aria-label') || 'Opciones');
 
     const pad = 8;
-    const maxHeight = window.matchMedia('(max-width:420px)').matches ? 120 : 160;
+    const maxHeight = window.matchMedia('(max-width:420px)').matches ? 200 : 300;
     popup.style.maxHeight = maxHeight + 'px';
     const width = Math.min(rect.width, Math.max(120, winW - 24));
-    popup.style.minWidth = Math.max(110, width) + 'px';
+    popup.style.minWidth = Math.max(150, width) + 'px';
 
     let top = rect.bottom + 6;
-    const estimatedHeight = Math.min(maxHeight, (selectEl.options ? selectEl.options.length * 36 : maxHeight));
+    const estimatedHeight = Math.min(maxHeight, (selectEl.options ? selectEl.options.length * 40 : maxHeight));
     if (top + estimatedHeight + pad > winH) {
         top = rect.top - estimatedHeight - 6;
         if (top < pad) top = pad;
@@ -692,6 +714,7 @@ document.addEventListener('visibilitychange', ()=> {
 
         d.addEventListener('click', (ev) => {
         ev.stopPropagation();
+      
         try {
             selectEl.value = opt.value;
             Array.from(selectEl.options).forEach(o => o.selected = (o.value === opt.value));
@@ -700,6 +723,7 @@ document.addEventListener('visibilitychange', ()=> {
         } catch(e){}
         closePopup();
             try { selectEl.focus();
+  
         } catch(e){}
         });
         d.addEventListener('keydown', (ev) => {
@@ -719,13 +743,14 @@ document.addEventListener('visibilitychange', ()=> {
             try { selectEl.focus(); } catch(e){}
         }
         });
-        popup.appendChild(d);
+    popup.appendChild(d);
     });
 
     document.body.appendChild(popup);
     activePopup = popup;
     const selected = popup.querySelector('.opt[aria-selected="true"]') || popup.querySelector('.opt');
-    if (selected) { selected.focus(); popup.scrollTop = Math.max(0, selected.offsetTop - 8);
+    if (selected) { selected.focus();
+        popup.scrollTop = Math.max(0, selected.offsetTop - 8);
     }
 
     outsideListener = function outsideHandler(ev){
@@ -752,9 +777,9 @@ document.addEventListener('visibilitychange', ()=> {
         const el = document.getElementById(id);
         if(el) createPopupFor(el);
         });
-        } catch(e) {
+    } catch(e) {
         console.warn('mobileSelectPopups init error', e);
-        }
+    }
     }
 
     window.addEventListener('resize', function(){
