@@ -847,12 +847,12 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1768755673346,
-        "updateType": "Ninguna",
+        "lastUpdate": 1769402924356,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/mtki74k5zzzywfdegb4ir/dfffffg.jpg?rlkey=g563wasphqjhhyep83qnq548r&st=9uw7j6kq&raw=1",
         "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 12",
-        "isFinal": false
+        "latestEpTitle": "Capítulo 13",
+        "isFinal": true
     },
     {
         "id": 50,
