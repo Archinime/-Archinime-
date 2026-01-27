@@ -4,10 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   
-  <title>Cargando Anime...</title>
-  <meta name="description" content="Ver anime online en alta calidad.">
-  <meta property="og:title" content="Archinime">
+  <title>Cargando Anime... - Archinime</title>
+  <meta name="description" content="Ver anime online en alta calidad en Archinime.">
+  
+  <meta property="og:type" content="video.movie">
+  <meta property="og:title" content="Archinime OS">
+  <meta property="og:description" content="Disfruta del mejor anime online con interfaz Cyberpunk.">
   <meta property="og:image" content="Logo_Archinime.avif">
+  <meta property="og:url" content="">
+  <meta property="og:site_name" content="Archinime">
 
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -331,6 +336,7 @@
         <div class="rec-title">Quizás te guste:</div>
         <div class="rec-grid" id="rec-grid"></div>
     </div>
+  
   </div>
 
   <div id="toast" class="toast">Enlace copiado</div>
@@ -351,7 +357,8 @@
        ---------------------------------------------------- */
     window.addEventListener('load', () => {
         // --- PARCHE DE COMPATIBILIDAD ---
-        if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') {
+        if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') 
+        {
             window.audioPlaylists = musica;
         }
         // ---------------------------------
@@ -359,7 +366,7 @@
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
-
+    
     /* ----------------------------------------------------
        2. Lógica de Audio
        ---------------------------------------------------- */
@@ -402,9 +409,9 @@
             playTrack(currentTrackIndex);
         }
     }, { once: true });
-
+    
     /* ----------------------------------------------------
-       3. Renderizado y Lógica Visual
+       3. Renderizado y Lógica Visual (CON MEJORA SEO)
        ---------------------------------------------------- */
     
     if (typeof data === 'undefined') {
@@ -416,7 +423,34 @@
         const container = document.getElementById('contenido');
 
         if (anime) {
-            document.title = `${anime.title} - Archinime`;
+            // ============================================
+            // INICIO SEO DINÁMICO MEJORADO
+            // ============================================
+            
+            // 1. Título de la pestaña
+            document.title = `Ver ${anime.title} Online - Archinime OS`;
+
+            // 2. Descripción para Google
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.setAttribute('content', `Disfruta de ${anime.title} en HD. ${anime.desc.substring(0, 140)}... Véalo gratis en Archinime.`);
+            }
+
+            // 3. Open Graph (Facebook, Discord, etc)
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            const ogDesc = document.querySelector('meta[property="og:description"]');
+            const ogImage = document.querySelector('meta[property="og:image"]');
+            const ogUrl = document.querySelector('meta[property="og:url"]');
+
+            if (ogTitle) ogTitle.setAttribute('content', `Ver ${anime.title} - Archinime`);
+            if (ogDesc) ogDesc.setAttribute('content', anime.desc.substring(0, 200) + "...");
+            if (ogImage) ogImage.setAttribute('content', anime.cover);
+            if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+
+            // ============================================
+            // FIN SEO DINÁMICO
+            // ============================================
+
             // --- Lógica de Géneros Actualizada ---
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
@@ -447,7 +481,8 @@
                 uploaderHtml = `
                     <div class="uploader-container">
                         <span class="upload-label">Subido por:</span>
-                        <a href="${userData.social || '#'}" ${userData.social ? 'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
+                        <a href="${userData.social || '#'}" ${userData.social ?
+                        'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
                             <img src="${userAvatar}" alt="${displayNick}">
                             <span>${displayNick}</span>
                         </a>
@@ -482,7 +517,7 @@
                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
+                            <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
                 });
@@ -491,6 +526,7 @@
             renderRecommendations(id);
         } else {
             container.innerHTML = "<h2 style='text-align:center; padding:50px;'>Anime no encontrado o ID incorrecto.</h2>";
+            document.title = "Anime No Encontrado - Archinime";
         }
     }
 
