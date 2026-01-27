@@ -256,5 +256,8 @@ const audioPlaylists = {
     ],
     "83": [
         "https://www.dropbox.com/scl/fi/i5wgx9wafu7o7nkmt2xr8/Mairimashita-Iruma-kun-Season-3-OP-Full-Girigiri-Ride-It-Out-Sub-Espa-ol-Romaji-AMV.mp3?rlkey=u8xvcv0u5nlwqnt51scufakh8&st=wb2mj4fm&raw=1"
+    ],
+    "84": [
+        "https://def4.pcloud.com/cBZDskkHX7ZxwHiGP7ZZZxl7U0kZlXZZA5zZkZ3RoEZcRZLRZU8ZTHZGQZQYZS4Z5RZsRZWYZfQZR4ZCmZcYZOyuK5Z4LkGkbgGU7pwbO9QEfBsVSp5VUdy/Miss%20Kobayashis%20Dragon%20Maid%20%20%20Opening%20FULL.mp3"
     ]
 };
