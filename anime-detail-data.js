@@ -276,6 +276,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
                     }
                 ],
                 "name": "Temporada 3"
