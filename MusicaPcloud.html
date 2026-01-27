@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>pCloud Link Fixer</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: white; display: flex; justify-content: center; padding: 20px; }
+        .card { background: #1e1e1e; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: #00d084; text-align: center; }
+        .step { background: #2a2a2a; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
+        label { display: block; margin-bottom: 10px; font-weight: bold; color: #00d084; }
+        input, textarea { width: 100%; padding: 10px; box-sizing: border-box; border-radius: 5px; border: 1px solid #444; background: #121212; color: #00d084; }
+        button { width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 5px; background: #00d084; color: black; font-weight: bold; cursor: pointer; }
+        button:hover { background: #00fa9a; }
+        .result { display: none; margin-top: 20px; text-align: center; border-top: 2px solid #00d084; padding-top: 20px; }
+        #audioPlayer { width: 100%; margin: 15px 0; }
+        .final-link { word-break: break-all; font-family: monospace; font-size: 12px; background: #000; padding: 10px; border-radius: 5px; color: #00d084; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Extractor de Música pCloud</h2>
+
+    <div class="step">
+        <label>Paso 1: Pegar link de pCloud</label>
+        <input type="text" id="pcloudUrl" placeholder="https://u.pcloud.link/show?code=...">
+        <button onclick="irAJson()">Generar link JSON</button>
+        <p style="font-size: 11px; color: #888;">* Esto abrirá una pestaña nueva. Copia TODO el texto que aparezca allí.</p>
+    </div>
+
+    <div class="step">
+        <label>Paso 2: Pegar el código JSON aquí</label>
+        <textarea id="jsonInput" rows="4" placeholder='{"result":0, "path":"...", "hosts":[...]}'></textarea>
+        <button onclick="procesarMusica()">Convertir a Música</button>
+    </div>
+
+    <div id="result" class="result">
+        <img id="coverImg" src="" style="width: 150px; border-radius: 10px; margin-bottom: 10px;">
+        <div id="songName" style="font-weight: bold; margin-bottom: 10px;"></div>
+        
+        <audio id="audioPlayer" controls></audio>
+        
+        <p style="font-size: 12px;">Enlace Directo:</p>
+        <div id="finalLink" class="final-link" onclick="copiar()"></div>
+    </div>
+</div>
+
+<script>
+    let currentCode = "";
+
+    function irAJson() {
+        const urlStr = document.getElementById('pcloudUrl').value;
+        try {
+            const url = new URL(urlStr);
+            currentCode = url.searchParams.get("code");
+            if (!currentCode) throw "No hay código";
+            
+            const apiUrl = `https://api.pcloud.com/getpublinkdownload?code=${currentCode}`;
+            window.open(apiUrl, '_blank');
+        } catch (e) {
+            alert("Error: Asegúrate de pegar un link válido de pCloud.");
+        }
+    }
+
+    function procesarMusica() {
+        const jsonStr = document.getElementById('jsonInput').value;
+        const resultDiv = document.getElementById('result');
+        
+        try {
+            const data = JSON.parse(jsonStr);
+            if (data.result === 0) {
+                const host = data.hosts[0];
+                const path = data.path;
+                const finalUrl = `https://${host}${path}`;
+
+                // Configurar reproductor
+                const audio = document.getElementById('audioPlayer');
+                audio.src = finalUrl;
+                
+                // Configurar nombre
+                const fileName = decodeURIComponent(path.split('/').pop());
+                document.getElementById('songName').innerText = fileName;
+
+                // Configurar Link final
+                document.getElementById('finalLink').innerText = finalUrl;
+
+                // Configurar Portada (usamos el código guardado del paso 1)
+                document.getElementById('coverImg').src = `https://api.pcloud.com/getpubthumb?code=${currentCode}&size=500x500`;
+
+                resultDiv.style.display = "block";
+                audio.play();
+            } else {
+                alert("El JSON no parece válido o el archivo no es público.");
+            }
+        } catch (e) {
+            alert("Error al leer el JSON. Asegúrate de copiarlo TODO desde la página que se abrió.");
+        }
+    }
+
+    function copiar() {
+        const text = document.getElementById('finalLink').innerText;
+        navigator.clipboard.writeText(text);
+        alert("¡Enlace copiado!");
+    }
+</script>
+
+</body>
+</html>
