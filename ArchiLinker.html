@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ArchiLinker | Convertidor Universal de Enlaces Multimedia</title>
+    <meta name="description" content="ArchiLinker es la herramienta definitiva para extraer enlaces directos de pCloud, Dropbox y Google Drive. Convierte links de audio, video e imágenes para usar en reproductores web o descargas directas.">
+    <meta name="keywords" content="pcloud direct link, dropbox raw link, google drive preview, extractor de enlaces, web tool, link converter">
+    <meta name="author" content="ArchiLinker">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta de Colores Neón */
+            --pcloud-primary: #00d084;
+            --pcloud-glow: rgba(0, 208, 132, 0.5);
+            
+            --dropbox-primary: #3984ff;
+            --dropbox-glow: rgba(57, 132, 255, 0.5);
+            
+            --drive-primary: #ffd04b;
+            --drive-glow: rgba(255, 208, 75, 0.5);
+
+            --bg-dark: #0a0a0a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 208, 132, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(57, 132, 255, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- Main Card Container --- */
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Decoration Line */
+        .top-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pcloud-primary), var(--dropbox-primary), var(--drive-primary));
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #bbb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        /* --- Selectores --- */
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 700;
+        }
+
+        /* Platform Grid */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .platform-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .platform-card i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .platform-card span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .platform-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        /* Active States for Platforms */
+        .platform-card[data-platform="pcloud"].active {
+            border-color: var(--pcloud-primary);
+            box-shadow: 0 0 20px var(--pcloud-glow) inset;
+        }
+        .platform-card[data-platform="pcloud"].active i { color: var(--pcloud-primary); }
+
+        .platform-card[data-platform="dropbox"].active {
+            border-color: var(--dropbox-primary);
+            box-shadow: 0 0 20px var(--dropbox-glow) inset;
+        }
+        .platform-card[data-platform="dropbox"].active i { color: var(--dropbox-primary); }
+
+        .platform-card[data-platform="drive"].active {
+            border-color: var(--drive-primary);
+            box-shadow: 0 0 20px var(--drive-glow) inset;
+        }
+        .platform-card[data-platform="drive"].active i { color: var(--drive-primary); }
+
+
+        /* Media Type Selector */
+        .type-selector {
+            display: flex;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50px;
+            padding: 5px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .type-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .type-btn.active {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* --- Inputs --- */
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 16px 16px 16px 45px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--text-muted);
+            background: rgba(0,0,0,0.5);
+        }
+
+        textarea {
+            padding: 15px; /* Reset padding for textarea */
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        /* --- Action Button --- */
+        .action-btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            color: #000; /* Default text color for contrast */
+        }
+        
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .action-btn:hover::after { opacity: 1; }
+
+        /* Dynamic Button Colors */
+        .btn-pcloud { background: var(--pcloud-primary); box-shadow: 0 10px 30px -5px var(--pcloud-glow); }
+        .btn-dropbox { background: var(--dropbox-primary); color: white; box-shadow: 0 10px 30px -5px var(--dropbox-glow); }
+        .btn-drive { background: var(--drive-primary); box-shadow: 0 10px 30px -5px var(--drive-glow); }
+
+        /* --- Result Area --- */
+        .result-container {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px dashed var(--glass-border);
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .preview-box {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            position: relative;
+        }
+
+        .preview-box img, .preview-box video {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        .preview-box iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        .link-copier {
+            background: #151515;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .link-copier:hover {
+            border-color: #777;
+            background: #1a1a1a;
+        }
+
+        .link-text {
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--pcloud-primary);
+        }
+
+        .copy-hint {
+            position: absolute;
+            right: 10px;
+            top: -10px;
+            background: #fff;
+            color: #000;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* --- Special Steps (pCloud) --- */
+        #pcloud-special-step {
+            display: none;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .step-badge {
+            display: inline-block;
+            background: var(--pcloud-primary);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-line"></div>
+    
+    <h1>ArchiLinker</h1>
+    <p class="subtitle">Transforma tus enlaces en la nube a formatos directos.</p>
+
+    <span class="section-label">1. Elige tu nube</span>
+    <div class="platform-grid">
+        <div class="platform-card active" data-platform="pcloud" onclick="selectPlatform('pcloud')">
+            <i class="fa-solid fa-cloud"></i>
+            <span>pCloud</span>
+        </div>
+        <div class="platform-card" data-platform="dropbox" onclick="selectPlatform('dropbox')">
+            <i class="fa-brands fa-dropbox"></i>
+            <span>Dropbox</span>
+        </div>
+        <div class="platform-card" data-platform="drive" onclick="selectPlatform('drive')">
+            <i class="fa-brands fa-google-drive"></i>
+            <span>Drive</span>
+        </div>
+    </div>
+
+    <span class="section-label">2. Elige el formato</span>
+    <div class="type-selector">
+        <button class="type-btn active" id="btn-audio" onclick="selectType('audio')">
+            <i class="fa-solid fa-music"></i> Audio
+        </button>
+        <button class="type-btn" id="btn-image" onclick="selectType('image')">
+            <i class="fa-solid fa-image"></i> Imagen
+        </button>
+        <button class="type-btn" id="btn-video" onclick="selectType('video')">
+            <i class="fa-solid fa-video"></i> Video
+        </button>
+    </div>
+
+    <span class="section-label">3. Pega tu enlace</span>
+    
+    <div class="input-wrapper">
+        <i class="fa-solid fa-link input-icon"></i>
+        <input type="text" id="mainUrl" placeholder="https://u.pcloud.link/..." oninput="clearResult()">
+    </div>
+
+    <div id="pcloud-special-step">
+        <span class="step-badge">REQUERIDO PARA AUDIO/VIDEO PCLOUD</span>
+        <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 10px;">
+            pCloud requiere un paso extra para obtener el archivo original de audio o video.
+        </p>
+        <button onclick="generateJsonLink()" style="background:#333; color:#fff; border:1px solid #555; padding:8px 15px; border-radius:6px; cursor:pointer; margin-bottom:10px; font-size:0.8rem;">
+            <i class="fa-solid fa-external-link-alt"></i> 1. Abrir API de pCloud
+        </button>
+        <p style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">2. Copia TODO el texto que aparezca y pégalo abajo:</p>
+        <textarea id="jsonInput" placeholder='{"result":0, "path":"/Musica/...", "hosts":...}'></textarea>
+    </div>
+
+    <button id="processBtn" class="action-btn btn-pcloud" onclick="processLink()">
+        Convertir Enlace
+    </button>
+
+    <div id="resultContainer" class="result-container">
+        <span class="section-label" style="text-align:center; color: var(--pcloud-primary);"> Vista Previa</span>
+        
+        <div class="preview-box" id="previewBox">
+            </div>
+
+        <div class="link-copier" onclick="copyResult()">
+            <span class="copy-hint">Click para copiar</span>
+            <div id="finalLinkText" class="link-text">...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // State Variables
+    let currentPlatform = 'pcloud';
+    let currentType = 'audio';
+
+    // DOM Elements
+    const mainUrlInput = document.getElementById('mainUrl');
+    const jsonInput = document.getElementById('jsonInput');
+    const pcloudStep = document.getElementById('pcloud-special-step');
+    const processBtn = document.getElementById('processBtn');
+    const resultContainer = document.getElementById('resultContainer');
+    const finalLinkText = document.getElementById('finalLinkText');
+    const previewBox = document.getElementById('previewBox');
+
+    // --- UI Interactions ---
+
+    function selectPlatform(platform) {
+        currentPlatform = platform;
+
+        // Visual Updates
+        document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('active'));
+        document.querySelector(`.platform-card[data-platform="${platform}"]`).classList.add('active');
+
+        // Button Color Update
+        processBtn.className = `action-btn btn-${platform}`;
+
+        updateUIState();
+    }
+
+    function selectType(type) {
+        currentType = type;
+
+        // Visual Updates
+        document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${type}`).classList.add('active');
+
+        updateUIState();
+    }
+
+    function updateUIState() {
+        clearResult();
+        
+        // Logic to show/hide pCloud JSON step
+        // We use JSON step for Audio AND Video in pCloud to get direct raw files.
+        // Images use the new simple URL replacement method requested.
+        if (currentPlatform === 'pcloud' && (currentType === 'audio' || currentType === 'video')) {
+            pcloudStep.style.display = 'block';
+            processBtn.innerText = "Procesar JSON pCloud";
+        } else {
+            pcloudStep.style.display = 'none';
+            processBtn.innerText = "Convertir Enlace";
+        }
+    }
+
+    function clearResult() {
+        resultContainer.style.display = 'none';
+        previewBox.innerHTML = '';
+        finalLinkText.innerText = '';
+    }
+
+    // --- Core Logic ---
+
+    function processLink() {
+        const url = mainUrlInput.value.trim();
+        
+        // Basic Validation
+        if (!url && currentPlatform !== 'pcloud') { // pCloud JSON mode might strictly rely on JSON input
+            alertInput(); return;
+        }
+
+        try {
+            if (currentPlatform === 'pcloud') processPCloud(url);
+            else if (currentPlatform === 'dropbox') processDropbox(url);
+            else if (currentPlatform === 'drive') processDrive(url);
+        } catch (error) {
+            console.error(error);
+            alert("Hubo un error al procesar el enlace. Verifica que sea correcto.");
+        }
+    }
+
+    // 1. PCloud Logic
+    function generateJsonLink() {
+        const url = mainUrlInput.value.trim();
+        try {
+            const urlObj = new URL(url);
+            const code = urlObj.searchParams.get("code");
+            if (!code) throw new Error();
+            window.open(`https://api.pcloud.com/getpublinkdownload?code=${code}`, '_blank');
+        } catch (e) {
+            alert("Error: El enlace de pCloud debe contener '?code=...'");
+        }
+    }
+
+    function processPCloud(url) {
+        // CASE A: Audio/Video (Via JSON)
+        if (currentType === 'audio' || currentType === 'video') {
+            const jsonStr = jsonInput.value.trim();
+            if (!jsonStr) { alert("Por favor, realiza el paso 1 y pega el JSON."); return; }
+            
+            try {
+                const data = JSON.parse(jsonStr);
+                if (data.result === 0) {
+                    const link = `https://${data.hosts[0]}${data.path}`;
+                    showResult(link);
+                } else {
+                    alert("El JSON indica un error o el archivo no es público.");
+                }
+            } catch (e) {
+                alert("Error leyendo JSON. Asegúrate de copiarlo completo.");
+            }
+        } 
+        // CASE B: Image (New URL Replacement Method)
+        else if (currentType === 'image') {
+            try {
+                // Extracts the code from: https://u.pcloud.link/publink/show?code=XZ4jh...
+                const urlObj = new URL(url);
+                const code = urlObj.searchParams.get("code");
+                
+                if(!code) throw "No Code";
+
+                // Constructs: https://api.pcloud.com/getpubthumb?code=...&size=2000x3000
+                const finalLink = `https://api.pcloud.com/getpubthumb?code=${code}&size=2000x3000`;
+                showResult(finalLink);
+            } catch (e) {
+                alert("Enlace pCloud inválido para imagen.");
+            }
+        }
+    }
+
+    // 2. Dropbox Logic
+    function processDropbox(url) {
+        // Goal: Replace dl=0 or anything at end with raw=1
+        // https://www.dropbox.com/.../image.jpg?dl=0 -> ...?raw=1
+        
+        let finalLink = url;
+        
+        // Remove existing query params related to dl
+        if(finalLink.includes('?')) {
+            // Simple replace if it exists
+            finalLink = finalLink.replace('dl=0', 'raw=1').replace('dl=1', 'raw=1');
+            
+            // If raw=1 wasn't there and we didn't replace it, we might need to append or fix
+            if(!finalLink.includes('raw=1')) {
+               // It has other params but not dl/raw. 
+               // Dropbox usually works if we force raw=1
+               finalLink += "&raw=1";
+            }
+        } else {
+            finalLink += "?raw=1";
+        }
+        
+        showResult(finalLink);
+    }
+
+    // 3. Drive Logic
+    function processDrive(url) {
+        // Goal: Replace /view?usp=sharing with /preview
+        let finalLink = url;
+        const search = "view?usp=sharing";
+        const replace = "preview";
+
+        if (finalLink.includes(search)) {
+            finalLink = finalLink.replace(search, replace);
+        } else if (finalLink.endsWith('/view')) {
+             finalLink = finalLink.replace('/view', '/preview');
+        } else if (!finalLink.includes('/preview')) {
+            // Try to force it if url looks like a file ID
+            // Simple approach: if it doesn't have preview, append it? 
+            // Safer to just trust the user provided a view link.
+            // If they provided a generic link, we try to ensure it ends in /preview
+        }
+        
+        // Drive preview links MUST be iframes
+        showResult(finalLink, true); 
+    }
+
+    // --- Display & Utils ---
+
+    function showResult(link, forceIframe = false) {
+        resultContainer.style.display = 'block';
+        finalLinkText.innerText = link;
+        
+        // Set Link Text Color based on platform
+        if(currentPlatform === 'pcloud') finalLinkText.style.color = 'var(--pcloud-primary)';
+        if(currentPlatform === 'dropbox') finalLinkText.style.color = 'var(--dropbox-primary)';
+        if(currentPlatform === 'drive') finalLinkText.style.color = 'var(--drive-primary)';
+
+        previewBox.innerHTML = '';
+
+        // Drive ALWAYS uses iframe for preview links
+        if (forceIframe || currentPlatform === 'drive') {
+            const iframe = document.createElement('iframe');
+            iframe.src = link;
+            iframe.allow = "autoplay";
+            previewBox.appendChild(iframe);
+            return;
+        }
+
+        // Logic for Direct Files (pCloud / Dropbox)
+        if (currentType === 'audio') {
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.src = link;
+            audio.style.width = '90%';
+            previewBox.appendChild(audio);
+            audio.play().catch(e => console.log("Autoplay blocked"));
+        } else if (currentType === 'image') {
+            const img = document.createElement('img');
+            img.src = link;
+            previewBox.appendChild(img);
+        } else if (currentType === 'video') {
+            const video = document.createElement('video');
+            video.controls = true;
+            video.src = link;
+            video.style.width = '100%';
+            previewBox.appendChild(video);
+        }
+        
+        // Scroll to result
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyResult() {
+        const text = finalLinkText.innerText;
+        if (!text) return;
+
+        navigator.clipboard.writeText(text).then(() => {
+            const originalColor = finalLinkText.style.color;
+            finalLinkText.style.color = '#fff';
+            finalLinkText.innerText = "¡ENLACE COPIADO!";
+            
+            setTimeout(() => {
+                finalLinkText.innerText = text;
+                finalLinkText.style.color = originalColor;
+            }, 1500);
+        });
+    }
+
+    function alertInput() {
+        mainUrlInput.style.borderColor = "red";
+        setTimeout(() => {
+            mainUrlInput.style.borderColor = "var(--glass-border)";
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
