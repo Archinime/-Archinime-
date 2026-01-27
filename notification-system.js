@@ -73,13 +73,11 @@ function checkForNewUpdates() {
         }
 
         notificationQueue = newItemsFound;
-        
-        // MODIFICACIÓN: Ya no llamamos a showNextPopup() aquí inmediatamente.
-        // Esperamos a que la página cargue (ver index.html).
+        // Se llama desde index.html cuando desaparece el loader
     }
 }
 
-// NUEVA FUNCIÓN: Se llama desde index.html cuando desaparece el loader
+// FUNCIÓN: Se llama desde index.html cuando desaparece el loader
 window.startNotificationSequence = function() {
     showNextPopup();
 };
@@ -99,9 +97,18 @@ function createPopupHTML(notif) {
     modal.id = 'eventModal';
     
     const indieMessage = "¡Ya disponible en la plataforma! Disfruta del estreno.";
-    let infoString = notif.epTitle;
+    
+    // MEJORA: Construcción explícita del título del episodio y bloque
+    let infoString = "";
     if (notif.blockName && notif.blockName !== "Novedad") {
-        infoString = `${notif.blockName} • ${notif.epTitle}`;
+        infoString += `<span style="color:var(--neon-cyan)">${notif.blockName}</span>`;
+    }
+    
+    if (notif.epTitle && notif.epTitle !== "Nuevo Contenido") {
+        if (infoString !== "") infoString += " • ";
+        infoString += `<span style="color:#fff">${notif.epTitle}</span>`;
+    } else {
+        if (infoString === "") infoString = "Nuevo Contenido";
     }
 
     // Definir estilos de etiqueta según el tipo
@@ -109,7 +116,7 @@ function createPopupHTML(notif) {
     if (notif.type.includes("ESTRENO")) badgeClass = "badge-estreno";
     else if (notif.type.includes("PRÓXIMAMENTE")) badgeClass = "badge-prox";
 
-    // Imagen de "FINAL" si aplica (MODIFICADO A FINALIZADO)
+    // Imagen de "FINAL" si aplica
     let finalImgHTML = '';
     if (notif.isFinal) {
         finalImgHTML = `<div class="final-stamp">FINALIZADO</div>`;
@@ -181,7 +188,7 @@ function toggleNotifMenu() {
         // Ocultar badge al abrir
         const badge = document.getElementById('notifBadge');
         if(badge) badge.style.display = 'none';
-        // Marcar todas las visibles como vistas (opcional, o hacerlo una por una)
+        // Marcar todas las visibles como vistas
         notificationsHistory.forEach(n => n.seen = true);
         saveHistoryToStorage();
         
@@ -216,9 +223,22 @@ function renderNotificationList() {
         const div = document.createElement('div');
         div.className = 'notif-item';
         
-        let infoString = item.epTitle;
+        // MEJORA: Mostrar Bloque Y Capítulo concatenados
+        let infoString = "";
+        
+        // Bloque (Temporada X, Película, etc)
         if (item.blockName && item.blockName !== "Novedad") {
-            infoString = `${item.blockName}`;
+            infoString += `<span class="n-block">${item.blockName}</span>`;
+        }
+        
+        // Título del capítulo
+        if (item.epTitle && item.epTitle !== "Nuevo Contenido") {
+             // Si ya pusimos el bloque, agregamos un separador visual
+             if (infoString !== "") infoString += " ";
+             infoString += `<span class="n-ep-title">${item.epTitle}</span>`;
+        } else {
+             // Si no hay titulo de cap, y no habia bloque, poner default
+             if (infoString === "") infoString = `<span class="n-ep-title">Nuevo Contenido</span>`;
         }
 
         // Color del texto según tipo
@@ -253,8 +273,7 @@ function updateBellBadge() {
     if (badge) {
         if (unread > 0) {
             badge.style.display = 'block';
-            badge.textContent = unread > 9 ? '+9' : unread; // Opcional: poner número
-            // Si prefieres solo punto: badge.textContent = '';
+            badge.textContent = unread > 9 ? '+9' : unread;
         } else {
             badge.style.display = 'none';
         }
