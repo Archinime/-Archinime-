@@ -11830,5 +11830,143 @@ const players = {
                 "title": "Mairimashita! Iruma-kun T3 Cap 21"
             }
         }
+    },
+    "84": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1ETbl7j_hi6n04dn5Qwmj4H5ucafdqEW_/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1TcSgyWVLTe6axmluBADBivGDx4ylAPOd/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/11DpIumB8tjEPjDbZ8qfXjCMoU7j_Re-z/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1nUKCFnMHIbBp02JYceF1hjN14aSq8oOy/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1TqwBV3uvK-0ltybDmLtfW733kcyq1Apd/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1IRNMi7_TZJ1CSw4DrRoHwLgoHMHK-iYj/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1mB8lGpTiZ4zWtchwOJfADECLvxRF4ggj/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1N4lrzSabiC3HbHJuJejsrcHoCxVDwqr9/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1c-LYIlc2caoVm9p3qUqGlECIPs1we1ej/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1CZzNYvQ3ElFFJNWaLTF37UH4VABXM0rW/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1BztTTkwtvUDSeecMt_Gy27pnBy2B4bIe/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1OntSnpoWqs5FWtctdsbFNgwlEYBGN9gK/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1vvusNm6xOWnnNuehPmMZ7AVPCQCguBX5/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T1 Cap 13"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1iWmCXVAyJ5OySlep9kLX9VrY3DgpDrNn/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1ex3s2U8DEi-N7mahL5eexHLDxvwZVKlW/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1mnoqz6shouoTXLWYbiGnXxdgvI4GiQbr/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1YlBwdcBfWGHQsFByuoRuUKiEW-cRA2wM/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/121PIH1E5-_gR1OLwx2c_v_iwNfRqyFGw/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1rbyKUd9NUN0Bk56wNM57Ssy3wHGpGd7B/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1_BASxZP7dzvYLyM0qCyflq1rjdpRLX9k/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1sdIgGNAfuEfl2L_mI1n2tSTmA4Hlqeva/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/11PjWAf3Gy5Wkuj5kfhqpAhuorr2JuQwA/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/19Mh0pRAPb58KVVtVZcMUdaxIARNpfFok/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1DCbojrguTvQ6EizamVcFKBlj5Dqaewsp/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1fRb_D-n9RKqyrG5UIZYllCk7LXzcbgEg/preview",
+                "link2": "",
+                "title": "Kobayashi-san Chi no Maid Dragon T2 Cap 12"
+            }
+        },
+        "3": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1Cx2Z6GrB1Lj_Y5sfZJ7DThaoq38lI5f-/preview",
+                "title": "Kobayashi-san Chi no Maid Dragon Película 1: A Lonely Dragon Wants to Be Loved"
+            }
+        }
     }
 };
