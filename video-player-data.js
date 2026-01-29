@@ -12284,6 +12284,133 @@ const players = {
                 "link2": "",
                 "title": "Sword Art Online Película 1: Ordinal Scale"
             }
+        },
+        "6": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1ZC80qKcYl6a6npLpsNaDdaSkjWbd0FC7/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1UcyzhwYmCkBg93PQehIQirN9AEJTjKrW/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1BF4X2ExXXnmRalCyqPFut7WAYoCmBQvm/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1-5BQ0aPltayak1V1B-rXxamWYWDohQEl/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1-IlQUHFhRqg4o4g5VsjI3jw4hBseq8zd/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1BihEg_zKy82XWKAL_8tBY8OuGrBErD0V/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1KgMv_3W_khh39faRl4QVjmsrJzypI_Eq/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1U9uw1WeJT7pCb-uwIMvs2Lnp6wl_9yUi/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1r6zjGoxiFUa6I-oDwIOjTHxzVBm-DHLq/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/12KceciTP49NYglSebVEllIHK4zVmH5Es/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1EdcaMKKYSjN3PLjIVBNK290OlemlaDz-/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/10wmdXf2hWyIcW-5aOO-Qpd80FKgqgls0/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1oAHr2UBhAjJWcQXv1vibefigor17OOiK/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1lB8U4EYdzDk0DpSLTUw-qE49L1F8K0MZ/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/11QzIs-kPnQOdU97-FKrST64AU0lkyn6l/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1I1VzMAgVGySom4dFUf1OWI4naz5kjYdL/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/10n9YV1tvMTu7sRZmgb0JOKWmwr_dIqzi/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/131c69T5oCbPlxR-1CADeBsK0CzTrJdnD/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1Q9uWtACS65hclOesDzmWqDkeNvcMGZlF/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1jKiyNQSQSja9SyOzL0rhAHeqFjyrh_PB/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1MFCaHxiTFcaf2p57NNfL7OZ9rXgrD6Dg/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1xw5OmG72kZT08q5JCMo7EjJt8GVcgvZV/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1yythjebp8qFFnmLifC_Gr_xK3N1rjAPl/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1Pm-bTPsH8y3sDR8MgaLNlYPf49kq6xum/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1GhZ_HSUpWv551o0cijgA-k_LD41LvphT/preview",
+                "link2": "",
+                "title": "Sword Art Online T3 Cap 25"
+            }
         }
     }
 };
