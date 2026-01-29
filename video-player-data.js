@@ -12148,7 +12148,12 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1XRVAE3QYt29RC0bnjZiz163jNiIThJ2z/preview",
                 "link2": "",
-                "title": "Sword Art Online OVA 1 \"Extra Edition\""
+                "title": "Sword Art Online Especial 1 Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1XRVAE3QYt29RC0bnjZiz163jNiIThJ2z/preview",
+                "title": "Sword Art Online Especial 1 Cap 2"
             }
         },
         "4": {
@@ -12532,6 +12537,20 @@ const players = {
                 "link": "https://drive.google.com/file/d/1AsqtCtIU_M3VPB9VbvhJb6kc64QvyIMq/preview",
                 "link2": "",
                 "title": "Sword Art Online T4 Cap 24"
+            }
+        },
+        "8": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1j2-cSpTmvp7FbHjy_b3PjnC3N_9Bslm_/preview",
+                "link2": "",
+                "title": "Sword Art Online Película 2: Progressive: Aria of a Starless Night"
+            }
+        },
+        "9": {
+            "1": {
+                "link": "https://drive.google.com/file/d/13kUok0uQr4zi4vl4Pnleel2VtbzUFWbI/preview",
+                "link2": "",
+                "title": "Sword Art Online Película 3: Progressive 2: Scherzo of Deep Night"
             }
         }
     }
