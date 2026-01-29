@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Reproductor - Archinime</title>
-  <link rel="icon" href="Logo_Archinime.avif" type="image/png">
+  <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,21 +13,21 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7;
-        --secondary-color: #7b2cbf;
-        --accent-color: #ff0055;
+        --primary-color: #00fff7; /* Celeste Fluorescente (Cyan) */
+        --accent-color: #ff0055; /* Rosado Fluorescente (Neon Pink) */
         --text-color: #ffffff;
-        --glass-bg: rgba(0, 0, 0, 0.6);
-        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
-        --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px rgba(0, 255, 247, 0.5);
+        --glass-bg: rgba(0, 0, 0, 0.7);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     /* --- ESTILOS GENERALES --- */
     body { 
         margin: 0;
         background: #050505; 
-        color: var(--text-color); font-family: 'Poppins', sans-serif; 
-        overflow-x: hidden; min-height: 100vh;
+        color: var(--text-color); 
+        font-family: 'Poppins', sans-serif; 
+        overflow-x: hidden; 
+        min-height: 100vh;
         -webkit-tap-highlight-color: transparent;
     }
    
@@ -35,245 +35,259 @@
     #bg-video { 
         position: fixed;
         top: 0; left: 0; 
-        width: 100%; height: 100%; object-fit: cover;
-        z-index: -10; opacity: 0.6;
+        width: 100%; height: 100%; 
+        object-fit: cover;
+        z-index: -10; 
+        opacity: 0.5; /* Un poco más oscuro para resaltar los neones */
     }
 
     /* --- OVERLAY --- */
     #overlay {
       position: fixed;
       top: 0; left: 0; 
-      width: 100%; height: 100%; z-index: -5;
-      background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1) 0%, #000000 90%);
-      backdrop-filter: blur(3px); pointer-events: none;
+      width: 100%; height: 100%; 
+      z-index: -5;
+      background: radial-gradient(circle at center, rgba(123, 44, 191, 0.15) 0%, #000000 90%);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
     }
     
     /* --- CONTENEDOR PRINCIPAL --- */
     .container { 
         width: 100%;
         max-width: 1200px;
-        margin: 0 auto; padding: 20px 15px; 
-        position: relative; z-index: 10; box-sizing: border-box;
+        margin: 0 auto;
+        padding: 15px;
+        position: relative;
+        z-index: 10;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
     
-    /* NAVEGACIÓN SUPERIOR */
+    /* --- NAVEGACIÓN SUPERIOR --- */
     .top-nav {
         display: flex;
-        justify-content: flex-start;
-        align-items: center; margin-bottom: 20px;
+        justify-content: space-between; 
+        align-items: center;
+        margin-bottom: 5px;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
-    /* BOTÓN VOLVER */
+    /* BOTÓN VOLVER (ESTILO NEON) */
     .back-btn { 
       display: inline-flex;
-      align-items: center; justify-content: center;
-      gap: 8px; color: #fff; text-decoration: none;
-      font-weight: 600; font-size: 0.95rem; 
-      transition: all .3s ease; cursor: pointer;
-      background: var(--glass-bg); backdrop-filter: blur(10px);
-      padding: 10px 25px; border-radius: 50px;
-      border: var(--glass-border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #eee;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 1px solid rgba(0, 255, 247, 0.3); /* Borde sutil celeste */
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
+
     .back-btn:hover {
-        background: rgba(0, 255, 247, 0.15); border-color: var(--primary-color);
-        box-shadow: 0 0 15px var(--primary-color); transform: translateY(-2px);
-    }
-
-    /* --- ESTILOS DE ANUNCIOS MEJORADOS --- */
-    .ad-group {
-        position: relative; /* Para posicionar el botón de cerrar */
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 25px 15px 15px 15px; /* Padding extra arriba para el botón cerrar */
-        box-sizing: border-box;
-        margin-bottom: 20px;
-        backdrop-filter: blur(5px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    
-    /* Clase para ocultar suavemente */
-    .ad-group.hidden {
-        opacity: 0;
-        pointer-events: none;
-        position: absolute; /* Sacarlo del flujo */
-        z-index: -100;
-        transform: translateY(-20px);
-    }
-
-    .ad-group.bottom {
-        margin-top: 40px;
-        background: rgba(0, 0, 0, 0.7);
-        padding-top: 15px; /* Abajo no ponemos botón cerrar para maximizar ganancias */
-    }
-
-    /* Botón cerrar publicidad */
-    .close-ads-btn {
-        position: absolute;
-        top: 5px;
-        right: 10px;
-        background: transparent;
-        border: none;
-        color: rgba(255, 255, 255, 0.5);
-        font-family: 'Poppins', sans-serif;
-        font-size: 0.8rem;
-        cursor: pointer;
-        transition: 0.3s;
-        display: flex; align-items: center; gap: 5px;
-    }
-    .close-ads-btn:hover {
-        color: var(--accent-color);
-        text-shadow: 0 0 5px var(--accent-color);
-    }
-
-    .ad-slot {
-        background: rgba(255, 255, 255, 0.03); /* Fondo por si no carga */
-        border: 1px dashed rgba(255,255,255,0.1); /* Borde punteado sutil */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        border-radius: 4px;
-        position: relative;
-        min-width: 100px; /* Evita que colapse a 0 */
-        min-height: 50px;
-    }
-
-    /* Texto fallback "Sponsor" detrás del anuncio */
-    .ad-slot::before {
-        content: 'SPONSOR';
-        position: absolute;
-        color: rgba(255,255,255,0.1);
-        font-size: 0.7rem;
-        z-index: 0;
-        pointer-events: none;
-    }
-    /* Aseguramos que el script/iframe quede encima del texto fallback */
-    .ad-slot > * {
-        z-index: 1; 
-        position: relative;
-    }
-
-    .ads-label {
-        width: 100%; text-align: center; color: #666; font-size: 0.7rem; 
-        text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;
-        display: block;
+        background: rgba(0, 255, 247, 0.15);
+        border-color: var(--primary-color);
+        color: #fff;
+        box-shadow: 0 0 20px var(--primary-color), inset 0 0 10px rgba(0, 255, 247, 0.2);
+        transform: translateY(-2px);
+        text-shadow: 0 0 5px var(--primary-color);
     }
    
-    /* REPRODUCTOR */
+    /* --- REPRODUCTOR --- */
     .player-wrapper { 
         position: relative;
-        padding-bottom: 56.25%; 
-        height: 0; width: 100%; background: #000;
-        overflow: hidden; z-index: 50;
-        border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(123, 44, 191, 0.3);
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0; 
+        width: 100%; 
+        background: #000;
+        overflow: hidden;
+        z-index: 50;
+        border-radius: 16px; 
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.9);
     }
+   
     .player-wrapper iframe, .player-wrapper video { 
         position: absolute;
         top: 0; left: 0; 
-        width: 100%; height: 100%; border: none;
+        width: 100%; height: 100%; 
+        border: none;
     }
 
-    /* OPCIONES */
+    /* --- OPCIONES DE SERVIDOR --- */
     .options { 
-        margin-top: 20px;
-        display: flex; gap: 10px;
-        justify-content: center; flex-wrap: wrap;
-        padding: 10px; background: rgba(0,0,0,0.3);
-        border-radius: 20px; backdrop-filter: blur(5px);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
     }
+    
     .opt-btn { 
-        font-size: 0.9rem; padding: 8px 18px;
+        font-size: 0.8rem;
+        padding: 6px 14px;
         border: 1px solid rgba(255,255,255,0.2); 
-        background: rgba(255,255,255,0.05);
-        color: #ddd; cursor: pointer; border-radius: 8px;
-        transition: all 0.3s; font-family: 'Poppins', sans-serif;
+        background: rgba(0, 0, 0, 0.6);
+        color: #ccc;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
         font-weight: 500;
-        white-space: nowrap;
     }
+    
     .opt-btn:hover {
-        background: rgba(255,255,255,0.1); color: #fff;
-        border-color: #fff;
-    }
-    .opt-btn.active { 
-        border-color: var(--primary-color); color: #000;
-        background: var(--primary-color); font-weight: 700;
-        box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
     }
 
-    /* TÍTULO */
+    .opt-btn.active { 
+        border-color: var(--primary-color);
+        color: #000;
+        background: var(--primary-color); 
+        font-weight: 700;
+        box-shadow: 0 0 15px var(--primary-color);
+    }
+
+    /* --- TÍTULO DEL EPISODIO --- */
     h1 { 
         color: #fff;
-        font-size: 1.8rem; 
-        margin: 25px 0 15px 0; text-align: center;
-        font-weight: 700; letter-spacing: 1px;
-        text-shadow: 0 4px 10px rgba(0,0,0,0.8); line-height: 1.3;
+        font-size: 1.3rem; 
+        margin: 5px 0 15px 0;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
-    
-    /* CONTROLES */
-    .controls { 
-        margin-top: 20px;
-        display: flex; 
-        justify-content: center; gap: 15px; 
-        flex-wrap: wrap; align-items: center;
-    }
-    .btn { 
-        padding: 14px 30px; background: var(--glass-bg);
-        border: var(--glass-border); color: #fff;
-        text-decoration: none; border-radius: 50px; 
-        cursor: pointer; transition: 0.3s;
-        font-weight: 600; font-size: 1rem;
-        display: inline-flex; align-items: center;
-        justify-content: center; gap: 8px;
-        backdrop-filter: blur(5px); min-width: 140px;
-    }
-    
-    #downloadBtn {
-        border-color: var(--accent-color);
-        background: rgba(255, 0, 85, 0.1);
-    }
-    #downloadBtn:hover {
-        background: var(--accent-color);
-        color: #fff;
-        box-shadow: 0 0 25px rgba(255, 0, 85, 0.6); transform: translateY(-3px);
-    }
-    .btn:not(#downloadBtn):hover { 
-        background: var(--primary-color); color: #000;
-        box-shadow: 0 0 25px rgba(0, 255, 247, 0.6);
-        border-color: var(--primary-color); transform: translateY(-3px);
-    }
-    .btn-hidden { display: none !important; }
 
-    /* RESPONSIVE */
-    @media (max-width: 1024px) { 
-        .ad-group { gap: 15px; }
+    /* --- CONTROLES (GRID SYSTEM PARA POSICIÓN PERFECTA) --- */
+    .controls { 
+        display: grid;
+        /* COL 1: Anterior, COL 2: Descargar (Flexible), COL 3: Siguiente */
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 15px; 
+        margin-top: 10px;
+        padding-bottom: 40px;
+        width: 100%;
     }
+    
+    /* Posicionamiento específico en la Grid */
+    #prevBtn { justify-self: start; }  /* Siempre a la izquierda */
+    #nextBtn { justify-self: end; }    /* Siempre a la derecha */
+    #downloadBtn { justify-self: center; } /* Siempre al centro */
+
+    /* ESTILOS DE LOS BOTONES */
+    .btn { 
+        padding: 12px 28px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        text-decoration: none; 
+        border-radius: 50px; 
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Efecto rebote suave */
+        backdrop-filter: blur(5px);
+        font-weight: 600;
+        min-width: 100px;
+        /* Tamaño mínimo para consistencia */
+    }
+    
+    /* EFECTO CELESTE (ANTERIOR / SIGUIENTE) */
+    .nav-btn {
+        border-color: rgba(0, 255, 247, 0.3);
+    }
+
+    .nav-btn:hover {
+        background: rgba(0, 255, 247, 0.15);
+        border-color: var(--primary-color);
+        color: #fff;
+        box-shadow: 0 0 25px var(--primary-color), inset 0 0 10px rgba(0, 255, 247, 0.2);
+        transform: scale(1.05);
+        text-shadow: 0 0 8px var(--primary-color);
+    }
+
+    /* ESTILO ESPECÍFICO DESCARGAR (ROSADO) */
+    #downloadBtn {
+        border-color: rgba(255, 0, 85, 0.4);
+        background: rgba(255, 0, 85, 0.05);
+        min-width: 140px;
+    }
+
+    #downloadBtn:hover {
+        background: rgba(255, 0, 85, 0.2);
+        border-color: var(--accent-color);
+        color: #fff;
+        box-shadow: 0 0 30px var(--accent-color), inset 0 0 10px rgba(255, 0, 85, 0.2);
+        transform: scale(1.05);
+        text-shadow: 0 0 8px var(--accent-color);
+    }
+
+    /* CLASE IMPORTANTE: OCULTA PERO MANTIENE EL ESPACIO */
+    .btn-hidden { 
+        visibility: hidden; /* No se ve */
+        pointer-events: none; /* No se puede clickear */
+        /* NO usamos display: none, para que ocupe espacio en la grid */
+    }
+
+    /* --- MEDIA QUERIES --- */
     @media (max-width: 768px) {
-        .container { padding: 15px 10px; }
-        .player-wrapper { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .container { padding: 10px; }
+
+        .top-nav { justify-content: space-between; }
+
         .options {
-            justify-content: flex-start;
             overflow-x: auto;
-            white-space: nowrap; padding: 15px;
-            -ms-overflow-style: none; scrollbar-width: none;
+            white-space: nowrap;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            max-width: 60%;
         }
         .options::-webkit-scrollbar { display: none; }
-        h1 { font-size: 1.3rem; margin: 20px 0; }
-        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
-        #prevBtn { grid-column: 1; order: 1; min-width: auto; }
-        #nextBtn { grid-column: 2; order: 2; min-width: auto; }
-        #downloadBtn { grid-column: 1 / span 2; order: 3; width: 100%; margin-top: 5px; box-sizing: border-box; }
-        .btn { padding: 12px; font-size: 0.9rem; }
+
+        /* CONTROLES MÓVIL (2 FILAS) */
+        .controls {
+            grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+            grid-template-rows: auto auto; /* 2 filas */
+            gap: 10px;
+        }
+
+        /* Fila 1: Anterior (Izq) y Siguiente (Der) */
+        #prevBtn { 
+            grid-column: 1;
+            grid-row: 1; 
+            justify-self: start; 
+            width: auto;
+        }
         
-        .ad-group { flex-direction: column; padding: 30px 10px 10px 10px; } /* Más padding top para la X */
-        .ad-slot { margin-bottom: 10px; max-width: 100%; }
+        #nextBtn { 
+            grid-column: 2;
+            grid-row: 1; 
+            justify-self: end; 
+            width: auto;
+        }
+
+        /* Fila 2: Descargar (Ocupa todo el ancho) */
+        #downloadBtn { 
+            grid-column: 1 / -1;
+            grid-row: 2;
+            width: 100%; /* Botón grande para descargar */
+            box-sizing: border-box;
+        }
     }
   </style>
 </head>
@@ -289,237 +303,177 @@
    
     <div class="top-nav">
        <a href="index.html" id="backLink" class="back-btn">
-         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
          Volver
        </a>
-    </div>
-
-    <div class="ad-group top-ads" id="topAdsGroup">
-        <button class="close-ads-btn" onclick="closeAds()">
-            <span>Cerrar</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        <span class="ads-label">Sponsors</span>
-        
-        <div class="ad-slot" style="min-height: 90px; min-width: 300px;">
-            <script type="text/javascript">
-                atOptions = { 'key' : '1f072201cddab551b2b65315f6c1643e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
-        </div>
-        <div class="ad-slot" style="min-height: 60px; min-width: 300px;">
-            <script type="text/javascript">
-                atOptions = { 'key' : '1904483365c7a7ab9f83e49d32b7d237', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
-        </div>
-        <div class="ad-slot" style="min-height: 50px; min-width: 300px;">
-            <script type="text/javascript">
-                atOptions = { 'key' : '6ecb40404fef8f9daf755244f9c4d753', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/6ecb40404fef8f9daf755244f9c4d753/invoke.js"></script>
-        </div>
+       <div class="options" id="serverOptions"></div>
     </div>
 
     <div class="player-wrapper" id="playerContainer"></div>
-   
-    <div class="options" id="serverOptions"></div>
-    <h1 id="epTitle">Cargando episodio...</h1>
+
+    <h1 id="epTitle">Cargando...</h1>
 
     <div class="controls">
-        <a id="prevBtn" class="btn btn-hidden">⏮ Anterior</a>
-        <a id="downloadBtn" class="btn" href="#" target="_blank" download>⬇ Descargar</a>
-        <a id="nextBtn" class="btn btn-hidden">Siguiente ⏭</a>
-    </div>
-
-    <div class="ad-group bottom">
-        <span class="ads-label" style="flex-basis: 100%;">Más Sponsors</span>
-        <div class="ad-slot" style="min-height: 250px; width: 300px;">
-            <script type="text/javascript">
-                atOptions = { 'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
-        </div>
-        <div class="ad-slot" style="min-height: 600px; width: 160px;">
-            <script type="text/javascript">
-                atOptions = { 'key' : '190984de4e16fc6eded87c1cb7a9bc83', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
-        </div>
-        <div class="ad-slot" style="min-height: 300px; width: 160px;">
-            <script type="text/javascript">
-                atOptions = { 'key' : '49281ce83eb56f120e34ad617cfd6996', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
-        </div>
+        <a id="prevBtn" class="btn nav-btn btn-hidden">⏮ Ant.</a>
+        
+        <a id="downloadBtn" class="btn" href="#" target="_blank" download>
+            ⬇ Descargar
+        </a>
+        
+        <a id="nextBtn" class="btn nav-btn btn-hidden">Sig. ⏭</a>
     </div>
 
   </div>
 
-  <script>
-    // FUNCION PARA CERRAR ADS
-    function closeAds() {
-        const topAds = document.getElementById('topAdsGroup');
-        if(topAds) {
-            topAds.classList.add('hidden');
-        }
-    }
+  <script src="video-player-data.js"></script>
 
-    // AUTO-VERSIONADO
-    var autoVersion = new Date().getTime();
-    document.write('<script src="video-player-data.js?v=' + autoVersion + '"><\/script>');
+  <script>
+    // -----------------------------------------------------------
+    // LÓGICA DEL REPRODUCTOR
+    // -----------------------------------------------------------
     
-    // SERVICE WORKER
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(reg => {
-                reg.update();
-            }).catch(e => console.log('SW Error:', e));
-        });
-    }
-  </script>
-
-  <script>
-    // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR (IGUAL QUE ANTES)
-    // -----------------------------------------------------------
-    setTimeout(() => {
-        const DB = (typeof players !== 'undefined') ? players : {};
-        const params = new URLSearchParams(location.search);
-        const animeId = params.get('anime');
-        const season = params.get('s');
-        const episode = params.get('e');
-
-        const backLink = document.getElementById('backLink');
-        if (backLink) {
-            if (animeId) {
-                backLink.href = `anime-detail.html?id=${animeId}`;
-            } else {
-                backLink.href = `index.html`;
-            }
-        }
-
-        const epData = DB[animeId]?.[season]?.[episode];
-        if (epData) {
-            document.title = `Ver ${epData.title} - Archinime`;
-            document.getElementById('epTitle').innerText = epData.title;
-            const initialLink = epData.link || epData.link2;
-            loadVideo(initialLink);
-            
-            const optContainer = document.getElementById('serverOptions');
-            optContainer.innerHTML = '';
-            if(epData.link) createOptionBtn("Opción Latino", epData.link, true);
-            if(epData.link2) createOptionBtn("Opción Subtitulado", epData.link2, !epData.link);
-            
-            updateDownloadButton(initialLink);
-            setupNavigation();
+    const DB = (typeof players !== 'undefined') ? players : {};
+    
+    const params = new URLSearchParams(location.search);
+    const animeId = params.get('anime');
+    const season = params.get('s');
+    const episode = params.get('e');
+    const backLink = document.getElementById('backLink');
+    if (backLink) {
+        if (animeId) {
+            backLink.href = `anime-detail.html?id=${animeId}`;
         } else {
-            console.error("No se encontraron datos para:", animeId, season, episode);
-            document.getElementById('epTitle').innerText = "Episodio no encontrado.";
-            document.getElementById('playerContainer').innerHTML = `
-                <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;flex-direction:column;gap:10px;">
-                    <span>Video no disponible o enlace roto.</span>
-                    <small style="color:#aaa;">Verifica el archivo video-player-data.js</small>
-                </div>`;
+            backLink.href = `index.html`;
         }
+    }
+
+    const epData = DB[animeId]?.[season]?.[episode];
+    if (epData) {
+        document.title = `Ver ${epData.title} - Archinime`;
+        document.getElementById('epTitle').innerText = epData.title;
+        const initialLink = epData.link || epData.link2;
+        loadVideo(initialLink);
         
-        function generateDirectDownloadLink(url) {
-            if (!url) return "#";
-            if (url.includes("drive.google.com")) {
-                const match = url.match(/\/d\/(.+?)\//);
-                if (match && match[1]) {
-                   return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-                }
-            }
-            if (url.includes("dropbox.com") && url.includes("dl=0")) {
-                 return url.replace('dl=0', 'dl=1');
-            }
-            return url;
-        }
+        const optContainer = document.getElementById('serverOptions');
+        optContainer.innerHTML = '';
+        
+        if(epData.link) createOptionBtn("Latino", epData.link, true);
+        if(epData.link2) createOptionBtn("Sub", epData.link2, !epData.link);
+        
+        updateDownloadButton(initialLink);
+        setupNavigation();
+    } else {
+        document.getElementById('epTitle').innerText = "No encontrado";
+    }
 
-        function updateDownloadButton(url) {
-            const dlBtn = document.getElementById('downloadBtn');
-            const directLink = generateDirectDownloadLink(url);
-            dlBtn.href = directLink;
-        }
-
-        function createOptionBtn(label, url, isActive) {
-            const optContainer = document.getElementById('serverOptions');
-            const btn = document.createElement('button');
-            const isFirst = optContainer.children.length === 0;
-            const shouldBeActive = isActive || isFirst;
-            btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
-            btn.innerText = label;
-            btn.onclick = () => {
-                document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                loadVideo(url);
-                updateDownloadButton(url);
-            };
-            optContainer.appendChild(btn);
-        }
-
-        function loadVideo(url) {
-            const container = document.getElementById('playerContainer');
-            container.innerHTML = ''; 
-            if (!url) return;
-            const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
-            const isDrive = url.includes('drive.google.com') && url.includes('/preview');
-            if (isVideoFile && !isDrive) {
-                const video = document.createElement('video');
-                video.src = url;
-                video.controls = true; video.autoplay = false; video.playsInline = true; 
-                video.style.width = "100%"; video.style.height = "100%";
-                video.onerror = function() {
-                    console.log("Error nativo, intentando modo iframe...");
-                    loadAsIframe(url, container);
-                };
-                container.appendChild(video);
-            } else {
-                loadAsIframe(url, container);
+    function generateDirectDownloadLink(url) {
+        if (!url) return "#";
+        if (url.includes("drive.google.com")) {
+            const match = url.match(/\/d\/(.+?)\//);
+            if (match && match[1]) {
+               return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
         }
-
-        function loadAsIframe(url, container) {
-            container.innerHTML = '';
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.setAttribute("sandbox", "allow-forms allow-scripts allow-same-origin allow-presentation allow-popups");
-            iframe.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
-            iframe.setAttribute("allowfullscreen", "true");
-            iframe.style.position = "absolute"; iframe.style.top = "0"; iframe.style.left = "0";
-            iframe.style.width = "100%"; iframe.style.height = "100%"; iframe.style.border = "none";
-            container.appendChild(iframe);
+        if (url.includes("dropbox.com") && url.includes("dl=0")) {
+             return url.replace('dl=0', 'dl=1');
         }
+        return url;
+    }
 
-        function setupNavigation() {
-            try {
-                if (DB[animeId]) {
-                    let flatList = [];
-                    const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
-                    seasons.forEach(sKey => {
-                        const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
-                        episodes.forEach(eKey => {
-                            flatList.push({ s: sKey, e: eKey });
-                        });
+    function updateDownloadButton(url) {
+        const dlBtn = document.getElementById('downloadBtn');
+        const directLink = generateDirectDownloadLink(url);
+        dlBtn.href = directLink;
+    }
+
+    function createOptionBtn(label, url, isActive) {
+        const optContainer = document.getElementById('serverOptions');
+        const btn = document.createElement('button');
+        const isFirst = optContainer.children.length === 0;
+        const shouldBeActive = isActive || isFirst;
+        btn.className = 'opt-btn' + (shouldBeActive ? ' active' : '');
+        btn.innerText = label;
+        btn.onclick = () => {
+            document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadVideo(url);
+            updateDownloadButton(url);
+        };
+        optContainer.appendChild(btn);
+    }
+
+    function loadVideo(url) {
+        const container = document.getElementById('playerContainer');
+        container.innerHTML = ''; 
+        if (!url) return;
+        const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
+        const isDrive = url.includes('drive.google.com') && url.includes('/preview');
+        if (isVideoFile && !isDrive) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = true;
+            video.autoplay = false;
+            video.playsInline = true; 
+            video.style.width = "100%";
+            video.style.height = "100%";
+            video.onerror = function() { loadAsIframe(url, container); };
+            container.appendChild(video);
+        } else {
+            loadAsIframe(url, container);
+        }
+    }
+
+    function loadAsIframe(url, container) {
+        container.innerHTML = '';
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.setAttribute("allow", "autoplay; fullscreen; encrypted-media; picture-in-picture");
+        iframe.setAttribute("allowfullscreen", "true");
+        iframe.style.position = "absolute";
+        iframe.style.top = "0";
+        iframe.style.left = "0";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        container.appendChild(iframe);
+    }
+
+    function setupNavigation() {
+        try {
+            if (DB[animeId]) {
+                let flatList = [];
+                const seasons = Object.keys(DB[animeId]).sort((a, b) => Number(a) - Number(b));
+                seasons.forEach(sKey => {
+                    const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
+                    episodes.forEach(eKey => {
+                        flatList.push({ s: sKey, e: eKey });
                     });
-                    const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
-                    const prevBtn = document.getElementById('prevBtn');
-                    const nextBtn = document.getElementById('nextBtn');
-                    if (currentIndex > 0) {
-                        const prevItem = flatList[currentIndex - 1];
-                        prevBtn.classList.remove('btn-hidden');
-                        prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
-                    }
-                    if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
-                        const nextItem = flatList[currentIndex + 1];
-                        nextBtn.classList.remove('btn-hidden');
-                        nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
-                    }
+                });
+                const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                // Configurar Anterior
+                if (currentIndex > 0) {
+                    const prevItem = flatList[currentIndex - 1];
+                    prevBtn.classList.remove('btn-hidden');
+                    prevBtn.href = `?anime=${animeId}&s=${prevItem.s}&e=${prevItem.e}`;
+                } else {
+                    // Si no hay anterior, nos aseguramos que tenga la clase btn-hidden
+                    prevBtn.classList.add('btn-hidden');
                 }
-            } catch (e) { console.error("Error en navegación:", e); }
+
+                // Configurar Siguiente
+                if (currentIndex !== -1 && currentIndex < flatList.length - 1) {
+                    const nextItem = flatList[currentIndex + 1];
+                    nextBtn.classList.remove('btn-hidden');
+                    nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
+                } else {
+                    nextBtn.classList.add('btn-hidden');
+                }
+            }
+        } catch (e) { console.error(e);
         }
-    }, 100);
+    }
   </script>
 </body>
 </html>
