@@ -12411,6 +12411,128 @@ const players = {
                 "link2": "",
                 "title": "Sword Art Online T3 Cap 25"
             }
+        },
+        "7": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1xd7XwWhiHauq_xv4mGQf_HAIihoL6IYX/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1-I-7ZgzoM-et5DT8R8Upku3q3d80CL0l/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1ZB_tvrf8m8L1dHn4Xy5od-P6acwsTTk-/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1n_L9B3xpOk7UM4bBYF7sp_QwAxc2uYU5/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1Il8W5aNlXyzi2hxD8GGtaAfKphAem_7p/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/19DKx7Vq112G1w4FjFP1IjV4wMdzMC190/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1y1irtWaij-jWoZU-PT4go20kdpxGNFEV/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1j3xcNTySwGWYUEV9Jb7K3n3YEFgg7Mx3/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1SRAskUgeaGgBiLDD0HP9PYBEX3s89_tF/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1sV6ElSZHyLgtehOxYAW0OiHuPJ9vyw45/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1vprqpcY0778_RZrXAkFiVeK2YBWkuCsY/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1qnk395T7NvBMdEXmvu3VEhJ3dLrIZYCj/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1D1ACaAshKhIe6_IDyVIfW_d8vXAFtUYc/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1w5zzpkCxUPAWr5Hf-LVRbUwK4eWdTkWc/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1tWLseOGVzRMFvjRWakxuz5zyvJze9R14/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1Osjv6BVksqfOW1UxAUat73MaqhqOx0XD/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1Ax0Qo3KBGcBrbvFDBfIj31gbKFB22Fz9/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1ljnrHyn-905_0NwAdWj9PLHzoVUdaueX/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1twKnmb5pr2F6p7lmfDs4YN9Pg9J312VH/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/13gxhaQh7ohe4hLHR5LXsm0QwnoVywgJx/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1-Lbkky6_3E-NtSeHE7vgpcaYlkj2l4xg/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1Fogu4QE44yw98LblECoQjFu6ALMgly8D/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1r3rjy9j8hEF9Bq_Ezk8qwIYTVjwaCf8W/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1AsqtCtIU_M3VPB9VbvhJb6kc64QvyIMq/preview",
+                "link2": "",
+                "title": "Sword Art Online T4 Cap 24"
+            }
         }
     }
 };
