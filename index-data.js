@@ -1634,7 +1634,7 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1769718436559,
+        "lastUpdate": 1769718886128,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZjSnK5Zyi5nPAcNy9Y0V0S50OKEWydf4gRV&size=2000x3000",
         "latestBlockName": "Película 3",
