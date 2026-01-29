@@ -9275,10 +9275,13 @@ const data = {
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZIwDK5ZJyUtMNCyhz4kaxwtOiGtkXPxznn7&size=2000x3000",
                 "eps": [
                     {
-                        "title": "Extra Edition"
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
                     }
                 ],
-                "name": "OVA 1"
+                "name": "Especial 1"
             },
             {
                 "num": 4,
@@ -9532,6 +9535,26 @@ const data = {
                     }
                 ],
                 "name": "Temporada 4"
+            },
+            {
+                "num": 8,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZRSnK5ZBuVI4IeVDKSxeLiBC79MubXWNBN7&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Progressive: Aria of a Starless Night"
+                    }
+                ],
+                "name": "Película 2"
+            },
+            {
+                "num": 9,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZjSnK5Zyi5nPAcNy9Y0V0S50OKEWydf4gRV&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Progressive 2: Scherzo of Deep Night"
+                    }
+                ],
+                "name": "Película 3"
             }
         ]
     }
