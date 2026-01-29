@@ -1634,11 +1634,11 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1769661920736,
+        "lastUpdate": 1769663136595,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZIwDK5ZJyUtMNCyhz4kaxwtOiGtkXPxznn7&size=2000x3000",
-        "latestBlockName": "OVA 1",
-        "latestEpTitle": "OVA 1",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZsdDK5Zwrs5SeTzNEB27kHJ0brge0Qkc8SV&size=2000x3000",
+        "latestBlockName": "Película 1",
+        "latestEpTitle": "Ordinal Scale",
         "isFinal": false
     }
 ];
