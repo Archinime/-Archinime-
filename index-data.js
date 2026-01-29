@@ -1634,11 +1634,11 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1769666551075,
+        "lastUpdate": 1769717641566,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZnIDK5ZGFXUeyphMLm3HvY570j9vjbIP49X&size=2000x3000",
-        "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 25",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZHmnK5ZzCEH4jIu5oRcXNFP2fmbSzTaaMMX&size=2000x3000",
+        "latestBlockName": "Temporada 4",
+        "latestEpTitle": "Capítulo 24",
         "isFinal": false
     }
 ];
