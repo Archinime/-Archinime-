@@ -1634,11 +1634,11 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1769717641566,
+        "lastUpdate": 1769718436559,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZHmnK5ZzCEH4jIu5oRcXNFP2fmbSzTaaMMX&size=2000x3000",
-        "latestBlockName": "Temporada 4",
-        "latestEpTitle": "Capítulo 24",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZjSnK5Zyi5nPAcNy9Y0V0S50OKEWydf4gRV&size=2000x3000",
+        "latestBlockName": "Película 3",
+        "latestEpTitle": "Progressive 2: Scherzo of Deep Night",
         "isFinal": false
     }
 ];
