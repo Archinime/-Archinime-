@@ -1616,5 +1616,29 @@ const animes = [
         "aliases": [
             "Miss Kobayashi’s Dragon Maid"
         ]
+    },
+    {
+        "id": 85,
+        "title": "Sword Art Online",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZexDK5ZF3sDn1qITuYL1VScYcuknLSBUcDy&size=2000x3000",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Ciencia ficción",
+            "Fantasía",
+            "Isekai",
+            "Romance",
+            "Thriller",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769661920736,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZIwDK5ZJyUtMNCyhz4kaxwtOiGtkXPxznn7&size=2000x3000",
+        "latestBlockName": "OVA 1",
+        "latestEpTitle": "OVA 1",
+        "isFinal": false
     }
 ];
