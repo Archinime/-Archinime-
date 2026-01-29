@@ -39,7 +39,7 @@
         z-index: -10; opacity: 0.6;
     }
 
-    /* --- OVERLAY MEJORADO --- */
+    /* --- OVERLAY --- */
     #overlay {
       position: fixed;
       top: 0; left: 0; 
@@ -79,10 +79,11 @@
         box-shadow: 0 0 15px var(--primary-color); transform: translateY(-2px);
     }
 
-    /* --- NUEVOS ESTILOS PARA LOS ANUNCIOS (FLEXBOX) --- */
+    /* --- ESTILOS DE ANUNCIOS MEJORADOS --- */
     .ad-group {
+        position: relative; /* Para posicionar el botón de cerrar */
         display: flex;
-        flex-wrap: wrap; /* Permite que bajen si no caben */
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         gap: 20px;
@@ -90,37 +91,85 @@
         background: rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 12px;
-        padding: 15px;
+        padding: 25px 15px 15px 15px; /* Padding extra arriba para el botón cerrar */
         box-sizing: border-box;
         margin-bottom: 20px;
         backdrop-filter: blur(5px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    /* Clase para ocultar suavemente */
+    .ad-group.hidden {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute; /* Sacarlo del flujo */
+        z-index: -100;
+        transform: translateY(-20px);
     }
 
     .ad-group.bottom {
         margin-top: 40px;
-        background: rgba(0, 0, 0, 0.7); /* Un poco más oscuro abajo */
+        background: rgba(0, 0, 0, 0.7);
+        padding-top: 15px; /* Abajo no ponemos botón cerrar para maximizar ganancias */
+    }
+
+    /* Botón cerrar publicidad */
+    .close-ads-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex; align-items: center; gap: 5px;
+    }
+    .close-ads-btn:hover {
+        color: var(--accent-color);
+        text-shadow: 0 0 5px var(--accent-color);
     }
 
     .ad-slot {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255,255,255,0.05);
+        background: rgba(255, 255, 255, 0.03); /* Fondo por si no carga */
+        border: 1px dashed rgba(255,255,255,0.1); /* Borde punteado sutil */
         display: flex;
         justify-content: center;
         align-items: center;
         overflow: hidden;
         border-radius: 4px;
+        position: relative;
+        min-width: 100px; /* Evita que colapse a 0 */
+        min-height: 50px;
+    }
+
+    /* Texto fallback "Sponsor" detrás del anuncio */
+    .ad-slot::before {
+        content: 'SPONSOR';
+        position: absolute;
+        color: rgba(255,255,255,0.1);
+        font-size: 0.7rem;
+        z-index: 0;
+        pointer-events: none;
+    }
+    /* Aseguramos que el script/iframe quede encima del texto fallback */
+    .ad-slot > * {
+        z-index: 1; 
+        position: relative;
     }
 
     .ads-label {
         width: 100%; text-align: center; color: #666; font-size: 0.7rem; 
-        text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
+        text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;
         display: block;
     }
    
     /* REPRODUCTOR */
     .player-wrapper { 
         position: relative;
-        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        padding-bottom: 56.25%; 
         height: 0; width: 100%; background: #000;
         overflow: hidden; z-index: 50;
         border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
@@ -132,7 +181,7 @@
         width: 100%; height: 100%; border: none;
     }
 
-    /* OPCIONES DE SERVIDOR */
+    /* OPCIONES */
     .options { 
         margin-top: 20px;
         display: flex; gap: 10px;
@@ -159,7 +208,7 @@
         box-shadow: 0 0 15px rgba(0, 255, 247, 0.4);
     }
 
-    /* TÍTULO DEL EPISODIO */
+    /* TÍTULO */
     h1 { 
         color: #fff;
         font-size: 1.8rem; 
@@ -223,9 +272,8 @@
         #downloadBtn { grid-column: 1 / span 2; order: 3; width: 100%; margin-top: 5px; box-sizing: border-box; }
         .btn { padding: 12px; font-size: 0.9rem; }
         
-        /* En móviles, los anuncios se apilan verticalmente */
-        .ad-group { flex-direction: column; padding: 10px; }
-        .ad-slot { margin-bottom: 10px; max-width: 100%; overflow: hidden; }
+        .ad-group { flex-direction: column; padding: 30px 10px 10px 10px; } /* Más padding top para la X */
+        .ad-slot { margin-bottom: 10px; max-width: 100%; }
     }
   </style>
 </head>
@@ -246,21 +294,26 @@
        </a>
     </div>
 
-    <span class="ads-label">Sponsors</span>
-    <div class="ad-group top-ads">
-        <div class="ad-slot">
+    <div class="ad-group top-ads" id="topAdsGroup">
+        <button class="close-ads-btn" onclick="closeAds()">
+            <span>Cerrar</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <span class="ads-label">Sponsors</span>
+        
+        <div class="ad-slot" style="min-height: 90px; min-width: 300px;">
             <script type="text/javascript">
                 atOptions = { 'key' : '1f072201cddab551b2b65315f6c1643e', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
             </script>
             <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
         </div>
-        <div class="ad-slot">
+        <div class="ad-slot" style="min-height: 60px; min-width: 300px;">
             <script type="text/javascript">
                 atOptions = { 'key' : '1904483365c7a7ab9f83e49d32b7d237', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
             </script>
             <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
         </div>
-        <div class="ad-slot">
+        <div class="ad-slot" style="min-height: 50px; min-width: 300px;">
             <script type="text/javascript">
                 atOptions = { 'key' : '6ecb40404fef8f9daf755244f9c4d753', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
             </script>
@@ -281,19 +334,19 @@
 
     <div class="ad-group bottom">
         <span class="ads-label" style="flex-basis: 100%;">Más Sponsors</span>
-        <div class="ad-slot">
+        <div class="ad-slot" style="min-height: 250px; width: 300px;">
             <script type="text/javascript">
                 atOptions = { 'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
             </script>
             <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
         </div>
-        <div class="ad-slot">
+        <div class="ad-slot" style="min-height: 600px; width: 160px;">
             <script type="text/javascript">
                 atOptions = { 'key' : '190984de4e16fc6eded87c1cb7a9bc83', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };
             </script>
             <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
         </div>
-        <div class="ad-slot">
+        <div class="ad-slot" style="min-height: 300px; width: 160px;">
             <script type="text/javascript">
                 atOptions = { 'key' : '49281ce83eb56f120e34ad617cfd6996', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };
             </script>
@@ -304,11 +357,19 @@
   </div>
 
   <script>
-    // AUTO-VERSIONADO: Fuerza la descarga del JS de datos siempre
+    // FUNCION PARA CERRAR ADS
+    function closeAds() {
+        const topAds = document.getElementById('topAdsGroup');
+        if(topAds) {
+            topAds.classList.add('hidden');
+        }
+    }
+
+    // AUTO-VERSIONADO
     var autoVersion = new Date().getTime();
     document.write('<script src="video-player-data.js?v=' + autoVersion + '"><\/script>');
     
-    // REGISTRO SERVICE WORKER
+    // SERVICE WORKER
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js').then(reg => {
@@ -320,31 +381,24 @@
 
   <script>
     // -----------------------------------------------------------
-    // LÓGICA DEL REPRODUCTOR
+    // LÓGICA DEL REPRODUCTOR (IGUAL QUE ANTES)
     // -----------------------------------------------------------
-    
     setTimeout(() => {
         const DB = (typeof players !== 'undefined') ? players : {};
-        
-        // Obtener parámetros URL
         const params = new URLSearchParams(location.search);
-      
         const animeId = params.get('anime');
         const season = params.get('s');
         const episode = params.get('e');
 
-        // Lógica del botón Volver
         const backLink = document.getElementById('backLink');
         if (backLink) {
             if (animeId) {
                 backLink.href = `anime-detail.html?id=${animeId}`;
-        
             } else {
                 backLink.href = `index.html`;
             }
         }
 
-        // Buscar datos
         const epData = DB[animeId]?.[season]?.[episode];
         if (epData) {
             document.title = `Ver ${epData.title} - Archinime`;
@@ -369,7 +423,6 @@
                 </div>`;
         }
         
-        // Helpers
         function generateDirectDownloadLink(url) {
             if (!url) return "#";
             if (url.includes("drive.google.com")) {
@@ -447,8 +500,7 @@
                     seasons.forEach(sKey => {
                         const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                         episodes.forEach(eKey => {
-                            flatList.push({ s: sKey, 
-                            e: eKey });
+                            flatList.push({ s: sKey, e: eKey });
                         });
                     });
                     const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
@@ -465,8 +517,7 @@
                         nextBtn.href = `?anime=${animeId}&s=${nextItem.s}&e=${nextItem.e}`;
                     }
                 }
-            } catch (e) { console.error("Error en navegación:", e);
-            }
+            } catch (e) { console.error("Error en navegación:", e); }
         }
     }, 100);
   </script>
