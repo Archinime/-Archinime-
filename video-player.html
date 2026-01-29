@@ -4,8 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Reproductor - Archinime</title>
-  
-  <meta name="description" content="Ver episodio online en Archinime. Sin publicidad invasiva y alta velocidad.">
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,10 +13,8 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7;
-        /* Celeste Fluorescente (Cyan) */
-        --accent-color: #ff0055;
-        /* Rosado Fluorescente (Neon Pink) */
+        --primary-color: #00fff7; /* Celeste Fluorescente (Cyan) */
+        --accent-color: #ff0055; /* Rosado Fluorescente (Neon Pink) */
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.7);
         --glass-border: 1px solid rgba(255, 255, 255, 0.15);
@@ -42,8 +38,7 @@
         width: 100%; height: 100%; 
         object-fit: cover;
         z-index: -10; 
-        opacity: 0.5;
-        /* Un poco más oscuro para resaltar los neones */
+        opacity: 0.5; /* Un poco más oscuro para resaltar los neones */
     }
 
     /* --- OVERLAY --- */
@@ -95,8 +90,7 @@
       backdrop-filter: blur(10px);
       padding: 8px 18px;
       border-radius: 50px;
-      border: 1px solid rgba(0, 255, 247, 0.3);
-      /* Borde sutil celeste */
+      border: 1px solid rgba(0, 255, 247, 0.3); /* Borde sutil celeste */
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
@@ -175,48 +169,6 @@
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
-    /* --- BLOQUE DE PUBLICIDAD --- */
-    .ads-block-container {
-        margin: 5px 0;
-        padding: 5px 0;
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.05);
-        width: 100%;
-    }
-
-    .ads-masonry {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 5px;
-        justify-items: center;
-        align-items: center;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .ad-slot {
-        background: rgba(255, 255, 255, 0.01);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        overflow: hidden;
-        border-radius: 6px;
-        padding: 2px;
-        box-sizing: border-box;
-    }
-    
-    .span-full {
-        grid-column: 1 / -1;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 5px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        margin-bottom: 5px;
-    }
-    
     /* --- CONTROLES (GRID SYSTEM PARA POSICIÓN PERFECTA) --- */
     .controls { 
         display: grid;
@@ -230,12 +182,9 @@
     }
     
     /* Posicionamiento específico en la Grid */
-    #prevBtn { justify-self: start;
-    }  /* Siempre a la izquierda */
-    #nextBtn { justify-self: end;
-    }    /* Siempre a la derecha */
-    #downloadBtn { justify-self: center;
-    } /* Siempre al centro */
+    #prevBtn { justify-self: start; }  /* Siempre a la izquierda */
+    #nextBtn { justify-self: end; }    /* Siempre a la derecha */
+    #downloadBtn { justify-self: center; } /* Siempre al centro */
 
     /* ESTILOS DE LOS BOTONES */
     .btn { 
@@ -290,20 +239,16 @@
 
     /* CLASE IMPORTANTE: OCULTA PERO MANTIENE EL ESPACIO */
     .btn-hidden { 
-        visibility: hidden;
-        /* No se ve */
-        pointer-events: none;
-        /* No se puede clickear */
+        visibility: hidden; /* No se ve */
+        pointer-events: none; /* No se puede clickear */
         /* NO usamos display: none, para que ocupe espacio en la grid */
     }
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 768px) {
-        .container { padding: 10px;
-    }
+        .container { padding: 10px; }
 
-        .top-nav { justify-content: space-between;
-    }
+        .top-nav { justify-content: space-between; }
 
         .options {
             overflow-x: auto;
@@ -312,44 +257,14 @@
             scrollbar-width: none;
             max-width: 60%;
         }
-        .options::-webkit-scrollbar { display: none;
-    }
-
-        /* GRID DE ADS MÓVIL */
-        .ads-masonry {
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-        }
-
-        .span-full-mobile {
-            grid-column: 1 / -1;
-            transform-origin: center top;
-        }
-
-        .ad-slot iframe { transform-origin: center center;
-    }
-
-        /* Ajustes de banners */
-        .banner-728 { transform: scale(0.42);
-            margin: -25px 0; }
-        .banner-468 { transform: scale(0.65); margin: -10px 0;
-    }
-        .grid-item-mobile {
-            transform: scale(0.65);
-            margin: -30px -10px;
-            max-height: 180px;
-        }
-        .banner-320 { transform: scale(0.95);
-    }
+        .options::-webkit-scrollbar { display: none; }
 
         /* CONTROLES MÓVIL (2 FILAS) */
         .controls {
-            grid-template-columns: 1fr 1fr;
-            /* 2 columnas iguales */
-            grid-template-rows: auto auto;
-            /* 2 filas */
+            grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+            grid-template-rows: auto auto; /* 2 filas */
             gap: 10px;
-    }
+        }
 
         /* Fila 1: Anterior (Izq) y Siguiente (Der) */
         #prevBtn { 
@@ -372,7 +287,7 @@
             grid-row: 2;
             width: 100%; /* Botón grande para descargar */
             box-sizing: border-box;
-    }
+        }
     }
   </style>
 </head>
@@ -392,125 +307,20 @@
          Volver
        </a>
        <div class="options" id="serverOptions"></div>
-    
     </div>
 
     <div class="player-wrapper" id="playerContainer"></div>
 
     <h1 id="epTitle">Cargando...</h1>
 
-    <div class="ads-block-container">
-        <div class="ads-masonry">
-            
-            <div class="ad-slot span-full-mobile">
-                <div class="banner-320">
-                    <script type="text/javascript">
-           
-                atOptions = {
-                        'key' : '6ecb40404fef8f9daf755244f9c4d753',
-                        'format' : 'iframe',
-                        'height' : 50,
-       
-                        'width' : 320,
-                        'params' : {}
-                        };
-</script>
-                    <script type="text/javascript" src="https://www.highperformanceformat.com/6ecb40404fef8f9daf755244f9c4d753/invoke.js"></script>
-                </div>
-            </div>
-
-            <div class="ad-slot span-full-mobile">
-                <div class="banner-728">
-                   
- <script type="text/javascript">
-                        atOptions = {
-                        'key' : '1f072201cddab551b2b65315f6c1643e',
-                        'format' : 'iframe',
-                    
-       'height' : 90,
-                        'width' : 728,
-                        'params' : {}
-                    };
-</script>
-                    <script type="text/javascript" src="https://www.highperformanceformat.com/1f072201cddab551b2b65315f6c1643e/invoke.js"></script>
-                </div>
-            </div>
-
-            <div class="ad-slot grid-item-mobile">
-                <script type="text/javascript">
-                   
-    atOptions = {
-                     'key' : 'c80e9060ab41f7adc2b2ccc358ef6c65',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-        
-             'params' : {}
-                     };
-</script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/c80e9060ab41f7adc2b2ccc358ef6c65/invoke.js"></script>
-            </div>
-
-            <div class="ad-slot grid-item-mobile">
-                <script type="text/javascript">
-                    atOptions = {
-                 
-      'key' : '49281ce83eb56f120e34ad617cfd6996',
-                    'format' : 'iframe',
-                    'height' : 300,
-                    'width' : 160,
-                    'params' : {}
-       
-                 };
-</script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/49281ce83eb56f120e34ad617cfd6996/invoke.js"></script>
-            </div>
-            
-            <div class="ad-slot span-full-mobile">
-                <div class="banner-468">
-                    <script type="text/javascript">
-      
-                     atOptions = {
-                        'key' : '1904483365c7a7ab9f83e49d32b7d237',
-                        'format' : 'iframe',
-                        'height' : 60,
-  
-                      'width' : 468,
-                        'params' : {}
-                        };
-</script>
-                    <script type="text/javascript" src="https://www.highperformanceformat.com/1904483365c7a7ab9f83e49d32b7d237/invoke.js"></script>
-                </div>
-            </div>
-
-             <div class="ad-slot grid-item-mobile">
-                <script type="text/javascript">
-                  
-     atOptions = {
-                     'key' : '190984de4e16fc6eded87c1cb7a9bc83',
-                    'format' : 'iframe',
-                    'height' : 600,
-                    'width' : 160,
-       
-                 'params' : {}
-                     };
-</script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/190984de4e16fc6eded87c1cb7a9bc83/invoke.js"></script>
-            </div>
-
-        </div>
-    </div>
-
     <div class="controls">
         <a id="prevBtn" class="btn nav-btn btn-hidden">⏮ Ant.</a>
         
         <a id="downloadBtn" class="btn" href="#" target="_blank" download>
             ⬇ Descargar
-      
-   </a>
+        </a>
         
-        <a id="nextBtn" class="btn nav-btn btn-hidden">Sig.
-⏭</a>
+        <a id="nextBtn" class="btn nav-btn btn-hidden">Sig. ⏭</a>
     </div>
 
   </div>
@@ -522,8 +332,7 @@
     // LÓGICA DEL REPRODUCTOR
     // -----------------------------------------------------------
     
-    const DB = (typeof players !== 'undefined') ?
-        players : {};
+    const DB = (typeof players !== 'undefined') ? players : {};
     
     const params = new URLSearchParams(location.search);
     const animeId = params.get('anime');
@@ -638,7 +447,6 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
-          
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
