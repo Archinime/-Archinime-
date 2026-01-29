@@ -9238,6 +9238,16 @@ const data = {
             },
             {
                 "num": 2,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZIwDK5ZJyUtMNCyhz4kaxwtOiGtkXPxznn7&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Extra Edition"
+                    }
+                ],
+                "name": "OVA 1"
+            },
+            {
+                "num": 3,
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZyqDK5Zt3acz3WekQpgkJ02cfowXFs6J4AV&size=2000x3000",
                 "eps": [
                     {
@@ -9266,22 +9276,12 @@ const data = {
                     },
                     {
                         "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
                     }
                 ],
                 "name": "Sword Art Offline"
-            },
-            {
-                "num": 3,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZIwDK5ZJyUtMNCyhz4kaxwtOiGtkXPxznn7&size=2000x3000",
-                "eps": [
-                    {
-                        "title": "Capítulo 1"
-                    },
-                    {
-                        "title": "Capítulo 2"
-                    }
-                ],
-                "name": "Especial 1"
             },
             {
                 "num": 4,
