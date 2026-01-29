@@ -11968,5 +11968,141 @@ const players = {
                 "title": "Kobayashi-san Chi no Maid Dragon Película 1: A Lonely Dragon Wants to Be Loved"
             }
         }
+    },
+    "85": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1Yc69lfQOjQ3SCFTUhAOoCWAjp-jPvjkh/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1qaqQeueMObdm9YIEtJrcwtkOQ0H9M8Qw/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1fWIeZMaIG2jdw_7MayAN8EXs1g2leXWi/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1ahLYiuyLm55UdGMI6KJ_8ScQhhkXRt78/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1qWW1JtSTt0Ks3YRbbAO6K0_eUAC_QkTU/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1beHHoIQLC9mjyMoKkuW5UFZRboWYMwIi/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1TwGNIGqNEXeKKrkXhBUd_-659bHgerE0/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1HSsLzJi3D6txfpGrcHnbAKvuzUEgZ4o9/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/19_a6d2zHVgVG-CsIRg5plNU0VJIB8WIc/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1M5BAZivs2P9palzYFD5YJCZRaqCizZz5/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1A9gQ3BYUrBv-nxvpDHmpqvHyADg3L5zu/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1baCURewW4eA9mt0UWHV1SlfHcwGJ2gaZ/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/118xNGDbzFTxvF7ZBnisqC3U5H3DspPHX/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1cGeBYptX5UFXZoc1361ReJTN_Xfh3_dv/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1GxdloTGdbGGH0w9KnR2JmjLPuneTHKvp/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1PCOOHazJmIWGHjM7KdAJeF1x0VgmD65H/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/143THAp4yky_2v4-L8J9THpBEjuydUGj1/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1VAOhcyFHXIta5DQo6NeFndTvmbE3U6xe/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1S2yrnPgaf8S_N_64HJ_1SAYMH7vBJpas/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1LQSvX0ZMyBt5nNHlmnaWPqEf4nYBZIZJ/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1xdtfF2KkT9IsQ-zcFYfG2hLIsjAORX3K/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1aTHk_TD1WNo5O_UPg33BgcDRApni72fL/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1ZGq5bQbs8MJHMZ0EO2zWfJWs1MZFyO8F/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1CS9eLsH309Mkat1u7moo_gFIkZp76kMz/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1AqPHJD855lRZKlhDu1OKk-mRuNIpWzj-/preview",
+                "link2": "",
+                "title": "Sword Art Online T1 Cap 25"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1XRVAE3QYt29RC0bnjZiz163jNiIThJ2z/preview",
+                "link2": "",
+                "title": "Sword Art Online OVA 1"
+            }
+        }
     }
 };
