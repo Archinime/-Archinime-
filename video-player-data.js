@@ -12696,6 +12696,73 @@ const players = {
                 "link2": "",
                 "title": "Baki T1 Cap 26"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1LsoAByCSuWY5YGAVV9ETyqsA8Z7bxkrw/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1HFkHC_chzuJRcGJw6vII4o2sJ0sqwWhx/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/11jY3kLRPSqmvfWaeZOsMiQYxcv2qiMfi/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1JExwm_wcH1TiO8L79QggN7tErNiuba7a/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1dNFrIdDgtqEi0IoSH5OK5t3QLhAgJIzr/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/10VfuLkx4Elb2fWAfAssBK665OWGosqf1/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1p_YrdHtuLIVXqIto2bowCjGo-zXHeZoj/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1RPY7kEjErqJ7uTEbnzBgy241t0fGklFU/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1uFks2KHIJIplhhD3VzaCtyfDgughHBSc/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1lbhaoeaxkjNjkNVrcwQbT3Q-7CMIxOyE/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1dpuAPLmABA63RZNjSWnuj3JU9NAcevQ_/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1LZXshB2OuOcLrMX-FZJr59Kcf3YNx3AQ/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1qOT4PeG2QF6uflQ2bsWNZNNZvnrk2xPE/preview",
+                "link2": "",
+                "title": "Baki T2 Cap 13"
+            }
         }
     }
 };
