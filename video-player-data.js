@@ -12962,6 +12962,13 @@ const players = {
                 "link2": "",
                 "title": "Baki T4 Cap 27"
             }
+        },
+        "5": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1VPRx8hjr2Bez5UsalIYtRT6SbKekCSuP/preview",
+                "link2": "",
+                "title": "Baki Película 1: Baki Hanma vs. Kengan Ashura"
+            }
         }
     }
 };
