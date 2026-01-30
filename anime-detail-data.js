@@ -9700,6 +9700,49 @@ const data = {
                     }
                 ],
                 "name": "Temporada 2"
+            },
+            {
+                "num": 3,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZuf9K5Z6yxVcVD6zqHJjm2rxwYNHV5fR4yV&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 3"
             }
         ]
     }
