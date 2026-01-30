@@ -261,9 +261,9 @@ const audioPlaylists = {
         "https://www.dropbox.com/scl/fi/g16veupg68rihmd46j25c/Miss-Kobayashis-Dragon-Maid-Opening-FULL.mp3?rlkey=egmnpr90obkf6g4j85su9xsxk&st=s3g1w50y&raw=1"
     ],
     "85": [
-        "https://def3.pcloud.com/cBZfcgVRX7Z8bV5oP7ZZZhDNU0kZlXZZA5zZkZPASRZ18Z6YZoRZrzZtzZgQZHYZWmZiFZa4ZK4ZPpZk4ZzmZoKDK5Zk30pp5iOKQm1dxyEUQa2pbLTInok/CreditlessSword%20Art%20Online_%20Alicization%20OP%20%20Opening%201UHD%2060FPS.mp3",
-        "https://def2.pcloud.com/D4ZQAgVRX7ZRkV5oP7ZZZiDNU0kZlXZZA5zZkZ0InpZHQZ5mZNQZQlDK5Zdpt5C0ORp5JUKx1EICctp80Ckr27/LiSAcrossing%20field%E3%82%BD%E3%83%BC%E3%83%89%E3%82%A2%E3%83%BC%E3%83%88%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E7%AC%AC1%E6%9C%9F1st%E3%82%AF%E3%83%BC%E3%83%AB%20%E3%83%8E%E3%83%B3%E3%82%AF%E3%83%AC%E3%82%B8%E3%83%83%E3%83%88OP.mp3",
-        "https://def2.pcloud.com/D4ZNvgVRX7ZxLV5oP7ZZZ81NU0kZlXZZA5zZkZnDnpZrRZa4ZMLZmlDK5ZIeEvFICUiJb6X9FUnLsDf0Nsd7dX/%E8%97%8D%E4%BA%95%E3%82%A8%E3%82%A4%E3%83%ABINNOCENCE%E3%82%BD%E3%83%BC%E3%83%89%E3%82%A2%E3%83%BC%E3%83%88%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E7%AC%AC1%E6%9C%9F2nd%E3%82%AF%E3%83%BC%E3%83%AB%20%E3%83%8E%E3%83%B3%E3%82%AF%E3%83%AC%E3%82%B8%E3%83%83%E3%83%88OP.mp3"
+        "https://www.dropbox.com/scl/fi/z39v3kgx5m2mr8wbyguf4/CreditlessSword-Art-Online_-Alicization-OP-Opening-1UHD-60FPS.mp3?rlkey=kdt5874k5qyp2b7bwdkx9wifw&st=jq1anfiv&raw=1",
+        "https://www.dropbox.com/scl/fi/xjlx49d3l5x4htcqtbbkq/LiSAcrossing-field-1-1st-OP.mp3?rlkey=kr2aglsnhrmedetvkjenklt9i&st=rb90uskg&raw=1",
+        "https://www.dropbox.com/scl/fi/8557cbs60g8bgx8cc3to9/INNOCENCE-1-2nd-OP.mp3?rlkey=9ksl3tntdfb5l060ypol880c0&st=lc98yhwk&raw=1"
     ],
     "86": [
         "https://www.dropbox.com/scl/fi/sulyu8dxvgrtbknd7rb5m/Baki-Season-1-OP1BEASTFUL-Full.mp3?rlkey=e88df44fb05nuif9po7oogejd&st=zd5aoot5&raw=1"
