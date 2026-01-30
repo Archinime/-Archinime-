@@ -336,7 +336,7 @@ function injectFinalBlock() {
 }
 
 const genresList = [
-    "Acción", "Animación", "Aventura", "Ciencia ficción", "Cocina", "Comedia", 
+    "Acción", "Animación", "Artes Marciales", "Aventura", "Ciencia ficción", "Cocina", "Comedia", 
     "Comedia oscura", "Cosplay", "Cyberpunk", "Deducción Social", "Deportivo", 
     "Divulgación Científica", "Drama", "Ecchi", "Espionaje", "Escolar", "Fantasía", 
     "Fantasía oscura", "Familiar", "Gag", "Gore", "Harem", "Hentai", "Histórico", 
@@ -345,7 +345,7 @@ const genresList = [
     "Policial", "Post-apocalíptico", "Psicológico", "Reverse Harem", "Romance", "RPG", 
     "Slice of Life", "Sobrenatural", "Steampunk", "Superhéroes", "Survival", 
     "Survival Game", "Suspenso", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
-    "Thriller psicológico", "Tokusatsu", "Tragedia", "Yaoi", "Yuri"
+    "Thriller psicológico", "Tokusatsu", "Tragedia", "VRMMO", "Yaoi", "Yuri"
 ];
 
 const gContainer = document.getElementById('genresContainer');
