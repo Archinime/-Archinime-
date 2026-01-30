@@ -266,6 +266,6 @@ const audioPlaylists = {
         "https://def2.pcloud.com/D4ZNvgVRX7ZxLV5oP7ZZZ81NU0kZlXZZA5zZkZnDnpZrRZa4ZMLZmlDK5ZIeEvFICUiJb6X9FUnLsDf0Nsd7dX/%E8%97%8D%E4%BA%95%E3%82%A8%E3%82%A4%E3%83%ABINNOCENCE%E3%82%BD%E3%83%BC%E3%83%89%E3%82%A2%E3%83%BC%E3%83%88%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E7%AC%AC1%E6%9C%9F2nd%E3%82%AF%E3%83%BC%E3%83%AB%20%E3%83%8E%E3%83%B3%E3%82%AF%E3%83%AC%E3%82%B8%E3%83%83%E3%83%88OP.mp3"
     ],
     "86": [
-        "https://def4.pcloud.com/cBZxFp2LX7Zkkl37C7ZZZm9oU0kZlXZZA5zZkZmbeDZjQZPYZQFZgzZvYZ6YZC4Z98Z1LZ24ZFmZRzZ1zZrpZvp9K5ZOft5Vk0k3jfYS0t4dsP89QceEhyk/Baki%20Season%201%20OP1BEASTFUL%28Full%29.mp3"
+        "https://www.dropbox.com/scl/fi/sulyu8dxvgrtbknd7rb5m/Baki-Season-1-OP1BEASTFUL-Full.mp3?rlkey=e88df44fb05nuif9po7oogejd&st=zd5aoot5&raw=1"
     ]
 };
