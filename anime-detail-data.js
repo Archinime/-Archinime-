@@ -9376,6 +9376,40 @@ const data = {
             },
             {
                 "num": 5,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZeDTK5ZHA2Q4Uso7jkzCpTQjHgxw4P1fBjX&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    }
+                ],
+                "name": "Sword Art Offline II"
+            },
+            {
+                "num": 6,
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZsdDK5Zwrs5SeTzNEB27kHJ0brge0Qkc8SV&size=2000x3000",
                 "eps": [
                     {
@@ -9385,7 +9419,7 @@ const data = {
                 "name": "Película 1"
             },
             {
-                "num": 6,
+                "num": 7,
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZnIDK5ZGFXUeyphMLm3HvY570j9vjbIP49X&size=2000x3000",
                 "eps": [
                     {
@@ -9467,7 +9501,7 @@ const data = {
                 "name": "Temporada 3"
             },
             {
-                "num": 7,
+                "num": 8,
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZHmnK5ZzCEH4jIu5oRcXNFP2fmbSzTaaMMX&size=2000x3000",
                 "eps": [
                     {
@@ -9546,7 +9580,7 @@ const data = {
                 "name": "Temporada 4"
             },
             {
-                "num": 8,
+                "num": 9,
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZRSnK5ZBuVI4IeVDKSxeLiBC79MubXWNBN7&size=2000x3000",
                 "eps": [
                     {
@@ -9556,7 +9590,7 @@ const data = {
                 "name": "Película 2"
             },
             {
-                "num": 9,
+                "num": 10,
                 "cover": "https://api.pcloud.com/getpubthumb?code=XZjSnK5Zyi5nPAcNy9Y0V0S50OKEWydf4gRV&size=2000x3000",
                 "eps": [
                     {
@@ -9564,6 +9598,92 @@ const data = {
                     }
                 ],
                 "name": "Película 3"
+            },
+            {
+                "num": 11,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZP1TK5Zb94z5nzcTzBJCtExxfBQIReDpgr7&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Alternative: Gun Gale Online"
+            },
+            {
+                "num": 12,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZr1TK5ZWqGs6z8IT6JzKyMNjMbUSH5P9wOk&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Alternative: Gun Gale Online II"
             }
         ]
     },
