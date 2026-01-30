@@ -1640,5 +1640,24 @@ const animes = [
         "latestBlockName": "Película 3",
         "latestEpTitle": "Progressive 2: Scherzo of Deep Night",
         "isFinal": false
+    },
+    {
+        "id": 86,
+        "title": "Baki",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZ0p9K5Zz7CYJaaP8E4a4o9sBzCkrSwHI6k0&size=2000x3000",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Deportivo",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769747603339,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZ9p9K5ZqjqTJUccGufTIcc4gX2Y0bamjI3k&size=2000x3000",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 26",
+        "isFinal": false
     }
 ];
