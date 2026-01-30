@@ -1607,8 +1607,8 @@ const animes = [
             "Yuri",
             "Seinen"
         ],
-        "lastUpdate": 1769529066752,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1769785876713,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZjojK5Z0gt6QP9JFsB8waiQNJy5hFX2fF77&size=2000x3000",
         "latestBlockName": "Película 1",
         "latestEpTitle": "A Lonely Dragon Wants to Be Loved",
