@@ -1632,14 +1632,15 @@ const animes = [
             "Isekai",
             "Romance",
             "Thriller",
+            "VRMMO",
             "Shōnen"
         ],
-        "lastUpdate": 1769718886128,
+        "lastUpdate": 1769805090130,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZjSnK5Zyi5nPAcNy9Y0V0S50OKEWydf4gRV&size=2000x3000",
-        "latestBlockName": "Película 3",
-        "latestEpTitle": "Progressive 2: Scherzo of Deep Night",
-        "isFinal": false
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZr1TK5ZWqGs6z8IT6JzKyMNjMbUSH5P9wOk&size=2000x3000",
+        "latestBlockName": "Alternative: Gun Gale Online II",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true
     },
     {
         "id": 86,
