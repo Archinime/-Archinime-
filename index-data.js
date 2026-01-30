@@ -1269,11 +1269,11 @@ const animes = [
             "Slice of Life",
             "Shōjo"
         ],
-        "lastUpdate": 1769089782779,
+        "lastUpdate": 1769735432170,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "kimitokoete1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 10",
+        "latestEpTitle": "Capítulo 11",
         "isFinal": false,
         "aliases": [
             "With You, Our Love Will Make It Through"
