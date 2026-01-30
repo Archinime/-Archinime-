@@ -10325,6 +10325,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/18FIAww6DmdCUIRg67W3HBkPh8ilRknrd/preview",
                 "link2": "",
                 "title": "Sentenced to Be a Hero T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1XyyqzQJAKabBb7np_hywc00GjFGEiuyI/preview",
+                "link2": "",
+                "title": "Sentenced to Be a Hero T1 Cap 4"
             }
         }
     },
