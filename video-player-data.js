@@ -12825,6 +12825,143 @@ const players = {
                 "link2": "",
                 "title": "Baki T3 Cap 12"
             }
+        },
+        "4": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1JCbzZVwJ5YWLJHPe35QumejKjTtLd6pR/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1FvLTonejNNmQ1YS5ykN-64yhJztU_eLu/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1X-VNBoBxqhjDn-2OPdrfyLd6_s08yBnY/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1_vo_60c69H4vNNQX_pf2Bief623-Z3Pn/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1fTMLyyVBtseAz2aZktvougqdx5OvGQ_K/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1G7e9HR0RYBZZ7RJ2vKJ9H72Lk2ycqOSe/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1XUBvUn4jilep1iKHP5E983JyRQOjEKcM/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1KUyq-HVij8SwU_lgY7EgaYkSNf9gjhGp/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1n7mE5pryjOrw9DJABS1oZqzwtJh8u5wG/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1GkBZVOVKaG1IMVXX5hwY5jjFr38VeFQA/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1M-mZUKxi1Web_OliOzAJu4BXGl5qZplF/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1rVmNCzB3ccEwEaDYT5sHqEZc_v9UssdP/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1MZjApEs587GxeuhZkY8naQOF2wG44vpP/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1PPUXvEXnXD6pBspdseVj6qIs_HVMqMOr/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1c8YGuLn5hlBgar_elooWfu5GqzqSu2Pn/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1iCa_1pi6wPlC1cX0FJh_XuQx4cQOIQ_U/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1Zri9caSy8m209OeaG-g1bbwNPGeE4Cmy/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1OgqR33FJiJlP9cAo8TaaZRwGKBfd2Wpe/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1myJ-6nAYV_KX6PskjB7OSaTcl8xQYRQc/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/174OmH_18hRP27C0-jVTlUdrFxIAliErL/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1ncbTSHlyERzePl2ID8yQlEQ_94ODXJVk/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1y0GvG1BK8NHYOZjYy-t0lr7C0YW6_8jM/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1iqEpv9e5aX4VSyvJnU947ifNp9XkwNY_/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1KtS5g7mWeJMAXlGTBQ-uqiRUHCyo34UV/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1A4_itg1T66Zwj3RYWl2U3MMbjnsn9ifw/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 25"
+            },
+            "26": {
+                "link": "https://drive.google.com/file/d/1W-EEQrmjThzmC-59dWBFs-tG4tIRQtNH/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 26"
+            },
+            "27": {
+                "link": "https://drive.google.com/file/d/1julElle4dpw5PJlo6hHiZz4ab3bXBOBU/preview",
+                "link2": "",
+                "title": "Baki T4 Cap 27"
+            }
         }
     }
 };
