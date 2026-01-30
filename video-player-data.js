@@ -12763,6 +12763,68 @@ const players = {
                 "link2": "",
                 "title": "Baki T2 Cap 13"
             }
+        },
+        "3": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1UOxfUx-q-2WO7DwIFDcHP1Yw69VOdTrt/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1N4ZbN8_POSgBYP7OGkGkjEIbWJTKVpkj/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1HpXvZ58wEHKXuz77zY7ctFkXOofsG9DO/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1GZre5PH9Djw1jsKnNOVhF3doC7OFn8qY/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1uaqenNkXvc8WQNqmBhstiJj82ro_W9ra/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1F9O3bzg1ZAOqt5mli6dj1eVDhy6zK4Cm/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1XBXLsOBi_KnMozJ5HprKOwirqu05_HF8/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1xIAVV2q8qh7Z6rlv6LEGtL8WYxmyIjtD/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1iwjsPvWzb8WywDi2iZX8megns_NFyEg2/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1o0aZC1j6aBBcOYyEeVd_kfHI2bnoND7c/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1iHAvcuqVqx5ZBVhwVhUemLAxleFMmtjk/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1bY-jbrNJw9az_CzgBrxTNJtxU5rWYXZs/preview",
+                "link2": "",
+                "title": "Baki T3 Cap 12"
+            }
         }
     }
 };
