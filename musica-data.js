@@ -258,7 +258,7 @@ const audioPlaylists = {
         "https://www.dropbox.com/scl/fi/i5wgx9wafu7o7nkmt2xr8/Mairimashita-Iruma-kun-Season-3-OP-Full-Girigiri-Ride-It-Out-Sub-Espa-ol-Romaji-AMV.mp3?rlkey=u8xvcv0u5nlwqnt51scufakh8&st=wb2mj4fm&raw=1"
     ],
     "84": [
-        "https://def4.pcloud.com/cBZDskkHX7ZxwHiGP7ZZZxl7U0kZlXZZA5zZkZ3RoEZcRZLRZU8ZTHZGQZQYZS4Z5RZsRZWYZfQZR4ZCmZcYZOyuK5Z4LkGkbgGU7pwbO9QEfBsVSp5VUdy/Miss%20Kobayashis%20Dragon%20Maid%20%20%20Opening%20FULL.mp3"
+        "https://www.dropbox.com/scl/fi/g16veupg68rihmd46j25c/Miss-Kobayashis-Dragon-Maid-Opening-FULL.mp3?rlkey=egmnpr90obkf6g4j85su9xsxk&st=s3g1w50y&raw=1"
     ],
     "85": [
         "https://def3.pcloud.com/cBZfcgVRX7Z8bV5oP7ZZZhDNU0kZlXZZA5zZkZPASRZ18Z6YZoRZrzZtzZgQZHYZWmZiFZa4ZK4ZPpZk4ZzmZoKDK5Zk30pp5iOKQm1dxyEUQa2pbLTInok/CreditlessSword%20Art%20Online_%20Alicization%20OP%20%20Opening%201UHD%2060FPS.mp3",
