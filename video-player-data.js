@@ -12127,7 +12127,7 @@ const players = {
             },
             "2": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/1jdymAHPfrlHr1bb2elJX8Q6k24Y9peAR/preview",
+                "link2": "https://drive.google.com/file/d/1Wi3ct5cmqiEQfSZ-vQcRLwVWW37_oWzI/preview",
                 "title": "Sword Art Online Sword Art Offline Cap 2"
             },
             "3": {
@@ -12142,27 +12142,27 @@ const players = {
             },
             "5": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/143dCu0g9UrTMYbdRWoRDtLZqWVhO8wGA/preview",
+                "link2": "https://drive.google.com/file/d/1aL6sOTmA4lycxF7bXYBrXO1KcWjYQR_h/preview",
                 "title": "Sword Art Online Sword Art Offline Cap 5"
             },
             "6": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/1u3emAZdl3QfOxsIpwNU43MuJcDFuEM4E/preview",
+                "link2": "https://drive.google.com/file/d/10lJdXlyxLFmkNg_mwNUekBrIolvNQYJz/preview",
                 "title": "Sword Art Online Sword Art Offline Cap 6"
             },
             "7": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/1zqM77fFKwukOMxAsUOSzgMJpvmyCAI9_/preview",
+                "link2": "https://drive.google.com/file/d/1UY-KLccHmZ4y_SzP9I_CnE2YDN-W4Xkl/preview",
                 "title": "Sword Art Online Sword Art Offline Cap 7"
             },
             "8": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/1qhpeQKvcpmgLCrszipQrw3CrCmktg9G1/preview",
+                "link2": "https://drive.google.com/file/d/1VaJIiqEvrzjmbHtKAswPOuIB_yJ-EhcL/preview",
                 "title": "Sword Art Online Sword Art Offline Cap 8"
             },
             "9": {
                 "link": "",
-                "link2": "https://drive.google.com/file/d/13BWdMe4-Xd66C7LQF62tdI0gJlwzebXS/preview",
+                "link2": "https://drive.google.com/file/d/1pPowFEyOoCgQtAm3pBW5jripj8v9g0Pr/preview",
                 "title": "Sword Art Online Sword Art Offline Cap 9"
             },
             "10": {
@@ -12300,12 +12300,59 @@ const players = {
         },
         "5": {
             "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1OlMLhbX1Bb1G6Qio2gjTP6i6GB2g-ezL/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1sRR-onl5tS9rUCXmQqtzjE0uL3C4T1i9/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 2"
+            },
+            "3": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1ZQHG0AE-2tMyy5q2y_Sbp2tnl3z9Y438/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 3"
+            },
+            "4": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1JDfz6QQig70NztfIN9i_pbcxBlzJp06F/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 4"
+            },
+            "5": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1ihU51hl0E11-fJ7tKKq3qYjJZC6TpxAF/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 5"
+            },
+            "6": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1F5DPYz7jwYBAzcS3i5BV7c-wjpx97jZv/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 6"
+            },
+            "7": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1mYm9etVrjUhOdW9_cUAPNwY2x62_xmLa/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 7"
+            },
+            "8": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1lWhh21SvCfNtIzvz3xRFpYsyzErIZAW6/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 8"
+            },
+            "9": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1CFzf2huppMYqctkMm2udCfMn6f6DD0dH/preview",
+                "title": "Sword Art Online Sword Art Offline II Cap 9"
+            }
+        },
+        "6": {
+            "1": {
                 "link": "https://drive.google.com/file/d/1eMALyhwkjIUaKMd-1mZMxdMKrPKK02zV/preview",
                 "link2": "",
                 "title": "Sword Art Online Película 1: Ordinal Scale"
             }
         },
-        "6": {
+        "7": {
             "1": {
                 "link": "https://drive.google.com/file/d/1ZC80qKcYl6a6npLpsNaDdaSkjWbd0FC7/preview",
                 "link2": "",
@@ -12432,7 +12479,7 @@ const players = {
                 "title": "Sword Art Online T3 Cap 25"
             }
         },
-        "7": {
+        "8": {
             "1": {
                 "link": "https://drive.google.com/file/d/1xd7XwWhiHauq_xv4mGQf_HAIihoL6IYX/preview",
                 "link2": "",
@@ -12554,18 +12601,142 @@ const players = {
                 "title": "Sword Art Online T4 Cap 24"
             }
         },
-        "8": {
+        "9": {
             "1": {
                 "link": "https://drive.google.com/file/d/1j2-cSpTmvp7FbHjy_b3PjnC3N_9Bslm_/preview",
                 "link2": "",
                 "title": "Sword Art Online Película 2: Progressive: Aria of a Starless Night"
             }
         },
-        "9": {
+        "10": {
             "1": {
                 "link": "https://drive.google.com/file/d/13kUok0uQr4zi4vl4Pnleel2VtbzUFWbI/preview",
                 "link2": "",
                 "title": "Sword Art Online Película 3: Progressive 2: Scherzo of Deep Night"
+            }
+        },
+        "11": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1OUfvoad_EdbM2DL05yku8HgHBeWA-Y4w/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/16RCLeOFeV0EUkUqs3BYWDCE72agml9Xm/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 2"
+            },
+            "3": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1jjxgL7-XncuemYdroLKTNVnGNruAA9ft/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 3"
+            },
+            "4": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1qnLdRzDEYAIBDjwM6gK56mihiT0g3NTn/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 4"
+            },
+            "5": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/17zhFKhPgaKg97i7gUXxWmxg-lQQCOqoU/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 5"
+            },
+            "6": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/16Zl2hINK37vkCFmiYDEllKpxxJGl-741/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 6"
+            },
+            "7": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1EZE-9PDkEjCX92k4Z_urNlqVOl0P78C7/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 7"
+            },
+            "8": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1Vi2V9evgqsj9gwX31g0ZWd7w8GCeNoH2/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 8"
+            },
+            "9": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1mfMdd7SHMVXIMMetoebX9OiEdhTYfGzC/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 9"
+            },
+            "10": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1zYBsm0xyNh6CAhEf8pFqe_8rudBjnKk3/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 10"
+            },
+            "11": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1x3n6RybPELDlw7CbzSi77ZIadnv5uMIh/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 11"
+            },
+            "12": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1U4GxWEp3OG6lL9bExc1Y3iU7i670YoZB/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online Cap 12"
+            }
+        },
+        "12": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1noNJVtzLtOwkUjjc0eTN50H9JJ1mwwgC/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/19Elorst6hp0xJnoEFuDQCaLnhha2IbbS/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 2"
+            },
+            "3": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1W_cTHAggsjI07FaxHRto-vdbaH7TVr6i/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 3"
+            },
+            "4": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1Yb5KIdlvP8rWn7qXs3aZM7K90UdbhyYH/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 4"
+            },
+            "5": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1XY-NXU8BPMvHccr5QxYUCa6krdlHxsG_/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 5"
+            },
+            "6": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1V5_LRzSl8sM0lk0k_ihmstkxrTrNi2Gt/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 6"
+            },
+            "7": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1z0SJczs8lAqDs7EXO-1TJyfMjwnDYTj2/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 7"
+            },
+            "8": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1WoYwkyjXDovpDMUrRlhms_ZpE5uVYEJu/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 8"
+            },
+            "9": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1wW4uBg85i_6fzFLrEMUTuAir0WrRm-oQ/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 9"
+            },
+            "10": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1yZLkdZEd0QgBENSLyyBS72bEqeXTWfvV/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 10"
+            },
+            "11": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/12RTJZjXYikmGQeFHWquNLBP332PnOl1O/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 11"
+            },
+            "12": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1g7Hp-B1pJC2v1mbcz0rlxLBSTrOklmI8/preview",
+                "title": "Sword Art Online Alternative: Gun Gale Online II Cap 12"
             }
         }
     },
