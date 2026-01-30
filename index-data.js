@@ -1650,14 +1650,15 @@ const animes = [
         "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
+            "Artes Marciales",
             "Deportivo",
             "Shōnen"
         ],
-        "lastUpdate": 1769755215045,
+        "lastUpdate": 1769789195067,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZ1B9K5Z5rwFu6hoiB5IltTlMjvywB8YSkwV&size=2000x3000",
-        "latestBlockName": "Temporada 4",
-        "latestEpTitle": "Capítulo 27",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZ6rMK5ZTji8HdOSHVXg8AlDp46GWV3zzusy&size=2000x3000",
+        "latestBlockName": "Película 1",
+        "latestEpTitle": "Baki Hanma vs. Kengan Ashura",
         "isFinal": false
     }
 ];
