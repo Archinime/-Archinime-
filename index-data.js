@@ -1653,11 +1653,11 @@ const animes = [
             "Deportivo",
             "Shōnen"
         ],
-        "lastUpdate": 1769747603339,
+        "lastUpdate": 1769748817157,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZ9p9K5ZqjqTJUccGufTIcc4gX2Y0bamjI3k&size=2000x3000",
-        "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 26",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZjz9K5ZWO1k5qWg2nX6x5YCztO2N8wGz90V&size=2000x3000",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 13",
         "isFinal": false
     }
 ];
