@@ -12563,5 +12563,139 @@ const players = {
                 "title": "Sword Art Online Película 3: Progressive 2: Scherzo of Deep Night"
             }
         }
+    },
+    "86": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1pyluSHTne0kzlKDll5ASm1xcerNmnBzj/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1PcCr1nwJ_goash7_zDfjz39Ft94s573S/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1mT6T2l_CQHps4x_m_wyuw9MIr4t5rDOy/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/11Fvh4xSceXhYmM7eM6mMYYmY0EuD8R_n/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/197gg5MKKzVTVvPvCGMPzhgZv7__LKa4M/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1Y57ML_iNgZqOx8H4e3THQblx1nqp_GBl/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1WesauLiX1XVHWYARtA3dCie8fskEHQMG/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1nrNsYu6_mD8_VeUIpECs5hTuXfaM6p2b/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1Jtc8Xux1liU1zVSvDwG09HZ65uokvtdd/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1XqEsUBxa8GY2RC2CNmB_RxAzIYqwTGJY/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1In4VXv1QV_WaaCH69A-o92LOdILklrON/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1zOTW1gDAkeQCwIDRKPNNUBrVrlOgyiZV/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1ZfpJzet8lihAtG4kvxecTiYadjTkMRDv/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1Lnzq5NYTUi5_7weZjMm31D_9GUqkQ3TU/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1Vj4mpmbYdVP4FOEFSLQdudHtAgeQ3WBz/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1NP8GSBFfojw5dE0iFvCKJPSPw5l0Wdfq/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1zI6r82EmGriUEPbmfW8DRtCBc1sXrT82/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1uVi0CFGtaJIAb3TimUEDFmQpoyfhvxta/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1L5jrz02M6WM0toyTrXPZW92v-UC8NOFj/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1z3GIWYiNlzHTukfWkKF3C2N9FcmZJazb/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1qqichP8r1Ost9CKdsfqH4AJOXfJT8dmA/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1x9iXYrjzhYRBQsg6OXqd391wvI5ZNvuq/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1aFccZZgE3-S3i539GDJLObjL2jvDn-cc/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1SkeiisLN05zKyTTbwsBadtjnwH8d2QX8/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/14Vy_GTW8gc4PLp-y66FljQ-JQptBe8zL/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 25"
+            },
+            "26": {
+                "link": "https://drive.google.com/file/d/1YZdt9jT_zOiNBOvO69k3iSJmMe6Jir3q/preview",
+                "link2": "",
+                "title": "Baki T1 Cap 26"
+            }
+        }
     }
 };
