@@ -267,5 +267,8 @@ const audioPlaylists = {
     ],
     "86": [
         "https://www.dropbox.com/scl/fi/sulyu8dxvgrtbknd7rb5m/Baki-Season-1-OP1BEASTFUL-Full.mp3?rlkey=e88df44fb05nuif9po7oogejd&st=zd5aoot5&raw=1"
+    ],
+    "87": [
+        "https://www.dropbox.com/scl/fi/84s1v2l37yxlok5lz7h21/The-World.-Death-Note-OP.1-Traducido-Al-Espa-ol..mp3?rlkey=p0ijyzl9itnpepgrjyejllsos&st=4f2ie4nd&raw=1"
     ]
 };
