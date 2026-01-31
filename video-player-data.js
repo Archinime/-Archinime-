@@ -8028,6 +8028,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/16lSrR0sfJoMsryjF4eqq5xkK5Zv146TA/preview",
                 "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1zNxPk0NGCkIaNNEDs2owc4V0b-WPitbD/preview",
+                "link2": "",
+                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 14"
             }
         }
     },
