@@ -1661,5 +1661,27 @@ const animes = [
         "latestBlockName": "Película 1",
         "latestEpTitle": "Baki Hanma vs. Kengan Ashura",
         "isFinal": false
+    },
+    {
+        "id": 87,
+        "title": "Death Note",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZC3PK5ZI5e4GKRCk8Xvz6QX7v678Q275LUy&size=2000x3000",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Drama",
+            "Misterio",
+            "Sobrenatural",
+            "Suspenso",
+            "Thriller psicológico",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769889152335,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZd3PK5ZpT0OB7y4ALjU5DNn1jo74HFpQ6FV&size=2000x3000",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 37",
+        "isFinal": true
     }
 ];
