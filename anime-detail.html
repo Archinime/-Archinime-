@@ -14,8 +14,6 @@
   <meta property="og:url" content="">
   <meta property="og:site_name" content="Archinime">
 
-  <link rel="canonical" href="" id="canonicalLink">
-
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
@@ -98,10 +96,12 @@
       padding: 8px 12px;
       border-radius: 20px;
     }
-    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
+    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3);
+    }
 
     /* --- PORTADA --- */
-    .anime-cover { text-align: center; margin-bottom: 25px; }
+    .anime-cover { text-align: center; margin-bottom: 25px;
+    }
     .anime-cover img {
       max-height: 400px; width: auto; max-width: 100%;
       border-radius: 12px;
@@ -197,7 +197,8 @@
       border-radius:8px;
       overflow:hidden;
     }
-    details[open] { background: #0d0214; }
+    details[open] { background: #0d0214;
+    }
     
     summary {
       padding:15px; cursor:pointer; font-weight:bold; color:#0ff;
@@ -206,9 +207,11 @@
       list-style:none; user-select: none;
       touch-action: manipulation;
     }
-    summary::-webkit-details-marker { display:none; }
+    summary::-webkit-details-marker { display:none;
+    }
     summary::after { content:'▼'; font-size:1.5rem; }
-    details[open] summary::after { content:'▲'; }
+    details[open] summary::after { content:'▲';
+    }
 
     .season-content { 
         padding: 10px; 
@@ -223,7 +226,7 @@
     }
 
     .ep-btn {
-      display:flex; align-items: center;
+      display:flex; flex-direction: column; align-items: center; /* Cambiado a columna para el badge */
       justify-content: center;
       padding:10px 4px;
       background: #1a0525; /* Fondo sólido */
@@ -231,8 +234,9 @@
       border-radius:4px;
       text-decoration:none; color:#ddd;
       font-size:0.8rem; text-align:center;
-      min-height: 45px;
+      min-height: 55px; /* Aumentado un poco para el badge */
       transition: all 0.2s;
+      position: relative;
     }
     .ep-btn:hover {
       background: #2a0a3d;
@@ -244,11 +248,33 @@
       color: #000;
     }
 
+    /* --- ESTILO PARA EPISODIOS VISTOS --- */
+    .ep-btn.watched {
+        background: #0f1d18;
+        border-color: #00ff9d;
+        color: #e0fff4;
+        box-shadow: inset 0 0 5px rgba(0, 255, 157, 0.1);
+    }
+    .watched-tag {
+        font-size: 0.65rem;
+        color: #00ff9d; /* Verde neón */
+        margin-top: 4px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        text-shadow: 0 0 5px rgba(0, 255, 157, 0.4);
+    }
+    /* ------------------------------------- */
+
     /* --- RECOMENDACIONES --- */
     .recommendations { margin-top:40px; padding-top:20px;
       border-top:1px solid #333;
     }
-    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
+    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
+    }
     
     /* 6 por fila en PC/Tablet */
     .rec-grid { 
@@ -290,7 +316,8 @@
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
-        .video-list { grid-template-columns: repeat(3, 1fr); }
+        .video-list { grid-template-columns: repeat(3, 1fr);
+        }
     }
 
     @media (max-width: 600px) {
@@ -300,7 +327,8 @@
         }
         .video-list { grid-template-columns: repeat(2, 1fr);
         gap: 6px; }
-        h1 { font-size:1.4rem; }
+        h1 { font-size:1.4rem;
+        }
         
         /* 3 por fila en MÓVILES */
         .rec-grid {
@@ -416,23 +444,19 @@
 
         if (anime) {
             // ============================================
-            // INICIO SEO DINÁMICO MEJORADO + JSON-LD
+            // INICIO SEO DINÁMICO MEJORADO
             // ============================================
             
-            // 1. URL Canónica
-            const currentUrl = window.location.href.split('?')[0] + `?id=${id}`;
-            document.getElementById('canonicalLink').href = currentUrl;
-
-            // 2. Título de la pestaña
+            // 1. Título de la pestaña
             document.title = `Ver ${anime.title} Online - Archinime OS`;
 
-            // 3. Descripción para Google
+            // 2. Descripción para Google
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
                 metaDesc.setAttribute('content', `Disfruta de ${anime.title} en HD. ${anime.desc.substring(0, 140)}... Véalo gratis en Archinime.`);
             }
 
-            // 4. Open Graph (Facebook, Discord, etc)
+            // 3. Open Graph (Facebook, Discord, etc)
             const ogTitle = document.querySelector('meta[property="og:title"]');
             const ogDesc = document.querySelector('meta[property="og:description"]');
             const ogImage = document.querySelector('meta[property="og:image"]');
@@ -441,31 +465,7 @@
             if (ogTitle) ogTitle.setAttribute('content', `Ver ${anime.title} - Archinime`);
             if (ogDesc) ogDesc.setAttribute('content', anime.desc.substring(0, 200) + "...");
             if (ogImage) ogImage.setAttribute('content', anime.cover);
-            if (ogUrl) ogUrl.setAttribute('content', currentUrl);
-
-            // 5. INYECCIÓN DE SCHEMA.ORG (JSON-LD) PARA GOOGLE
-            const schemaScript = document.createElement('script');
-            schemaScript.type = 'application/ld+json';
-            const schemaData = {
-                "@context": "https://schema.org",
-                "@type": "TVSeries",
-                "name": anime.title,
-                "description": anime.desc,
-                "image": anime.cover,
-                "url": currentUrl,
-                "actor": [
-                    { "@type": "Person", "name": "Archinime Fansub" } 
-                ],
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD",
-                    "availability": "https://schema.org/InStock"
-                }
-            };
-            schemaScript.text = JSON.stringify(schemaData);
-            document.head.appendChild(schemaScript);
-
+            if (ogUrl) ogUrl.setAttribute('content', window.location.href);
             // ============================================
             // FIN SEO DINÁMICO
             // ============================================
@@ -488,8 +488,7 @@
             let uploaderEmailOrName = anime.uploader || "Desconocido";
             let displayNick = uploaderEmailOrName; 
             let uploaderHtml = "";
-            let userAvatar = "Logo_Archinime.avif";
-            // Avatar por defecto
+            let userAvatar = "Logo_Archinime.avif"; // Avatar por defecto
 
             if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
                 const userData = usersData[uploaderEmailOrName];
@@ -500,8 +499,7 @@
                 uploaderHtml = `
                     <div class="uploader-container">
                         <span class="upload-label">Subido por:</span>
-                        <a href="${userData.social || '#'}" ${userData.social ?
-                        'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
+                        <a href="${userData.social || '#'}" ${userData.social ? 'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
                             <img src="${userAvatar}" alt="${displayNick}">
                             <span>${displayNick}</span>
                         </a>
@@ -575,7 +573,22 @@
                 const a = document.createElement('a');
                 a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
                 a.className = 'ep-btn';
-                a.textContent = `▶ ${ep.title}`;
+                
+                // --- LÓGICA DE VISTO ---
+                // Creamos una clave única: watched_ID_TEMP_EP
+                const viewedKey = `watched_${animeId}_${seasonNum}_${i+1}`;
+                
+                if(localStorage.getItem(viewedKey)) {
+                    a.classList.add('watched');
+                    a.innerHTML = `
+                        <span>▶ ${ep.title}</span>
+                        <div class="watched-tag"><i class="fas fa-check"></i> VISTO</div>
+                    `;
+                } else {
+                    a.textContent = `▶ ${ep.title}`;
+                }
+                // -----------------------
+
                 fragment.appendChild(a);
             }
 
@@ -595,18 +608,19 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
+
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
-            return;
+             return;
         }
 
         grid.innerHTML = randomKeys.map(k => `
             <div class="rec-card" onclick="location.href='anime-detail.html?id=${k}'" style="cursor:pointer">
-                <img src="${data[k].cover}" alt="${data[k].title}" loading="lazy">
+                <img src="${data[k].cover}" alt="${data[k].title}">
                 <p>${data[k].title}</p>
             </div>
         `).join('');

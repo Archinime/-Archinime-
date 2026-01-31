@@ -199,12 +199,10 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        /* Efecto rebote suave */
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote suave */
         backdrop-filter: blur(5px);
         font-weight: 600;
-        min-width: 100px;
-        /* Tamaño mínimo para consistencia */
+        min-width: 100px; /* Tamaño mínimo para consistencia */
     }
     
     /* EFECTO CELESTE (ANTERIOR / SIGUIENTE) */
@@ -339,6 +337,16 @@
     const season = params.get('s');
     const episode = params.get('e');
     const backLink = document.getElementById('backLink');
+
+    // -- LOGICA DE GUARDADO DE CAPÍTULO VISTO --
+    if (animeId && season && episode) {
+        // Creamos una clave única para este capitulo: watched_ID_TEMP_EP
+        const viewedKey = `watched_${animeId}_${season}_${episode}`;
+        // Guardamos en la memoria local que ya se vio
+        localStorage.setItem(viewedKey, 'true');
+    }
+    // ------------------------------------------
+
     if (backLink) {
         if (animeId) {
             backLink.href = `anime-detail.html?id=${animeId}`;
@@ -471,8 +479,7 @@
                     nextBtn.classList.add('btn-hidden');
                 }
             }
-        } catch (e) { console.error(e);
-        }
+        } catch (e) { console.error(e); }
     }
   </script>
 </body>
