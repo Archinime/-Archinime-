@@ -13136,5 +13136,194 @@ const players = {
                 "title": "Baki Película 1: Baki Hanma vs. Kengan Ashura"
             }
         }
+    },
+    "87": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1HT2v3CmDakazdO0B7hQElfpiw8IGQTc-/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1UtTpAFa1P38MloHRHyZzdxk8e4E6X8dx/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1Q4dg-4PjeC4oXeeLXd9qbJmCTQRinDVP/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1grWgYXUkqhxtcqJj4L7pskwnOC_w-B3M/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/14kbY0_aT2d0qeFDgSQR4_xPK03-VMEeB/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/12VB8jm-iuo1olQhMfbX3KvF3Xuz70CTz/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1Xbelx4ELBaCqvCIEY970dA-fMI7-X4br/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1KFfsFubWyIYRO9HcL7x7VhrN4_rpOVp_/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1HmwXwtzjUSP9WUWWEIztFi7iJGb9OqKT/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1W7OhxbuUpHVsM_wtVd1rtlYNm5A2daEs/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1HnYkdk6UUj1H3ZR8C2b7puoOQ4wRG7v5/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1kY0Fr095Q3a1fZjrfHeSqd-Dp0ihC8N0/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1UN5d_6K1Fesj2KOjBy6Utc0aXZ5-8atu/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/16_al1OrKZCFBajc3lF7cm-nrKYBDUQuQ/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1UsBmVw5OUCKq79D_TUUSnC8QXI0i-5eY/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/17RPeBbJOq6OnqJUvQqSa7IuVnVypV82J/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1SAbGwW5tMYcJP7GZmn5uj9nlg83fONgs/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1J6FH0W2sKHEQ5QghJs8WmpXWNvjPn6pr/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1n00F56OZay0UkSHPG8RjnBOGY8G6kg-H/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1nwgydooWCIzAyrNsmTN2dcA5J7D28s93/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1Cx6CM7P8JvFVW3xFj3q2Leds34B2nJ8i/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1MI16B2ADjFmpwE47I9ojppIR_KZaV7lt/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1d3QR876bSSuKp60p3Ybk74upmhhMD3WT/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1RZAfvTj93uPmIm88MCAW1xs8_hxmRpHK/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1Q-Aq_IJL9uxnkkcVeaoMSuhlUu4I3udQ/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 25"
+            },
+            "26": {
+                "link": "https://drive.google.com/file/d/1TWCYut6cN4lMzl1o9uMrZS_Xu6QgMm2n/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 26"
+            },
+            "27": {
+                "link": "https://drive.google.com/file/d/1x1Hx5AnkXg887rk8oIcEei4ar8pgKdzx/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 27"
+            },
+            "28": {
+                "link": "https://drive.google.com/file/d/1Ak6GFyxk0-8k2c6V6IVCI8Ww46gqFFOf/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 28"
+            },
+            "29": {
+                "link": "https://drive.google.com/file/d/18CROyMWZjIlA-EhcdEGN4fY-Itwh8Oiy/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 29"
+            },
+            "30": {
+                "link": "https://drive.google.com/file/d/1r8fKXzPtUEq_57b-xDyIZj_5uLxj0kxH/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 30"
+            },
+            "31": {
+                "link": "https://drive.google.com/file/d/1eS3DxxwMniRmkjjWbBE0d3jUT_txniTi/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 31"
+            },
+            "32": {
+                "link": "https://drive.google.com/file/d/11YtMxnl-RaKjmg04jWKBFwZF4r6F2Ne1/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 32"
+            },
+            "33": {
+                "link": "https://drive.google.com/file/d/1L1rpwrZidvtM7Z9og41XaWDyiw_2f3Sw/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 33"
+            },
+            "34": {
+                "link": "https://drive.google.com/file/d/1cKCzwdgE6irw84W66gpxnAJUKh6OjnW5/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 34"
+            },
+            "35": {
+                "link": "https://drive.google.com/file/d/1ABe-Lk8NczM2eUx8d1f3M0YsgpH9gtt7/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 35"
+            },
+            "36": {
+                "link": "https://drive.google.com/file/d/1nCBXnka9myiujdXriM5_fTqWee7lFFXc/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 36"
+            },
+            "37": {
+                "link": "https://drive.google.com/file/d/1Ot1D3wO7gniq-oOe2t7hUr02KQ922Dsb/preview",
+                "link2": "",
+                "title": "Death Note T1 Cap 37"
+            }
+        }
     }
 };
