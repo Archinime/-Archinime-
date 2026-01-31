@@ -9960,5 +9960,131 @@ const data = {
                 "name": "Película 1"
             }
         ]
+    },
+    "87": {
+        "title": "Death Note",
+        "desc": "Light Yagami es un estudiante brillante con mucho futuro que se aburre a más no poder. Pero todo cambia cuando encuentra la Death Note, un cuaderno que dejó caer un rebelde dios de la muerte.",
+        "cover": "https://api.pcloud.com/getpubthumb?code=XZC3PK5ZI5e4GKRCk8Xvz6QX7v678Q275LUy&size=2000x3000",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZd3PK5ZpT0OB7y4ALjU5DNn1jo74HFpQ6FV&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
+                    },
+                    {
+                        "title": "Capítulo 17"
+                    },
+                    {
+                        "title": "Capítulo 18"
+                    },
+                    {
+                        "title": "Capítulo 19"
+                    },
+                    {
+                        "title": "Capítulo 20"
+                    },
+                    {
+                        "title": "Capítulo 21"
+                    },
+                    {
+                        "title": "Capítulo 22"
+                    },
+                    {
+                        "title": "Capítulo 23"
+                    },
+                    {
+                        "title": "Capítulo 24"
+                    },
+                    {
+                        "title": "Capítulo 25"
+                    },
+                    {
+                        "title": "Capítulo 26"
+                    },
+                    {
+                        "title": "Capítulo 27"
+                    },
+                    {
+                        "title": "Capítulo 28"
+                    },
+                    {
+                        "title": "Capítulo 29"
+                    },
+                    {
+                        "title": "Capítulo 30"
+                    },
+                    {
+                        "title": "Capítulo 31"
+                    },
+                    {
+                        "title": "Capítulo 32"
+                    },
+                    {
+                        "title": "Capítulo 33"
+                    },
+                    {
+                        "title": "Capítulo 34"
+                    },
+                    {
+                        "title": "Capítulo 35"
+                    },
+                    {
+                        "title": "Capítulo 36"
+                    },
+                    {
+                        "title": "Capítulo 37"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
