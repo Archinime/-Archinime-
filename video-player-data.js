@@ -13463,5 +13463,261 @@ const players = {
                 "title": "Bocchi the Rock! T1 Cap 12"
             }
         }
+    },
+    "90": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1AXRkLUTJgemersf4cSGsAPibhkH_iHu6/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1_sapf74qcOoJIsp0e5EH9rvRoVe-m0wE/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1sc_dpqMAWD90w_QjjBxhhdaS0li7dmUo/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1pn21X0RjCxxskVCrdOOa4UwUI5zUnedK/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1Glv8LX_r9MbRBVhK0Maq_Ma0B24nEc0p/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1Is2byFf7eyffh04OJx22vp1FWwi2tRaR/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1HYlFrfoLm0JflDgIWVjDKuRzuqIGcl5J/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1spLkg_LHm82N31rIHbgYqW0IrkxH9MPo/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1DARknkCaGxCi7UZGmet45Nst7rl7cCxC/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1SyDszTu4w89HPQXCtQAZi75zad_7XIlJ/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1kIbMedxDw4UUMKzKf5oTcMBmsprUVVDZ/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1S5jHP4ANONDdyGPIVC1NN02IodzL8Tbr/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1-CM9AAL7itEl9PNKpFjO6-eRejn07Nql/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1CR2zkPvjxrvFjeJ8j-QgruXT_eXwOkLP/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1zbWqtJ_GGusu0cRI68YMsZoRxjKoYLt2/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1fgaOb3uN-IDhAUQDSx3ZLxTDQXjoUIyJ/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1OZTBwcxeBIkOKdIZzwYtFPQdu1PBkQ_O/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1ELXXXvg-27mIHEDFTLdFv1wjGy7SO0CR/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1v94dfKcM6oxGMfhZ0voH1syBuP9PXR6j/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1ux1AiwJAPFBp0tr0yxb-jhTR_3qSnkpw/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1FE7FFE5lmnb5AZWHPrsLwGLy5ijQU9Y_/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1MuC0lEaqXv3LgbuUml5sac2jmx9QqwJs/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1LJ94gVSsHG_OdzAnQo4fcst2OIodLY4n/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1DCEJW9R7Yuu3a5n1z8ob0vEmuXCRE7mW/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1V9o7m4L0atSU8r2r4FlPGtu7dvuAFppL/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T1 Cap 25"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/13KUekBL5xHGFt0auPIvSibej4NLyPc4x/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1L9QnxpFANnrhx5r3YEH22BXUxSjlSAdN/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1EI82Ub6jEU6zYYhVyiu6UwXeEcl2Z-nV/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1HTQw5cblcjZdbtR9w82BzAwcWLyCQFFN/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1SJYS4FGNtMw5KViV_fGeKFlxJtLVZAlZ/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1wqQVXSjJY1co3B_aSQXDq6GFB4dnRECy/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/17OziYV9v8E7eELFkDQ4fq6cbbAi0aYQQ/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1fB7Db2d2fz2S1SjyAH-AgsWvwoyO6QrD/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1ctfX-KQ3YaQvD5sOLNQOdhY31HkOfNGa/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/16-ehFcC1kUkurLoDMTAvyKoa8PXjqePY/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1TZguS3WqE9S2ZlZMIMc2gQrpiMwtNmds/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1nJma69J4vV7AGModpZRtLMNIvxro3PMH/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1ZhWTyK8La9uW7t-n3Y6bRM9yhv2PxQcg/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1-qtWdSZAjDqkOP2AUb6j92_HFnYJDWjb/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1_H1x1kN4O7WRxDx_czny0dXg8GSP8zI6/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1NoCHtTbZd7qZAgV0bRCnlJ0Q7L6zLdYF/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1BdKGG8jbLAfjkTB6rAUjNRYwTDbWqBcB/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1XVa_5vqYZ66mKuEMqRcL3Z1VFYcOYOFv/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1iKnQ4yaWQ9-mmn7cgI68Lk33cSja_p-u/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1yx4CPkieBejp5a-4FyVHRHDWR1C9VtMe/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1NG6AYG59wvww18OS1S1tAxmk61r9OKnB/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/1f7FnzwT3LvoYCqSXXsBtOhz6sXck9Zwd/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1H2TYFjfYfvYdKE_yO95rAwNgwDfMtAJ6/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1cW5L7Qa_7rP8okPe-VFurdFwLSwaZGmw/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1rMB1RNrXiXb2Q_8-RI_fs0pnM6Jo0YvZ/preview",
+                "link2": "",
+                "title": "Shangri-La Frontier T2 Cap 25"
+            }
+        }
     }
 };
