@@ -270,5 +270,8 @@ const audioPlaylists = {
     ],
     "87": [
         "https://www.dropbox.com/scl/fi/84s1v2l37yxlok5lz7h21/The-World.-Death-Note-OP.1-Traducido-Al-Espa-ol..mp3?rlkey=p0ijyzl9itnpepgrjyejllsos&st=4f2ie4nd&raw=1"
+    ],
+    "88": [
+        "https://www.dropbox.com/scl/fi/ksfx8464u2293vux1v8nf/Leviathan-OP-Paths-Combine-by-Joe-Hisaishi-Netflix-Anime.mp3?rlkey=yicku7wgtj8i3bj6tiyvlf2pt&st=4emorcv2&raw=1"
     ]
 };
