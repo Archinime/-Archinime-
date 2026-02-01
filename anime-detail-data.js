@@ -10096,12 +10096,12 @@ const data = {
     "88": {
         "title": "Leviathan",
         "desc": "En 1914, al borde de la Primera Guerra Mundial, un joven príncipe huye tras un golpe de Estado y conoce a una chica que se hace pasar por chico para alistarse. Su encuentro ocurre a bordo del Leviatán, una asombrosa aeronave viviente fruto de la bioingeniería.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZyDxK5ZfJ69ByBAgeuO17nbuo5yUfdzylpX&size=2000x3000",
+        "cover": "https://api.pcloud.com/getpubthumb?code=XZtUxK5ZfdVT4R2RN44PbPKssJv7pzlVjzTk&size=2000x3000",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://u.pcloud.link/publink/show?code=XZ2DxK5ZmgfLWbnnbafbAGxrJTBBCzMK2pXV",
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZUUxK5ZvX1LOxy7ATS77OpaO3KgbbREKVQV&size=2000x3000",
                 "eps": [
                     {
                         "title": "Capítulo 1"
