@@ -1687,7 +1687,7 @@ const animes = [
     {
         "id": 88,
         "title": "Leviathan",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZyDxK5ZfJ69ByBAgeuO17nbuo5yUfdzylpX&size=2000x3000",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZtUxK5ZfdVT4R2RN44PbPKssJv7pzlVjzTk&size=2000x3000",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1700,9 +1700,9 @@ const animes = [
             "Steampunk",
             "Shōnen"
         ],
-        "lastUpdate": 1769954150074,
+        "lastUpdate": 1769958574912,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://u.pcloud.link/publink/show?code=XZ2DxK5ZmgfLWbnnbafbAGxrJTBBCzMK2pXV",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZUUxK5ZvX1LOxy7ATS77OpaO3KgbbREKVQV&size=2000x3000",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
