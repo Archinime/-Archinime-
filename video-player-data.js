@@ -13399,5 +13399,69 @@ const players = {
                 "title": "Leviathan T1 Cap 12"
             }
         }
+    },
+    "89": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1uOyklkqoGYeXCWVmNJclXqzOde0fOkx_/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1IbyfAVuCP2_hZICQIE9_hliSb7eAul9U/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1nFHT8RHcgMFGF0H_7P-lfaVo10AWkDm5/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1gXrZb6s3e_l3sGEI30k5nqvD-PqGkUdl/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1uAMg3RdSK6JzhSITZFqHy0Tn5aMThCnS/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1AtJkdAo-QlLLkxnVUBT_SSGrkk6NZA80/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1fImIUQqKzOq60r9l-5VEW21h-2ORel30/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1HoMUGq-zuzYE3NTF47fU_SXY2eG6oEsR/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/10bFNtNTYZxvYw6I-xnlyCJd66g0ciR-E/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/18-HcAlNoe9liALNgvIe8BVJkDX5vh4Yj/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1Q5hiWwE6QwWmEdR5gRdMoXFW_Kb3dGDD/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/112hxMEL5X1Zk69MgTmYQ96wEczVJ34Rs/preview",
+                "link2": "",
+                "title": "Bocchi the Rock! T1 Cap 12"
+            }
+        }
     }
 };
