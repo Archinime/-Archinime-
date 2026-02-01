@@ -276,5 +276,10 @@ const audioPlaylists = {
     ],
     "89": [
         "https://www.dropbox.com/scl/fi/r34di8n2mvzsqcszw6yhn/seisyun-complex.mp3?rlkey=m7yri0tkoaaabbx0smbtqz05p&st=dtn4vgfd&raw=1"
+    ],
+    "90": [
+        "https://www.dropbox.com/scl/fi/g24d8bw9nv0vueg4yjraa/Shangri-la-Frontier-Season-2-Opening-2-Frontiers.mp3?rlkey=zonzeec8wap1cnfjy3e6b42ug&st=ord0ivng&raw=1",
+        "https://www.dropbox.com/scl/fi/gi53jsx8hz2eelzl3l15u/Shangri-la-Frontier-Opening-Broken-Games.mp3?rlkey=jbpo19u54pgbppdw0iat99h5i&st=t0m0vbxi&raw=1",
+        "https://www.dropbox.com/scl/fi/6q2yn5h8ap1buqtwtebpg/Shangri-la-Frontier-Season-2-Opening-Queen-by-LiSA.mp3?rlkey=qysjemi1tkbl2oci6vf6k42hy&st=r7kk105w&raw=1"
     ]
 };
