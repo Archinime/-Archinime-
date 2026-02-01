@@ -13335,5 +13335,69 @@ const players = {
                 "title": "Death Note T1 Cap 37"
             }
         }
+    },
+    "88": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1gXPaph7GnAdmMXjnx0PJtVDmAr4_bcLU/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1bw-hfH6B5yipFqN5bqEHA0OJpeJzkKbB/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1nEtOUH-Hwn_1lXFAQI8VrQhyDEDfZiSP/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1FM0tgRsdjLeUuYk8aFo3l06D70G6hwU3/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1PinlNB6eWhN4-gKqgQlwxFBXegsgsYzU/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1nHpVoCneNMKwqEYCdCQ1kby-Bvwt-yX8/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1jxA4dSQZghaSUW72APHY7rM6-KTP8Zcm/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1oM0oUbU__hF0GyR_RqTq3P7eYdnIJs8G/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1WSpRLcz3xmHFozskl1W-dZudGyEcTgzU/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1pGZSTw6hrQBcxi6IIo7ATN7bc2AtIxX7/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1helaokXgXy0fMKJGZy4UysHZ3G1aObw7/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1KOn1rXoznLTWNc9cNXfbCkd9w0g5RPDe/preview",
+                "link2": "",
+                "title": "Leviathan T1 Cap 12"
+            }
+        }
     }
 };
