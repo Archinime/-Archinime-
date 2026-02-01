@@ -1683,5 +1683,28 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 37",
         "isFinal": true
+    },
+    {
+        "id": 88,
+        "title": "Leviathan",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZyDxK5ZfJ69ByBAgeuO17nbuo5yUfdzylpX&size=2000x3000",
+        "rating": 4.6,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Ciencia ficción",
+            "Fantasía",
+            "Militar",
+            "Steampunk",
+            "Shōnen"
+        ],
+        "lastUpdate": 1769954150074,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://u.pcloud.link/publink/show?code=XZ2DxK5ZmgfLWbnnbafbAGxrJTBBCzMK2pXV",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true
     }
 ];
