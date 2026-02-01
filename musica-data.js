@@ -273,5 +273,8 @@ const audioPlaylists = {
     ],
     "88": [
         "https://www.dropbox.com/scl/fi/ksfx8464u2293vux1v8nf/Leviathan-OP-Paths-Combine-by-Joe-Hisaishi-Netflix-Anime.mp3?rlkey=yicku7wgtj8i3bj6tiyvlf2pt&st=4emorcv2&raw=1"
+    ],
+    "89": [
+        "https://www.dropbox.com/scl/fi/r34di8n2mvzsqcszw6yhn/seisyun-complex.mp3?rlkey=m7yri0tkoaaabbx0smbtqz05p&st=dtn4vgfd&raw=1"
     ]
 };
