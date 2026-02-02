@@ -13739,5 +13739,69 @@ const players = {
                 "title": "Shangri-La Frontier T2 Cap 25"
             }
         }
+    },
+    "91": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/13b-0q8RmB57FrJBaGvpwFSG6Y2pyFkAo/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1pvRKp06SGEgNxXzY4l1pxP5_RPP7f7nL/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1R4ylcx_zQ3MXzTM3LynndsKLJ16mIvS8/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1St6yonjLXbpkfk3tCKcBxMdhltRoqVay/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1U356ZDyOeqhoh2EftsneDhnHtdiRX0vZ/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1-h6TsKYMw_FntsvdP9ORc5RWKLhdFePL/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1hlpabHBIlVv1vY6ZrNkeMHZs5cLYaeKC/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1istWEUcPk3cm2KTeBtj8wbhJaBHMRGS9/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1hdwHygsF7eRpEI4LHtV2SrEmGjmNOZcO/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1DYlVWoqlf2bz1yUieN9Js00kdjO9DtPe/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1ZOcMEWlwsyAXmq_LKGQVyIGlW-ZrykWM/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1c4xAiSYSBXRSjLaEyYnAVcECOg6c9cpC/preview",
+                "link2": "",
+                "title": "Trigun Stampede T1 Cap 12"
+            }
+        }
     }
 };
