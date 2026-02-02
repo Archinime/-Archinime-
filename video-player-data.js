@@ -10311,6 +10311,16 @@ const players = {
                 "link": "https://drive.google.com/file/d/1DP0MxXSv7maeRXaJOySRGje2vl6JnaF1/preview",
                 "link2": "",
                 "title": "Seihantai na Kimi to Boku T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1Pf30VHJAcZC5fGCqVaZKzrdBMqSvJAI2/preview",
+                "link2": "",
+                "title": "Seihantai na Kimi to Boku T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1tMvp_mhLKVLlKPrrSuegvVU9Qd-3i7nd/preview",
+                "link2": "",
+                "title": "Seihantai na Kimi to Boku T1 Cap 4"
             }
         }
     },
