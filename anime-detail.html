@@ -3,9 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  
+
   <title>Cargando Anime... - Archinime</title>
   <meta name="description" content="Ver anime online en alta calidad en Archinime.">
+
+<script>
+  (function() {
+    // PALETA "SYNTHWAVE": Solo colores fríos y neones que combinan con la galaxia
+    const colors = [
+      "#00f3ff", // Cian Neón (Inicio)
+      "#0066ff", // Azul Eléctrico
+      "#bc13fe", // Morado Protagonista
+      "#ff0055", // Rosa Neón (Acento)
+      "#bc13fe", // Morado (Regreso)
+      "#0066ff", // Azul
+      "#00f3ff"  // Cian (Final para loop perfecto)
+    ];
+
+    const animationDuration = 6000; // 6 segundos (igual que el CSS nuevo)
+    const intervalTime = 20; 
+    const segments = colors.length - 1;
+    const step = (intervalTime / animationDuration) * segments;
+
+    let currentProgress = 0;
+    let metaTag = document.querySelector('meta[name="theme-color"]');
+    
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.name = "theme-color";
+      document.head.appendChild(metaTag);
+    }
+
+    const hexToRgb = (hex) => {
+      const bigint = parseInt(hex.slice(1), 16);
+      return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+    };
+
+    const rgbToHex = (r, g, b) => {
+      return "#" + [r, g, b].map(x => {
+        const hex = Math.round(x).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join('');
+    };
+
+    const lerp = (start, end, t) => start + (end - start) * t;
+
+    setInterval(() => {
+      currentProgress += step;
+      if (currentProgress >= segments) {
+        currentProgress = currentProgress % segments;
+      }
+
+      const index = Math.floor(currentProgress);
+      const t = currentProgress - index;
+      const colorStart = hexToRgb(colors[index]);
+      const colorEnd = hexToRgb(colors[index + 1]);
+
+      const r = lerp(colorStart[0], colorEnd[0], t);
+      const g = lerp(colorStart[1], colorEnd[1], t);
+      const b = lerp(colorStart[2], colorEnd[2], t);
+
+      metaTag.setAttribute('content', rgbToHex(r, g, b));
+    }, intervalTime);
+  })();
+</script>
   
   <meta property="og:type" content="video.movie">
   <meta property="og:title" content="Archinime OS">
@@ -79,12 +140,18 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
     /* --- BOTONES SUPERIORES --- */
+    /* CAMBIO 2: Fondo degradado para simular efecto en PC */
     .top-buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
-        margin-bottom: 20px;
+        /* Efecto visual añadido para que parezca una barra superior */
+        margin: -20px -20px 20px -20px;
+        padding: 15px 20px;
+        background: linear-gradient(to bottom, rgba(140, 82, 255, 0.3), transparent);
+        border-radius: 12px 12px 0 0;
+        border-bottom: 1px solid rgba(140, 82, 255, 0.2);
     }
 
     .back, .share-detail {
@@ -226,7 +293,8 @@
     }
 
     .ep-btn {
-      display:flex; flex-direction: column; align-items: center; /* Cambiado a columna para el badge */
+      display:flex; flex-direction: column;
+      align-items: center; /* Cambiado a columna para el badge */
       justify-content: center;
       padding:10px 4px;
       background: #1a0525; /* Fondo sólido */
@@ -257,7 +325,8 @@
     }
     .watched-tag {
         font-size: 0.65rem;
-        color: #00ff9d; /* Verde neón */
+        color: #00ff9d;
+        /* Verde neón */
         margin-top: 4px;
         font-weight: 800;
         letter-spacing: 1px;
@@ -270,7 +339,8 @@
     /* ------------------------------------- */
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px; padding-top:20px;
+    .recommendations { margin-top:40px;
+      padding-top:20px;
       border-top:1px solid #333;
     }
     .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
@@ -488,7 +558,8 @@
             let uploaderEmailOrName = anime.uploader || "Desconocido";
             let displayNick = uploaderEmailOrName; 
             let uploaderHtml = "";
-            let userAvatar = "Logo_Archinime.avif"; // Avatar por defecto
+            let userAvatar = "Logo_Archinime.avif";
+            // Avatar por defecto
 
             if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
                 const userData = usersData[uploaderEmailOrName];
@@ -531,7 +602,7 @@
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-                        <div class="season-content">
+                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
@@ -573,11 +644,9 @@
                 const a = document.createElement('a');
                 a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
                 a.className = 'ep-btn';
-                
                 // --- LÓGICA DE VISTO ---
                 // Creamos una clave única: watched_ID_TEMP_EP
                 const viewedKey = `watched_${animeId}_${seasonNum}_${i+1}`;
-                
                 if(localStorage.getItem(viewedKey)) {
                     a.classList.add('watched');
                     a.innerHTML = `
@@ -608,7 +677,6 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
-
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);

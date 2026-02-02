@@ -3,8 +3,70 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
+
+<script>
+  (function() {
+    // PALETA "SYNTHWAVE": Solo colores fríos y neones que combinan con la galaxia
+    const colors = [
+      "#00f3ff", // Cian Neón (Inicio)
+      "#0066ff", // Azul Eléctrico
+      "#bc13fe", // Morado Protagonista
+      "#ff0055", // Rosa Neón (Acento)
+      "#bc13fe", // Morado (Regreso)
+      "#0066ff", // Azul
+      "#00f3ff"  // Cian (Final para loop perfecto)
+    ];
+
+    const animationDuration = 6000; // 6 segundos (igual que el CSS nuevo)
+    const intervalTime = 20; 
+    const segments = colors.length - 1;
+    const step = (intervalTime / animationDuration) * segments;
+
+    let currentProgress = 0;
+    let metaTag = document.querySelector('meta[name="theme-color"]');
+    
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.name = "theme-color";
+      document.head.appendChild(metaTag);
+    }
+
+    const hexToRgb = (hex) => {
+      const bigint = parseInt(hex.slice(1), 16);
+      return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+    };
+
+    const rgbToHex = (r, g, b) => {
+      return "#" + [r, g, b].map(x => {
+        const hex = Math.round(x).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join('');
+    };
+
+    const lerp = (start, end, t) => start + (end - start) * t;
+
+    setInterval(() => {
+      currentProgress += step;
+      if (currentProgress >= segments) {
+        currentProgress = currentProgress % segments;
+      }
+
+      const index = Math.floor(currentProgress);
+      const t = currentProgress - index;
+      const colorStart = hexToRgb(colors[index]);
+      const colorEnd = hexToRgb(colors[index + 1]);
+
+      const r = lerp(colorStart[0], colorEnd[0], t);
+      const g = lerp(colorStart[1], colorEnd[1], t);
+      const b = lerp(colorStart[2], colorEnd[2], t);
+
+      metaTag.setAttribute('content', rgbToHex(r, g, b));
+    }, intervalTime);
+  })();
+</script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,6 +129,7 @@
     }
     
     /* --- NAVEGACIÓN SUPERIOR --- */
+    /* CAMBIO 2: Fondo degradado para simular efecto en PC */
     .top-nav {
         display: flex;
         justify-content: space-between; 
@@ -74,6 +137,12 @@
         margin-bottom: 5px;
         flex-wrap: wrap;
         gap: 10px;
+        
+        /* Efecto visual añadido */
+        background: linear-gradient(to bottom, rgba(140, 82, 255, 0.3), transparent);
+        padding: 10px;
+        border-radius: 0 0 15px 15px;
+        border-bottom: 1px solid rgba(140, 82, 255, 0.2);
     }
 
     /* BOTÓN VOLVER (ESTILO NEON) */
@@ -199,10 +268,12 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote suave */
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Efecto rebote suave */
         backdrop-filter: blur(5px);
         font-weight: 600;
-        min-width: 100px; /* Tamaño mínimo para consistencia */
+        min-width: 100px;
+        /* Tamaño mínimo para consistencia */
     }
     
     /* EFECTO CELESTE (ANTERIOR / SIGUIENTE) */
@@ -300,7 +371,7 @@
   <div class="container">
    
     <div class="top-nav">
-       <a href="index.html" id="backLink" class="back-btn">
+       <a href="#" id="backLink" class="back-btn">
          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
          Volver
        </a>
@@ -347,12 +418,10 @@
     }
     // ------------------------------------------
 
-    if (backLink) {
-        if (animeId) {
-            backLink.href = `anime-detail.html?id=${animeId}`;
-        } else {
-            backLink.href = `index.html`;
-        }
+    // CAMBIO EN LA LÓGICA DEL BOTÓN VOLVER
+    // Solo actualizamos si hay animeId, y eliminamos la redirección a index.html
+    if (backLink && animeId) {
+        backLink.href = `anime-detail.html?id=${animeId}`;
     }
 
     const epData = DB[animeId]?.[season]?.[episode];
@@ -364,7 +433,6 @@
         
         const optContainer = document.getElementById('serverOptions');
         optContainer.innerHTML = '';
-        
         if(epData.link) createOptionBtn("Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Sub", epData.link2, !epData.link);
         
@@ -374,12 +442,14 @@
         document.getElementById('epTitle').innerText = "No encontrado";
     }
 
+    // CAMBIO EN LA FUNCIÓN DE DESCARGA
     function generateDirectDownloadLink(url) {
         if (!url) return "#";
         if (url.includes("drive.google.com")) {
             const match = url.match(/\/d\/(.+?)\//);
             if (match && match[1]) {
-               return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+               // Nuevo formato solicitado con usercontent, export y authuser
+               return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
             }
         }
         if (url.includes("dropbox.com") && url.includes("dl=0")) {
@@ -479,7 +549,8 @@
                     nextBtn.classList.add('btn-hidden');
                 }
             }
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error(e);
+        }
     }
   </script>
 </body>
