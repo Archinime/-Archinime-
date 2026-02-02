@@ -1748,5 +1748,26 @@ const animes = [
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 25",
         "isFinal": true
+    },
+    {
+        "id": 91,
+        "title": "Trigun Stampede",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZswdK5ZPrDr8metTShLGWYpHJjgnJ3OvO3k&size=2000x3000",
+        "rating": 4.5,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Ciencia ficción",
+            "Drama",
+            "Seinen"
+        ],
+        "lastUpdate": 1770050435269,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZUwdK5ZW1ksGIIKW0FKoFGnE4sGzRGSoATy&size=2000x3000",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true
     }
 ];
