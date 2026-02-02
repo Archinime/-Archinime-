@@ -394,7 +394,11 @@
 
   </div>
 
-  <script src="video-player-data.js"></script>
+  <script>
+    var version = new Date().getTime();
+    document.write('<script src="video-player-data.js?v=' + version + '"><\/script>');
+  </script>
+
 
   <script>
     // -----------------------------------------------------------

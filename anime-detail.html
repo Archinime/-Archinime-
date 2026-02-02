@@ -438,10 +438,26 @@
   </video>
   <div id="overlay"></div>
 
-  <script src="index-data.js"></script> 
-  <script src="anime-detail-data.js"></script>
-  <script src="musica-data.js"></script>
-  <script src="users-data.js"></script>
+  <script>
+    var version = new Date().getTime();
+    document.write('<script src="index-data.js?v=' + version + '"><\/script>');
+  </script>
+
+  <script>
+    var version = new Date().getTime();
+    document.write('<script src="anime-detail-data.js?v=' + version + '"><\/script>');
+  </script>
+
+  <script>
+    var version = new Date().getTime();
+    document.write('<script src="musica-data.js?v=' + version + '"><\/script>');
+  </script>
+
+  <script>
+    var version = new Date().getTime();
+    document.write('<script src="users-data.js?v=' + version + '"><\/script>');
+  </script>
+
 
   <script>
     /* ----------------------------------------------------
