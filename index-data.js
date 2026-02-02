@@ -525,7 +525,7 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1770068219652,
+        "lastUpdate": 1770069564645,
         "updateType": "Ninguna",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/2zghbbzs6lpi2lt6sf7ui/fumetsu3.jpg?rlkey=l8yfxc0yk2u13ie8wemgcuoal&st=t0qoyl96&raw=1",
         "latestBlockName": "Temporada 3",
