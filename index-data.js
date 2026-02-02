@@ -1311,11 +1311,11 @@ const animes = [
             "Slice of Life",
             "Shōnen"
         ],
-        "lastUpdate": 1770072822061,
-        "updateType": "Ninguna",
+        "lastUpdate": 1770073348741,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/87mra8kmnrk51w9uxoxc2/ImageToStl.com_v3_top_fv_kv02.avif?rlkey=yjbztlp5l7fjxsjuke5ffijf3&st=0iob3l2k&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 2",
+        "latestEpTitle": "Capítulo 4",
         "isFinal": false,
         "aliases": [
             "You And I Are Polar Opposites"
