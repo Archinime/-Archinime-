@@ -337,7 +337,7 @@ function injectFinalBlock() {
 
 const genresList = [
     "Acción", "Animación", "Artes Marciales", "Aventura", "Ciencia ficción", "Cocina", "Comedia", 
-    "Comedia oscura", "Cosplay", "Cyberpunk", "Deducción Social", "Deportivo", 
+    "Comedia oscura", "Cosplay", "Crimen", "Cyberpunk", "Deducción Social", "Deportivo", 
     "Divulgación Científica", "Drama", "Ecchi", "Espionaje", "Escolar", "Fantasía", 
     "Fantasía oscura", "Familiar", "Gag", "Gore", "Harem", "Hentai", "Histórico", 
     "Horror", "Incesto", "Infantil", "Isekai", "Isekai Inverso", "Kaiju", "Mahō Shōjo", 
