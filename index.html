@@ -8,8 +8,69 @@
   
   <meta name="description" content="Explora Archinime, la plataforma definitiva para ver anime online. Disfruta de estrenos de temporada, clásicos y una base de datos actualizada en alta calidad.">
   
+<script>
+  (function() {
+    // PALETA "SYNTHWAVE": Solo colores fríos y neones que combinan con la galaxia
+    const colors = [
+      "#00f3ff", // Cian Neón (Inicio)
+      "#0066ff", // Azul Eléctrico
+      "#bc13fe", // Morado Protagonista
+      "#ff0055", // Rosa Neón (Acento)
+      "#bc13fe", // Morado (Regreso)
+      "#0066ff", // Azul
+      "#00f3ff"  // Cian (Final para loop perfecto)
+    ];
+
+    const animationDuration = 6000; // 6 segundos (igual que el CSS nuevo)
+    const intervalTime = 20; 
+    const segments = colors.length - 1;
+    const step = (intervalTime / animationDuration) * segments;
+
+    let currentProgress = 0;
+    let metaTag = document.querySelector('meta[name="theme-color"]');
+    
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.name = "theme-color";
+      document.head.appendChild(metaTag);
+    }
+
+    const hexToRgb = (hex) => {
+      const bigint = parseInt(hex.slice(1), 16);
+      return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+    };
+
+    const rgbToHex = (r, g, b) => {
+      return "#" + [r, g, b].map(x => {
+        const hex = Math.round(x).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join('');
+    };
+
+    const lerp = (start, end, t) => start + (end - start) * t;
+
+    setInterval(() => {
+      currentProgress += step;
+      if (currentProgress >= segments) {
+        currentProgress = currentProgress % segments;
+      }
+
+      const index = Math.floor(currentProgress);
+      const t = currentProgress - index;
+      const colorStart = hexToRgb(colors[index]);
+      const colorEnd = hexToRgb(colors[index + 1]);
+
+      const r = lerp(colorStart[0], colorEnd[0], t);
+      const g = lerp(colorStart[1], colorEnd[1], t);
+      const b = lerp(colorStart[2], colorEnd[2], t);
+
+      metaTag.setAttribute('content', rgbToHex(r, g, b));
+    }, intervalTime);
+  })();
+</script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="Archinime">
+
   <meta property="og:description" content="Únete a la nueva era del streaming de anime con interfaz Cyberpunk. ¡Entra ya!">
   <meta property="og:image" content="https://archinime.github.io/-Archinime-/Logo_Archinime.png">
   
@@ -26,7 +87,6 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
 href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.png">
   
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#8c52ff">
 
   <meta name="google-adsense-account" content="ca-pub-3917033517052949">
 
@@ -706,6 +766,7 @@ border-radius:50%; opacity:0.8;">
         <option>Comedia oscura</option>
      
         <option>Cosplay</option>
+        <option>Crimen</option>
         <option>Cyberpunk</option>
         <option>Deducción Social</option>
         <option>Deportivo</option>
