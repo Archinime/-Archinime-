@@ -1795,5 +1795,30 @@ const animes = [
         "aliases": [
             "Omae Gotoki ga Maō ni Kateru to Omou na"
         ]
+    },
+    {
+        "id": 93,
+        "title": "Tower of God",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZF6EK5Zvw2rdq5KKMVN0VFcgbLkohPIfQ0k&size=2000x3000",
+        "rating": 4.6,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Drama",
+            "Fantasía oscura",
+            "Misterio",
+            "Shōnen"
+        ],
+        "lastUpdate": 1770137764938,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZR6EK5ZMbtpcgy8H3Ld11AsXGK1V5mXHjRk&size=2000x3000",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 26",
+        "isFinal": true,
+        "aliases": [
+            "Torre de Dios"
+        ]
     }
 ];
