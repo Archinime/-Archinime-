@@ -10453,5 +10453,144 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "93": {
+        "title": "Tower of God",
+        "desc": "Alcanza la lo más alto y todo será tuyo.\n\nEn la cima de la torre encontrarás todo lo que existe en este mundo, y todo puede ser tuyo.\n\nPodrás ser un dios.\n\nEsta es la historia del inicio y el final de Rachel, la joven que ascendió la torre para poder ver las estrellas, y Bam, el joven que lo único que necesitaba era estar con ella.",
+        "cover": "https://api.pcloud.com/getpubthumb?code=XZF6EK5Zvw2rdq5KKMVN0VFcgbLkohPIfQ0k&size=2000x3000",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZp6EK5Zoo7hw2hakajeuIuwXUtcrHWlEIny&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    }
+                ],
+                "name": "Temporada 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZR6EK5ZMbtpcgy8H3Ld11AsXGK1V5mXHjRk&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    },
+                    {
+                        "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
+                    },
+                    {
+                        "title": "Capítulo 17"
+                    },
+                    {
+                        "title": "Capítulo 18"
+                    },
+                    {
+                        "title": "Capítulo 19"
+                    },
+                    {
+                        "title": "Capítulo 20"
+                    },
+                    {
+                        "title": "Capítulo 21"
+                    },
+                    {
+                        "title": "Capítulo 22"
+                    },
+                    {
+                        "title": "Capítulo 23"
+                    },
+                    {
+                        "title": "Capítulo 24"
+                    },
+                    {
+                        "title": "Capítulo 25"
+                    },
+                    {
+                        "title": "Capítulo 26"
+                    }
+                ],
+                "name": "Temporada 2"
+            }
+        ]
     }
 };
