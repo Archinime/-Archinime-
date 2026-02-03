@@ -13822,5 +13822,206 @@ const players = {
                 "title": "Roll Over and Die T1 Cap 1"
             }
         }
+    },
+    "93": {
+        "1": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1sda8RPd87r27IbvSZsTjRUTMaK6Q-sA9/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1TvgQ34oJRKeHVNbUJeSBk90e1AmQojMs/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1giLceSTWLQQhVikIM6XUUJHaaGB6sqyQ/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1kiDE00PICk--IRQkZiUmKotBpgenKY2K/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1xC8hazampjtaG8f2BjfZh9SIqoTy58x3/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1Z_WG63QkevlVgh35OwTxqm9yk57U4JyM/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1tSg4Ba5HhU3WVFwzrhSbUCZ-w3M_O2Qv/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1tolDJ3Fo2oiMBU5_44s_Y684HRBwf7dS/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/17PpdPub96L50FFxP7_ETcUWVjY0zgYhn/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/1Ael-YRk7aP9AQ3UrZB7GNXM8aOXGomxH/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1O469yk4r7dqnIvchlFGRtpyCxgEukSWE/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1ahQXArQfRSlclQkVAEG-efMDZpNd1V0s/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1YflifwJ87EXpJxLvEQzdYgkAO0IhrvcZ/preview",
+                "link2": "",
+                "title": "Tower of God T1 Cap 13"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1n4iRJmDPG-AqRAFBpCnJZnGwR4RXHi7N/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1e6cG-na0RzuEgcCaml4wcAh-BzjgQRXD/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/16RzVHQGh4YnNyCCj_4MEE6QzdnEsuVeb/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1_CmpU88Sbj5sEWdVOFVDtAw82SlooDO8/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/12fFjWyXf5kfc3SHge_cJa35mPinNpoxp/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1uXtFC1bLHUDu0qZdigurwOfycOGWHnAF/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1Cnc7xqRXkcMhyAo561vUwavzgTBqFqjv/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/1NhR34ag_mWTw88Vm5Reppbx5YhAsPOvm/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 8"
+            },
+            "9": {
+                "link": "https://drive.google.com/file/d/1629ALg7aBbk50yEwxjcyGvbvcKhVyhgv/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/19--bQ76mvKQteaFsTHSAJx23FeJ5aA0J/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 10"
+            },
+            "11": {
+                "link": "https://drive.google.com/file/d/1CnD-K229mUbCOM9_kYkDgqRaDtORfpqw/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1JX7f4PwgWVMK6FsEx0kxH0gljfqEvRJM/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 12"
+            },
+            "13": {
+                "link": "https://drive.google.com/file/d/1F9DovjXeOR7YamadPNab-2gHtPjnmBJo/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 13"
+            },
+            "14": {
+                "link": "https://drive.google.com/file/d/1rjZp7F8Fg6NZxhU0xWqgKVfRpB4epsn9/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 14"
+            },
+            "15": {
+                "link": "https://drive.google.com/file/d/1P560r0lybfDiRbObreBm7TMHwjv_NDZT/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 15"
+            },
+            "16": {
+                "link": "https://drive.google.com/file/d/1I-tIjukWgn3jnHqdR_2iG8DTQnSEjfh8/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1bX4TB38g_O_SnwMsV5up9eHvMvEZZOBW/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/11JlAVC4EL3PcJ6nusY5xCnBUkmhulr6e/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 18"
+            },
+            "19": {
+                "link": "https://drive.google.com/file/d/1KNQxdW3lh0ykapbHjP_EaeeuhXsShXsH/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1QNL_fTO_xH8_AzddEKDdiXbfK08Uow_2/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 20"
+            },
+            "21": {
+                "link": "https://drive.google.com/file/d/1hD74HIHDniqqOogz1m7FtY5N3HceF1Mk/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 21"
+            },
+            "22": {
+                "link": "https://drive.google.com/file/d/14nznomYKNeQ7f-0hrQXtek4fGi668P5H/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 22"
+            },
+            "23": {
+                "link": "https://drive.google.com/file/d/1AHhLBL6Kxw9Z21wCJWS6CW-C15lyzZJA/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 23"
+            },
+            "24": {
+                "link": "https://drive.google.com/file/d/1QzeOVPx3MveyDolYKK07H9TOD_daQST3/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 24"
+            },
+            "25": {
+                "link": "https://drive.google.com/file/d/1Vsb0bzLuq2qMScsQ-oV4o3pUpUSuw5tm/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 25"
+            },
+            "26": {
+                "link": "https://drive.google.com/file/d/1BbLInPlZt-KDFaTUtcJndN4b-eJxoIPj/preview",
+                "link2": "",
+                "title": "Tower of God T2 Cap 26"
+            }
+        }
     }
 };
