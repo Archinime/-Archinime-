@@ -285,5 +285,9 @@ const audioPlaylists = {
     "91": [
         "https://www.dropbox.com/scl/fi/1y2wdh5m8py2tx4bod0z0/TRIGUN-STAMPEDE-OP.-Full-TOMBI-Sub.-Espa-ol-AMV.mp3?rlkey=eawwgvqac9i4rq29b19mqodi9&st=r9zvbxcw&raw=1",
         "https://www.dropbox.com/scl/fi/xuvi2n4vagouh77jrhke5/Eng-LyricsConcept-Art.VerTRIGUN-STAMPEDE-Full-Ending-by-Salyu-Haruka-Nakamura.mp3?rlkey=2go145cxrv62p3a9bej8wz3aw&st=8q4x78uq&raw=1"
+    ],
+    "92": [
+        "https://www.dropbox.com/scl/fi/0zvi91ka303ok249u5wpx/Roll-Over-and-Die-Opening-Liberator-with-KanRomEn.mp3?rlkey=p2tbx1hsquc5zn9qp9lm8ywky&st=pc8vqkmf&raw=1",
+        "https://www.dropbox.com/scl/fi/g7xm04ivmp2cn25bbi5vx/Roll-Over-and-Die-Ending-I-need-with-KanRomEn.mp3?rlkey=lj6ouvwmd94wvurid38iow3gp&st=rpud5p98&raw=1"
     ]
 };
