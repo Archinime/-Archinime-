@@ -1769,5 +1769,31 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
+    },
+    {
+        "id": 92,
+        "title": "Roll Over and Die",
+        "img": "https://api.pcloud.com/getpubthumb?code=XZppEK5ZRLLOpgFR0DXqgYFQHwIxaYtakxkk&size=2000x3000",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Fantasía oscura",
+            "Romance",
+            "Survival",
+            "Yuri",
+            "Shōnen"
+        ],
+        "lastUpdate": 1770125814297,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZHpEK5ZDYj1Ggi9U8bycVPaNOxCkQolhpak&size=2000x3000",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Omae Gotoki ga Maō ni Kateru to Omou na"
+        ]
     }
 ];
