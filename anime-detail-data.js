@@ -10435,5 +10435,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "92": {
+        "title": "Roll Over and Die",
+        "desc": "Flum no era fuerte. Tampoco poseía una gran magia ni hablidades, solo una capacidad llamada \"Reversión\" que ni ella misma comprende. Entonces, ¿por qué Dios la incluyó en el grupo de héroes? La traicionan, la venden como esclava y acaba siendo un juguete para monstruos. Estando al borde la muerte, Flum debe elegir: dejarse devorar o empuñar una espada maldita que, según se dice, mata a quien la...",
+        "cover": "https://api.pcloud.com/getpubthumb?code=XZppEK5ZRLLOpgFR0DXqgYFQHwIxaYtakxkk&size=2000x3000",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZHpEK5ZDYj1Ggi9U8bycVPaNOxCkQolhpak&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
