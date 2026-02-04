@@ -1269,7 +1269,7 @@ const animes = [
             "Slice of Life",
             "Shōjo"
         ],
-        "lastUpdate": 1770242949128,
+        "lastUpdate": 1770243238332,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "kimitokoete1.avif",
         "latestBlockName": "Temporada 1",
