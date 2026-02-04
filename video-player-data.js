@@ -10020,6 +10020,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1OryzgY70rqaI7mBSKvp14YBSU_Llfnj2/preview",
                 "link2": "",
                 "title": "Kimi to Koete Koi ni Naru T1 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1H0zajBr9JfRO_2iVQGylzeLE1t0FdCxu/preview",
+                "link2": "",
+                "title": "Kimi to Koete Koi ni Naru T1 Cap 12"
             }
         }
     },
