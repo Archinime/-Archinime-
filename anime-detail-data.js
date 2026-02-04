@@ -7682,6 +7682,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
                     }
                 ],
                 "name": "Temporada 1"
