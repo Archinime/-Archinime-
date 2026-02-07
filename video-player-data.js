@@ -382,6 +382,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1SEe3QVkVZLupUdBCckKTsthLcPLIY8Z-/preview",
                 "link2": "",
                 "title": "Jujutsu Kaisen T3 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1eSbL7WOytIeuJ8GWFlqQfVz4usFTZK_6/preview",
+                "link2": "",
+                "title": "Jujutsu Kaisen T3 Cap 3"
             }
         }
     },
