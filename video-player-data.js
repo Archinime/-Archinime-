@@ -11204,6 +11204,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1jWm5nw2Qehiutv2KCMbeA87Xh2dk3cmM/preview",
                 "link2": "",
                 "title": "Dark Moon: The Blood Altar T1 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1QkyRx0qbTQ9kkTdnGBVKxOY_Fg91WWFN/preview",
+                "link2": "",
+                "title": "Dark Moon: The Blood Altar T1 Cap 5"
             }
         }
     },
