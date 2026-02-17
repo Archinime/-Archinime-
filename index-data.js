@@ -1145,11 +1145,11 @@ const animes = [
             "Misterio",
             "Seinen"
         ],
-        "lastUpdate": 1770381903192,
+        "lastUpdate": 1771331483768,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "gnosia1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 13",
+        "latestEpTitle": "Capítulo 14",
         "isFinal": false
     },
     {
