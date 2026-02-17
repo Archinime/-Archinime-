@@ -13875,6 +13875,16 @@ const players = {
                 "link": "https://drive.google.com/file/d/1OlCe3JGAvhbbP5zfiRBw0cfrdT7p6x3e/preview",
                 "link2": "",
                 "title": "Roll Over and Die T1 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1FEHEg8uKrlpzx3d_2CN9w_7Wi0HAEj8W/preview",
+                "link2": "",
+                "title": "Roll Over and Die T1 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/1qmgm0Bz7wQPZNKH5FAz_eMkOJjv7Gq2C/preview",
+                "link2": "",
+                "title": "Roll Over and Die T1 Cap 3"
             }
         }
     },
