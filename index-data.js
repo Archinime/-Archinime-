@@ -1786,11 +1786,11 @@ const animes = [
             "Yuri",
             "Shōnen"
         ],
-        "lastUpdate": 1770125814297,
-        "updateType": "ESTRENO 🚨",
+        "lastUpdate": 1771331814114,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZHpEK5ZDYj1Ggi9U8bycVPaNOxCkQolhpak&size=2000x3000",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 3",
         "isFinal": false,
         "aliases": [
             "Omae Gotoki ga Maō ni Kateru to Omou na"
