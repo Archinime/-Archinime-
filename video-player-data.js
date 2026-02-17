@@ -9816,9 +9816,14 @@ const players = {
         },
         "2": {
             "1": {
-                "link": "",
+                "link": "https://drive.google.com/file/d/10Iz6kXhbS6sMtl4QDYdOiY7zyz7Qz6u0/preview",
                 "link2": "https://drive.google.com/file/d/1zWvISlEqod0p1HCnDNEa_5Wt8hIITylI/preview",
                 "title": "Frieren: Más allá del final del viaje T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1HIVK9fiMa6OHcZMRnDqRj-SZY0RUFV1Y/preview",
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T2 Cap 2"
             }
         }
     },
