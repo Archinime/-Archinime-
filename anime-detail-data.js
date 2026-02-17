@@ -8557,6 +8557,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
                     }
                 ],
                 "name": "Temporada 1"
