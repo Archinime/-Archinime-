@@ -1512,11 +1512,11 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1769099807990,
+        "lastUpdate": 1771452215125,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/w5est8ffkgk3w7af0c4i0/ImageToStl.com_MV5BZjhmMjhkNjUtMGU2MC00N2IzLTg1YzItZDk5ODMxMDYxODc0XkEyXkFqcGc._V1.avif?rlkey=ytkpz6jwh00o8ikvdyf95l4pq&st=9mxw44sm&raw=1",
-        "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 13",
+        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZz2Pl5ZtIRJpcwNxr5Alrpg7RDymX4RfcJV&size=2000x3000",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false,
         "aliases": [
             "Jigokuraku."
