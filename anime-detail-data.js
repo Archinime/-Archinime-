@@ -6043,6 +6043,12 @@ const data = {
                     },
                     {
                         "title": "Capítulo 14"
+                    },
+                    {
+                        "title": "Capítulo 15"
+                    },
+                    {
+                        "title": "Capítulo 16"
                     }
                 ],
                 "name": "Temporada 1"
