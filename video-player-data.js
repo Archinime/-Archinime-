@@ -5635,6 +5635,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/16sXyqvVhhVGdboPEGsPsO31F7kVnmML5/preview",
                 "link2": "",
                 "title": "One Punch-Man T3 Cap 11"
+            },
+            "12": {
+                "link": "https://drive.google.com/file/d/1OD0ssy9UEtjEWEeW62f6px_jbxEPeVG0/preview",
+                "link2": "",
+                "title": "One Punch-Man T3 Cap 12"
             }
         }
     },
