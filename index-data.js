@@ -737,11 +737,18 @@ const animes = [
         "img": "pm.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Hentai",
             "Animación",
+            "Hentai",
             "Seijin"
-        ]
+        ],
+        "lastUpdate": 1771448463426,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/totid4w011l0ftg088jwf/erisM.jpg?rlkey=bv2zu5u17sst8k4cjct0l0e0u&st=7f5sh8co&raw=1",
+        "latestBlockName": "My Dress-Up Darling",
+        "latestEpTitle": "Capítulo 2",
+        "isFinal": false
     },
     {
         "id": 44,
