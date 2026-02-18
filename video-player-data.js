@@ -11325,6 +11325,18 @@ const players = {
                 "link2": "",
                 "title": "Hell's Paradise T1 Cap 13"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/1RsC7hHu_1JjUAA6cEHBXHrwnC0h7qe7x/preview",
+                "link2": "",
+                "title": "Hell's Paradise T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1xI2p1mKuw2XcwH8o1MGv4uEizuJvYyG2/preview",
+                "link2": "",
+                "title": "Hell's Paradise T2 Cap 2"
+            }
         }
     },
     "81": {
