@@ -8674,6 +8674,19 @@ const data = {
                     }
                 ],
                 "name": "Temporada 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://api.pcloud.com/getpubthumb?code=XZz2Pl5ZtIRJpcwNxr5Alrpg7RDymX4RfcJV&size=2000x3000",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
