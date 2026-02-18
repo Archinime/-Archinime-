@@ -406,6 +406,13 @@ function log(msg) {
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
+    
+    // NUEVO: Reemplazo para enlaces locales de red a Render
+    if (val.includes('http://10.22.7.119:8080')) {
+        input.value = val.replace('http://10.22.7.119:8080', 'https://fsb-latest-gdv3.onrender.com');
+        changed = true;
+        showToast("Link local convertido a Render");
+    }
 
     if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
         input.value = val.replace('&dl=0', '&raw=1');
