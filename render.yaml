@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: archinime-streamer
+    env: docker
+    plan: free
+    envVars:
+      - key: API_ID
+        value: 32407553
+      - key: API_HASH
+        value: 2ea6e61835b2846ff98523179b3799f8
+      - key: BOT_TOKEN
+        value: 8276084290:AAFJN6bKF5Y7yUa6GSBIt0_OwALiyXbtHcI
+      - key: LOG_CHANNEL
+        value: "-1003808209102"
+      - key: PORT
+        value: 8080
