@@ -6013,126 +6013,137 @@ const players = {
     "43": {
         "1": {
             "1": {
-                "link": "https://drive.google.com/file/d/13VHpKJzcZypYHZXcLgkCozZKko9aGJCg/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/19?hash=6b497a",
                 "link2": "https://www.dropbox.com/scl/fi/oynuf4tsiy30xuaf25dbo/Yor-X-Loid-Espa-ol-Maplestar.mp4?rlkey=60w7r9wkqkvzfc87gbovyl5ta&st=x2jn5p7a&raw=1",
-                "title": "Spy X Family 1 - Maplestar"
+                "title": "Maplestar Spy X Family Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1Oj4W3pWSzPKjWOmvkCJ4aukuRrWr-NGa/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/20?hash=5d7378",
                 "link2": "https://www.dropbox.com/scl/fi/aoczgvzx3o2fiqns7awao/Yor-X-Loid-2-Espa-ol-Maplestar.mp4?rlkey=qpzaczed8r3yk0u2brhbhxx0v&st=808mdhtz&raw=1",
-                "title": "Spy X Family 2 - Maplestar"
+                "title": "Maplestar Spy X Family Cap 2"
             }
         },
         "2": {
             "1": {
-                "link": "https://drive.google.com/file/d/15NnWrR-ZH9wdymzlP_LEJ5SEbXpcN44-/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/21?hash=4a5d0f",
                 "link2": "https://www.dropbox.com/scl/fi/8zshz5yaz8ieg7k4m8l4m/Alya-Sometimes-Hides-Her-Feelings-In-Russian-Espa-ol-Maplestar.mp4?rlkey=d1vcugz2v2daf3dlvbzkolsxf&st=2n65gs92&raw=1",
-                "title": "Alya Sometimes Hides Her Feelings In Russian - Maplestar"
+                "title": "Maplestar Alya Sometimes Hides Her Feelings In Russian Cap 1"
             }
         },
         "3": {
             "1": {
-                "link": "https://drive.google.com/file/d/1688s-1NZtT4wHEjRcJI6oToACFMWX1WW/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/22?hash=abe311",
                 "link2": "https://www.dropbox.com/scl/fi/1oclh84eqrm2pdibc7wug/Nobara-X-Itadori-Espa-ol-Maplestar.mp4?rlkey=856uv2y2pi87bcvrs8zfwpjhz&st=d0yyarke&raw=1",
-                "title": "Jujutsu Kaisen 1 - Maplestar"
+                "title": "Maplestar Jujutsu Kaisen Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1BUO-ea9J0vwQLU-c7F45I8lCTM4NudxN/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/23?hash=f4e51f",
                 "link2": "https://www.dropbox.com/scl/fi/20dqg4xjmloscmwaakawd/Nobara-X-Itadori-2-Espa-ol-Maplestar.mp4?rlkey=7qh995axvt0260518tv43pcr4&st=wqop1mcj&raw=1",
-                "title": "Jujutsu Kaisen 2 - Maplestar"
+                "title": "Maplestar Jujutsu Kaisen Cap 2"
             }
         },
         "4": {
             "1": {
-                "link": "https://drive.google.com/file/d/1svNEgjuNlpWpISF4k96gz5iiYQyLnrHh/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/24?hash=f01f60",
                 "link2": "https://www.dropbox.com/scl/fi/5769745hjivphobjle24a/Aqua-X-Kasuma-Espa-ol-Maplestar.mp4?rlkey=hnr7wqda33eza55m6wzc79h0i&st=o2cff8yx&raw=1",
-                "title": "Konosuba - Maplestar"
+                "title": "Maplestar Konosuba Cap 1"
             }
         },
         "5": {
             "1": {
-                "link": "https://drive.google.com/file/d/1zsqb-oLMOGfAfpjISfd8BuzaCbb7ARaX/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/25?hash=c938ec",
                 "link2": "https://www.dropbox.com/scl/fi/icwx6v24laymogldw513e/Denji-X-Makima-Espa-ol-Maplestar.mp4?rlkey=g4uegob84oyqyvve5wre8pnou&st=4bqr4nx6&raw=1",
-                "title": "Chainsaw Man 1 - Maplestar"
+                "title": "Maplestar Chainsaw Man Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1clNe9tgpxIgwVHq_D2Z6LExwCoYiNYIB/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/26?hash=ecbef6",
                 "link2": "https://www.dropbox.com/scl/fi/4xm609lu8g96qra8r6drn/Denji-X-Makima-2-Espa-ol-Maplestar.mp4?rlkey=7hbf9osgrwxh4h2hye0rx533n&st=mvd903is&raw=1",
-                "title": "Chainsaw Man 2 - Maplestar"
+                "title": "Maplestar Chainsaw Man Cap 2"
             }
         },
         "6": {
             "1": {
-                "link": "https://drive.google.com/file/d/1Q0dg46Ityc2h_70kFjegQHd7Pt87QOkZ/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/27?hash=d74a2f",
                 "link2": "https://www.dropbox.com/scl/fi/ctriibfqfda9ess5xjo8w/Dandadan-Espa-ol-Maplestar.mp4?rlkey=focs9hjwykcesobsono8s3q5b&st=0nlb9z16&raw=1",
-                "title": "Dan Da Dan - Maplestar"
+                "title": "Maplestar Dan Da Dan Cap 1"
             }
         },
         "7": {
             "1": {
-                "link": "https://drive.google.com/file/d/1DTs8jF_uGX1BpJP6DaXR0ubq1EvqcKRp/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/28?hash=7a4ed3",
                 "link2": "https://www.dropbox.com/scl/fi/hq06fig1utkxxfkosgf7v/Fern-X-Stark-Espa-ol-Maplestar.mp4?rlkey=ec0ct97jpyv9z89wku6cn1jv3&st=hwjcqjq1&raw=1",
-                "title": "Frieren - Maplestar"
+                "title": "Maplestar Frieren Cap 1"
             }
         },
         "8": {
             "1": {
-                "link": "https://drive.google.com/file/d/1jarBV2jlgK9BD4OV9u33EV67tZGdp73V/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/29?hash=717653",
                 "link2": "https://www.dropbox.com/scl/fi/c52qwuwf24oqfkjdneqer/Nier-Automata-Espa-ol-Maplestar.mp4?rlkey=4fg30rxabdbuaw08s0i76ttdc&st=3yhssa6h&raw=1",
-                "title": "Nier: Automata - Maplestar"
+                "title": "Maplestar Nier: Automata Cap 1"
             }
         },
         "9": {
             "1": {
-                "link": "https://drive.google.com/file/d/1OeZpHO3wZZMaRR_PGEU8ucZXjUawgGLh/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/30?hash=dcf29e",
                 "link2": "https://www.dropbox.com/scl/fi/hm36ev962ojte54ty5uil/Zelda-Tears-The_Kingdom-Espa-ol-Maplestar.mp4?rlkey=piva9mtpoqhnrq3vh577i4zyd&st=y0wvc09i&raw=1",
-                "title": "The Legend of Zelda: Tears of the Kingdom 1 - Maplestar"
+                "title": "Maplestar The Legend of Zelda: Tears of the Kingdom Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1U1J8B7omizL1fny1_IDIikK0rlNaaaJ-/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/31?hash=c4fefc",
                 "link2": "https://www.dropbox.com/scl/fi/jbam1juoa6qvei2d01csf/Purah-The-Legend-Of-Zelda-Espa-ol-Maplestar.mp4?rlkey=74a7j6b1e6lpau7mqnkmmkjs4&st=dtt3v9w5&raw=1",
-                "title": "The Legend of Zelda: Tears of the Kingdom 2 - Maplestar"
+                "title": "Maplestar The Legend of Zelda: Tears of the Kingdom Cap 2"
             }
         },
         "10": {
             "1": {
-                "link": "https://drive.google.com/file/d/1DOyTdwZ8EfmuaGTVig8qNKZQHAmV0BMJ/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/32?hash=903b38",
                 "link2": "https://www.dropbox.com/scl/fi/t4qxgu9mdaz4nzpmrwkrh/Rias-X-Issei-Espa-ol-Maplestar.mp4?rlkey=rt713gbmmha17tpcesk27l5vo&st=hruhtxvb&raw=1",
-                "title": "High School DxD - Maplestar"
+                "title": "Maplestar High School DxD Cap 1"
             }
         },
         "11": {
             "1": {
-                "link": "https://drive.google.com/file/d/1z_dVW9nZ1Qn4ZEIicaUJJdsWPSV-nvQ6/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/33?hash=0d56b3",
                 "link2": "https://www.dropbox.com/scl/fi/7tva7jw11ax8ueufy1bcs/Emilia-ReZero-Espa-ol-Maplestar.mp4?rlkey=nlpwfjivecsx3ep6acacnoonu&st=ay9ttsb5&raw=1",
-                "title": "Re:Zero - Maplestar"
+                "title": "Maplestar Re:Zero Cap 1"
             }
         },
         "12": {
             "1": {
-                "link": "https://drive.google.com/file/d/1iBAYK3YKC6quGLjXRRdvirKOmWhXqHrq/preview",
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/34?hash=3d9d1e",
                 "link2": "https://www.dropbox.com/scl/fi/a0axyqufmc945r5w9bat8/Mizuhara-Chizuru-Espa-ol-Maplestar.mp4?rlkey=3e8y5oc5hb1ffmjp1olrto5yi&st=r3lf31fm&raw=1",
-                "title": "Rent-A-Girlfriend - Maplestar"
+                "title": "Maplestar Rent-A-Girlfriend Cap 1"
             }
         },
         "13": {
             "1": {
-                "link": "https://drive.google.com/file/d/1Kz-6-EZTnYIJot11LLgl7jcMf_pDqXDs/preview",
-                "link2": "https://www.dropbox.com/scl/fi/475g2hz6cm5zzzu29u507/Mar-n-X-Gojo-Espa-ol-Maplestar.mp4?rlkey=aq420lzqo9o8m3atwok1syxlf&st=qg5eisiz&raw=1",
-                "title": "My Dress-Up Darling - Maplestar"
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/36?hash=f3fd22",
+                "link2": "https://www.dropbox.com/scl/fi/zhsdyr8t1pee4b8p4xfms/The-Rising-of-the-Shield-Hero-Maplestar.mp4?rlkey=hu238mo45s3sckdqlucq15xj3&st=62npwezw&raw=1",
+                "title": "Maplestar The Rising of the Shield Hero Cap 1"
             }
         },
         "14": {
             "1": {
-                "link": "https://drive.google.com/file/d/13jJiui7LEtkfp-ERx5Xu3gq7zSLo-09E/preview",
-                "link2": "https://www.dropbox.com/scl/fi/zhsdyr8t1pee4b8p4xfms/The-Rising-of-the-Shield-Hero-Maplestar.mp4?rlkey=hu238mo45s3sckdqlucq15xj3&st=62npwezw&raw=1",
-                "title": "The Rising of the Shield Hero - Maplestar"
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/37?hash=8fe7be",
+                "link2": "",
+                "title": "Maplestar Demon Slayer Cap 1"
+            },
+            "2": {
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/38?hash=408a6d",
+                "link2": "",
+                "title": "Maplestar Demon Slayer Cap 2"
             }
         },
         "15": {
             "1": {
-                "link": "https://drive.google.com/file/d/1DLuNi4WG3-38dz0qCK0CfbTWflmfm1Zr/preview",
-                "title": "Demon Slayer"
+                "link": "https://fsb-latest-gdv3.onrender.com/stream/35?hash=ed76f5",
+                "link2": "https://www.dropbox.com/scl/fi/475g2hz6cm5zzzu29u507/Mar-n-X-Gojo-Espa-ol-Maplestar.mp4?rlkey=aq420lzqo9o8m3atwok1syxlf&st=qg5eisiz&raw=1",
+                "title": "Maplestar My Dress-Up Darling Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://fsb-latest-gdv3.onrender.com/stream/39?hash=2b8ddf",
+                "title": "Maplestar My Dress-Up Darling Cap 2"
             }
         }
     },
