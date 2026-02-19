@@ -429,6 +429,15 @@ function smartLinkConvert(input) {
         }
     }
     
+// --- NUEVA LÓGICA PARA OK.RU ---
+    // Busca "https://ok.ru/video/" y lo reemplaza por "https://ok.ru/videoembed/"
+    if (val.includes('https://ok.ru/video/')) {
+        input.value = val.replace('https://ok.ru/video/', 'https://ok.ru/videoembed/');
+        changed = true;
+        showToast("Link ok.ru convertido a /videoembed/");
+    }
+    // -------------------------------
+    
     // Si cambió el link, forzamos la re-verificación inmediata
     if(changed) {
         if(input.id === 'portadaAnime') {
