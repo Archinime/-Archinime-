@@ -10460,6 +10460,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1WjSXmP1VQq40ePXYi8VUafKWmiSeddTs/preview",
                 "link2": "",
                 "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 6"
+            },
+            "7": {
+                "link": "https://ok.ru/videoembed/12274412227282",
+                "link2": "",
+                "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 7"
             }
         }
     },
