@@ -11231,6 +11231,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1xHMxx5pFsl0RueoFKJMbWFRPCDMl4uKx/preview",
                 "link2": "",
                 "title": "Hana-Kimi T1 Cap 7"
+            },
+            "8": {
+                "link": "https://ok.ru/videoembed/12236932254418",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 8"
             }
         }
     },
