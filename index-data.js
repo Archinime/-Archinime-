@@ -35,11 +35,11 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1771452375995,
+        "lastUpdate": 1771592946169,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
         "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 4",
+        "latestEpTitle": "Capítulo 5",
         "isFinal": false
     },
     {
