@@ -1367,11 +1367,11 @@ const animes = [
             "Thriller",
             "Seinen"
         ],
-        "lastUpdate": 1771451628849,
+        "lastUpdate": 1771592715258,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/lxizxk8vjgtw98rlqs0gs/ImageToStl.com_MV5BMjhjNDQwYzEtY2EzNy00Zjk2LThmMjgtNGI2ODdlZDAxYzllXkEyXkFqcGc-._V1.avif?rlkey=evoiqoezadb87f7hqfqufabvg&st=qfm4dc84&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 6",
+        "latestEpTitle": "Capítulo 7",
         "isFinal": false,
         "aliases": [
             "Shibou Yuugi de Meshi wo Kuu"
