@@ -10387,6 +10387,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1vCdawJUjC-bIOBHgtTKFYBqvjH1oroU_/preview",
                 "link2": "",
                 "title": "Seihantai na Kimi to Boku T1 Cap 5"
+            },
+            "6": {
+                "link": "https://ok.ru/videoembed/12274410785490",
+                "link2": "",
+                "title": "Seihantai na Kimi to Boku T1 Cap 6"
             }
         }
     },
