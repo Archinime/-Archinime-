@@ -4,28 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Archinime</title>
+  <title>Archinime - Ver Anime Online Gratis en Alta Calidad</title>
   
   <meta name="description" content="Explora Archinime, la plataforma definitiva para ver anime online. Disfruta de estrenos de temporada, clásicos y una base de datos actualizada en alta calidad.">
+  
+  <link rel="canonical" href="https://archinime.github.io/-Archinime-/">
   
 <script>
   (function() {
     // PALETA "SYNTHWAVE": Solo colores fríos y neones que combinan con la galaxia
     const colors = [
-      "#00f3ff", // Cian Neón (Inicio)
-      "#0066ff", // Azul Eléctrico
-      "#bc13fe", // Morado Protagonista
-      "#ff0055", // Rosa Neón (Acento)
-      "#bc13fe", // Morado (Regreso)
-      "#0066ff", // Azul
-      "#00f3ff"  // Cian (Final para loop perfecto)
+      "#00f3ff", "#0066ff", "#bc13fe", 
+      "#ff0055", "#bc13fe", "#0066ff", "#00f3ff" 
     ];
 
-    const animationDuration = 20000; // 6 segundos (igual que el CSS nuevo)
+    const animationDuration = 20000;
     const intervalTime = 20; 
     const segments = colors.length - 1;
     const step = (intervalTime / animationDuration) * segments;
-
     let currentProgress = 0;
     let metaTag = document.querySelector('meta[name="theme-color"]');
     
@@ -39,7 +35,6 @@
       const bigint = parseInt(hex.slice(1), 16);
       return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
     };
-
     const rgbToHex = (r, g, b) => {
       return "#" + [r, g, b].map(x => {
         const hex = Math.round(x).toString(16);
@@ -48,13 +43,9 @@
     };
 
     const lerp = (start, end, t) => start + (end - start) * t;
-
     setInterval(() => {
       currentProgress += step;
-      if (currentProgress >= segments) {
-        currentProgress = currentProgress % segments;
-      }
-
+      if (currentProgress >= segments) currentProgress = currentProgress % segments;
       const index = Math.floor(currentProgress);
       const t = currentProgress - index;
       const colorStart = hexToRgb(colors[index]);
@@ -70,24 +61,13 @@
 </script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="Archinime">
-
   <meta property="og:description" content="Únete a la nueva era del streaming de anime con interfaz Cyberpunk. ¡Entra ya!">
-  <meta property="og:image" content="https://archinime.github.io/-Archinime-/Logo_Archinime.png">
-  
-  <link rel="icon" type="image/png" 
-href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%202.png" sizes="32x32">
+<link rel="icon" type="image/avif" sizes="512x512" href="Logo_Archinime_comprimida.png">
+<link rel="apple-touch-icon" href="Logo_Archinime_comprimida.png">
 
-  <link rel="icon" type="image/png" 
-href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%201.png" sizes="16x16">
-
-  <link rel="apple-touch-icon" 
-href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.png">
-
-  <link rel="shortcut icon" 
-href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Archinime/-Archinime-@main/Logo_Archinime_comprimida.png">
   
   <link rel="manifest" href="manifest.json">
-
   <meta name="google-adsense-account" content="ca-pub-3917033517052949">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,11 +86,10 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     --glass-bg: rgba(10, 12, 16, 0.75);
     --text: #ffffff;
     --header-height: 72px;
-}
+  }
 
   /* --- RESET & BASICOS --- */
-  * { margin: 0; padding: 0; box-sizing: border-box;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   
   body { 
     background-color: var(--dark-bg);
@@ -123,35 +102,81 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     overflow-x: hidden;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-}
+  }
 
   /* --- SCROLLBAR --- */
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #020202;
-}
+  ::-webkit-scrollbar-track { background: #020202; }
   ::-webkit-scrollbar-thumb { 
     background: linear-gradient(180deg, var(--neon-purple), var(--neon-cyan)); 
     border-radius: 4px;
-}
+  }
 
-  /* --- LOADER --- */
+  /* --- LOADER MEJORADO --- */
   #page-loader {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
-    background: #000; z-index: 99999;
+    background: #050505; z-index: 99999;
     display: flex; justify-content: center; align-items: center; flex-direction: column;
-    transition: opacity 0.5s ease-out, visibility 0.5s;
+    transition: opacity 0.4s ease-out, visibility 0.4s;
   }
+  
+  .loader-glitch-wrapper {
+      position: relative;
+      display: inline-block;
+  }
+
   .loader-glitch {
-    font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: white;
-    text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
-    animation: glitch 0.8s infinite;
-    letter-spacing: 4px;
-}
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 3rem; 
+    color: white;
+    font-weight: 900;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    position: relative;
+    text-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+  }
+
+  .loader-glitch::before, .loader-glitch::after {
+      content: 'Archinime';
+      position: absolute;
+      top: 0; left: 0; width: 100%;
+      height: 100%;
+      background: #050505;
+  }
+
+  .loader-glitch::before {
+      left: 3px;
+      text-shadow: -2px 0 var(--neon-pink);
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      animation: trueGlitch 2.5s infinite linear alternate-reverse;
+      z-index: -1;
+  }
+
+  .loader-glitch::after {
+      left: -3px;
+      text-shadow: -2px 0 var(--neon-cyan);
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      animation: trueGlitch2 3s infinite linear alternate-reverse;
+      z-index: -2;
+  }
+
+  .loader-sub {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      color: var(--neon-cyan);
+      letter-spacing: 3px;
+      margin-top: 5px;
+      opacity: 0.8;
+      animation: pulseText 1.5s infinite;
+  }
+
   .loader-line {
-    width: 0; height: 3px; background: var(--neon-cyan); margin-top: 15px;
-    box-shadow: 0 0 10px var(--neon-cyan);
-    animation: loadLine 1.5s forwards ease-in-out;
+    width: 0; height: 3px; background: var(--neon-cyan);
+    margin-top: 20px;
+    box-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-purple);
+    border-radius: 2px;
+    animation: loadLine 1s forwards cubic-bezier(0.7, 0, 0.3, 1);
   }
 
   /* --- FONDO --- */
@@ -163,21 +188,20 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     transition: opacity 1.2s ease;
     background: url('galaxia-morado1.avif') no-repeat center center / cover;
   }
-  #bg-video.loaded { opacity: 1;
-}
+  #bg-video.loaded { opacity: 1; }
 
   #overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle at center, rgba(188, 19, 254, 0.08) 0%, rgba(0,0,0,0.85) 90%);
     z-index: -4; pointer-events: none;
     transition: opacity 0.6s ease;
-}
+  }
   #scanlines {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5));
     background-size: 100% 3px;
     z-index: -3; pointer-events: none; opacity: 0.15;
-}
+  }
 
   /* --- NAVBAR --- */
   .cyber-nav {
@@ -199,22 +223,17 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     opacity: 0.7;
   }
 
-  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer;
-}
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
   .nav-logo img { 
     height: 42px; width: 42px; object-fit: contain; border-radius: 8px;
     box-shadow: 0 0 10px rgba(188, 19, 254, 0.3); transition: transform 0.3s;
   }
-  .nav-logo:hover img { transform: rotate(10deg) scale(1.1);
-}
+  .nav-logo:hover img { transform: rotate(10deg) scale(1.1); }
   
   @keyframes rainbowNeon {
-      0% { background-position: 0% 50%;
-}
-      50% { background-position: 100% 50%;
-}
-      100% { background-position: 0% 50%;
-}
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
   }
 
   .nav-logo-text {
@@ -226,10 +245,9 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
+  }
 
-  .search-wrapper { position: relative; margin: 0 25px; flex-grow: 1; max-width: 450px;
-}
+  .search-wrapper { position: relative; margin: 0 25px; flex-grow: 1; max-width: 450px; }
   .search-input {
     width: 100%;
     background: rgba(0, 0, 0, 0.3);
@@ -238,12 +256,12 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-family: 'Poppins'; font-size: 0.9rem;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-}
+  }
   .search-input:focus {
     background: rgba(0, 0, 0, 0.6); border-color: var(--neon-cyan);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.15), inset 0 0 10px rgba(0, 243, 255, 0.05);
     transform: scale(1.02);
-}
+  }
   .search-icon { 
     position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
     color: rgba(255,255,255,0.5); transition: 0.3s;
@@ -251,8 +269,7 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
   }
   .search-input:focus + .search-icon { color: var(--neon-cyan); }
 
-  .nav-actions { display: flex; align-items: center; gap: 12px;
-}
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
   
   .cyber-btn-icon {
     width: 40px; height: 40px; border-radius: 8px;
@@ -267,7 +284,7 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     width: 0%; height: 100%;
     background: var(--neon-purple); z-index: -1; transition: 0.3s; opacity: 0.2;
     border-radius: 8px; overflow: hidden;
-}
+  }
   .cyber-btn-icon:hover {
     color: white; border-color: var(--neon-purple);
     box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
@@ -275,19 +292,15 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
   }
   .cyber-btn-icon:hover::before { width: 100%; }
   
-  #installBtn { display: none;
-}
-  .install-pulse { animation: pulseBorder 2s infinite; color: var(--neon-cyan); border-color: rgba(0, 243, 255, 0.3);
-}
+  #installBtn { display: none; }
+  .install-pulse { animation: pulseBorder 2s infinite; color: var(--neon-cyan); border-color: rgba(0, 243, 255, 0.3); }
 
   /* --- NOTIFICACIONES --- */
-  .notif-wrapper { position: relative; overflow: visible;
-}
+  .notif-wrapper { position: relative; overflow: visible; }
   .notif-badge {
     position: absolute; top: -6px; right: -6px; z-index: 10;
     background: var(--neon-pink); min-width: 16px;
-    height: 16px; 
-    padding: 0 3px; font-size: 9px; border-radius: 10px; 
+    height: 16px; padding: 0 3px; font-size: 9px; border-radius: 10px; 
     box-shadow: 0 0 8px var(--neon-pink); border: 1px solid #000;
     color: #fff;
     display: flex; align-items: center; justify-content: center;
@@ -301,140 +314,106 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     transform: translateY(-10px) scale(0.95);
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 2000; display: flex; flex-direction: column; overflow: hidden;
-}
+  }
   .notif-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
   .notif-header {
     padding: 12px;
     background: rgba(188, 19, 254, 0.1);
     color: var(--neon-cyan); font-family: 'Orbitron'; font-size: 0.85rem;
     text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: 2px;
-}
+  }
   .notif-list { max-height: 400px; overflow-y: auto; }
   .notif-list::-webkit-scrollbar { width: 5px; }
-  .notif-list::-webkit-scrollbar-thumb { background: #333;
-    border-radius: 4px; }
+  .notif-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
   .notif-item {
     display: flex; gap: 15px; padding: 12px 15px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     transition: background 0.2s; cursor: pointer; position: relative; align-items: center;
   }
-  .notif-item:hover { background: rgba(255,255,255,0.05);
-}
+  .notif-item:hover { background: rgba(255,255,255,0.05); }
   .notif-img-box {
     width: 50px; height: 70px; flex-shrink: 0; border-radius: 4px; overflow: hidden; position: relative;
     border: 1px solid rgba(255,255,255,0.2);
   }
-  .notif-img-box img { width: 100%; height: 100%; object-fit: cover;
-}
+  .notif-img-box img { width: 100%; height: 100%; object-fit: cover; }
   .notif-content { flex: 1; min-width: 0; }
-  .notif-header-line { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px;
-}
-  .n-title { font-size: 0.9rem; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
-}
-  .n-type { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px;
-}
+  .notif-header-line { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; }
+  .n-title { font-size: 0.9rem; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+  .n-type { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
   .n-meta { font-size: 0.75rem; color: #aaa; }
-  .n-block { color: var(--neon-cyan); font-weight: bold; margin-right: 5px;
-}
+  .n-block { color: var(--neon-cyan); font-weight: bold; margin-right: 5px; }
   .n-ep-title { color: #ddd; font-style: italic; }
-  .tag-final { background: #ff0000; color: white; padding: 1px 4px;
-    border-radius: 2px; font-size: 0.55em; }
-  .empty-notif { padding: 30px; text-align: center; color: #666; font-style: italic;
-}
+  .tag-final { background: #ff0000; color: white; padding: 1px 4px; border-radius: 2px; font-size: 0.55em; }
+  .empty-notif { padding: 30px; text-align: center; color: #666; font-style: italic; }
 
   /* --- BARRA DE FILTROS --- */
   .controls-container {
     padding: 20px 3%; 
     display: flex;
-    gap: 15px; 
-    flex-wrap: wrap; 
-    justify-content: center;
+    gap: 15px; flex-wrap: wrap; justify-content: center;
     background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-    margin-bottom: 10px; 
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-}
+    margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
   
-  /* --- DISEÑO CYBERPUNK DE SELECT --- */
   select {
     appearance: none;
     -webkit-appearance: none; -moz-appearance: none; 
     background-color: rgba(20, 20, 25, 0.9);
     color: #e0e0e0;
-    font-family: 'Orbitron', sans-serif; 
-    font-size: 0.8rem; 
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    outline: none; 
-    padding: 12px 35px 12px 20px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.5px;
+    cursor: pointer; outline: none; padding: 12px 35px 12px 20px;
     min-width: 160px;
-    border: 1px solid rgba(188, 19, 254, 0.4);
-    border-radius: 0;
+    border: 1px solid rgba(188, 19, 254, 0.4); border-radius: 0;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bc13fe' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: calc(100% - 12px) center;
-    background-size: 14px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
-}
+    background-position: calc(100% - 12px) center; background-size: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: all 0.3s ease;
+  }
   select:hover, select:focus {
-    color: white;
-    background-color: rgba(30, 30, 40, 0.95);
+    color: white; background-color: rgba(30, 30, 40, 0.95);
     border-color: var(--neon-cyan);
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); transform: translateY(-2px);
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f3ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-}
-  select option { background: #0b0c10; color: white; padding: 10px;
-}
+  }
+  select option { background: #0b0c10; color: white; padding: 10px; }
 
   /* --- GRID DE ANIME --- */
-  .container { max-width: 1600px; margin: 0 auto;
-    padding: 10px 20px 80px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px;
-}
+  .container { max-width: 1600px; margin: 0 auto; padding: 10px 20px 80px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
   .card {
     position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 2/3; cursor: pointer;
     transition: transform 0.1s ease-out, box-shadow 0.3s;
     box-shadow: 0 10px 25px rgba(0,0,0,0.6); background: #111; transform-style: preserve-3d;
-}
+  }
   .card::before {
     content: ''; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
     z-index: 2; pointer-events: none; transition: 0.3s;
   }
   .card:hover { z-index: 10; }
-  .card:hover::before { border-color: var(--neon-purple);
-    box-shadow: 0 0 20px rgba(188, 19, 254, 0.2) inset; }
-  .card img { width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  .card:hover img { transform: scale(1.08);
-}
+  .card:hover::before { border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(188, 19, 254, 0.2) inset; }
+  .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .card:hover img { transform: scale(1.08); }
   .card .info {
     position: absolute; bottom: 0; left: 0; width: 100%;
     background: linear-gradient(to top, #000 0%, rgba(5,5,5,0.95) 60%, transparent 100%);
     padding: 70px 15px 15px; display: flex; flex-direction: column; gap: 4px;
     z-index: 5; transform: translateY(10px); opacity: 0.9; transition: 0.3s;
   }
-  .card:hover .info { transform: translateY(0); opacity: 1;
-}
-  .card .info strong { font-size: 1rem; color: white; line-height: 1.2; text-shadow: 0 2px 4px black; font-weight: 700;
-}
-  .card .info span { font-size: 0.75rem; color: var(--neon-cyan); font-weight: 600; font-family: 'Orbitron'; letter-spacing: 1px; display: inline-block; margin-top: 5px;
-}
+  .card:hover .info { transform: translateY(0); opacity: 1; }
+  .card .info strong { font-size: 1rem; color: white; line-height: 1.2; text-shadow: 0 2px 4px black; font-weight: 700; }
+  .card .info span { font-size: 0.75rem; color: var(--neon-cyan); font-weight: 600; font-family: 'Orbitron'; letter-spacing: 1px; display: inline-block; margin-top: 5px; }
 
   /* --- STAGE --- */
-  .stage { pointer-events: none; position: fixed; inset: 0; z-index: 8;
-}
+  .stage { pointer-events: none; position: fixed; inset: 0; z-index: 8; }
   #fgContainer {
     position: absolute; pointer-events: auto; display: flex; align-items: center; justify-content: center;
     right: 20px;
     bottom: 20px; overflow: hidden; background: transparent; border-radius: 10px;
     filter: drop-shadow(0 0 10px rgba(0,243,255,0.2));
   }
-  #fgCanvas, #fgVideo { width: 100%;
-    height: 100%; display: block; object-fit: contain; }
-  .play-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
-    z-index: 900; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
+  #fgCanvas, #fgVideo { width: 100%; height: 100%; display: block; object-fit: contain; }
+  .play-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 900; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
   .play-btn {
     padding: 15px 40px; border-radius: 4px;
     border: 1px solid var(--neon-cyan);
@@ -442,9 +421,7 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     font-weight: 800; font-family: 'Orbitron'; letter-spacing: 2px; cursor: pointer;
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); transition: 0.3s; text-transform: uppercase;
   }
-  .play-btn:hover { background: var(--neon-cyan); color: #000;
-    box-shadow: 0 0 40px rgba(0, 243, 255, 0.6); transform: scale(1.05);
-}
+  .play-btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 40px rgba(0, 243, 255, 0.6); transform: scale(1.05); }
 
   /* --- EVENT MODAL --- */
   #eventModal {
@@ -455,34 +432,29 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     opacity: 0; pointer-events: none;
     transition: all 0.5s ease-in-out; padding: 20px;
   }
-  #eventModal.show { opacity: 1; pointer-events: auto;
-}
+  #eventModal.show { opacity: 1; pointer-events: auto; }
   .event-card {
-    background: rgba(11, 12, 16, 0.95); width: 100%; max-width: 420px;
-    border: 1px solid transparent;
+    background: rgba(11, 12, 16, 0.95); width: 100%; max-width: 420px; border: 1px solid transparent;
     background-image: linear-gradient(#0b0c10, #0b0c10), linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-    background-origin: border-box; background-clip: content-box, border-box;
-    border-radius: 20px; overflow: hidden;
+    background-origin: border-box; background-clip: content-box, border-box; border-radius: 20px; overflow: hidden;
     box-shadow: 0 0 80px rgba(188, 19, 254, 0.15), 0 20px 40px rgba(0,0,0,0.8);
     transform: scale(0.9) translateY(40px);
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
     display: flex; flex-direction: column; position: relative;
-}
+  }
   #eventModal.show .event-card { transform: scale(1) translateY(0); }
   .event-visuals {
     position: relative; width: 100%;
     height: 260px; overflow: hidden; display: flex; align-items: center; justify-content: center;
     background: #000; border-bottom: 2px solid var(--neon-cyan);
-}
+  }
   .visual-bg {
     position: absolute; inset: 0; background-size: cover; background-position: center;
     filter: blur(20px) brightness(0.5) saturate(1.2);
     transform: scale(1.2); transition: transform 6s ease;
   }
   #eventModal.show .visual-bg { transform: scale(1); }
-  .covers-container { position: relative;
-    z-index: 2; width: 100%; height: 100%; display: flex; justify-content: center; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
-}
+  .covers-container { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; justify-content: center; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8)); }
   .cover-back {
     position: absolute; bottom: 25px; left: 50%; width: 110px; height: 165px; object-fit: cover;
     border-radius: 8px; opacity: 0.8; transform: translateX(-50%) rotate(-10deg) scale(0.95);
@@ -492,13 +464,10 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
   .cover-front {
     position: absolute; bottom: 25px;
     left: 50%; width: 130px; height: 195px; object-fit: cover;
-    border-radius: 10px; border: 2px solid var(--neon-cyan); transform: translateX(-50%) rotate(5deg) scale(1);
-    z-index: 5;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-  #eventModal.show .cover-back { transform: translateX(calc(-50% + 70px)) rotate(-10deg) scale(0.95);
-}
+    border-radius: 10px; border: 2px solid var(--neon-cyan); transform: translateX(-50%) rotate(5deg) scale(1); z-index: 5;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  #eventModal.show .cover-back { transform: translateX(calc(-50% + 70px)) rotate(-10deg) scale(0.95); }
   #eventModal.show .cover-front { transform: translateX(calc(-50% - 70px)) rotate(5deg) scale(1); }
   .event-type-badge {
     position: absolute;
@@ -507,20 +476,15 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     text-transform: uppercase; backdrop-filter: blur(5px);
   }
-  .badge-default { background: linear-gradient(135deg, #8c52ff, #5e17eb); color: white;
-    border: 1px solid rgba(255,255,255,0.3); }
-  .badge-estreno { background: #ff0055; color: white; box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
-    border: 1px solid #ff5588; }
-  .badge-prox { background: var(--neon-yellow); color: black; border: 1px solid #fff;
-}
+  .badge-default { background: linear-gradient(135deg, #8c52ff, #5e17eb); color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .badge-estreno { background: #ff0055; color: white; box-shadow: 0 0 15px rgba(255, 0, 85, 0.6); border: 1px solid #ff5588; }
+  .badge-prox { background: var(--neon-yellow); color: black; border: 1px solid #fff; }
   .final-stamp {
-    position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg) scale(0);
-    z-index: 20;
-    color: #ff0000; border: 3px solid #ff0000; padding: 5px 15px;
-    font-weight: 900; font-size: 1.2rem; text-shadow: 0 0 15px black; background: rgba(0,0,0,0.85);
+    position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg) scale(0); z-index: 20;
+    color: #ff0000; border: 3px solid #ff0000; padding: 5px 15px; font-weight: 900; font-size: 1.2rem; text-shadow: 0 0 15px black; background: rgba(0,0,0,0.85);
     text-transform: uppercase; pointer-events: none; box-shadow: 0 0 30px rgba(255,0,0,0.4);
     letter-spacing: 2px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transition-delay: 0.3s;
-}
+  }
   #eventModal.show .final-stamp { transform: translate(-50%, -50%) rotate(-25deg) scale(1); }
   .event-close {
     position: absolute;
@@ -528,20 +492,15 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%;
     cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; backdrop-filter: blur(4px);
   }
-  .event-close:hover { background: var(--neon-pink);
-    border-color: var(--neon-pink); transform: rotate(90deg) scale(1.1); box-shadow: 0 0 15px var(--neon-pink); }
-  .event-info { background: linear-gradient(to bottom, #111, #050505);
-    padding: 25px; text-align: center; position: relative; z-index: 5; }
-  .event-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900;
-    color: white; margin-bottom: 8px; line-height: 1.1; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+  .event-close:hover { background: var(--neon-pink); border-color: var(--neon-pink); transform: rotate(90deg) scale(1.1); box-shadow: 0 0 15px var(--neon-pink); }
+  .event-info { background: linear-gradient(to bottom, #111, #050505); padding: 25px; text-align: center; position: relative; z-index: 5; }
+  .event-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: white; margin-bottom: 8px; line-height: 1.1; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
   .event-meta {
     display: inline-block;
-    color: var(--neon-cyan); font-size: 0.85rem; font-weight: 700;
-    text-transform: uppercase; margin-bottom: 20px; background: rgba(0, 243, 255, 0.1); padding: 4px 12px; border-radius: 12px;
+    color: var(--neon-cyan); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; background: rgba(0, 243, 255, 0.1); padding: 4px 12px; border-radius: 12px;
     border: 1px solid rgba(0, 243, 255, 0.2); letter-spacing: 1px;
   }
-  .event-desc { color: #aaa; font-size: 0.9rem; font-style: italic;
-    margin-bottom: 25px; line-height: 1.4; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; }
+  .event-desc { color: #aaa; font-size: 0.9rem; font-style: italic; margin-bottom: 25px; line-height: 1.4; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; }
   .event-btn {
     background: white;
     color: black; border: none; padding: 14px; width: 100%; border-radius: 30px;
@@ -550,156 +509,89 @@ href="https://raw.githubusercontent.com/Archinime/-Archinime-/main/favicon%203.p
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative;
     overflow: hidden;
   }
-  .event-btn::before {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); transition: 0.5s;
-  }
-  .event-btn:hover { background: var(--neon-cyan); color: #000;
-    box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px rgba(0, 243, 255, 0.4); transform: scale(1.03); }
-  .event-btn:hover::before { left: 100%;
-}
-
+  .event-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); transition: 0.5s; }
+  .event-btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px rgba(0, 243, 255, 0.4); transform: scale(1.03); }
+  .event-btn:hover::before { left: 100%; }
   .ios-modal { 
-    display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); 
-    width: 90%;
-    max-width: 340px; background: rgba(20,20,25,0.95); border: 1px solid #444; border-radius: 16px; padding: 25px;
-    z-index: 10000; text-align: center;
+    display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%;
+    max-width: 340px; background: rgba(20,20,25,0.95); border: 1px solid #444; border-radius: 16px; padding: 25px; z-index: 10000; text-align: center;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
   }
-  .ios-content p { color: #ddd; margin: 10px 0; font-size: 0.95rem;
-}
+  .ios-content p { color: #ddd; margin: 10px 0; font-size: 0.95rem; }
   .ios-content i { color: var(--neon-cyan); }
-  .ios-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem;
-    color: #888; cursor: pointer; }
+  .ios-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; color: #888; cursor: pointer; }
 
-  @keyframes glitch {
-    0% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
-}
-    20% { text-shadow: -2px 2px 0px var(--neon-pink), 2px -2px 0px var(--neon-cyan);
-}
-    40% { text-shadow: 2px -2px 0px var(--neon-pink), -2px 2px 0px var(--neon-cyan);
-}
-    60% { text-shadow: -2px -2px 0px var(--neon-pink), 2px 2px 0px var(--neon-cyan);
-}
-    80% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
-}
-    100% { text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
-}
+  /* Animaciones Glitch */
+  @keyframes trueGlitch {
+      0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(-2px, 1px); }
+      20% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(2px, -1px); }
+      40% { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translate(-2px, 2px); }
+      60% { clip-path: polygon(0 40%, 100% 40%, 100% 45%, 0 45%); transform: translate(2px, -2px); }
+      80% { clip-path: polygon(0 30%, 100% 30%, 100% 30%, 0 30%); transform: translate(-1px, 1px); }
+      100% { clip-path: polygon(0 25%, 100% 25%, 100% 35%, 0 35%); transform: translate(1px, -1px); }
   }
-  @keyframes loadLine { to { width: 100%;
-} }
-  @keyframes borderFlow { 0% { background-position: 100% 0; } 100% { background-position: -100% 0;
-} }
-  @keyframes pulseBorder { 0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4);
-} 70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0);
-} 100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0);
-} }
+  @keyframes trueGlitch2 {
+      0% { clip-path: polygon(0 65%, 100% 65%, 100% 70%, 0 70%); transform: translate(2px, -1px); }
+      20% { clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%); transform: translate(-2px, 2px); }
+      40% { clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%); transform: translate(2px, -2px); }
+      60% { clip-path: polygon(0 90%, 100% 90%, 100% 95%, 0 95%); transform: translate(-1px, 1px); }
+      80% { clip-path: polygon(0 85%, 100% 85%, 100% 85%, 0 85%); transform: translate(1px, -1px); }
+      100% { clip-path: polygon(0 75%, 100% 75%, 100% 80%, 0 80%); transform: translate(-2px, 1px); }
+  }
+  @keyframes pulseText { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.3; } }
+  @keyframes loadLine { to { width: 100%; } }
+  @keyframes borderFlow { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+  @keyframes pulseBorder { 0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); } }
 
   /* --- RESPONSIVE --- */
   @media (max-width: 768px) {
-    .cyber-nav { flex-wrap: wrap;
-    height: auto; padding: 12px 15px; gap: 10px; }
-    .nav-logo { order: 1; flex: 1;
-}
+    .cyber-nav { flex-wrap: wrap; height: auto; padding: 12px 15px; gap: 10px; }
+    .nav-logo { order: 1; flex: 1; }
     .nav-actions { order: 2; gap: 8px; }
-    .search-wrapper { order: 3; width: 100%;
-    max-width: 100%; margin: 5px 0 0; }
-    .search-input { padding: 8px 15px 8px 40px; font-size: 0.85rem;
-}
-    
-    /* CORRECCIÓN: Layout de filtros en móvil para 3 en fila */
-    .controls-container { 
-        padding: 10px 5px;
-        /* Reducimos padding lateral */
-        gap: 5px;
-        /* Menos espacio entre elementos */
-        justify-content: space-between; 
-        flex-wrap: nowrap;
-        /* IMPORTANTE: No permitir salto de línea */
-        overflow-x: auto;
-        /* Seguridad por si la pantalla es muy pequeña */
-    }
-    
-    select { 
-        padding: 6px 18px 6px 5px;
-        /* Padding interno reducido */
-        font-size: 0.65rem;
-        /* Fuente más pequeña para que quepa texto */
-        flex: 1;
-        /* Ocupar espacio equitativo */
-        width: auto;
-        /* Dejar que flex maneje el ancho */
-        min-width: 0;
-        /* Permitir encogerse */
-        background-position: calc(100% - 5px) center;
-        /* Flecha más pegada al borde */
-    }
-    
-    /* El último select (Rating) ahora se comporta igual que los otros */
-    select:last-child {
-        flex: 1;
-width: auto;
-    }
-    
-    .grid { grid-template-columns: repeat(3, 1fr); gap: 10px;
-    padding: 0 10px 80px; }
-    .notif-dropdown { position: fixed; top: 65px; left: 10px; right: 10px; width: auto;
-    max-width: none; }
-    .event-card { width: 90%; max-height: 90vh; overflow-y: auto;
-}
-    
-    .cover-back { transform: translateX(-50%) rotate(0deg) scale(0.8);
-}
-    .cover-front { transform: translateX(-50%) rotate(0deg) scale(0.8);
-}
-    #eventModal.show .cover-back { transform: translateX(calc(-50% + 50px)) rotate(-8deg) scale(0.9);
-}
-    #eventModal.show .cover-front { transform: translateX(calc(-50% - 50px)) rotate(5deg);
-}
-
-    .card .info { padding: 40px 8px 8px;
-}
+    .search-wrapper { order: 3; width: 100%; max-width: 100%; margin: 5px 0 0; }
+    .search-input { padding: 8px 15px 8px 40px; font-size: 0.85rem; }
+    .controls-container { padding: 10px 5px; gap: 5px; justify-content: space-between; flex-wrap: nowrap; overflow-x: auto; }
+    select { padding: 6px 18px 6px 5px; font-size: 0.65rem; flex: 1; width: auto; min-width: 0; background-position: calc(100% - 5px) center; }
+    select:last-child { flex: 1; width: auto; }
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 10px 80px; }
+    .notif-dropdown { position: fixed; top: 65px; left: 10px; right: 10px; width: auto; max-width: none; }
+    .event-card { width: 90%; max-height: 90vh; overflow-y: auto; }
+    .cover-back { transform: translateX(-50%) rotate(0deg) scale(0.8); }
+    .cover-front { transform: translateX(-50%) rotate(0deg) scale(0.8); }
+    #eventModal.show .cover-back { transform: translateX(calc(-50% + 50px)) rotate(-8deg) scale(0.9); }
+    #eventModal.show .cover-front { transform: translateX(calc(-50% - 50px)) rotate(5deg); }
+    .card .info { padding: 40px 8px 8px; }
     .card .info strong { font-size: 0.85rem; }
-    .card .info span { font-size: 0.65rem;
-}
+    .card .info span { font-size: 0.65rem; }
   }
   @media (max-width: 480px) {
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px;
-}
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .nav-logo-text { font-size: 1.1rem; }
-    .event-card { width: 95%;
-}
+    .event-card { width: 95%; }
   }
   
   /* ESTILOS POPUP MÓVIL */
   .mobile-select-popup {
-      position: fixed;
-      background: rgba(15, 15, 20, 0.98); border: 1px solid var(--neon-purple);
-      border-radius: 8px;
+      position: fixed; background: rgba(15, 15, 20, 0.98); border: 1px solid var(--neon-purple); border-radius: 8px;
       box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 15px rgba(188, 19, 254, 0.15);
       z-index: 10002; overflow-y: auto; backdrop-filter: blur(15px);
       animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .mobile-select-popup .opt {
-      padding: 15px 20px;
-      color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 1rem; font-family: 'Orbitron', sans-serif; transition: background 0.2s;
-}
+  .mobile-select-popup .opt { padding: 15px 20px; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem; font-family: 'Orbitron', sans-serif; transition: background 0.2s; }
   .mobile-select-popup .opt:last-child { border-bottom: none; }
-  .mobile-select-popup .opt:hover, .mobile-select-popup .opt:active { background: rgba(188, 19, 254, 0.1);
-color: white; }
-  .mobile-select-popup .opt[aria-selected="true"] { color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); font-weight: bold; border-left: 3px solid var(--neon-cyan);
-}
-  @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1);
-} }
+  .mobile-select-popup .opt:hover, .mobile-select-popup .opt:active { background: rgba(188, 19, 254, 0.1); color: white; }
+  .mobile-select-popup .opt[aria-selected="true"] { color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); font-weight: bold; border-left: 3px solid var(--neon-cyan); }
+  @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 </style>
 </head>
 <body>
 
   <div id="page-loader">
-    <div class="loader-glitch">Archinime</div>
-    <div style="width: 220px; height: 3px; background: #222; margin-top: 15px; overflow: hidden; border-radius: 2px;">
+    <div class="loader-glitch-wrapper">
+        <div class="loader-glitch">Archinime</div>
+    </div>
+    <div class="loader-sub">CARGANDO SISTEMA...</div>
+    <div style="width: 260px; height: 3px; background: rgba(255,255,255,0.05); margin-top: 15px; overflow: hidden; border-radius: 2px;">
       <div class="loader-line"></div>
     </div>
   </div>
@@ -714,8 +606,8 @@ color: white; }
   <nav class="cyber-nav">
     <a href="https://archinime.github.io/-Archinime-/Archinime%20CMS%20-%20Creador.html" target="_blank" class="nav-logo" title="Ir al Creador CMS">
       <img id="logo" src="Logo_Archinime.avif" alt="Logo Archinime">
-      <span class="nav-logo-text">ARCHINIME</span>
-   
+      
+      <h1 class="nav-logo-text" style="margin: 0; font-size: inherit; line-height: 1;">ARCHINIME</h1>
     </a>
 
     <div class="search-wrapper">
@@ -739,16 +631,13 @@ color: white; }
                 <i class="fas fa-network-wired"></i> TRANSMISIONES
             </div>
             <div id="notifList" class="notif-list">
-   
-                <div class="empty-notif" style="padding:20px; text-align:center;
-color:#666;">Buscando señal...</div>
+                <div class="empty-notif" style="padding:20px; text-align:center; color:#666;">Buscando señal...</div>
             </div>
         </div>
       </div>
       
       <button class="cyber-btn-icon" onclick="window.open('https://www.youtube.com/@Archinime-k2g', '_blank')" title="YouTube">
-        <img src="youtube.avif" alt="YT" style="width:20px;
-border-radius:50%; opacity:0.8;">
+        <img src="youtube.avif" alt="YT" style="width:20px; border-radius:50%; opacity:0.8;">
       </button>
     </div>
   </nav>
@@ -764,7 +653,6 @@ border-radius:50%; opacity:0.8;">
         <option>Cocina</option>
         <option>Comedia</option>
         <option>Comedia oscura</option>
-     
         <option>Cosplay</option>
         <option>Crimen</option>
         <option>Cyberpunk</option>
@@ -778,7 +666,6 @@ border-radius:50%; opacity:0.8;">
         <option>Fantasía</option>
         <option>Fantasía oscura</option>
         <option>Familiar</option>
-      
         <option>Gag</option>
         <option>Gore</option>
         <option>Harem</option>
@@ -791,7 +678,6 @@ border-radius:50%; opacity:0.8;">
         <option>Isekai Inverso</option>
         <option>Kaiju</option>
         <option>Mahō Shōjo</option>
-        
         <option>Mecha</option>
         <option>Militar</option>
         <option>Mitología</option>
@@ -805,7 +691,6 @@ border-radius:50%; opacity:0.8;">
         <option>Reverse Harem</option>
         <option>Romance</option>
         <option>RPG</option>
-   
         <option>Slice of Life</option>
         <option>Sobrenatural</option>
         <option>Steampunk</option>
@@ -818,7 +703,6 @@ border-radius:50%; opacity:0.8;">
         <option>Terror psicológico</option>
         <option>Thriller</option>
         <option>Thriller psicológico</option>
-  
         <option>Tokusatsu</option>
         <option>Tragedia</option>
         <option>VRMMO</option>
@@ -833,7 +717,6 @@ border-radius:50%; opacity:0.8;">
         <option>Seijin</option>
         <option>Seinen</option>
         <option>Shōjo</option>
-   
         <option>Shōnen</option>
       </select>
 
@@ -846,6 +729,13 @@ border-radius:50%; opacity:0.8;">
   </div>
 
   <main class="container">
+    <noscript>
+      <div style="padding: 20px; background: rgba(0,0,0,0.8); border: 1px solid var(--neon-cyan); border-radius: 8px; margin-bottom: 20px;">
+        <h2>Explora nuestra base de datos completa de Anime</h2>
+        <p>Bienvenido a Archinime, tu plataforma para ver anime online gratis. Nuestro catálogo incluye los mejores estrenos de temporada, clásicos de acción, aventura, isekai, shōnen y más, todo en alta calidad. Activa JavaScript en tu navegador para interactuar con nuestra interfaz Cyberpunk, utilizar el buscador avanzado y visualizar toda nuestra colección en tiempo real.</p>
+      </div>
+    </noscript>
+
     <div class="grid" id="grid"></div>
   </main>
 
@@ -853,15 +743,13 @@ border-radius:50%; opacity:0.8;">
     <div id="fgContainer" aria-label="Vídeo frontal">
       <canvas id="fgCanvas"></canvas>
       <video id="fgVideo" muted loop playsinline></video>
-   
     </div>
     <div class="play-overlay" id="playOverlay">
       <button class="play-btn" id="playBtn">▶ INICIAR ENLACE</button>
     </div>
   </div>
 
-  <div id="decorations" aria-hidden="true" style="position:fixed;
-    inset:0; pointer-events:none; z-index:1;">
+  <div id="decorations" aria-hidden="true" style="position:fixed; inset:0; pointer-events:none; z-index:1;">
      <svg id="star-template" class="shooting-star" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:none;">
         <circle cx="4" cy="4" r="4" fill="#fff9e0" opacity="0.9"></circle>
         <rect class="shooting-tail" x="8" y="3" width="100" height="2"></rect>
@@ -871,35 +759,28 @@ border-radius:50%; opacity:0.8;">
   <div id="iosInstallModal" class="ios-modal">
       <div class="ios-content">
           <span class="ios-close" onclick="closeIosModal()">&times;</span>
-          <h3 style="color:white;
-            margin-bottom:10px;">Instalar Sistema</h3>
+          <h3 style="color:white; margin-bottom:10px;">Instalar Sistema</h3>
           <p>Para añadir <strong>Archinime</strong> a iOS:</p>
           <p>1. Toca <strong>Compartir</strong> <i class="fas fa-share-square"></i></p>
           <p>2. Elige <strong>"Agregar a Inicio"</strong> <i class="far fa-plus-square"></i></p>
       </div>
   </div>
 
-  <script>
-    var version = new Date().getTime();
-    document.write('<script src="index-data.js?v=' + version + '"><\/script>');
-  </script>
-
-  <script src="animaciones.js"></script>
-  <script src="musica_fondo.js"></script>
-  <script src="notification-system.js"></script>
-  <script src="script-index.js"></script>
+  <script src="index-data.js"></script>
+  <script src="animaciones.js" defer></script>
+  <script src="musica_fondo.js" defer></script>
+  <script src="notification-system.js" defer></script>
+  <script src="script-index.js" defer></script>
   
   <script>
-    if ('serviceWorker' in navigator) 
-{
+    if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(registration => {
+             navigator.serviceWorker.register('sw.js').then(registration => {
                 console.log('SW Registrado: OK');
                 registration.update(); 
                 registration.onupdatefound = () => {
-                  const installingWorker 
-                  = registration.installing;
-                  installingWorker.onstatechange = () => {
+                  const installingWorker = registration.installing;
+                   installingWorker.onstatechange = () => {
                         if (installingWorker.state === 'installed') {
                             if (navigator.serviceWorker.controller) {
                                 console.log('Nueva versión encontrada. Recargando...');
@@ -941,14 +822,14 @@ border-radius:50%; opacity:0.8;">
             deferredPrompt.userChoice.then((res) => {
                 deferredPrompt = null;
             });
-     
-           } else {
+         } else {
             alert("App ya instalada o no soportada en este navegador.");
         }
     });
     function closeIosModal() { iosModal.style.display = 'none'; }
     window.addEventListener('DOMContentLoaded', checkInstallVisibility);
     window.addEventListener('resize', checkInstallVisibility);
+    /* LOGICA DE CARGA OPTIMIZADA CON SESSION STORAGE */
     window.addEventListener('load', () => {
       const loader = document.getElementById('page-loader');
       const bgVideo = document.getElementById('bg-video');
@@ -958,36 +839,40 @@ border-radius:50%; opacity:0.8;">
             bgVideo.muted = true; 
             let playPromise = bgVideo.play();
              if (playPromise !== undefined) {
-           
                  playPromise.then(_ => {
                     bgVideo.classList.add('loaded'); 
                 })
                 .catch(error => {
                      console.log("Autoplay bloqueado. Esperando interacción.");
-              
-                      document.body.addEventListener('click', () => {
+                       document.body.addEventListener('click', () => {
                         bgVideo.play();
                         bgVideo.classList.add('loaded');
-                    }, { once: true });
-                  
+                     }, { once: true });
+                   
                   document.body.addEventListener('touchstart', () => {
                         bgVideo.play();
                         bgVideo.classList.add('loaded');
-                    }, { once: true });
+                  }, { once: true });
                 });
             }
         }
       };
-    forcePlayVideo();
-    setTimeout(() => { 
+      forcePlayVideo();
+      
+      // VERIFICAR SI YA ENTRO A LA PAGINA
+      const isFirstVisit = !sessionStorage.getItem('archinime_loaded');
+      const delay = isFirstVisit ? 1400 : 50; // Retraso largo solo la primera vez
+
+      setTimeout(() => { 
         loader.style.opacity = '0'; 
         setTimeout(() => {
             loader.style.visibility = 'hidden';
+            sessionStorage.setItem('archinime_loaded', 'true'); // Guardar que ya cargó
             if (window.startNotificationSequence) {
                 window.startNotificationSequence();
             }
-        }, 500);
-       }, 800);
+        }, 400); // Transición suave
+       }, delay);
     });
 
     const gridObserver = new MutationObserver(() => {
@@ -998,14 +883,12 @@ border-radius:50%; opacity:0.8;">
           
           card.addEventListener('mousemove', (e) => {
              const rect = card.getBoundingClientRect();
-            
              const x = e.clientX - rect.left;
              const y = e.clientY - rect.top;
              const centerX = rect.width / 2;
              const centerY = rect.height / 2;
              const rotateX = ((y - centerY) / centerY) * -8;
-             const rotateY = ((x - 
-                centerX) / centerX) * 8;
+             const rotateY = ((x - centerX) / centerX) * 8;
              card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
           });
           card.addEventListener('mouseleave', () => {
