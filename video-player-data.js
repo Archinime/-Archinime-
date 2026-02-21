@@ -8089,6 +8089,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1G3spH6oy070sgpijGhqelkdDplsWPUQJ/preview",
                 "link2": "",
                 "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 16"
+            },
+            "17": {
+                "link": "https://ok.ru/videoembed/12303448017618",
+                "link2": "",
+                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 17"
             }
         }
     },
