@@ -9877,7 +9877,7 @@ const players = {
                 "title": "Frieren: Más allá del final del viaje T2 Cap 2"
             },
             "3": {
-                "link": "https://ok.ru/videoembed/12303719664338",
+                "link": "https://drive.google.com/file/d/1sQilu5M8fxfKd8B1_H1_-EzvQvy59Q98/preview",
                 "link2": "",
                 "title": "Frieren: Más allá del final del viaje T2 Cap 3"
             }
