@@ -9549,6 +9549,16 @@ const players = {
                 "link": "https://drive.google.com/file/d/1-6oARAx7qAzsnMtilPJEAR19N1-Cj0XJ/preview",
                 "link2": "",
                 "title": "Gnosia T1 Cap 14"
+            },
+            "15": {
+                "link": "https://ok.ru/videoembed/12303529216722",
+                "link2": "",
+                "title": "Gnosia T1 Cap 15"
+            },
+            "16": {
+                "link": "https://ok.ru/videoembed/12303503198930",
+                "link2": "",
+                "title": "Gnosia T1 Cap 16"
             }
         }
     },
