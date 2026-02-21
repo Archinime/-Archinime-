@@ -11227,6 +11227,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1xeD2uAnf4lSqkCR10ZdLiIqYFpbAhgI0/preview",
                 "link2": "",
                 "title": "Fire Force T3 Cap 18"
+            },
+            "19": {
+                "link": "https://ok.ru/videoembed/12303575812818",
+                "link2": "",
+                "title": "Fire Force T3 Cap 19"
             }
         }
     },
