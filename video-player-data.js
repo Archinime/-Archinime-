@@ -9875,6 +9875,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1HIVK9fiMa6OHcZMRnDqRj-SZY0RUFV1Y/preview",
                 "link2": "",
                 "title": "Frieren: Más allá del final del viaje T2 Cap 2"
+            },
+            "3": {
+                "link": "https://ok.ru/videoembed/12303719664338",
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T2 Cap 3"
             }
         }
     },
