@@ -13960,6 +13960,28 @@ const players = {
                 "link2": "",
                 "title": "Trigun Stampede T1 Cap 12"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://ok.ru/videoembed/12303239219922",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 1"
+            },
+            "2": {
+                "link": "https://ok.ru/videoembed/12303239416530",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 2"
+            },
+            "3": {
+                "link": "https://ok.ru/videoembed/12303239285458",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 3"
+            },
+            "4": {
+                "link": "https://ok.ru/videoembed/12303239350994",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 4"
+            }
         }
     },
     "92": {
