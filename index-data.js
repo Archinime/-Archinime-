@@ -1775,7 +1775,7 @@ const animes = [
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/trigun-stargaze-character-visuals-v0-no7rngaincuf1.jpg",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 4",
-        "isFinal": true
+        "isFinal": false
     },
     {
         "id": 92,

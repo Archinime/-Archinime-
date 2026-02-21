@@ -11229,7 +11229,7 @@ const players = {
                 "title": "Fire Force T3 Cap 18"
             },
             "19": {
-                "link": "https://ok.ru/videoembed/12303575812818",
+                "link": "https://drive.google.com/file/d/1LDmOM658vaAmnJdrm5Dl8NWindG25ar3/preview",
                 "link2": "",
                 "title": "Fire Force T3 Cap 19"
             }
@@ -11307,12 +11307,12 @@ const players = {
                 "title": "Dark Moon: The Blood Altar T1 Cap 5"
             },
             "6": {
-                "link": "https://ok.ru/videoembed/12303374093010",
+                "link": "https://drive.google.com/file/d/1Q2C4wQ17eWntlFvdUj26MqJ5KBY6GZzF/preview",
                 "link2": "",
                 "title": "Dark Moon: The Blood Altar T1 Cap 6"
             },
             "7": {
-                "link": "https://ok.ru/videoembed/12303374158546",
+                "link": "https://drive.google.com/file/d/1CFk948TU4l2ibXgBFtq5HwD4HQd0KeuW/preview",
                 "link2": "",
                 "title": "Dark Moon: The Blood Altar T1 Cap 7"
             }
