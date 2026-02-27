@@ -10461,6 +10461,11 @@ const players = {
                 "link": "https://ok.ru/videoembed/12274417273554",
                 "link2": "",
                 "title": "Sentenced to Be a Hero T1 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/167m9dUL_TXWz2mT2t0O-eQXvWYSbcBd5/preview",
+                "link2": "",
+                "title": "Sentenced to Be a Hero T1 Cap 8"
             }
         }
     },
