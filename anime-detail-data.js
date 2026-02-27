@@ -8007,6 +8007,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
                     }
                 ],
                 "name": "Temporada 1"
