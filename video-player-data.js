@@ -4707,6 +4707,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1TvankGcqCnnP4pZA0NMx4vqhlTVeOyra/preview",
                 "link2": "",
                 "title": "To Your Eternity T3 Cap 16"
+            },
+            "17": {
+                "link": "https://drive.google.com/file/d/1w6aJdOFu-AVTyKGHTvb-v4Qe_UZwFgM0/preview",
+                "link2": "",
+                "title": "To Your Eternity T3 Cap 17"
             }
         }
     },
