@@ -957,11 +957,11 @@ const animes = [
             "Tokusatsu",
             "Seinen"
         ],
-        "lastUpdate": 1771712932555,
+        "lastUpdate": 1772330647570,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/1acwpuwtsx2f20urv44eo/Airbrush-IMAGE-ENHANCER-1763730194883-1763730194884.jpg?rlkey=ornue772yaoazcagrsinqj1fc&st=nlz517kl&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 17",
+        "latestEpTitle": "Capítulo 18",
         "isFinal": false,
         "aliases": [
             "Tojima Wants to Be a Kamen Rider"
