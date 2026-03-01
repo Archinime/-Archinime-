@@ -1191,11 +1191,11 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1771714381242,
+        "lastUpdate": 1772330876617,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/68met98fq4br4u8cd7594/frieren2.avif?rlkey=w5jv3dne0ffs2ponw3ai1kgt0&st=uqyu2mmm&raw=1",
         "latestBlockName": "Temporada 2",
-        "latestEpTitle": "Capítulo 3",
+        "latestEpTitle": "Capítulo 4",
         "isFinal": false,
         "aliases": [
             "Sōsō no Frieren"
