@@ -14046,6 +14046,11 @@ const players = {
                 "link": "https://ok.ru/videoembed/12303239350994",
                 "link2": "",
                 "title": "Trigun Stampede T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1YtVnB7vyun4bxfk5VhjgGYBFxV_7MweL/preview",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 5"
             }
         }
     },
