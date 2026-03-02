@@ -11331,6 +11331,11 @@ const players = {
                 "link": "https://ok.ru/videoembed/12325398842066",
                 "link2": "",
                 "title": "Hana-Kimi T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/14hBC3yqJXcDSWbbR8wVWYw49MUP2gwId/preview",
+                "link2": "",
+                "title": "Hana-Kimi T1 Cap 10"
             }
         }
     },
