@@ -11471,6 +11471,11 @@ const players = {
                 "link": "https://ok.ru/videoembed/12325398907602",
                 "link2": "",
                 "title": "Hell's Paradise T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1ThQeMgdh2FIHxhDdst6pxBgu9I8q5Va4/preview",
+                "link2": "",
+                "title": "Hell's Paradise T2 Cap 5"
             }
         }
     },
