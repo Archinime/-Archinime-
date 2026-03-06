@@ -14130,6 +14130,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1WIkgLdKEWaFXAQaBMPNsVeAaFAdvHdvd/preview",
                 "link2": "",
                 "title": "Roll Over and Die T1 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/14p0OhTOz2cEI5AUNSEqotOoLyabJ1Rd0/preview",
+                "link2": "",
+                "title": "Roll Over and Die T1 Cap 6"
             }
         }
     },
