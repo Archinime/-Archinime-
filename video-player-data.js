@@ -9910,6 +9910,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1ep6uRdP3Fjx1s7yvcukPmr1HVxh0u7Ye/preview",
                 "link2": "",
                 "title": "Frieren: Más allá del final del viaje T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/11fyC1Yc6OedhGbhJQR8vr9Sm7fkXYnjo/preview",
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T2 Cap 5"
             }
         }
     },
