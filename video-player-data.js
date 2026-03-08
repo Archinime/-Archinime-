@@ -9584,6 +9584,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1zNnwrphqLHVHBVUM9wX_mLnPnYbRMQ15/preview",
                 "link2": "",
                 "title": "Gnosia T1 Cap 17"
+            },
+            "18": {
+                "link": "https://drive.google.com/file/d/1pL5GccED3j-yBBGYuT3K_kjD0VjOrkzX/preview",
+                "link2": "",
+                "title": "Gnosia T1 Cap 18"
             }
         }
     },
