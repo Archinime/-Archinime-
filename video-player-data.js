@@ -14131,6 +14131,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1YtVnB7vyun4bxfk5VhjgGYBFxV_7MweL/preview",
                 "link2": "",
                 "title": "Trigun Stampede T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/18g1fAPhwXnSmvqlGa2JeIqGbYkvB2637/preview",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 6"
             }
         }
     },
