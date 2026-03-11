@@ -3262,7 +3262,8 @@ const data = {
                     {
                         "title": "Capítulo 8"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
@@ -3292,7 +3293,8 @@ const data = {
                     {
                         "title": "Capítulo 8"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
