@@ -489,14 +489,21 @@ const animes = [
         "img": "onepieceportada.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Acción",
             "Aventura",
             "Comedia",
-            "Acción",
-            "Fantasía",
             "Drama",
+            "Fantasía",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1773258729289,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/8ia1wi18lkdtsxev6vzrq/onepiece22.jpg?rlkey=a1nlcclu7625tqoiy4w3rgi8i&st=xnadjkcg&raw=1",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 8",
+        "isFinal": true
     },
     {
         "id": 30,
