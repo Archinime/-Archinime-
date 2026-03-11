@@ -4396,6 +4396,48 @@ const players = {
                 "link2": "https://www.dropbox.com/scl/fi/c7aw1aqf99fhn09dyfq0g/One-Piece-Live-Action-Ep-8.mp4?rlkey=31syrhrql53eud9m14aeoff8e&st=b3v6ge48&raw=1",
                 "title": "One Piece (Live Action) T1 Cap 8"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://drive.google.com/file/d/18zlFEgVfvexX0nexeyKlMxpVMHPpYiDe/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 1"
+            },
+            "2": {
+                "link": "https://drive.google.com/file/d/1fKqW6y17seUNgAHUm9VC4PibwvuNYb2f/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 2"
+            },
+            "3": {
+                "link": "https://drive.google.com/file/d/12Aod1Tm8rFY4gWiqO6KPR4eATc9nHibO/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 3"
+            },
+            "4": {
+                "link": "https://drive.google.com/file/d/1sMvvAf5XpU64XL2NB90Rlu6HC86HUFhK/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 4"
+            },
+            "5": {
+                "link": "https://drive.google.com/file/d/1ms9qXOhK2_RR0JwCWz66lkoir04BfI-D/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 5"
+            },
+            "6": {
+                "link": "https://drive.google.com/file/d/1mdJF7aWfxZA-XAJfw-yY_4GCuXernSt7/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1qbv8YR226ZoQHGNfuqMXbzW3toi8hX3W/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 7"
+            },
+            "8": {
+                "link": "https://drive.google.com/file/d/166Q6cTSuazPz4eLv43vkbfTSCrfNAc82/preview",
+                "link2": "",
+                "title": "One Piece (Live Action) T2 Cap 8"
+            }
         }
     },
     "30": {
