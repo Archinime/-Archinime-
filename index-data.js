@@ -750,8 +750,8 @@ const animes = [
             "Hentai",
             "Seijin"
         ],
-        "lastUpdate": 1771448463426,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1773362047565,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/totid4w011l0ftg088jwf/erisM.jpg?rlkey=bv2zu5u17sst8k4cjct0l0e0u&st=7f5sh8co&raw=1",
         "latestBlockName": "My Dress-Up Darling",
         "latestEpTitle": "Capítulo 2",
