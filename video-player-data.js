@@ -6095,131 +6095,131 @@ const players = {
                 "title": "Maplestar Spy X Family Cap 1"
             },
             "2": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/20?hash=5d7378",
+                "link": "https://odysee.com/$/embed/4312:7",
                 "link2": "https://www.dropbox.com/scl/fi/aoczgvzx3o2fiqns7awao/Yor-X-Loid-2-Espa-ol-Maplestar.mp4?rlkey=qpzaczed8r3yk0u2brhbhxx0v&st=808mdhtz&raw=1",
                 "title": "Maplestar Spy X Family Cap 2"
             }
         },
         "2": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/21?hash=4a5d0f",
+                "link": "https://odysee.com/$/embed/4321:a",
                 "link2": "https://www.dropbox.com/scl/fi/8zshz5yaz8ieg7k4m8l4m/Alya-Sometimes-Hides-Her-Feelings-In-Russian-Espa-ol-Maplestar.mp4?rlkey=d1vcugz2v2daf3dlvbzkolsxf&st=2n65gs92&raw=1",
                 "title": "Maplestar Alya Sometimes Hides Her Feelings In Russian Cap 1"
             }
         },
         "3": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/22?hash=abe311",
+                "link": "https://odysee.com/$/embed/4331:ee",
                 "link2": "https://www.dropbox.com/scl/fi/1oclh84eqrm2pdibc7wug/Nobara-X-Itadori-Espa-ol-Maplestar.mp4?rlkey=856uv2y2pi87bcvrs8zfwpjhz&st=d0yyarke&raw=1",
                 "title": "Maplestar Jujutsu Kaisen Cap 1"
             },
             "2": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/23?hash=f4e51f",
+                "link": "https://odysee.com/$/embed/4332:b",
                 "link2": "https://www.dropbox.com/scl/fi/20dqg4xjmloscmwaakawd/Nobara-X-Itadori-2-Espa-ol-Maplestar.mp4?rlkey=7qh995axvt0260518tv43pcr4&st=wqop1mcj&raw=1",
                 "title": "Maplestar Jujutsu Kaisen Cap 2"
             }
         },
         "4": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/24?hash=f01f60",
+                "link": "https://odysee.com/$/embed/4341:4",
                 "link2": "https://www.dropbox.com/scl/fi/5769745hjivphobjle24a/Aqua-X-Kasuma-Espa-ol-Maplestar.mp4?rlkey=hnr7wqda33eza55m6wzc79h0i&st=o2cff8yx&raw=1",
                 "title": "Maplestar Konosuba Cap 1"
             }
         },
         "5": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/25?hash=c938ec",
+                "link": "https://odysee.com/$/embed/4351:2",
                 "link2": "https://www.dropbox.com/scl/fi/icwx6v24laymogldw513e/Denji-X-Makima-Espa-ol-Maplestar.mp4?rlkey=g4uegob84oyqyvve5wre8pnou&st=4bqr4nx6&raw=1",
                 "title": "Maplestar Chainsaw Man Cap 1"
             },
             "2": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/26?hash=ecbef6",
+                "link": "https://odysee.com/$/embed/4352:13",
                 "link2": "https://www.dropbox.com/scl/fi/4xm609lu8g96qra8r6drn/Denji-X-Makima-2-Espa-ol-Maplestar.mp4?rlkey=7hbf9osgrwxh4h2hye0rx533n&st=mvd903is&raw=1",
                 "title": "Maplestar Chainsaw Man Cap 2"
             }
         },
         "6": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/27?hash=d74a2f",
+                "link": "https://odysee.com/$/embed/4361:1",
                 "link2": "https://www.dropbox.com/scl/fi/ctriibfqfda9ess5xjo8w/Dandadan-Espa-ol-Maplestar.mp4?rlkey=focs9hjwykcesobsono8s3q5b&st=0nlb9z16&raw=1",
                 "title": "Maplestar Dan Da Dan Cap 1"
             }
         },
         "7": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/28?hash=7a4ed3",
+                "link": "https://odysee.com/$/embed/4371:a",
                 "link2": "https://www.dropbox.com/scl/fi/hq06fig1utkxxfkosgf7v/Fern-X-Stark-Espa-ol-Maplestar.mp4?rlkey=ec0ct97jpyv9z89wku6cn1jv3&st=hwjcqjq1&raw=1",
                 "title": "Maplestar Frieren Cap 1"
             }
         },
         "8": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/29?hash=717653",
+                "link": "https://odysee.com/$/embed/4381:d",
                 "link2": "https://www.dropbox.com/scl/fi/c52qwuwf24oqfkjdneqer/Nier-Automata-Espa-ol-Maplestar.mp4?rlkey=4fg30rxabdbuaw08s0i76ttdc&st=3yhssa6h&raw=1",
                 "title": "Maplestar Nier: Automata Cap 1"
             }
         },
         "9": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/30?hash=dcf29e",
+                "link": "https://odysee.com/$/embed/4391:f",
                 "link2": "https://www.dropbox.com/scl/fi/hm36ev962ojte54ty5uil/Zelda-Tears-The_Kingdom-Espa-ol-Maplestar.mp4?rlkey=piva9mtpoqhnrq3vh577i4zyd&st=y0wvc09i&raw=1",
                 "title": "Maplestar The Legend of Zelda: Tears of the Kingdom Cap 1"
             },
             "2": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/31?hash=c4fefc",
+                "link": "https://odysee.com/$/embed/4392:f",
                 "link2": "https://www.dropbox.com/scl/fi/jbam1juoa6qvei2d01csf/Purah-The-Legend-Of-Zelda-Espa-ol-Maplestar.mp4?rlkey=74a7j6b1e6lpau7mqnkmmkjs4&st=dtt3v9w5&raw=1",
                 "title": "Maplestar The Legend of Zelda: Tears of the Kingdom Cap 2"
             }
         },
         "10": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/32?hash=903b38",
+                "link": "https://odysee.com/$/embed/43101:0",
                 "link2": "https://www.dropbox.com/scl/fi/t4qxgu9mdaz4nzpmrwkrh/Rias-X-Issei-Espa-ol-Maplestar.mp4?rlkey=rt713gbmmha17tpcesk27l5vo&st=hruhtxvb&raw=1",
                 "title": "Maplestar High School DxD Cap 1"
             }
         },
         "11": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/33?hash=0d56b3",
+                "link": "https://odysee.com/$/embed/43111:5",
                 "link2": "https://www.dropbox.com/scl/fi/7tva7jw11ax8ueufy1bcs/Emilia-ReZero-Espa-ol-Maplestar.mp4?rlkey=nlpwfjivecsx3ep6acacnoonu&st=ay9ttsb5&raw=1",
                 "title": "Maplestar Re:Zero Cap 1"
             }
         },
         "12": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/34?hash=3d9d1e",
+                "link": "https://odysee.com/$/embed/43121:4",
                 "link2": "https://www.dropbox.com/scl/fi/a0axyqufmc945r5w9bat8/Mizuhara-Chizuru-Espa-ol-Maplestar.mp4?rlkey=3e8y5oc5hb1ffmjp1olrto5yi&st=r3lf31fm&raw=1",
                 "title": "Maplestar Rent-A-Girlfriend Cap 1"
             }
         },
         "13": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/36?hash=f3fd22",
+                "link": "https://odysee.com/$/embed/43131:8",
                 "link2": "https://www.dropbox.com/scl/fi/zhsdyr8t1pee4b8p4xfms/The-Rising-of-the-Shield-Hero-Maplestar.mp4?rlkey=hu238mo45s3sckdqlucq15xj3&st=62npwezw&raw=1",
                 "title": "Maplestar The Rising of the Shield Hero Cap 1"
             }
         },
         "14": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/37?hash=8fe7be",
+                "link": "https://odysee.com/$/embed/43141:4",
                 "link2": "",
                 "title": "Maplestar Demon Slayer Cap 1"
             },
             "2": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/38?hash=408a6d",
+                "link": "https://odysee.com/$/embed/43142:9",
                 "link2": "",
                 "title": "Maplestar Demon Slayer Cap 2"
             }
         },
         "15": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/35?hash=ed76f5",
+                "link": "https://odysee.com/$/embed/43151:6",
                 "link2": "https://www.dropbox.com/scl/fi/475g2hz6cm5zzzu29u507/Mar-n-X-Gojo-Espa-ol-Maplestar.mp4?rlkey=aq420lzqo9o8m3atwok1syxlf&st=qg5eisiz&raw=1",
                 "title": "Maplestar My Dress-Up Darling Cap 1"
             },
             "2": {
-                "link": "",
-                "link2": "https://fsb-latest-gdv3.onrender.com/stream/39?hash=2b8ddf",
+                "link": "https://odysee.com/$/embed/43152:8",
+                "link2": "",
                 "title": "Maplestar My Dress-Up Darling Cap 2"
             }
         }
