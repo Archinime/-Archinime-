@@ -75,6 +75,7 @@ async function checkAccess(user) {
     if(errText) errText.innerText = "Verificando base de datos...";
     const logErr = document.getElementById('loginError');
     if(logErr) logErr.style.display = 'none';
+
     try {
         const usersFile = await getGithubFile(currentUserToken, OWNER, REPO, 'users-data.js');
         globalUsersData = safeEval(usersFile.content);
@@ -138,6 +139,7 @@ function openProfileEditor() {
     document.getElementById('btnSaveProfile').innerText = 'ACTUALIZAR DATOS';
     const btnCancel = document.getElementById('btnCancelProfile');
     if(btnCancel) btnCancel.style.display = 'block';
+
     if(globalUsersData[currentUserEmail]) {
         document.getElementById('setupNick').value = globalUsersData[currentUserEmail].nick;
         document.getElementById('setupAvatar').value = globalUsersData[currentUserEmail].avatar;
@@ -175,6 +177,7 @@ async function saveUserProfile() {
     const isTaken = Object.entries(globalUsersData).some(([email, data]) => {
         return data.nick.toLowerCase() === nickLower && email !== currentUserEmail;
     });
+
     if (isTaken) {
         alert("Este nombre ya ha sido registrado, elige otro por favor.");
         return;
@@ -182,16 +185,19 @@ async function saveUserProfile() {
 
     btn.disabled = true;
     logEl.innerText = "Guardando perfil en GitHub...";
+
     try {
         globalUsersData[currentUserEmail] = {
             nick: nick,
             avatar: avatar,
             social: social
         };
+
         await updateGithubFile(currentUserToken, OWNER, REPO, 'users-data.js', (content) => {
             const jsonStr = JSON.stringify(globalUsersData, null, 4);
             return `const usersData = ${jsonStr};`;
         });
+
         currentUserNick = nick;
         currentUserAvatar = avatar;
 
@@ -202,6 +208,7 @@ async function saveUserProfile() {
             logEl.innerText = "";
             showCMS();
         }, 1000);
+
     } catch(e) {
         console.error(e);
         logEl.innerText = "Aun no perteneces al grupo de aportadores";
@@ -258,7 +265,6 @@ function injectStateSelect() {
         </select>
     `;
     genresContainer.parentNode.insertBefore(wrapper, genresContainer);
-    
     // Estilos inline para asegurar consistencia
     const sel = document.getElementById('estadoAnime');
     sel.style.width = "100%";
@@ -304,7 +310,7 @@ function injectFinalBlock() {
             <span class="slider round" style="position:relative; display:inline-block; width:50px; height:26px; background-color:#333; border-radius:34px; transition:.4s;">
            
       <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background-color:white; border-radius:50%; transition:.4s;"
- id="sliderCircle"></span>
+id="sliderCircle"></span>
             </span>
         </label>
     `;
@@ -346,12 +352,14 @@ const genresList = [
     "Survival Game", "Suspenso", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
     "Thriller psicológico", "Tokusatsu", "Tragedia", "VRMMO", "Yaoi", "Yuri"
 ];
+
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="checkbox" value="${g}" onchange="requestPreviewUpdate()"> ${g}`;
     gContainer.appendChild(label);
 });
+
 // Actualizar demografías
 const demoSelectCMS = document.getElementById('demografiaAnime');
 if(demoSelectCMS) {
@@ -370,10 +378,10 @@ function showToast(msg, isError = false) {
     const x = document.getElementById("toast");
     if(!x) return;
     x.innerHTML = isError ?
- `<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
+`<i class="fas fa-times-circle" style="color:#ff4757"></i> ${msg}` : `<i class="fas fa-check-circle" style="color:var(--accent)"></i> ${msg}`;
     x.className = "show";
     x.style.borderColor = isError ?
- "#ff4757" : "var(--accent)";
+"#ff4757" : "var(--accent)";
     setTimeout(() => { x.className = x.className.replace("show", ""); }, 4000);
 }
 
@@ -405,6 +413,7 @@ function log(msg) {
 function smartLinkConvert(input) {
     let val = input.value.trim();
     let changed = false;
+
     // NUEVO: Reemplazo para enlaces locales de red a Render
     if (val.includes('http://10.22.7.119:8080')) {
         input.value = val.replace('http://10.22.7.119:8080', 'https://fsb-latest-gdv3.onrender.com');
@@ -435,6 +444,14 @@ function smartLinkConvert(input) {
         showToast("Link ok.ru convertido a /videoembed/");
     }
     // -------------------------------
+
+    // --- NUEVA LÓGICA PARA ODYSEE ---
+    if (val.includes('odysee.com/') && !val.includes('odysee.com/$/embed/')) {
+        input.value = val.replace(/odysee\.com\//i, 'odysee.com/$/embed/');
+        changed = true;
+        showToast("Link Odysee convertido a Embed");
+    }
+    // --------------------------------
     
     // Si cambió el link, forzamos la re-verificación inmediata
     if(changed) {
@@ -452,6 +469,7 @@ function checkCoverVisual(input) {
     const display = document.getElementById('dimDisplay');
     if(!img || !display) return;
     const val = input.value.trim();
+
     if(val === "") {
         img.style.display = 'none';
         display.innerText = "";
@@ -461,11 +479,13 @@ function checkCoverVisual(input) {
     img.src = val;
     img.style.display = 'block';
     display.innerText = "Verificando...";
+
     img.onload = function() { 
         const w = this.naturalWidth;
         const h = this.naturalHeight;
         const allowed = [{w: 1000, h: 1500}, {w: 1400, h: 2100}, {w: 2000, h: 3000}, {w: 2090, h: 3135}, {w: 3412, h: 5120}];
         const isValid = allowed.some(d => d.w === w && d.h === h);
+
         if (isValid) {
             display.innerHTML = `<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido: ${w}x${h}px</span>`;
             input.style.borderColor = '#00ffbf';
@@ -523,19 +543,22 @@ function updateAudioPreview(input) {
     statusEl.innerHTML = '<span style="color:#facc15"><i class="fas fa-circle-notch fa-spin"></i> Cargando...</span>';
     audioEl.src = input.value;
     audioEl.load();
+
     audioEl.onloadeddata = () => { statusEl.innerHTML = '<span style="color:#00ffbf"><i class="fas fa-check"></i> Válido</span>'; };
     audioEl.onerror = () => { statusEl.innerHTML = '<span style="color:#ff4757"><i class="fas fa-triangle-exclamation"></i> Error</span>'; };
 }
 
 const colorPalette = ['#00f0ff', '#8c52ff', '#ff0055', '#00ff9d', '#ffeb3b', '#ff9100', '#2979ff', '#e040fb'];
+
 function addSeason(data = null) {
     const container = document.getElementById('seasonsContainer');
     const div = document.createElement('div');
     div.className = 'season-card';
+
     const count = document.querySelectorAll('.season-card').length;
     const color = colorPalette[count % colorPalette.length];
     div.style.cssText = `border-left: 4px solid ${color};
- background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);`;
+    background: linear-gradient(120deg, ${color}11 0%, rgba(19, 20, 25, 0.9) 35%);`;
     div.innerHTML = `
         <div class="card-controls">
             <button class="btn-move" onclick="moveSeason(this, -1)" title="Mover Atrás/Arriba"><i class="fas fa-arrow-up"></i></button>
@@ -548,7 +571,7 @@ function addSeason(data = null) {
                 <label>Tipo</label>
                 <select class="s-type" onchange="handleSeasonTypeChange(this)">
                     <option value="" disabled ${!data ?
- 'selected' : ''}>Seleccionar...</option>
+'selected' : ''}>Seleccionar...</option>
                     <option value="Temporada">Temporada</option>
                     <option value="Pelicula">Película</option>
                     <option value="OVA">OVA</option>
@@ -560,7 +583,7 @@ function addSeason(data = null) {
             <div class="col-flex">
                  <label>Nombre Bloque</label>
                  <input type="text" class="s-name" placeholder="Auto" disabled oninput="requestPreviewUpdate()">
-            
+           
  </div>
         </div>
         <label>Poster Bloque</label>
@@ -568,7 +591,7 @@ function addSeason(data = null) {
         <div class="row-flex">
             <div class="col-flex">
                 <label>Cant.
- Capítulos</label>
+Capítulos</label>
                 <input type="number" class="s-count" min="1" onchange="renderChapters(this); checkAutoState();">
             </div>
             <div class="col-flex">
@@ -599,9 +622,10 @@ function addSeason(data = null) {
         handleSeasonTypeChange(typeSel);
         
         const startSel = div.querySelector('.s-start-index');
+
         if(data.eps && data.eps.length > 0) {
             const firstTitle = data.eps[0].title ||
- "";
+"";
             if(firstTitle.includes(" 0") || firstTitle.includes("Capítulo 0")) startSel.value = "0";
             else startSel.value = "1";
         }
@@ -626,6 +650,7 @@ function checkAutoState() {
         // Peliculas/OVAs suelen ser 1 cap, el input está disabled pero value=1
         if(inp.disabled) totalCaps += 1;
     });
+
     // NUEVO: Respetar si el usuario eligió "PRÓXIMAMENTE ⏳" o "Ninguna"
     if (stateSel.value !== 'PRÓXIMAMENTE ⏳' && stateSel.value !== 'Ninguna') {
         if (totalCaps === 1) {
@@ -645,6 +670,7 @@ function moveSeason(btn, direction) {
         if (card.nextElementSibling) container.insertBefore(card, card.nextElementSibling.nextElementSibling);
     }
     updateAllBlockNames();
+
     document.querySelectorAll('.season-card').forEach((c, idx) => {
         const color = colorPalette[idx % colorPalette.length];
         c.style.borderLeftColor = color;
@@ -658,6 +684,7 @@ function removeSeasonBlock(btn) {
     updateAllBlockNames();
     checkAutoState();
     requestPreviewUpdate();
+    
     document.querySelectorAll('.season-card').forEach((card, idx) => {
         const color = colorPalette[idx % colorPalette.length];
         card.style.borderLeftColor = color;
@@ -667,7 +694,9 @@ function removeSeasonBlock(btn) {
 
 function updateAllBlockNames() {
     const cards = document.querySelectorAll('.season-card');
+
     let tempCount = 0, movieCount = 0, ovaCount = 0, specialCount = 0, spinOffCount = 0;
+
     // Iteramos en orden del DOM para asignar nombres secuenciales
     cards.forEach(card => {
         const typeSelect = card.querySelector('.s-type');
@@ -677,21 +706,24 @@ function updateAllBlockNames() {
         
         nameInput.disabled = (type !== 'Spin-Off');
         
-        // CORRECCION: Rellenar siempre si es automático (disabled) o está vacío
+        // CORRECCION: Rellenar siempre si es 
+automático (disabled) o está vacío
         // Esto permite que al reordenar se actualicen los números (Temp 1, Temp 2...)
         if (nameInput.disabled || nameInput.value.trim() === "") {
              if (type === 'Temporada') { tempCount++; nameInput.value = `Temporada ${tempCount}`; }
              else if (type === 'Pelicula') { movieCount++; nameInput.value = `Película ${movieCount}`; }
-             else if (type === 'OVA') { ovaCount++; nameInput.value = `OVA ${ovaCount}`; }
+             else 
+if (type === 'OVA') { ovaCount++; nameInput.value = `OVA ${ovaCount}`; }
              else if (type === 'Especial') { specialCount++; nameInput.value = `Especial ${specialCount}`; }
              else if (type === 'Spin-Off') { 
                  spinOffCount++;
-                 // Solo ponemos nombre por defecto si está vacío, el SpinOff es editable
+// Solo ponemos nombre por defecto si está vacío, el SpinOff es editable
                  if (!nameInput.value) nameInput.value = `Spin-Off ${spinOffCount}`;
-             }
+}
         } else {
              // Si el usuario escribió un nombre personalizado en un Spin-Off, no lo tocamos.
-             // Pero sí incrementamos los contadores para que los siguientes sigan la secuencia correcta si fuera necesario.
+// Pero sí incrementamos los contadores para que los siguientes sigan la secuencia correcta si fuera necesario.
+
              if (type === 'Temporada') tempCount++;
              else if (type === 'Pelicula') movieCount++;
              else if (type === 'OVA') ovaCount++;
@@ -705,6 +737,7 @@ function handleSeasonTypeChange(select) {
     const card = select.closest('.season-card');
     const countInput = card.querySelector('.s-count');
     const type = select.value;
+
     if (['Pelicula', 'OVA', 'Especial'].includes(type)) {
         countInput.value = 1;
         countInput.disabled = true;
@@ -714,6 +747,7 @@ function handleSeasonTypeChange(select) {
     
     // Forzar actualización inmediata de nombres al cambiar tipo
     updateAllBlockNames();
+
     if(countInput.value) renderChapters(countInput);
     checkAutoState();
     requestPreviewUpdate();
@@ -730,6 +764,7 @@ function renderChapters(input, existingEps = []) {
 
     const list = card.querySelector('.chapters-grid');
     let currentData = [];
+
     if(existingEps.length === 0) {
         card.querySelectorAll('.chapter-row').forEach(row => {
             currentData.push({
@@ -742,10 +777,13 @@ function renderChapters(input, existingEps = []) {
 
     list.innerHTML = '';
     if(isNaN(count) || count < 1) return;
+
     for(let i=0; i<count; i++) {
         const row = document.createElement('div');
         row.className = 'chapter-row';
+
         let sub = '', lat = '', customTitle = '';
+
         if(existingEps[i]) {
              lat = existingEps[i].link || '';
              sub = existingEps[i].link2 || ''; 
@@ -759,7 +797,7 @@ function renderChapters(input, existingEps = []) {
         let currentNum = startNum + i;
         let titleInputDisabled = ['Temporada', 'Spin-Off'].includes(type) ? "disabled" : "";
         let titlePlaceholder = titleInputDisabled ?
- `Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
+`Capítulo ${currentNum}` : "Nombre (ej: El viaje...)";
         if(titleInputDisabled) customTitle = `Capítulo ${currentNum}`;
         row.innerHTML = `
             <div class="chapter-header"><span class="chapter-num">CAPÍTULO ${currentNum}</span></div>
@@ -790,6 +828,7 @@ function checkForChanges() {
     const btn = document.getElementById('btnSaveAction');
     if (!originalAnimeState) return;
     const currentState = JSON.stringify(generateData());
+
     if (currentState !== originalAnimeState) {
         if (btn.disabled && !btn.innerHTML.includes("BLOQUEADA")) {
              btn.disabled = false;
@@ -808,11 +847,13 @@ function checkForChanges() {
 function updateWebPreview() {
     const titleEl = document.getElementById('webTitle');
     const titleVal = document.getElementById('tituloAnime').value;
+
     if(titleEl) titleEl.innerText = titleVal || 'Título';
 
     const coverUrl = document.getElementById('portadaAnime').value;
     const webCover = document.getElementById('webCover');
     if(coverUrl && webCover) webCover.src = coverUrl;
+
     const prevId = document.getElementById('previewId');
     if(prevId) prevId.innerText = isEditMode ? currentEditingId : "###";
 
@@ -822,6 +863,7 @@ function updateWebPreview() {
     
     const aliases = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliases.push(i.value.trim()) });
+
     const prevAlias = document.getElementById('previewAliasesList');
     if(prevAlias) prevAlias.innerText = aliases.length > 0 ? aliases.join(', ') : "";
 
@@ -829,6 +871,7 @@ function updateWebPreview() {
     const rd = document.getElementById('ratingDec').value;
     const wRat = document.getElementById('webRating');
     if(wRat) wRat.innerText = `⭐ ${ri || 0}.${rd || 0}`;
+
     const tagsContainer = document.getElementById('webTags');
     if(tagsContainer) {
         tagsContainer.innerHTML = '';
@@ -857,18 +900,21 @@ function updateWebPreview() {
                 div.innerHTML = `<img src="${img || 'https://via.placeholder.com/150'}"><div class="preview-s-count">${label}</div><div class="preview-s-title">${name}</div>`;
                 grid.appendChild(div);
             }
-  
+ 
         });
     }
 }
 
 async function getGithubFile(token, owner, repo, path) {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
     const response = await fetch(url, {
         headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
     });
+
     if (!response.ok) throw new Error(`Error leyendo ${path}`);
     const data = await response.json();
+    
     return { 
         sha: data.sha, 
         content: new TextDecoder().decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0))) 
@@ -880,8 +926,10 @@ function safeEval(fileContent) {
         const eqIndex = fileContent.indexOf('=');
         if (eqIndex === -1) throw new Error("No se encontró asignación de variable");
         let dataStr = fileContent.substring(eqIndex + 1).trim();
+
         if (dataStr.endsWith(';')) dataStr = dataStr.slice(0, -1);
         return eval('(' + dataStr + ')');
+
     } catch (e) {
         console.error("Error parseando JS:", e);
         throw new Error("El archivo tiene un formato inválido o complejo.");
@@ -892,6 +940,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
     const fileData = await getGithubFile(token, owner, repo, path);
     const newContent = contentTransformer(fileData.content);
     const encodedContent = btoa(new TextEncoder().encode(newContent).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
@@ -901,6 +950,7 @@ async function updateGithubFile(token, owner, repo, path, contentTransformer) {
             sha: fileData.sha
         })
     });
+
     if (!response.ok) throw new Error(`Error subiendo ${path}`);
 }
 
@@ -927,18 +977,21 @@ function switchSearchTab(mode) {
     currentSearchMode = mode;
     document.getElementById('tabMine').className = mode === 'mine' ? 'tab-btn active' : 'tab-btn';
     document.getElementById('tabGeneral').className = mode === 'general' ? 'tab-btn active' : 'tab-btn';
+
     if(cachedIndex.length > 0) filterSearch();
 }
 
 async function loadIndexForSearch() {
     const loading = document.getElementById('loadingSearch');
     loading.style.display = 'block';
+
     try {
         if(!currentUserToken) throw new Error("No hay sesión");
         const file = await getGithubFile(currentUserToken, OWNER, REPO, 'index-data.js');
         const data = safeEval(file.content);
         cachedIndex = data.reverse(); 
         filterSearch();
+
     } catch(e) {
         document.getElementById('searchResults').innerHTML = `<div style="color:red; text-align:center">Error: ${e.message}</div>`;
     } finally {
@@ -964,6 +1017,7 @@ function _performFilter() {
             return matchesText; 
         }
     }).slice(0, 1000);
+
     filtered.forEach(anime => {
         const div = document.createElement('div');
         div.className = 's-result-item';
@@ -973,8 +1027,7 @@ function _performFilter() {
         let displayNick = anime.uploader;
         let uploaderImg = "Logo_Archinime.avif"; 
         if(globalUsersData[anime.uploader]) {
-             displayNick 
-= globalUsersData[anime.uploader].nick;
+             displayNick = globalUsersData[anime.uploader].nick;
              uploaderImg = globalUsersData[anime.uploader].avatar;
         }
         if (currentSearchMode === 'general') { 
@@ -1030,6 +1083,7 @@ getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         if(editModeBar) editModeBar.style.display = 'block';
         const existingDelBtn = document.getElementById('btnDeleteAnime');
         if(existingDelBtn) existingDelBtn.remove();
+        
         if(currentUserEmail === "archinime12@gmail.com") {
              const delBtn = document.createElement('button');
              delBtn.id = 'btnDeleteAnime';
@@ -1047,6 +1101,7 @@ getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         const storedUploader = targetDetail.uploader || (indexEntry ? indexEntry.uploader : "Archinime");
         const isSuperAdmin = ALLOWED_USERS.includes(currentUserEmail);
         const isOwner = (storedUploader === currentUserEmail) || (storedUploader === currentUserNick) || isSuperAdmin || (currentUserNick === "Archinime");
+
         const saveBtn = document.getElementById('btnSaveAction');
         if (!isOwner) {
             saveBtn.disabled = true;
@@ -1066,6 +1121,7 @@ getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
 
         if(indexEntry && indexEntry.genres && indexEntry.genres.length > 0) {
             let loadedGenres = [...indexEntry.genres];
+            
             // Detectar demografia
             const demoOptions = ["Gekiga", "Josei", "Kodomo", "Seijin", "Seinen", "Shōjo", "Shōnen"];
             const foundDemo = loadedGenres.find(g => demoOptions.includes(g));
@@ -1088,6 +1144,7 @@ getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
         document.getElementById('ratingDec').value = decPart;
         
         document.getElementById('seasonsContainer').innerHTML = '';
+
         if(targetDetail.seasons) {
             targetDetail.seasons.forEach(s => {
                 const seasonPlayer = targetPlayer[s.num] || {}; 
@@ -1103,9 +1160,11 @@ getGithubFile(currentUserToken, OWNER, REPO, 'musica-data.js')
 
         document.getElementById('musicContainer').innerHTML = '';
         targetMusic.forEach(url => addMusic(url));
+
         // Cargar estado de "FINAL" si existe en indexEntry
         if(indexEntry && indexEntry.isFinal) {
             const toggle = document.getElementById('finalToggle');
+
             if(toggle) {
                 toggle.checked = true;
                 const evt = new Event('change');
@@ -1140,6 +1199,7 @@ async function deleteCurrentAnime(idToDelete) {
     const token = currentUserToken;
     const logEl = document.getElementById('statusLog');
     logEl.style.display = 'block';
+
     try {
         log("1/5 Descargando bases de datos...");
         const [indexFile, detailFile, playerFile, musicFile] = await Promise.all([
@@ -1148,6 +1208,7 @@ async function deleteCurrentAnime(idToDelete) {
             getGithubFile(token, OWNER, REPO, 'video-player-data.js'),
             getGithubFile(token, OWNER, REPO, 'musica-data.js')
         ]);
+        
         let indexData = safeEval(indexFile.content);
         let detailData = safeEval(detailFile.content);
         let playerData = safeEval(playerFile.content);
@@ -1158,6 +1219,7 @@ async function deleteCurrentAnime(idToDelete) {
             if (item.id > idToDelete) item.id = item.id - 1; 
             return item;
         });
+
         log("3/5 Procesando Detalles y Player...");
         const shiftObjectKeys = (obj) => {
             const newObj = {};
@@ -1178,12 +1240,14 @@ async function deleteCurrentAnime(idToDelete) {
         await updateGithubFile(token, OWNER, REPO, 'anime-detail-data.js', () => `const data = ${JSON.stringify(newDetail, null, 4)};`);
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', () => `const players = ${JSON.stringify(newPlayer, null, 4)};`);
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', () => `const audioPlaylists = ${JSON.stringify(newMusic, null, 4)};`);
+        
         log("✅ ¡ELIMINADO Y REORDENADO CORRECTAMENTE!");
         alert("✅ Cambios guardados correctamente.\nPor favor, cierra sesión.");
         highlightLogoutButton();
         document.getElementById('editModeBar').style.display = 'none';
         document.getElementById('btnSaveAction').disabled = true;
         document.getElementById('btnSaveAction').innerText = "ELIMINADO";
+        
     } catch(e) {
         console.error(e);
         log(`❌ ERROR FATAL: ${e.message}`);
@@ -1207,9 +1271,11 @@ function generateData() {
     const selectedGenres = [];
     document.querySelectorAll('#genresContainer input:checked').forEach(cb => selectedGenres.push(cb.value));
     const demoSelect = document.getElementById('demografiaAnime').value;
+    
     const iVal = document.getElementById('ratingInt').value || "0";
     const dVal = document.getElementById('ratingDec').value || "0";
     const ratingVal = parseFloat(iVal + "." + dVal);
+    
     const aliasList = [];
     document.querySelectorAll('.alias-input').forEach(i => { if(i.value.trim()) aliasList.push(i.value.trim()) });
     
@@ -1224,7 +1290,7 @@ function generateData() {
 
     const anime = {
         id: isEditMode ?
- currentEditingId : 0, 
+currentEditingId : 0, 
         titulo: document.getElementById('tituloAnime').value.trim(),
         aliases: aliasList,
         portada: document.getElementById('portadaAnime').value.trim(),
@@ -1240,8 +1306,11 @@ function generateData() {
         estado: selectedState,
         isFinal: isFinal // Guardar booleano de Final
     };
+
     document.querySelectorAll('#musicContainer .m-url').forEach(i => { if(i.value) anime.musica.push(i.value.trim()); });
+    
     let globalOrder = 1, seasonCountVP = 0, ovaCountVP = 0, movieCountVP = 0, specialCountVP = 0, spinOffCount = 0;
+    
     document.querySelectorAll('.season-card').forEach(card => {
         const eps = [];
         const sName = card.querySelector('.s-name').value;
@@ -1260,7 +1329,8 @@ function generateData() {
             const sub = row.querySelector('.c-link-sub').value.trim();
             let customTitleInput = row.querySelector('.c-title-ov').value.trim();
             let playerTitle = "", detailTitle = ""; 
-            let currentEpNum = startNum + idx;
+            let 
+currentEpNum = startNum + idx;
    
          
             if (sType === 'Temporada') {
@@ -1271,15 +1341,15 @@ function generateData() {
                 playerTitle = `${anime.titulo} ${sName} Cap ${currentEpNum}`;
             } else if (sType === 'OVA') {
                 detailTitle = customTitleInput ||
- sName;
+sName;
                 playerTitle = `${anime.titulo} OVA ${ovaCountVP}` + (customTitleInput ? ` "${customTitleInput}"` : "");
             } else if (sType === 'Pelicula') {
                 detailTitle = customTitleInput ||
- sName;
+sName;
                 playerTitle = `${anime.titulo} Película ${movieCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             } else if (sType === 'Especial') {
                 detailTitle = customTitleInput ||
- sName;
+sName;
                 playerTitle = `${anime.titulo} Especial ${specialCountVP}` + (customTitleInput ? `: ${customTitleInput}` : "");
             }
 
@@ -1308,6 +1378,7 @@ function highlightLogoutButton() {
             logoutBtn.style.opacity = visible ? '0.5' : '1';
             visible = !visible;
         }, 500);
+        
         const tip = document.createElement('div');
         tip.innerHTML = "⬇ CLIC AQUÍ ⬇";
         tip.style.position = 'absolute';
@@ -1329,6 +1400,7 @@ async function subirAGithHub() {
     if(btn.disabled) return showToast("Edición Bloqueada o Sin Cambios", true);
     const token = currentUserToken;
     if(!token) return showToast("Error de sesión", true);
+    
     const nuevoAnime = generateData();
     if(!nuevoAnime.titulo) return showToast("Falta Título", true);
     if(!nuevoAnime.portada) return showToast("Falta Portada", true);
@@ -1344,9 +1416,11 @@ async function subirAGithHub() {
     if(!confirm(`¿Deseas compilar y subir los datos de "${nuevoAnime.titulo}"?`)) return;
 
     document.getElementById('statusLog').innerHTML = "🚀 Iniciando...<br>";
+
     try {
         let FINAL_ID = nuevoAnime.id;
         let UPDATE_LABEL = nuevoAnime.estado;
+        
         if (!isEditMode) {
             log("1/6 Calculando ID...");
             const indexFile = await getGithubFile(token, OWNER, REPO, 'index-data.js');
@@ -1360,9 +1434,11 @@ async function subirAGithHub() {
         }
         
         log(`📢 Tipo de Evento: ${UPDATE_LABEL}`);
+        
         let lastSeasonCover = nuevoAnime.portada;
         let lastBlockName = "Novedad";
         let lastEpTitle = "Nuevo Contenido";
+        
         if (nuevoAnime.temporadas && nuevoAnime.temporadas.length > 0) {
             const lastSeason = nuevoAnime.temporadas[nuevoAnime.temporadas.length - 1];
             if (lastSeason.cover) lastSeasonCover = lastSeason.cover;
@@ -1387,12 +1463,13 @@ async function subirAGithHub() {
                 title: nuevoAnime.titulo,
                 img: nuevoAnime.portada,
                 rating: nuevoAnime.rating,
-               
+     
                  uploader: nuevoAnime.uploader,
                 uploaderImg: nuevoAnime.uploaderAvatar, 
                 genres: finalGenres,
                 lastUpdate: Date.now(), 
                 updateType: UPDATE_LABEL, 
+ 
                 latestSeasonCover: lastSeasonCover, 
          
                  latestBlockName: lastBlockName,     
@@ -1401,6 +1478,7 @@ async function subirAGithHub() {
             };
             if(nuevoAnime.aliases.length > 0) newIndexEntry.aliases = nuevoAnime.aliases;
             const existingIdx = indexList.findIndex(x => x.id === FINAL_ID);
+            
             if (existingIdx !== -1) indexList[existingIdx] = newIndexEntry;
             else indexList.push(newIndexEntry);
             return `const animes = ${JSON.stringify(indexList, null, 4)};`;
@@ -1419,14 +1497,16 @@ async function subirAGithHub() {
             const newDetailEntry = {
                 title: nuevoAnime.titulo,
                 desc: nuevoAnime.sinopsis,
-              
+  
                  cover: nuevoAnime.portada,
                 uploader: nuevoAnime.uploader,
                 seasons: seasonsArr
             };
             detailsObj[FINAL_ID] = newDetailEntry;
+          
             return `const data = ${JSON.stringify(detailsObj, null, 4)};`;
         });
+        
         log("4/6 Actualizando Player...");
         await updateGithubFile(token, OWNER, REPO, 'video-player-data.js', (content) => {
             const playersObj = safeEval(content);
@@ -1435,22 +1515,25 @@ async function subirAGithHub() {
                 newPlayerEntry[t.num] = {};
                 t.eps.forEach(e => {
           
-                    newPlayerEntry[t.num][e.num] = { link: e.link, link2: e.link2, title: e.playerTitle };
+                  newPlayerEntry[t.num][e.num] = { link: e.link, link2: e.link2, title: e.playerTitle };
                 });
             });
             playersObj[FINAL_ID] = newPlayerEntry;
             return `const players = ${JSON.stringify(playersObj, null, 4)};`;
         });
+        
         log("5/6 Actualizando Música...");
         await updateGithubFile(token, OWNER, REPO, 'musica-data.js', (content) => {
             const musicObj = safeEval(content);
             musicObj[FINAL_ID] = nuevoAnime.musica;
             return `const audioPlaylists = ${JSON.stringify(musicObj, null, 4)};`;
         });
+        
         log("✨ ¡EXITO! YA PUEDES CERRAR SESIÓN");
         showToast("¡Datos subidos! Cierra sesión para refrescar.", false);
         alert("✅ Cambios guardados correctamente.\n\nPor favor, presiona el botón de 'CERRAR SESIÓN'.");
         highlightLogoutButton();
+        
     } catch (e) {
         console.error(e);
         log(`❌ ERROR: ${e.message}`);
