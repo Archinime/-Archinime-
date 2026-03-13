@@ -6090,7 +6090,7 @@ const players = {
     "43": {
         "1": {
             "1": {
-                "link": "https://fsb-latest-gdv3.onrender.com/stream/19?hash=6b497a",
+                "link": "https://odysee.com/$/embed/Yor-X-Loid-Espa%C3%B1ol-Maplestar:b",
                 "link2": "https://www.dropbox.com/scl/fi/oynuf4tsiy30xuaf25dbo/Yor-X-Loid-Espa-ol-Maplestar.mp4?rlkey=60w7r9wkqkvzfc87gbovyl5ta&st=x2jn5p7a&raw=1",
                 "title": "Maplestar Spy X Family Cap 1"
             },
