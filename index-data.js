@@ -532,11 +532,11 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1773008932891,
+        "lastUpdate": 1773539611244,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/2zghbbzs6lpi2lt6sf7ui/fumetsu3.jpg?rlkey=l8yfxc0yk2u13ie8wemgcuoal&st=t0qoyl96&raw=1",
         "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 18",
+        "latestEpTitle": "Capítulo 19",
         "isFinal": false,
         "aliases": [
             "Fumetsu no Anata e"
