@@ -11487,6 +11487,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1XKbzL5i_HnJbKXdoPTxXE6vLxZlAJHq7/preview",
                 "link2": "",
                 "title": "Dark Moon: The Blood Altar T1 Cap 9"
+            },
+            "10": {
+                "link": "https://drive.google.com/file/d/14U3L-wECe7cNmS48dn4-7CznsuZrcAkK/preview",
+                "link2": "",
+                "title": "Dark Moon: The Blood Altar T1 Cap 10"
             }
         }
     },
