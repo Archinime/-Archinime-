@@ -8075,97 +8075,102 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1CNEjy7XOSsWioiEbsy3aCyhy0K5l88k3/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ipb4lc6jiaqacb6al4y2v/T-jima-Tanzabur-wa-Kamen-Rider-ni-Naritai-T1-Cap-1.mp4?rlkey=7796r6pwfdbbjvk0rl9l7tnzr&st=u4huftos&raw=1",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 1"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1-TAltIstu2c6oReESC1WZDGstP6RoLgW/preview",
                 "link2": "https://www.dropbox.com/scl/fi/zfv6optbgdlhk9yrbyimb/T-jima-Tanzabur-wa-Kamen-Rider-ni-Naritai-T1-Cap-2.mp4?rlkey=k2n3ma25tmhkptlorprj234fi&st=jtf97b5e&raw=1",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 2"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1ZYTNt-vrHLTFEvDuscNs-3JC5fLZC4f2/preview",
                 "link2": "https://www.dropbox.com/scl/fi/9i7ycmk5wwxa0ja0uhpgk/T-jima-Tanzabur-wa-Kamen-Rider-ni-Naritai-T1-Cap-3.mp4?rlkey=yt8tg9r5tfoq31x02qst6zc9y&st=egtk9xj7&raw=1",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 3"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1FY_jZ61wRtSTS6akzxOvYvBvqTBXGcV8/preview",
                 "link2": "https://www.dropbox.com/scl/fi/6u0gyjxomjfvh2nm40l0w/T-jima-Tanzabur-wa-Kamen-Rider-ni-Naritai-T1-Cap-4.mp4?rlkey=7ul5jfhj5h4rkttdj5vwfrne3&st=6eu62t5d&raw=1",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 4"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1LGTe12Pezs-4VVuV4Zkz4XRTeXszP6vv/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 5"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1H0sq3zKrJxnLIAF_MlmuI1-cUAtom07M/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 6"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1MXYNnpSIKUMuIr1nVgGVi-aM4Z2DA5Pz/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 7"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1cgwwaDUEhG-QBsXgK5anjCw-pb1T8lTO/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 8"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/10jEXAorQKgqzuiksXcst8f40-GBJZe9M/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 9"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/16kHo1LyyVlPO5MlbLZ64VQaTias5lA6p/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 10"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/15tcLf-i1vMj9q2y_TR6LrSltXLiDrXND/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 11"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/189kwKpe-dkjx-HNmUxgGSgn_jGeodXZH/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 12"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/16lSrR0sfJoMsryjF4eqq5xkK5Zv146TA/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 13"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1zNxPk0NGCkIaNNEDs2owc4V0b-WPitbD/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 14"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/10-v8EftLlr2lXaxdbNzm-Luc9pG9xO3k/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 15"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1G3spH6oy070sgpijGhqelkdDplsWPUQJ/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 16"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 16"
             },
             "17": {
                 "link": "https://ok.ru/videoembed/12303448017618",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 17"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1TxWXry5KxV8yxkbcsw7fEFHmEj65wgwz/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 18"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1GJ5Z6KPf6QemskOCj3Tfz1kzTjaEpncy/preview",
                 "link2": "",
-                "title": "Tōjima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 19"
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 19"
+            },
+            "20": {
+                "link": "https://drive.google.com/file/d/1K4cs4SH2bzmHv1JUfE04jUjxArIfOV_r/preview",
+                "link2": "",
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 20"
             }
         }
     },
