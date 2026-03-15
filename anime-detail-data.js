@@ -3524,6 +3524,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 18"
+                    },
+                    {
+                        "title": "Capítulo 19"
                     }
                 ],
                 "name": "Temporada 3"
