@@ -11613,6 +11613,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1b6Urkt5sq0co-kv74H-p44O8g8rXWvAe/preview",
                 "link2": "",
                 "title": "Hell's Paradise T2 Cap 6"
+            },
+            "7": {
+                "link": "https://drive.google.com/file/d/1PjMq2xUxVvhP3vII8LDuN3DQXzF-5UYO/preview",
+                "link2": "",
+                "title": "Hell's Paradise T2 Cap 7"
             }
         }
     },
