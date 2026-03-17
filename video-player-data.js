@@ -14543,6 +14543,100 @@ const players = {
                 "link2": "",
                 "title": "Oshi no Ko T1 Cap 11"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9421:7",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9422:0e",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9423:e",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9424:8",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9425:a",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9426:4",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9427:1",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9428:7",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9429:2",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94210:5",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94211:0",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94212:1",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 12"
+            },
+            "13": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94213:f",
+                "link2": "",
+                "title": "Oshi no Ko T2 Cap 13"
+            }
+        },
+        "3": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9431:4",
+                "link2": "",
+                "title": "Oshi no Ko T3 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9432:a",
+                "link2": "",
+                "title": "Oshi no Ko T3 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9433:4",
+                "link2": "",
+                "title": "Oshi no Ko T3 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9434:5",
+                "link2": "",
+                "title": "Oshi no Ko T3 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9435:5",
+                "link2": "",
+                "title": "Oshi no Ko T3 Cap 5"
+            }
         }
     }
 };
