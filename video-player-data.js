@@ -14485,5 +14485,64 @@ const players = {
                 "title": "Tower of God T2 Cap 26"
             }
         }
+    },
+    "94": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9311:d",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94-1-2:e",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9413:d",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9414:5",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9415:2",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9416:7",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9417:fb",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9418:2eb",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/@yudi:1/9419:1",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94110:7",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@yudi:1/94111:8",
+                "link2": "",
+                "title": "Oshi no Ko T1 Cap 11"
+            }
+        }
     }
 };
