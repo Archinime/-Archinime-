@@ -1744,7 +1744,7 @@ const animes = [
     {
         "id": 90,
         "title": "Shangri-La Frontier",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZLEwK5ZcndcdKwL4pftTTY5vsrHUhh3Vkc7&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/shangiran.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1756,8 +1756,8 @@ const animes = [
             "VRMMO",
             "Shōnen"
         ],
-        "lastUpdate": 1769990075138,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1773758461313,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZBEwK5ZjV7AT4DkE4YjShvLSJIRlLcMFJHV&size=2000x3000",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 25",
