@@ -293,5 +293,10 @@ const audioPlaylists = {
     "93": [
         "https://www.dropbox.com/scl/fi/aahlmgroyqa04fgpw9xhk/SLUMP-Ending-1.-Tower-of-God.-Subtitulado-al-Espa-ol..mp3?rlkey=qvn3wnudtnpr4c27rgu4kukcd&st=2y7f6hd6&raw=1",
         "https://www.dropbox.com/scl/fi/qmq2e9j3g0oyknkhqcy1z/Tower-of-God-opening-Stray-Kids-TOP-Japanese-version-Sub-espa-ol.mp3?rlkey=6nu3vfqym23ym8rkv74jrl67t&st=9ihevgk4&raw=1"
+    ],
+    "94": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/【推しの子】ノンクレジットオープニング｜YOASOBI「アイドル」.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/【推しの子】第3期ノンクレジットエンディング｜なとり「セレナーデ」.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/【推しの子】第3期ノンクレジットオープニング｜ちゃんみな「TEST%20ME」.mp3"
     ]
 };
