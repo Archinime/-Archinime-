@@ -1834,5 +1834,27 @@ const animes = [
         "aliases": [
             "Torre de Dios"
         ]
+    },
+    {
+        "id": 94,
+        "title": "Oshi no Ko",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImageToStl.com_oshi.avif",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Drama",
+            "Misterio",
+            "Slice of Life",
+            "Sobrenatural",
+            "Thriller psicológico",
+            "Seinen"
+        ],
+        "lastUpdate": 1773765505608,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImageToStl.com_oshi%2Bt1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 11",
+        "isFinal": false
     }
 ];
