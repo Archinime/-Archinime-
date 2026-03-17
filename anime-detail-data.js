@@ -10722,7 +10722,7 @@ const data = {
     "93": {
         "title": "Tower of God",
         "desc": "Alcanza la lo más alto y todo será tuyo.\n\nEn la cima de la torre encontrarás todo lo que existe en este mundo, y todo puede ser tuyo.\n\nPodrás ser un dios.\n\nEsta es la historia del inicio y el final de Rachel, la joven que ascendió la torre para poder ver las estrellas, y Bam, el joven que lo único que necesitaba era estar con ella.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZF6EK5Zvw2rdq5KKMVN0VFcgbLkohPIfQ0k&size=2000x3000",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tower.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
