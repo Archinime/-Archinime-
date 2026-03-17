@@ -10857,5 +10857,53 @@ const data = {
                 "name": "Temporada 2"
             }
         ]
+    },
+    "94": {
+        "title": "Oshi no Ko",
+        "desc": "Ai Hoshino, una idol de 16 años adorada pero con un secreto: está embarazada de gemelos. Un médico fan, Gorou, le promete un parto seguro pero muere y renace como uno de los hijos de Ai",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImageToStl.com_oshi.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImageToStl.com_oshi%2Bt1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
