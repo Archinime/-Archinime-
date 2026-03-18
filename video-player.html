@@ -72,10 +72,8 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7;
-        /* Celeste Fluorescente (Cyan) */
-        --accent-color: #ff0055;
-        /* Rosado Fluorescente (Neon Pink) */
+        --primary-color: #00fff7; /* Celeste Fluorescente (Cyan) */
+        --accent-color: #ff0055; /* Rosado Fluorescente (Neon Pink) */
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.7);
         --glass-border: 1px solid rgba(255, 255, 255, 0.15);
@@ -198,8 +196,7 @@
         left: 0;
         width: 100%;
         height: 14%; /* Tapa un 14% de la pantalla (ideal para logos) */
-        min-height: 45px;
-        /* Altura mínima en móviles pequeños */
+        min-height: 45px; /* Altura mínima en móviles pequeños */
         background: linear-gradient(to bottom, rgba(5, 5, 5, 1) 0%, rgba(5, 5, 5, 0.85) 40%, transparent 100%);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
@@ -208,8 +205,7 @@
         justify-content: center;
         align-items: flex-start;
         padding-top: 1.5%; /* Espaciado adaptable */
-        pointer-events: auto;
-        /* IMPORTANTE: Esto bloquea los clics hacia el iframe */
+        pointer-events: auto; /* IMPORTANTE: Esto bloquea los clics hacia el iframe */
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
         user-select: none; /* Evita que seleccionen el texto */
@@ -256,11 +252,8 @@
     }
 
     @keyframes neonPulse {
-        0% { opacity: 0.8;
-        text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
-        100% { opacity: 1;
-        text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
-        }
+        0% { opacity: 0.8; text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
+        100% { opacity: 1; text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color); }
     }
 
     /* --- OPCIONES DE SERVIDOR --- */
@@ -319,10 +312,8 @@
     }
     
     #prevBtn { justify-self: start; }
-    #nextBtn { justify-self: end;
-    }
-    #downloadBtn { justify-self: center; cursor: pointer;
-    }
+    #nextBtn { justify-self: end; }
+    #downloadBtn { justify-self: center; cursor: pointer; }
 
     /* ESTILOS DE LOS BOTONES */
     .btn { 
@@ -378,10 +369,8 @@
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 768px) {
-        .container { padding: 10px;
-        }
-        .top-nav { justify-content: space-between;
-        }
+        .container { padding: 10px; }
+        .top-nav { justify-content: space-between; }
         .options {
             overflow-x: auto;
             white-space: nowrap;
@@ -389,8 +378,7 @@
             scrollbar-width: none;
             max-width: 60%;
         }
-        .options::-webkit-scrollbar { display: none;
-        }
+        .options::-webkit-scrollbar { display: none; }
 
         .controls {
             grid-template-columns: 1fr 1fr;
@@ -398,19 +386,14 @@
             gap: 10px;
         }
 
-        #prevBtn { grid-column: 1; grid-row: 1;
-        justify-self: start; width: auto; }
-        #nextBtn { grid-column: 2; grid-row: 1; justify-self: end;
-        width: auto; }
-        #downloadBtn { grid-column: 1 / -1; grid-row: 2; width: 100%;
-        box-sizing: border-box; }
+        #prevBtn { grid-column: 1; grid-row: 1; justify-self: start; width: auto; }
+        #nextBtn { grid-column: 2; grid-row: 1; justify-self: end; width: auto; }
+        #downloadBtn { grid-column: 1 / -1; grid-row: 2; width: 100%; box-sizing: border-box; }
         
         /* Ajuste fino para la tira en móviles - Agrandada según lo pedido */
         .logo-blocker {
-            height: 20%;
-            /* Aumentado de 17% a 20% */
-            min-height: 60px;
-            /* Aumentado de 52px a 60px */
+            height: 20%; /* Aumentado de 17% a 20% */
+            min-height: 60px; /* Aumentado de 52px a 60px */
             padding-top: 4%;
         }
     }
@@ -432,7 +415,6 @@
          Volver
        </a>
        <div class="options" id="serverOptions"></div>
-    
     </div>
 
     <div class="player-wrapper" id="playerContainer">
@@ -455,9 +437,7 @@
             ⬇ Descargar
         </a>
         
-        <a id="nextBtn" class="btn nav-btn btn-hidden">Sig.
-        ⏭</a>
-   
+        <a id="nextBtn" class="btn nav-btn btn-hidden">Sig. ⏭</a>
      </div>
 
   </div>
@@ -553,6 +533,10 @@
         if (url.includes("odysee.com")) {
             let claimStr = url.split("/embed/")[1];
             if (claimStr) {
+                // CORRECCIÓN: Manejar URLs complejas (ej. @canal:1/video:2)
+                if (claimStr.includes('/')) {
+                    claimStr = claimStr.split('/').pop(); // Extrae solo la parte final "video:2"
+                }
                 claimStr = claimStr.replace(':', '/');
                 return `https://odysee.com/$/download/${claimStr}`;
             }
@@ -568,14 +552,12 @@
         
         const directLink = generateDirectDownloadLink(url);
         newBtn.href = directLink || '#';
-        
         if(directLink && directLink !== '#') {
             // Lógica para OK.ru (AnyDownloader)
             if (directLink.includes("anydownloader.com")) {
                 newBtn.setAttribute("target", "_blank");
             } else {
                 newBtn.removeAttribute("target");
-                
                 // Lógica de tablet y descarga forzada SOLO para Odysee
                 if (url.includes("odysee.com")) {
                     newBtn.onclick = function(e) {
@@ -657,7 +639,6 @@
                     const episodes = Object.keys(DB[animeId][sKey]).sort((a, b) => Number(a) - Number(b));
                     episodes.forEach(eKey => {
                         flatList.push({ s: sKey, e: eKey });
-          
                     });
                 });
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
@@ -679,8 +660,7 @@
                     nextBtn.classList.add('btn-hidden');
                 }
             }
-        } catch (e) { console.error(e);
-        }
+        } catch (e) { console.error(e); }
     }
   </script>
 </body>
