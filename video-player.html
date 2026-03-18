@@ -20,7 +20,7 @@
       "#00f3ff"  // Cian (Final para loop perfecto)
     ];
 
-    const animationDuration = 20000; // 6 segundos (igual que el CSS nuevo)
+    const animationDuration = 20000; 
     const intervalTime = 20; 
     const segments = colors.length - 1;
     const step = (intervalTime / animationDuration) * segments;
@@ -37,6 +37,7 @@
       const bigint = parseInt(hex.slice(1), 16);
       return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
     };
+    
     const rgbToHex = (r, g, b) => {
       return "#" + [r, g, b].map(x => {
         const hex = Math.round(x).toString(16);
@@ -45,6 +46,7 @@
     };
 
     const lerp = (start, end, t) => start + (end - start) * t;
+    
     setInterval(() => {
       currentProgress += step;
       if (currentProgress >= segments) {
@@ -72,8 +74,8 @@
   <style>
     /* --- VARIABLES --- */
     :root {
-        --primary-color: #00fff7; /* Celeste Fluorescente (Cyan) */
-        --accent-color: #ff0055; /* Rosado Fluorescente (Neon Pink) */
+        --primary-color: #00fff7;
+        --accent-color: #ff0055;
         --text-color: #ffffff;
         --glass-bg: rgba(0, 0, 0, 0.7);
         --glass-border: 1px solid rgba(255, 255, 255, 0.15);
@@ -189,31 +191,30 @@
         border: none;
     }
 
-    /* --- TIRA PROTECTORA (LOGO BLOCKER) - AHORA PERMANENTE --- */
+    /* --- TIRA PROTECTORA (LOGO BLOCKER) --- */
     .logo-blocker {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 14%; /* Tapa un 14% de la pantalla (ideal para logos) */
-        min-height: 45px; /* Altura mínima en móviles pequeños */
+        height: 14%; 
+        min-height: 45px;
         background: linear-gradient(to bottom, rgba(5, 5, 5, 1) 0%, rgba(5, 5, 5, 0.85) 40%, transparent 100%);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
-        z-index: 100; /* Siempre encima del video */
+        z-index: 100; 
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        padding-top: 1.5%; /* Espaciado adaptable */
-        pointer-events: auto; /* IMPORTANTE: Esto bloquea los clics hacia el iframe */
+        padding-top: 1.5%; 
+        pointer-events: auto;
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
-        user-select: none; /* Evita que seleccionen el texto */
+        user-select: none; 
         opacity: 1;
         visibility: visible;
     }
 
-    /* Línea sutil de neón debajo del bloqueador */
     .logo-blocker::after {
         content: '';
         position: absolute;
@@ -234,7 +235,7 @@
     .blocker-text {
         font-family: 'Poppins', sans-serif;
         font-weight: 800;
-        font-size: clamp(1rem, 2.5vw, 1.4rem); /* Texto responsivo */
+        font-size: clamp(1rem, 2.5vw, 1.4rem); 
         color: #fff;
         letter-spacing: 5px;
         text-transform: uppercase;
@@ -334,9 +335,7 @@
         min-width: 100px;
     }
     
-    .nav-btn {
-        border-color: rgba(0, 255, 247, 0.3);
-    }
+    .nav-btn { border-color: rgba(0, 255, 247, 0.3); }
 
     .nav-btn:hover {
         background: rgba(0, 255, 247, 0.15);
@@ -390,10 +389,9 @@
         #nextBtn { grid-column: 2; grid-row: 1; justify-self: end; width: auto; }
         #downloadBtn { grid-column: 1 / -1; grid-row: 2; width: 100%; box-sizing: border-box; }
         
-        /* Ajuste fino para la tira en móviles - Agrandada según lo pedido */
         .logo-blocker {
-            height: 20%; /* Aumentado de 17% a 20% */
-            min-height: 60px; /* Aumentado de 52px a 60px */
+            height: 20%;
+            min-height: 60px;
             padding-top: 4%;
         }
     }
@@ -433,7 +431,7 @@
     <div class="controls">
         <a id="prevBtn" class="btn nav-btn btn-hidden">⏮ Ant.</a>
         
-        <a id="downloadBtn" class="btn">
+        <a id="downloadBtn" class="btn" href="#">
             ⬇ Descargar
         </a>
         
@@ -470,10 +468,17 @@
     }
 
     const epData = DB[animeId]?.[season]?.[episode];
+    
+    // --- LÓGICA PRINCIPAL (Modificada para priorizar descarga) ---
     if (epData) {
         document.title = `Ver ${epData.title} - Archinime`;
         document.getElementById('epTitle').innerText = epData.title;
         const initialLink = epData.link || epData.link2;
+        
+        // 1. GENERAR BOTÓN DE DESCARGA INSTANTÁNEAMENTE
+        updateDownloadButton(initialLink);
+        
+        // 2. CARGAR REPRODUCTOR DESPUÉS
         loadVideo(initialLink);
         
         const optContainer = document.getElementById('serverOptions');
@@ -481,19 +486,22 @@
         if(epData.link) createOptionBtn("Latino", epData.link, true);
         if(epData.link2) createOptionBtn("Opcion 2", epData.link2, !epData.link);
         
-        updateDownloadButton(initialLink);
         setupNavigation();
     } else {
         document.getElementById('epTitle').innerText = "No encontrado";
     }
 
-    // --- DETECCIÓN DE TABLET ---
+    // --- DETECCIÓN DE DISPOSITIVOS ---
     function isTabletDevice() {
         const ua = navigator.userAgent.toLowerCase();
         const isIpad = /ipad/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
         const isAndroidTablet = /android/i.test(ua) && !/mobile/i.test(ua);
         const isGenericTablet = /tablet/i.test(ua);
         return isIpad || isAndroidTablet || isGenericTablet;
+    }
+
+    function isMobileDevice() {
+        return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());
     }
 
     // --- FORZAR LA DESCARGA OCULTA EN SEGUNDO PLANO ---
@@ -533,9 +541,8 @@
         if (url.includes("odysee.com")) {
             let claimStr = url.split("/embed/")[1];
             if (claimStr) {
-                // CORRECCIÓN: Manejar URLs complejas (ej. @canal:1/video:2)
                 if (claimStr.includes('/')) {
-                    claimStr = claimStr.split('/').pop(); // Extrae solo la parte final "video:2"
+                    claimStr = claimStr.split('/').pop();
                 }
                 claimStr = claimStr.replace(':', '/');
                 return `https://odysee.com/$/download/${claimStr}`;
@@ -547,30 +554,33 @@
 
     function updateDownloadButton(url) {
         const dlBtn = document.getElementById('downloadBtn');
-        const newBtn = dlBtn.cloneNode(true);
-        dlBtn.parentNode.replaceChild(newBtn, dlBtn);
+        
+        // Limpiamos atributos y eventos previos en lugar de clonar el botón
+        dlBtn.onclick = null;
+        dlBtn.removeAttribute("target");
         
         const directLink = generateDirectDownloadLink(url);
-        newBtn.href = directLink || '#';
+        dlBtn.href = directLink || '#';
+
         if(directLink && directLink !== '#') {
-            // Lógica para OK.ru (AnyDownloader)
             if (directLink.includes("anydownloader.com")) {
-                newBtn.setAttribute("target", "_blank");
-            } else {
-                newBtn.removeAttribute("target");
-                // Lógica de tablet y descarga forzada SOLO para Odysee
-                if (url.includes("odysee.com")) {
-                    newBtn.onclick = function(e) {
+                dlBtn.setAttribute("target", "_blank");
+            } else if (url.includes("odysee.com")) {
+                // Manejo especial de Odysee para evitar bloqueos
+                dlBtn.onclick = function(e) {
+                    if (isTabletDevice()) {
                         e.preventDefault();
-                        if (isTabletDevice()) {
-                            prompt("Tu dispositivo es una Tablet. Copia el siguiente enlace y pégalo manualmente en una nueva pestaña para descargar el episodio:", directLink);
-                        } else {
-                            forceDownload(directLink);
-                        }
-                    };
-                }
-                // Para Google Drive y Dropbox, al no haber onclick, el navegador maneja
-                // el 'href' de forma nativa, evitando los bloqueos de seguridad del iframe.
+                        prompt("Tu dispositivo es una Tablet. Copia el siguiente enlace y pégalo manualmente en una nueva pestaña para descargar el episodio:", directLink);
+                    } else if (isMobileDevice()) {
+                        // En móviles dejamos que el href actúe nativamente o forzamos en nueva pestaña
+                        // Esto previene que el navegador bloquee la descarga del iframe
+                        dlBtn.setAttribute("target", "_blank"); 
+                    } else {
+                        // En PC usamos el iframe oculto
+                        e.preventDefault();
+                        forceDownload(directLink);
+                    }
+                };
             }
         }
     }
@@ -585,20 +595,22 @@
         btn.onclick = () => {
             document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            loadVideo(url);
+            
+            // Actualizar el botón al instante antes del video
             updateDownloadButton(url);
+            loadVideo(url);
         };
         optContainer.appendChild(btn);
     }
 
     function loadVideo(url) {
-        // Ahora solo limpiamos el contenedor de video, no toda la caja protectora
         const container = document.getElementById('mediaContainer');
         container.innerHTML = ''; 
         if (!url) return;
 
         const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
         const isDrive = url.includes('drive.google.com') && url.includes('/preview');
+        
         if (isVideoFile && !isDrive) {
             const video = document.createElement('video');
             video.src = url;
@@ -641,9 +653,11 @@
                         flatList.push({ s: sKey, e: eKey });
                     });
                 });
+                
                 const currentIndex = flatList.findIndex(item => String(item.s) === String(season) && String(item.e) === String(episode));
                 const prevBtn = document.getElementById('prevBtn');
                 const nextBtn = document.getElementById('nextBtn');
+                
                 if (currentIndex > 0) {
                     const prevItem = flatList[currentIndex - 1];
                     prevBtn.classList.remove('btn-hidden');
