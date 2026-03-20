@@ -14287,6 +14287,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1iFkhcfZ_zM2pk_FApN7e_oZb0zcfeDrT/preview",
                 "link2": "",
                 "title": "Roll Over and Die T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/@any:a/omae18:c",
+                "link2": "",
+                "title": "Roll Over and Die T1 Cap 8"
             }
         }
     },
