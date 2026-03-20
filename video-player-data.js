@@ -10637,6 +10637,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/14gznxwSdWqugOHNj3cyQt2pGgXDYlSdx/preview",
                 "link2": "",
                 "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@any:a/shi111:a",
+                "link2": "",
+                "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales T1 Cap 11"
             }
         }
     },
