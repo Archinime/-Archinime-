@@ -1374,12 +1374,12 @@ const animes = [
             "Thriller",
             "Seinen"
         ],
-        "lastUpdate": 1773324308678,
+        "lastUpdate": 1773968239416,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/lxizxk8vjgtw98rlqs0gs/ImageToStl.com_MV5BMjhjNDQwYzEtY2EzNy00Zjk2LThmMjgtNGI2ODdlZDAxYzllXkEyXkFqcGc-._V1.avif?rlkey=evoiqoezadb87f7hqfqufabvg&st=qfm4dc84&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 10",
-        "isFinal": false,
+        "latestEpTitle": "Capítulo 11",
+        "isFinal": true,
         "aliases": [
             "Shibou Yuugi de Meshi wo Kuu"
         ]
