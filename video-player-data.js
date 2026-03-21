@@ -11404,6 +11404,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1P_5WCml5GF-6C5o7pCVNiraV2ELAs8ir/preview",
                 "link2": "",
                 "title": "Fire Force T3 Cap 22"
+            },
+            "23": {
+                "link": "https://odysee.com/$/embed/@any:a/ff323:6",
+                "link2": "",
+                "title": "Fire Force T3 Cap 23"
             }
         }
     },
