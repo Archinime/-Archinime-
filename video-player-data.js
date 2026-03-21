@@ -9987,6 +9987,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/11fyC1Yc6OedhGbhJQR8vr9Sm7fkXYnjo/preview",
                 "link2": "",
                 "title": "Frieren: Más allá del final del viaje T2 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/@any:a/fr26:8",
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T2 Cap 6"
             }
         }
     },
