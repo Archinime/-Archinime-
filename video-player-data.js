@@ -11522,6 +11522,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/14U3L-wECe7cNmS48dn4-7CznsuZrcAkK/preview",
                 "link2": "",
                 "title": "Dark Moon: The Blood Altar T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@any:a/dm111:8",
+                "link2": "",
+                "title": "Dark Moon: The Blood Altar T1 Cap 11"
             }
         }
     },
