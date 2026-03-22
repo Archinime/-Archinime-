@@ -1856,5 +1856,32 @@ const animes = [
         "latestBlockName": "Temporada 3",
         "latestEpTitle": "Capítulo 5",
         "isFinal": false
+    },
+    {
+        "id": 95,
+        "title": "Rooster Fighter",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo.jpg",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Ciencia ficción",
+            "Comedia",
+            "Parodia",
+            "Post-apocalíptico",
+            "Sobrenatural",
+            "Seinen"
+        ],
+        "lastUpdate": 1774149040526,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo1.jpg",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Niwatori Fighter"
+        ]
     }
 ];
