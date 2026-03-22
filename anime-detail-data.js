@@ -11021,5 +11021,29 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "96": {
+        "title": "Mato Seihei no Slave",
+        "desc": "Los monstruos amenazan el mundo desde otra dimensión, y solo las mujeres que consumen \"Peaches\" pueden obtener poderes para combatirlos. El protagonista, Yuuki Wakura, termina convirtiéndose en el \"esclavo\" de una capitana del escuadrón de defensa.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
