@@ -8181,6 +8181,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1K4cs4SH2bzmHv1JUfE04jUjxArIfOV_r/preview",
                 "link2": "",
                 "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 20"
+            },
+            "21": {
+                "link": "https://odysee.com/$/embed/@any:a/ttw121:9",
+                "link2": "",
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 21"
             }
         }
     },
