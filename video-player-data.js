@@ -14695,6 +14695,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/Rf11:8",
                 "link2": "",
                 "title": "Rooster Fighter T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/rf12:4",
+                "link2": "",
+                "title": "Rooster Fighter T1 Cap 2"
             }
         }
     },
