@@ -1777,11 +1777,11 @@ const animes = [
             "Drama",
             "Seinen"
         ],
-        "lastUpdate": 1773538760990,
+        "lastUpdate": 1774148621513,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/trigun-stargaze-character-visuals-v0-no7rngaincuf1.jpg",
         "latestBlockName": "Temporada 2",
-        "latestEpTitle": "Capítulo 7",
+        "latestEpTitle": "Capítulo 8",
         "isFinal": false
     },
     {
