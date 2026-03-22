@@ -27,7 +27,6 @@
 
     let currentProgress = 0;
     let metaTag = document.querySelector('meta[name="theme-color"]');
-    
     if (!metaTag) {
       metaTag = document.createElement('meta');
       metaTag.name = "theme-color";
@@ -38,7 +37,6 @@
       const bigint = parseInt(hex.slice(1), 16);
       return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
     };
-
     const rgbToHex = (r, g, b) => {
       return "#" + [r, g, b].map(x => {
         const hex = Math.round(x).toString(16);
@@ -47,7 +45,6 @@
     };
 
     const lerp = (start, end, t) => start + (end - start) * t;
-
     setInterval(() => {
       currentProgress += step;
       if (currentProgress >= segments) {
@@ -140,14 +137,12 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
     /* --- BOTONES SUPERIORES --- */
-    /* CAMBIO 2: Fondo degradado para simular efecto en PC */
     .top-buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
-        /* Efecto visual añadido para que parezca una barra superior */
-        margin: -20px -20px 20px -20px;
+        margin: -20px -20px 10px -20px;
         padding: 15px 20px;
         background: linear-gradient(to bottom, rgba(140, 82, 255, 0.3), transparent);
         border-radius: 12px 12px 0 0;
@@ -163,12 +158,90 @@
       padding: 8px 12px;
       border-radius: 20px;
     }
-    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3);
+    .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
+
+    /* --- BARRA DE BÚSQUEDA RÁPIDA --- */
+    .search-container {
+        position: relative;
+        margin-bottom: 25px;
+    }
+    .search-container input {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 25px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(0, 255, 255, 0.4);
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    .search-container input:focus {
+        border-color: #0ff;
+        box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.8);
+    }
+    .search-container input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .search-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 8px;
+        background: #1a0525;
+        border: 1px solid #0ff;
+        border-radius: 8px;
+        max-height: 250px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+    }
+    /* Estilizar barra de scroll del dropdown */
+    .search-dropdown::-webkit-scrollbar { width: 8px; }
+    .search-dropdown::-webkit-scrollbar-track { background: #0d0214; border-radius: 8px; }
+    .search-dropdown::-webkit-scrollbar-thumb { background: #0ff; border-radius: 8px; }
+
+    .search-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        gap: 12px;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+    .search-item:last-child { border-bottom: none; }
+    .search-item:hover { background: rgba(0, 255, 255, 0.15); }
+    .search-item img {
+        width: 40px;
+        height: 55px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+    .search-item-info {
+        display: flex;
+        flex-direction: column;
+    }
+    .search-item-title {
+        font-weight: bold;
+        font-size: 0.95rem;
+        color: #fff;
+    }
+    .search-item:hover .search-item-title { color: #0ff; }
+    .search-no-results {
+        padding: 15px;
+        text-align: center;
+        color: #aaa;
+        font-size: 0.9rem;
     }
 
     /* --- PORTADA --- */
-    .anime-cover { text-align: center; margin-bottom: 25px;
-    }
+    .anime-cover { text-align: center; margin-bottom: 25px; }
     .anime-cover img {
       max-height: 400px; width: auto; max-width: 100%;
       border-radius: 12px;
@@ -212,18 +285,15 @@
       border-left:3px solid #0ff;
     }
 
-    /* --- UPLOADER INFO (DISEÑO MEJORADO) --- */
+    /* --- UPLOADER INFO --- */
     .uploader-container {
         display: flex;
         align-items: center;
-        justify-content: flex-end; /* Alineado a la derecha */
+        justify-content: flex-end; 
         margin-bottom: 30px;
         gap: 10px;
     }
-    .upload-label {
-        font-size: 0.85rem;
-        color: #aaa;
-    }
+    .upload-label { font-size: 0.85rem; color: #aaa; }
     .uploader-chip {
         display: flex;
         align-items: center;
@@ -231,7 +301,6 @@
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.15);
         padding: 5px 12px 5px 5px;
-        /* Padding ajustado */
         border-radius: 50px;
         color: #fff;
         text-decoration: none;
@@ -258,14 +327,12 @@
     /* --- TEMPORADAS --- */
     details {
       margin-bottom:12px;
-      background: #0d0214; /* Morado muy oscuro sólido */
+      background: #0d0214; 
       border: 1px solid #4a004a;
-      /* Borde morado */
       border-radius:8px;
       overflow:hidden;
     }
-    details[open] { background: #0d0214;
-    }
+    details[open] { background: #0d0214; }
     
     summary {
       padding:15px; cursor:pointer; font-weight:bold; color:#0ff;
@@ -274,16 +341,11 @@
       list-style:none; user-select: none;
       touch-action: manipulation;
     }
-    summary::-webkit-details-marker { display:none;
-    }
+    summary::-webkit-details-marker { display:none; }
     summary::after { content:'▼'; font-size:1.5rem; }
-    details[open] summary::after { content:'▲';
-    }
+    details[open] summary::after { content:'▲'; }
 
-    .season-content { 
-        padding: 10px; 
-        display: block;
-    }
+    .season-content { padding: 10px; display: block; }
 
     /* --- LISTA DE VIDEOS --- */
     .video-list { 
@@ -294,15 +356,15 @@
 
     .ep-btn {
       display:flex; flex-direction: column;
-      align-items: center; /* Cambiado a columna para el badge */
+      align-items: center; 
       justify-content: center;
       padding:10px 4px;
-      background: #1a0525; /* Fondo sólido */
+      background: #1a0525; 
       border: 1px solid #330c4d;
       border-radius:4px;
       text-decoration:none; color:#ddd;
       font-size:0.8rem; text-align:center;
-      min-height: 55px; /* Aumentado un poco para el badge */
+      min-height: 55px; 
       transition: all 0.2s;
       position: relative;
     }
@@ -312,9 +374,7 @@
       color: #0ff;
       box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
-    .ep-btn:active { background: #0ff;
-      color: #000;
-    }
+    .ep-btn:active { background: #0ff; color: #000; }
 
     /* --- ESTILO PARA EPISODIOS VISTOS --- */
     .ep-btn.watched {
@@ -326,7 +386,6 @@
     .watched-tag {
         font-size: 0.65rem;
         color: #00ff9d;
-        /* Verde neón */
         margin-top: 4px;
         font-weight: 800;
         letter-spacing: 1px;
@@ -336,17 +395,11 @@
         gap: 3px;
         text-shadow: 0 0 5px rgba(0, 255, 157, 0.4);
     }
-    /* ------------------------------------- */
 
     /* --- RECOMENDACIONES --- */
-    .recommendations { margin-top:40px;
-      padding-top:20px;
-      border-top:1px solid #333;
-    }
-    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px;
-    }
+    .recommendations { margin-top:40px; padding-top:20px; border-top:1px solid #333; }
+    .rec-title { margin-bottom:15px; color:#bbb; border-left:4px solid #ff4d4d; padding-left:10px; }
     
-    /* 6 por fila en PC/Tablet */
     .rec-grid { 
         display: grid;
         grid-template-columns: repeat(6, 1fr);
@@ -360,21 +413,15 @@
       overflow: hidden;
       transition: all 0.2s;
     }
-
     .rec-card:hover {
       transform: translateY(-3px);
       background: #2a0a3d; 
       border-color: #0ff;
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
     }
-
-    /* Para que el texto cambie a celeste al pasar el mouse sobre la tarjeta */
-    .rec-card:hover p {
-      color: #0ff;
-    }
+    .rec-card:hover p { color: #0ff; }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
-    .rec-card p { padding:6px; font-size:0.8rem;
-      text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+    .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
@@ -386,8 +433,7 @@
 
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
-        .video-list { grid-template-columns: repeat(3, 1fr);
-        }
+        .video-list { grid-template-columns: repeat(3, 1fr); }
     }
 
     @media (max-width: 600px) {
@@ -395,20 +441,10 @@
             width:100%;
             margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
         }
-        .video-list { grid-template-columns: repeat(2, 1fr);
-        gap: 6px; }
-        h1 { font-size:1.4rem;
-        }
-        
-        /* 3 por fila en MÓVILES */
-        .rec-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .uploader-container {
-            justify-content: flex-start;
-            /* En movil alineado a la izquierda */
-        }
+        .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        h1 { font-size:1.4rem; }
+        .rec-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .uploader-container { justify-content: flex-start; }
     }
   </style>
 </head>
@@ -422,13 +458,17 @@
         <span id="share-detail" class="share-detail">🔗 Compartir</span>
     </div>
     
+    <div class="search-container">
+        <input type="text" id="quick-search" placeholder="🔍 Buscar otro anime..." autocomplete="off">
+        <div id="quick-search-results" class="search-dropdown"></div>
+    </div>
+    
     <div id="contenido"></div>
 
     <div class="recommendations">
         <div class="rec-title">Quizás te guste:</div>
         <div class="rec-grid" id="rec-grid"></div>
     </div>
-  
   </div>
 
   <div id="toast" class="toast">Enlace copiado</div>
@@ -464,16 +504,16 @@
        1. Gestión de Carga
        ---------------------------------------------------- */
     window.addEventListener('load', () => {
-        // --- PARCHE DE COMPATIBILIDAD ---
         if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') 
         {
             window.audioPlaylists = musica;
         }
-        // ---------------------------------
+ 
         const screen = document.getElementById('loading-screen');
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
+
     /* ----------------------------------------------------
        2. Lógica de Audio
        ---------------------------------------------------- */
@@ -501,7 +541,6 @@
     }
 
     document.addEventListener('click', () => {
-        // --- PARCHE DE COMPATIBILIDAD POR SI ACASO ---
         if (typeof audioPlaylists === 'undefined' && typeof musica !== 'undefined') {
             window.audioPlaylists = musica;
         }
@@ -516,6 +555,7 @@
             playTrack(currentTrackIndex);
         }
     }, { once: true });
+
     /* ----------------------------------------------------
        3. Renderizado y Lógica Visual (CON MEJORA SEO)
        ---------------------------------------------------- */
@@ -529,20 +569,13 @@
         const container = document.getElementById('contenido');
 
         if (anime) {
-            // ============================================
-            // INICIO SEO DINÁMICO MEJORADO
-            // ============================================
-            
-            // 1. Título de la pestaña
             document.title = `Ver ${anime.title} Online - Archinime OS`;
 
-            // 2. Descripción para Google
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
                 metaDesc.setAttribute('content', `Disfruta de ${anime.title} en HD. ${anime.desc.substring(0, 140)}... Véalo gratis en Archinime.`);
             }
 
-            // 3. Open Graph (Facebook, Discord, etc)
             const ogTitle = document.querySelector('meta[property="og:title"]');
             const ogDesc = document.querySelector('meta[property="og:description"]');
             const ogImage = document.querySelector('meta[property="og:image"]');
@@ -552,11 +585,7 @@
             if (ogDesc) ogDesc.setAttribute('content', anime.desc.substring(0, 200) + "...");
             if (ogImage) ogImage.setAttribute('content', anime.cover);
             if (ogUrl) ogUrl.setAttribute('content', window.location.href);
-            // ============================================
-            // FIN SEO DINÁMICO
-            // ============================================
 
-            // --- Lógica de Géneros Actualizada ---
             let genreHtml = '';
             if (typeof animes !== 'undefined') {
                 const animeInfo = animes.find(a => String(a.id) === String(id));
@@ -568,21 +597,17 @@
                     genreHtml = '<span style="color:#aaa; font-size:0.8rem;">Sin géneros</span>';
                 }
             }
-            // -------------------------------------
 
-            // --- NUEVO: LÓGICA DE UPLOADER/SUBIDO POR ---
             let uploaderEmailOrName = anime.uploader || "Desconocido";
             let displayNick = uploaderEmailOrName; 
             let uploaderHtml = "";
             let userAvatar = "Logo_Archinime.avif";
-            // Avatar por defecto
 
             if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
                 const userData = usersData[uploaderEmailOrName];
                 displayNick = userData.nick;
                 userAvatar = userData.avatar || "Logo_Archinime.avif";
 
-                // Estructura del botón moderno SIN EL ICONO DE LINK
                 uploaderHtml = `
                     <div class="uploader-container">
                         <span class="upload-label">Subido por:</span>
@@ -593,7 +618,6 @@
                     </div>
                 `;
             } else {
-                // Fallback si no está en la base de datos
                 uploaderHtml = `
                     <div class="uploader-container">
                         <span class="upload-label">Subido por:</span>
@@ -604,7 +628,6 @@
                     </div>
                 `;
             }
-            // ---------------------------------------------
 
             let html = `
                 <div class="anime-cover"><img src="${anime.cover}" alt="cover"></div>
@@ -613,12 +636,13 @@
                 <p class="desc">${anime.desc}</p>
                 ${uploaderHtml}
             `;
+
             if(anime.seasons){
                 anime.seasons.forEach((s, index) => {
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-                         <div class="season-content">
+                        <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
@@ -651,6 +675,7 @@
         
         let processed = 0;
         const CHUNK_SIZE = 40;
+
         function processChunk() {
             const fragment = document.createDocumentFragment();
             const limit = Math.min(processed + CHUNK_SIZE, total);
@@ -660,8 +685,7 @@
                 const a = document.createElement('a');
                 a.href = `video-player.html?anime=${animeId}&s=${seasonNum}&e=${i+1}`;
                 a.className = 'ep-btn';
-                // --- LÓGICA DE VISTO ---
-                // Creamos una clave única: watched_ID_TEMP_EP
+
                 const viewedKey = `watched_${animeId}_${seasonNum}_${i+1}`;
                 if(localStorage.getItem(viewedKey)) {
                     a.classList.add('watched');
@@ -672,13 +696,13 @@
                 } else {
                     a.textContent = `▶ ${ep.title}`;
                 }
-                // -----------------------
 
                 fragment.appendChild(a);
             }
 
             listContainer.appendChild(fragment);
             processed += CHUNK_SIZE;
+
             if (processed < total) {
                 requestAnimationFrame(processChunk);
             } else {
@@ -693,10 +717,12 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
+
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
+
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
              return;
@@ -712,6 +738,61 @@
 
     function escapeHtml(str){
       return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ----------------------------------------------------
+       5. Lógica de Búsqueda Rápida
+       ---------------------------------------------------- */
+    if (typeof data !== 'undefined') {
+        const searchInput = document.getElementById('quick-search');
+        const searchResults = document.getElementById('quick-search-results');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            searchResults.innerHTML = ''; 
+
+            if (query.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            const currentParams = new URLSearchParams(location.search);
+            const currentId = currentParams.get('id');
+
+            // Filtrar animes ignorando mayúsculas/minúsculas y excluyendo el anime que ya estamos viendo
+            const matches = Object.entries(data).filter(([id, anime]) => {
+                return anime.title.toLowerCase().includes(query) && id !== currentId;
+            });
+
+            if (matches.length > 0) {
+                const html = matches.map(([id, anime]) => `
+                    <a href="anime-detail.html?id=${id}" class="search-item">
+                        <img src="${anime.cover}" alt="${anime.title}">
+                        <div class="search-item-info">
+                            <span class="search-item-title">${anime.title}</span>
+                        </div>
+                    </a>
+                `).join('');
+                searchResults.innerHTML = html;
+            } else {
+                searchResults.innerHTML = '<div class="search-no-results">No se encontró ningún anime.</div>';
+            }
+            searchResults.style.display = 'block';
+        });
+
+        // Ocultar resultados si haces clic fuera de la barra
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // Volver a mostrar si se hace click de nuevo en el input y tiene texto
+        searchInput.addEventListener('focus', function() {
+            if (this.value.trim().length > 0) {
+                searchResults.style.display = 'block';
+            }
+        });
     }
   </script>
 </body>
