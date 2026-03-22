@@ -344,7 +344,7 @@ const genresList = [
     "Slice of Life", "Sobrenatural", "Steampunk", "Superhéroes", "Survival", 
    
     "Survival Game", "Suspenso", "Tentáculos", "Terror", "Terror psicológico", "Thriller", 
-    "Thriller psicológico", "Tokusatsu", "Tragedia", "VRMMO", "Yaoi", "Yuri"
+    "Thriller psicológico", "Tokusatsu", "Tragedia", "VRMMO", "Yankī", "Yaoi", "Yuri"
 ];
 const gContainer = document.getElementById('genresContainer');
 genresList.forEach(g => {
