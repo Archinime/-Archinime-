@@ -298,14 +298,13 @@ const data = {
         ]
     },
     "3": {
-        "title": "¡KonoSuba! ¡Una bendición para este maravilloso mundo!",
+        "title": "KonoSuba!",
         "desc": "Kazuma Satou es un chico de preparatoria otaku y hikikomori que no suele salir de casa, pero cuando lo hace, un fatídico (y ridículo) accidente acaba con su vida. En el otro mundo aparece una diosa ante él y le propone comenzar de nuevo su vida en un mundo de magia y espada, pero las condiciones son un tanto peculiares, así que acabará comenzando de cero como aventurero y acompañado de una diosa.",
         "cover": "konosubaportada.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "name": "KonoSuba: Explosión en un mundo maravilloso",
                 "cover": "konome.jpg",
                 "eps": [
                     {
@@ -344,11 +343,11 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "KonoSuba: Explosión en un mundo maravilloso"
             },
             {
                 "num": 2,
-                "name": "Temporada 1",
                 "cover": "konosuba.jpg",
                 "eps": [
                     {
@@ -381,21 +380,21 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 3,
-                "name": "Ova 1",
                 "cover": "https://www.dropbox.com/scl/fi/kxgfmbxwbx0gff57djm4j/89iISQwnZos1oum2oF6g2udEyd1ujz3hP04KnsfY-1.png?rlkey=lnyzlxqtbz2s3xrsqfdd4vooa&st=ozr66w1k&raw=1",
                 "eps": [
                     {
-                        "title": "¡Bendita sea esta maravillosa gargantilla!"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             },
             {
                 "num": 4,
-                "name": "Temporada 2",
                 "cover": "KONO2.jpg",
                 "eps": [
                     {
@@ -428,31 +427,31 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 5,
-                "name": "Ova 2",
                 "cover": "https://www.dropbox.com/scl/fi/5v47ftp62xm36dxvyvytk/KonoOva2.jpg?rlkey=he334e5mning06qxouu5w5x72&st=p5vtvl4o&raw=1",
                 "eps": [
                     {
-                        "title": "¡Bendita sea esta maravillosa pieza de arte!"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 2"
             },
             {
                 "num": 6,
-                "name": "Película 1",
                 "cover": "https://www.dropbox.com/scl/fi/yheu84pklqou4gtqfxwi2/konopeli.jpg?rlkey=haxntxcllpl8n5eooxmtz3t5p&st=45m3sgf7&raw=1",
                 "eps": [
                     {
                         "title": "La Leyenda Carmesí"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 7,
-                "name": "Temporada 3",
                 "cover": "https://www.dropbox.com/scl/fi/lvj3auv41jv0c92equ9yw/konosubatem3.jpg?rlkey=1q282bs80zi6khlvi4msh3v0q&st=rprkna4u&raw=1",
                 "eps": [
                     {
@@ -488,17 +487,21 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 8,
-                "name": "Ova 3",
                 "cover": "kono3.png",
                 "eps": [
                     {
-                        "title": "¡Bonus Stage!"
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
                     }
-                ]
+                ],
+                "name": "Ova 3"
             }
         ]
     },
