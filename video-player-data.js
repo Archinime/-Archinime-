@@ -14724,6 +14724,41 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/Ms15:e",
                 "link2": "",
                 "title": "Mato Seihei no Slave T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms16:f",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms17:c",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms18:4",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms19:a",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms110:8",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms111:3",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms112:6",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 12"
             }
         }
     }
