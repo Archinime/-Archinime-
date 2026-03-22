@@ -1907,5 +1907,26 @@ const animes = [
         "aliases": [
             "Chained Soldier"
         ]
+    },
+    {
+        "id": 97,
+        "title": "Wind Breaker",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winder.avif",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Drama",
+            "Escolar",
+            "Yankī",
+            "Shōnen"
+        ],
+        "lastUpdate": 1774206481809,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winderbt1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     }
 ];
