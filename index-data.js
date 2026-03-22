@@ -1860,7 +1860,7 @@ const animes = [
     {
         "id": 95,
         "title": "Rooster Fighter",
-        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo.jpg",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/pollo.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1874,9 +1874,9 @@ const animes = [
             "Sobrenatural",
             "Seinen"
         ],
-        "lastUpdate": 1774149040526,
+        "lastUpdate": 1774155805327,
         "updateType": "ESTRENO 🚨",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo1.jpg",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/pollo1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 1",
         "isFinal": false,
