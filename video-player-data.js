@@ -14688,5 +14688,14 @@ const players = {
                 "title": "Oshi no Ko T3 Cap 5"
             }
         }
+    },
+    "95": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@any:a/Rf11:8",
+                "link2": "",
+                "title": "Rooster Fighter T1 Cap 1"
+            }
+        }
     }
 };
