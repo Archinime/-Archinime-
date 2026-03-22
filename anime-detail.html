@@ -272,8 +272,7 @@
       border: 1px solid rgba(0, 255, 255, 0.4);
       background: rgba(0, 255, 255, 0.05);
       color: #e0ffff;
-      cursor: default; 
-      user-select: none;
+      cursor: text; /* Permite el cursor de selección de texto */
     }
     .genre-chip:hover {
         background: rgba(0, 255, 255, 0.15);
@@ -367,7 +366,7 @@
       border-radius:4px;
       text-decoration:none; color:#ddd;
       font-size:0.8rem; text-align:center;
-      min-height: 55px; 
+      min-height: 55px;
       transition: all 0.2s;
       position: relative;
     }
@@ -424,7 +423,8 @@
     }
     .rec-card:hover p { color: #0ff; }
     .rec-card img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
-    .rec-card p { padding:6px; font-size:0.8rem; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
+    .rec-card p { padding:6px; font-size:0.8rem;
+    text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ccc; margin:0; }
 
     /* --- TOAST --- */
     .toast {
@@ -451,7 +451,8 @@
             max-width: 100%;
             margin-top: 10px;
         }
-        .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        .video-list { grid-template-columns: repeat(2, 1fr);
+        gap: 6px; }
         h1 { font-size:1.4rem; }
         .rec-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .uploader-container { justify-content: flex-start; }
@@ -472,7 +473,8 @@
         </div>
 
         <span id="share-detail" class="share-detail">🔗 Compartir</span>
-    </div>
+   
+     </div>
     
     <div id="contenido"></div>
 
@@ -521,10 +523,10 @@
         }
  
         const screen = document.getElementById('loading-screen');
+  
         screen.style.opacity = '0';
         setTimeout(() => { screen.style.display = 'none'; }, 500);
     });
-
     /* ----------------------------------------------------
        2. Lógica de Audio
        ---------------------------------------------------- */
@@ -560,13 +562,13 @@
         const params = new URLSearchParams(location.search);
         const id = params.get('id');
         
-        if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
+       
+         if (audioPlaylists[id] && audioPlaylists[id].length > 0) {
             playlist = audioPlaylists[id];
             currentTrackIndex = Math.floor(Math.random() * playlist.length);
             playTrack(currentTrackIndex);
         }
     }, { once: true });
-
     /* ----------------------------------------------------
        3. Renderizado y Lógica Visual (CON MEJORA SEO)
        ---------------------------------------------------- */
@@ -581,7 +583,6 @@
 
         if (anime) {
             document.title = `Ver ${anime.title} Online - Archinime OS`;
-
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
                 metaDesc.setAttribute('content', `Disfruta de ${anime.title} en HD. ${anime.desc.substring(0, 140)}... Véalo gratis en Archinime.`);
@@ -609,11 +610,11 @@
                 }
             }
 
-            let uploaderEmailOrName = anime.uploader || "Desconocido";
+            let uploaderEmailOrName = anime.uploader ||
+            "Desconocido";
             let displayNick = uploaderEmailOrName; 
             let uploaderHtml = "";
             let userAvatar = "Logo_Archinime.avif";
-
             if (typeof usersData !== 'undefined' && usersData[uploaderEmailOrName]) {
                 const userData = usersData[uploaderEmailOrName];
                 displayNick = userData.nick;
@@ -622,22 +623,26 @@
                 uploaderHtml = `
                     <div class="uploader-container">
                         <span class="upload-label">Subido por:</span>
-                        <a href="${userData.social || '#'}" ${userData.social ? 'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
+                        <a href="${userData.social || '#'}" ${userData.social ?
+                        'target="_blank"' : 'style="cursor:default"'} class="uploader-chip">
                             <img src="${userAvatar}" alt="${displayNick}">
                             <span>${displayNick}</span>
                         </a>
-                    </div>
+               
+                     </div>
                 `;
             } else {
                 uploaderHtml = `
                     <div class="uploader-container">
                         <span class="upload-label">Subido por:</span>
                         <div class="uploader-chip" style="cursor:default">
-                            <img src="${userAvatar}" alt="User">
+       
+                             <img src="${userAvatar}" alt="User">
                             <span>${displayNick}</span>
                         </div>
                     </div>
-                `;
+     
+                 `;
             }
 
             let html = `
@@ -645,18 +650,20 @@
                 <h1>${anime.title}</h1>
                 <div class="genres-wrap" id="genres-container">${genreHtml}</div>
                 <p class="desc">${anime.desc}</p>
-                ${uploaderHtml}
+               
+                 ${uploaderHtml}
             `;
-
             if(anime.seasons){
                 anime.seasons.forEach((s, index) => {
                     html += `
                     <details ontoggle="toggleSeason(this, ${id}, ${index})">
                         <summary>${s.name || 'Temporada ' + s.num}</summary>
-                        <div class="season-content">
+       
+                         <div class="season-content">
                             ${s.cover ? `<img src="${s.cover}" loading="lazy" style="width:100%; border-radius:5px; margin-bottom:10px; display:block;">` : ''}
                             <div class="video-list" id="list-${index}"></div>
-                            <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
+              
+                             <div id="loading-${index}" style="display:none; text-align:center; padding:10px; color:#aaa;">Cargando...</div>
                         </div>
                     </details>`;
                 });
@@ -686,7 +693,6 @@
         
         let processed = 0;
         const CHUNK_SIZE = 40;
-
         function processChunk() {
             const fragment = document.createDocumentFragment();
             const limit = Math.min(processed + CHUNK_SIZE, total);
@@ -713,7 +719,6 @@
 
             listContainer.appendChild(fragment);
             processed += CHUNK_SIZE;
-
             if (processed < total) {
                 requestAnimationFrame(processChunk);
             } else {
@@ -728,12 +733,10 @@
         const t = document.getElementById('toast');
         t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
     });
-
     function renderRecommendations(currentId) {
         const grid = document.getElementById('rec-grid');
         const keys = Object.keys(data).filter(k => k != currentId);
         const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 12);
-
         if(randomKeys.length === 0) {
              grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay más animes cargados.</p>';
              return;
@@ -767,22 +770,26 @@
                 return;
             }
 
+  
             const currentParams = new URLSearchParams(location.search);
             const currentId = currentParams.get('id');
 
             // LÓGICA ESTRICTA: El título del anime debe empezar exactamente con la consulta (ignorando mayúsculas)
             const matches = Object.entries(data).filter(([id, anime]) => {
                 return anime.title.toLowerCase().startsWith(query) && id !== currentId;
+      
             });
 
             if (matches.length > 0) {
                 const html = matches.map(([id, anime]) => `
                     <a href="anime-detail.html?id=${id}" class="search-item">
                         <img src="${anime.cover}" alt="${anime.title}">
-                        <div class="search-item-info">
+        
+                         <div class="search-item-info">
                             <span class="search-item-title">${anime.title}</span>
                         </div>
                     </a>
+          
                 `).join('');
                 searchResults.innerHTML = html;
             } else {
@@ -790,14 +797,12 @@
             }
             searchResults.style.display = 'block';
         });
-
         // Ocultar resultados si haces clic fuera de la barra
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.style.display = 'none';
             }
         });
-        
         // Volver a mostrar si se hace click de nuevo en el input y tiene texto
         searchInput.addEventListener('focus', function() {
             if (this.value.trim().length > 0) {
