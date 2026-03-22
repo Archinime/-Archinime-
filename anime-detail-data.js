@@ -11126,5 +11126,43 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "98": {
+        "title": "Sonic",
+        "desc": "Sonic intenta navegar por las complejidades de la vida en la Tierra con su nuevo mejor amigo, un humano llamado Tom Wachowski. Pronto deben unir fuerzas para evitar que el malvado Dr. Robotnik capture a Sonic y use sus poderes para dominar el mundo.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic1.avif",
+                "eps": [
+                    {
+                        "title": "Película 1"
+                    }
+                ],
+                "name": "Película 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic2.avif",
+                "eps": [
+                    {
+                        "title": "Película 2"
+                    }
+                ],
+                "name": "Película 2"
+            },
+            {
+                "num": 3,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic3.avif",
+                "eps": [
+                    {
+                        "title": "Película 3"
+                    }
+                ],
+                "name": "Película 3"
+            }
+        ]
     }
 };
