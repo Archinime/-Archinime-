@@ -14697,5 +14697,24 @@ const players = {
                 "title": "Rooster Fighter T1 Cap 1"
             }
         }
+    },
+    "96": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms11:c",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms12:8",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@any:a/Ms13:5",
+                "link2": "",
+                "title": "Mato Seihei no Slave T1 Cap 3"
+            }
+        }
     }
 };
