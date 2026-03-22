@@ -14766,5 +14766,69 @@ const players = {
                 "title": "Mato Seihei no Slave T1 Cap 12"
             }
         }
+    },
+    "97": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/Wb11:5",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/Wb12:8",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/Wb13:a",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/Wb14:c",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/Wb15:c",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/Wb16:2",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/wb17:8",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/wb18:8",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/wb19:8",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/wb110:3",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/wb111:4",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/wb112:f",
+                "link2": "",
+                "title": "Wind Breaker T1 Cap 12"
+            }
+        }
     }
 };
