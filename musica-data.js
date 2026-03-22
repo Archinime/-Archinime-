@@ -309,5 +309,8 @@ const audioPlaylists = {
     "97": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winder.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winder2.mp3"
+    ],
+    "98": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic.mp3"
     ]
 };
