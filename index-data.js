@@ -1922,12 +1922,12 @@ const animes = [
             "Yankī",
             "Shōnen"
         ],
-        "lastUpdate": 1774206481809,
+        "lastUpdate": 1774214367932,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winderbt1.avif",
-        "latestBlockName": "Temporada 1",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winderbt2.avif",
+        "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 12",
-        "isFinal": false
+        "isFinal": true
     },
     {
         "id": 98,
