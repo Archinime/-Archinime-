@@ -44,18 +44,28 @@ const animes = [
     },
     {
         "id": 3,
-        "title": "Konosuba",
+        "title": "KonoSuba!",
         "img": "konosubaportada.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Aventura",
             "Comedia",
-            "Fantasía",
-            "Sobrenatural",
-            "Isekai",
             "Ecchi",
+            "Fantasía",
+            "Isekai",
+            "Sobrenatural",
             "Shōnen"
+        ],
+        "lastUpdate": 1774222579317,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "kono3.png",
+        "latestBlockName": "Ova 3",
+        "latestEpTitle": "Capítulo 2",
+        "isFinal": false,
+        "aliases": [
+            "Kono subarashii sekai ni shukufuku o!"
         ]
     },
     {
