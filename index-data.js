@@ -1874,11 +1874,11 @@ const animes = [
             "Sobrenatural",
             "Seinen"
         ],
-        "lastUpdate": 1774155805327,
-        "updateType": "ESTRENO 🚨",
+        "lastUpdate": 1774194995115,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/pollo1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false,
         "aliases": [
             "Niwatori Fighter"
