@@ -14829,6 +14829,68 @@ const players = {
                 "link2": "",
                 "title": "Wind Breaker T1 Cap 12"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://odysee.com/$/embed/wb21:f",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/wb22:6",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/wb23:e",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/wb24:b",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/wb25:8",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/wb26:2",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/wb27:a",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/wb28:d",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/wb29:4",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/wb210:3",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/wb211:2",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/wb212:8",
+                "link2": "",
+                "title": "Wind Breaker T2 Cap 12"
+            }
         }
     },
     "98": {
