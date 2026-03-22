@@ -1883,5 +1883,26 @@ const animes = [
         "aliases": [
             "Niwatori Fighter"
         ]
+    },
+    {
+        "id": 96,
+        "title": "Mato Seihei no Slave",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei.avif",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Ecchi",
+            "Fantasía oscura",
+            "Harem",
+            "Shōnen"
+        ],
+        "lastUpdate": 1774155162398,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 3",
+        "isFinal": false
     }
 ];
