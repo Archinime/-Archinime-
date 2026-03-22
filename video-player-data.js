@@ -420,244 +420,256 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1mlmhdv2zOqhNAQ-Ii85VfshrgV3K2aVz/preview",
                 "link2": "https://www.dropbox.com/scl/fi/d85e3fd9dma3c0oao4z5p/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-1.mp4?rlkey=gdyo8h37600vuz4xtuhe63c4t&st=jv8oj8ns&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 1"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1mTxxpssd6EAiiy2mnVq4KC4KlGbmBkYx/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ddnb1rxe9k4n4ahmfygbz/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-2.mp4?rlkey=swk1jy9lqgmqk58qb6930mp5w&st=5os922wo&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 2"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1lHi1OjQ9DZye1-W7QMgP-b1P88ppeOcS/preview",
                 "link2": "https://www.dropbox.com/scl/fi/tdr3ly33odyby08ne1wwt/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-3.mp4?rlkey=tgy8833hakcjijbybdzhpcpmk&st=pd1odh44&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 3"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1JoCT3i5MS-hQUJEDH8lWEIz8Dt-ktf0y/preview",
                 "link2": "https://www.dropbox.com/scl/fi/szx884iao5cm5l8j7z6sv/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-4.mp4?rlkey=kih6a6wqxkx2wv6qd4q90mtqn&st=uz4g7lcb&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 4"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1TKdbSnSTsqqDQNxbCj33KysEBTKmspua/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ufifcckovo7p87uy2huxe/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-5.mp4?rlkey=lofj30e8q5l599uo5u6xxdzam&st=1ddb24m9&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 5"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1sXeK-siRFSwR3K7iBBe7W2SSdeHpg4Es/preview",
                 "link2": "https://www.dropbox.com/scl/fi/n3xqbufdwjeqt8x3kmdbs/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-6.mp4?rlkey=9qaqtmsrex96qw3qmlnjy4yge&st=bna4b6xb&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 6"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1X59v5OTISnPH2nAmjIhF_YfJqcxf9M02/preview",
                 "link2": "https://www.dropbox.com/scl/fi/jxdvdp8s5myee44yf71wv/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-7.mp4?rlkey=hx0j30bbet47nd8crdcxepvyb&st=i03ph7a6&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 7"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1lXon0cHAcqA-gzSXO1y4G_Xa7ooMY2C3/preview",
                 "link2": "https://www.dropbox.com/scl/fi/3o7vu3d8xli760xn4vdw6/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-8.mp4?rlkey=n73hqovvmgo7wmayuuoukdi18&st=mqsbyynv&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 8"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1z1bw5igNGYc9Rm_L2tsrInkdm3cBTZAH/preview",
                 "link2": "https://www.dropbox.com/scl/fi/hf6ud6on5m7hu5ib0roi6/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-9.mp4?rlkey=o7whvnyq7vhwmhy7mm7e6igdp&st=j9le4g5y&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 9"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1Wq5JwPaKckHkYzLMP21CQfhbiqavaTY4/preview",
                 "link2": "https://www.dropbox.com/scl/fi/k7lrhwn5cqhiew2iw6bsg/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-10.mp4?rlkey=wirjbeofaefvoibb0g35e1skj&st=r2krolkg&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 10"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1-iy53O1cQQmBJgrgIhAZIOtU80jQVSg1/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fpgxve2e8mdytfcl1sowe/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-11.mp4?rlkey=2vkpsksmw1hxmn57wwj94kn8v&st=raovsek7&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 11"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1aMZjEtmdvdFj-jujdjaiYGT3X3kEQm0i/preview",
                 "link2": "https://www.dropbox.com/scl/fi/bd6v592gq68z5zn268nk7/KonoSuba-Explosi-n-en-un-mundo-maravilloso-Cap-12.mp4?rlkey=opbt0iengt11jr25g2t2li9ic&st=1m3qiwfw&raw=1",
-                "title": "KonoSuba: Explosión en un mundo maravilloso Cap 12"
+                "title": "KonoSuba! KonoSuba: Explosión en un mundo maravilloso Cap 12"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1s23K2kobScKbhddn6kbEKYPNVn1TlS4-/preview",
                 "link2": "https://www.dropbox.com/scl/fi/7mw5jj1gcqee3hm3hogta/Konosuba-temporada-1-capitulo-1.mp4?rlkey=m7dwevzfmxdwplf1lxkn0yebg&st=8oyw5vil&raw=1",
-                "title": "Konosuba T1 Cap 1"
+                "title": "KonoSuba! T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1XqdwCI_V2xD1D_9La_64PKqvgPyDc6-8/preview",
                 "link2": "https://www.dropbox.com/scl/fi/sq7bvjbkqr5xiqvpcogrl/Konosuba-temporada-1-capitulo-2.mp4?rlkey=7436ru4xkdg03mb2wyto2dv9w&st=e0rosfgd&raw=1",
-                "title": "Konosuba T1 Cap 2"
+                "title": "KonoSuba! T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1qUnFvvZyrDm4e9l9sLOlpAgniZtNF1D9/preview",
                 "link2": "https://www.dropbox.com/scl/fi/3ldvnz3vnn68fppd26c4p/Konosuba-temporada-1-capitulo-3.mp4?rlkey=hsv5i90hrlqpptuvni8ai37jp&st=6aw85pcr&raw=1",
-                "title": "Konosuba T1 Cap 3"
+                "title": "KonoSuba! T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1295_c95K09nJlXvsr_TsUi3Y1Cigs9oY/preview",
                 "link2": "https://www.dropbox.com/scl/fi/xu9e12akcxcfryzxenvuk/Konosuba-temporada-1-capitulo-4.mp4?rlkey=eu0cpc6v18yivfdipt9ieextj&st=u7xbc5f7&raw=1",
-                "title": "Konosuba T1 Cap 4"
+                "title": "KonoSuba! T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1paeqYcXXbgNAQ3xWkBMBLYgLfHKb6GEj/preview",
                 "link2": "https://www.dropbox.com/scl/fi/mmvnfra3q74ar9g4e6p74/Konosuba-temporada-1-capitulo-5.mp4?rlkey=9mxdge6s4ipc0xrvpbs0auc04&st=i7o3jge4&raw=1",
-                "title": "Konosuba T1 Cap 5"
+                "title": "KonoSuba! T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1MmFhw2txMF3h151K3Bom1t-DllAlC4AM/preview",
                 "link2": "https://www.dropbox.com/scl/fi/xaur8474k12h76nsryram/Konosuba-temporada-1-capitulo-6.mp4?rlkey=z94mn0uhxh0nggtkvorxi7ha2&st=vq5wdcqd&raw=1",
-                "title": "Konosuba T1 Cap 6"
+                "title": "KonoSuba! T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1eZeqSpQGwfQvJ_sI3B3pxdlGQde2nt-G/preview",
                 "link2": "https://www.dropbox.com/scl/fi/nn9lipvkbgsizwhk7ggmt/Konosuba-temporada-1-capitulo-7.mp4?rlkey=zlx7adcjwpg4ub3ojzc9y9t3m&st=0q1tvhtx&raw=1",
-                "title": "Konosuba T1 Cap 7"
+                "title": "KonoSuba! T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1jniyzG70s94cIf_7DmbY82IKFeZaqBKZ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/nn1tptmn24mh0ayursdw3/Konosuba-temporada-1-capitulo-8.mp4?rlkey=rs3ov0c2y9tli0x9l5jrr4r6k&st=gggs059d&raw=1",
-                "title": "Konosuba T1 Cap 8"
+                "title": "KonoSuba! T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1MMmeDmyrt-Sj51S5e38c6vWNpnQZOQTD/preview",
                 "link2": "https://www.dropbox.com/scl/fi/7n6buke5wushh7v3zfdvw/Konosuba-temporada-1-capitulo-9.mp4?rlkey=v2hn3d64got41b5u8lzepm4r3&st=de1i91k1&raw=1",
-                "title": "Konosuba T1 Cap 9"
+                "title": "KonoSuba! T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1cew9pz-2qorlswxuK8ho8fyYCRN0I3IS/preview",
                 "link2": "https://www.dropbox.com/scl/fi/0muafn4xtz70wxqibknf6/Konosuba-temporada-1-capitulo-10.mp4?rlkey=dwlzhu8j8xpa02njh6nki4abs&st=zbkicsov&raw=1",
-                "title": "Konosuba T1 Cap 10"
+                "title": "KonoSuba! T1 Cap 10"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1MqS0mxCcahwoNeikKlANdas7jUZQmj-F/preview",
                 "link2": "https://www.dropbox.com/scl/fi/iqbvofr4dfek9yrvyo42o/Konosuba-OVA-1.mp4?rlkey=rsejvimb6ob52gtioupi7johu&st=jypnotph&raw=1",
-                "title": "KonoSuba OVA 1 La ¡Bendita sea esta maravillosa gargantilla!"
+                "title": "KonoSuba! Ova 1 Cap 1"
             }
         },
         "4": {
             "1": {
                 "link": "https://drive.google.com/file/d/1AAWxfZP30W8hPSWXQq791TuGrYvUzwDn/preview",
                 "link2": "https://www.dropbox.com/scl/fi/td7z0o5hdi39soq542zi2/Konosuba-temporada-2-capitulo-1.mp4?rlkey=u7vdh20v0y5cj5d2wofoptnzw&st=ik5cd3vu&raw=1",
-                "title": "Konosuba T2 Cap 1"
+                "title": "KonoSuba! T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1QOZJl2ouWx3ut4KFf8NxUTjXFGdXiqOu/preview",
                 "link2": "https://www.dropbox.com/scl/fi/hvk2nqjorvm4wo4n0oc1h/Konosuba-temporada-2-capitulo-2.mp4?rlkey=h4qkm209c64wjbh81ap10pifa&st=vvmvg50w&raw=1",
-                "title": "Konosuba T2 Cap 2"
+                "title": "KonoSuba! T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1qZ6R4AnGryOhz9_j7Ay1ox4Xs5rwJHRf/preview",
                 "link2": "https://www.dropbox.com/scl/fi/lqu2g92n3l89khjeygynh/Konosuba-temporada-2-capitulo-3.mp4?rlkey=9f5xelhijb2382qm0lsu1m3d6&st=kya6r653&raw=1",
-                "title": "Konosuba T2 Cap 3"
+                "title": "KonoSuba! T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1tCtMisi3VSXJ5NCrP5rUT79kfG87Zgn4/preview",
                 "link2": "https://www.dropbox.com/scl/fi/mg2w16jwtk114hqo854iv/Konosuba-temporada-2-capitulo-4.mp4?rlkey=bggk86fe9h4ntoeu5qks4j35d&st=0v5utiga&raw=1",
-                "title": "Konosuba T2 Cap 4"
+                "title": "KonoSuba! T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1iaq9IKHiI-4Vd2Ekm-3OlaY0Fy2_larD/preview",
                 "link2": "https://www.dropbox.com/scl/fi/vfx021rsyh6g9zgg3k4ub/Konosuba-temporada-2-capitulo-5.mp4?rlkey=az0dxwba3qwq51e4kdfznkmk9&st=wolqhfg5&raw=1",
-                "title": "Konosuba T2 Cap 5"
+                "title": "KonoSuba! T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1q1lqDEGq9bGnnUfP2d6fiqzTEhja1eiD/preview",
                 "link2": "https://www.dropbox.com/scl/fi/f04pw8dwbjz5g78mrad64/Konosuba-temporada-2-cap-6.mp4?rlkey=fhspdbliaj5apkv01qefwbvkw&st=ycggktp7&raw=1",
-                "title": "Konosuba T2 Cap 6"
+                "title": "KonoSuba! T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1FZPgDfPr_HEZJVLowW7iRdezGQOLtoFn/preview",
                 "link2": "https://www.dropbox.com/scl/fi/atws9vf26vhejy8uz9edp/Konosuba-temporada-2-cap-7.mp4?rlkey=efdw91076kpcs6s5akng884z0&st=w99p48oo&raw=1",
-                "title": "Konosuba T2 Cap 7"
+                "title": "KonoSuba! T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1AJKWYVCE5HiaPJB8KO4Hn30tQyqn7RWX/preview",
                 "link2": "https://www.dropbox.com/scl/fi/1eb4bf5b4z20qvv1r74el/Konosuba-temporada-2-capitulo-8.mp4?rlkey=wwycbokmf4nf3swdlf5vd4wmb&st=zq3d6vl4&raw=1",
-                "title": "Konosuba T2 Cap 8"
+                "title": "KonoSuba! T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1jM4r3dqW7fFwBupS7YMTnQSqQJBWDg-G/preview",
                 "link2": "https://www.dropbox.com/scl/fi/7k51ugtkqmazb5h5ibrex/Konosuba-Temporada-2-Capitulo-9-Espa-ol-Latino.mp4?rlkey=pw4xg16v8v0kv70v4hlddxcsu&st=7rjomo6v&raw=1",
-                "title": "Konosuba T2 Cap 9"
+                "title": "KonoSuba! T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1FzcuAPvOwjrpw-41BzexpuWyppcmk5ar/preview",
                 "link2": "https://www.dropbox.com/scl/fi/cxv5yg6r1am2nu793mo08/Konosuba-temporada-2-cap-10.mp4?rlkey=uqddznfnvb94vbm2b57v6a5ol&st=15svir7c&raw=1",
-                "title": "Konosuba T2 Cap 10"
+                "title": "KonoSuba! T2 Cap 10"
             }
         },
         "5": {
             "1": {
                 "link": "https://drive.google.com/file/d/1yc0hOKkC3yLlCLnxOJ7DGyQ4cK1994WC/preview",
                 "link2": "https://www.dropbox.com/scl/fi/g20nwz9z1dm7tja0qtqvg/Konosuba-OVA-2.mp4?rlkey=72pq2kso86jrq4l2b3dg7slit&st=049nyw04&raw=1",
-                "title": "KonoSuba OVA 2 ¡Bendita sea esta maravillosa pieza de arte!"
+                "title": "KonoSuba! Ova 2 Cap 1"
             }
         },
         "6": {
             "1": {
                 "link": "https://drive.google.com/file/d/1GDdwVwX5IiKA5L97IsaH-u0c_T6OMMqV/preview",
                 "link2": "https://www.dropbox.com/scl/fi/hyl4eur6kqntu2ozeizgu/Konosuba-Temporada-2-Pel-cula-Espa-ol-Latino.mp4?rlkey=st3432fudhrwaxad8ru97lsfx&st=pzg0s915&raw=1",
-                "title": "Konosuba Pelicula 1 \"La Leyenda Carmesí\""
+                "title": "KonoSuba! Película 1: La Leyenda Carmesí"
             }
         },
         "7": {
             "1": {
                 "link": "https://drive.google.com/file/d/13UHN7CEDhHRSPCck0KRBAfN3Gc4BakeK/preview",
                 "link2": "https://www.dropbox.com/scl/fi/i22l6ijecclkufdrysi5r/Konosuba-Temporada-3-Capitulo-1-Espa-ol-Latino.mp4?rlkey=l2ryz566b6wcopayhdqv2u1ls&st=wnb5ozk8&raw=1",
-                "title": "Konosuba T3 Cap 1"
+                "title": "KonoSuba! T3 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1vt95qHFLh-tXDcYkCWhOddlqkMa8hQsQ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/rydgtjc1kizy7c8a98kbb/Konosuba-Temporada-3-Capitulo-2-Espa-ol-Latino.mp4?rlkey=6d8gm5eo9du91e6rw0rhx33bn&st=dwn6cjdp&raw=1",
-                "title": "Konosuba T3 Cap 2"
+                "title": "KonoSuba! T3 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/11tRMruEj0D8TxjZeYMNWMF_bkAdnnGwy/preview",
                 "link2": "https://www.dropbox.com/scl/fi/7c6eskzgzw95d7n7vtinz/Konosuba-Temporada-3-Capitulo-3-Espa-ol-Latino.mp4?rlkey=a1kk39fufmnzjzugm8tvrxnfn&st=xcfc7hs1&raw=1",
-                "title": "Konosuba T3 Cap 3"
+                "title": "KonoSuba! T3 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1GwYgeCnvkCLtoFV7rEb9sz9crIylxuIT/preview",
                 "link2": "https://www.dropbox.com/scl/fi/n5h1vlbxwhlmfsqw75qgo/Konosuba-Temporada-3-Capitulo-4-Espa-ol-Latino.mp4?rlkey=z3nohbgobmiwr28o0wc6ipwvg&st=9ubfq3xu&raw=1",
-                "title": "Konosuba T3 Cap 4"
+                "title": "KonoSuba! T3 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1tKWDbALZABBEx7L-eVpGxpFS_OYDY5U1/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ltl1zrtscbj7eq08dlfva/Konosuba-Temporada-3-Capitulo-5-Espa-ol-Latino.mp4?rlkey=b31pz7jc0gyg9d3l6qmvm4uuu&st=cguu8qrv&raw=1",
-                "title": "Konosuba T3 Cap 5"
+                "title": "KonoSuba! T3 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/13Ki5erjF372oUpet1oikHiTkunoxpai5/preview",
                 "link2": "https://www.dropbox.com/scl/fi/1m53j5anshau171sys6tw/Konosuba-Temporada-3-Capitulo-6-Espa-ol-Latino.mp4?rlkey=s9fjkt32fcermqevrecwzhx1a&st=73zai8rj&raw=1",
-                "title": "Konosuba T3 Cap 6"
+                "title": "KonoSuba! T3 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1caPhm7Wi2qnDu_1TXo47VJK8WNlu8e9b/preview",
                 "link2": "https://www.dropbox.com/scl/fi/byvas3t6unx7fu0pnal8s/Konosuba-Temporada-3-Capitulo-7-Espa-ol-Latino.mp4?rlkey=gggs4wgr6iy5mvug7zakcx1ej&st=n50aldnc&raw=1",
-                "title": "Konosuba T3 Cap 7"
+                "title": "KonoSuba! T3 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/14GilFmw3XmYNzlg15Cli1T-SVt69erwB/preview",
                 "link2": "https://www.dropbox.com/scl/fi/szzlksezmsgoh1qjocd77/Konosuba-Temporada-3-Capitulo-8-Espa-ol-Latino.mp4?rlkey=gwqan9xwazhlftun1vops5ve1&st=o8onr8ao&raw=1",
-                "title": "Konosuba T3 Cap 8"
+                "title": "KonoSuba! T3 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1fjRs1BQMPptw25s0MI0u5QpuSV0vMDIn/preview",
                 "link2": "https://www.dropbox.com/scl/fi/hak49mtphnj23b4y3uw2l/Konosuba-Temporada-3-Capitulo-9-Espa-ol-Latino.mp4?rlkey=2se2cb8epv90of14to5tlckon&st=d85bxlbx&raw=1",
-                "title": "Konosuba T3 Cap 9"
+                "title": "KonoSuba! T3 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1lxRBPMtMCjEyD2Ilqcypn8rGfg2o1NVw/preview",
                 "link2": "https://www.dropbox.com/scl/fi/46hlrxw3zch1zizdeorbo/Konosuba-Temporada-3-Capitulo-10-Espa-ol-Latino.mp4?rlkey=x2q3dovgi7vgxg4zo996792gv&st=imx2a5an&raw=1",
-                "title": "Konosuba T3 Cap 10"
+                "title": "KonoSuba! T3 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1A1ZoLMXCpSOqI3sHVqUjNLEhrg_BjmRz/preview",
                 "link2": "https://www.dropbox.com/scl/fi/qepig1ktfvcgeg97mepiw/Konosuba-Temporada-3-Capitulo-11-Espa-ol-Latino.mp4?rlkey=3jnxyndee30nlaaub8hdwmcdl&st=lkxdltvh&raw=1",
-                "title": "Konosuba T3 Cap 11"
+                "title": "KonoSuba! T3 Cap 11"
+            }
+        },
+        "8": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1gM2kbFAj_LUF3Qad5nLDCpL8dw8xZ-mx/preview",
+                "title": "KonoSuba! Ova 3 Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/17Enjg1YbuHYJI0SS1AtliAvrYcNQ5Wvv/preview",
+                "title": "KonoSuba! Ova 3 Cap 2"
             }
         }
     },
