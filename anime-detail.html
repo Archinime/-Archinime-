@@ -837,9 +837,9 @@
             const currentParams = new URLSearchParams(location.search);
             const currentId = currentParams.get('id');
 
-            // MEJORA: El buscador ahora encuentra la palabra en cualquier parte del título
+            // LÓGICA ESTRICTA: El título del anime debe empezar exactamente con la consulta (ignorando mayúsculas)
             const matches = Object.entries(data).filter(([id, anime]) => {
-                return anime.title.toLowerCase().includes(query) && id !== currentId;
+                return anime.title.toLowerCase().startsWith(query) && id !== currentId;
             });
 
             if (matches.length > 0) {
