@@ -11075,5 +11075,56 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "97": {
+        "title": "Wind Breaker",
+        "desc": "El lugar donde las notas medias son las peores, pero las peleas son las mejores. El Instituto Furin es bien conocido por ser un instituto repleto de delincuentes. Haruka Sakura, estudiante de primero, llega como novato con ganas de abrirse paso luchando hasta lo más alto. Sin embargo, el Instituto Furin tiene ahora un grupo que protege las calles de la ciudad con el nombre de la “Wind Breaker”. ¡Este es el inicio de la leyenda de Sakura, el delincuente de instituto!",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winder.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/winderbt1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
