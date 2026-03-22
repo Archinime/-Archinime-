@@ -11003,5 +11003,23 @@ const data = {
                 "name": "Temporada 3"
             }
         ]
+    },
+    "95": {
+        "title": "Rooster Fighter",
+        "desc": "La humanidad está al borde del colapso después de que el demoníaco Kiju descienda sin previo aviso, arrasando ciudades y aplastando a todos a su paso. La resistencia falla. La esperanza se desvanece. Las cosas se ven mal...hasta que un gallo solitario da un paso adelante. Con espuelas afiladas y un grito de batalla que divide el cielo, este improbable héroe lleva el destino del mundo en sus alas. Cuando las defensas caigan y la esperanza se desvanezca, un pájaro se levantará.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo.jpg",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo1.jpg",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
