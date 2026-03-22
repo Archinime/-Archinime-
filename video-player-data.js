@@ -9656,6 +9656,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1pL5GccED3j-yBBGYuT3K_kjD0VjOrkzX/preview",
                 "link2": "",
                 "title": "Gnosia T1 Cap 18"
+            },
+            "19": {
+                "link": "https://odysee.com/$/embed/@any:a/gn119:e",
+                "link2": "",
+                "title": "Gnosia T1 Cap 19"
             }
         }
     },
