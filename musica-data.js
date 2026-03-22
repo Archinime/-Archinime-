@@ -298,5 +298,8 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/【推しの子】ノンクレジットオープニング｜YOASOBI「アイドル」.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/【推しの子】第3期ノンクレジットエンディング｜なとり「セレナーデ」.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/【推しの子】第3期ノンクレジットオープニング｜ちゃんみな「TEST%20ME」.mp3"
+    ],
+    "95": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gallo.mp3"
     ]
 };
