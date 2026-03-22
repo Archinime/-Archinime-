@@ -136,13 +136,14 @@
     }
     @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-    /* --- BOTONES SUPERIORES --- */
+    /* --- BOTONES SUPERIORES Y BUSCADOR --- */
     .top-buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 10px;
-        margin: -20px -20px 10px -20px;
+        gap: 15px;
+        flex-wrap: wrap; /* Permite que los elementos se reacomoden en pantallas pequeñas */
+        margin: -20px -20px 20px -20px;
         padding: 15px 20px;
         background: linear-gradient(to bottom, rgba(140, 82, 255, 0.3), transparent);
         border-radius: 12px 12px 0 0;
@@ -157,22 +158,24 @@
       background: rgba(0, 255, 255, 0.1);
       padding: 8px 12px;
       border-radius: 20px;
+      white-space: nowrap;
     }
     .back:active, .share-detail:active { background: rgba(0, 255, 255, 0.3); }
 
-    /* --- BARRA DE BÚSQUEDA RÁPIDA --- */
+    /* --- BARRA DE BÚSQUEDA RÁPIDA EN EL MEDIO --- */
     .search-container {
         position: relative;
-        margin-bottom: 25px;
+        flex-grow: 1; /* Permite que tome el espacio central restante */
+        max-width: 400px; /* Evita que sea excesivamente larga en PC */
     }
     .search-container input {
         width: 100%;
-        padding: 12px 20px;
+        padding: 10px 18px;
         border-radius: 25px;
         background: rgba(0, 0, 0, 0.6);
         border: 1px solid rgba(0, 255, 255, 0.4);
         color: #fff;
-        font-size: 1rem;
+        font-size: 0.95rem;
         outline: none;
         transition: all 0.3s ease;
     }
@@ -441,6 +444,13 @@
             width:100%;
             margin-top:0; padding:15px; border-radius:0; border:none; background: rgba(0,0,0,0.6); 
         }
+        /* Ajuste para que el buscador pase a la fila de abajo en móviles y no aplaste los botones */
+        .search-container {
+            order: 3;
+            width: 100%;
+            max-width: 100%;
+            margin-top: 10px;
+        }
         .video-list { grid-template-columns: repeat(2, 1fr); gap: 6px; }
         h1 { font-size:1.4rem; }
         .rec-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -455,12 +465,13 @@
   <div class="container">
     <div class="top-buttons">
         <a href="index.html" class="back">← Volver</a>
+        
+        <div class="search-container">
+            <input type="text" id="quick-search" placeholder="🔍 Buscar anime..." autocomplete="off">
+            <div id="quick-search-results" class="search-dropdown"></div>
+        </div>
+
         <span id="share-detail" class="share-detail">🔗 Compartir</span>
-    </div>
-    
-    <div class="search-container">
-        <input type="text" id="quick-search" placeholder="🔍 Buscar otro anime..." autocomplete="off">
-        <div id="quick-search-results" class="search-dropdown"></div>
     </div>
     
     <div id="contenido"></div>
@@ -759,9 +770,9 @@
             const currentParams = new URLSearchParams(location.search);
             const currentId = currentParams.get('id');
 
-            // Filtrar animes ignorando mayúsculas/minúsculas y excluyendo el anime que ya estamos viendo
+            // LÓGICA ESTRICTA: El título del anime debe empezar exactamente con la consulta (ignorando mayúsculas)
             const matches = Object.entries(data).filter(([id, anime]) => {
-                return anime.title.toLowerCase().includes(query) && id !== currentId;
+                return anime.title.toLowerCase().startsWith(query) && id !== currentId;
             });
 
             if (matches.length > 0) {
