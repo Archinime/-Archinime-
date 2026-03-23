@@ -14944,5 +14944,21 @@ const players = {
                 "title": "Sonic Película 4: Trailer"
             }
         }
+    },
+    "99": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/smb1:f",
+                "link2": "https://drive.google.com/file/d/1k73NlnV5Lln9J70ibbJW6vUSCMCGjaK0/preview",
+                "title": "Super Mario Bros Película 1"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "",
+                "link2": "https://drive.google.com/file/d/1YpMk2kYq1Qv14sb0ZFtT7vXMtZATLfQZ/preview",
+                "title": "Super Mario Bros Película 2: Trailer"
+            }
+        }
     }
 };
