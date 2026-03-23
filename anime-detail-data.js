@@ -2875,23 +2875,23 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "name": "Zootopia 1",
                 "cover": "https://www.dropbox.com/scl/fi/h4u28g5gc8h06lqpapm7n/zootopia1.jpg?rlkey=d5g0vyhomx7ki87j4kkb9gfvt&st=iy9nscle&raw=1",
                 "eps": [
                     {
-                        "title": "Zootopia 1"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Zootopia 1"
             },
             {
                 "num": 2,
-                "name": "Zootopia 2",
                 "cover": "https://www.dropbox.com/scl/fi/8jsapi6ovjb24j9hwydhq/zootopia2.jpeg?rlkey=dee636x8blmjjuh6xltn7x2i5&st=x9bcl3m3&raw=1",
                 "eps": [
                     {
-                        "title": "Zootopia 2"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Zootopia 2"
             }
         ]
     },
