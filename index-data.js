@@ -453,17 +453,23 @@ const animes = [
         "img": "zootopiaportada.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Animación",
             "Aventura",
             "Comedia",
-            "Policial",
-            "Infantil",
             "Familiar",
+            "Infantil",
             "Misterio",
-            "Animación",
-            "Dibujo Animado",
+            "Policial",
             "Kodomo"
-        ]
+        ],
+        "lastUpdate": 1774310037586,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://www.dropbox.com/scl/fi/8jsapi6ovjb24j9hwydhq/zootopia2.jpeg?rlkey=dee636x8blmjjuh6xltn7x2i5&st=x9bcl3m3&raw=1",
+        "latestBlockName": "Zootopia 2",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     },
     {
         "id": 27,
