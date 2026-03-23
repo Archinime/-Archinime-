@@ -14948,9 +14948,9 @@ const players = {
     "99": {
         "1": {
             "1": {
-                "link": "https://odysee.com/$/embed/smb1:f",
+                "link": "https://ok.ru/videoembed/12787530336965",
                 "link2": "https://drive.google.com/file/d/1k73NlnV5Lln9J70ibbJW6vUSCMCGjaK0/preview",
-                "title": "Super Mario Bros Película 1"
+                "title": "Super Mario Bros Película 1: Película 1"
             }
         },
         "2": {
