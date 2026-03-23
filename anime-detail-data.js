@@ -11214,6 +11214,16 @@ const data = {
                     }
                 ],
                 "name": "Película 3"
+            },
+            {
+                "num": 4,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic4.avif",
+                "eps": [
+                    {
+                        "title": "Trailer"
+                    }
+                ],
+                "name": "Película 4"
             }
         ]
     }
