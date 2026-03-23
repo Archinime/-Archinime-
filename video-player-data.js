@@ -11675,6 +11675,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1PjMq2xUxVvhP3vII8LDuN3DQXzF-5UYO/preview",
                 "link2": "",
                 "title": "Hell's Paradise T2 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/Hp28:8",
+                "link2": "",
+                "title": "Hell's Paradise T2 Cap 8"
             }
         }
     },
