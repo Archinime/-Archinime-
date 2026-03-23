@@ -11226,5 +11226,33 @@ const data = {
                 "name": "Película 4"
             }
         ]
+    },
+    "99": {
+        "title": "Super Mario Bros",
+        "desc": "Mario y Luigi, dos hermanos que viajan a un mundo oculto para rescatar a la Princesa Peach, capturada por el malvado Rey Bowser. Las cosas, sin embargo no serán sencillas. Mario y Luigi tendrán que enfrentarse a un ejército de setas animadas antes de luchar contra su oponente. Rutas de ladrillos y castillos con múltiples peligros serán algunos de los obstáculos que los hermanos tendrán que superar para conseguir su objetivo.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mariop.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario1.avif",
+                "eps": [
+                    {
+                        "title": "Película 1"
+                    }
+                ],
+                "name": "Película 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario2.avif",
+                "eps": [
+                    {
+                        "title": "Trailer"
+                    }
+                ],
+                "name": "Película 2"
+            }
+        ]
     }
 };
