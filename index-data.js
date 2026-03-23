@@ -1958,11 +1958,11 @@ const animes = [
             "Policial",
             "Kodomo"
         ],
-        "lastUpdate": 1774212181030,
-        "updateType": "Ninguna",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic3.avif",
-        "latestBlockName": "Película 3",
-        "latestEpTitle": "Película 3",
+        "lastUpdate": 1774226171151,
+        "updateType": "PRÓXIMAMENTE ⏳",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic4.avif",
+        "latestBlockName": "Película 4",
+        "latestEpTitle": "Trailer",
         "isFinal": false
     }
 ];
