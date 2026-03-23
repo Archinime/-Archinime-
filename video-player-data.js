@@ -10566,6 +10566,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1YUeDm7LGq8BatznHhcZBd7lP1TvNIjpz/preview",
                 "link2": "",
                 "title": "Seihantai na Kimi to Boku T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/Sei19:6",
+                "link2": "",
+                "title": "Seihantai na Kimi to Boku T1 Cap 9"
             }
         }
     },
