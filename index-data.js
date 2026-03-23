@@ -1964,5 +1964,32 @@ const animes = [
         "latestBlockName": "Película 4",
         "latestEpTitle": "Trailer",
         "isFinal": false
+    },
+    {
+        "id": 99,
+        "title": "Super Mario Bros",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mariop.avif",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Animación",
+            "Aventura",
+            "Ciencia ficción",
+            "Comedia",
+            "Drama",
+            "Fantasía",
+            "Familiar",
+            "Infantil",
+            "Romance",
+            "Kodomo"
+        ],
+        "lastUpdate": 1774240294465,
+        "updateType": "PRÓXIMAMENTE ⏳",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario2.avif",
+        "latestBlockName": "Película 2",
+        "latestEpTitle": "Trailer",
+        "isFinal": false
     }
 ];
