@@ -1991,8 +1991,8 @@ const animes = [
             "Romance",
             "Kodomo"
         ],
-        "lastUpdate": 1774240294465,
-        "updateType": "PRÓXIMAMENTE ⏳",
+        "lastUpdate": 1774310097770,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario2.avif",
         "latestBlockName": "Película 2",
         "latestEpTitle": "Trailer",
