@@ -1904,7 +1904,7 @@ const animes = [
         "id": 96,
         "title": "Mato Seihei no Slave",
         "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei.avif",
-        "rating": 4.7,
+        "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
         "genres": [
@@ -1914,7 +1914,7 @@ const animes = [
             "Harem",
             "Shōnen"
         ],
-        "lastUpdate": 1774366276416,
+        "lastUpdate": 1774367250048,
         "updateType": "Ninguna",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei1.avif",
         "latestBlockName": "Temporada 1",
