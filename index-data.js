@@ -1914,8 +1914,8 @@ const animes = [
             "Harem",
             "Shōnen"
         ],
-        "lastUpdate": 1774190608006,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1774366276416,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Seihei1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
