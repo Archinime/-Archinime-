@@ -1866,11 +1866,11 @@ const animes = [
             "Thriller psicológico",
             "Seinen"
         ],
-        "lastUpdate": 1773781369664,
+        "lastUpdate": 1774380465794,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImageToStl.com_oshi%2Bt3.avif",
         "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 5",
+        "latestEpTitle": "Capítulo 6",
         "isFinal": false
     },
     {
