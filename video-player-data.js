@@ -14758,7 +14758,7 @@ const players = {
                 "title": "Mato Seihei no Slave T1 Cap 6"
             },
             "7": {
-                "link": "https://odysee.com/$/embed/@any:a/Ms17:c",
+                "link": "https://odysee.com/$/embed/Ms17:3",
                 "link2": "",
                 "title": "Mato Seihei no Slave T1 Cap 7"
             },
@@ -14768,7 +14768,7 @@ const players = {
                 "title": "Mato Seihei no Slave T1 Cap 8"
             },
             "9": {
-                "link": "https://odysee.com/$/embed/@any:a/Ms19:a",
+                "link": "https://odysee.com/$/embed/Ms19:1",
                 "link2": "",
                 "title": "Mato Seihei no Slave T1 Cap 9"
             },
