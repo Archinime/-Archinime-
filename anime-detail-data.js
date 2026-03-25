@@ -11257,5 +11257,56 @@ const data = {
                 "name": "Película 2"
             }
         ]
+    },
+    "100": {
+        "title": "Komi-san wa, Komyushō desu.",
+        "desc": "Komi-san es la chica hermosa y admirable de la que nadie puede es capaz de apartar la vista. Casi toda la escuela la ve como la belleza fría que está fuera de su alcance, pero Tadano Hitohito sabe la verdad: ella es realmente mala para comunicarse con los demás. Komi-san, que desea arreglar este mal hábito suyo, intenta mejorar con la ayuda de Tadano-kun.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
