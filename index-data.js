@@ -2007,17 +2007,18 @@ const animes = [
         "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
+            "Coming-of-age",
             "Escolar",
             "Romance",
             "Slice of Life",
             "Shōnen"
         ],
-        "lastUpdate": 1774457879043,
+        "lastUpdate": 1774461121349,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan1.avif",
-        "latestBlockName": "Temporada 1",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan2.avif",
+        "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 12",
-        "isFinal": false,
+        "isFinal": true,
         "aliases": [
             "Komi-san no puede comunicarse"
         ]
