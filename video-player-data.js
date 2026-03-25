@@ -14965,5 +14965,69 @@ const players = {
                 "title": "Super Mario Bros Película 2: Trailer"
             }
         }
+    },
+    "100": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/Ksw11:6",
+                "link2": "https://drive.google.com/file/d/1gR2y1YXNzGTx14h3XTV2aXkovuoSod_O/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/Ksw1:9",
+                "link2": "https://drive.google.com/file/d/1fAY1FbZP-fuzjKZls34WEwqQunhrnJfX/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/Ksw13:3",
+                "link2": "https://drive.google.com/file/d/1pNcOl165xFtPAT65yPEeRrrguBiwSJH4/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/Ksw14:9",
+                "link2": "https://drive.google.com/file/d/1dOvT4NYDEOuKLFk-Jg7A9_eeg20YJJxz/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/Ksw15:d",
+                "link2": "https://drive.google.com/file/d/1FWCg8Gkt7HfC_Wf6QHQs4_S-BVn-7gD0/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/Ksw16:1",
+                "link2": "https://drive.google.com/file/d/18j3cUE0kDiT-niiVhaU38CgGYC_1GITb/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/Ksw17:a",
+                "link2": "https://drive.google.com/file/d/14OsPaNehgVexC-dPAeslXvcZ0VpeHjq3/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/Ksw18:3",
+                "link2": "https://drive.google.com/file/d/1Ve684yjgUsnw9ZrJhm6zDPOcbyKMzAye/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/Ksw19:4",
+                "link2": "https://drive.google.com/file/d/1Rm_NFVpntmF1L_S0WydtcaKBuMKkvIUX/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/Ksw110:3",
+                "link2": "https://drive.google.com/file/d/1hlWwhkio9Ztl9stRylGNReDLg9PcJ2XV/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/Ksw111:a",
+                "link2": "https://drive.google.com/file/d/1dLBA_2J2FZ9xwwN4AZZ7mDXs1402Bh7z/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/Ksw112:6",
+                "link2": "https://drive.google.com/file/d/1QT6tJzG--45yc0vlsvZY5siqb8HabXE8/preview",
+                "title": "Komi-san wa, Komyushō desu. T1 Cap 12"
+            }
+        }
     }
 };
