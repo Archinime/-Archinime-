@@ -1997,5 +1997,29 @@ const animes = [
         "latestBlockName": "Película 2",
         "latestEpTitle": "Trailer",
         "isFinal": false
+    },
+    {
+        "id": 100,
+        "title": "Komi-san wa, Komyushō desu.",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan.avif",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Shōnen"
+        ],
+        "lastUpdate": 1774457879043,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Komi-san no puede comunicarse"
+        ]
     }
 ];
