@@ -8372,20 +8372,24 @@ const players = {
     "57": {
         "1": {
             "1": {
-                "link": "https://drive.google.com/file/d/1VB-00wKILX3piZcPV4yy2njOWauoxxkG/preview",
-                "title": "Oyasumi Sex Cap 1"
+                "link": "https://odysee.com/$/embed/Oyx11:2",
+                "link2": "https://drive.google.com/file/d/1VB-00wKILX3piZcPV4yy2njOWauoxxkG/preview",
+                "title": "Oyasumi Sex T1 Cap 1"
             },
             "2": {
-                "link": "https://drive.google.com/file/d/1eGTl3lvheAZlFTCCKGksvAIxP3pE4jGA/preview",
-                "title": "Oyasumi Sex Cap 2"
+                "link": "https://odysee.com/$/embed/Oyx12:8",
+                "link2": "https://drive.google.com/file/d/1eGTl3lvheAZlFTCCKGksvAIxP3pE4jGA/preview",
+                "title": "Oyasumi Sex T1 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/10L2jvxFgA375hP-yPwFcGGI9U4rGqfXH/preview",
-                "title": "Oyasumi Sex Cap 3"
+                "link": "https://odysee.com/$/embed/Oya13:b",
+                "link2": "https://drive.google.com/file/d/10L2jvxFgA375hP-yPwFcGGI9U4rGqfXH/preview",
+                "title": "Oyasumi Sex T1 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/17FhjkUZDpQL09Lym99JRCvYIGUj4Jgd8/preview",
-                "title": "Oyasumi Sex Cap 4"
+                "link": "https://odysee.com/$/embed/Oyx14:e",
+                "link2": "https://drive.google.com/file/d/17FhjkUZDpQL09Lym99JRCvYIGUj4Jgd8/preview",
+                "title": "Oyasumi Sex T1 Cap 4"
             }
         }
     },
