@@ -315,5 +315,9 @@ const audioPlaylists = {
     ],
     "99": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Peaches.mp3"
+    ],
+    "100": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/komisan2.mp3"
     ]
 };
