@@ -1037,12 +1037,19 @@ const animes = [
         "img": "oyasumi.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Hentai",
             "Romance",
             "Slice of Life",
             "Seijin"
-        ]
+        ],
+        "lastUpdate": 1774467255694,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "oyasumi1.jpg",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 4",
+        "isFinal": false
     },
     {
         "id": 58,
