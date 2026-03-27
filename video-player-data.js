@@ -11578,6 +11578,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/dm111:8",
                 "link2": "",
                 "title": "Dark Moon: The Blood Altar T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/dm112:d",
+                "link2": "",
+                "title": "Dark Moon: The Blood Altar T1 Cap 12"
             }
         }
     },
