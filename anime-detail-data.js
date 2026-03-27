@@ -11358,5 +11358,56 @@ const data = {
                 "name": "Temporada 2"
             }
         ]
+    },
+    "101": {
+        "title": "Boku no Kokoro no Yabai Yatsu",
+        "desc": "Kyotaro Ichikawa es un estudiante solitario y resentido que suele leer una enciclopedia sobre asesinatos y estudiar anatomía humana . Fantasea con asesinar a sus compañeros más populares, siendo Anna Yamada, la bella ídolo de la clase, su principal objetivo.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bokunokokoro.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bokunokokoro1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
