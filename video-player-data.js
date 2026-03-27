@@ -15168,6 +15168,73 @@ const players = {
                 "link2": "https://drive.google.com/file/d/1H1k64FD4uwH27_Xsun-OorMNLgn5tgan/preview",
                 "title": "Boku no Kokoro no Yabai Yatsu T1 Cap 12"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://odysee.com/$/embed/nknnyy21:6",
+                "link2": "https://drive.google.com/file/d/1Poka6mA-NFLvb-r8r3hEG3ifAWLrzIWR/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/nknnyy22:8",
+                "link2": "https://drive.google.com/file/d/1E02IgozxT0f18roR7yy8elak23aT9nkx/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/nknnyy23:4",
+                "link2": "https://drive.google.com/file/d/1D8eTGDV4Bk5HXiXhCajx70GaI9YJsFfW/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/nknnyy24:4",
+                "link2": "https://drive.google.com/file/d/18ogzGgvXHfdqMrfCsovQfFbSXyeh1FUf/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/nknnyy25:2",
+                "link2": "https://drive.google.com/file/d/1dVouptou2D1Q8SEmppq9X_3ayuffSWhZ/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/nknnyy26:d",
+                "link2": "https://drive.google.com/file/d/1CXjzPPJmwPEFespsbymkS6025Ow3sISD/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/nknnyy27:d",
+                "link2": "https://drive.google.com/file/d/14ZWJ3fO2KbbfJqrUyt7TLQRfrorDZfa7/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/nknnyy28:0",
+                "link2": "https://drive.google.com/file/d/1Z_nGrOohwUgqAdI1NKfpRTNujijlVEkp/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/nknnyy29:e",
+                "link2": "https://drive.google.com/file/d/1peJewdBSHQNTWLEV4joexmj2Xqn4opjI/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/nknnyy210:0",
+                "link2": "https://drive.google.com/file/d/1LngA-P6yBwTyLxKi8hlDGxZI6hmm3bRY/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/nknnyy211:f",
+                "link2": "https://drive.google.com/file/d/1f33_qQeAoVQcqxXCVlIOTgELgeZYbj4_/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/nknnyy212:c",
+                "link2": "https://drive.google.com/file/d/1CRy323NFmKKX47GAWmXDETTQr9N6yJ5g/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 12"
+            },
+            "13": {
+                "link": "https://odysee.com/$/embed/nknnyy213:1",
+                "link2": "https://drive.google.com/file/d/1EQtFY3MPwWyTZlA-UdVyteYiYdYf9K2Q/preview",
+                "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 13"
+            }
         }
     }
 };
