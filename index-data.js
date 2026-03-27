@@ -1517,12 +1517,12 @@ const animes = [
             "Sobrenatural",
             "Shōjo"
         ],
-        "lastUpdate": 1774068751943,
+        "lastUpdate": 1774643494613,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/2ji05um3swkxlqysdr70h/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1768945509924-1768945509924.avif?rlkey=5cvtzsgy67fktx4om4qrphlco&st=ue9uf0aq&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 11",
-        "isFinal": false
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true
     },
     {
         "id": 80,
