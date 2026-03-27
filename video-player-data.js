@@ -10028,6 +10028,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/fr26:8",
                 "link2": "",
                 "title": "Frieren: Más allá del final del viaje T2 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/ff27:6",
+                "link2": "",
+                "title": "Frieren: Más allá del final del viaje T2 Cap 7"
             }
         }
     },
