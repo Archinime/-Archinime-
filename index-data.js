@@ -2029,5 +2029,30 @@ const animes = [
         "aliases": [
             "Komi-san no puede comunicarse"
         ]
+    },
+    {
+        "id": 101,
+        "title": "Boku no Kokoro no Yabai Yatsu",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bokunokokoro.avif",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Coming-of-age",
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Shōnen"
+        ],
+        "lastUpdate": 1774630239121,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bokunokokoro1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "The Dangers in my Heart"
+        ]
     }
 ];
