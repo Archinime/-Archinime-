@@ -11460,6 +11460,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/ff323:6",
                 "link2": "",
                 "title": "Fire Force T3 Cap 23"
+            },
+            "24": {
+                "link": "https://odysee.com/$/embed/frfr324:c",
+                "link2": "",
+                "title": "Fire Force T3 Cap 24"
             }
         }
     },
