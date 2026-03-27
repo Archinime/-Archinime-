@@ -2045,11 +2045,11 @@ const animes = [
             "Slice of Life",
             "Shōnen"
         ],
-        "lastUpdate": 1774630239121,
+        "lastUpdate": 1774639816966,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bokunokokoro1.avif",
-        "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 12",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bokunokokoro2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 13",
         "isFinal": false,
         "aliases": [
             "The Dangers in my Heart"
