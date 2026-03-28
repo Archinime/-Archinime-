@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Habitación 3D - Inventario y Lunari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://github.com/Archinime/ArchiPapu/blob/main/room_style.css">
+</head>
+<body>
+    <video id="tv-video" style="display:none;" crossorigin="anonymous" playsinline></video>
+
+    <div id="fps-counter" style="display: none;">FPS: <span>60</span></div>
+    <div id="coin-display" title="Tus Monedas" style="display: none;">🪙 <span id="coin-amount">0</span></div>
+    <div id="weather-status">🌍 Detectando clima...</div>
+    
+    <div id="inventory-button" class="top-btn" title="Inventario y Tienda">🎒</div>
+    <div id="settings-button" class="top-btn" title="Ajustes">⚙️</div>
+
+    <div id="ff-settings-modal">
+        <div class="ff-modal-content">
+            <div class="ff-header">
+                <h2>Ajustes del Cuarto</h2>
+                <button id="close-ff-settings">✖</button>
+            </div>
+            <div class="ff-body">
+                <div class="ff-sidebar">
+                    <button class="ff-tab active" data-target="tab-graficos">Gráficos</button>
+                    <button class="ff-tab" data-target="tab-sonido">Sonido</button>
+                    <button class="ff-tab" data-target="tab-sistema">Sistema</button>
+                </div>
+                
+                <div class="ff-content">
+                    <div id="tab-graficos" class="ff-tab-pane active">
+                        <div class="ff-setting-group">
+                            <label>Calidad Visual</label>
+                            <div class="ff-radio-group" id="setting-calidad">
+                                <button data-val="baja">Suave</button>
+                                <button data-val="media">Estándar</button>
+                                <button data-val="alta">Ultra</button>
+                            </div>
+                        </div>
+                        <div class="ff-setting-group">
+                            <label>Fluidez (FPS)</label>
+                            <div class="ff-radio-group" id="setting-fps">
+                                <button data-val="30">Normal (30)</button>
+                                <button data-val="60">Alto (60)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-sonido" class="ff-tab-pane">
+                        <div class="ff-setting-group">
+                            <label>Volumen TV - <span id="vol-tv-val">50%</span></label>
+                            <input type="range" id="setting-volumen-tv" min="0" max="100" value="50" class="ff-slider">
+                        </div>
+                        <div class="ff-setting-group">
+                            <label>Volumen PC (Juego) - <span id="vol-pc-val">50%</span></label>
+                            <input type="range" id="setting-volumen-pc" min="0" max="100" value="50" class="ff-slider">
+                        </div>
+                        <div class="ff-setting-group">
+                            <label>Efectos y Entorno - <span id="vol-efectos-val">50%</span></label>
+                            <input type="range" id="setting-volumen-efectos" min="0" max="100" value="50" class="ff-slider">
+                        </div>
+                    </div>
+
+                    <div id="tab-sistema" class="ff-tab-pane">
+                        <div class="ff-setting-group">
+                            <label>Mostrar FPS en pantalla</label>
+                            <label class="ff-switch">
+                                <input type="checkbox" id="setting-showfps">
+                                <span class="ff-slider-round"></span>
+                            </label>
+                        </div>
+                        <div class="ff-setting-group">
+                            <label>Mostrar Monedas en pantalla</label>
+                            <label class="ff-switch">
+                                <input type="checkbox" id="setting-showcoins">
+                                <span class="ff-slider-round"></span>
+                            </label>
+                        </div>
+                        <div class="ff-setting-group" style="margin-top: 20px; color: #a5d6a7; font-size: 12px;">
+                            <i>*Los cambios gráficos se ajustan automáticamente según tu dispositivo para evitar sobrecalentamiento.</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="character-layer">
+        <div id="dialogue-box">
+            <h3 class="char-name">Lunari</h3>
+            <p id="dialogue-text">¡Hola!<br>Bienvenido de nuevo a casa.<br>¿Vemos un anime hoy?</p>
+        </div>
+    </div>
+
+    <div id="tv-controls" style="display:none;">
+        <button id="tv-power" title="Encender/Apagar" style="color: red; text-shadow: 0 0 5px red;">🔴</button>
+        <button id="tv-prev" title="Canal Anterior">⏮️</button>
+        <button id="tv-play-pause" title="Pausar/Reproducir">⏯️</button>
+        <button id="tv-next" title="Canal Siguiente">⏭️</button>
+    </div>
+
+    <div id="pc-controls" style="display:none;">
+        <button id="pc-power" title="Encender/Apagar PC" style="color: red; text-shadow: 0 0 5px red;">🔴</button>
+        <button id="pc-open" title="Navegar en PC">💻</button>
+    </div>
+
+    <div id="pc-modal" class="modal-overlay">
+        <div class="pc-modal-content">
+            <div id="pc-header">
+                <h2>🖥️ PC Virtual de Lunari</h2>
+                <button id="close-pc">✖</button>
+            </div>
+            <iframe id="pc-iframe" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div id="inventory-modal">
+        <div id="inv-header">
+            <h2>🎒 Inventario y Tienda</h2>
+            <button id="close-inv">✖</button>
+        </div>
+        <div id="inv-body">
+            <div id="inv-sidebar"></div>
+            <div id="inv-content"></div>
+        </div>
+    </div>
+
+    <div id="poster-view-modal">
+        <button id="close-poster-view">&times;</button>
+        <img id="poster-enlarged-image" src="" alt="Póster">
+    </div>
+
+    <div id="cyber-loader">
+        <div class="loader-content">
+            <div class="loader-glitch-wrapper">
+                <div class="loader-glitch" data-text="LUNARI OS">LUNARI OS</div>
+            </div>
+            <div class="loader-sub">INICIALIZANDO ENTORNO 3D... <span id="loading-count">0/0</span></div>
+            <div class="loading-bar-container">
+                <div id="loading-bar"></div>
+            </div>
+            <button id="cyber-start-btn" style="display: none; opacity: 0;">▶ INICIAR ENLACE</button>
+        </div>
+    </div>
+    
+    <div id="light-status">💡 Luz encendida</div>
+    
+    <div id="daily-reward-toast" style="display:none;">¡Has ganado 100🪙 por entrar hoy!</div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="https://github.com/Archinime/ArchiPapu/blob/main/room_main.js"></script>
+</body>
+</html>
