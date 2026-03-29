@@ -1362,7 +1362,7 @@ const animes = [
         "id": 73,
         "title": "Sentenced to Be a Hero",
         "img": "https://www.dropbox.com/scl/fi/xfnznn3sp5r6ffzkbfadj/ImageToStl.com_fgdfgfdg.avif?rlkey=89wcv2sq8ro8lwpxmd1umh3ce&st=7acedkk4&raw=1",
-        "rating": 4.8,
+        "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
         "genres": [
@@ -1371,11 +1371,11 @@ const animes = [
             "Fantasía oscura",
             "Seinen"
         ],
-        "lastUpdate": 1773348695100,
+        "lastUpdate": 1774824570775,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://www.dropbox.com/scl/fi/g6gmcpr341z0eav70s8xa/C2P4K6XQ5BBNBAKHMAM5XBFAKE.avif?rlkey=8q1u5gev6iq55ndsts7m6s5ij&st=x46rl6r1&raw=1",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 10",
+        "latestEpTitle": "Capítulo 11",
         "isFinal": false,
         "aliases": [
             "Yuusha-kei ni Shosu"
