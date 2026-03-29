@@ -18,6 +18,7 @@ export const WeatherSystem = {
             luzFocoDia.intensity = lightInt; 
             luzFocoDia.distance = dist; 
             luzFocoDia.castShadow = State.gameSettings.sombras > 0;
+            // CORRECCIÓN DE SOMBRAS CLIMA: Eliminamos distorsión en la pared opuesta
             luzFocoDia.shadow.bias = -0.002;
             luzFocoDia.shadow.normalBias = 0.05;
         }
@@ -49,6 +50,7 @@ export const WeatherSystem = {
             return;
         }
 
+        // Ya no pedimos geolocalización. Pasamos directo a obtener la ubicación por IP silenciosamente.
         this.fetchWeatherByIP(loader, scene, applyMaterialLogic, loadedSlotMeshes, safeCheckLoading);
     },
 
@@ -124,6 +126,7 @@ export const WeatherSystem = {
         videoTexture.format = THREE.RGBAFormat; 
         videoTexture.encoding = THREE.sRGBEncoding;
         videoTexture.generateMipmaps = false;
+        // OPTIMIZACIÓN VRAM
 
         loader.load(getFreshUrl('cuadro.glb'), (gltf) => {
             const cuadroModel = gltf.scene;
