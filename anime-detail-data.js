@@ -3539,6 +3539,12 @@ const data = {
                     },
                     {
                         "title": "Capítulo 20"
+                    },
+                    {
+                        "title": "Capítulo 21"
+                    },
+                    {
+                        "title": "Capítulo 22"
                     }
                 ],
                 "name": "Temporada 3"
