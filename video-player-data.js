@@ -9707,6 +9707,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/gn119:e",
                 "link2": "",
                 "title": "Gnosia T1 Cap 19"
+            },
+            "20": {
+                "link": "https://odysee.com/$/embed/Gs120:a",
+                "link2": "",
+                "title": "Gnosia T1 Cap 20"
             }
         }
     },
