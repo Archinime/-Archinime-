@@ -10659,6 +10659,11 @@ const players = {
                 "link": "https://drive.google.com/file/d/1FMZRRrWaaIODevINjprNqBBuBABPfox7/preview",
                 "link2": "",
                 "title": "Sentenced to Be a Hero T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/Stb11:5",
+                "link2": "",
+                "title": "Sentenced to Be a Hero T1 Cap 11"
             }
         }
     },
