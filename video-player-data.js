@@ -4504,12 +4504,12 @@ const players = {
                 "title": "To Your Eternity T1 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/1d4__vsnAHl9gAJnSgg2cgzr2Ceo5GTQs/preview",
+                "link": "https://odysee.com/$/embed/tty23:a",
                 "link2": "https://www.dropbox.com/scl/fi/xtxz2kvp2lmz2wunhqt9f/To-Your-Eternity-T1-Cap-3.mp4?rlkey=udh6hnulp3ogltz2sa0obe3n2&st=llaomxbn&raw=1",
                 "title": "To Your Eternity T1 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/1-zQlvuzXp2UOd2xlg0bh12xwtcmiGieK/preview",
+                "link": "https://odysee.com/$/embed/tty24:c",
                 "link2": "https://www.dropbox.com/scl/fi/fjs9di8heeoiirxrwkt13/To-Your-Eternity-T1-Cap-4.mp4?rlkey=iqkocsn85vnfhacgy8jb9v407&st=yqa0raod&raw=1",
                 "title": "To Your Eternity T1 Cap 4"
             },
@@ -4796,6 +4796,16 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/tt320:c",
                 "link2": "",
                 "title": "To Your Eternity T3 Cap 20"
+            },
+            "21": {
+                "link": "https://odysee.com/$/embed/tty321:3",
+                "link2": "",
+                "title": "To Your Eternity T3 Cap 21"
+            },
+            "22": {
+                "link": "https://odysee.com/$/embed/tty322:7",
+                "link2": "",
+                "title": "To Your Eternity T3 Cap 22"
             }
         }
     },
