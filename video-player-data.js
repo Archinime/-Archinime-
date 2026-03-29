@@ -4504,12 +4504,12 @@ const players = {
                 "title": "To Your Eternity T1 Cap 2"
             },
             "3": {
-                "link": "https://odysee.com/$/embed/tty23:a",
+                "link": "https://odysee.com/$/embed/tty13:4",
                 "link2": "https://www.dropbox.com/scl/fi/xtxz2kvp2lmz2wunhqt9f/To-Your-Eternity-T1-Cap-3.mp4?rlkey=udh6hnulp3ogltz2sa0obe3n2&st=llaomxbn&raw=1",
                 "title": "To Your Eternity T1 Cap 3"
             },
             "4": {
-                "link": "https://odysee.com/$/embed/tty24:c",
+                "link": "https://odysee.com/$/embed/tty14:4",
                 "link2": "https://www.dropbox.com/scl/fi/fjs9di8heeoiirxrwkt13/To-Your-Eternity-T1-Cap-4.mp4?rlkey=iqkocsn85vnfhacgy8jb9v407&st=yqa0raod&raw=1",
                 "title": "To Your Eternity T1 Cap 4"
             },
@@ -4606,12 +4606,12 @@ const players = {
                 "title": "To Your Eternity T2 Cap 2"
             },
             "3": {
-                "link": "https://drive.google.com/file/d/1wf4UXzYjR-LnPwYymnXeOMBgYCPNqu6O/preview",
+                "link": "https://odysee.com/$/embed/tty23:a",
                 "link2": "https://www.dropbox.com/scl/fi/3d68ddnxfpxfrz6dejco0/To-Your-Eternity-T2-Cap-3.mp4?rlkey=fy2v7qlo0m9cr9vya843yt61j&st=on7tpepy&raw=1",
                 "title": "To Your Eternity T2 Cap 3"
             },
             "4": {
-                "link": "https://drive.google.com/file/d/16kUZ9GfaWLqiO4iTQNKNV9awHAr9GN2K/preview",
+                "link": "https://odysee.com/$/embed/tty24:c",
                 "link2": "https://www.dropbox.com/scl/fi/8r47jhl3insl126j3o7kv/To-Your-Eternity-T2-Cap-4.mp4?rlkey=qmv5dh6ykgz4eax9h6u4rwpzt&st=uuei6w3j&raw=1",
                 "title": "To Your Eternity T2 Cap 4"
             },
