@@ -182,6 +182,7 @@ function applyCurrentSettings() {
     
     document.getElementById('fps-counter').style.display = State.gameSettings.mostrarFps ? 'block' : 'none';
     
+    // APLICACIÓN DE MONEDAS
     const coinDisplay = document.getElementById('coin-display');
     if (coinDisplay) coinDisplay.style.display = State.gameSettings.mostrarMonedas ? 'flex' : 'none';
 
@@ -227,6 +228,7 @@ function applyMaterialLogic(model, categoryKey) {
     });
 }
 
+// --- SISTEMA OPTIMIZADO DE CARGA DINÁMICA ---
 const loader = new GLTFLoader();
 let totalModelsToLoad = 0, modelsLoaded = 0;
 const originalLoad = loader.load.bind(loader);
@@ -536,8 +538,10 @@ function handleInteraction(event) {
         TVManager.lastTvClickTime = currentTime; return;
     }
 
+    // --- CORRECCIÓN LÓGICA DE CLIC EN LA PC ---
     const pcScreenMesh = loadedSlotMeshes['pantalla_pc2'];
     if (pcScreenMesh && raycaster.intersectObject(pcScreenMesh, true).length > 0) {
+        // 1. Si está apagada, solo mostramos los controles para que pueda prenderla
         if (!PCManager.isPcOn) {
             document.getElementById('tv-controls').style.display = 'none';
             const pcControls = document.getElementById('pc-controls');
@@ -545,6 +549,7 @@ function handleInteraction(event) {
             return;
         }
 
+        // 2. Si está prendida, ejecuta la lógica normal de enlaces
         if (LunariSystem.currentState === 'jugar') { 
             window.open('https://archinime.github.io/-Archinime-', '_blank');
         } else {
@@ -558,6 +563,7 @@ function handleInteraction(event) {
 
     const pc2ScreenMesh = loadedSlotMeshes['pantalla_pc'];
     if (pc2ScreenMesh && raycaster.intersectObject(pc2ScreenMesh, true).length > 0) {
+        // 1. Si está apagada, mostramos controles y terminamos
         if (!PCManager.isPcOn) {
             document.getElementById('tv-controls').style.display = 'none';
             const pcControls = document.getElementById('pc-controls');
@@ -565,6 +571,7 @@ function handleInteraction(event) {
             return;
         }
 
+        // 2. Si está prendida, abre el enlace
         document.getElementById('tv-controls').style.display = 'none';
         const pcControls = document.getElementById('pc-controls'); pcControls.style.display = 'none';
         if (LunariSystem.currentState === 'jugar') { window.open('https://survev.io', '_blank');
