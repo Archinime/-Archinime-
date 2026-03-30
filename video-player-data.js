@@ -15291,5 +15291,69 @@ const players = {
                 "title": "Boku no Kokoro no Yabai Yatsu T2 Cap 13"
             }
         }
+    },
+    "102": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/IDT1C1:f",
+                "link2": "https://drive.google.com/file/d/1wJ85wLwef6U4jF9qwPlm6VhQ5R26muhq/preview",
+                "title": "El incidente de Darwin T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/IDT1C2:c",
+                "link2": "https://drive.google.com/file/d/1LTSmdFOnaYwiqzgKLRlL5hsMVXlIETBD/preview",
+                "title": "El incidente de Darwin T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/IDT1C3:9",
+                "link2": "https://drive.google.com/file/d/1uAmvfrf8eM7i7oehCbelMRP0quNOwCZX/preview",
+                "title": "El incidente de Darwin T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/IDT1C4:2",
+                "link2": "https://drive.google.com/file/d/1rJF-jJ7iWd4Yx1MbLd929TCUxdnAsmCx/preview",
+                "title": "El incidente de Darwin T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/IDT1C5:9",
+                "link2": "https://drive.google.com/file/d/1Ro6JJ9NKeiXeliiRkWbKClEZjIlSGA8d/preview",
+                "title": "El incidente de Darwin T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/IDT1C6:e",
+                "link2": "https://drive.google.com/file/d/1I3MiOuYlLRWqZDZJjwD50pKaTAvyzbpQ/preview",
+                "title": "El incidente de Darwin T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/IDT1C7:2",
+                "link2": "https://drive.google.com/file/d/1OgrEwwkyGkl9ub-LJ4WLrDKmjRMsGo6U/preview",
+                "title": "El incidente de Darwin T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/IDT1C8:d",
+                "link2": "https://drive.google.com/file/d/17hIQXjlNuF9NsdQr0g5Yk92pcka1w1_5/preview",
+                "title": "El incidente de Darwin T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/IDT1C9:5",
+                "link2": "https://drive.google.com/file/d/10yJqJnOrGM-OCTJqGUQNADhsOVqVqOpI/preview",
+                "title": "El incidente de Darwin T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/IDT1C10:3",
+                "link2": "https://drive.google.com/file/d/1c-kHI2MVlPecgQd3b77ZUNQB3ypt4XQL/preview",
+                "title": "El incidente de Darwin T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/IDT1C11:0",
+                "link2": "https://drive.google.com/file/d/1cPcLpc4txnRhNybc3QlM7HD_MlJ8Yvgf/preview",
+                "title": "El incidente de Darwin T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/IDT1C12:3",
+                "link2": "https://drive.google.com/file/d/17jhZqWAbvnNhdAhs004qMfeJxo8kX-b9/preview",
+                "title": "El incidente de Darwin T1 Cap 12"
+            }
+        }
     }
 };
