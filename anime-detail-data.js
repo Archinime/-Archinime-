@@ -4719,6 +4719,16 @@ const data = {
                     }
                 ],
                 "name": "My Dress-Up Darling"
+            },
+            {
+                "num": 16,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/reze.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Clases Con Reze"
             }
         ]
     },
