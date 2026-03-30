@@ -11488,5 +11488,56 @@ const data = {
                 "name": "Temporada 2"
             }
         ]
+    },
+    "102": {
+        "title": "El incidente de Darwin",
+        "desc": "Charlie es único. Es el humancé, un híbrido entre humano y chimpancé con una inteligencia y fuerza impresionantes. Por eso, la Alianza de Liberación Animal, una organización terrorista, quiere reclutarlo. Y recurrirán a medidas extremas para lograrlo, pero Charlie está decidido a luchar para proteger a sus seres queridos.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
