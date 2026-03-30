@@ -2054,5 +2054,31 @@ const animes = [
         "aliases": [
             "The Dangers in my Heart"
         ]
+    },
+    {
+        "id": 102,
+        "title": "El incidente de Darwin",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin.avif",
+        "rating": 4.3,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Ciencia ficción",
+            "Deducción Social",
+            "Drama",
+            "Suspenso",
+            "Thriller",
+            "Seinen"
+        ],
+        "lastUpdate": 1774830187862,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Darwin Jihen",
+            "The Darwin Incident"
+        ]
     }
 ];
