@@ -766,11 +766,11 @@ const animes = [
             "Hentai",
             "Seijin"
         ],
-        "lastUpdate": 1773366211665,
-        "updateType": "Ninguna",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/totid4w011l0ftg088jwf/erisM.jpg?rlkey=bv2zu5u17sst8k4cjct0l0e0u&st=7f5sh8co&raw=1",
-        "latestBlockName": "My Dress-Up Darling",
-        "latestEpTitle": "Capítulo 2",
+        "lastUpdate": 1774914503106,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/reze.avif",
+        "latestBlockName": "Clases Con Reze",
+        "latestEpTitle": "Capítulo 1",
         "isFinal": false
     },
     {
