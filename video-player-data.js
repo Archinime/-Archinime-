@@ -6264,6 +6264,13 @@ const players = {
                 "link2": "",
                 "title": "Maplestar My Dress-Up Darling Cap 2"
             }
+        },
+        "16": {
+            "1": {
+                "link": "https://odysee.com/$/embed/mr1:4",
+                "link2": "",
+                "title": "Maplestar Clases Con Reze Cap 1"
+            }
         }
     },
     "44": {
