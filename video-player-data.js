@@ -15435,6 +15435,68 @@ const players = {
                 "link2": "",
                 "title": "Horimiya T1 Cap 13"
             }
+        },
+        "2": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@any:a/hry21:4",
+                "link2": "",
+                "title": "Horimiya T2 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@any:a/hry22:e",
+                "link2": "",
+                "title": "Horimiya T2 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@any:a/hry23:c",
+                "link2": "",
+                "title": "Horimiya T2 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/@any:a/hry24:a",
+                "link2": "",
+                "title": "Horimiya T2 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/@any:a/hry25:5",
+                "link2": "",
+                "title": "Horimiya T2 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/@any:a/hry26:3",
+                "link2": "",
+                "title": "Horimiya T2 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/@any:a/hry27:b",
+                "link2": "",
+                "title": "Horimiya T2 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/@any:a/hry28:6",
+                "link2": "",
+                "title": "Horimiya T2 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/@any:a/hry29:2",
+                "link2": "",
+                "title": "Horimiya T2 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@any:a/hry210:0",
+                "link2": "",
+                "title": "Horimiya T2 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@any:a/hry211:b",
+                "link2": "",
+                "title": "Horimiya T2 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/@any:a/hry212:9",
+                "link2": "",
+                "title": "Horimiya T2 Cap 12"
+            }
         }
     }
 };
