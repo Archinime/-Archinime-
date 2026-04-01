@@ -2080,5 +2080,28 @@ const animes = [
             "Darwin Jihen",
             "The Darwin Incident"
         ]
+    },
+    {
+        "id": 103,
+        "title": "Horimiya",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya.avif",
+        "rating": 4.8,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Shōnen"
+        ],
+        "lastUpdate": 1775055066968,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 13",
+        "isFinal": false,
+        "aliases": [
+            "Hori-san to Miyamura-kun"
+        ]
     }
 ];
