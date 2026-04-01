@@ -2070,11 +2070,11 @@ const animes = [
             "Thriller",
             "Seinen"
         ],
-        "lastUpdate": 1774830187862,
+        "lastUpdate": 1775054393842,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 12",
+        "latestEpTitle": "Capítulo 13",
         "isFinal": false,
         "aliases": [
             "Darwin Jihen",
