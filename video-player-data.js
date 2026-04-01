@@ -15367,5 +15367,74 @@ const players = {
                 "title": "El incidente de Darwin T1 Cap 13"
             }
         }
+    },
+    "103": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c1:7",
+                "link2": "",
+                "title": "Horimiya T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c2:c",
+                "link2": "",
+                "title": "Horimiya T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c3:6",
+                "link2": "",
+                "title": "Horimiya T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c4:b",
+                "link2": "",
+                "title": "Horimiya T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c5:8",
+                "link2": "",
+                "title": "Horimiya T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c6:2",
+                "link2": "",
+                "title": "Horimiya T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c7:4",
+                "link2": "",
+                "title": "Horimiya T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c8:e",
+                "link2": "",
+                "title": "Horimiya T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c9:f",
+                "link2": "",
+                "title": "Horimiya T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c10:1",
+                "link2": "",
+                "title": "Horimiya T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c11:3",
+                "link2": "",
+                "title": "Horimiya T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c12:5",
+                "link2": "",
+                "title": "Horimiya T1 Cap 12"
+            },
+            "13": {
+                "link": "https://odysee.com/$/embed/@any:a/Hrmys1c13:c",
+                "link2": "",
+                "title": "Horimiya T1 Cap 13"
+            }
+        }
     }
 };
