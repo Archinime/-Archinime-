@@ -327,5 +327,9 @@ const audioPlaylists = {
     "102": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/darwin2.mp3"
+    ],
+    "103": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya2.mp3"
     ]
 };
