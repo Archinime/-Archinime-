@@ -2089,17 +2089,18 @@ const animes = [
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Comedia",
             "Escolar",
             "Romance",
             "Slice of Life",
             "Shōnen"
         ],
-        "lastUpdate": 1775055066968,
+        "lastUpdate": 1775058361747,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya1.avif",
-        "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 13",
-        "isFinal": false,
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": true,
         "aliases": [
             "Hori-san to Miyamura-kun"
         ]
