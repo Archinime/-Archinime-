@@ -11552,5 +11552,59 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "103": {
+        "title": "Horimiya",
+        "desc": "Kyouko Hori e Izumi Miyamura no podrían ser mas diferentes, ella es una estudiante brillante y extrovertida que siempre es el centro de atención, y el es alguien tímido y silencioso que pasa por las vidas de sus compañeros de clase casi como un fantasma. Pero un día el azar les lleva a encontrarse fuera del instituto y descubren con sorpresa que ninguno es exactamente lo que el otro creía, que esas imágenes que ambos han estado proyectando en el instituto no eran mas que fachadas que ocultaban quienes son realmente. Un conocimiento que hará que ambos se acerquen cada vez mas y se den cuenta de que ya no son capaces de estar sin el otro.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/horimiya1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
