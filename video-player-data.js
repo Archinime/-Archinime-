@@ -4319,69 +4319,69 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1R1Nkvi-_ujzAbOEbeb_Eip2MpidXAY5G/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 1"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/149E3PkW8vrv5EErlkAwTp1Aw6PeIAA1U/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 2"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1rX4EP1doifl_ICgJJwueHnGR3S_mFDMl/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 3"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1cvYkPjC9mjZYTQyKxYjxhvdY657raK8u/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 4"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/10msU3Q-yNlm0EvCWDryDmbGYWVeZE8fF/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 5"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1axhLh9DpJqCDUpmqkYLQRbJeI8bIJwr6/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 6"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1-N-7UPdJ8AIP4rWYvhBq_yKpesphmJsL/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 7"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1fP3-TrJApXT9ujbRx061WIjJC4iqjKCI/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 8"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1yPYhEIfakGUf0gMXg4xqzHuoVXkBQKZT/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 9"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1IkTucIQzCQWX6qkDFKfIH0duBZwavOcE/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 10"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1WpN7CzbtVqPD_yabhhFGJcok4y84QLm8/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 11"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1LttR5D0x4q9kcNdyRdYBeKvwAs8f5oG5/preview",
                 "link2": "",
-                "title": "Dr. Stone T5 Cap 12"
+                "title": "Dr. Stone Temporada 4 Parte II Cap 12"
             }
         },
         "7": {
             "1": {
                 "link": "https://odysee.com/$/embed/@any:a/Drst425:5",
                 "link2": "",
-                "title": "Dr. Stone T6 Cap 1"
+                "title": "Dr. Stone Temporada 4 Parte III - FInal Cap 1"
             }
         }
     },
