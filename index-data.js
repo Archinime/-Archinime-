@@ -1998,11 +1998,11 @@ const animes = [
             "Romance",
             "Kodomo"
         ],
-        "lastUpdate": 1775140586134,
-        "updateType": "Ninguna",
+        "lastUpdate": 1775141427915,
+        "updateType": "ESTRENO 🚨",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario2.avif",
         "latestBlockName": "Película 2",
-        "latestEpTitle": "Trailer",
+        "latestEpTitle": "Película 2 Subtítulos en línea",
         "isFinal": false
     },
     {
