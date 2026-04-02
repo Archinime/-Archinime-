@@ -2157,5 +2157,31 @@ const animes = [
         "aliases": [
             "Go For It, Nakamura-kun!!"
         ]
+    },
+    {
+        "id": 106,
+        "title": "Rompiendo el hielo",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rompiendoelhielo.avif",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Coming-of-age",
+            "Drama",
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Shōjo"
+        ],
+        "lastUpdate": 1775161408341,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rompiendoelhielo1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Koori no Jouheki",
+            "The Ramparts of Ice"
+        ]
     }
 ];
