@@ -1971,7 +1971,7 @@ const animes = [
             "Policial",
             "Kodomo"
         ],
-        "lastUpdate": 1774288231197,
+        "lastUpdate": 1775144553017,
         "updateType": "Ninguna",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/sonic4.avif",
         "latestBlockName": "Película 4",
