@@ -11649,5 +11649,85 @@ const data = {
                 "name": "Temporada 2"
             }
         ]
+    },
+    "104": {
+        "title": "Dorohedoro",
+        "desc": "Bienvenido al caos. La cabeza de Caiman, un hombre amnésico, fue transformada en la de un lagarto por obra de la magia. Para recuperar su verdadero rostro y sus recuerdos, continúa buscando junto a su compañera Nikaido al hechicero que le lanzó el hechizo. Pero ¿quién es en realidad?",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doro.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doro1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    },
+                    {
+                        "title": "Capítulo 13"
+                    }
+                ],
+                "name": "Temporada 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doroova.avif",
+                "eps": [
+                    {
+                        "title": "Anécdotas diabólicas"
+                    }
+                ],
+                "name": "OVA 1"
+            },
+            {
+                "num": 3,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doro2.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    }
+                ],
+                "name": "Temporada 2"
+            }
+        ]
     }
 };
