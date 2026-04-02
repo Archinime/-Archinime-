@@ -2132,5 +2132,30 @@ const animes = [
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 3",
         "isFinal": false
+    },
+    {
+        "id": 105,
+        "title": "Ganbare! Nakamura-kun!!",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gambarepor.avif",
+        "rating": 4.2,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Yaoi",
+            "Shōjo"
+        ],
+        "lastUpdate": 1775160587272,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ganbare1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 2",
+        "isFinal": false,
+        "aliases": [
+            "Go For It, Nakamura-kun!!"
+        ]
     }
 ];
