@@ -1998,7 +1998,7 @@ const animes = [
             "Romance",
             "Kodomo"
         ],
-        "lastUpdate": 1774310097770,
+        "lastUpdate": 1775140586134,
         "updateType": "Ninguna",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario2.avif",
         "latestBlockName": "Película 2",
