@@ -15610,5 +15610,19 @@ const players = {
                 "title": "Dorohedoro T2 Cap 3"
             }
         }
+    },
+    "105": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@any:a/gnk11:a",
+                "link2": "",
+                "title": "Ganbare! Nakamura-kun!! T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@any:a/gnk12:c",
+                "link2": "",
+                "title": "Ganbare! Nakamura-kun!! T1 Cap 2"
+            }
+        }
     }
 };
