@@ -417,6 +417,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/Jk39:1",
                 "link2": "",
                 "title": "Jujutsu Kaisen T3 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@any:a/jjk310:2",
+                "link2": "",
+                "title": "Jujutsu Kaisen T3 Cap 10"
             }
         }
     },
