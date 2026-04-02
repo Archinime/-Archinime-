@@ -11752,5 +11752,26 @@ const data = {
                 "name": "Temporada 2"
             }
         ]
+    },
+    "105": {
+        "title": "Ganbare! Nakamura-kun!!",
+        "desc": "Nakamura es un chico tímido que se enamora a primera vista de uno de sus compañeros de clase: Hirose, su compañero de instituto, que le parece un sueño. Pero hay un problema: aún no se conocen. ¡Y Nakamura es un auténtico torpe que podría estropearlo todo antes incluso de que empiece!",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gambarepor.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ganbare1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
