@@ -3197,7 +3197,7 @@ const data = {
                         "title": "Capítulo 12"
                     }
                 ],
-                "name": "Temporada 4 Parte I"
+                "name": "Temporada 4"
             },
             {
                 "num": 6,
@@ -3240,7 +3240,7 @@ const data = {
                         "title": "Capítulo 12"
                     }
                 ],
-                "name": "Temporada 4 Parte II"
+                "name": "Temporada 5"
             },
             {
                 "num": 7,
@@ -3250,7 +3250,7 @@ const data = {
                         "title": "Capítulo 1"
                     }
                 ],
-                "name": "Temporada 4 Parte III - FINAL"
+                "name": "Temporada 6"
             }
         ]
     },
