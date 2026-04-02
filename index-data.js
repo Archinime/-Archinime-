@@ -490,14 +490,21 @@ const animes = [
         "img": "Dr._Stoneportada.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Ciencia ficción",
             "Aventura",
+            "Ciencia ficción",
             "Comedia",
             "Divulgación Científica",
             "Post-apocalíptico",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1775145953343,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone4.avif",
+        "latestBlockName": "Temporada 4 Parte III - FINAL",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     },
     {
         "id": 29,
