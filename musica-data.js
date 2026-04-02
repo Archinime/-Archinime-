@@ -341,5 +341,9 @@ const audioPlaylists = {
     "105": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ganbare.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ganbare1.mp3"
+    ],
+    "106": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rompiendoelhielo.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rompiendoelhielo1.mp3"
     ]
 };
