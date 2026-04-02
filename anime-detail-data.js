@@ -11773,5 +11773,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "106": {
+        "title": "Rompiendo el hielo",
+        "desc": "A Koyuki le cuesta trabajo conectar con otros. Preferiría pasar sus años escolares sola…, hasta que aparece Minato, que decide derretir los muros de hielo a su alrededor.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rompiendoelhielo.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rompiendoelhielo1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
