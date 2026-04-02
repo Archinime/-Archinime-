@@ -11301,7 +11301,7 @@ const data = {
                 "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mario2.avif",
                 "eps": [
                     {
-                        "title": "Trailer"
+                        "title": "Película 2 Subtítulos en línea"
                     }
                 ],
                 "name": "Película 2"
