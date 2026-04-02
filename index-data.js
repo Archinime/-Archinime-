@@ -2104,5 +2104,26 @@ const animes = [
         "aliases": [
             "Hori-san to Miyamura-kun"
         ]
+    },
+    {
+        "id": 104,
+        "title": "Dorohedoro",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doro.avif",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Ciencia ficción",
+            "Fantasía oscura",
+            "Horror",
+            "Seinen"
+        ],
+        "lastUpdate": 1775094692304,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doro2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 3",
+        "isFinal": false
     }
 ];
