@@ -15037,8 +15037,8 @@ const players = {
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1XAoZ2sYYoPWpLyE_ei4LmCqIjyNd-ml8/preview",
-                "link2": "",
-                "title": "Super Mario Bros Película 2: Trailer"
+                "link2": "https://drive.google.com/file/d/1bmwe5KhGZ_TmxoEZes01Vb_ExEiwmR0i/preview",
+                "title": "Super Mario Bros Película 2: Película 2 Subtítulos en línea"
             }
         }
     },
