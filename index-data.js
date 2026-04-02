@@ -499,10 +499,10 @@ const animes = [
             "Post-apocalíptico",
             "Shōnen"
         ],
-        "lastUpdate": 1775145953343,
+        "lastUpdate": 1775146251205,
         "updateType": "ESTRENO 🚨",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone4.avif",
-        "latestBlockName": "Temporada 4 Parte III - FINAL",
+        "latestBlockName": "Temporada 6",
         "latestEpTitle": "Capítulo 1",
         "isFinal": false
     },
