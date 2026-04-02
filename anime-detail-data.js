@@ -2956,8 +2956,7 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "name": "Temporada 1",
-                "cover": "https://www.dropbox.com/scl/fi/ff7ghfhr8lhf6kxtfujns/drstone.jpg?rlkey=ejiu7gfaphzs6q12ugz7t8c36&st=mad899yo&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stonetemporada1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3031,12 +3030,12 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Temporada 2",
-                "cover": "https://www.dropbox.com/scl/fi/hg2jkiw7nf5awcj3ho85i/dtstones2.jpg?rlkey=3y4egujqn3haoizunk9geb1d8&st=zt2xytu0&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stonetemporada12.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3071,22 +3070,22 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "name": "Especial",
-                "cover": "https://www.dropbox.com/scl/fi/tpnv3v2y4flbqwyu4wnon/dcstoneova.jpg?rlkey=tfa6ppjywrliyzhi6kj0datgy&st=duv90d1j&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stoneova.avif",
                 "eps": [
                     {
                         "title": "Ryusui"
                     }
-                ]
+                ],
+                "name": "Especial 1"
             },
             {
                 "num": 4,
-                "name": "Temporada 3",
-                "cover": "https://www.dropbox.com/scl/fi/5jvz9rumus5ssebv0ctgp/drstones3.jpg?rlkey=47lenlu7dd0uln5ukecqbvv8v&st=ojax5r7q&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stonetemporada3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3154,12 +3153,12 @@ const data = {
                     {
                         "title": "Capítulo 22"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 5,
-                "name": "Temporada 4",
-                "cover": "https://www.dropbox.com/scl/fi/0w1qy88i3p23dsj3y42uj/drstones4.jpg?rlkey=rghh4x56blbeq742f07ds93tp&st=lmk6gto8&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3196,44 +3195,62 @@ const data = {
                     },
                     {
                         "title": "Capítulo 12"
-                    },
-                    {
-                        "title": "Capítulo 13"
-                    },
-                    {
-                        "title": "Capítulo 14"
-                    },
-                    {
-                        "title": "Capítulo 15"
-                    },
-                    {
-                        "title": "Capítulo 16"
-                    },
-                    {
-                        "title": "Capítulo 17"
-                    },
-                    {
-                        "title": "Capítulo 18"
-                    },
-                    {
-                        "title": "Capítulo 19"
-                    },
-                    {
-                        "title": "Capítulo 20"
-                    },
-                    {
-                        "title": "Capítulo 21"
-                    },
-                    {
-                        "title": "Capítulo 22"
-                    },
-                    {
-                        "title": "Capítulo 23"
-                    },
-                    {
-                        "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 4 Parte I"
+            },
+            {
+                "num": 6,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stonetemporada4.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    },
+                    {
+                        "title": "Capítulo 9"
+                    },
+                    {
+                        "title": "Capítulo 10"
+                    },
+                    {
+                        "title": "Capítulo 11"
+                    },
+                    {
+                        "title": "Capítulo 12"
+                    }
+                ],
+                "name": "Temporada 4 Parte II"
+            },
+            {
+                "num": 7,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone4.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 4 Parte III - FINAL"
             }
         ]
     },
