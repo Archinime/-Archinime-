@@ -15498,5 +15498,98 @@ const players = {
                 "title": "Horimiya T2 Cap 12"
             }
         }
+    },
+    "104": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/doro11:8",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/doro12:b",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/doro13:c",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/doro14:d",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/doro15:8",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/doro16:4",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/doro17:1",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/doro18:e",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/doro19:5",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/doro110:9",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/doro111:2",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/doro112:2",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 12"
+            },
+            "13": {
+                "link": "https://odysee.com/$/embed/doro113:9",
+                "link2": "",
+                "title": "Dorohedoro T1 Cap 13"
+            }
+        },
+        "2": {
+            "1": {
+                "link": "",
+                "link2": "https://odysee.com/$/embed/doroova:9",
+                "title": "Dorohedoro OVA 1 \"Anécdotas diabólicas\""
+            }
+        },
+        "3": {
+            "1": {
+                "link": "https://odysee.com/$/embed/doro21:c",
+                "link2": "",
+                "title": "Dorohedoro T2 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/doro22:c",
+                "link2": "",
+                "title": "Dorohedoro T2 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/doro23:c",
+                "link2": "",
+                "title": "Dorohedoro T2 Cap 3"
+            }
+        }
     }
 };
