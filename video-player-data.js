@@ -15624,5 +15624,14 @@ const players = {
                 "title": "Ganbare! Nakamura-kun!! T1 Cap 2"
             }
         }
+    },
+    "106": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/@any:a/knj11:e",
+                "link2": "",
+                "title": "Rompiendo el hielo T1 Cap 1"
+            }
+        }
     }
 };
