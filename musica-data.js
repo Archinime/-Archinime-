@@ -85,8 +85,8 @@ const audioPlaylists = {
         "clevates.mp3"
     ],
     "28": [
-        "Dr. Stone  Good Morning World!  Burnout Syndromes AMV ( sub español ).mp3",
-        "ending4 doctor stone.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone4.mp3"
     ],
     "29": [
         "We Are. OP. 1  One Piece.  Traduccion Al Español.mp3"
