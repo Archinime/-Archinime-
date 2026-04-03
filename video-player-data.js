@@ -6284,6 +6284,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/mr1:4",
                 "link2": "",
                 "title": "Maplestar Clases Con Reze Cap 1"
+            },
+            "2": {
+                "link": "",
+                "link2": "https://odysee.com/$/embed/Rm:1",
+                "title": "Maplestar Clases Con Reze Cap 2"
             }
         }
     },
