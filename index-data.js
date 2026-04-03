@@ -2183,5 +2183,29 @@ const animes = [
             "Koori no Jouheki",
             "The Ramparts of Ice"
         ]
+    },
+    {
+        "id": 107,
+        "title": "Snowball Earth",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/snowball.avif",
+        "rating": 4.5,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Ciencia ficción",
+            "Kaiju",
+            "Mecha",
+            "Post-apocalíptico",
+            "Survival",
+            "Seinen"
+        ],
+        "lastUpdate": 1775238844907,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/snowball1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     }
 ];
