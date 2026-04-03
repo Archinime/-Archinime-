@@ -773,11 +773,11 @@ const animes = [
             "Hentai",
             "Seijin"
         ],
-        "lastUpdate": 1774914503106,
+        "lastUpdate": 1775233012988,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/reze.avif",
         "latestBlockName": "Clases Con Reze",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false
     },
     {
