@@ -11521,6 +11521,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/frfr324:c",
                 "link2": "",
                 "title": "Fire Force T3 Cap 24"
+            },
+            "25": {
+                "link": "https://odysee.com/$/embed/ffre325:c",
+                "link2": "",
+                "title": "Fire Force T3 Cap 25"
             }
         }
     },
