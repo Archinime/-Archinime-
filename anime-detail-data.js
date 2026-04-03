@@ -11797,5 +11797,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "107": {
+        "title": "Snowball Earth",
+        "desc": "Diez años después de salvar la Tierra con su amigo robot Yukio, Tetsuo regresa a un planeta de hielo y nieve sin fin.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/snowball.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/snowball1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
