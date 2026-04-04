@@ -11818,5 +11818,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "108": {
+        "title": "Rilakkuma",
+        "desc": "La vida cotidiana recibe un giro acogedor con el relajado Rilakkuma. Se desarrollan suaves momentos de amistad, cambios y pequeñas alegrías, convirtiendo momentos ordinarios en algo silenciosamente mágico, un día suave y reconfortante a la vez.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rilakkuma.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rilakkuma1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
