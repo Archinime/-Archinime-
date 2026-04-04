@@ -2207,5 +2207,26 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 1",
         "isFinal": false
+    },
+    {
+        "id": 108,
+        "title": "Rilakkuma",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rilakkuma.avif",
+        "rating": 3.3,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Drama",
+            "Familiar",
+            "Slice of Life",
+            "Josei"
+        ],
+        "lastUpdate": 1775317964546,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rilakkuma1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     }
 ];
