@@ -14417,6 +14417,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/Ts29:0",
                 "link2": "",
                 "title": "Trigun Stampede T2 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/@yudi:1/tsz210:7",
+                "link2": "",
+                "title": "Trigun Stampede T2 Cap 10"
             }
         }
     },
