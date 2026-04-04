@@ -8249,6 +8249,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/ttkw22:3",
                 "link2": "",
                 "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 22"
+            },
+            "23": {
+                "link": "https://odysee.com/$/embed/@any:a/ttw123:9",
+                "link2": "",
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 23"
             }
         }
     },
