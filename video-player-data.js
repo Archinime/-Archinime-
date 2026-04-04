@@ -15657,5 +15657,14 @@ const players = {
                 "title": "Snowball Earth T1 Cap 1"
             }
         }
+    },
+    "108": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/rlkk11:c",
+                "link2": "",
+                "title": "Rilakkuma T1 Cap 1"
+            }
+        }
     }
 };
