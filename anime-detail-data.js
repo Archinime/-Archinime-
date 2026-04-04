@@ -11852,5 +11852,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "109": {
+        "title": "Daemons of the Shadow Realm",
+        "desc": "En un mundo donde ciertos humanos controlan poderosos dúos sobrenaturales llamados tsugai, gobernar sobre estas entidades es el derecho de nacimiento de \"los hijos que separan el día y la noche\": los gemelos Yoru y Asa. Separados desde pequeños y ajenos a la verdad sobre su origen, hermano y hermana deberán luchar para reencontrarse, reclamar lo que les pertenece y salvar el mundo…",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dawmons.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dawmons1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
