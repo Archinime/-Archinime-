@@ -1613,7 +1613,7 @@ const animes = [
     {
         "id": 83,
         "title": "Mairimashita! Iruma-kun",
-        "img": "https://www.dropbox.com/scl/fi/1jwtfdr7fniisbyk86ufq/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769436697375-1769436697376-1.avif?rlkey=7ykuw4c34w1dkr6wlnt2hmx82&st=nbyyeq8a&raw=1",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1625,12 +1625,12 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1769437840855,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/oqkpyyqku4fr3ghwhzcr0/iruma3.avif?rlkey=g4yh1imo1v86ubsaeb4k541nk&st=2yuirrws&raw=1",
-        "latestBlockName": "Temporada 3",
-        "latestEpTitle": "Capítulo 21",
-        "isFinal": true,
+        "lastUpdate": 1775318690574,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma4.avif",
+        "latestBlockName": "Temporada 4",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
         "aliases": [
             "Welcome to Demon School! Iruma-kun"
         ]
