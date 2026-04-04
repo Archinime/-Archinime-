@@ -9169,12 +9169,12 @@ const data = {
     "83": {
         "title": "Mairimashita! Iruma-kun",
         "desc": "Iruma Suzuki es un humano de 14 años que un día es arrastrado en contra de su voluntad al mundo de los demonios. Por si no tenía bastantes problemas con eso, su nuevo dueño y autodeclarado \"Abuelo\" es el demonio director de su nueva escuela. Para poder sobrevivir en este nuevo mundo y en esta escuela, Iruma tendrá que superar todo tipo de retos, como vencer en un duelo a un estudiante muy peligroso, una chica con ciertos problemillas de personalidad, ¡y todo tipo de seres terroríficos!",
-        "cover": "https://www.dropbox.com/scl/fi/1jwtfdr7fniisbyk86ufq/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769436697375-1769436697376-1.avif?rlkey=7ykuw4c34w1dkr6wlnt2hmx82&st=nbyyeq8a&raw=1",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/h4duafxrqto2ibfeb4ozh/iruma1.avif?rlkey=2t4afhydf7skq7rfzevvfq08m&st=o0voptcy&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9250,7 +9250,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/aeoy9d588siec1zwqts4z/iruma2.avif?rlkey=w8ftukvyby93woqg6tl3oxsog&st=j4x9rx6h&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9320,7 +9320,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/oqkpyyqku4fr3ghwhzcr0/iruma3.avif?rlkey=g4yh1imo1v86ubsaeb4k541nk&st=2yuirrws&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9387,6 +9387,16 @@ const data = {
                     }
                 ],
                 "name": "Temporada 3"
+            },
+            {
+                "num": 4,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma4.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 4"
             }
         ]
     },
