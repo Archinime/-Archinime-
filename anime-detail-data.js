@@ -6141,6 +6141,9 @@ const data = {
                     },
                     {
                         "title": "Capítulo 22"
+                    },
+                    {
+                        "title": "Capítulo 23"
                     }
                 ],
                 "name": "Temporada 1"
