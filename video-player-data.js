@@ -12421,6 +12421,13 @@ const players = {
                 "link2": "",
                 "title": "Mairimashita! Iruma-kun T3 Cap 21"
             }
+        },
+        "4": {
+            "1": {
+                "link": "https://odysee.com/$/embed/mrmik41:5",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T4 Cap 1"
+            }
         }
     },
     "84": {
