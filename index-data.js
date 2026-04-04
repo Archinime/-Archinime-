@@ -2228,5 +2228,29 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 1",
         "isFinal": false
+    },
+    {
+        "id": 109,
+        "title": "Daemons of the Shadow Realm",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dawmons.avif",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Fantasía oscura",
+            "Sobrenatural",
+            "Shōnen"
+        ],
+        "lastUpdate": 1775325938735,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dawmons1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Yomi no Tsugai"
+        ]
     }
 ];
