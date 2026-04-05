@@ -11879,5 +11879,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "110": {
+        "title": "Nippon Sangoku: Las tres naciones del sol carmesí",
+        "desc": "Al final de la era Reiwa, Japón sufrió los efectos de una guerra nuclear mundial, lo que provocó una afluencia de refugiados, seguida de un virus mortal y un terremoto devastador. El país se encontraba mal administrado, con los poderosos imponiendo fuertes impuestos, lo que desencadenó una hambruna. Finalmente, el pueblo inició una revuelta que derrocó al gobierno nacional. Si bien la población se redujo a una décima parte de su tamaño anterior a la guerra, la tecnología se redujo a la de la era Meiji y el país quedó dividido en tres reinos: Yamato, Takeo y Seii. Cien años después, un hombre llamado Aoteru Misumi lideró un movimiento para reunificar el país.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
