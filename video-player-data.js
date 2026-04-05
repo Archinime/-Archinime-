@@ -15707,5 +15707,14 @@ const players = {
                 "title": "Daemons of the Shadow Realm T1 Cap 1"
             }
         }
+    },
+    "110": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/npps11:9",
+                "link2": "",
+                "title": "Nippon Sangoku: Las tres naciones del sol carmesí T1 Cap 1"
+            }
+        }
     }
 };
