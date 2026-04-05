@@ -1549,11 +1549,11 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1774814578129,
+        "lastUpdate": 1775413769761,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZz2Pl5ZtIRJpcwNxr5Alrpg7RDymX4RfcJV&size=2000x3000",
         "latestBlockName": "Temporada 2",
-        "latestEpTitle": "Capítulo 9",
+        "latestEpTitle": "Capítulo 10",
         "isFinal": false,
         "aliases": [
             "Jigokuraku."
