@@ -2252,5 +2252,26 @@ const animes = [
         "aliases": [
             "Yomi no Tsugai"
         ]
+    },
+    {
+        "id": 110,
+        "title": "Nippon Sangoku: Las tres naciones del sol carmesí",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon.avif",
+        "rating": 4.7,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Drama",
+            "Militar",
+            "Post-apocalíptico",
+            "Seinen"
+        ],
+        "lastUpdate": 1775402835231,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     }
 ];
