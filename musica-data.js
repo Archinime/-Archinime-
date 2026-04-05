@@ -356,5 +356,8 @@ const audioPlaylists = {
     ],
     "109": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dawmons.mp3"
+    ],
+    "110": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon.mp3"
     ]
 };
