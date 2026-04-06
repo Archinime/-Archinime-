@@ -359,5 +359,8 @@ const audioPlaylists = {
     ],
     "110": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon.mp3"
+    ],
+    "111": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Atelier%20of%20Witch%20Hat.mp3"
     ]
 };
