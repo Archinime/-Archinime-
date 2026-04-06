@@ -11921,5 +11921,23 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "112": {
+        "title": "Scarlet",
+        "desc": "Una princesa medieval experta en el manejo de la espada se embarca en una peligrosa misión para vengar la muerte de su padre. Tras fracasar en su misión y encontrarse gravemente herida en un 'Otromundo', conoce a un joven idealista de nuestro presente que no solo la ayuda a curarse, sino que le muestra la posibilidad de un futuro libre de amargura y rabia. Cuando se enfrenta de nuevo al asesino de su padre, Scarlet se enfrenta a su batalla más difícil: ¿podrá romper el ciclo del odio y encontrar un sentido a la vida más allá de la venganza?",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/scarlet.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/scarlet1.avif",
+                "eps": [
+                    {
+                        "title": "Película 1"
+                    }
+                ],
+                "name": "Película 1"
+            }
+        ]
     }
 };
