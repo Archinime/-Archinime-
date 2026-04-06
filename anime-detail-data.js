@@ -11900,5 +11900,26 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "111": {
+        "title": "Witch Hat Atelier",
+        "desc": "En un mundo donde sólo las brujas pueden lanzar magia, deben evitar ser vistas por la gente común mientras lanzan. Mientras Coco hace sus tareas, sueña despierta con convertirse en bruja. Cuando una joven bruja llamada Qifrey visita su aldea, Coco descubre el secreto absoluto de “, se convierte en aprendiz de Qifrey y comienza sus estudios. Esta es la historia de niños que se encuentran con la desesperación y, sin embargo, se acercan a la esperanza.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Atelier%20of%20Witch%20Hat.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Atelier%20of%20Witch%20Hat1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
