@@ -2296,5 +2296,29 @@ const animes = [
         "aliases": [
             "Atelier of Witch Hat"
         ]
+    },
+    {
+        "id": 112,
+        "title": "Scarlet",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/scarlet.avif",
+        "rating": 4.5,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Drama",
+            "Fantasía",
+            "Seinen"
+        ],
+        "lastUpdate": 1775512959643,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/scarlet1.avif",
+        "latestBlockName": "Película 1",
+        "latestEpTitle": "Película 1",
+        "isFinal": false,
+        "aliases": [
+            "Hateshinaki sukāretto"
+        ]
     }
 ];
