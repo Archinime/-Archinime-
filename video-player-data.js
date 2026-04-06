@@ -15721,5 +15721,19 @@ const players = {
                 "title": "Nippon Sangoku: Las tres naciones del sol carmesí T1 Cap 1"
             }
         }
+    },
+    "111": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/wha11:4",
+                "link2": "",
+                "title": "Witch Hat Atelier T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/wha12:3",
+                "link2": "",
+                "title": "Witch Hat Atelier T1 Cap 2"
+            }
+        }
     }
 };
