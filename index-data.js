@@ -2273,5 +2273,28 @@ const animes = [
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 1",
         "isFinal": false
+    },
+    {
+        "id": 111,
+        "title": "Witch Hat Atelier",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Atelier%20of%20Witch%20Hat.avif",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Aventura",
+            "Drama",
+            "Fantasía",
+            "Seinen"
+        ],
+        "lastUpdate": 1775492146890,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Atelier%20of%20Witch%20Hat1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 2",
+        "isFinal": false,
+        "aliases": [
+            "Atelier of Witch Hat"
+        ]
     }
 ];
