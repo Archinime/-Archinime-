@@ -1,77 +1,57 @@
-// sw.js
-const CACHE_NAME = 'room-cache-v13'; 
+const CACHE_NAME = 'archinime-os-dynamic';
 const urlsToCache = [
-    './',
-    './index.html',
-    './room_style.css',
-    './room_main.js',
-    './inventory-data.js',
-    'gohan_vs_cell.mp4',
-    'zoro_vs_king.mp4',
-    'rezero.mp4',
-    'efecto_tele.mp4',
-    'efecto_tele - Invertido.mp4',
-    'prender_luz.mp3',
-    'apagar_luz.mp3',
-    'abrir_poster.mp3',
-    'guardar_poster.mp3',
-    'sonido_boton.mp3',
-    'lunari_esta_despierta.glb', 
-    'lunari_jugando.glb',
-    'lunari_idle.glb',
-    'lunari_saluda.glb',
-    'lunari_idle2.glb',
-    'lunari_idle3.glb',
-    'lunari_idle4.glb',
-    'lunari_idle5.glb',
-    'lunari_idle6.glb',
-    'surv.mp4',
-    'logo.avif'
+  './',
+  'index.html',
+  'styles-index.css',
+  'Logo_Archinime.avif'
 ];
 
+// 1. INSTALACIÓN: Cachea lo básico, pero no bloquea
 self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(urlsToCache))
-            .then(() => self.skipWaiting())
-    );
+  self.skipWaiting(); // Forza al SW a activarse de inmediato
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
 });
 
+// 2. ACTIVACIÓN: Limpia cachés viejas automáticamente
 self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.filter(name => name !== CACHE_NAME)
-                    .map(name => caches.delete(name))
-            );
-        }).then(() => self.clients.claim())
-    );
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+           // Borra cualquier caché que no sea la actual
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  return self.clients.claim(); // Toma control de la página inmediatamente
 });
 
+// 3. FETCH: ESTRATEGIA NETWORK FIRST (La magia)
 self.addEventListener('fetch', event => {
-    const requestUrl = event.request.url;
-    const isMedia = requestUrl.endsWith('.mp4') || requestUrl.endsWith('.glb') || requestUrl.endsWith('.mp3') || requestUrl.endsWith('.avif');
+  event.respondWith(
+    fetch(event.request)
+      .then(networkResponse => {
+        // Si hay internet y respuesta válida:
+        // 1. Clonamos la respuesta (porque se consume al leerla)
+        const responseClone = networkResponse.clone();
+        
+        // 2. Actualizamos la caché con lo NUEVO que acabamos de bajar
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
 
-    if (isMedia) {
-        event.respondWith(
-            caches.match(event.request).then(cachedResponse => {
-                if (cachedResponse) return cachedResponse;
-                return fetch(event.request).then(networkResponse => {
-                    const clone = networkResponse.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-                    return networkResponse;
-                });
-            }).catch(() => caches.match(event.request))
-        );
-    } else {
-        event.respondWith(
-            fetch(event.request).then(networkResponse => {
-                if (!requestUrl.includes('nocache=')) {
-                    const clone = networkResponse.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-                }
-                return networkResponse;
-            }).catch(() => caches.match(event.request))
-        );
-    }
+        // 3. Entregamos la versión nueva al usuario
+        return networkResponse;
+      })
+      .catch(() => {
+        // Si falla internet (catch), entregamos lo que haya en caché
+        return caches.match(event.request);
+      })
+  );
 });
