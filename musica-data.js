@@ -365,5 +365,11 @@ const audioPlaylists = {
     ],
     "112": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Vastness.mp3"
+    ],
+    "113": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox2.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox3.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox4.mp3"
     ]
 };
