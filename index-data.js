@@ -2320,5 +2320,32 @@ const animes = [
         "aliases": [
             "Hateshinaki sukāretto"
         ]
+    },
+    {
+        "id": 113,
+        "title": "Blue Box",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox.avif",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Comedia",
+            "Deportivo",
+            "Drama",
+            "Escolar",
+            "Romance",
+            "Slice of Life",
+            "Shōnen"
+        ],
+        "lastUpdate": 1775597679018,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 25",
+        "isFinal": false,
+        "aliases": [
+            "Ao no Hako",
+            "La Caja Azul"
+        ]
     }
 ];
