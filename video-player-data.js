@@ -15744,5 +15744,134 @@ const players = {
                 "title": "Scarlet Película 1"
             }
         }
+    },
+    "113": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/caja11:a",
+                "link2": "https://drive.google.com/file/d/1OJchBdVVKewW-7Pm5ekLHEeZJFaD296x/preview",
+                "title": "Blue Box T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/caja122:7",
+                "link2": "https://drive.google.com/file/d/17rduRYVmEgqTJdPOHxALdshOYI3Mbjsm/preview",
+                "title": "Blue Box T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/cajax3:5",
+                "link2": "https://drive.google.com/file/d/1Icp3KCf3xGPe8zRRbBn9B_OlDTf4oDNG/preview",
+                "title": "Blue Box T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/caja4:8",
+                "link2": "https://drive.google.com/file/d/1NrisuZpUu3sEUZtzvhWdzKE1NQsPo8Sg/preview",
+                "title": "Blue Box T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/caja5:6",
+                "link2": "https://drive.google.com/file/d/13iiZOe5dp6L2njNyOjMlewSAnJFikGHl/preview",
+                "title": "Blue Box T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/caja6:9",
+                "link2": "https://drive.google.com/file/d/11MekRxopCJhCgG5wsZ21dGv_JRHd-HGF/preview",
+                "title": "Blue Box T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/caja7:4",
+                "link2": "https://drive.google.com/file/d/1NaQdeK-1j48XW8E2CPGb2rzJdzhThN9M/preview",
+                "title": "Blue Box T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/caja8:8",
+                "link2": "https://drive.google.com/file/d/1lnwrWp0b4UNG5ncI3ch2MyuBoPO9UTkt/preview",
+                "title": "Blue Box T1 Cap 8"
+            },
+            "9": {
+                "link": "https://odysee.com/$/embed/caja9:3",
+                "link2": "https://drive.google.com/file/d/128S1Mwx41CO3hSDdu-xc_KfnjNXOEdvP/preview",
+                "title": "Blue Box T1 Cap 9"
+            },
+            "10": {
+                "link": "https://odysee.com/$/embed/caja10:c",
+                "link2": "https://drive.google.com/file/d/1wo9zU2BW_eTchDmrpHZXNICZaYALQC4o/preview",
+                "title": "Blue Box T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/caja111:0",
+                "link2": "https://drive.google.com/file/d/1xk0rAOylBqHCvec4gEVsORyTyz6fsQ0p/preview",
+                "title": "Blue Box T1 Cap 11"
+            },
+            "12": {
+                "link": "https://odysee.com/$/embed/caja112:e",
+                "link2": "https://drive.google.com/file/d/134DBLPPMblecJvZ9weVRzPV_AyQrodxo/preview",
+                "title": "Blue Box T1 Cap 12"
+            },
+            "13": {
+                "link": "https://odysee.com/$/embed/caja13:a",
+                "link2": "https://drive.google.com/file/d/1oTEQD3a7gyybw19lojxQWKoOHmkq7shh/preview",
+                "title": "Blue Box T1 Cap 13"
+            },
+            "14": {
+                "link": "https://odysee.com/$/embed/caja14:8",
+                "link2": "https://drive.google.com/file/d/1GfjxLdLee7pSl3c9KA5EIz43g9nrQI4a/preview",
+                "title": "Blue Box T1 Cap 14"
+            },
+            "15": {
+                "link": "https://odysee.com/$/embed/caja15:4",
+                "link2": "https://drive.google.com/file/d/1y6Ba3-L5XxAcpCPrJVVi8ilwkScodgmz/preview",
+                "title": "Blue Box T1 Cap 15"
+            },
+            "16": {
+                "link": "https://odysee.com/$/embed/caja16:2",
+                "link2": "https://drive.google.com/file/d/1WG49rItHyR4vFWtHpMsvm0LLhnSDgCp0/preview",
+                "title": "Blue Box T1 Cap 16"
+            },
+            "17": {
+                "link": "https://odysee.com/$/embed/caja17:7",
+                "link2": "https://drive.google.com/file/d/1A8lxcHj7yXfJmcSmDkwDQlUu2du_ato9/preview",
+                "title": "Blue Box T1 Cap 17"
+            },
+            "18": {
+                "link": "https://odysee.com/$/embed/caja18:b",
+                "link2": "https://drive.google.com/file/d/1b5YX5Eo3FyHnNd0cRt00wSQOEpF4XmAJ/preview",
+                "title": "Blue Box T1 Cap 18"
+            },
+            "19": {
+                "link": "https://odysee.com/$/embed/cajac19:5",
+                "link2": "https://drive.google.com/file/d/1rRm-cOB9paJM3uZ4cALqbaT75g20UDZC/preview",
+                "title": "Blue Box T1 Cap 19"
+            },
+            "20": {
+                "link": "https://odysee.com/$/embed/caja20:0",
+                "link2": "https://drive.google.com/file/d/1HjdgvpVfPfQFTe9lQ9Q6h837u_RmLrBM/preview",
+                "title": "Blue Box T1 Cap 20"
+            },
+            "21": {
+                "link": "https://odysee.com/$/embed/caja21:a1",
+                "link2": "https://drive.google.com/file/d/1ZTT_8v-_ErWl9eWc3sIWmZ9pS4YptRTP/preview",
+                "title": "Blue Box T1 Cap 21"
+            },
+            "22": {
+                "link": "https://odysee.com/$/embed/caja22:1",
+                "link2": "https://drive.google.com/file/d/1hIqSPqPWu3GUk7-QWeG0VN9EuqYHNak9/preview",
+                "title": "Blue Box T1 Cap 22"
+            },
+            "23": {
+                "link": "https://odysee.com/$/embed/caja23:a",
+                "link2": "https://drive.google.com/file/d/1arnMVQYCLfwDixDA9OghCCfZNGd1PZft/preview",
+                "title": "Blue Box T1 Cap 23"
+            },
+            "24": {
+                "link": "https://odysee.com/$/embed/caja24:b",
+                "link2": "https://drive.google.com/file/d/1rRxeqM4cyT0IJAspxFBN3uR38xpFn5ET/preview",
+                "title": "Blue Box T1 Cap 24"
+            },
+            "25": {
+                "link": "https://odysee.com/$/embed/caja25:b",
+                "link2": "https://drive.google.com/file/d/1aj0_1PoD9tF5IQOeikD454Y33qwP7uOj/preview",
+                "title": "Blue Box T1 Cap 25"
+            }
+        }
     }
 };
