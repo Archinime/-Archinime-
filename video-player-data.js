@@ -15665,6 +15665,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/doro23:c",
                 "link2": "",
                 "title": "Dorohedoro T2 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/doro24:7",
+                "link2": "",
+                "title": "Dorohedoro T2 Cap 4"
             }
         }
     },
