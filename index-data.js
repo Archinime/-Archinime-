@@ -2126,11 +2126,11 @@ const animes = [
             "Horror",
             "Seinen"
         ],
-        "lastUpdate": 1775094692304,
+        "lastUpdate": 1775661913405,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/doro2.avif",
         "latestBlockName": "Temporada 2",
-        "latestEpTitle": "Capítulo 3",
+        "latestEpTitle": "Capítulo 4",
         "isFinal": false
     },
     {
