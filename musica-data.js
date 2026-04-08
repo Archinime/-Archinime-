@@ -9,9 +9,10 @@ const audioPlaylists = {
         "konosuba.mp3"
     ],
     "4": [
-        "「Call of the Witch」ReZero OST 15 ／『Main Soundtrack』.mp3",
-        "ReZERO - Starting Life in Another World - Ending.mp3",
-        "ReZERO -Starting Life in Another World- Season 2 - Ending Memento.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezero.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezero2.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezero4.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezerobruja.mp3"
     ],
     "5": [
         "mushokutensei.mp3"
