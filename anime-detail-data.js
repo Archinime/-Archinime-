@@ -514,12 +514,12 @@ const data = {
     "4": {
         "title": "Re:Zero − Empezar vida en otro mundo",
         "desc": "Subaru Natsuki es un estudiante corriente de preparatoria que conoce a una hermosa chica de pelo plateado de otro mundo que lo rescata. Para devolverle el favor decide quedarse con ella, pero el destino con el que carga la muchacha es mucho más pesado de lo que Subaru puede imaginar. Los enemigos atacan sin descanso, uno tras otro, hasta que finalmente mueren tanto él como la chica. Subaru no quiere que la chica resulte herida, con lo que jura acabar con cualquier enemigo, con cualquier destino que le aguarde, siempre por protegerla.",
-        "cover": "rezero.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezeroportada.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "re1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezerot1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -596,32 +596,32 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Ova 1",
-                "cover": "https://www.dropbox.com/scl/fi/qvlliskznnw5d0erdqgx2/memorysnow.jpg?rlkey=wpsr0aobcumds7drop5kmgvhq&st=r7jwwrec&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezeroova1.avif",
                 "eps": [
                     {
                         "title": "Memory Snow"
                     }
-                ]
+                ],
+                "name": "OVA 1"
             },
             {
                 "num": 3,
-                "name": "Ova 2",
-                "cover": "https://www.dropbox.com/scl/fi/o7fjn1yzvssr0udzpyf87/frozenbond.jpg?rlkey=va7eox0xpy8gtgj930qmk00dc&st=tbuvgcyc&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezeroova2.avif",
                 "eps": [
                     {
-                        "title": "Frozen Bonds"
+                        "title": "The Frozen Bond"
                     }
-                ]
+                ],
+                "name": "OVA 2"
             },
             {
                 "num": 4,
-                "name": "Temporada 2",
-                "cover": "https://www.dropbox.com/scl/fi/1es250wkd4i4skvdo9pjo/wermi.png?rlkey=puhwrzseyiexioav4w15cydyc&st=09oer5op&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezerot2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -698,12 +698,12 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 5,
-                "name": "Temporada 3",
-                "cover": "wermi3.png",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezerot3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -753,7 +753,18 @@ const data = {
                     {
                         "title": "Capítulo 16"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
+            },
+            {
+                "num": 6,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezerot4.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    }
+                ],
+                "name": "Temporada 4"
             }
         ]
     },
