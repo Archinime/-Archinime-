@@ -71,19 +71,29 @@ const animes = [
     {
         "id": 4,
         "title": "Re:Zero − Empezar vida en otro mundo",
-        "img": "rezero.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezeroportada.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
             "Aventura",
             "Drama",
             "Fantasía oscura",
-            "Romance",
-            "Thriller psicológico",
-            "Terror psicológico",
             "Isekai",
+            "Romance",
+            "Terror psicológico",
+            "Thriller psicológico",
             "Shōnen"
+        ],
+        "lastUpdate": 1775663031924,
+        "updateType": "ESTRENO 🚨",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezerot4.avif",
+        "latestBlockName": "Temporada 4",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Rezero"
         ]
     },
     {
