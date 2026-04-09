@@ -3211,7 +3211,7 @@ const data = {
                         "title": "Capítulo 12"
                     }
                 ],
-                "name": "Temporada 4"
+                "name": "Temporada 4 Parte I"
             },
             {
                 "num": 6,
@@ -3262,9 +3262,12 @@ const data = {
                 "eps": [
                     {
                         "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
                     }
                 ],
-                "name": "Temporada 4 Parte III - FInal"
+                "name": "Temporada 4 Parte III - FINAL"
             }
         ]
     },
