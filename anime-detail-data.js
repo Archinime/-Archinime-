@@ -12089,6 +12089,112 @@ const data = {
                     }
                 ],
                 "name": "Temporada 1"
+            },
+            {
+                "num": 2,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys2.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    }
+                ],
+                "name": "Temporada 2"
+            },
+            {
+                "num": 3,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys3.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    }
+                ],
+                "name": "Temporada 3"
+            },
+            {
+                "num": 4,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys4.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    }
+                ],
+                "name": "Temporada 4"
+            },
+            {
+                "num": 5,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys5.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    }
+                ],
+                "name": "Temporada 5"
             }
         ]
     }
