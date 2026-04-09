@@ -15711,6 +15711,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/knj11:e",
                 "link2": "",
                 "title": "Rompiendo el hielo T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/knj12:6",
+                "link2": "",
+                "title": "Rompiendo el hielo T1 Cap 2"
             }
         }
     },
