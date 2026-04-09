@@ -11846,6 +11846,9 @@ const data = {
                 "eps": [
                     {
                         "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
                     }
                 ],
                 "name": "Temporada 1"
