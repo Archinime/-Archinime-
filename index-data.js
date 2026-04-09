@@ -2357,5 +2357,32 @@ const animes = [
             "Ao no Hako",
             "La Caja Azul"
         ]
+    },
+    {
+        "id": 114,
+        "title": "The Boys",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys.avif",
+        "rating": 4.9,
+        "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
+        "genres": [
+            "Acción",
+            "Aventura",
+            "Ciencia ficción",
+            "Comedia",
+            "Comedia oscura",
+            "Drama",
+            "Misterio",
+            "Policial",
+            "Superhéroes",
+            "Thriller",
+            "Seijin"
+        ],
+        "lastUpdate": 1775763346319,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 8",
+        "isFinal": false
     }
 ];
