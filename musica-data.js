@@ -372,5 +372,8 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox2.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox3.mp3",
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/bluebox4.mp3"
+    ],
+    "114": [
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys.mp3"
     ]
 };
