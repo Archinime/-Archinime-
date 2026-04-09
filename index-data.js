@@ -2378,11 +2378,11 @@ const animes = [
             "Thriller",
             "Seijin"
         ],
-        "lastUpdate": 1775763346319,
+        "lastUpdate": 1775771701508,
         "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys1.avif",
-        "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 8",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys5.avif",
+        "latestBlockName": "Temporada 5",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false
     }
 ];
