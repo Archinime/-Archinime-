@@ -4270,62 +4270,62 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1gJcuM8PFMY0T5yHeSoulJ8mho8bthosi/preview",
                 "link2": "https://www.dropbox.com/scl/fi/t6k44f4me7n2syky58067/Dr.-Stone-Temporada-4-Capitulo-1.mp4?rlkey=h3us38696qunlxa07s73nmzfl&st=5br2jk3i&raw=1",
-                "title": "Dr. Stone T4 Cap 1"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1Lccn9Ns6swMdosHZa0SntkXydjuSX2Uk/preview",
                 "link2": "https://www.dropbox.com/scl/fi/eob9e74n46yxtv6gom8x1/Dr.-Stone-Temporada-4-Capitulo-2.mp4?rlkey=rs4h6qxwsabz6fyczg7846det&st=1ynp83e6&raw=1",
-                "title": "Dr. Stone T4 Cap 2"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1y_VuMe1G4YwuGw41pqPVGGi-cNlo-NO9/preview",
                 "link2": "https://www.dropbox.com/scl/fi/urjemxvk1fi5lqtre0zby/Dr.-Stone-Temporada-4-Capitulo-3.mp4?rlkey=sooycrmqup5nw7dp171iqw4r1&st=8tz5c3mv&raw=1",
-                "title": "Dr. Stone T4 Cap 3"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1OhI_AFHn_vd883CcN6Xra5edQjIloX4o/preview",
                 "link2": "https://www.dropbox.com/scl/fi/6fewioc9x2psq99s76tcm/Dr.-Stone-Temporada-4-Capitulo-4.mp4?rlkey=i2y2jvxpsjx4uzlcg0tr1g4xy&st=jo0egluk&raw=1",
-                "title": "Dr. Stone T4 Cap 4"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/19xBJ2oi-qXTAFsg5fpia4QMxNRH3frzJ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/z6p1icfcz47v2o4tdo4il/Dr.-Stone-Temporada-4-Capitulo-5.mp4?rlkey=aulpwrj8bbip5shjed34cao7p&st=l02u13ql&raw=1",
-                "title": "Dr. Stone T4 Cap 5"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/12jHj_QCbgXJT3hia1dAKEyWQqcaeDRXa/preview",
                 "link2": "https://www.dropbox.com/scl/fi/k5bdboay3ft6n7kn6svf7/Dr.-Stone-Temporada-4-Capitulo-6.mp4?rlkey=c8rymhfz8a70zgc4w038gwvpi&st=9dc8majv&raw=1",
-                "title": "Dr. Stone T4 Cap 6"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1OroLgsm_RrgKg4k3Et8d077epI1ZL1cs/preview",
                 "link2": "https://www.dropbox.com/scl/fi/lb08veoot6w2b6l07kyr8/Dr.-Stone-Temporada-4-Capitulo-7.mp4?rlkey=j3e6pywnel9gip52u2qkc8x60&st=rr40daq9&raw=1",
-                "title": "Dr. Stone T4 Cap 7"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1vGPlbCUaSKraBD6xuDkwAHzvnVoXjC4Q/preview",
                 "link2": "https://www.dropbox.com/scl/fi/plpchvyqjmk5aodc4ewx0/Dr.-Stone-Temporada-4-Capitulo-8.mp4?rlkey=jqq91pqmqmbyfqgwyk90aqs71&st=y0c79ld1&raw=1",
-                "title": "Dr. Stone T4 Cap 8"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1JcIr-9XKEgG3rVO5MQpXuZHFikbxiKoj/preview",
                 "link2": "https://www.dropbox.com/scl/fi/zd29wmdq6poaufvdamf25/Dr.-Stone-Temporada-4-Capitulo-9.mp4?rlkey=x2hxh2aw22gty5raje09inhas&st=3ufty3op&raw=1",
-                "title": "Dr. Stone T4 Cap 9"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1ZiMNFgF_rXzQMqIxr13Cbdp94MC3q0Ot/preview",
                 "link2": "https://www.dropbox.com/scl/fi/xv5xykemzk90kcfl9dij0/Dr.-Stone-Temporada-4-Capitulo-10.mp4?rlkey=w0zztn6d7kd9kph2tlx7b5j63&st=gxppzuql&raw=1",
-                "title": "Dr. Stone T4 Cap 10"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1CGipAz4tZM2f2DpCaLtTGMitjaIADFuR/preview",
                 "link2": "https://www.dropbox.com/scl/fi/isg0mu7rd2l4xt6aw4qc5/Dr.-Stone-Temporada-4-Capitulo-11.mp4?rlkey=nsxqvvd6k0ba5y32fjbigowoo&st=w3xa85je&raw=1",
-                "title": "Dr. Stone T4 Cap 11"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1achqUcQYqE14rcPer2G3MKfiE4fOLz74/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fnq50t4of0y1m9eu4wewx/Dr.-Stone-Temporada-4-Capitulo-12.mp4?rlkey=emqowfzxq2us7ytjt17fwcfus&st=gkkqfxle&raw=1",
-                "title": "Dr. Stone T4 Cap 12"
+                "title": "Dr. Stone Temporada 4 Parte I Cap 12"
             }
         },
         "6": {
@@ -4394,7 +4394,12 @@ const players = {
             "1": {
                 "link": "https://odysee.com/$/embed/@any:a/Drst425:5",
                 "link2": "",
-                "title": "Dr. Stone Temporada 4 Parte III - FInal Cap 1"
+                "title": "Dr. Stone Temporada 4 Parte III - FINAL Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/drst426:7",
+                "link2": "",
+                "title": "Dr. Stone Temporada 4 Parte III - FINAL Cap 2"
             }
         }
     },
