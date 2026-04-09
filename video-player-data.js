@@ -15901,5 +15901,49 @@ const players = {
                 "title": "Blue Box T1 Cap 25"
             }
         }
+    },
+    "114": {
+        "1": {
+            "1": {
+                "link": "https://odysee.com/$/embed/tby11:6",
+                "link2": "https://drive.google.com/file/d/14NoLEppytULPfI_f73Ole17ca9NBJyXq/preview",
+                "title": "The Boys T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/rbyt12:f",
+                "link2": "https://drive.google.com/file/d/1EJaHm9BNjoZS81234sHYauchMJ1JqBRn/preview",
+                "title": "The Boys T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/rbyt13:d",
+                "link2": "https://drive.google.com/file/d/1rCsQDySIul6qhthuLYAvMz0VlSGcUE3w/preview",
+                "title": "The Boys T1 Cap 3"
+            },
+            "4": {
+                "link": "https://odysee.com/$/embed/rbyt14:0",
+                "link2": "https://drive.google.com/file/d/1wPLwZ-lLVqymviJVYJ2vb-Fyu-VThXj8/preview",
+                "title": "The Boys T1 Cap 4"
+            },
+            "5": {
+                "link": "https://odysee.com/$/embed/rbyt15:f",
+                "link2": "https://drive.google.com/file/d/1zjGTQ5QJglzlCCcWCx4ekKS6UO9e_7H8/preview",
+                "title": "The Boys T1 Cap 5"
+            },
+            "6": {
+                "link": "https://odysee.com/$/embed/rbyt16:3",
+                "link2": "https://drive.google.com/file/d/1Nyut4DwW9ek46JSFUIMTr8Mk6TzKHeT7/preview",
+                "title": "The Boys T1 Cap 6"
+            },
+            "7": {
+                "link": "https://odysee.com/$/embed/rbyt17:9",
+                "link2": "https://drive.google.com/file/d/11kHXhwk1PJUexwFHT1H9ngL-j5rO2fDt/preview",
+                "title": "The Boys T1 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/tbyt18:1",
+                "link2": "https://drive.google.com/file/d/1ecKl7TTrZt4IB4HoMgEOBZs7GzQUA8CT/preview",
+                "title": "The Boys T1 Cap 8"
+            }
+        }
     }
 };
