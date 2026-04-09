@@ -12052,5 +12052,44 @@ const data = {
                 "name": "Temporada 1"
             }
         ]
+    },
+    "114": {
+        "title": "The Boys",
+        "desc": "Un grupo de vigilantes se dispuso a acabar con los superhéroes corruptos que abusan de sus superpoderes.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys.avif",
+        "uploader": "archinime12@gmail.com",
+        "seasons": [
+            {
+                "num": 1,
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/theboys1.avif",
+                "eps": [
+                    {
+                        "title": "Capítulo 1"
+                    },
+                    {
+                        "title": "Capítulo 2"
+                    },
+                    {
+                        "title": "Capítulo 3"
+                    },
+                    {
+                        "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
+                    },
+                    {
+                        "title": "Capítulo 6"
+                    },
+                    {
+                        "title": "Capítulo 7"
+                    },
+                    {
+                        "title": "Capítulo 8"
+                    }
+                ],
+                "name": "Temporada 1"
+            }
+        ]
     }
 };
