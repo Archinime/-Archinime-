@@ -14863,6 +14863,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/oshi37:e",
                 "link2": "",
                 "title": "Oshi no Ko T3 Cap 7"
+            },
+            "8": {
+                "link": "https://odysee.com/$/embed/oshi38:1",
+                "link2": "",
+                "title": "Oshi no Ko T3 Cap 8"
             }
         }
     },
