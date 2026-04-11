@@ -8272,6 +8272,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@any:a/ttw123:9",
                 "link2": "",
                 "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 23"
+            },
+            "24": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/toji124:4",
+                "link2": "",
+                "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai T1 Cap 24"
             }
         }
     },
