@@ -15759,6 +15759,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/rlkk11:c",
                 "link2": "",
                 "title": "Rilakkuma T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/rlkk12:5",
+                "link2": "",
+                "title": "Rilakkuma T1 Cap 2"
             }
         }
     },
