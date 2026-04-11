@@ -2232,11 +2232,11 @@ const animes = [
             "Slice of Life",
             "Josei"
         ],
-        "lastUpdate": 1775317964546,
-        "updateType": "ESTRENO 🚨",
+        "lastUpdate": 1775920359031,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Rilakkuma1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false
     },
     {
