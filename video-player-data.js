@@ -15740,6 +15740,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/se11:c",
                 "link2": "",
                 "title": "Snowball Earth T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/sne12:c",
+                "link2": "",
+                "title": "Snowball Earth T1 Cap 2"
             }
         }
     },
