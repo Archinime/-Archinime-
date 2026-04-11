@@ -15778,6 +15778,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/@yudi:1/dots11:e",
                 "link2": "",
                 "title": "Daemons of the Shadow Realm T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/demons21:2",
+                "link2": "",
+                "title": "Daemons of the Shadow Realm T1 Cap 2"
             }
         }
     },
