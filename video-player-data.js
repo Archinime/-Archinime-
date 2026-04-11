@@ -12470,6 +12470,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/mrmik41:5",
                 "link2": "",
                 "title": "Mairimashita! Iruma-kun T4 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/irut4c2:c",
+                "link2": "",
+                "title": "Mairimashita! Iruma-kun T4 Cap 2"
             }
         }
     },
