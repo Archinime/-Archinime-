@@ -2211,11 +2211,11 @@ const animes = [
             "Survival",
             "Seinen"
         ],
-        "lastUpdate": 1775238844907,
-        "updateType": "ESTRENO 🚨",
+        "lastUpdate": 1775868643345,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/snowball1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false
     },
     {
