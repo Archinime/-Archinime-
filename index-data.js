@@ -1635,11 +1635,11 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1775318690574,
-        "updateType": "ESTRENO 🚨",
+        "lastUpdate": 1775919995565,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma4.avif",
         "latestBlockName": "Temporada 4",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false,
         "aliases": [
             "Welcome to Demon School! Iruma-kun"
