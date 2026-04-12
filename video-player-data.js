@@ -10679,6 +10679,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/opp110:e",
                 "link2": "",
                 "title": "Seihantai na Kimi to Boku T1 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/snkimi111:5",
+                "link2": "",
+                "title": "Seihantai na Kimi to Boku T1 Cap 11"
             }
         }
     },
