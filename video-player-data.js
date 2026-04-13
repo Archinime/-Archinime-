@@ -11823,6 +11823,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/hpr210:b",
                 "link2": "",
                 "title": "Hell's Paradise T2 Cap 10"
+            },
+            "11": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/hp211:8",
+                "link2": "",
+                "title": "Hell's Paradise T2 Cap 11"
             }
         }
     },
