@@ -15812,6 +15812,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/npps11:9",
                 "link2": "",
                 "title": "Nippon Sangoku: Las tres naciones del sol carmesí T1 Cap 1"
+            },
+            "2": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/nps12:2",
+                "link2": "",
+                "title": "Nippon Sangoku: Las tres naciones del sol carmesí T1 Cap 2"
             }
         }
     },
