@@ -15831,6 +15831,11 @@ const players = {
                 "link": "https://odysee.com/$/embed/wha12:3",
                 "link2": "",
                 "title": "Witch Hat Atelier T1 Cap 2"
+            },
+            "3": {
+                "link": "https://odysee.com/$/embed/@Leomord:6/awh13:8",
+                "link2": "",
+                "title": "Witch Hat Atelier T1 Cap 3"
             }
         }
     },
