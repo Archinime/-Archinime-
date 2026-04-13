@@ -2277,11 +2277,11 @@ const animes = [
             "Post-apocalíptico",
             "Seinen"
         ],
-        "lastUpdate": 1775402835231,
-        "updateType": "ESTRENO 🚨",
+        "lastUpdate": 1776040456012,
+        "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Nippon1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 1",
+        "latestEpTitle": "Capítulo 2",
         "isFinal": false
     },
     {
