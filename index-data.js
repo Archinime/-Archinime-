@@ -2297,11 +2297,11 @@ const animes = [
             "Fantasía",
             "Seinen"
         ],
-        "lastUpdate": 1775492146890,
+        "lastUpdate": 1776093798742,
         "updateType": "NUEVO 🔥",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Atelier%20of%20Witch%20Hat1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 2",
+        "latestEpTitle": "Capítulo 3",
         "isFinal": false,
         "aliases": [
             "Atelier of Witch Hat"
