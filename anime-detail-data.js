@@ -2173,12 +2173,12 @@ const data = {
     "17": {
         "title": "The Gorila God's Go- To Girl",
         "desc": "Sophia es la tímida hija de un conde que únicamente desea llevar una vida tranquila, pero el Dios Gorila tiene otros planes. Dotada de una fuerza inigualable, se ve obligada a unirse a la Real Orden de Caballeros, lo que convierte su tranquila vida en un caos. Ahora deberá hacer malabares con los estudios, la vida de caballero y su gran poder. ¿Quién podría creer que tener la fuerza de un gorila fuera tan complicado?",
-        "cover": "gorila11.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gorila.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "gorila.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gorila1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2216,7 +2216,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
