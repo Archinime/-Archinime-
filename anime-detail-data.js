@@ -1309,12 +1309,12 @@ const data = {
     "7": {
         "title": "Saga of Tanya the Evil (Youjo Senki)",
         "desc": "Junio del año 1923. Una joven de cabello rubio y ojos azules, Tanya Degurechaff, ha entrado en la selección final de la Academia Militar Imperial y entrena en el distrito militar norte, Norden Theater, como parte de su servicio. Su entrenamiento, el primer paso hacia una brillante carrera como maga de la aviación, debería haber sido un camino de rosas, pero... las cosas toman un tinte inesperado. Estalla guerra entre el Imperio y la vecina Federación cuando esta viola las fronteras del Imperio. Un ataque sorpresa de las fuerzas de la Federación obliga a Tanya a entrar en combate.",
-        "cover": "tanya1.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tanya.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "Tanya.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tanya1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1352,27 +1352,28 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Película 1",
-                "cover": "https://www.dropbox.com/scl/fi/g2k407zpzrv7c9q52b4xk/Tanya-Movie-Poster.jpg?rlkey=ro290in1sh1mqsm4mg0nbqkku&st=h9ez020u&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tanya_pelicula.avif",
                 "eps": [
                     {
                         "title": "Película"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 3,
-                "name": "Ova 1",
-                "cover": "https://www.dropbox.com/scl/fi/y98z505h2j7j1abfrwf7b/tgkp0Jr.png?rlkey=zlv29fab2hudrncjemdvs3gvt&st=igpa8lrx&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tanya_ova.avif",
                 "eps": [
                     {
-                        "title": "OVA"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             }
         ]
     },
