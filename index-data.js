@@ -1888,7 +1888,7 @@ const animes = [
     {
         "id": 81,
         "title": "NieR: Automata Ver1.1a",
-        "img": "https://www.dropbox.com/scl/fi/54c7obrwsgh12oojlpvkx/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769098432658-1769098432658-1.avif?rlkey=md3jxz8n24z6i6ube8locfa9o&st=1kc4iygy&raw=1",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1900,10 +1900,10 @@ const animes = [
             "Psicológico",
             "Seinen"
         ],
-        "lastUpdate": 1769105148079,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/8r1nblzvbi56izp0v7kog/ImageToStl.com_sadfsf.avif?rlkey=dqr0neuyaiwp4tnhc9t8e2jcf&st=2ij9738d&raw=1",
-        "latestBlockName": "Temporada 2",
+        "lastUpdate": 1776612619128,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata2.avif",
+        "latestBlockName": "Temporada 1 - Parte II",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true,
         "aliases": [
