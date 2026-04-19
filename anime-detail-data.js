@@ -6663,12 +6663,12 @@ const data = {
     "59": {
         "title": "Akujiki Reijou to Kyouketsu Koushaku",
         "desc": "Toda dama noble debe tener unos gustos refinados, y lo que más disfruta la señorita Melphiera son… ¡los monstruos! Por desgracia, la sociedad no ve con buenos ojos tales antojos y la apoda la “Villana Voraz”. En pleno banquete, un monstruo la ataca, pero la salva el “Duque Sediento de Sangre”. Es brutal, misterioso y encantador. ¿Será él la primera persona que aprecie su monstruoso apetito?",
-        "cover": "akujiki.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akujiki.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "akujiki1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akujiki1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
