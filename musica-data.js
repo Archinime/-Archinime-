@@ -117,7 +117,7 @@ const audioPlaylists = {
         "Ending Shinsei Kourin Dacryon.mp3"
     ],
     "38": [
-        "Kami Tachi ni Hirowareta Otoko OP  Azusa Tadokoro - Yasashii Sekai Sub Español, Romaji & English.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi.mp3"
     ],
     "39": [
         "Pyramid Daigyakuten - by Spira Spica - Ore dake Haireru Kakushi Dungeon Opening.mp3"
