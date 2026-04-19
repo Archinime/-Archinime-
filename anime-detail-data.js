@@ -2752,12 +2752,12 @@ const data = {
     "24": {
         "title": "Definitivamente. ¡No me gusta mi hermano para nada!",
         "desc": "Shuusuke Takanashi es un joven apasionado por coleccionar todo tipo de contenido lascivo, pero se enfrenta a un dilema cuando su encantadora hermana menor, Nao, busca atraer su atención como mujer. Para su fortuna, o quizás su infortunio, reaparece Iroha Tsuchiura, una amiga de la infancia de Shuusuke a quien no había visto en más de 10 años. Sin embargo, Iroha comienza a seducirlo y a mostrar un lado inusual. Así da comienzo a un triángulo amoroso entre Nao, Iroha y Shuusuke, al que se une Mayuka Kondou, compañera de clase y amante de historias de amor entre chicos, desencadenando una comedia romántica única.",
-        "cover": "Oni.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "oni1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2800,7 +2800,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/1ds4mocfv035zgs7brobv/Definitivamente1.jpg?rlkey=xurw5jdgzeeww66ly0vmhiy6k&st=o8jyfz4c&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto_ova.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
