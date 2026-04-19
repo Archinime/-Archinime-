@@ -3781,12 +3781,12 @@ const data = {
     "34": {
         "title": "Magic Maker: Isekai Mahou no Tsukurikata",
         "desc": "La noche de su trigésimo cumpleaños, los sueños de usar la magia de un hombre se hacen realidad tras fallecer de forma inesperada. Al despertar se encuentra convertido en Sion, un niño de otro mundo. Él y su hermana mayor, Marie, son hijos de una familia noble de clase baja que gobierna su región. Tras recibir mensajes contradictorios de su padre, Sion y Marie emprenden una aventura para descubrir la magia.",
-        "cover": "magic maker.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MagicMaker.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/ibry5ccorh1dm82brsxrx/magic1.jpg?rlkey=w6ype0tfwbkytf85klaxri92t&st=1qyp5cxa&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MagicMaker1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3824,7 +3824,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
