@@ -2914,12 +2914,12 @@ const data = {
     "26": {
         "title": "Zootopia",
         "desc": "La metrópoli Zootopía es una ciudad de mamíferos, donde muchos animales viven y se desarrollan. Allí, la optimista agente Judy Hopps se convierte en la primera conejita de un cuerpo policial compuesto por animales duros y enormes. Judy está decidida a demostrar su valentía y se mete en un caso con Nick Wilde, un zorro parlanchín y estafador.",
-        "cover": "zootopiaportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/h4u28g5gc8h06lqpapm7n/zootopia1.jpg?rlkey=d5g0vyhomx7ki87j4kkb9gfvt&st=iy9nscle&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2929,7 +2929,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/8jsapi6ovjb24j9hwydhq/zootopia2.jpeg?rlkey=dee636x8blmjjuh6xltn7x2i5&st=x9bcl3m3&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
