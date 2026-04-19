@@ -249,17 +249,24 @@ const animes = [
     {
         "id": 11,
         "title": "Maou 2099",
-        "img": "maou2099portada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maou2099.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Ciencia ficción",
-            "Isekai Inverso",
             "Acción",
-            "Fantasía",
+            "Ciencia ficción",
             "Cyberpunk",
+            "Fantasía",
+            "Isekai Inverso",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776568255656,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maou2099t1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 12,
