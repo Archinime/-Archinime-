@@ -2701,12 +2701,12 @@ const data = {
     "23": {
         "title": "Kanchigai no Atelier Meister",
         "desc": "Kurt Rockhans es un bondadoso chico de los recados del grupo de héroes, el Colmillo de Dragón Llameante. Un día, lo destierran del grupo y descubre que tiene el rango más bajo en combate. Para ganarse la vida, Kurt acepta diversos trabajos y descubre que posee habilidades asombrosas. Aunque aún no lo sabe, Kurt posee habilidades de rango SSS en todo menos en la lucha, y se embarca en una nueva aventura.",
-        "cover": "atelier1.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/atelier.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "atelier.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/atelier1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2744,7 +2744,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
