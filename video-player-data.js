@@ -3192,14 +3192,17 @@ const players = {
             },
             "23": {
                 "link": "https://drive.google.com/file/d/1frdFkG0CYnMfKinpkkGR7kJ2PQn41Q9T/preview",
+                "link2": "",
                 "title": "The Rising of the Shield Hero T1 Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/1heu-7bboZwPkO4h8XGISmCqLWiKwceGH/preview",
+                "link2": "",
                 "title": "The Rising of the Shield Hero T1 Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1V-HU6-IgKQQo6j4YjdQhzl-FzmvLCKr8/preview",
+                "link2": "",
                 "title": "The Rising of the Shield Hero T1 Cap 25"
             }
         },
