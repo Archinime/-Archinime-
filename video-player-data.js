@@ -7096,695 +7096,716 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1Okk-3meCaTGFrNfyV5C2Uokn1DAxDWbI/preview",
-                "title": "Black Clover T1 Cap 1"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1xpzflbrlfvtyBmAnpPOdp0-E57gaQ9AN/preview",
-                "title": "Black Clover T1 Cap 2"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1O8v25aOFR6kDbwSJYOsLmql0lEFBRu5z/preview",
-                "title": "Black Clover T1 Cap 3"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1kTOMF9xAOney8XPtc2A23DU8vC69zZEC/preview",
-                "title": "Black Clover T1 Cap 4"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1JBNAVjMCMTAW0bGBms3I3imEYd5shZV_/preview",
-                "title": "Black Clover T1 Cap 5"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1JJCfygxegenyOokfI6Iy2rn1WBVyQBDt/preview",
-                "title": "Black Clover T1 Cap 6"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/18pS_xP6gaF-cvSt_9fi962dLS9k3tPzk/preview",
-                "title": "Black Clover T1 Cap 7"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/10sNooAZD-1qfUgYXqw0tICVESwWKNMqo/preview",
-                "title": "Black Clover T1 Cap 8"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1bJ2O8EH8NSHpQbjhkA8XxJIF5XDDrPRq/preview",
-                "title": "Black Clover T1 Cap 9"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/15FEgPpwS0xYXvtk8kTAUFM_l2Kae8ybc/preview",
-                "title": "Black Clover T1 Cap 10"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1zhcnh2fDreHWkOO8GzpYPpu2UgkNJDbK/preview",
-                "title": "Black Clover T1 Cap 11"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1fEeBfjWhDcJ_hOfOyq669J61I_E1PpDx/preview",
-                "title": "Black Clover T1 Cap 12"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1QDr8qsogB1GVanRlQ8kWNzIMcJM0tm-o/preview",
-                "title": "Black Clover T1 Cap 13"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1o1RJ4XYmC5BO0zIZEu6iwL9BXlG0cGHt/preview",
-                "title": "Black Clover T1 Cap 14"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/11fvJQBzwonhr63-9V6i2wwbtqCP3R79p/preview",
-                "title": "Black Clover T1 Cap 15"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/16mGE2B7AjhJpqtGsKz1pJlIK1MwYW1kK/preview",
-                "title": "Black Clover T1 Cap 16"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1xM-m3oQ6rGq6WTgZFzSPCPlouS6b10dv/preview",
-                "title": "Black Clover T1 Cap 17"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1guKmP2N341Wast0I7gBouAno1i7tfldf/preview",
-                "title": "Black Clover T1 Cap 18"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1djkxMlchQrsyVAqBukOaSZCuYLkEeceZ/preview",
-                "title": "Black Clover T1 Cap 19"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/123DSD0zVWpV2g9JIbCrmE2Wl3UG7U7nc/preview",
-                "title": "Black Clover T1 Cap 20"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1EhVYQl6Nc90tg_bRN7s0VkfRUEZR5HJI/preview",
-                "title": "Black Clover T1 Cap 21"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1cb-K_3t6TU8dk8u6UHnOXMhbFxqi3PFY/preview",
-                "title": "Black Clover T1 Cap 22"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/1ONIN-M892mfSnFMCw4Ks5BnxqBjFitr8/preview",
-                "title": "Black Clover T1 Cap 23"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/1gJvAvBHIiE7DyYJHaIOpOrJmjwechiRt/preview",
-                "title": "Black Clover T1 Cap 24"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1xFcewXwU8TUmOvTINWT198vueNa2xo9s/preview",
-                "title": "Black Clover T1 Cap 25"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 25"
             },
             "26": {
                 "link": "https://drive.google.com/file/d/1XbrECJfBGDJyaGWc72foG80Xjrsndf4J/preview",
-                "title": "Black Clover T1 Cap 26"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 26"
             },
             "27": {
                 "link": "https://drive.google.com/file/d/1MIdKch5ftr4YLVhro811PWGh03V_tvIy/preview",
-                "title": "Black Clover T1 Cap 27"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 27"
             },
             "28": {
                 "link": "https://drive.google.com/file/d/1O-izmsci-fissgg096B45iwsstgfXEb-/preview",
-                "title": "Black Clover T1 Cap 28"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 28"
             },
             "29": {
                 "link": "https://drive.google.com/file/d/18JHxRJq6Lg5S5AwtIYNMuomm6eIqb58H/preview",
-                "title": "Black Clover T1 Cap 29"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 29"
             },
             "30": {
                 "link": "https://drive.google.com/file/d/1HuQopDXQkA7mZw_HA8H9QFwluHAU_wRM/preview",
-                "title": "Black Clover T1 Cap 30"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 30"
             },
             "31": {
                 "link": "https://drive.google.com/file/d/1Ou1vnHRdkpLW_LxY7gSM_M36E1vJ1FxN/preview",
-                "title": "Black Clover T1 Cap 31"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 31"
             },
             "32": {
                 "link": "https://drive.google.com/file/d/1WoVz1lIIy-kwnOYpTNs9RqtLUFQVZLOb/preview",
-                "title": "Black Clover T1 Cap 32"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 32"
             },
             "33": {
                 "link": "https://drive.google.com/file/d/1tqqmOtMpL0c6sdrlQsi-UyYIU0SXofHN/preview",
-                "title": "Black Clover T1 Cap 33"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 33"
             },
             "34": {
                 "link": "https://drive.google.com/file/d/1JDLBd33w-pANf3R30M1P_jkYQKuLQOm7/preview",
-                "title": "Black Clover T1 Cap 34"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 34"
             },
             "35": {
                 "link": "https://drive.google.com/file/d/16YiieljI2zjEqa8XHqtwHqhXdkUSB-9R/preview",
-                "title": "Black Clover T1 Cap 35"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 35"
             },
             "36": {
                 "link": "https://drive.google.com/file/d/1CBwc4i9qPenn-U3ZOuSy0GxUkpq6uehh/preview",
-                "title": "Black Clover T1 Cap 36"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 36"
             },
             "37": {
                 "link": "https://drive.google.com/file/d/1_aiGVZJK4sgxRe0YphXxbxo2zDnkr6cw/preview",
-                "title": "Black Clover T1 Cap 37"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 37"
             },
             "38": {
                 "link": "https://drive.google.com/file/d/1RZvkI51Z4qbEl646zEsIKoVhfL25BD7B/preview",
-                "title": "Black Clover T1 Cap 38"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 38"
             },
             "39": {
                 "link": "https://drive.google.com/file/d/1S7ta9ESIJFxRRYBawlS87R6-kteIn6A6/preview",
-                "title": "Black Clover T1 Cap 39"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 39"
             },
             "40": {
                 "link": "https://drive.google.com/file/d/1e5tDfGV9rF3UcXOL0V4bLcjKV1cpLu1x/preview",
-                "title": "Black Clover T1 Cap 40"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 40"
             },
             "41": {
                 "link": "https://drive.google.com/file/d/1j2Cmb7Mhw9Gc4SmvCLcGnk1_BzybOCuk/preview",
-                "title": "Black Clover T1 Cap 41"
-            },
-            "42": {
-                "link": "https://drive.google.com/file/d/1KtDgePGAyJ0aKhWf6nNyq_j3F6YWBc9H/preview",
-                "title": "Black Clover T1 Cap 42"
-            },
-            "43": {
-                "link": "https://drive.google.com/file/d/1RSNxPCgJas3IXNd4F-UhQCFXFG3Cg3DK/preview",
-                "title": "Black Clover T1 Cap 43"
-            },
-            "44": {
-                "link": "https://drive.google.com/file/d/1PUx3XVo2pF9EzjcuI4uwLuDA0R48p6Dz/preview",
-                "title": "Black Clover T1 Cap 44"
-            },
-            "45": {
-                "link": "https://drive.google.com/file/d/1fOgcFKuq4MsNViBNaHJUMLXAoWnNLSyA/preview",
-                "title": "Black Clover T1 Cap 45"
-            },
-            "46": {
-                "link": "https://drive.google.com/file/d/1CzEuYzft3afNgNDu6uKkeMy9mSgsVfzN/preview",
-                "title": "Black Clover T1 Cap 46"
-            },
-            "47": {
-                "link": "https://drive.google.com/file/d/1EYDJfFe_1-35CGV6qoYRJOfRi8JSb-hZ/preview",
-                "title": "Black Clover T1 Cap 47"
-            },
-            "48": {
-                "link": "https://drive.google.com/file/d/11VYG8qUMPPTFiOl_MktZsihEigQ4FwjC/preview",
-                "title": "Black Clover T1 Cap 48"
-            },
-            "49": {
-                "link": "https://drive.google.com/file/d/1Tg5OzLrLy_BjqTyN7Fn-KeDBD9LF3kzX/preview",
-                "title": "Black Clover T1 Cap 49"
-            },
-            "50": {
-                "link": "https://drive.google.com/file/d/1QSs1qWzwZLgXFfeDTmi6VLgeoBi_QOq6/preview",
-                "title": "Black Clover T1 Cap 50"
-            },
-            "51": {
-                "link": "https://drive.google.com/file/d/1Krk9eAuyWcbp-_sye9NNMhBxvODhqoFp/preview",
-                "title": "Black Clover T1 Cap 51"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco I Cap 41"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1KnuWuykToIAu6dN8GjwRJkXn3wyTduSV/preview",
-                "title": "Black Clover T2 Cap 1"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1augpqWt65eyxB1UygblWSgwSjcfHox3u/preview",
-                "title": "Black Clover T2 Cap 2"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1ae2kx34csWz3EVvFQ9d6EtsulkiDPOR6/preview",
-                "title": "Black Clover T2 Cap 3"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1AiOMM6hloQ-_RBnnrm88LTgbwKDYP-MK/preview",
-                "title": "Black Clover T2 Cap 4"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1TovV8rQONhx2nXItjpeKohQ5W78DwaAZ/preview",
-                "title": "Black Clover T2 Cap 5"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1i0d7EUAJVS3x_TEnn8uhfNYogo-8gAge/preview",
-                "title": "Black Clover T2 Cap 6"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/11Fr_qkKfmahkTYF1gO6MPmWaaFv8JBP3/preview",
-                "title": "Black Clover T2 Cap 7"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1GmMnTCtK-bvkulKXCFt_x0-hTUcz4-8r/preview",
-                "title": "Black Clover T2 Cap 8"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1H8lhDGZWJQo8zqbievlGGYbd6Uk3AMTP/preview",
-                "title": "Black Clover T2 Cap 9"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/12qQR9hqOgMox5TfT1LV0NYOfWk7Fhcqf/preview",
-                "title": "Black Clover T2 Cap 10"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/12eAd_9dbPBs1_2rFp-e2KCriMDbF0vTv/preview",
-                "title": "Black Clover T2 Cap 11"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1wr9Kma92HloGYyaYJXpiUCwVHT10S8im/preview",
-                "title": "Black Clover T2 Cap 12"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1ohrrdH_Q-nsP_7vBG4IjuFkGMrbxTQVj/preview",
-                "title": "Black Clover T2 Cap 13"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/10_-sWNftjAOQiymgg0Ky8QJ74aotHeKx/preview",
-                "title": "Black Clover T2 Cap 14"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1SsSoEKJvdVwzFFabpx22p4Qf3DhxEnKU/preview",
-                "title": "Black Clover T2 Cap 15"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1QH9GIXF2_y4tOuiEfX94XOR8VP-xjfaC/preview",
-                "title": "Black Clover T2 Cap 16"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1K1yjBHdkPIlUmydBEE-zIVClFnMXS8Bs/preview",
-                "title": "Black Clover T2 Cap 17"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1b7990dxD8HX3iLSRslBwKJ4OfFMDR-LZ/preview",
-                "title": "Black Clover T2 Cap 18"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1ilOOZng5xGKrJ45Kq538hUsJw1nnZeYR/preview",
-                "title": "Black Clover T2 Cap 19"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/14INcAxBRjmhSPmaMngZifCOO2gEBzN6u/preview",
-                "title": "Black Clover T2 Cap 20"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1ykr_yZeciRmoKQ2oXGDcklafbD0vx6bt/preview",
-                "title": "Black Clover T2 Cap 21"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1-qyVE0wshIRbXYBtmj5WP-ZuaHn6be1C/preview",
-                "title": "Black Clover T2 Cap 22"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/1ONIN-M892mfSnFMCw4Ks5BnxqBjFitr8/preview",
-                "title": "Black Clover T2 Cap 23"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/1vcpESlKeR_mDb8ZGwD1oc5Dk946Q_1HS/preview",
-                "title": "Black Clover T2 Cap 24"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1bfF9WnwCBUcUCmm5BS1x3Z8uWFuqjlBK/preview",
-                "title": "Black Clover T2 Cap 25"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 25"
             },
             "26": {
                 "link": "https://drive.google.com/file/d/11tRXhJW50wMgpjmsPBhIOUwI5WptVBhP/preview",
-                "title": "Black Clover T2 Cap 26"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 26"
             },
             "27": {
                 "link": "https://drive.google.com/file/d/1CujkwRCz7qPge7XFBIIwM6cL1xamUIkk/preview",
-                "title": "Black Clover T2 Cap 27"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 27"
             },
             "28": {
                 "link": "https://drive.google.com/file/d/1hQBglyg2imbdxneDj8VU51oRPaz7jy5F/preview",
-                "title": "Black Clover T2 Cap 28"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 28"
             },
             "29": {
                 "link": "https://drive.google.com/file/d/1mSH0N9D5t4aAW4WmxxPucQcQfEZTZ3B3/preview",
-                "title": "Black Clover T2 Cap 29"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 29"
             },
             "30": {
                 "link": "https://drive.google.com/file/d/1Je7ek0vvOp_KxVuD9_R4fP3Q52YFuD8Q/preview",
-                "title": "Black Clover T2 Cap 30"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 30"
             },
             "31": {
                 "link": "https://drive.google.com/file/d/1KNUDgEAPFXVNUsT9PivkxIihnau8z3R_/preview",
-                "title": "Black Clover T2 Cap 31"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 31"
             },
             "32": {
                 "link": "https://drive.google.com/file/d/1WoVz1lIIy-kwnOYpTNs9RqtLUFQVZLOb/preview",
-                "title": "Black Clover T2 Cap 32"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 32"
             },
             "33": {
                 "link": "https://drive.google.com/file/d/1tqqmOtMpL0c6sdrlQsi-UyYIU0SXofHN/preview",
-                "title": "Black Clover T2 Cap 33"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 33"
             },
             "34": {
                 "link": "https://drive.google.com/file/d/12VNMn-E0lsgRaGdMgAf0PPtURPuhzrAc/preview",
-                "title": "Black Clover T2 Cap 34"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 34"
             },
             "35": {
                 "link": "https://drive.google.com/file/d/1GEULLu0-OUK1F3C9Bn4fMwn3hPZuh2nT/preview",
-                "title": "Black Clover T2 Cap 35"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 35"
             },
             "36": {
                 "link": "https://drive.google.com/file/d/1GGkpgv1Ww5w1yNyfY7F_8cQSJWNGoUIT/preview",
-                "title": "Black Clover T2 Cap 36"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 36"
             },
             "37": {
                 "link": "https://drive.google.com/file/d/1KzCEQDvEq0RzjelGLHMFhPqDmAU3LpTb/preview",
-                "title": "Black Clover T2 Cap 37"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 37"
             },
             "38": {
                 "link": "https://drive.google.com/file/d/1wZE6kDj12-wtIXk186AHlnN9Q0gRyGi-/preview",
-                "title": "Black Clover T2 Cap 38"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 38"
             },
             "39": {
                 "link": "https://drive.google.com/file/d/1VEX8CbQoeYjnP1SuZyI5D9h5pR2Xec1W/preview",
-                "title": "Black Clover T2 Cap 39"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 39"
             },
             "40": {
                 "link": "https://drive.google.com/file/d/1KurEGgyP_7N-coKcPK3pStRYXWPf9hkK/preview",
-                "title": "Black Clover T2 Cap 40"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 40"
             },
             "41": {
                 "link": "https://drive.google.com/file/d/1StXtDRlC3G0-mH_Rs28qgES-PZMnn9r1/preview",
-                "title": "Black Clover T2 Cap 41"
-            },
-            "42": {
-                "link": "https://drive.google.com/file/d/1iNnKEHEZYWgH8uO___sCtNjv6njaYWJa/preview",
-                "title": "Black Clover T2 Cap 42"
-            },
-            "43": {
-                "link": "https://drive.google.com/file/d/19guXWVWbPOrDd3_Hdf58l8d2UPKg2TbW/preview",
-                "title": "Black Clover T2 Cap 43"
-            },
-            "44": {
-                "link": "https://drive.google.com/file/d/11CQejr7kXEhEhglbsqm7RWvtssCGQ39-/preview",
-                "title": "Black Clover T2 Cap 44"
-            },
-            "45": {
-                "link": "https://drive.google.com/file/d/1kSQloaopr-eYk3Tdqc1LKf79Rl4tM-Mm/preview",
-                "title": "Black Clover T2 Cap 45"
-            },
-            "46": {
-                "link": "https://drive.google.com/file/d/17u53hxeLGZJVmGA79g7dzBZRL_INfHf3/preview",
-                "title": "Black Clover T2 Cap 46"
-            },
-            "47": {
-                "link": "https://drive.google.com/file/d/1FIElwz_Uk7m_1tYUjqsJ4wBW11ug7f8q/preview",
-                "title": "Black Clover T2 Cap 47"
-            },
-            "48": {
-                "link": "https://drive.google.com/file/d/1AyGgQx7DozMgHol79d0fPsHsoG-l-opg/preview",
-                "title": "Black Clover T2 Cap 48"
-            },
-            "49": {
-                "link": "https://drive.google.com/file/d/12-ltCLGWL_N5h53ACbUi_wkumvckCrTf/preview",
-                "title": "Black Clover T2 Cap 49"
-            },
-            "50": {
-                "link": "https://drive.google.com/file/d/1zAEfFrh-lvy88x0oVMO8o9xcmKjgk6OO/preview",
-                "title": "Black Clover T2 Cap 50"
-            },
-            "51": {
-                "link": "https://drive.google.com/file/d/14pT6KxLklVTamHgmyQQ5YSN5TgFPUKY1/preview",
-                "title": "Black Clover T2 Cap 51"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco II Cap 41"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1Cqs1KS-hcjrydR3OSU6-zkVYxU-VYnW-/preview",
-                "title": "Black Clover T3 Cap 1"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1o8d789yHnJWvrYTHovKrIhMPms2reKYx/preview",
-                "title": "Black Clover T3 Cap 2"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1gzxsbPE8EVRhV7aPBdDAiGtzVHEdn0mt/preview",
-                "title": "Black Clover T3 Cap 3"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1Cr5ksprzuYw9iBNMfLHHLk6L1MhCxCtY/preview",
-                "title": "Black Clover T3 Cap 4"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1JevhWFji1ew9cBX6lpSHOL2kgYPhUC_Z/preview",
-                "title": "Black Clover T3 Cap 5"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1Z47F2gu8xIy44vrA2ZKH0tQF8v45H2XQ/preview",
-                "title": "Black Clover T3 Cap 6"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1JevhWFji1ew9cBX6lpSHOL2kgYPhUC_Z/preview",
-                "title": "Black Clover T3 Cap 7"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1_F7TD94UWgg2Ih6JE8MvS9eeaYlBxmRQ/preview",
-                "title": "Black Clover T3 Cap 8"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1N0SC4qAY9PBtr5XQTF4N_Q4e2C0SXlwE/preview",
-                "title": "Black Clover T3 Cap 9"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1U57Z84I0qzK6tDbqXRgG2qTQsqahVPMx/preview",
-                "title": "Black Clover T3 Cap 10"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1YExJXX0hUzJ7JWlOYpAsg8gJ1dYWQ_q1/preview",
-                "title": "Black Clover T3 Cap 11"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1EIr2q0beMrbJiUgy1q0gAayCLNK3KWYa/preview",
-                "title": "Black Clover T3 Cap 12"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1IQ28d_et868WZivyzZa4XWxymNqRcZmf/preview",
-                "title": "Black Clover T3 Cap 13"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1hFMZ37oa-pBX8gFyqsDsi-D_6KFLtNS7/preview",
-                "title": "Black Clover T3 Cap 14"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1nnw-3nvg3nwHloVkvsNXDviqdYqsM0Ya/preview",
-                "title": "Black Clover T3 Cap 15"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1GOfD_kf2JPlXXSFHvM9VZaOKRQTK76QZ/preview",
-                "title": "Black Clover T3 Cap 16"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1WjM4JLBHHJhEjWi08OhBdAPpdijMPjBh/preview",
-                "title": "Black Clover T3 Cap 17"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1H3ktq-MVHLuZCRRmhYgsw25nyf6rHsud/preview",
-                "title": "Black Clover T3 Cap 18"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1zIkbKHdqsQBsTLEe7d37-GVAhhQZd0Xn/preview",
-                "title": "Black Clover T3 Cap 19"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1J-OT_DnXLqSHyKuMOu_7GrN6fWg6DwmH/preview",
-                "title": "Black Clover T3 Cap 20"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1F4WhTttbsysOnNf1uJ0j9vKA3cf-gYVc/preview",
-                "title": "Black Clover T3 Cap 21"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/18EhBubwvJdiHjvGHHdcLuBVzYeECgKEE/preview",
-                "title": "Black Clover T3 Cap 22"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/13B7LCuzpbrS95_SJxfu-p1QC8RSxVFzy/preview",
-                "title": "Black Clover T3 Cap 23"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/10f0vnqP4YCufMGFi4Qc9k7ypqm-3HJ2o/preview",
-                "title": "Black Clover T3 Cap 24"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/15a5b7VJdO0AH2OqdsnbzpZqtebK2a8Iq/preview",
-                "title": "Black Clover T3 Cap 25"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 25"
             },
             "26": {
                 "link": "https://drive.google.com/file/d/1zJ79cu48TstH-qgeomSO954d_knD7uGi/preview",
-                "title": "Black Clover T3 Cap 26"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 26"
             },
             "27": {
                 "link": "https://drive.google.com/file/d/1f0Q9v4PJ5zFZDUWYgp9SjL5KzjDI97Gj/preview",
-                "title": "Black Clover T3 Cap 27"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 27"
             },
             "28": {
                 "link": "https://drive.google.com/file/d/12lKwCgPQMhqv8kv-dxEMbF1AMdMXn2a1/preview",
-                "title": "Black Clover T3 Cap 28"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 28"
             },
             "29": {
                 "link": "https://drive.google.com/file/d/14jrNRNZzFIKaY51YomgCXCIHmF38PL5H/preview",
-                "title": "Black Clover T3 Cap 29"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 29"
             },
             "30": {
                 "link": "https://drive.google.com/file/d/1UakBRyT7Iu_-AxYbVi0RZKSdSN7IflAe/preview",
-                "title": "Black Clover T3 Cap 30"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 30"
             },
             "31": {
                 "link": "https://drive.google.com/file/d/1dFmBE_ww9LFg0nwVPtvMYmUBfqJQsM7b/preview",
-                "title": "Black Clover T3 Cap 31"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 31"
             },
             "32": {
                 "link": "https://drive.google.com/file/d/1-MAUFlHd79TwFGQWzipvOxxtQkcNTjma/preview",
-                "title": "Black Clover T3 Cap 32"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 32"
             },
             "33": {
                 "link": "https://drive.google.com/file/d/1z93idfB0zJTY17AnY441ozL2hHM6hKLf/preview",
-                "title": "Black Clover T3 Cap 33"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 33"
             },
             "34": {
                 "link": "https://drive.google.com/file/d/1Mm2JQuu0C_6KiL4KxIy9BTot0gpJGd5w/preview",
-                "title": "Black Clover T3 Cap 34"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 34"
             },
             "35": {
                 "link": "https://drive.google.com/file/d/1qoVLOzcj9a--kpptP_pJfMjYrwACYOf3/preview",
-                "title": "Black Clover T3 Cap 35"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 35"
             },
             "36": {
                 "link": "https://drive.google.com/file/d/1haFBSHs_90pOfJPs_yqXaWd65QdYJKHm/preview",
-                "title": "Black Clover T3 Cap 36"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 36"
             },
             "37": {
                 "link": "https://drive.google.com/file/d/11bqpzCDPXA-uy3UMgUwyHJE5paX5bsvS/preview",
-                "title": "Black Clover T3 Cap 37"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 37"
             },
             "38": {
                 "link": "https://drive.google.com/file/d/1Dxq4o7GHCaUqgpa6PPDn8leZSYJnkrxu/preview",
-                "title": "Black Clover T3 Cap 38"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 38"
             },
             "39": {
                 "link": "https://drive.google.com/file/d/1qqcCI5RsQiGWga-V-5N5GbdSNu3xKTyI/preview",
-                "title": "Black Clover T3 Cap 39"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 39"
             },
             "40": {
                 "link": "https://drive.google.com/file/d/1NTvtH-byhZbuSNeaIDipgH_b2TwcDZg7/preview",
-                "title": "Black Clover T3 Cap 40"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 40"
             },
             "41": {
                 "link": "https://drive.google.com/file/d/1OzNc8SKQJQoS24w1eE7EUybFTz6nMhpP/preview",
-                "title": "Black Clover T3 Cap 41"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 41"
             },
             "42": {
                 "link": "https://drive.google.com/file/d/1JXjBQMDyM9ltVMtMs_iZ8nOuabYdYH-A/preview",
-                "title": "Black Clover T3 Cap 42"
-            },
-            "43": {
-                "link": "https://drive.google.com/file/d/15OvbIPPSC1Nx6MosIbaYO9lob6oHxfCN/preview",
-                "title": "Black Clover T3 Cap 43"
-            },
-            "44": {
-                "link": "https://drive.google.com/file/d/1cK0FzlmvdCvvSgx4rEDUu2l4Dr_vFOsa/preview",
-                "title": "Black Clover T3 Cap 44"
-            },
-            "45": {
-                "link": "https://drive.google.com/file/d/1LYCgKl_iHnc9pM4TNP_xWB3iuqvmXXGw/preview",
-                "title": "Black Clover T3 Cap 45"
-            },
-            "46": {
-                "link": "https://drive.google.com/file/d/1prMD8Op8ck9nvCP3P3PcIpuzS2UOm-G4/preview",
-                "title": "Black Clover T3 Cap 46"
-            },
-            "47": {
-                "link": "https://drive.google.com/file/d/1UmcQwy7i1C3V5gFNsznnvgWZPT6WgzDq/preview",
-                "title": "Black Clover T3 Cap 47"
-            },
-            "48": {
-                "link": "https://drive.google.com/file/d/1wer87GEK7EZp77rGiBIWE9BKfZwQX83g/preview",
-                "title": "Black Clover T3 Cap 48"
-            },
-            "49": {
-                "link": "https://drive.google.com/file/d/1P1fwEiirdMPuJ4sN_mFF8TkphoPG8VwF/preview",
-                "title": "Black Clover T3 Cap 49"
-            },
-            "50": {
-                "link": "https://drive.google.com/file/d/1DZlZM2ivSrLc-MVQnkdTZ9NPY6PmPk_v/preview",
-                "title": "Black Clover T3 Cap 50"
-            },
-            "51": {
-                "link": "https://drive.google.com/file/d/15fulsWwV3eg8f_RywRYcP4ZqKsM5ZJ28/preview",
-                "title": "Black Clover T3 Cap 51"
-            },
-            "52": {
-                "link": "https://drive.google.com/file/d/1p1dQ_C62d6k6DyR_xq82f-7BpJXGPi_i/preview",
-                "title": "Black Clover T3 Cap 52"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco III Cap 42"
             }
         },
         "4": {
             "1": {
                 "link": "https://drive.google.com/file/d/1jYUCPo6tmxBBe9EYSAsD2pS1nGNr5yMl/preview",
-                "title": "Black Clover. La Película: La espada del rey mago"
+                "link2": "",
+                "title": "Black Clover Película 1: La espada del rey mago"
             }
         },
         "5": {
             "1": {
                 "link": "https://drive.google.com/file/d/12K1PmZEUW9djyK2FDgZP6bR5usbq4I92/preview",
-                "title": "Black Clover T4 Cap 1"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/19w8eH5FldMk2rSpxmNJeEQGYBfsHfRq4/preview",
-                "title": "Black Clover T4 Cap 2"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1aSH-rwxdOM_cp8zXTICu5RDQZfJ_4E2y/preview",
-                "title": "Black Clover T4 Cap 3"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1hGZAurHN6fBH-zdtF85ipun0Vp-Y7nBw/preview",
-                "title": "Black Clover T4 Cap 4"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1PDW0nZkubILCyhh1f078TVpluUNvMvns/preview",
-                "title": "Black Clover T4 Cap 5"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1oyGX6ea11r4AnDNe1_8xYuKuCwBinXaN/preview",
-                "title": "Black Clover T4 Cap 6"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1K0P91Ru5upWt3U6hh4EBGHj6HInp8t-C/preview",
-                "title": "Black Clover T4 Cap 7"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1T7kV9KFLeHKBxdRJsrSe2nuTRXWe-5yn/preview",
-                "title": "Black Clover T4 Cap 8"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1g2Ii5KkJHbUXY4ACTX7jSFa8BFEPLXZE/preview",
-                "title": "Black Clover T4 Cap 9"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1zrdj0LpK65NzpHD4L1MgN3YZUSMqQPUO/preview",
-                "title": "Black Clover T4 Cap 10"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1PtX8cCfe3H8yy3ETpbefZV2pGbGXu5Yn/preview",
-                "title": "Black Clover T4 Cap 11"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1OqaFDs1b_UIc22MwvR1MyYIHtDzXLKEU/preview",
-                "title": "Black Clover T4 Cap 12"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1yAjJN17doFGNATh7aSOea5P3cUISQ80p/preview",
-                "title": "Black Clover T4 Cap 13"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1ZpN4Ap64Ym5awRxuWJ8CmLKhTMXDFGR4/preview",
-                "title": "Black Clover T4 Cap 14"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/17m9yHaiTwbkFeTxSTQl-F-EfuTp3TJ52/preview",
-                "title": "Black Clover T4 Cap 15"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1G97D7hGxSaSsT4cD8W1Vj-JutLOsI561/preview",
-                "title": "Black Clover T4 Cap 16"
+                "link2": "",
+                "title": "Black Clover Temporada 1 - Arco IV Cap 16"
             }
         }
     },
