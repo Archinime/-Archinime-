@@ -9981,158 +9981,196 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1zjyfjzhTu1k7vb4Va5v-0A-hEivXY3V7/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1RtOrnoChz92X6M4cg0f-paIvNcolK4o8/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1uN482BQj-qw0xAb8O4bT7aRc6XO9KWUA/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1mvC44GzAschPTCvx8BN6gvey1hnEAqNM/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1J52H9eL71cFB6c4H4eWvuKpiZDlaH8Bb/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1hCSbUWJZIVzqZfhcEIV-3DhnGd6kNqa4/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/18TpgrMee9iIKB5v-2NC7b2QZkj4qy25v/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1TuzQJTFckoc_erKo1eLILmUQSTBnwBDN/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1awGm-e4xPgcKJ5FVrF1oxWS4RGVvUwgg/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1dxUFZye23W3qD-tTSYKRCKRP5asyFlXy/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/19Eecj6SCslVjZPYrCiHc6bkwhs3d0ea-/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1u9v0Z69--n_PvP9lMouyWLUyE-QFNIky/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T1 Cap 12"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/11AKyJflDeDe5QNuCv9BV_QCoUYe5zI5f/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1lESx4bTU4pOHWSXHeNnLo6mfVAJHHkyF/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1IJbW32-ONnSYK3lDfRnQfKoM3lx0UptN/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/18Vv6DuZg5JD-1TJq7DVI4thnZQIB_S1J/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1xEIPZjsdoYajHcI1oTXLTZvPbst5v_6b/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1inQVUKkSWOXB1dBFN0nMSlicZ5EgYFNW/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1jYMWwMy6RrhVBdGNU1F6vHeV77P_55cB/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1Ulgo22UkPE2Mb9aNITbwpCPlQCt57aCz/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1iy2I219290kDqd3FbPsky0oA6hBqBw-t/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1ZHYGhIvRt8c5li2l8mo_03LGE2RIZKff/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1_V4cIgofxPLa2NTXqgwAtsBM5dPBnxKs/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1-jq3NngpxqcLLJm4RaHe6XWdXcAdXh6d/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1V4vMJQksyWyLbbkAkb3vSl-8IrR6BkrD/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T2 Cap 13"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1QHtfFPm6zB0Y5Yz3lKSoSeHA8C737naL/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1JTWx9clEjZJxIn4-qNI2ytnY43D20iMl/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/17ep4rqYdo79pI_cHoyQOb_C-COTQ_r12/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1HD28n-zxq0ZdO3h1acIrQJSXNkn7VIZR/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1RvbM7TOl_fDOL6VNN4LvFd6pqRRpZfKo/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1kg-eSvRA157LZByG6FwFF0RT1CqVy1Tt/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1JUxlWiKecfj--9BfmRPNVApuqSyP7v_c/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1PDMLcZhUnY_e11YIYe0qLfeZv1uPj3JQ/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1IeM1LBsU5CanPw-80UGRhkuV0Rk93lKp/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1wZC89YhIVsXve-IcBUT0Ha9IcaqgCr7q/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1SuLDRMylTfs1ke_zOSYEDV6nYUVClVJv/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1YzD4T1lx7OXoSW_8Zc_-2mCLPSf5JLma/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1Uo5hAK4uAKGdeQBG5LARPCfrZ9YjkBaP/preview",
+                "link2": "",
                 "title": "Classroom of the Elite T3 Cap 13"
             }
         }
