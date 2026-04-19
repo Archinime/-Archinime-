@@ -1620,7 +1620,7 @@ const animes = [
     {
         "id": 70,
         "title": "Kimi to Koete Koi ni Naru",
-        "img": "kimitokoete.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitokoete.avif",
         "rating": 4.3,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1633,9 +1633,9 @@ const animes = [
             "Slice of Life",
             "Shōjo"
         ],
-        "lastUpdate": 1770243238332,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "kimitokoete1.avif",
+        "lastUpdate": 1776609477675,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitokoete1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true,
