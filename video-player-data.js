@@ -5460,62 +5460,62 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1TirmkEKzvfEuwgiyhszC5wsuG3Qxqk8P/preview",
                 "link2": "https://www.dropbox.com/scl/fi/eanzirqj3bdlfq2b2b0or/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-1.mp4?rlkey=7mvdwl8885e7sqfkklgz6vb91&st=m6b46m4z&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 1"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1WsouJMa49H3snfKO_BAIeKk3Tw93tMvf/preview",
                 "link2": "https://www.dropbox.com/scl/fi/oupy2vbx7lglb9r3mcwrv/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-2.mp4?rlkey=gwzpb0b5lkn2f82987k2or99t&st=1gsdwyym&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 2"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1aXKLSEITH2KUfYMusvqZEtH_H_uq0MuP/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fam3xggazllkhx8bvoukc/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-3.mp4?rlkey=porva9g30uoajgk5mu8c1blbm&st=44vm29i8&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 3"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/16AaYMJtGJ7m8Zx2Qoj5KomqWAqYYeeuG/preview",
                 "link2": "https://www.dropbox.com/scl/fi/l6js7r80fktoibccv5h5n/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-4.mp4?rlkey=v04jg4p66kcn7zg90kfhx2spa&st=bnpeggoi&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 4"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1tAHN1kZNnFcM1VJLWcb9DHoI08BDe8PM/preview",
                 "link2": "https://www.dropbox.com/scl/fi/2a5cwig01gk3y6me1rgct/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-5.mp4?rlkey=bfd4kzmdy0tjizm70pivnb98x&st=8std2ony&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 5"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/15ly6yT-bSfE6vNadc381cZ-C1bBB0B-X/preview",
                 "link2": "https://www.dropbox.com/scl/fi/3vsn2xrjz389w2hclcke1/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-6.mp4?rlkey=8khb7gvemnyl98bdes9nd5o81&st=kjez41cz&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 6"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1CW_CiXFcgooSaS9guXeDhbav8439BKNH/preview",
                 "link2": "https://www.dropbox.com/scl/fi/i59kf0mn06sx54luy5kaw/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-7.mp4?rlkey=47bombg5t2g4wuakvu3jo0peo&st=h1v1ieue&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 7"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1qjC-f_USGLuftZ9AlLRKhifWcx7ZJboD/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fkdebrj207y9jxxm4ynar/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-8.mp4?rlkey=tm208y6o02zcoe4deoibvpbrp&st=6r19mmkz&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 8"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1z53BpQTc8N3mlBXLFKX8BmbNK79yOzUv/preview",
                 "link2": "https://www.dropbox.com/scl/fi/0g4mekxk6obxqicysfurd/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-9.mp4?rlkey=2qv19e5kjv4s3zcyae1vzl16a&st=jlcejcfy&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 9"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1kgEpTxFdinEtxiRmqY-eQ9Pp4fyylGBr/preview",
                 "link2": "https://www.dropbox.com/scl/fi/k4qb14wc99e5r6fcsvo67/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-10.mp4?rlkey=wr0o95te52au4o9v88ggtucyl&st=g09bd3g1&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 10"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1ChDfmF6Zb1lvytRbbFlPDCXh2RBc1E4C/preview",
                 "link2": "https://www.dropbox.com/scl/fi/580afhv9dazfpymylm21b/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-11.mp4?rlkey=sf0ehgfkh9w7s52434sqc4kdg&st=36ydi6q9&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 11"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1HkI2oV8psFwTOALm6jsraBGTbNAf05RK/preview",
                 "link2": "https://www.dropbox.com/scl/fi/9bpz0xsez77kac32spn8l/Ore-dake-Haireru-Kakushi-Dungeon-T1-Cap-12.mp4?rlkey=nwmxngz5gqvqzyyb0fdcue1nc&st=t15zwdpt&raw=1",
-                "title": "Kami-tachi ni Hirowareta Otoko T1 Cap 12"
+                "title": "Ore dake Haireru Kakushi Dungeon T1 Cap 12"
             }
         }
     },
