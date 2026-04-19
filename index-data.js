@@ -290,18 +290,25 @@ const animes = [
     {
         "id": 13,
         "title": "Izure Saikyou no Renkinjutsushi",
-        "aliases": [
-            "Possibly the Greatest Alchemist of All Time"
-        ],
-        "img": "Izure.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/izure.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Aventura",
             "Comedia",
             "Fantasía",
             "Isekai",
             "Shōnen"
+        ],
+        "lastUpdate": 1776568700851,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/izure1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Possibly the Greatest Alchemist of All Time"
         ]
     },
     {
