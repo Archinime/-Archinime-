@@ -202,7 +202,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gnosia.mp3"
     ],
     "65": [
-        "classroomelite.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite.mp3"
     ],
     "66": [
         "frieren.mp3"
