@@ -588,7 +588,7 @@ const animes = [
     {
         "id": 26,
         "title": "Zootopia",
-        "img": "zootopiaportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -602,9 +602,9 @@ const animes = [
             "Policial",
             "Kodomo"
         ],
-        "lastUpdate": 1774310037586,
+        "lastUpdate": 1776573340151,
         "updateType": "Ninguna",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/8jsapi6ovjb24j9hwydhq/zootopia2.jpeg?rlkey=dee636x8blmjjuh6xltn7x2i5&st=x9bcl3m3&raw=1",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia2.avif",
         "latestBlockName": "Zootopia 2",
         "latestEpTitle": "Capítulo 1",
         "isFinal": false
