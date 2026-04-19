@@ -6239,12 +6239,12 @@ const data = {
     "56": {
         "title": "Spice and Wolf",
         "desc": "Lawrence, un comerciante ambulante, encuentra a una chica desnuda con orejas y cola de lobo dormida en su carreta. Ella es Holo, una diosa de la cosecha con una bestia indómita acechando en su interior. Armados con su astucia callejera y sus instintos animales, un simple vendedor ambulante y una deidad olvidada viajan por el campo mientras cosechan las riquezas de la felicidad y exponen la bancarrota que habita en el corazón humano",
-        "cover": "drgfedfgdf.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SpiceandWolf.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "spice.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SpiceandWolf%201.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6321,7 +6321,8 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
