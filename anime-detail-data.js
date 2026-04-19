@@ -5373,12 +5373,12 @@ const data = {
     "50": {
         "title": "Black Clover",
         "desc": "En un mundo en el que la magia lo es todo, Asta y Yuno son dos niños que encuentran abandonados el mismo día en una iglesia. Mientras que Yuno crece demostrando tener unos grandes poderes mágicos, Asta parece ser la única persona en el mundo que no posee capacidad mágica alguna. Eso no importará a los dos jóvenes, que aspirarán a alcanzar el puesto de Rey Mago, el mejor mago de todos. Pero para ello tendrán que ser seleccionados primero por una Orden de Caballeros Mágicos, ¡y Asta no tiene magia!",
-        "cover": "portbla.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/o18z2ffglfahrw28kkpcv/tttt1.jpg?rlkey=lrbt4548j3ynyca7kpzh4jye6&st=6erl286j&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5471,43 +5471,44 @@ const data = {
                         "title": "Capítulo 30"
                     },
                     {
+                        "title": "Capítulo 31"
+                    },
+                    {
+                        "title": "Capítulo 32"
+                    },
+                    {
+                        "title": "Capítulo 33"
+                    },
+                    {
+                        "title": "Capítulo 34"
+                    },
+                    {
+                        "title": "Capítulo 35"
+                    },
+                    {
+                        "title": "Capítulo 36"
+                    },
+                    {
+                        "title": "Capítulo 37"
+                    },
+                    {
+                        "title": "Capítulo 38"
+                    },
+                    {
+                        "title": "Capítulo 39"
+                    },
+                    {
+                        "title": "Capítulo 40"
+                    },
+                    {
                         "title": "Capítulo 41"
-                    },
-                    {
-                        "title": "Capítulo 42"
-                    },
-                    {
-                        "title": "Capítulo 43"
-                    },
-                    {
-                        "title": "Capítulo 44"
-                    },
-                    {
-                        "title": "Capítulo 45"
-                    },
-                    {
-                        "title": "Capítulo 46"
-                    },
-                    {
-                        "title": "Capítulo 47"
-                    },
-                    {
-                        "title": "Capítulo 48"
-                    },
-                    {
-                        "title": "Capítulo 49"
-                    },
-                    {
-                        "title": "Capítulo 50"
-                    },
-                    {
-                        "title": "Capítulo 51"
                     }
-                ]
+                ],
+                "name": "Temporada 1 - Arco I"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/ge29jroh9c39j5at9qjw2/tttttt2.jpg?rlkey=frv2nkcd392tto3jaxsqbgldm&st=ioxz2ogz&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5600,43 +5601,44 @@ const data = {
                         "title": "Capítulo 30"
                     },
                     {
+                        "title": "Capítulo 31"
+                    },
+                    {
+                        "title": "Capítulo 32"
+                    },
+                    {
+                        "title": "Capítulo 33"
+                    },
+                    {
+                        "title": "Capítulo 34"
+                    },
+                    {
+                        "title": "Capítulo 35"
+                    },
+                    {
+                        "title": "Capítulo 36"
+                    },
+                    {
+                        "title": "Capítulo 37"
+                    },
+                    {
+                        "title": "Capítulo 38"
+                    },
+                    {
+                        "title": "Capítulo 39"
+                    },
+                    {
+                        "title": "Capítulo 40"
+                    },
+                    {
                         "title": "Capítulo 41"
-                    },
-                    {
-                        "title": "Capítulo 42"
-                    },
-                    {
-                        "title": "Capítulo 43"
-                    },
-                    {
-                        "title": "Capítulo 44"
-                    },
-                    {
-                        "title": "Capítulo 45"
-                    },
-                    {
-                        "title": "Capítulo 46"
-                    },
-                    {
-                        "title": "Capítulo 47"
-                    },
-                    {
-                        "title": "Capítulo 48"
-                    },
-                    {
-                        "title": "Capítulo 49"
-                    },
-                    {
-                        "title": "Capítulo 50"
-                    },
-                    {
-                        "title": "Capítulo 51"
                     }
-                ]
+                ],
+                "name": "Temporada 1 - Arco II"
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/54jrohpuxlz10mxfv6a5w/ttt3.jpg?rlkey=bxief3gzjeec4nhbywqvgg9w9&st=t1afu6wn&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5729,57 +5731,57 @@ const data = {
                         "title": "Capítulo 30"
                     },
                     {
+                        "title": "Capítulo 31"
+                    },
+                    {
+                        "title": "Capítulo 32"
+                    },
+                    {
+                        "title": "Capítulo 33"
+                    },
+                    {
+                        "title": "Capítulo 34"
+                    },
+                    {
+                        "title": "Capítulo 35"
+                    },
+                    {
+                        "title": "Capítulo 36"
+                    },
+                    {
+                        "title": "Capítulo 37"
+                    },
+                    {
+                        "title": "Capítulo 38"
+                    },
+                    {
+                        "title": "Capítulo 39"
+                    },
+                    {
+                        "title": "Capítulo 40"
+                    },
+                    {
                         "title": "Capítulo 41"
                     },
                     {
                         "title": "Capítulo 42"
-                    },
-                    {
-                        "title": "Capítulo 43"
-                    },
-                    {
-                        "title": "Capítulo 44"
-                    },
-                    {
-                        "title": "Capítulo 45"
-                    },
-                    {
-                        "title": "Capítulo 46"
-                    },
-                    {
-                        "title": "Capítulo 47"
-                    },
-                    {
-                        "title": "Capítulo 48"
-                    },
-                    {
-                        "title": "Capítulo 49"
-                    },
-                    {
-                        "title": "Capítulo 50"
-                    },
-                    {
-                        "title": "Capítulo 51"
-                    },
-                    {
-                        "title": "Capítulo 52"
                     }
-                ]
+                ],
+                "name": "Temporada 1 - Arco III"
             },
             {
                 "num": 4,
-                "name": "Película 1",
-                "cover": "https://www.dropbox.com/scl/fi/blh0hn4e02uz3wabj4gx9/blackcoverpeli.jpg?rlkey=57s5u8rz5i6ktft5d1fxuqp9n&st=z8167v5s&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCoverPelicula.avif",
                 "eps": [
                     {
                         "title": "La espada del rey mago"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 5,
-                "name": "Temporada 4",
-                "cover": "https://www.dropbox.com/scl/fi/ua7bt57wpgun088hy7844/2738670.jpg?rlkey=h2771se0lzqrbge9571hb5l2k&st=egpj98jo&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5829,7 +5831,8 @@ const data = {
                     {
                         "title": "Capítulo 16"
                     }
-                ]
+                ],
+                "name": "Temporada 1 - Arco IV"
             }
         ]
     },
