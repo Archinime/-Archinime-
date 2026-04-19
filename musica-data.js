@@ -214,7 +214,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/it.mp3"
     ],
     "69": [
-        "cars.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars.mp3"
     ],
     "70": [
         "kimitokoete.mp3"
