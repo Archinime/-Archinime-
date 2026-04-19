@@ -1541,21 +1541,28 @@ const animes = [
     {
         "id": 67,
         "title": "Solo leveling",
-        "aliases": [
-            "Ore dake Level Up na Ken"
-        ],
-        "img": "sololeveling.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SoloLeveling.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
-            "Aventura",
             "Acción",
-            "RPG",
-            "Superhéroes",
+            "Aventura",
+            "Fantasía",
             "Isekai",
             "Nekketsu",
+            "RPG",
+            "Superhéroes",
             "Shōnen"
+        ],
+        "lastUpdate": 1776609187165,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SoloLeveling2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 13",
+        "isFinal": false,
+        "aliases": [
+            "Ore dake Level Up na Ken"
         ]
     },
     {
