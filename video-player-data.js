@@ -2948,7 +2948,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1_l2Nzm1PGq1OXmV97pLVISg2uRHtkN9H/preview",
                 "link2": "https://www.dropbox.com/scl/fi/3g5jiioc6njk3cej30rsp/Gorilla-no-Kami-Kara-Kago-Sareta-Cap-1.mp4?rlkey=yje8x14i5rrtbvbtqkr4dlm72&st=0wvkg08l&raw=1",
-                "title": "The Gorilla God's Go-To Girl T1 Cap 1"
+                "title": "The Gorila God's Go- To Girl T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1VQrBLVQm0PBc7EHA3DnSyGhAM-L1ei1T/preview",
