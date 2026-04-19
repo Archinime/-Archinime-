@@ -478,17 +478,24 @@ const animes = [
     {
         "id": 21,
         "title": "Shiunji-ke no Kodomotachi",
-        "img": "Shiux.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiunji-ke.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
-            "Romance",
             "Drama",
             "Harem",
+            "Romance",
             "Slice of Life",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1776572257702,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiunji-ke1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 22,
