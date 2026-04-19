@@ -3617,48 +3617,18 @@ const data = {
     "32": {
         "title": "Tsugunai Subbed",
         "desc": "Nuestro mc vive con su hermana, Nana, después de que sus padres murieran en un accidente. Crecieron compartiendo momentos tristes y felices juntos. Pero un día, Nana tuvo que pasar por una vida terrible, fue asaltada por un grupo de hombres ricos y quedó extremadamente traumatizada. Quería vengarse de esos sucios hombres ricos. Mc se convierte en profesor de secundaria donde estudia la hija de los ricos. Después de retomar el momento, los invitó a una villa remota para recibir clases complementarias. Cerró la puerta para asegurarse de que ninguno de ellos escapara y se vengara por primera vez de la chica llamada Ruriko, que tenía el mayor respeto por su asqueroso padre que agredió a la hermana de mc. El resto de la chica trató de huir, pero ¿serán capaces de escapar de la ira de mc?",
-        "cover": "TsugunaiSubbed.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsugunaiSubbed.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "name": "Episodio 1",
-                "cover": "Tsugunai Subbed portada.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsugunaiSubbed1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
                     }
-                ]
-            },
-            {
-                "num": 2,
-                "name": "Episodio 2",
-                "cover": "https://www.dropbox.com/scl/fi/jodlrfmjspmchlgnkcl75/1-5-scaled.jpg?rlkey=wlplaei093sf9llnwy7viqj9t&st=58pdmcpz&raw=1",
-                "eps": [
-                    {
-                        "title": "Capítulo 2"
-                    }
-                ]
-            },
-            {
-                "num": 3,
-                "name": "Episodio 3",
-                "cover": "https://www.dropbox.com/scl/fi/55684q9fs1scrgzt673ws/c1207375package-scaled.jpg?rlkey=jkg4qtm7ma1amjd77xd38kc7q&st=kd7b3hxp&raw=1",
-                "eps": [
-                    {
-                        "title": "Capítulo 3"
-                    }
-                ]
-            },
-            {
-                "num": 4,
-                "name": "Episodio 4",
-                "cover": "https://www.dropbox.com/scl/fi/ruk16o8fpf448j739rdi7/1n8KjfuP_o-1.jpg?rlkey=ac1scvwpd8swujz8g2k1bkwkm&st=h1cva2z5&raw=1",
-                "eps": [
-                    {
-                        "title": "Capítulo 4"
-                    }
-                ]
+                ],
+                "name": "Episodio 1"
             }
         ]
     },
