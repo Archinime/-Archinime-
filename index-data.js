@@ -1471,7 +1471,7 @@ const animes = [
     {
         "id": 64,
         "title": "Gnosia",
-        "img": "gnosiap.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gnosia.avif",
         "rating": 4.4,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1482,9 +1482,9 @@ const animes = [
             "Misterio",
             "Seinen"
         ],
-        "lastUpdate": 1775325492328,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "gnosia1.avif",
+        "lastUpdate": 1776608826587,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gnosia1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 21",
         "isFinal": true
