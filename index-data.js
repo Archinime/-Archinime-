@@ -45,7 +45,7 @@ const animes = [
     {
         "id": 3,
         "title": "KonoSuba!",
-        "img": "konosubaportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosubaportada.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -58,9 +58,9 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1774222579317,
+        "lastUpdate": 1776566285286,
         "updateType": "Ninguna",
-        "latestSeasonCover": "kono3.png",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba_ova3.avif",
         "latestBlockName": "Ova 3",
         "latestEpTitle": "Capítulo 2",
         "isFinal": false,
