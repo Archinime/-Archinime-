@@ -168,7 +168,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/FutariSoloCamp.mp3"
     ],
     "54": [
-        "Tojima Tanzaburo Wants To Be A Kamen Rider OP FULL - 『Wanna Be』 by TeddyLoid feat. Shigeru Matsuzaki.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Tojima.mp3"
     ],
     "55": [
         "Alma-chan wa Kazoku ni Naritai Ending Full『Arifuretetai』by KAF.mp3"
