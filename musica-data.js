@@ -263,9 +263,9 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kobayashis.mp3"
     ],
     "85": [
-        "https://www.dropbox.com/scl/fi/z39v3kgx5m2mr8wbyguf4/CreditlessSword-Art-Online_-Alicization-OP-Opening-1UHD-60FPS.mp3?rlkey=kdt5874k5qyp2b7bwdkx9wifw&st=jq1anfiv&raw=1",
-        "https://www.dropbox.com/scl/fi/xjlx49d3l5x4htcqtbbkq/LiSAcrossing-field-1-1st-OP.mp3?rlkey=kr2aglsnhrmedetvkjenklt9i&st=rb90uskg&raw=1",
-        "https://www.dropbox.com/scl/fi/8557cbs60g8bgx8cc3to9/INNOCENCE-1-2nd-OP.mp3?rlkey=9ksl3tntdfb5l060ypol880c0&st=lc98yhwk&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline2.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline3.mp3"
     ],
     "86": [
         "https://www.dropbox.com/scl/fi/sulyu8dxvgrtbknd7rb5m/Baki-Season-1-OP1BEASTFUL-Full.mp3?rlkey=e88df44fb05nuif9po7oogejd&st=zd5aoot5&raw=1"
