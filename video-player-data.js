@@ -2691,129 +2691,129 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1AXQuFYco9BJsBLemZ4tdUkI-1leio-eI/preview",
                 "link2": "https://www.dropbox.com/scl/fi/v1b55og1pzpkqdve462qx/T1-Cap-1-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=5gazf3htteac64x92llc63n1b&st=z9c8bdyu&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 1"
+                "title": "Reborn as a Vending Machine T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/102R0AhBHsFkakh582wQ2YJ2oA8VAkdkl/preview",
                 "link2": "https://www.dropbox.com/scl/fi/muapi036coq4futwa91vn/T1-Cap-2-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=w8kw9twk771ae8n00e1f82goi&st=1mlz9qd6&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 2"
+                "title": "Reborn as a Vending Machine T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1yJoGs0QQCv860lfOeH23Hh3N10JviZQO/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ruyqldm991cehym12b9xr/T1-Cap-3-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=40d39mqgj4dand7bikjryi05t&st=qhtgequg&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 3"
+                "title": "Reborn as a Vending Machine T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1KitDTyXJrw6zaIW8VTWPGffb5uhodFvS/preview",
                 "link2": "https://www.dropbox.com/scl/fi/1je8pxhww3d11agu73pkm/T1-Cap-4-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=y5j2jdxcn35ucv0saqtnj4ys6&st=dbjpvte1&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 4"
+                "title": "Reborn as a Vending Machine T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1mDf6MY7vwuPKJRAhRjpOOpnsD7rPa_8L/preview",
                 "link2": "https://www.dropbox.com/scl/fi/u9hjjuw7d3ab0am79pbqz/T1-Cap-5-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=1pbqxfgb4k9p5m5rjoceeubzg&st=omkp9hgd&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 5"
+                "title": "Reborn as a Vending Machine T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1QSDI-fwRWJzBGLD8sS2q6Ga09jz7XV53/preview",
                 "link2": "https://www.dropbox.com/scl/fi/tsy25xnqbylvyt9tuzumr/T1-Cap-6-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=aw68q2pju96nmq2u3fy0s6yct&st=7x8k71nd&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 6"
+                "title": "Reborn as a Vending Machine T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1xiEkOrcWNODzMODGcMMr4AoCFRc4VBfy/preview",
                 "link2": "https://www.dropbox.com/scl/fi/5k5hsbjpx6dmj74lj7kg8/T1-Cap-7-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=f8x0urihm350spn6sse4dgfbu&st=hrt7ur15&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 7"
+                "title": "Reborn as a Vending Machine T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1KnlSNjdDvsdFfrG8VriEFXJkC4D-hpH0/preview",
                 "link2": "https://www.dropbox.com/scl/fi/mwddyveu5fwwvzz0u8nea/T1-Cap-8-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=naha64tyw3ez2phkr1widb8h5&st=o5li66nc&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 8"
+                "title": "Reborn as a Vending Machine T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1CsdyVdSHj5DedH4UsHZMQ7pfZATQ_uht/preview",
                 "link2": "https://www.dropbox.com/scl/fi/08147a8lmjyzngxvvfdov/T1-Cap-9-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=ypbj4y4sczv7x1n514qk1jhqf&st=buyup2ss&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 9"
+                "title": "Reborn as a Vending Machine T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1hg3zus6QsX_XXKji2cf0RnBkdlXvB5DL/preview",
                 "link2": "https://www.dropbox.com/scl/fi/omlx6zpwb1oija101q675/T1-Cap-10-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=x5iz2p2r6erbxbbqyj6s832x3&st=jnfregr8&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 10"
+                "title": "Reborn as a Vending Machine T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1JHsEaNX9GQ3X5BOaEJRy6Zx5pDyfd9hp/preview",
                 "link2": "https://www.dropbox.com/scl/fi/e13vgzbwqn435bo626h3n/T1-Cap-11-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=tu56uqz6j7zo2at5rxwqkm625&st=qvepzfei&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 11"
+                "title": "Reborn as a Vending Machine T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1NE9m9HbJeg-qCdeEUNX98a0oipwSO6Rg/preview",
                 "link2": "https://www.dropbox.com/scl/fi/g6yappi9y3yrnmwie1f3k/T1-Cap-12-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=ftnjkhc42htb81oz95rn3kii7&st=4lbaeodu&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 12"
+                "title": "Reborn as a Vending Machine T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1XyTPjMZbSewm1jJDIgbx4_AB8VAwdkDs/preview",
                 "link2": "https://www.dropbox.com/scl/fi/d6k7tjsg1d5cdeolkrlry/T1-Cap-13-jidou-hanbaiki-ni-umarekawatta-ore-wa-meikyuu-wo-samayou.mp4?rlkey=lwv1jbw41vctzm6ybxvmheeuk&st=15z89fmg&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T1 Cap 13"
+                "title": "Reborn as a Vending Machine T1 Cap 13"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1gKbVHMUQk-nV29uExl1oYwT9YJjC1vPf/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fiv2247eihrew5apl7qu9/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-1.mp4?rlkey=mfpi5nq7992ms6fs56urmhpeb&st=yanf15xm&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 1"
+                "title": "Reborn as a Vending Machine T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1MoklqIpTIHqug4aas0osC4zVn5tbie4M/preview",
                 "link2": "https://www.dropbox.com/scl/fi/4mcfklbb0ea6jv9eebcgu/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-2.mp4?rlkey=tt27wzcn68e4i17mjj8mkhwds&st=0e47xmnb&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 2"
+                "title": "Reborn as a Vending Machine T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1wFDxziXg8oEb3GYJM3WVkVDPE28LJ2Jd/preview",
                 "link2": "https://www.dropbox.com/scl/fi/6g5teh707c7qaqf30vx18/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-3.mp4?rlkey=lfzc2l3k152n5rzybon2wyx00&st=2g38ha0q&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 3"
+                "title": "Reborn as a Vending Machine T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1un6Nt6Ad49PyNiLSVrJm1B4xm44r21T8/preview",
                 "link2": "https://www.dropbox.com/scl/fi/1p54i3haxxiipa4rob8d7/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-4.mp4?rlkey=p2x1vljnpepvvikui0wsgacj7&st=gjgq4tbu&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 4"
+                "title": "Reborn as a Vending Machine T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/18umtrpig4MdB6ioQ17_dBXrZDM9rL0xy/preview",
                 "link2": "https://www.dropbox.com/scl/fi/fd8z2gghd2y7cuzs05vu8/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-5.mp4?rlkey=it83bbnvf7w5bft1boop4987e&st=b80aikp6&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 5"
+                "title": "Reborn as a Vending Machine T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1YDh8Je7kINy8tCrpkK73Y74bPfSCDTtH/preview",
                 "link2": "https://www.dropbox.com/scl/fi/4iyxp3ak3k2tw8kic17jx/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-6.mp4?rlkey=xtgk8ftjeo56rupgv3im1mvhq&st=gh126rf6&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 6"
+                "title": "Reborn as a Vending Machine T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1qfH85YShLI68NkwK_TSby62BmHOdEbiq/preview",
                 "link2": "https://www.dropbox.com/scl/fi/3941pm4ury4h8uy32pzs2/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-7.mp4?rlkey=2slgm2g96ludmwudfic6kz0mq&st=xttmwbnz&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 7"
+                "title": "Reborn as a Vending Machine T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/15-x8SXdL9SLFTw24uZTL8sCiykUrTWo8/preview",
                 "link2": "https://www.dropbox.com/scl/fi/90e58n1aanwtcaowp9zlb/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-8.mp4?rlkey=i26dhb4a1rgblyvg1e7kmi51h&st=bwokt6ld&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 8"
+                "title": "Reborn as a Vending Machine T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1hXsQc2O8qqpqh2NKV-Va7rL_SMMBD0Yd/preview",
                 "link2": "https://www.dropbox.com/scl/fi/urwt2uoir4ykxk8at4n0y/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-9.mp4?rlkey=q4ug2eu1waazp4r2vpkopvx6f&st=fuhdxlue&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 9"
+                "title": "Reborn as a Vending Machine T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1MvSPs95ZQRR6UllGrdsKd1_qjCX-MItT/preview",
                 "link2": "https://www.dropbox.com/scl/fi/spam75xphrw6y1tdn0s80/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-10.mp4?rlkey=bf8peymo2p94leittco7ed2w5&st=erpheq6a&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 10"
+                "title": "Reborn as a Vending Machine T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1YYV-FYkjHh1KVB8Y0PmAxfqEksnpq7-u/preview",
                 "link2": "https://www.dropbox.com/scl/fi/vv9frwkxnropfx3g102kb/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-11.mp4?rlkey=y7dmffaflyjt4b9tpnm8x8ytx&st=acovu8fb&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 11"
+                "title": "Reborn as a Vending Machine T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1h4ujMB27n26EDGjerlcPZc7qEO_Yova9/preview",
                 "link2": "https://www.dropbox.com/scl/fi/7wf73dr5mhiz3ismtkg2b/Reborn-as-a-Vending-Machine-I-Now-Wander-the-Dungeon-T2-Cap-12.mp4?rlkey=hj8452bn4nkq2kbh07clmj4wc&st=3emg4oae&raw=1",
-                "title": "Reborn as a Vending Machine, I Now Wander the Dungeon T2 Cap 12"
+                "title": "Reborn as a Vending Machine T2 Cap 12"
             }
         }
     },
