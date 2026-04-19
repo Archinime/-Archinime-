@@ -241,7 +241,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce.mp3"
     ],
     "78": [
-        "https://www.dropbox.com/scl/fi/fikl8mp1ht47xmzipjgxa/Hana-Kimi-Opening-Adrena-by-YOASOBI.mp3?rlkey=94ano4j50v8nhd492j9j2uw42&st=lnjja3mi&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Hana-Kimi.mp3"
     ],
     "79": [
         "https://www.dropbox.com/scl/fi/4ngz61g7k9s87o2rb2q3f/DARK-MOON-ENHYPEN-One-In-A-Billion-Japanese-Ver..mp3?rlkey=e8jj4bofrtrbi9gio0oqto2zc&st=lg79kept&raw=1"
