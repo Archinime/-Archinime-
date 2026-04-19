@@ -764,18 +764,25 @@ const animes = [
     {
         "id": 34,
         "title": "Magic Maker: Isekai Mahou no Tsukurikata",
-        "aliases": [
-            "Magic Maker: How to Make Magic in Another World"
-        ],
-        "img": "magic maker.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MagicMaker.avif",
         "rating": 4.4,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Aventura",
             "Fantasía",
             "Isekai",
-            "Aventura",
             "Slice of Life",
             "Shōnen"
+        ],
+        "lastUpdate": 1776574551581,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MagicMaker1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Magic Maker: How to Make Magic in Another World"
         ]
     },
     {
