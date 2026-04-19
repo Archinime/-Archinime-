@@ -50,7 +50,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou.mp3"
     ],
     "16": [
-        "Kimi to Boku no Saigo.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku.mp3"
     ],
     "17": [
         "The Gorilla Gods Go- To Girl  illuminate - Nakamura Shuugo「KanRomPer」.mp3"
