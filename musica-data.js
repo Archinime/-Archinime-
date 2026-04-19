@@ -56,7 +56,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gorila.mp3"
     ],
     "18": [
-        "Chainsaw Man – The Movie Reze Arc - Theme Song FULL IRIS OUT by Kenshi Yonezu (Lyrics).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan.mp3"
     ],
     "19": [
         "MADKID  RISE (The Rising of the Shield Hero Opening Theme).mp3"
