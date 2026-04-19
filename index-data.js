@@ -1153,7 +1153,7 @@ const animes = [
     {
         "id": 51,
         "title": "My Hero Academia",
-        "img": "sgsgsdseg.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BokuNoHero.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1168,9 +1168,9 @@ const animes = [
             "Superhéroes",
             "Shōnen"
         ],
-        "lastUpdate": 1768755604711,
+        "lastUpdate": 1776605876009,
         "updateType": "Ninguna",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1udlgl7s87fdvmwi7mp2l/Airbrush-IMAGE-ENHANCER-1762698551862-1762698551862.jpg?rlkey=e8rdhex2nwtlhyl6nume5oq9t&st=ojvzr0lg&raw=1",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BokuNoHero1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 11",
         "isFinal": true,
