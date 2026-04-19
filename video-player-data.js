@@ -3073,7 +3073,8 @@ const players = {
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1kMmV1TX0SXqSQSDMBgOBW6mPJlhet66x/preview",
-                "title": "Chainsaw Man La Película: El Arco de Reze"
+                "link2": "",
+                "title": "Chainsaw Man Película 1: El Arco de Reze"
             }
         }
     },
