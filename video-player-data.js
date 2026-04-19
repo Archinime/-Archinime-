@@ -10501,34 +10501,42 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1c-f9LqX0yr0pzTf_UdE5_TXtnwfC5ssB/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/15RYzFhZFhvtaiovvRUfoA-eeec3N8sHK/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1VStC7Y65xYkFoIkGPhGOTMuuyswFn1d2/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1YjENQcOxYIsWp5trnfUEIhEerLjLWsMJ/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1ofRdCfhReg7cVzg1T9Mw6riX9KlDpuP0/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1eyUQ3lQS8oVOgKdUgVeZJP7ETb1uP4n8/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1x245zGfkS59RoHqPtCnXCnOfEpvro9ss/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1B7coVAg2KnIluw7Dj53PQC3-hWiCvq_v/preview",
+                "link2": "",
                 "title": "It - Bienvenidos a Derry T1 Cap 8"
             }
         }
