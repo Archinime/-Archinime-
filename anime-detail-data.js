@@ -4902,12 +4902,12 @@ const data = {
     "46": {
         "title": "My Dress-Up Darling",
         "desc": "Gojo Wakana es un estudiante de preparatoria que quiere convertirse en un maestro del tradicional arte de crear muñecas Hina. Aunque adora ese arte, no sabe nada de las últimas tendencias y eso hace que le cueste encajar con sus compañeros de clase. Los más populares de la clase, en especial una chica llamada Marin Kitagawa, parecen creer que él vive en un mundo aparte. Todo esto cambia por completo un día cuando Marin comparte un secreto inesperado con él y hace que sus dos mundos coincidan.",
-        "cover": "muneca.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/sgssq24vusnr09wos4hkc/temporada-1.jpg?rlkey=fuks85o0zhjdg1k9yub702sti&st=rc85ffbo&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4945,11 +4945,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/y2n6m8apw5mf26djl7j9d/dfghdf.jpg?rlkey=fxe6zlr8u0g2c2coq3we4luq1&st=lv2y4k4f&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4987,7 +4988,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
