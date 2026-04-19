@@ -1646,7 +1646,7 @@ const animes = [
     {
         "id": 71,
         "title": "Overlord",
-        "img": "overlord.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlord.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1659,7 +1659,13 @@ const animes = [
             "Isekai",
             "Sobrenatural",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776609638119,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlordp.avif",
+        "latestBlockName": "Película 1",
+        "latestEpTitle": "El Reino Sagrado",
+        "isFinal": false
     },
     {
         "id": 72,
