@@ -10569,12 +10569,12 @@ const data = {
     "89": {
         "title": "Bocchi the Rock!",
         "desc": "Hitori es una chica muy introvertida e incapaz de relacionarse socialmente. Sin embargo, ama la música y su sueño es formar una banda y ser famosa. Un día, mientras iba con su guitarra, se encuentra con una chica que necesita una guitarrista para tocar urgentemente en una banda. A partir de aquí, Hitori tendrá que superar sus miedos para poder alcanzar su sueño.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZ4dxK5ZKlNdhaL1aIHMTyPcgPwmj0xf5tck&size=2000x3000",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BochiTheRock.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZ2dxK5ZgSR67lxGIR7csx2hXKyFnYeBg4M7&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BochiTheRock1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
