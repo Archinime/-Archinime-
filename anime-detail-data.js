@@ -1778,12 +1778,12 @@ const data = {
     "11": {
         "title": "Maou 2099",
         "desc": "Hace cinco siglos, el Señor Demonio Veltol reinaba sobre una nación inmortal. Ahora, ha llegado su momento de despertar. Corre el año 2099 y la civilización ha alcanzado su máximo desarrollo, dando lugar a un paisaje de alta tecnología con imponentes rascacielos, algo nunca antes conquistado. Veltol puede ser una reliquia del pasado, pero no se equivoquen: ¡este nuevo mundo estará a su disposición!",
-        "cover": "maou2099portada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maou2099.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/axa2pt1w17qjje7rlj4vj/demonlord2099.jpg?rlkey=ttell6vd3tkr0yq8hicb6zyhh&st=desgd2d6&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maou2099t1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1821,7 +1821,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
