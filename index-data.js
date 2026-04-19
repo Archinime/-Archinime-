@@ -1274,20 +1274,27 @@ const animes = [
     {
         "id": 56,
         "title": "Spice and Wolf",
-        "aliases": [
-            "Okami to Kōshinryō"
-        ],
-        "img": "drgfedfgdf.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SpiceandWolf.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Romance",
-            "Ciencia ficción",
             "Aventura",
-            "Fantasía",
+            "Ciencia ficción",
             "Drama",
+            "Fantasía",
+            "Romance",
             "Seinen"
+        ],
+        "lastUpdate": 1776606777332,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SpiceandWolf%201.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 25",
+        "isFinal": false,
+        "aliases": [
+            "Okami to Kōshinryō"
         ]
     },
     {
