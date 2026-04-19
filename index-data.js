@@ -1320,21 +1320,28 @@ const animes = [
     {
         "id": 58,
         "title": "Rick and Morty",
-        "aliases": [
-            "Rick y Morty"
-        ],
-        "img": "rymp.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Animación",
             "Acción",
-            "Ciencia ficción",
+            "Animación",
             "Aventura",
+            "Ciencia ficción",
             "Comedia",
             "Comedia oscura",
             "Gag",
             "Seijin"
+        ],
+        "lastUpdate": 1776607021156,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty8.avif",
+        "latestBlockName": "Temporada 8",
+        "latestEpTitle": "Capítulo 10",
+        "isFinal": false,
+        "aliases": [
+            "Rick y Morty"
         ]
     },
     {
