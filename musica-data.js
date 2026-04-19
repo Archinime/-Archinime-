@@ -59,7 +59,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan.mp3"
     ],
     "19": [
-        "MADKID  RISE (The Rising of the Shield Hero Opening Theme).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo.mp3"
     ],
     "20": [
         "『Hinooka Rei - Uzuho』 Overflow Ending Full  ϟ Sub. Español - Romaji ♡.mp3"
