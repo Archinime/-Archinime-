@@ -6191,12 +6191,12 @@ const data = {
     "55": {
         "title": "Alma-chan wa Kazoku ni Naritai",
         "desc": "Creada por los científicos Enji y Suzume, Alma es una inteligencia artificial capaz de aprender por sí misma… y de destrozar un tanque en segundos. Sin embargo, cree que ellos son su padre y su padre. Ahora, la pareja deberá ocultar sus sentimientos románticos mientras enfrenta su experimento más caótico: la vida en familia.",
-        "cover": "almachan.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/almachan.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/en905hoqulm0ih9epmjcf/almachan1.jpg?rlkey=dm7s8l0lhplo8eshfsgj7fdyk&st=ji8mmsmi&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/almachan1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
