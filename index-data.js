@@ -1205,7 +1205,7 @@ const animes = [
     {
         "id": 53,
         "title": "Futari Solo Camp",
-        "img": "futaripor.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/FutariSoloCamp.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1215,9 +1215,9 @@ const animes = [
             "Slice of Life",
             "Seinen"
         ],
-        "lastUpdate": 1768678787339,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/tmonp4atoj90k87ojxtdf/Airbrush-IMAGE-ENHANCER-1763472470283-1763472470284.jpg?rlkey=ctc7gslr2ttsotj67parqf8ai&st=n96z3g28&raw=1",
+        "lastUpdate": 1776606328974,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/FutariSoloCamp1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 24",
         "isFinal": false,
