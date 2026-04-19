@@ -336,17 +336,26 @@ const animes = [
     },
     {
         "id": 15,
-        "title": "Reborn as a Vending Machine, I Now Wander the Dungeon",
-        "aliases": [
-            "Jidōhanbaiki ni Umarekawatta Ore wa Meikyū ni Samayō"
-        ],
-        "img": "jidou.avif",
+        "title": "Reborn as a Vending Machine",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou.avif",
         "rating": 4.1,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Aventura",
+            "Comedia",
             "Fantasía",
             "Isekai",
             "Shōnen"
+        ],
+        "lastUpdate": 1776569203417,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Jidōhanbaiki ni Umarekawatta Ore wa Meikyū ni Samayō"
         ]
     },
     {
