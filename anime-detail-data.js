@@ -1880,12 +1880,12 @@ const data = {
     "13": {
         "title": "Izure Saikyou no Renkinjutsushi",
         "desc": "Takumi Iruma termina siendo arrastrado a una invocación heroica, aun cuando él no es ningún héroe. Llamado por error a Mildgard, un mundo fantástico de magia y espadas, Takumi ve en esto la oportunidad de empezar desde cero. Aunque anhela una vida pacífica, la diosa Nolyn le concede la “Alquimia”, una habilidad sumamente poderosa que le permite crear casi cualquier cosa, desde espadas sagradas hasta naves voladoras.",
-        "cover": "Izure.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/izure.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "IZU.PNG",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/izure1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1923,7 +1923,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
