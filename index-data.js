@@ -1061,7 +1061,7 @@ const animes = [
     {
         "id": 47,
         "title": "Hazbin Hotel",
-        "img": "hhzz.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1073,9 +1073,9 @@ const animes = [
             "Policial",
             "Seijin"
         ],
-        "lastUpdate": 1769033282341,
+        "lastUpdate": 1776577961168,
         "updateType": "Ninguna",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/iz2jt0avm2d625tjb8trq/Airbrush-Image-Enhancer-1761697102126.jpg?rlkey=isj2usvel3oh22io1o620lfoi&st=8laf3wdv&raw=1",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 8",
         "isFinal": false,
