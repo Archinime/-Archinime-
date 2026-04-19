@@ -2597,13 +2597,12 @@ const data = {
     "22": {
         "title": "Goblin Slayer",
         "desc": "Una joven sacerdotisa ha formado su primer grupo de aventureros, pero no tardan mucho en verse en serios problemas. Por suerte, quien aparece en su rescate es el Asesino de Goblins, un hombre que ha dedicado su vida a exterminar a todo goblin viviente por los medios que fueran necesarios. Cuando comienzan a circular rumores sobre sus hazañas, no hay forma de saber quién será el próximo en aparecer…",
-        "cover": "goblinslayerportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/goblinslayerportada.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "name": "Temporada 1",
-                "cover": "https://www.dropbox.com/scl/fi/eprbvirmsv2f73rcqu8vy/Goblin_Slayer.jpg?rlkey=2auszeahlxr9tgf8ytxyc3wg3&st=0e2ixy5v&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Goblin_Slayer1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2641,22 +2640,22 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Película: Goblin's Crown (Castellano)",
-                "cover": "https://www.dropbox.com/scl/fi/fl8lykxy3iqpw8j4r4tcs/MV5BZGNkMWE2ZjEtODM0NC00YjdlLWEzOTYtZmM4ZGJjOWE5YTM5XkEyXkFqcGc-._V1_.jpg?rlkey=8pb1uj6gmz5qvfkuhhwhbjlom&st=16cqmm92&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Goblin_Slayer_pelicula.avif",
                 "eps": [
                     {
                         "title": "Película"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 3,
-                "name": "Temporada 2",
-                "cover": "https://www.dropbox.com/scl/fi/496rr0hjixfyfuj6gwwa8/filters_quality-95-format-webp.jpg?rlkey=vcq8iyk4ngt39bzrk9t9ft2pj&st=0dauo7kk&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Goblin_Slayer2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2694,7 +2693,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
