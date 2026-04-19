@@ -3573,7 +3573,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1bwxQwD2-dwkRTFirFNDMwKa_2-xmOpin/preview",
                 "link2": "https://www.dropbox.com/scl/fi/051otbpbx8r44fs3qvv7v/Goblin-Slayer-Goblins-CROWN-la-Pel-cula-en-Castellano.mp4?rlkey=7igfrqrsebubwyog7i6mmsz48&st=e7d0kzmj&raw=1",
-                "title": "Película: Goblin's Crown (Castellano)"
+                "title": "Goblin Slayer Película 1: Película"
             }
         },
         "3": {
