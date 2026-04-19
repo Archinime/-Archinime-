@@ -4856,28 +4856,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1LAgAYWuQ4wgJK4QD9949DbSNFYGn8Eob/preview",
                 "link2": "https://www.dropbox.com/scl/fi/kj79c7ts1h7p70wtqbb3y/Tsugunai-Subbed-Cap-1.mp4?rlkey=eog59ldhku6wwqovibjfgr9r1&st=4vunfix2&raw=1",
-                "title": "Tsugunai Subbed SUB Cap 1"
-            }
-        },
-        "2": {
-            "2": {
-                "link": "https://drive.google.com/file/d/1kOM5TV5yRvWH6C_2ODqzNOoMdFNojW9O/preview",
-                "link2": "https://www.dropbox.com/scl/fi/8trdqujmfiac8zmwqk55f/Tsugunai-Subbed-Cap-2.mp4?rlkey=44ggx7uhpwwpeyg8bf10r8s3p&st=jcdeqcr1&raw=1",
-                "title": "Tsugunai Subbed SUB Cap 2"
-            }
-        },
-        "3": {
-            "3": {
-                "link": "https://drive.google.com/file/d/1HndZ94GpgAIzMA3_m0RP6HTKJmPWNFoD/preview",
-                "link2": "https://www.dropbox.com/scl/fi/6lqaol686fkktk16o2jgl/Tsugunai-Subbed-Cap-3.mp4?rlkey=kmpx130t8n8vknwu5pnswy4qv&st=59c1uubg&raw=1",
-                "title": "Tsugunai Subbed SUB Cap 3"
-            }
-        },
-        "4": {
-            "4": {
-                "link": "https://drive.google.com/file/d/1Nd3EAd9lIBlBO9crEugmyOqC8llgFO-Z/preview",
-                "link2": "https://www.dropbox.com/scl/fi/ytpnotvj9rurxs20nwxmk/Tsugunai-Subbed-Cap-4.mp4?rlkey=f9h9k3olzzyzlosstu3u34g0v&st=eb8imc60&raw=1",
-                "title": "Tsugunai Subbed SUB Cap 4"
+                "title": "Tsugunai Subbed Episodio 1 Cap 1"
             }
         }
     },
