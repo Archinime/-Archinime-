@@ -10370,105 +10370,130 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1831tHql76bHG9B8EAY49WksXu0InK6ID/preview",
-                "title": "Solo Leveling T1 Cap 1"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/14kygr2Gv4-PDGBcTleOWZyUYX_eC8Ph4/preview",
-                "title": "Solo Leveling T1 Cap 2"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1ZggR2UvLbxH2kCAYAetGePlwDq-1qixj/preview",
-                "title": "Solo Leveling T1 Cap 3"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1RK_8XGfV-019m3iioEWl0jZC3RtJYhiU/preview",
-                "title": "Solo Leveling T1 Cap 4"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1B_pomfkP_iMINhjsC2f_mcS71RfRlmrK/preview",
-                "title": "Solo Leveling T1 Cap 5"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1_R3-c_aqYODKxMxR4dyw8VOe5YM2Flpx/preview",
-                "title": "Solo Leveling T1 Cap 6"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1BOfrrdn3COl1alHEeDiZKiTTlIJbD8hk/preview",
-                "title": "Solo Leveling T1 Cap 7"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1SARlMg6h9QxI_E1RlspdluQ2mfNwcu8s/preview",
-                "title": "Solo Leveling T1 Cap 8"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1-T2UY7wHPFQAt7Gz4Hkvb7aTB2kyCXMA/preview",
-                "title": "Solo Leveling T1 Cap 9"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/16iwobqoYldND2yZdrStLuymUS8CvI_fr/preview",
-                "title": "Solo Leveling T1 Cap 10"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/13ngq33m-FGsU2ZIdUkOezrZsW5XxoChC/preview",
-                "title": "Solo Leveling T1 Cap 11"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1zh14T7VK5lYflFw4Czgmo-1yhvynY74G/preview",
-                "title": "Solo Leveling T1 Cap 12"
+                "link2": "",
+                "title": "Solo leveling T1 Cap 12"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1NtGKNuwnvmYZIafzwbseqTAiMsKu2qug/preview",
-                "title": "Solo Leveling T2 Cap 1"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/18x7JD_5n-DBDMFfWAlzHkGWKRalQMi7p/preview",
-                "title": "Solo Leveling T2 Cap 2"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1Zs22yqy2P1K-weH3ZyK9QAlT1FXu9XtV/preview",
-                "title": "Solo Leveling T2 Cap 3"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/15b9arlpzRlltbBC09zvSEPilPxIpxPVM/preview",
-                "title": "Solo Leveling T2 Cap 4"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1wCiVa0-XsX8nvqMvPYhO6uyNdLAo7zMl/preview",
-                "title": "Solo Leveling T2 Cap 5"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1YO5MwjFZemos-CehaUaGIXzJG7N64BIV/preview",
-                "title": "Solo Leveling T2 Cap 6"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1OphXlnf-SoXjMQ1_iXyKvL8vsxk5H9Xk/preview",
-                "title": "Solo Leveling T2 Cap 7"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1hnq3gDqz8aCyfPa8o5dV_kOs-MSvBrlT/preview",
-                "title": "Solo Leveling T2 Cap 8"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1S8uLRmrO2spTFFuL4tcKgYGxIcS2KT6C/preview",
-                "title": "Solo Leveling T2 Cap 9"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1kNXcHYBMDy4cnvJKRlahpDZ6G1qLAUq7/preview",
-                "title": "Solo Leveling T2 Cap 10"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1zvYTFwzdsAkQbI8x5LaBTc1vQX22WyVw/preview",
-                "title": "Solo Leveling T2 Cap 11"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1mvbPkuXMQwo94hxZFeIPymTJiTagTDmQ/preview",
-                "title": "Solo Leveling T2 Cap 12"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1d6l0YJOHI3KRcdxp9JiJa7xYOfb6xVDy/preview",
-                "title": "Solo Leveling T2 Cap 13"
+                "link2": "",
+                "title": "Solo leveling T2 Cap 13"
             }
         }
     },
