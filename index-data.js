@@ -429,21 +429,28 @@ const animes = [
     {
         "id": 19,
         "title": "The Rising of the Shield Hero",
-        "aliases": [
-            "Tate no Yuusha no Nariagari",
-            "El Héroe del Escudo"
-        ],
-        "img": "heroedelescudoportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Acción",
             "Aventura",
             "Drama",
             "Fantasía",
-            "Acción",
-            "Romance",
             "Isekai",
+            "Romance",
             "Seinen"
+        ],
+        "lastUpdate": 1776570338573,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo4.avif",
+        "latestBlockName": "Temporada 4",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Tate no Yuusha no Nariagari",
+            "El Héroe del Escudo"
         ]
     },
     {
