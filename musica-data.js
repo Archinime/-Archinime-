@@ -83,7 +83,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia.mp3"
     ],
     "27": [
-        "clevates.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/clevatess.mp3"
     ],
     "28": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone1.mp3",
