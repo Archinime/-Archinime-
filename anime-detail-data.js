@@ -96,12 +96,12 @@ const data = {
     "2": {
         "title": "Jujutsu Kaisen",
         "desc": "Yuji Itadori se traga un dedo maldito para salvar a alguien de su clase y ahora Ryomen Sukuna, un poderoso hechicero malvado conocido como el Rey de las Maldiciones, vive en su alma. Las maldiciones son seres sobrenaturales creadas a partir de las emociones negativas de los humanos. Esta energía maldita puede usarse como fuente de poder por parte de los hechiceros y de los espíritus malditos.Guiado por los hechiceros, Yuji Itadori se une a la Escuela de Bachillerato Técnico de Brujería de Tokio, una organización que enfrenta a las maldiciones. Con la ayuda de su maestro, Satoru Gojo, Itadori hace amistad con Megumi Fushiguro y Nobara Kugisaki, ambos estudiantes de primer año como él.",
-        "cover": "Jujutsu.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Jujutsu.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/vqhp3mr9kij4hp558zmrg/5993750.jpg?rlkey=y3xyzpbcea49q0q26kdi04lxr&st=szjxzi55&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jujutsup.avif",
                 "eps": [
                     {
                         "title": "Jujutsu Kaisen 0"
@@ -111,7 +111,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "Jujutsu1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jujutsu1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -190,7 +190,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "Jujutsu2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jujutsu2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -266,7 +266,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jujutsu3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
