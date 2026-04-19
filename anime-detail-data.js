@@ -4592,12 +4592,12 @@ const data = {
     "43": {
         "title": "Maplestar",
         "desc": "✨𝗠𝗮𝗽𝗹𝗲𝘀𝘁𝗮𝗿, un creador de contenido y artista conocido por sus animaciones para adultos de personajes de anime",
-        "cover": "pm.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/avjrkhe5q0yv4kqwrx4x0/Spy-x-Family-Yor-Forger-ganha-animacao-18-em-2D3.jpg?rlkey=18e6y2j4xk7255k9ktj3aglu8&st=mt2bb8ud&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_spyx.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4610,7 +4610,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/nmfbx7us1q9k5dh5qglfy/aliaM.jpg?rlkey=yath585uqogp214rxh7ulepf9&st=466xsoqv&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_alya.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4620,7 +4620,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/fswo0t4mzwijbspj2v9g4/nobaraM.jfif?rlkey=e787f0szmw8n05ursu8hihqmy&st=aebv02ah&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_novara.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4633,7 +4633,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/uzfdxexukg9sr4wp1z94w/aquaM.jfif?rlkey=igtyabr214tsilqnnhy5o1shx&st=lyjb3gm2&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_aqua.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4643,7 +4643,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://www.dropbox.com/scl/fi/nbr045h8grownaa3bu464/makimaM.jpg?rlkey=ewy21pxbt7mgop4yfrd9v1vo2&st=j6a6rtqw&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_chaiw.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4656,7 +4656,7 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "https://www.dropbox.com/scl/fi/by32qz4bh39bx2yb34gwa/dan.jpg?rlkey=o64kxwhd1y9hmoskxghyvc22g&st=qqax6yc6&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_momo.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4666,7 +4666,7 @@ const data = {
             },
             {
                 "num": 7,
-                "cover": "https://www.dropbox.com/scl/fi/ggq2edhfeox5pnjd2sx5x/FERN.jpg?rlkey=7lyh8ni85qonzs5q768cd0zda&st=pf0aghys&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_fern.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4676,7 +4676,7 @@ const data = {
             },
             {
                 "num": 8,
-                "cover": "https://www.dropbox.com/scl/fi/34xwkjrydls96q5z1hyre/8-min-nier.jpg?rlkey=0apo1w3wwod1r6d8l57amq2jo&st=23pwus4w&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_autonama.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4686,7 +4686,7 @@ const data = {
             },
             {
                 "num": 9,
-                "cover": "https://www.dropbox.com/scl/fi/hq01tsig0ac9h2e8wq3rp/zelda-1.jpg?rlkey=z5i1ghzkn0np8009d39t01lma&st=jb28zqch&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_zelda.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4699,7 +4699,7 @@ const data = {
             },
             {
                 "num": 10,
-                "cover": "https://www.dropbox.com/scl/fi/su4u2rau7cppordofr9ai/kudasai_dxd-74.jpg?rlkey=rayqt9zi559n32agnrzbymx2e&st=7jpc5q9o&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_school.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4709,7 +4709,7 @@ const data = {
             },
             {
                 "num": 11,
-                "cover": "https://www.dropbox.com/scl/fi/2fatzekmlexw5f0c6avfz/rezesroM.jpg?rlkey=oxfbyto5hf3680a1kipvp4j4h&st=y6evnq26&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_rezero.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4719,7 +4719,7 @@ const data = {
             },
             {
                 "num": 12,
-                "cover": "https://www.dropbox.com/scl/fi/qjwxek3z34b2i97zrrndk/mizuharaM.jpg?rlkey=x5xkgdapedk1lcjow9weo6jm4&st=e2dtm2po&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_mizuhara.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4729,7 +4729,7 @@ const data = {
             },
             {
                 "num": 13,
-                "cover": "https://www.dropbox.com/scl/fi/d0gfqghwy4c5ny1k4uydw/tate.jpg?rlkey=s5nbk49nlerdhyzbxy6q0kgia&st=94zaxd74&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_tate.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4739,7 +4739,7 @@ const data = {
             },
             {
                 "num": 14,
-                "cover": "inosukexnetsuko.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/inosukexnetsuko.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4752,7 +4752,7 @@ const data = {
             },
             {
                 "num": 15,
-                "cover": "https://www.dropbox.com/scl/fi/totid4w011l0ftg088jwf/erisM.jpg?rlkey=bv2zu5u17sst8k4cjct0l0e0u&st=7f5sh8co&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar_maria.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4765,7 +4765,7 @@ const data = {
             },
             {
                 "num": 16,
-                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/reze.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezee.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
