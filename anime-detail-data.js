@@ -7859,12 +7859,12 @@ const data = {
     "70": {
         "title": "Kimi to Koete Koi ni Naru",
         "desc": "Mari, una estudiante de secundaria, no se imaginaba que se enamoraría de Tsunagu, un amable y sensible hombres bestia, los cuales están segregados tras unos muros. Mari y Tsunagu demuestran que sus diferencias son, en realidad, un puente. ¿Podrá su amor superar la brecha entre ambas especies?",
-        "cover": "kimitokoete.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitokoete.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "kimitokoete1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitokoete1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
