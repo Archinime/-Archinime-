@@ -180,7 +180,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumi.mp3"
     ],
     "58": [
-        "rym.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty.mp3"
     ],
     "59": [
         "akujiki.mp3"
