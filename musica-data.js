@@ -126,7 +126,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch.mp3"
     ],
     "41": [
-        "Bling-Bang-Bang-Born.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle.mp3"
     ],
     "42": [
         "Kusuriya no Hitorigoto ed 1.mp3",
