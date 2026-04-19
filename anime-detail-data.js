@@ -6714,12 +6714,12 @@ const data = {
     "60": {
         "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka",
         "desc": "Scarlet ya ha soportado bastante los abusos de su prometido. El segundo príncipe Kyle no solo es arrogante y vulgar, sino que además rompe su compromiso con ella en pleno baile. Y, por si fuera poco, la acusa de un crimen que jamás cometió. Enfadada por la traición, Scarlet desata toda su furia y la propina al príncipe y a sus nobles una paliza que nunca olvidarán.",
-        "cover": "saigo ni hitotsu.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SaigoNiHitotsu.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "ca08afa9a48d.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SaigoNiHitotsu1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6760,7 +6760,8 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
