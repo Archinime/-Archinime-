@@ -6017,12 +6017,12 @@ const data = {
     "53": {
         "title": "Futari Solo Camp",
         "desc": "Gen Kinokura solo quería disfrutar de sus tranquilos viajes de acampada en solitario: sin distracciones ni problemas. Entonces aparece Shizuku Kusano, una novata despistada pero entusiasta que irrumpe en su campamento (literalmente). Ahora, este excursionista algo molesto se ve obligado a enseñarle los entresijos del camping. ¡Risas, percances y momentos entrañables aguardan esta aventura de acampada bajo las estrellas!",
-        "cover": "futaripor.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/FutariSoloCamp.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/tmonp4atoj90k87ojxtdf/Airbrush-IMAGE-ENHANCER-1763472470283-1763472470284.jpg?rlkey=ctc7gslr2ttsotj67parqf8ai&st=n96z3g28&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/FutariSoloCamp1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
