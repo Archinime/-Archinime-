@@ -4808,12 +4808,12 @@ const data = {
     "45": {
         "title": "Tondemo Skill de Isekai Hourou Meshi",
         "desc": "Tsuyoshi Mukoda es un oficinista cualquiera al que de repente transportan a otro mundo. La habilidad única que obtiene al llegar a este nuevo mundo es una que parece un tanto inútil, “Supermercado Online”. Al inicio Mukoda está muy deprimido, ¡pero resulta que toda la comida moderna que puede proporcionar a este nuevo mundo con su nueva habilidad tiene algunos efectos increíbles!",
-        "cover": "todemo.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/w97i64p4kr14uk0y00prb/5q0oW3C6VOtX-RKU7QfJCn4rt1SgjRbbtciZmqz7AsI.jpg?rlkey=oe6zk4sr5t6cccvm9kjv6hxaq&st=1ri0jwi7&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4851,11 +4851,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/6qf8b9v8htkye6hitgu0i/MV5BZjIyMzY0MDQtOThjZS00ZWNkLWI3ODgtZTY1OWJhYWU2MjZiXkEyXkFqcGc-._V1_FMjpg_UX1000_.jpg?rlkey=m7b2hww7iecb9nmh3gl2pt05r&st=hn7qr180&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4893,7 +4894,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
