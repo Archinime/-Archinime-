@@ -159,7 +159,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover.mp3"
     ],
     "51": [
-        "Boku no Hero Academia Season 1 Ending 1 full『 Brian the Sun - Heroes』【Sub EspañolJaponés】AMV.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BokuNoHero.mp3"
     ],
     "52": [
         "Kakou no iinazuke OP FULL  Kiyoe Yoshioka Dekoboko  Sub Español, Romaji & English-AMV.mp3"
