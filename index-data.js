@@ -149,21 +149,28 @@ const animes = [
     },
     {
         "id": 7,
-        "title": "Saga of Tanya the Evil",
-        "aliases": [
-            "Yōjo Senki"
-        ],
-        "img": "tanya1.avif",
+        "title": "Saga of Tanya the Evil (Youjo Senki)",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tanya.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
             "Aventura",
+            "Ciencia ficción",
+            "Drama",
             "Fantasía",
             "Militar",
-            "Drama",
-            "Ciencia ficción",
             "Seinen"
+        ],
+        "lastUpdate": 1776567256710,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tanya_ova.avif",
+        "latestBlockName": "Ova 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false,
+        "aliases": [
+            "Yōjo Senki"
         ]
     },
     {
