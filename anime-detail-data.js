@@ -2546,12 +2546,12 @@ const data = {
     "21": {
         "title": "Shiunji-ke no Kodomotachi",
         "desc": "La familia Shiunji y sus siete hijos residen en una mansión del barrio tokiota de Setagaya. El hijo mayor, Arata, está cansado de que sus cinco hermanas y fantasea con la posibilidad de vivir lejos de ellas. Sin embargo, el padre de Arata les revela algo sorprendente: ¡en realidad son todos adoptados! Con este nuevo dato sobre la mesa, las relaciones entre los hermanos cambiarán completamente.",
-        "cover": "Shiux.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiunji-ke.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "shiu1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiunji-ke1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2589,7 +2589,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
