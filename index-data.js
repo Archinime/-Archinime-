@@ -384,19 +384,26 @@ const animes = [
     },
     {
         "id": 17,
-        "title": "The Gorilla God's Go- To Girl",
-        "aliases": [
-            "Gorilla no Kami Kara Kago Sareta Reijō wa Ōritsu Kishidan de Kawaiigareru"
-        ],
-        "img": "gorila11.avif",
+        "title": "The Gorila God's Go- To Girl",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gorila.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
             "Comedia",
             "Escolar",
+            "Fantasía",
             "Romance",
             "Shōjo"
+        ],
+        "lastUpdate": 1776569564225,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gorila1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Gorilla no Kami Kara Kago Sareta Reijō wa Ōritsu Kishidan de Kawaiigareru"
         ]
     },
     {
