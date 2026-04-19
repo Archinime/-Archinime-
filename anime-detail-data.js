@@ -2507,12 +2507,12 @@ const data = {
     "20": {
         "title": "Overflow",
         "desc": "¡Puedo deslizarme lentamente, pero no podre desbordar todo mi amor! Un día, Kazushi Sudou recibe la visita de las hermanas Ayane y Kotone Shirakawa, sus dos hermosas amigas de la infancia. Aunque no tienen relación sanguínea, ambas lo llaman con cariño como «hermano». De la nada, y por venganza de Ayane, ambas hermanas deciden unirse a Kazushi en su pequeño baño, y terminan bañándose juntos. Entre el dulce aroma y espuma de baño, Kotone tiene un pequeño accidente con Kazushi y ambos terminan «conectados». ¿Podrá el pervertido Kazushi resistir a los encantos de estas hermosas hermanas?.",
-        "cover": "overflow.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overflow.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/msonocfks3ytuni7sfapb/5df46b18fbdd9ea06c3af21381f69978.jpeg?rlkey=b8e20ptae69tcpjezf8y1sr9q&st=k4hx278z&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overflow1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2538,7 +2538,8 @@ const data = {
                     {
                         "title": "Capítulo 8"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
