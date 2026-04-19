@@ -8256,12 +8256,12 @@ const data = {
     "75": {
         "title": "Date a Live",
         "desc": "Shido, un estudiante de preparatoria común y corriente, descubre a una misteriosa chica en la zona cero de un reciente terremoto espacial. Shido descubre, a través de su hermana Kotori, que la chica es uno de los Espíritus: criaturas místicas responsables de los terremotos espaciales. Shido es reclutado para ayudar a \"sellar\" a los espíritus y acabar con su amenaza para la humanidad. Solo hay una condición: la única manera de sellar un espíritu es hacer que se enamore de ti.",
-        "cover": "https://www.dropbox.com/scl/fi/0p0mfy5af83b1u0au9ebb/datealive-1.jpg?rlkey=6cft8w0ibv4j60iqcz4bdip00&st=4i66ch8r&raw=1",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/3o77xs6m26chtq0ksrjdc/datealive1.avif?rlkey=bqdrm63lztv73obekk27z5y4y&st=db0pctp8&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8304,7 +8304,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/4nh6lhxlebnyhkhv9ekhp/datealiveova1.avif?rlkey=hegjyapqlyrl974alubzobnti&st=ffsa2pim&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice_Ova.avif",
                 "eps": [
                     {
                         "title": "Date to Date"
@@ -8314,7 +8314,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/9hw4mo92sskll7fudvijg/datealive2.avif?rlkey=g34ts9btyjro1x424p2ltmmna&st=hu35wkwp&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8351,7 +8351,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/1v9vfqfqhhn2xq5qw5tph/datealiveova2.avif?rlkey=sikq6eciwauj10i73j731h4bd&st=7dk5p7ey&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice_Ova2.avif",
                 "eps": [
                     {
                         "title": "Kurumi Star Festival"
@@ -8361,7 +8361,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://www.dropbox.com/scl/fi/01a4adofr41e197gqkhe8/datealivepelicula.avif?rlkey=3g3mpdn552r1jux1b9srx9fzm&st=q4nwvj2s&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice_pelicula.avif",
                 "eps": [
                     {
                         "title": "Mayuri Judgement"
@@ -8371,7 +8371,7 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "https://www.dropbox.com/scl/fi/36m7l6ciwu5b2u6oc5v0v/datealive3.avif?rlkey=50jup0tl3rcvbc8ha0395yth5&st=svp38pm2&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8414,7 +8414,7 @@ const data = {
             },
             {
                 "num": 7,
-                "cover": "https://www.dropbox.com/scl/fi/ac61j6y0nvqh132v2dyaj/Date-A-Bullet.avif?rlkey=kkw63qgo8ts6frf6aentd271m&st=4gzc6lhi&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice_bullet.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8427,7 +8427,7 @@ const data = {
             },
             {
                 "num": 8,
-                "cover": "https://www.dropbox.com/scl/fi/9nv51y1z6cpbq4jjle2vr/datealive4.avif?rlkey=2iyk0y13stw1g6yj57e6bolzb&st=hoslep3i&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8470,7 +8470,7 @@ const data = {
             },
             {
                 "num": 9,
-                "cover": "https://www.dropbox.com/scl/fi/twsfyhd59flqcld6hx8kf/datealive5.avif?rlkey=szzmialnfoz4pvtbb0ee84bvg&st=uptlajf8&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice5.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
