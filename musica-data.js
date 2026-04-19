@@ -111,7 +111,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NewSaga.mp3"
     ],
     "36": [
-        "Gachiakuta - Ending FULL TOMOSHIBI by DUSTCELL (Lyrics).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gachiakuta.mp3"
     ],
     "37": [
         "Ending Shinsei Kourin Dacryon.mp3"
