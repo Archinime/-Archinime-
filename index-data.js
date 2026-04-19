@@ -900,7 +900,7 @@ const animes = [
     {
         "id": 40,
         "title": "One Punch-Man",
-        "img": "onepunch.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -912,9 +912,9 @@ const animes = [
             "Superhéroes",
             "Seinen"
         ],
-        "lastUpdate": 1771450440133,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1r0djgkxmptdfe2ltkbk1/onepunch3.jpg?rlkey=4e2i0r1cvl5ufsh5f41fa2sqm&st=woghk9gy&raw=1",
+        "lastUpdate": 1776576001810,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch3.avif",
         "latestBlockName": "Temporada 3",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true,
