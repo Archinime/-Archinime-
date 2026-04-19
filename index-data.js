@@ -1181,18 +1181,25 @@ const animes = [
     {
         "id": 52,
         "title": "Kakkou no Linazuke",
-        "aliases": [
-            "A Couple of Cuckoos"
-        ],
-        "img": "pordf.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/KakouNoInazuke.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Romance",
             "Comedia",
             "Escolar",
             "Harem",
+            "Romance",
             "Shōnen"
+        ],
+        "lastUpdate": 1776606107091,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/KakouNoInazuke%202.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "A Couple of Cuckoos"
         ]
     },
     {
