@@ -874,20 +874,27 @@ const animes = [
     {
         "id": 39,
         "title": "Ore dake Haireru Kakushi Dungeon",
-        "aliases": [
-            "The Hidden Dungeon Only I Can Enter"
-        ],
-        "img": "oredake.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oredake.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
-            "Comedia",
-            "Harem",
-            "Ecchi",
             "Acción",
+            "Comedia",
+            "Ecchi",
+            "Fantasía",
+            "Harem",
             "Romance",
             "Shōnen"
+        ],
+        "lastUpdate": 1776575375241,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oredake1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "The Hidden Dungeon Only I Can Enter"
         ]
     },
     {
