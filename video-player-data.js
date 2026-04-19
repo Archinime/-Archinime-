@@ -1805,76 +1805,76 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1XstjlK7gADavzLFlgON50jZ-uBY9sqAb/preview",
                 "link2": "https://www.dropbox.com/scl/fi/cwloo9f61zbq16pk02ymg/Youjo-Senki-T1-Cap-1.mp4?rlkey=ws7dj41kz96o682mgryaexyv8&st=l9fnlr2e&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 1"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1Qey3l1qgHEhUR1E3Xh_hHklZVxlFyV4W/preview",
                 "link2": "https://www.dropbox.com/scl/fi/wedbnkmetzklli9sl2zeu/Youjo-Senki-T1-Cap-2.mp4?rlkey=jj5h7lfux5pnl7utkbjn31cj1&st=5vx77qxs&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 2"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1VfnU5Gn8DW5PGAwWiTzuNDpXlnVf3g5d/preview",
                 "link2": "https://www.dropbox.com/scl/fi/c7z9dzmv08wdwzn2jpdx6/Youjo-Senki-T1-Cap-3.mp4?rlkey=xnw9uyo6en0j7ofbb4lv14fvs&st=93dcpil2&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 3"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1fOZXchBRAZdiazNQf9z7WpF3BCEpE6fp/preview",
                 "link2": "https://www.dropbox.com/scl/fi/ohkkuvu4bq03tf35iyuu8/Youjo-Senki-T1-Cap-4.mp4?rlkey=1aeehf3c4t4y3xc1kwu4sw6i7&st=zevggehd&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 4"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1Mp6LsHex9zy9wsO8ZpjI71VvZqw6pgpa/preview",
                 "link2": "https://www.dropbox.com/scl/fi/x51hvj9popylg23jtxv4o/Youjo-Senki-T1-Cap-5.mp4?rlkey=uxtzqpleynxyzs3isccmqrx2a&st=3yty0yat&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 5"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1J7XeFMZGmfTyyZH-1f5H7TvHa1aM0laR/preview",
                 "link2": "https://www.dropbox.com/scl/fi/h41ppi21nb31j7bg5wd4y/Youjo-Senki-T1-Cap-6.mp4?rlkey=i3igqmmttmfq4gt3u8mhiagcr&st=wa1v8dwi&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 6"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1yLFzTxEno7wIEFfhS4ec4sXfK7YZmUw7/preview",
                 "link2": "https://www.dropbox.com/scl/fi/p5xiwa7q0m84illeananc/Youjo-Senki-T1-Cap-7.mp4?rlkey=n56c9qmnurj8v7n094ywyj5cu&st=8u110tq9&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 7"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1ZJ-FlmOQUYTKA6hxAtq796-YscCaposH/preview",
                 "link2": "https://www.dropbox.com/scl/fi/vq2n6h53jlswdzn580v8h/Youjo-Senki-T1-Cap-8.mp4?rlkey=gpzgxr75ozy1zgbx56k3xwclx&st=6xiuq3ta&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 8"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1rhr21r4m4eRgcX7hIjZfB1c5_EUyLRkd/preview",
                 "link2": "https://www.dropbox.com/scl/fi/bq1a5mxnj4u7j5m0qkpjy/Youjo-Senki-T1-Cap-9.mp4?rlkey=f7afgptopsnfa595hkxh3vs7l&st=hk6wfszm&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 9"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1jXyzPAtrep4Wsf9sRAThIdOFtTUnhue4/preview",
                 "link2": "https://www.dropbox.com/scl/fi/1o2rbohpe7ex1ln9b4fyl/Youjo-Senki-T1-Cap-10.mp4?rlkey=j2xioeeavkgl2qty6rnir72x1&st=ojrirudw&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 10"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/16XoJm26z24_MDSWZD0FnCO4SsOxkLxKJ/preview",
                 "link2": "https://www.dropbox.com/scl/fi/zxgjyfdogpmqtsqff2uev/Youjo-Senki-T1-Cap-11.mp4?rlkey=fm79ti0hgij2p2xpd0qtyjyuc&st=v2ow0lnv&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 11"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1KbSBTJJQ1d3efgzSvTgiNixttN6jOKU6/preview",
                 "link2": "https://www.dropbox.com/scl/fi/v816agopxg8uroibqvk7j/Youjo-Senki-T1-Cap-12.mp4?rlkey=6ezog4aqfpsaxl8jfuy3lle83&st=ifdm9i9i&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) T1 Cap 12"
+                "title": "Saga of Tanya the Evil (Youjo Senki) T1 Cap 12"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1sfVVvTlmVGKWgwZ2fqwNHKHnxh4Ae6zM/preview",
                 "link2": "https://www.dropbox.com/scl/fi/qosr7biv96np4err6zznk/Youjo-Senki-Pelicula.mp4?rlkey=9gmwjse1yer6wuw679ziwzytn&st=bzx5kstk&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) Pelicula"
+                "title": "Saga of Tanya the Evil (Youjo Senki) Película 1: Película"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1bHckqCGvg_FRdxjREVHUIrea3HwwvwUW/preview",
                 "link2": "https://www.dropbox.com/scl/fi/uci3pxlcdmcoxulkqypf0/Youjo-Senki-Ova-1.mp4?rlkey=dkl33xtpjdt4lz7e0iz9n960c&st=i02t9230&raw=1",
-                "title": "Saga of Tanya the Evil (Yōjo Senki) OVA SUB"
+                "title": "Saga of Tanya the Evil (Youjo Senki) Ova 1 Cap 1"
             }
         }
     },
