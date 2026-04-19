@@ -1010,20 +1010,27 @@ const animes = [
     {
         "id": 45,
         "title": "Tondemo Skill de Isekai Hourou Meshi",
-        "aliases": [
-            "Campfire Cooking in Another World with My Absurd Skills"
-        ],
-        "img": "todemo.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Aventura",
+            "Cocina",
             "Comedia",
             "Fantasía",
+            "Isekai",
             "Slice of Life",
-            "Cocina",
-            "Aventura",
-            "Shōnen",
-            "Isekai"
+            "Shōnen"
+        ],
+        "lastUpdate": 1776577662900,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Campfire Cooking in Another World with My Absurd Skills"
         ]
     },
     {
