@@ -973,7 +973,7 @@ const animes = [
     {
         "id": 43,
         "title": "Maplestar",
-        "img": "pm.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maplestar.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -982,9 +982,9 @@ const animes = [
             "Hentai",
             "Seijin"
         ],
-        "lastUpdate": 1775233012988,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/reze.avif",
+        "lastUpdate": 1776577215563,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezee.avif",
         "latestBlockName": "Clases Con Reze",
         "latestEpTitle": "Capítulo 2",
         "isFinal": false
