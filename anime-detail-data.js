@@ -10625,7 +10625,7 @@ const data = {
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZfEwK5Zgs30Jghmx8jFQPqIBtwqIjSpUS4X&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shangri-la-Frontier1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10707,7 +10707,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZBEwK5ZjV7AT4DkE4YjShvLSJIRlLcMFJHV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shangri-la-Frontier2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
