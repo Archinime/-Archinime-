@@ -2143,7 +2143,7 @@ const animes = [
     {
         "id": 92,
         "title": "Roll Over and Die",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZppEK5ZRLLOpgFR0DXqgYFQHwIxaYtakxkk&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RollOver.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2156,9 +2156,9 @@ const animes = [
             "Yuri",
             "Shōnen"
         ],
-        "lastUpdate": 1775773593071,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZHpEK5ZDYj1Ggi9U8bycVPaNOxCkQolhpak&size=2000x3000",
+        "lastUpdate": 1776616224481,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RollOver1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 11",
         "isFinal": false,
