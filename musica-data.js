@@ -80,7 +80,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun8.mp3"
     ],
     "26": [
-        "Zootopia - Try Everything By Shakira (Music Video).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/zootopia.mp3"
     ],
     "27": [
         "clevates.mp3"
