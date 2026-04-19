@@ -7331,12 +7331,12 @@ const data = {
     "64": {
         "title": "Gnosia",
         "desc": "Cuando un enemigo cambiaformas conocido como Gnosia se infiltra en una nave espacial solitaria, la tripulación solo tiene una forma de sobrevivir: identificar al impostor cada día y ponerlo en criosueño. Pero para Yuri, el día nunca termina. Atrapada en un bucle temporal, revive el primer día de la crisis una y otra vez. Para escapar, Yuri debe descubrir la verdad tras Gnosia y el propio bucle temporal, antes de que sea demasiado tarde.",
-        "cover": "gnosiap.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gnosia.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "gnosia1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gnosia1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
