@@ -137,7 +137,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/phub.mp3"
     ],
     "44": [
-        "Uzumaki  Opening theme Song   Intro Anime.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/uzumaki.mp3"
     ],
     "45": [
         "Tondemo Skill de Isekai Hourou Meshi Opening Full  Luxury Spoon -  Van de Shop  Sub Español Latino.mp3"
