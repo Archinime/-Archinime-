@@ -10112,12 +10112,12 @@ const data = {
     "86": {
         "title": "Baki",
         "desc": "Baki Hanma, un joven prodigio de las artes marciales que entrena incansablemente para superar a su padre, Yujiro Hanma, considerado el ser más fuerte del mundo, enfrentándose a luchadores extremadamente poderosos en peleas clandestinas y torneos para probar su fuerza y superar sus límites, con el objetivo final de derrotar a su padre.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZ0p9K5Zz7CYJaaP8E4a4o9sBzCkrSwHI6k0&size=2000x3000",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZ9p9K5ZqjqTJUccGufTIcc4gX2Y0bamjI3k&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10202,7 +10202,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZjz9K5ZWO1k5qWg2nX6x5YCztO2N8wGz90V&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10248,7 +10248,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZuf9K5Z6yxVcVD6zqHJjm2rxwYNHV5fR4yV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10291,7 +10291,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZ1B9K5Z5rwFu6hoiB5IltTlMjvywB8YSkwV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10379,7 +10379,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZ6rMK5ZTji8HdOSHVXg8AlDp46GWV3zzusy&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki_pelicula.avif",
                 "eps": [
                     {
                         "title": "Baki Hanma vs. Kengan Ashura"
