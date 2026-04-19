@@ -176,12 +176,10 @@ const animes = [
     {
         "id": 8,
         "title": "Akame Ga Kill",
-        "aliases": [
-            "Akame ga Kiru"
-        ],
-        "img": "Akame1.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Akame1.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
             "Aventura",
@@ -190,6 +188,15 @@ const animes = [
             "Romance",
             "Tragedia",
             "Shōnen"
+        ],
+        "lastUpdate": 1776567409876,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akame11.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false,
+        "aliases": [
+            "Akame ga Kiru"
         ]
     },
     {
