@@ -953,12 +953,12 @@ const data = {
     "6": {
         "title": "Tensei Shitara Slime Datta Ken",
         "desc": "Satoru Mikami es un hombre de 37 años que tiene un trabajo que no le gusta, sin salida y que no es feliz con la vida que lleva, pero cuando muere a manos de un ladrón y piensa que es su fin, se despierta descubriendo que se ha reencarnado en un mundo de magia y espada… ¡pero como un slime! Ahora tendrá que acostumbrarse a su nueva vida, aunque por suerte contará con dos habilidades únicas que le ayudarán a sobrevivir: una que le proporciona una gran comprensión de todo lo que le rodea, y otra que le permite copiar las habilidades de sus oponentes.",
-        "cover": "slime.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "tensura.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1040,7 +1040,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/k0ls4nfraabvcgnzabowj/slimeova1.jpg?rlkey=3fcrw6dxyx8rpqb4nlsfe01rq&st=fpul3ecd&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime_ova1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1050,7 +1050,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/7hkrogwhi7mmmf5ss3fhs/20241130-2.jpg?rlkey=ppye69mmc1cmp30usipi9idmv&st=bgk4g5gg&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime_ova2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1060,7 +1060,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/tqc17z3qar9pxfcgi9zya/1477001f0720aef9992b9cba9e12615f.jpg?rlkey=bi3zxk6w0k84jn5s0s1x73axk&st=q9fwy5fn&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime_ova3-5.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1076,7 +1076,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://www.dropbox.com/scl/fi/kcs3irob5bxh8gakdytk7/MV5BMTU3MTIzN2UtMDhmOS00MjM1LWI5OWEtOWQ3MTZjOWFjMDM2XkEyXkFqcGc-._V1_FMjpg_UX1000_.jpg?rlkey=ddrnjyrra1mm5gp3qghiqz3w0&st=gah9qpka&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime_especial.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1088,11 +1088,11 @@ const data = {
                         "title": "Capítulo 3"
                     }
                 ],
-                "name": "Especial 1 - 3"
+                "name": "Especial 1"
             },
             {
                 "num": 6,
-                "cover": "https://www.dropbox.com/scl/fi/q8bum80iahn7gxh400ku9/ETsT4reUUAAeAPr-1.jpg?rlkey=x7fjm8om8jrxkl2nq7na0o70z&st=n4ev0cur&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime_spin.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1135,7 +1135,7 @@ const data = {
             },
             {
                 "num": 7,
-                "cover": "tensura22.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1214,7 +1214,7 @@ const data = {
             },
             {
                 "num": 8,
-                "cover": "https://www.dropbox.com/scl/fi/87tecbrxiwl4qv996wj2i/smilepelicula.jpg?rlkey=pabnkmf8j1i0hl5jeohvj0ihu&st=y0xxy6a4&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime_pelicula.avif",
                 "eps": [
                     {
                         "title": "El Vinculo Escarlata"
@@ -1224,7 +1224,7 @@ const data = {
             },
             {
                 "num": 9,
-                "cover": "tensura3.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 0"
