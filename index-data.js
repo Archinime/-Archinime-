@@ -1251,7 +1251,7 @@ const animes = [
     {
         "id": 55,
         "title": "Alma-chan wa Kazoku ni Naritai",
-        "img": "almachan.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/almachan.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1261,11 +1261,12 @@ const animes = [
             "Romance",
             "Seinen"
         ],
-        "lastUpdate": 1768672215669,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/en905hoqulm0ih9epmjcf/almachan1.jpg?rlkey=dm7s8l0lhplo8eshfsgj7fdyk&st=ji8mmsmi&raw=1",
+        "lastUpdate": 1776606629184,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/almachan1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 11",
+        "isFinal": false,
         "aliases": [
             "Alma-chan Wants to Be a Family!"
         ]
