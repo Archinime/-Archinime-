@@ -7910,12 +7910,12 @@ const data = {
     "71": {
         "title": "Overlord",
         "desc": "Cuando un popular MMORPG anuncia su cierre definitivo, el veterano jugador Momonoga decide quedarse en él hasta el mismo cierre, sin salir. El problema es que pasa la horra de cierre y él no se desconecta, pero los NPC han ganado conciencia propia. ¿Está atrapado?",
-        "cover": "overlord.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlord.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "overlord1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlord1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7961,7 +7961,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "overlord2.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlord2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8007,7 +8007,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "overlord3.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlord3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8053,7 +8053,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "overlord4.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlord4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8099,7 +8099,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "overlordp.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overlordp.avif",
                 "eps": [
                     {
                         "title": "El Reino Sagrado"
