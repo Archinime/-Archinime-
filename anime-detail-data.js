@@ -10792,12 +10792,12 @@ const data = {
     "91": {
         "title": "Trigun Stampede",
         "desc": "Un pistolero con una recompensa millonaria, conocido como el \"Huracán Humano\" por la destrucción que supuestamente causa en el árido planeta No Man's Land, pero que en realidad es un pacifista bondadoso que intenta proteger a la humanidad de los peligros de su propio pasado y de su hermano gemelo malvado, Knives Millions, que busca erradicar a la humanidad a través de las poderosas plantas que sustentan la vida.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZswdK5ZPrDr8metTShLGWYpHJjgnJ3OvO3k&size=2000x3000",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TrigunStampede.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZUwdK5ZW1ksGIIKW0FKoFGnE4sGzRGSoATy&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TrigunStampede1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
