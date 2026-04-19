@@ -4781,12 +4781,12 @@ const data = {
     "44": {
         "title": "Uzumaki",
         "desc": "Kurozu-cho, un pequeño pueblo rodeado de niebla en la costa de Japón, está maldito. Según Shuichi Saito, el novio retraído de la adolescente Kirie Goshima, su pueblo no está embrujado por una persona o un ser, sino por un patrón: uzumaki, la espiral, la hipnótica forma secreta del mundo. Se manifiesta en todo, desde conchas marinas y remolinos en el agua hasta las marcas en espiral en los cuerpos de las personas, las obsesiones insanas del padre de Shuichi y la voz de la cóclea en nuestro oído interno. A medida que la locura se extiende, los habitantes de Kurozu-cho se ven arrastrados cada vez más a un remolino del que no hay retorno.",
-        "cover": "uzumakii.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/uzumaki.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/cmnpn6u7tcm3qgwoe77k6/81CfbcFFyHL._SL1500_.jpg?rlkey=kr5vd2y6gxg5jqxh1ews0trgp&st=egg0cx1h&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/uzumaki1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4800,7 +4800,8 @@ const data = {
                     {
                         "title": "Capítulo 4"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
