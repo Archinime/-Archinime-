@@ -24,7 +24,7 @@ const animes = [
     {
         "id": 2,
         "title": "Jujutsu Kaisen",
-        "img": "Jujutsu.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Jujutsu.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -35,9 +35,9 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1776397120525,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/fsaecbkjhqot7rnqy2lnl/sfsf.avif?rlkey=xg05r2gx62t7jn2z5m9q47ehm&st=5azi7pqp&raw=1",
+        "lastUpdate": 1776565658103,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jujutsu3.avif",
         "latestBlockName": "Temporada 3",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
