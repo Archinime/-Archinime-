@@ -9550,174 +9550,216 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1bJfRss4sSJvFLTKyr991-ndEhDuhht5F/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/15yjcRp6FCXq60Zq-CzvewcKPx8DNCo-R/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1PQuanJWE56k5BF7seDj8--x7Da13vH55/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1gECR-_qV7qQyp7UibFYS2v8xabgP9IB2/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1Kv4ftC20DQgz6tk3_cZ8t67JzzZ412bC/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1NvHK0B6J5xQuTssHb-GU726aLcGKAOtl/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1h9l9pcaS2qdvXp5jzbHtNcxrjgRERIFE/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/17S8ef8BnVuqGQQ7_0-YVtz3VlNfZInEI/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1JB0BHTA5N0yHqj1ZRoWLzcJvto1pwpCd/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1P9HcJSwYj0EAuBc9chbgoJzfTBcMzLFf/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1PfEp-yFTjLWf3bst3jLT6lfmq-z_o-mz/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1RCrQySivSpdkhHNf2gV2H9DF-q3d6Uyb/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T1 Cap 12"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1zcw1vC_UsDs0BAML-2SRX2pJ8Rd8k0DP/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1_EBdWrkFMlV7jC-s2maEZkSljH9qB5si/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1n4GLxSY1zSlEX1meRPfcjOLlSi9w43c6/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1sRRe5YgiO6oZcXDU1Th33ktT2Nf40V7q/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1CJ38IF4xALg__9zVi2OEV7m0QKpJJp4j/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/13C6afqDjXnY_AtUErylIhz1Go-BtDZOH/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1lJsLO6kTmx_69X0hsMtD8_e8jhM5wyyb/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1eiIbeStOTxU40D-7G0XhF8ID-W7F9K3h/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/14vn2ZNUUoH0WChA74_eYUPQDPuroJM0P/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/11xChlg7wP8qzsJ1rZOsO0xI2_EhCNBfX/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1hvxIe4ZkFlRHck4h2-21f9sq-HXUDQKZ/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1L7-Xo9bNr3eQr13I-aLEJDCNoux4_fBs/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1OiV30O57voOLV9ixx6-UMcVzq8heJOZW/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1EzB2F8MnvN08nx98hpNRa2AG4f_aDciS/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/17eFGySleG2RgR7_ubKmCPrHmuIjkNrrU/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T2 Cap 15"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1qzUKzuzz0gqDaJWU26UAOWYAHhd_fyKA/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1DcooqI_Bfp8DVal6oG7QPbfPS3ZWyiPP/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/15a5eIVYxXkqVJurNuGusZCFY9H3ggJLj/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1gOQHZpIlXf0O7F3WXp9Iw0bthlSDWA6M/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1jh4L9BsnQB87uZFSxDoh4azpSRORAaz4/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1wWNiBAe_nm96nBzb2TamNULOhbUJ1SDd/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1BtU_LdKNVvvzGQeCazxcruI_jnFzNCv2/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1J_yi_vRoLGlEeCHmDu6HbEXOIfljgapx/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1KGaSd6aDHRrH7AMDegp1H9qU8bVvO9kT/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1-RTmij_woV-fUD7SquEoZ--G3PfdPZJ1/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1MuUZIrj_QLVN26I-KaUnQC7KcFHwCqUB/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1w6FHNCpv6w81Tb7qrXL77GoKHZQjjIwQ/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1ekRhrqXFtJrBhpvNHKvr9qmcHD1Kzt9u/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1WklxyeLw7i1visDEuUG377HHKZm_54ws/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1Gl5syJlG4VU80XhdceaNmppURs5qR5aR/preview",
+                "link2": "",
                 "title": "Record of Ragnarok T3 Cap 15"
             }
         }
