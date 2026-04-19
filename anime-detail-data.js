@@ -1467,12 +1467,12 @@ const data = {
     "9": {
         "title": "To Be Hero X",
         "desc": "Este es un mundo en el que los mejores héroes son aclamados. El \"Valor de Confianza\" es lo que crean superhéroes. Si la gente cree que un héroe \"puede volar\", adquirirá la capacidad de volar. También ocurre al revés: aunque un héroe tenga poderes, si baja su Valor de Confianza, también perderá sus poderes. El Valor de Confianza se mide en forma de datos y se usa para clasificar a los héroes. Una vez cada dos años, los mejores héroes se reúnen para competir en un torneo especial. El Valor de Confianza de los participantes en el torneo varía en función de su rendimiento en el mismo, actualizándose posteriormente la clasificación, y al héroe que queda en lo más alto se lo conoce como \"X\"...",
-        "cover": "hero11.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/hero.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "hero.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/hero1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1546,7 +1546,8 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
