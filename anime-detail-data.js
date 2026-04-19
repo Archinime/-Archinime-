@@ -1829,12 +1829,12 @@ const data = {
     "12": {
         "title": "Tsue to Tsurugi no Wistoria",
         "desc": "Will es un chico muy trabajador que se inscribe en una academia de magia con la esperanza de convertirse en un gran hechicero. Por desgracia, su plan tiene un fallo crítico: que no tiene la habilidad de usar magia. Las miradas de desprecio de sus compañeros e instructores hacen que Will se desanime en ocasiones, pero sigue adelante con una fuerza de voluntad inquebrantable. No puede usar una varita, pero puede blandir su espada en su intento por llegar a lo más alto de un mundo dominado por la magia. Solo tiene que creer en sus propios puntos fuertes y recordar la promesa que le hizo a alguien muy importante para él...",
-        "cover": "wistoria.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "wistoria1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1872,7 +1872,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
