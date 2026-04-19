@@ -105,7 +105,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock.mp3"
     ],
     "34": [
-        "Magic Maker Isekai Mahou no Tsukurikata ending full  Yoake no Uta (夜明けの歌) by Humbreaders.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MagicMaker.mp3"
     ],
     "35": [
         "New Saga Ending - Her with KanRomEn.mp3"
