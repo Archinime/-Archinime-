@@ -53,7 +53,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku.mp3"
     ],
     "17": [
-        "The Gorilla Gods Go- To Girl  illuminate - Nakamura Shuugo「KanRomPer」.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/gorila.mp3"
     ],
     "18": [
         "Chainsaw Man – The Movie Reze Arc - Theme Song FULL IRIS OUT by Kenshi Yonezu (Lyrics).mp3"
