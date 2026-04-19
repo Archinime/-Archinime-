@@ -3372,16 +3372,13 @@ const data = {
     "30": {
         "title": "Shoujo Ramune",
         "desc": "Ha sido unos meses desde Kiyoshi renunció a su trabajo para cumplir su sueño de tener un dagashis-ya en las afueras de Tokio. Él quería vivir el resto de su vida viendo niñas. Su plan fue un éxito, con las niñas de la escuela cercana que visitan su tienda todos los días y hablaban con él felizmente como amigos. Sin embargo, poco después que las vacaciones de verano comenzaran, se dio cuenta que una de sus clientes habituales, Chie, robaba algunos dulces. A pesar de que no había mucha pérdida, no podía dejar que se saliera con la suya. Cuando se le preguntó, ella dijo que le iba a compensar por ello mediante el trabajo a tiempo parcial en su tienda. Así comienza sus vacaciones de verano con pequeñas niñas.",
-        "cover": "shoujoramuneportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/shoujoramune.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "shoujo2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/shoujoramune1.avif",
                 "eps": [
-                    {
-                        "title": "Capítulo 1 SUB"
-                    },
                     {
                         "title": "Capítulo 1"
                     },
@@ -3393,8 +3390,12 @@ const data = {
                     },
                     {
                         "title": "Capítulo 4"
+                    },
+                    {
+                        "title": "Capítulo 5"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
