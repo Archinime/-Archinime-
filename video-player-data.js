@@ -12175,62 +12175,62 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1GeGpDgKJIHOMEW50ng8mBxSxkJq5cDom/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 1"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1qSwRzIZvcLDHXR7fY36pAOg_gdtxUM7C/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 2"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1CoNCI3L_nPv2H6gUGso6jjIvdaFG_8bI/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 3"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1RwEykti-FlxNtj_2lvjSawjh4lrNYwi_/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 4"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/17tmJNjgRUWF0cMFssPuadRBo4sM_oBGh/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 5"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1dsDhZufAu7YyfO8KfftoWCWUZ_fptxR0/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 6"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1BUXfGK6RMbRQiGBds9bWOJXbT-IV21hk/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 7"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1iPyCGR-nx7xEbCX_8DrPC2VTfShS08VD/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 8"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1nIbJGI-QNnjtQLSlUjlqNApyDwfSbC9-/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 9"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/11dZ9V5TLhWnxVhKSUib5xNYoHJGxqdlX/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 10"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1Wi174ab6GX1Mkq5CWAwwW4n0lOBQqcNU/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 11"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1mIlQS0trkV_IbAwEx1CI2ePkR_FhxwKt/preview",
                 "link2": "",
-                "title": "NieR: Automata Ver1.1a T2 Cap 12"
+                "title": "NieR: Automata Ver1.1a Temporada 1 - Parte II Cap 12"
             }
         }
     },
