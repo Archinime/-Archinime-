@@ -162,7 +162,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BokuNoHero.mp3"
     ],
     "52": [
-        "Kakou no iinazuke OP FULL  Kiyoe Yoshioka Dekoboko  Sub Español, Romaji & English-AMV.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/KakouNoInazuke.mp3"
     ],
     "53": [
         "futari solo camp.mp3"
