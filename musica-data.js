@@ -47,7 +47,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/alya.mp3"
     ],
     "15": [
-        "Rebornasa vending.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou.mp3"
     ],
     "16": [
         "Kimi to Boku no Saigo.mp3"
