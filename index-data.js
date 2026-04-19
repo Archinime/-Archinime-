@@ -1743,7 +1743,7 @@ const animes = [
     {
         "id": 75,
         "title": "Date a Live",
-        "img": "https://www.dropbox.com/scl/fi/0p0mfy5af83b1u0au9ebb/datealive-1.jpg?rlkey=6cft8w0ibv4j60iqcz4bdip00&st=4i66ch8r&raw=1",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1757,9 +1757,9 @@ const animes = [
             "Romance",
             "Shōnen"
         ],
-        "lastUpdate": 1768713497317,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/twsfyhd59flqcld6hx8kf/datealive5.avif?rlkey=szzmialnfoz4pvtbb0ee84bvg&st=uptlajf8&raw=1",
+        "lastUpdate": 1776611367618,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DateALice5.avif",
         "latestBlockName": "Temporada 5",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
