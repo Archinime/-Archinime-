@@ -1468,17 +1468,17 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1DAOXIRNPIVf5Hk0F7NUA8nKr7Hvr_BNm/preview",
                 "link2": "",
-                "title": "Tensei Shitara Slime Datta Ken Especial 1 - 3 Cap 1"
+                "title": "Tensei Shitara Slime Datta Ken Especial 1: Capítulo 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/16P9EcxLwnXrbSpNlhrp6WlcQtajbtunl/preview",
                 "link2": "",
-                "title": "Tensei Shitara Slime Datta Ken Especial 1 - 3 Cap 2"
+                "title": "Tensei Shitara Slime Datta Ken Especial 1: Capítulo 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/199mFTTI00pn3wn1OkT01RsUryA7Yhe0n/preview",
                 "link2": "",
-                "title": "Tensei Shitara Slime Datta Ken Especial 1 - 3 Cap 3"
+                "title": "Tensei Shitara Slime Datta Ken Especial 1: Capítulo 3"
             }
         },
         "6": {
