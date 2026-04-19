@@ -6356,12 +6356,12 @@ const data = {
     "58": {
         "title": "Rick and Morty",
         "desc": "Las descontroladas aventuras de un científico brillante, pero excéntrico, junto a su nieto común y corriente, los llevan a explorar universos paralelos, enfrentar criaturas extrañas y vivir situaciones absurdas que desafían la lógica.",
-        "cover": "rymp.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "rym1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6396,11 +6396,12 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "rym2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6432,11 +6433,12 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "cover": "rym3.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6468,11 +6470,12 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 4,
-                "cover": "rym4.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6504,11 +6507,12 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 4"
             },
             {
                 "num": 5,
-                "cover": "rym5.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty5.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6540,11 +6544,12 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 5"
             },
             {
                 "num": 6,
-                "cover": "rym6.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty6.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6576,11 +6581,12 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 6"
             },
             {
                 "num": 7,
-                "cover": "rym7.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty7.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6612,11 +6618,12 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 7"
             },
             {
                 "num": 8,
-                "cover": "rym8.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty8.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6648,7 +6655,8 @@ const data = {
                     {
                         "title": "Capítulo 10"
                     }
-                ]
+                ],
+                "name": "Temporada 8"
             }
         ]
     },
