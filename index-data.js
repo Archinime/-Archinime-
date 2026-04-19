@@ -1422,20 +1422,27 @@ const animes = [
     {
         "id": 62,
         "title": "Record of Ragnarok",
-        "aliases": [
-            "Shūmatsu no Valkyrie"
-        ],
-        "img": "recordpor.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Fantasía",
-            "Sobrenatural",
             "Drama",
+            "Fantasía",
             "Mitología",
+            "Sobrenatural",
             "Survival",
             "Seinen"
+        ],
+        "lastUpdate": 1776608515558,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok3.avif",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 15",
+        "isFinal": false,
+        "aliases": [
+            "Shūmatsu no Valkyrie"
         ]
     },
     {
