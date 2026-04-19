@@ -1396,7 +1396,7 @@ const animes = [
     {
         "id": 61,
         "title": "Ataque a los titanes",
-        "img": "synt.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1408,6 +1408,12 @@ const animes = [
             "Misterio",
             "Shōnen"
         ],
+        "lastUpdate": 1776607886434,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan4.avif",
+        "latestBlockName": "Temporada 4",
+        "latestEpTitle": "Capítulo 30",
+        "isFinal": false,
         "aliases": [
             "Attack on Titan",
             "Shingeki no Kyojin"
