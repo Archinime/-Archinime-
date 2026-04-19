@@ -1347,7 +1347,7 @@ const animes = [
     {
         "id": 59,
         "title": "Akujiki Reijou to Kyouketsu Koushaku",
-        "img": "akujiki.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akujiki.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1358,9 +1358,9 @@ const animes = [
             "Romance",
             "Shōjo"
         ],
-        "lastUpdate": 1768678905514,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "akujiki1.jpg",
+        "lastUpdate": 1776607202592,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akujiki1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true,
