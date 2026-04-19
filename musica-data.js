@@ -177,7 +177,7 @@ const audioPlaylists = {
         "Spice and Wolf (2024) ED  Ending 2 - Creditless  4K  24FPS (1).mp3"
     ],
     "57": [
-        "【Oyasumi Sekusu Episode 4】Ending (1).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumi.mp3"
     ],
     "58": [
         "rym.mp3"
