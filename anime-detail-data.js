@@ -3635,12 +3635,12 @@ const data = {
     "33": {
         "title": "Blue Lock",
         "desc": "Yoichi es un joven al que acaban de eliminar junto a su equipo. De pronto recibe una carta donde lo convocan para participar en un extraño experimento sobre fútbol.",
-        "cover": "Bluelockportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/jbppp4s21shy7wqcnyvkv/Bluelockt1.jpg?rlkey=skkirad9x3515lrdlfcahkdkk&st=78pu5jgc&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3714,22 +3714,22 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Película 1",
-                "cover": "https://www.dropbox.com/scl/fi/7p8e03u8m0yibymxbx8sx/Bluelockpelicula-1.jpg?rlkey=uk3kjkm10szyqq1ioraz9hyru&st=kj51wwxm&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock_pelicula.avif",
                 "eps": [
                     {
                         "title": "Episodio Nagi"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 3,
-                "name": "Temporada 2",
-                "cover": "https://www.dropbox.com/scl/fi/mct6vsfmcmmq40o6rdknw/bluelockt2.jpeg?rlkey=hkqqa2r015turmekuxfcc8ygv&st=5m7ne332&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3773,7 +3773,8 @@ const data = {
                     {
                         "title": "Capítulo 14"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
