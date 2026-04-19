@@ -7256,75 +7256,75 @@ const data = {
     "63": {
         "title": "Genshin Impact Hentai",
         "desc": "Mira Los mejores videos, películas y cortos Genshin Impact Hentai, aquí en Archinime.",
-        "cover": "gih.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImpactG.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "name": "Videos",
-                "cover": "gih1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImpactG1.avif",
                 "eps": [
                     {
-                        "title": "Video 1"
+                        "title": "Capítulo 1"
                     },
                     {
-                        "title": "Video 2"
+                        "title": "Capítulo 2"
                     },
                     {
-                        "title": "Video 3"
+                        "title": "Capítulo 3"
                     },
                     {
-                        "title": "Video 4"
+                        "title": "Capítulo 4"
                     },
                     {
-                        "title": "Video 5"
+                        "title": "Capítulo 5"
                     },
                     {
-                        "title": "Video 6"
+                        "title": "Capítulo 6"
                     },
                     {
-                        "title": "Video 7"
+                        "title": "Capítulo 7"
                     },
                     {
-                        "title": "Video 8"
+                        "title": "Capítulo 8"
                     },
                     {
-                        "title": "Video 9"
+                        "title": "Capítulo 9"
                     },
                     {
-                        "title": "Video 10"
+                        "title": "Capítulo 10"
                     },
                     {
-                        "title": "Video 11"
+                        "title": "Capítulo 11"
                     },
                     {
-                        "title": "Video 12"
+                        "title": "Capítulo 12"
                     },
                     {
-                        "title": "Video 13"
+                        "title": "Capítulo 13"
                     },
                     {
-                        "title": "Video 14"
+                        "title": "Capítulo 14"
                     },
                     {
-                        "title": "Video 15"
+                        "title": "Capítulo 15"
                     },
                     {
-                        "title": "Video 16"
+                        "title": "Capítulo 16"
                     },
                     {
-                        "title": "Video 17"
+                        "title": "Capítulo 17"
                     },
                     {
-                        "title": "Video 18"
+                        "title": "Capítulo 18"
                     },
                     {
-                        "title": "Video 19"
+                        "title": "Capítulo 19"
                     },
                     {
-                        "title": "Video 20"
+                        "title": "Capítulo 20"
                     }
-                ]
+                ],
+                "name": "Videos"
             }
         ]
     },
