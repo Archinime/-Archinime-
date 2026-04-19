@@ -196,7 +196,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok.mp3"
     ],
     "63": [
-        "phub.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/phub.mp3"
     ],
     "64": [
         "gnosia.mp3"
