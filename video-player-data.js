@@ -4987,7 +4987,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1E5rWiC2i_AGBfsswSKf31p30mW2Ey2mg/preview",
                 "link2": "https://www.dropbox.com/scl/fi/kx1ws1iu15zwtikdpip9o/Blue-Lock-La-Pel-cula-Episodio-Nagi.mp4?rlkey=b0vv98lw53qbn018dbya4yxwn&st=imp3xbyc&raw=1",
-                "title": "Blue Lock La Película: Episodio Nagi"
+                "title": "Blue Lock Película 1: Episodio Nagi"
             }
         },
         "3": {
