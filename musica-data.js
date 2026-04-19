@@ -211,7 +211,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SoloLeveling.mp3"
     ],
     "68": [
-        "it.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/it.mp3"
     ],
     "69": [
         "cars.mp3"
