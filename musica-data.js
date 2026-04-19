@@ -90,7 +90,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/stone4.mp3"
     ],
     "29": [
-        "We Are. OP. 1  One Piece.  Traduccion Al Español.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepiece.mp3"
     ],
     "30": [
         "Shoujo Ramune (Anime) Opening (小女ラムネ OVA OP - 挿入歌 ).mp3"
