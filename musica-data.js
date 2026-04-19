@@ -277,7 +277,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Leviathan.mp3"
     ],
     "89": [
-        "https://www.dropbox.com/scl/fi/r34di8n2mvzsqcszw6yhn/seisyun-complex.mp3?rlkey=m7yri0tkoaaabbx0smbtqz05p&st=dtn4vgfd&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BochiTheRock.mp3"
     ],
     "90": [
         "https://www.dropbox.com/scl/fi/g24d8bw9nv0vueg4yjraa/Shangri-la-Frontier-Season-2-Opening-2-Frontiers.mp3?rlkey=zonzeec8wap1cnfjy3e6b42ug&st=ord0ivng&raw=1",
