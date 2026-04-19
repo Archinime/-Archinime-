@@ -815,7 +815,7 @@ const animes = [
     {
         "id": 36,
         "title": "Gachiakuta",
-        "img": "Gachiakuta.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gachiakuta.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -826,11 +826,12 @@ const animes = [
             "Fantasía oscura",
             "Shōnen"
         ],
-        "lastUpdate": 1768672095349,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/xlkbrayxyel3kiyepr1r2/Gachiakuta1.jpg?rlkey=q5g6jlo0cv4e5z7znj70vtyor&st=uh2bwp30&raw=1",
+        "lastUpdate": 1776575038308,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gachiakuta1.avif",
         "latestBlockName": "Temporada 1",
-        "latestEpTitle": "Capítulo 24"
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false
     },
     {
         "id": 37,
