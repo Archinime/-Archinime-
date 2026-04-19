@@ -2285,12 +2285,12 @@ const data = {
     "19": {
         "title": "The Rising of the Shield Hero",
         "desc": "Iwatani Naofumi es el típico otaku, al menos hasta que un día encuentra en la biblioteca un libro que lo transporta a otro mundo. Allí se convertirá en el Héroe del Escudo, uno de los Cuatro Héroes Cardinales, y tendrá que luchar contra las Olas de la Catástrofe junto a los héroes de la espada, la lanza y el arco. Emocionado ante la perspectiva de vivir una gran aventura, Naofumi parte de viaje con su grupo. No obstante, al cabo de unos pocos días lo traicionan y pierde su dinero, su dignidad y el respeto de los que le rodean.",
-        "cover": "heroedelescudoportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/9ba5brlvuf36ll191pkmz/71q9MkiCWGL._AC_SL1080_-1-1.jpg?rlkey=vet8b9iq1r9uxqupzho0eoges&st=6ljf18qk&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2367,11 +2367,12 @@ const data = {
                     {
                         "title": "Capítulo 25"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/4skrchq5cjxznvf0ysbwp/afeasfa.jpg?rlkey=j6dqqmbmstfn9ygdrfrgu10h5&st=4558xpvr&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2412,11 +2413,12 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/1zs7lgtjl9mb8edp8f0c3/hdfhdh.jpg?rlkey=ucmzalo4rysjzqyjz5jl9sa9j&st=sxl5mhwv&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2454,11 +2456,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/420u8f1z53bwui8hriklt/dfhhdfh.jpg?rlkey=4vl8gjuzpqf9ihsfcx2qhq09z&st=lx2guyq7&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Heroe_Escudo4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2496,7 +2499,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 4"
             }
         ]
     },
