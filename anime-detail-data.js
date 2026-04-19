@@ -3402,12 +3402,12 @@ const data = {
     "31": {
         "title": "To Your Eternity",
         "desc": "Al principio el \"orbe\" llegó a la Tierra. Podía hacer dos cosas: tomar la forma de cualquier cosa con la que interactuara y regenerarse para volver a la vida. El orbe se convirtió en roca, luego en lobo y finalmente en un chico, pero vaga por el mundo como un recién nacido que no sabe nada. Como niño se convierte en Fushi. Poco a poco va conociendo la amabilidad humana y Fushi no solo aprende a sobrevivir, sino que crece como \"persona\". Pero su viaje queda ensombrecido por Nokker, un destructivo e inexplicable enemigo, así como por las crueles depedidas de aquellos a quienes ama",
-        "cover": "fumetsuportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ToYourEternity.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/vdhje75y0qrapg2w7bzlm/fumetsu1.jpg?rlkey=cxo830q5q6am7ifdo4o0gy1yw&st=h8yg0yj1&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ToYourEternity1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3474,7 +3474,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/6fgqny1klytu2rgeykusx/fumetsu2.jpg?rlkey=65c92sgt2g3bzm56tc0wsol6i&st=axfb816j&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ToYourEternity2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3541,7 +3541,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/2zghbbzs6lpi2lt6sf7ui/fumetsu3.jpg?rlkey=l8yfxc0yk2u13ie8wemgcuoal&st=t0qoyl96&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ToYourEternity3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
