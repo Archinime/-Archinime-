@@ -5066,12 +5066,12 @@ const data = {
     "48": {
         "title": "The Eminence in Shadow",
         "desc": "Incluso en su vida pasada, el sueño de Cid no era convertirse en protagonista o jefe final. Prefiere pasar desapercibido como un personaje secundario hasta que sea el momento de máxima audiencia para revelar que es un autor intelectual… o al menos, hacer lo siguiente mejor: ¡pretender serlo! Y ahora que ha renacido en otro mundo, está listo para establecer las condiciones perfectas para vivir sus sueños al máximo. Armado con su imaginación hiperactiva, Cid recluta en broma miembros para su organización e inventa toda una historia de fondo sobre un culto malvado que deben acabar. Bueno, por suerte, estos adversarios imaginarios resultan ser reales, ¡y todos saben la verdad menos él!",
-        "cover": "shadow.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/2bcwaknie7oqj2z1b9p0j/MV5BMDFmMWJlMWYtMDFkNi00OWViLTkzOGEtNDI0YWNmM2M5MzI5XkEyXkFqcGc-._V1_FMjpg_UX1000_.jpg?rlkey=ffw7z9iqf8mds8jczy2gx03x8&st=mdzhy17n&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5133,11 +5133,12 @@ const data = {
                     {
                         "title": "Capítulo 20"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/nnot4umauq0sl5gcnupak/Sinopsis-de-The-Eminence-in-Shadow.jpg?rlkey=oea0l803qpxxrfl9huhxhrrop&st=r1v53adw&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5175,7 +5176,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
