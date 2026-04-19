@@ -99,7 +99,7 @@ const animes = [
     {
         "id": 5,
         "title": "Mushoku Tensei",
-        "img": "mushoku.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mushoku.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -114,9 +114,9 @@ const animes = [
             "Romance",
             "Seinen"
         ],
-        "lastUpdate": 1768680725366,
+        "lastUpdate": 1776566500946,
         "updateType": "Ninguna",
-        "latestSeasonCover": "mushoku22.jpg",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mushoku2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 24",
         "isFinal": false
