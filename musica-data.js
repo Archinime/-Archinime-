@@ -102,7 +102,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsugunaiSubbed.mp3"
     ],
     "33": [
-        "Blue Lock OP Full  Chaos ga Kiwamaru  Sub Español - Romaji『AMV』☆.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock.mp3"
     ],
     "34": [
         "Magic Maker Isekai Mahou no Tsukurikata ending full  Yoake no Uta (夜明けの歌) by Humbreaders.mp3"
