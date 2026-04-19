@@ -10931,12 +10931,12 @@ const data = {
     "93": {
         "title": "Tower of God",
         "desc": "Alcanza la lo más alto y todo será tuyo.\n\nEn la cima de la torre encontrarás todo lo que existe en este mundo, y todo puede ser tuyo.\n\nPodrás ser un dios.\n\nEsta es la historia del inicio y el final de Rachel, la joven que ascendió la torre para poder ver las estrellas, y Bam, el joven que lo único que necesitaba era estar con ella.",
-        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tower.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TowerOfGod.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZp6EK5Zoo7hw2hakajeuIuwXUtcrHWlEIny&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TowerOfGod1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10982,7 +10982,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZR6EK5ZMbtpcgy8H3Ld11AsXGK1V5mXHjRk&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TowerOfGod2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
