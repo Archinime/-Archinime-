@@ -7409,12 +7409,12 @@ const data = {
     "65": {
         "title": "Classroom of the Elite",
         "desc": "Kiyotaka Ayanokouji acaba de entrar en la Academia Tokyo Koudo Ikusei, de la cual se dice que el 100% de sus estudiantes acaban yendo a la universidad o encontrando un buen trabajo. Sin embargo nuestro protagonista acaba en la Clase 1-D, donde la escuela pone a todos los alumnos con problemas. Y lo que es más, cada mes la escuela otorga a los estudiantes puntos por valor de 100.000 yenes, y las clases emplean un sistema por el cual se puede hablar, dormir e incluso molestar a los compañeros durante las clases.",
-        "cover": "classroomelite.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "classroomelite1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7452,11 +7452,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "classroomelite2.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7497,11 +7498,12 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "cover": "classroomelite3.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7542,16 +7544,8 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
-            },
-            {
-                "num": 4,
-                "cover": "classroomelite4.avif",
-                "eps": [
-                    {
-                        "title": "Próximamente"
-                    }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
