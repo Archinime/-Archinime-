@@ -4426,12 +4426,12 @@ const data = {
     "42": {
         "title": "Los Diarios de la Boticaria",
         "desc": "Maomao llevaba una vida tranquila ayudando a su padre, un boticario. Todo cambia el día que la venden como sirvienta al palacio del emperador, pero la vida entre nobles y realeza no es para ella. Cuando la familia imperial enferma, ella decide intervenir para encontrar una cura, lo que llama la atención de Jinshi, un guapo oficial de palacio que decide ascenderla como dama de compañía de una de las concubinas del emperador. ¡Su habilidad con la medicina la hará conocida en el palacio por ayudar a resolver muchos misterios!",
-        "cover": "maomaot1.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/ulsbjhkml29ya0bx5rvip/maomaott1.jpg?rlkey=d31ch377s5fiejauwmxr4jc5s&st=f9332p29&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4505,11 +4505,12 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/4okrn42bx3gn32mgbhliq/kusuriya-s2.jpg?rlkey=yyrkl50fzfxc5kn4ntxmp1tju&st=mfvfr1yc&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4583,7 +4584,8 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
