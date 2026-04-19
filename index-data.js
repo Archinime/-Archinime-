@@ -850,18 +850,25 @@ const animes = [
     {
         "id": 38,
         "title": "Kami-tachi ni Hirowareta Otoko",
-        "aliases": [
-            "By the Grace of the Gods"
-        ],
-        "img": "Kamitachi.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
             "Aventura",
-            "Slice of Life",
+            "Fantasía",
             "Isekai",
+            "Slice of Life",
             "Shōnen"
+        ],
+        "lastUpdate": 1776575237355,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "By the Grace of the Gods"
         ]
     },
     {
