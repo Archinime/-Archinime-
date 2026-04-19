@@ -2079,12 +2079,12 @@ const data = {
     "16": {
         "title": "Kimi to Boku no Saigo no Senjou",
         "desc": "Dos enemigos enfrentados en un conflicto encuentran una base común, lo que los convierte en potenciales traidores para sus países y amantes desgarrados por la guerra.",
-        "cover": "kimi22222.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "kimix.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2122,11 +2122,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "kimi22.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2164,7 +2165,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
