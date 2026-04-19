@@ -77,7 +77,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto.mp3"
     ],
     "25": [
-        "アニメ『怪獣８号』ノンクレジットED｜OneRepublic「Nobody」｜毎週土曜23時～放送・配信.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun8.mp3"
     ],
     "26": [
         "Zootopia - Try Everything By Shakira (Music Video).mp3"
