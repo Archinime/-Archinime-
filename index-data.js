@@ -992,13 +992,20 @@ const animes = [
     {
         "id": 44,
         "title": "Uzumaki",
-        "img": "uzumakii.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/uzumaki.avif",
         "rating": 4.2,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Horror",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1776577473827,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/uzumaki1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 4",
+        "isFinal": false
     },
     {
         "id": 45,
