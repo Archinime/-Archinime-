@@ -124,7 +124,7 @@ const animes = [
     {
         "id": 6,
         "title": "Tensei Shitara Slime Datta Ken",
-        "img": "slime.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -137,9 +137,9 @@ const animes = [
             "Slice of Life",
             "Shōnen"
         ],
-        "lastUpdate": 1769090734634,
+        "lastUpdate": 1776567039615,
         "updateType": "Ninguna",
-        "latestSeasonCover": "tensura3.jpg",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/slime3.avif",
         "latestBlockName": "Temporada 3",
         "latestEpTitle": "Capítulo 24",
         "isFinal": false,
