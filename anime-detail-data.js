@@ -3883,12 +3883,12 @@ const data = {
     "36": {
         "title": "Gachiakuta",
         "desc": "En una ciudad flotante donde los ricos se deshacen de su basura y de las personas, a Ludo lo acusan de asesinato y lo arrojan al Abismo, un infierno habitado por las bestias de la basura. Para sobrevivir, deberá hacer uso de un nuevo poder y unirse a los Limpiadores. El objetivo de Ludo no es solo acabar con los monstruos, sino también con aquellos que lo arrojaron al Infierno.",
-        "cover": "Gachiakuta.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gachiakuta.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/xlkbrayxyel3kiyepr1r2/Gachiakuta1.jpg?rlkey=q5g6jlo0cv4e5z7znj70vtyor&st=uh2bwp30&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Gachiakuta1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
