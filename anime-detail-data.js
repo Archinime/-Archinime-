@@ -9582,12 +9582,12 @@ const data = {
     "85": {
         "title": "Sword Art Online",
         "desc": "En un futuro cercano, un Virtual Reality Massive Multiplayer Online Role-Playing Game (VRMMORPG) llamado Sword Art Online permite que los jugadores se introduzcan en el juego directamente mediante el uso del Nerve Gear, un casco que les sumerge por completo.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZexDK5ZF3sDn1qITuYL1VScYcuknLSBUcDy&size=2000x3000",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZKxDK5ZyrehaQ3LaA4GlOjnABQsnBclPUJV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9669,7 +9669,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZIwDK5ZJyUtMNCyhz4kaxwtOiGtkXPxznn7&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_ova.avif",
                 "eps": [
                     {
                         "title": "Extra Edition"
@@ -9679,7 +9679,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZyqDK5Zt3acz3WekQpgkJ02cfowXFs6J4AV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_off.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9716,7 +9716,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZslDK5ZFU3tnJ6khuhVpVgn6oA3WbEEq9Py&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9798,7 +9798,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZeDTK5ZHA2Q4Uso7jkzCpTQjHgxw4P1fBjX&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_off2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9832,7 +9832,7 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZsdDK5Zwrs5SeTzNEB27kHJ0brge0Qkc8SV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_pelicula.avif",
                 "eps": [
                     {
                         "title": "Ordinal Scale"
@@ -9842,7 +9842,7 @@ const data = {
             },
             {
                 "num": 7,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZnIDK5ZGFXUeyphMLm3HvY570j9vjbIP49X&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9924,7 +9924,7 @@ const data = {
             },
             {
                 "num": 8,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZHmnK5ZzCEH4jIu5oRcXNFP2fmbSzTaaMMX&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10003,7 +10003,7 @@ const data = {
             },
             {
                 "num": 9,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZRSnK5ZBuVI4IeVDKSxeLiBC79MubXWNBN7&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_pelicula2.avif",
                 "eps": [
                     {
                         "title": "Progressive: Aria of a Starless Night"
@@ -10013,7 +10013,7 @@ const data = {
             },
             {
                 "num": 10,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZjSnK5Zyi5nPAcNy9Y0V0S50OKEWydf4gRV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_pelicula3.avif",
                 "eps": [
                     {
                         "title": "Progressive 2: Scherzo of Deep Night"
@@ -10023,7 +10023,7 @@ const data = {
             },
             {
                 "num": 11,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZP1TK5Zb94z5nzcTzBJCtExxfBQIReDpgr7&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_alternative.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -10066,7 +10066,7 @@ const data = {
             },
             {
                 "num": 12,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZr1TK5ZWqGs6z8IT6JzKyMNjMbUSH5P9wOk&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_alternative2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
