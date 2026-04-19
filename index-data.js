@@ -1371,19 +1371,26 @@ const animes = [
     {
         "id": 60,
         "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka",
-        "aliases": [
-            "May I Ask for One Final Thing?"
-        ],
-        "img": "saigo ni hitotsu.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SaigoNiHitotsu.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Fantasía",
             "Comedia",
             "Drama",
+            "Fantasía",
             "Romance",
             "Shōjo"
+        ],
+        "lastUpdate": 1776607544787,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SaigoNiHitotsu1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 13",
+        "isFinal": false,
+        "aliases": [
+            "May I Ask for One Final Thing?"
         ]
     },
     {
