@@ -146,7 +146,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling.mp3"
     ],
     "47": [
-        "Poison (Español Latino) - Hazbin Hotel Fan Lyric Vídeo.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel.mp3"
     ],
     "48": [
         "The Eminence in Shadow  Moonlight Sonata (1st Movement) - Beethoven.mp3",
