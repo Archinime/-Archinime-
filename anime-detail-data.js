@@ -10392,12 +10392,12 @@ const data = {
     "87": {
         "title": "Death Note",
         "desc": "Light Yagami es un estudiante brillante con mucho futuro que se aburre a más no poder. Pero todo cambia cuando encuentra la Death Note, un cuaderno que dejó caer un rebelde dios de la muerte.",
-        "cover": "https://api.pcloud.com/getpubthumb?code=XZC3PK5ZI5e4GKRCk8Xvz6QX7v678Q275LUy&size=2000x3000",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DeadNote.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://api.pcloud.com/getpubthumb?code=XZd3PK5ZpT0OB7y4ALjU5DNn1jo74HFpQ6FV&size=2000x3000",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DeadNote1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
