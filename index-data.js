@@ -360,19 +360,26 @@ const animes = [
     },
     {
         "id": 16,
-        "title": "kimi to boku no saigo no senjou",
-        "aliases": [
-            "Our Last Crusade or the Rise of a New World"
-        ],
-        "img": "kimi22222.avif",
+        "title": "Kimi to Boku no Saigo no Senjou",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
             "Fantasía",
-            "Romance",
             "Militar",
+            "Romance",
             "Seinen"
+        ],
+        "lastUpdate": 1776569408897,
+        "updateType": "NUEVO 🔥",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kimitoboku2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Our Last Crusade or the Rise of a New World"
         ]
     },
     {
