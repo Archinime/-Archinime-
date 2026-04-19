@@ -2942,12 +2942,12 @@ const data = {
     "27": {
         "title": "Clevatess -Majuu no Ou to Akago",
         "desc": "Uno de los Señores de las Bestias Oscuras, el reinado de Clevatess se hace trizas cuando revive a un héroe al que él mismo mató y adopta a un bebé humanoide huérfano, la última esperanza para salvar un mundo moribundo. Ahora unidos por el destino, ¿qué les deparará a este trío tan improbable?",
-        "cover": "Clevatessportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/clevatess.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/r4tom3zqhioemqoovedao/clevatess.jpg?rlkey=b8i9g854dw3x1hoiru1ef8694&st=f4vn6r3a&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/clevatess1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2985,7 +2985,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
