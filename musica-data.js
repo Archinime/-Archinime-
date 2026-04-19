@@ -149,8 +149,8 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel.mp3"
     ],
     "48": [
-        "The Eminence in Shadow  Moonlight Sonata (1st Movement) - Beethoven.mp3",
-        "The Eminence in Shadow Season 2 OP Full  grayscale dominator  Sub Español - Romaji『AMV』☆.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow2.mp3"
     ],
     "49": [
         "Spy x Family Ed. 2 Full  Shikisai by yama  Sub Español.mp3"
