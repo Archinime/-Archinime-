@@ -925,18 +925,25 @@ const animes = [
     {
         "id": 41,
         "title": "Mashle",
-        "aliases": [
-            "Mash Burnedead"
-        ],
-        "img": "mashle1.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
             "Acción",
-            "Fantasía",
             "Aventura",
+            "Comedia",
+            "Fantasía",
             "Shōnen"
+        ],
+        "lastUpdate": 1776576152812,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Mash Burnedead"
         ]
     },
     {
