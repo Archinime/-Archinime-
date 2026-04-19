@@ -521,16 +521,23 @@ const animes = [
     {
         "id": 23,
         "title": "Kanchigai no Atelier Meister",
-        "img": "atelier1.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/atelier.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
+            "Acción",
             "Aventura",
             "Comedia",
             "Fantasía",
-            "Acción",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776572654050,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/atelier1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 24,
