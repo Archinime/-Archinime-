@@ -1518,7 +1518,7 @@ const animes = [
     {
         "id": 66,
         "title": "Frieren: Más allá del final del viaje",
-        "img": "ff.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Frieren.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1528,9 +1528,9 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1775837027184,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/68met98fq4br4u8cd7594/frieren2.avif?rlkey=w5jv3dne0ffs2ponw3ai1kgt0&st=uqyu2mmm&raw=1",
+        "lastUpdate": 1776609080985,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Frieren2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 9",
         "isFinal": false,
