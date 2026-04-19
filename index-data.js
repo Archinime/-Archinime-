@@ -1788,7 +1788,7 @@ const animes = [
     {
         "id": 77,
         "title": "Fire Force",
-        "img": "https://www.dropbox.com/scl/fi/yb4ceq87w77dc9tfv6hck/fireforce.avif?rlkey=vqtcwroglk2w1xksclu3fzy6k&st=x4wng0o2&raw=1",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1802,9 +1802,9 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1775243266221,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1vev0mnfqzgdkb64yehck/fireforce3.avif?rlkey=26ytp6sdp69ilxsr5wcxwifah&st=rnme9z8u&raw=1",
+        "lastUpdate": 1776611686139,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce3.avif",
         "latestBlockName": "Temporada 3",
         "latestEpTitle": "Capítulo 25",
         "isFinal": true
