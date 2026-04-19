@@ -949,18 +949,25 @@ const animes = [
     {
         "id": 42,
         "title": "Los Diarios de la Boticaria",
-        "aliases": [
-            "Kusuriya no Hitorigoto",
-            "The Apothecary Diaries"
-        ],
-        "img": "maomaot1.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Drama",
             "Misterio",
             "Romance",
             "Shōjo"
+        ],
+        "lastUpdate": 1776576521985,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false,
+        "aliases": [
+            "Kusuriya no Hitorigoto",
+            "The Apothecary Diaries"
         ]
     },
     {
