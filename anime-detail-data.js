@@ -312,12 +312,12 @@ const data = {
     "3": {
         "title": "KonoSuba!",
         "desc": "Kazuma Satou es un chico de preparatoria otaku y hikikomori que no suele salir de casa, pero cuando lo hace, un fatídico (y ridículo) accidente acaba con su vida. En el otro mundo aparece una diosa ante él y le propone comenzar de nuevo su vida en un mundo de magia y espada, pero las condiciones son un tanto peculiares, así que acabará comenzando de cero como aventurero y acompañado de una diosa.",
-        "cover": "konosubaportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosubaportada.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "konome.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba_megumin.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -360,7 +360,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "konosuba.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -397,7 +397,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/kxgfmbxwbx0gff57djm4j/89iISQwnZos1oum2oF6g2udEyd1ujz3hP04KnsfY-1.png?rlkey=lnyzlxqtbz2s3xrsqfdd4vooa&st=ozr66w1k&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba_ova1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -407,7 +407,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "KONO2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -444,7 +444,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://www.dropbox.com/scl/fi/5v47ftp62xm36dxvyvytk/KonoOva2.jpg?rlkey=he334e5mning06qxouu5w5x72&st=p5vtvl4o&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba_ova2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -454,7 +454,7 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "https://www.dropbox.com/scl/fi/yheu84pklqou4gtqfxwi2/konopeli.jpg?rlkey=haxntxcllpl8n5eooxmtz3t5p&st=45m3sgf7&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba_pelicula.avif",
                 "eps": [
                     {
                         "title": "La Leyenda Carmesí"
@@ -464,7 +464,7 @@ const data = {
             },
             {
                 "num": 7,
-                "cover": "https://www.dropbox.com/scl/fi/lvj3auv41jv0c92equ9yw/konosubatem3.jpg?rlkey=1q282bs80zi6khlvi4msh3v0q&st=rprkna4u&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -504,7 +504,7 @@ const data = {
             },
             {
                 "num": 8,
-                "cover": "kono3.png",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba_ova3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
