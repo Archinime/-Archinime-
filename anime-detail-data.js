@@ -6313,12 +6313,12 @@ const data = {
     "57": {
         "title": "Oyasumi Sex",
         "desc": "Yui le comenta a su hermano que alguien se le confesó, lo que causa que este comience a sentirse celoso y comenzar a ver diferente a su hermanita. Una noche mientras ella dormía, este decide aprovecharse y hacerla suya...",
-        "cover": "oyasumi.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumi1.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "oyasumi1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumii.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
