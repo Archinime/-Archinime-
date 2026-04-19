@@ -134,7 +134,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria3.mp3"
     ],
     "43": [
-        "phub.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/phub.mp3"
     ],
     "44": [
         "Uzumaki  Opening theme Song   Intro Anime.mp3"
