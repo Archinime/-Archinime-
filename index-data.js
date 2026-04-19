@@ -224,7 +224,7 @@ const animes = [
     {
         "id": 10,
         "title": "Demon Slayer",
-        "img": "demon.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demon.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -236,6 +236,12 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
+        "lastUpdate": 1776568006795,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer_pelicula2.avif",
+        "latestBlockName": "Película 2",
+        "latestEpTitle": "Castillo Infinito",
+        "isFinal": false,
         "aliases": [
             "Kimetsu no Yaiba"
         ]
