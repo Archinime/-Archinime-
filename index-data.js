@@ -654,7 +654,7 @@ const animes = [
     {
         "id": 29,
         "title": "One Piece (Live Action)",
-        "img": "onepieceportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepiece.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -666,9 +666,9 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1773258729289,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/8ia1wi18lkdtsxev6vzrq/onepiece22.jpg?rlkey=a1nlcclu7625tqoiy4w3rgi8i&st=xnadjkcg&raw=1",
+        "lastUpdate": 1776573657096,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepiece2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 8",
         "isFinal": true
