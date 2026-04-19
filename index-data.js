@@ -1228,7 +1228,7 @@ const animes = [
     {
         "id": 54,
         "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai",
-        "img": "tojima1.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Tojima.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1238,9 +1238,9 @@ const animes = [
             "Tokusatsu",
             "Seinen"
         ],
-        "lastUpdate": 1775934120087,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1acwpuwtsx2f20urv44eo/Airbrush-IMAGE-ENHANCER-1763730194883-1763730194884.jpg?rlkey=ornue772yaoazcagrsinqj1fc&st=nlz517kl&raw=1",
+        "lastUpdate": 1776606511345,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Tojima1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 24",
         "isFinal": true,
