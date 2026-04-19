@@ -68,7 +68,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiunji-ke.mp3"
     ],
     "22": [
-        "Goblin Slayer OP Full  Rightfully - Sub Español.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Goblin_Slayer.mp3"
     ],
     "23": [
         "Unaware Atelier Meister - Opening full FACTSORY by MeseMoa [Lyrics].mp3"
