@@ -4332,12 +4332,12 @@ const data = {
     "41": {
         "title": "Mashle",
         "desc": "Este es un mundo de magia. Este es un mundo en el que todos usan la magia habitualmente. En un bosque profundo y oscuro de este mundo de magia, hay un chico que se ejercita a diario. Su nombre es Mash Burnedead y tiene un secreto: no puede usar magia. Lo único que quería era vivir tranquilo con su familia, pero cuando un día intentan matarlo por no poder usar magia, las cosas se salen de control y acaba inscrito en una escuela mágica, donde su objetivo será convertirse en el \"Iluminado Divino\", el alumno más formidable, el elegido de Dios. ¿Podrán sus poderosos músculos derrotar a los más brillantes usuarios de magia? ¡Se alza el telón de esta historia de magia y fantasía peculiar en el que la fuerza puede con la magia!",
-        "cover": "mashle1.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/lq148lh81cae2m0m8ezby/mashlet1.jpg?rlkey=ykcyoj3kgip5ibuxhlvp10373&st=yqgn83dz&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4375,11 +4375,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/fyanzghps0unrat46x3dp/mashlet2.jpg?rlkey=g6crdk8as99o8k4jkyz5u91im&st=kobq9hht&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4417,7 +4418,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
