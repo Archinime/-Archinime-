@@ -3841,7 +3841,7 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1_aGhuBR0Cwp4H9_TVHrE12muKAz0csCY/preview",
                 "link2": "https://www.dropbox.com/scl/fi/5hn50c6xouhn8jtud1obz/Kaiju-No.-8-Ova-Hoshina-s-Day-Off.mp4?rlkey=166iwumudtt7yyd32lhjakdb9&st=62u8qimo&raw=1",
-                "title": "Kaiju No. 8 Ova : Hoshina's Day Off"
+                "title": "Kaiju No. 8 Ova 1 Cap 1"
             }
         },
         "3": {
