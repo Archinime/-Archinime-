@@ -7821,38 +7821,38 @@ const data = {
     "69": {
         "title": "Cars",
         "desc": "El aspirante a campeón de carreras Rayo McQueen parece que está a punto de conseguir el éxito. Su actitud arrogante se desvanece cuando llega a una pequeña comunidad olvidada que le enseña las cosas importantes de la vida que había olvidado.",
-        "cover": "cars.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "name": "Película 1",
-                "cover": "cars1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars1.avif",
                 "eps": [
                     {
                         "title": "Película 1"
                     }
-                ]
+                ],
+                "name": "Película 1"
             },
             {
                 "num": 2,
-                "name": "Película 2",
-                "cover": "cars2.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars2.avif",
                 "eps": [
                     {
                         "title": "Película 2"
                     }
-                ]
+                ],
+                "name": "Película 2"
             },
             {
                 "num": 3,
-                "name": "Película 3",
-                "cover": "cars3.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars3.avif",
                 "eps": [
                     {
                         "title": "Película 3"
                     }
-                ]
+                ],
+                "name": "Película 3"
             }
         ]
     },
