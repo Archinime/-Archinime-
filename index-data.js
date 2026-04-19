@@ -788,21 +788,28 @@ const animes = [
     {
         "id": 35,
         "title": "Tsuyokute New Saga",
-        "aliases": [
-            "New Saga"
-        ],
-        "img": "New Saga.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NewSaga.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
-            "Isekai",
+            "Acción",
             "Aventura",
             "Comedia",
-            "Acción",
             "Drama",
+            "Fantasía",
+            "Isekai",
             "Slice of Life",
             "Shōnen"
+        ],
+        "lastUpdate": 1776574914979,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NewSaga1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "New Saga"
         ]
     },
     {
