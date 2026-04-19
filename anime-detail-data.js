@@ -3302,12 +3302,12 @@ const data = {
     "29": {
         "title": "One Piece (Live Action)",
         "desc": "Acompañado de su ecléctica tripulación, el joven pirata Monkey D. Luffy emprende un viaje en busca de un tesoro legendario en esta adaptación del popular manga.",
-        "cover": "onepieceportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepiece.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/nyz5xbqtnn7rzs84lujn0/cialda-ostia-torta-onepiece-61.jpg?rlkey=57224ktjmga7bvozflu4pxibe&st=tu85tib4&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepiece1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3338,7 +3338,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/8ia1wi18lkdtsxev6vzrq/onepiece22.jpg?rlkey=a1nlcclu7625tqoiy4w3rgi8i&st=xnadjkcg&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepiece2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
