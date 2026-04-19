@@ -235,7 +235,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/I%20swear.mp3"
     ],
     "76": [
-        "https://www.dropbox.com/scl/fi/nmtq5a2n2ipoognughtr5/Lets-Play-1-2-Play.mp3?rlkey=24qh32l9mgt5xdn8s2l78y4d2&st=sorxydgl&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LetsPlay.mp3"
     ],
     "77": [
         "https://www.dropbox.com/scl/fi/mgfvc0w16noqdh4a12ts5/Mrs.-GREEN-APPLE-Inferno.mp3?rlkey=7w7lenfoaplou65lu0vycsexg&st=p1ijtaxo&raw=1"
