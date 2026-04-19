@@ -676,15 +676,22 @@ const animes = [
     {
         "id": 30,
         "title": "Shoujo Ramune",
-        "img": "shoujoramuneportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/shoujoramune.avif",
         "rating": 4.3,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Hentai",
             "Harem",
+            "Hentai",
             "Incesto",
             "Seijin"
-        ]
+        ],
+        "lastUpdate": 1776573775716,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/shoujoramune1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 5",
+        "isFinal": false
     },
     {
         "id": 31,
