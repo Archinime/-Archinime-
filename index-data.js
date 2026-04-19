@@ -720,15 +720,22 @@ const animes = [
     {
         "id": 32,
         "title": "Tsugunai Subbed",
-        "img": "TsugunaiSubbed.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsugunaiSubbed.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Hentai",
-            "Harem",
             "Escolar",
+            "Harem",
+            "Hentai",
             "Seijin"
-        ]
+        ],
+        "lastUpdate": 1776574161481,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsugunaiSubbed1.avif",
+        "latestBlockName": "Episodio 1",
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     },
     {
         "id": 33,
