@@ -120,7 +120,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi.mp3"
     ],
     "39": [
-        "Pyramid Daigyakuten - by Spira Spica - Ore dake Haireru Kakushi Dungeon Opening.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oredake.mp3"
     ],
     "40": [
         "One punch man - The Hero  OP 1  sub. español ; lyrics ; letra.mp3"
