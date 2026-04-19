@@ -740,18 +740,25 @@ const animes = [
     {
         "id": 33,
         "title": "Blue Lock",
-        "aliases": [
-            "Yoichi Isagi"
-        ],
-        "img": "Bluelockportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Thriller",
-            "Psicológico",
             "Deportivo",
+            "Psicológico",
             "Survival Game",
+            "Thriller",
             "Shōnen"
+        ],
+        "lastUpdate": 1776574387484,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Bluelock2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 14",
+        "isFinal": false,
+        "aliases": [
+            "Yoichi Isagi"
         ]
     },
     {
