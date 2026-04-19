@@ -30,9 +30,9 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/hero.mp3"
     ],
     "10": [
-        "demonslayer1.mp3",
-        "demonslayer2.mp3",
-        "demonslayer3.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer2.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer3.mp3"
     ],
     "11": [
         "maou2099.mp3"
