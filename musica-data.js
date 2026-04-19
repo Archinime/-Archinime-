@@ -189,8 +189,8 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SaigoNiHitotsu.mp3"
     ],
     "61": [
-        "syn.mp3",
-        "syn2.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan1.mp3"
     ],
     "62": [
         "record.mp3"
