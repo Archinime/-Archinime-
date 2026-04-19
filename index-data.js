@@ -1132,16 +1132,23 @@ const animes = [
     {
         "id": 50,
         "title": "Black Clover",
-        "img": "portbla.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
             "Acción",
-            "Fantasía",
             "Aventura",
+            "Comedia",
+            "Fantasía",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776605683612,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover4.avif",
+        "latestBlockName": "Temporada 1 - Arco IV",
+        "latestEpTitle": "Capítulo 16",
+        "isFinal": false
     },
     {
         "id": 51,
