@@ -65,7 +65,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overflow.mp3"
     ],
     "21": [
-        "Shiunji-ke no Kodomo-tachi Opening Full  Honey Lemon - Sub. Español ♡.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiunji-ke.mp3"
     ],
     "22": [
         "Goblin Slayer OP Full  Rightfully - Sub Español.mp3"
