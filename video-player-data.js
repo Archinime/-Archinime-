@@ -8365,103 +8365,128 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1w2dKPPq4VE1Ep2Vm8ZI9nIi_RE9YR87u/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1D12R4n8HbmLqPWQIt8t2O3FMo7Yh_wFT/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1C0JTi0olk0MoSKP7gwn0HiOvkLR36GaV/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1R82WtxDG7q_0H-RVrnjyp-GtJPjIoYl1/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1DqWuCyjGOxKSUtByq-070oJta1lXw4x0/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/15JOZAS3hKFN4UAghltVDaytioyG-TDHq/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/166l8NchxLFAQkCdIYkJkIUt2-M0vg9sl/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1FAaeMNavgaE85OCpMjZpotVGekBUYY2r/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1VdZNvNAsGWZJPPAkg3OcC1wl_WI40rhl/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/19DzLkbU2MgkooyfnfTaCRvxQDHSq92VX/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1hKGuI5Roij3WsJlN1t76Yhu5YL7_nY2S/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/11zG8Lbbvei5XR9soycL56KLlwDEsWHl6/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1JHX0v0IXV5GlwsN-vJzOArG_n23aHfsQ/preview",
+                "link2": "",
                 "title": "Spice and Wolf T1 Cap 13"
             },
             "14": {
                 "link": "https://drive.google.com/file/d/1pglakSh-bD0unhSIuBHomPUdIPtm40iV/preview",
-                "title": "Spice and Wolf T2 Cap 14"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 14"
             },
             "15": {
                 "link": "https://drive.google.com/file/d/1wNnt0rn84YzzTAOck6OgU3kTPykFOA0s/preview",
-                "title": "Spice and Wolf T2 Cap 15"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 15"
             },
             "16": {
                 "link": "https://drive.google.com/file/d/1HR_N7Y3iwQNAdm-UuzU_ILXJQ7Qa3X7I/preview",
-                "title": "Spice and Wolf T2 Cap 16"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 16"
             },
             "17": {
                 "link": "https://drive.google.com/file/d/1JYyO4-1ilWUdQYrxwIHorjweH8Q4jbE7/preview",
-                "title": "Spice and Wolf T2 Cap 17"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 17"
             },
             "18": {
                 "link": "https://drive.google.com/file/d/1v04Gbvg6knodhu71HC-RHZeQdvFPdLFL/preview",
-                "title": "Spice and Wolf T2 Cap 18"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 18"
             },
             "19": {
                 "link": "https://drive.google.com/file/d/1aYn9OkC20MRnILNC8f22IMbyTAQ2rPjp/preview",
-                "title": "Spice and Wolf T2 Cap 19"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 19"
             },
             "20": {
                 "link": "https://drive.google.com/file/d/1GyFLmD18niH-s3f-irhMzlOYP-Obs7so/preview",
-                "title": "Spice and Wolf T2 Cap 20"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 20"
             },
             "21": {
                 "link": "https://drive.google.com/file/d/1ZWTAYc2Qkj61Z9cfIQyF9OXluPedrsve/preview",
-                "title": "Spice and Wolf T2 Cap 21"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 21"
             },
             "22": {
                 "link": "https://drive.google.com/file/d/1tpRqFwEpuQVjmkdvgGspg4HSmnKJRsxT/preview",
-                "title": "Spice and Wolf T2 Cap 22"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 22"
             },
             "23": {
                 "link": "https://drive.google.com/file/d/1AhERccJvIMI8u32agU-JgwC5dok6J_sJ/preview",
-                "title": "Spice and Wolf T2 Cap 23"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 23"
             },
             "24": {
                 "link": "https://drive.google.com/file/d/1ov0f9V3kcwTGx8KtMTDNJzLxFC2v4KlX/preview",
-                "title": "Spice and Wolf T2 Cap 24"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 24"
             },
             "25": {
                 "link": "https://drive.google.com/file/d/1UogckdZh4kQN7HFV42i4FZVmasGqmwb2/preview",
-                "title": "Spice and Wolf T2 Cap 25"
+                "link2": "",
+                "title": "Spice and Wolf T1 Cap 25"
             }
         }
     },
