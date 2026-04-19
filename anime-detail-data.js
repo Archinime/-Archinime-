@@ -3832,12 +3832,12 @@ const data = {
     "35": {
         "title": "Tsuyokute New Saga",
         "desc": "Tras una brutal guerra, el espadachín mágico Kyle derrota al Rey Demonio, pero se queda agonizante. Un cristal carmesí le envía cuatro años al pasado, a su ciudad natal, antaño destruido, donde se encuentra con vida a sus seres queridos perdidos. Armado con el conocimiento del futuro, Kyle jura evitar la tragedia que se avecina y reescribir el destino.",
-        "cover": "New Saga.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NewSaga.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/5blxcy3s9emno9stkftzs/newsaga1.jpg?rlkey=1790xix1th127twrk97h3opyn&st=gl09uhwc&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NewSaga1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -3875,7 +3875,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
