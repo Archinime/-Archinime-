@@ -2224,12 +2224,12 @@ const data = {
     "18": {
         "title": "Chainsaw Man",
         "desc": "Denji es un adolescente que vive con un demonio motosierra llamado Pochita. Para pagar la deuda que le dejó su padre tras su muerte, ha tenido que ganarse el pan como puede matar demonios y vender sus cadáveres a la mafia, aunque su vida siempre ha sido miserable. Cuando una traición provoca la muerte de Denji, Pochita hace un contrato con él y Denji revive como Chainsaw Man, un ser humano con el corazón de un demonio.",
-        "cover": "chaiportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "chaiw11.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2267,17 +2267,18 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Película 1",
-                "cover": "https://www.dropbox.com/scl/fi/qwllg4jlrbdnamf5h8spf/chait2.jpg?rlkey=cj3r0ny8n5yhk4b2fcbz68jh7&st=m9dobxos&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan2.avif",
                 "eps": [
                     {
                         "title": "El Arco de Reze"
                     }
-                ]
+                ],
+                "name": "Película 1"
             }
         ]
     },
