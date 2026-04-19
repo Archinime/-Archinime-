@@ -8567,12 +8567,12 @@ const data = {
     "77": {
         "title": "Fire Force",
         "desc": "Tokio está ardiendo y los ciudadanos sufren misteriosas combustiones espontáneas por toda la ciudad. La responsable de apagar este infierno es la Brigada Especial Antiincendios y Shinra está listo para unirse a su lucha. Ahora, como parte del 8.º Escuadrón, usará sus poderes para evitar que la ciudad acabe reducida a cenizas.Sin embargo, un secreto de su pasado podría prenderlo todo.",
-        "cover": "https://www.dropbox.com/scl/fi/yb4ceq87w77dc9tfv6hck/fireforce.avif?rlkey=vqtcwroglk2w1xksclu3fzy6k&st=x4wng0o2&raw=1",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/8qk3g1d7l5jz5w00y6fhs/fireforce1.avif?rlkey=sw2jpbkkue0i2azgswqtvswje&st=qbpro3i8&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8651,7 +8651,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/yr1ue000zew17acj05fvh/fireforce2.avif?rlkey=bv4t186a6hlfgs1srwtspeaph&st=3x9mbj4r&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -8730,7 +8730,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/1vev0mnfqzgdkb64yehck/fireforce3.avif?rlkey=26ytp6sdp69ilxsr5wcxwifah&st=rnme9z8u&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
