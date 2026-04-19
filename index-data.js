@@ -409,15 +409,22 @@ const animes = [
     {
         "id": 18,
         "title": "Chainsaw Man",
-        "img": "chaiportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía oscura",
             "Acción",
             "Comedia oscura",
+            "Fantasía oscura",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776569745509,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ChainsawMan2.avif",
+        "latestBlockName": "Película 1",
+        "latestEpTitle": "El Arco de Reze",
+        "isFinal": false
     },
     {
         "id": 19,
