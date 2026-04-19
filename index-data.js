@@ -1086,20 +1086,27 @@ const animes = [
     {
         "id": 48,
         "title": "The Eminence in Shadow",
-        "aliases": [
-            "Kage no Jitsuryokusha ni Naritakute!"
-        ],
-        "img": "shadow.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Comedia",
             "Acción",
+            "Comedia",
             "Fantasía",
-            "Isekai",
             "Harem",
+            "Isekai",
             "Steampunk",
             "Shōnen"
+        ],
+        "lastUpdate": 1776578166719,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Kage no Jitsuryokusha ni Naritakute!"
         ]
     },
     {
