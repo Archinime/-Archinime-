@@ -99,7 +99,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ToYourEternity.mp3"
     ],
     "32": [
-        "Tsugunai Subbed.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsugunaiSubbed.mp3"
     ],
     "33": [
         "Blue Lock OP Full  Chaos ga Kiwamaru  Sub Español - Romaji『AMV』☆.mp3"
