@@ -7101,12 +7101,12 @@ const data = {
     "62": {
         "title": "Record of Ragnarok",
         "desc": "En el Concejo del Valhalla, los dioses acuerdan unánimemente extinguir a la raza humana. Pero Brunilda, la mayor de las hermanas valquirias, se opone. En el primer combate de la batalla de Ragnarok, Lü Bu, el caudillo militar de la dinastía Han, lucha contra el dios nórdico Thor y sorprende a los dioses presentes.",
-        "cover": "recordpor.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "recordt11.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7144,11 +7144,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "recordt2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7195,11 +7196,12 @@ const data = {
                     {
                         "title": "Capítulo 15"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             },
             {
                 "num": 3,
-                "cover": "recordt3.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7246,7 +7248,8 @@ const data = {
                     {
                         "title": "Capítulo 15"
                     }
-                ]
+                ],
+                "name": "Temporada 3"
             }
         ]
     },
