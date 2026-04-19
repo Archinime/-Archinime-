@@ -1860,7 +1860,7 @@ const animes = [
     {
         "id": 80,
         "title": "Hell's Paradise",
-        "img": "https://www.dropbox.com/scl/fi/vpt0m3tswyu0uzjsu7f1w/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769090129026-1769090129026-1.avif?rlkey=4s8i5bmu32nk7mbghl593q6h0&st=1349sffw&raw=1",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HellParadire.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1875,9 +1875,9 @@ const animes = [
             "Thriller",
             "Shōnen"
         ],
-        "lastUpdate": 1776040313758,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZz2Pl5ZtIRJpcwNxr5Alrpg7RDymX4RfcJV&size=2000x3000",
+        "lastUpdate": 1776612417979,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HellParadire2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 11",
         "isFinal": false,
