@@ -8518,340 +8518,421 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1P52gUvhzvK_3jUy7Rhn9F7zwmJmY6aKu/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/11osdRo1deBoKNPT1inl6EGy_F0N8vdPd/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/178ZHWpGSI4Spe_diQydFZmOYV-YY7bbR/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1MpPdbmEz8oq8nGRwU7oeVj1wlROC8zy6/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1x5OcHGJ4W1IwnsbFXIcZeIGnePue6Z-Z/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/14f7nEJGnS2JA1xU6PhPgiLSAt3J1P7lm/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/12TYCyGG8bsY4KXlDkjjLCUbw3zE8XBgs/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1fiai-_ooFpNrKeKvIv9eUd9ORgKvk9YU/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/13aEwc-TmTgHXrg92v6FR1j6q7bSQYBIS/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/12r0piptLyvWoFTzmULiIFHp7qfKHZ7v8/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1lDdz034nk4VOuvH1NA2MmY40Kfz6U5pr/preview",
+                "link2": "",
                 "title": "Rick and Morty T1 Cap 11"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1UtzepiQqd3k7A93zRrVoOVBp4LaOk4Tq/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1cTuFDVjFVGg5j21618t8SJ1Z0NgPopV_/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1urZmgsWI9E6HvK_AchxZXVCRQxXgNLc3/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1KPBCxmFG8ZGUcK32UOqTO1a2ckMxgEXv/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1nEKA8kszJmpHTIlcx0NJwl5gq9tP6ShD/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1ODdZa3ks3uwlzSJ2KmgWl7EOZSjHKJwT/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1W5s9pdmbhYTzFniI5pTyDx7PS_6VY_FX/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/15VEvk2Pf5iWJ_6AmlsVFlT4yHy6oJFpf/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/157QksXNJaEjeV11cX3IE2XLBGGwAhW_s/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1ve1vSylTVNm9bcevSC9G7w_IOq-xaZRR/preview",
+                "link2": "",
                 "title": "Rick and Morty T2 Cap 10"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1oGw2JOFbnqzW_phWXKvfDnYAfm9Gm_Kk/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1X5JtCPsyQsHF_REOz9SWI0QFt5OwPQ-a/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1mLENIt7zP2R6xZ85E2qxhiaxwJhMVyE6/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/164_jsQmYMvceWgck_iKCe1ffKdTfvhxh/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1etmwG49GbEvgjAw-BknR5sqoUF1ATWhX/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/15RRYykCt9XQiQtBs7brdMB7XKyP_7s3v/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/15EWtPUERDZmRXg86oD1IVJ9T8_HY5CKG/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1oPO6vw3J8Z-_qyAUGPSL-xOi4jimdUl_/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/186axWQhEiCUYmBadFpvh_N99c9w__RcE/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1pEW4aMcEVAGzH7uNh_N8UkIgr8oiUaoi/preview",
+                "link2": "",
                 "title": "Rick and Morty T3 Cap 10"
             }
         },
         "4": {
             "1": {
                 "link": "https://drive.google.com/file/d/1s1hSnDm2TPbh_eDzfr2tuvnGm9ML9xn2/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1QYQDkk5l_QNV2GimjNF8Yeo_bNO1Vz7m/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1W-a5X6zZDj20ch-hYh9Ka_7C6gQiaLJ3/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1Z__E_a5_wcNrTfTgtAe7GOkV-jE9ybJs/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1MuLzeMXmU0_GrW2_Z2UjwX6UGxATkAlV/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/174mxYgWWSiQbu_WtwFuslypfViU4BcoH/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/15GvNV4qALROCdjXM351T-XWXcZfA8aDL/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1e-ROYzDYsyK_SvYowmcbaisUCWA4kvo4/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1eMBpYZtWrjt_bwlhAj0gNh69DvNHQtER/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1ihMJjQ_IDCfbZgg4EWjbSctenZ2D_cjg/preview",
+                "link2": "",
                 "title": "Rick and Morty T4 Cap 10"
             }
         },
         "5": {
             "1": {
                 "link": "https://drive.google.com/file/d/1ZKlqVINC4FoK98GGplFxhQQzqNFzgHAk/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1VPpKX-2kuGleh51oGCkQ_AiUTWhlSTPP/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1nbj-W9jCj1HB9mU4WeN7xuBs2luoR3sd/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1ZzYAYvSIzVrbfBdukjIjxtxJ78n0tyIA/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1d_-r8h3STLSATDqCJHtwyTj5oROjELHt/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1LFPHpmfHeLyGaVpDiDUapIuvanjvDIKr/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1n-WH59EXu9secrQ09ZU-1Q5nBZLBSgEw/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/19ixjrmenU-hjLMrFzupCaNdVTqUU4O9K/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1hL1Ca0hGTlqTHiZRXRD0ciURzpiASJdu/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1TaZnPyN0DxfjKZ1MtCxmTidsbyJx-uf_/preview",
+                "link2": "",
                 "title": "Rick and Morty T5 Cap 10"
             }
         },
         "6": {
             "1": {
                 "link": "https://drive.google.com/file/d/1DWl8WsYd3Xh_bhCqaAYZwuxwfpW-oqHU/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1IiMy94gCogHGIHiMCTncuT8m93jHf628/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1iFLrriG54m2P7LmLqX7naONtFaW3YJAp/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/19Qce-63EOFXh1iSLUTrc3NMVUc87SS0M/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1q8dB0jA78Xn_2v3557mM2QytRPSm4Xt0/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/12SgK6FwBmIb2jmOZJLoBJka87Dom3no3/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1jw53Gr8orNAf1rOjh8-Xu5p1aLms7iaQ/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1mCXLO07-NI7GDGsuiZIESlsPzvrQD4Uo/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1PZzMyarCzpY9-fmvb_8ZarB-pEf-NHu0/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1BlziFCX3Dl7Ja4N3opDTPnt1yOw6hzg5/preview",
+                "link2": "",
                 "title": "Rick and Morty T6 Cap 10"
             }
         },
         "7": {
             "1": {
                 "link": "https://drive.google.com/file/d/1cBdsCKKR2_nRM2OluezLQWLxGFmpov1R/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1y9fX-e1ZqEp-iaUeC_UlnQne7hOPW-z1/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1dUjLQYlfpTuSsHX6tKem1wMtwVTzwYnX/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1Pao2jh3vk_HR7uqnoZ0J5eDKgP5QfGk_/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1tsD81WMrkIPIls-0toGxFCDcWMezkBm5/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1PuQh6YUe3KZ-8ZsRewQT1P3oQ7KDycwf/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1OsJv8OPSCbDUfEXuGsfmUJLMZQu5Bj4W/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1KBWkJARLVAdHnudsQxjMkcm21XKujXUR/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1z3-sfWx6GVJ0mUkn0MpkpoQghsEuyjPo/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1QwNGII-vtaw2Jh4CByhtV751oroz2iBs/preview",
+                "link2": "",
                 "title": "Rick and Morty T7 Cap 10"
             }
         },
         "8": {
             "1": {
                 "link": "https://drive.google.com/file/d/1KoHwJhoH0h_Vi5S0Ihv7oSwYHd4QjnUC/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1txhYHGX9Ov91WwtSfq7WFXxInmCl9luz/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1Gxq8OMo0GbNg1yCOrbCv0S0b9Z1GXBxt/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1Q-UrX31h8HfC-dHJcm8xwkXBGM4lXkD6/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1aglYjI_a2655-_H8_C7ThAk08DIeik8M/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1RDB3ue5eaNmr1udgwzgggeck6HpsxP0K/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1V1RqebDThzUOMryYHKjeK3zcES3qMjW8/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1OhWBKbs7cIw1qlL5mwq2RBraBptw-kNV/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1jtxao5crpqVVpDVH-z6G4_KI-CR_Y1ka/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1chuPssurZ6dnvn15rCZ8sTLGKpg8Qoax/preview",
+                "link2": "",
                 "title": "Rick and Morty T8 Cap 10"
             }
         }
