@@ -2080,7 +2080,7 @@ const animes = [
     {
         "id": 89,
         "title": "Bocchi the Rock!",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZ4dxK5ZKlNdhaL1aIHMTyPcgPwmj0xf5tck&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BochiTheRock.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2090,9 +2090,9 @@ const animes = [
             "Slice of Life",
             "Seinen"
         ],
-        "lastUpdate": 1769957459671,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZ2dxK5ZgSR67lxGIR7csx2hXKyFnYeBg4M7&size=2000x3000",
+        "lastUpdate": 1776615267042,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BochiTheRock1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
