@@ -10545,19 +10545,22 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1S5pojtBClVB34_sFguRRk_B_4pcvkoKN/preview",
-                "title": "Cars Película 1"
+                "link2": "",
+                "title": "Cars Película 1: Película 1"
             }
         },
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/1scE1xqNoWnQDGjRPHDR8AbL7l_X0_hWA/preview",
-                "title": "Cars Película 2"
+                "link2": "",
+                "title": "Cars Película 2: Película 2"
             }
         },
         "3": {
             "1": {
                 "link": "https://drive.google.com/file/d/1GOMOvEkGumhQO6pUgPw1BdhXc4lGJzE0/preview",
-                "title": "Cars Película 3"
+                "link2": "",
+                "title": "Cars Película 3: Película 3"
             }
         }
     },
