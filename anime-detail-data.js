@@ -1931,12 +1931,12 @@ const data = {
     "14": {
         "title": "Alya Sometimes Hides Her Feelings in Russian",
         "desc": "Alya es una estudiante recién transferida que disfruta de tener buenas calificaciones y mucha popularidad en su nueva preparatoria, aunque lo habitual es que luzca muy fría. No suele hablar nunca con un compañero de clase muy estudioso llamado Kuza Masachika, y cuando lo hace, es para decirle algún halago en ruso. Lo que ella no sabe es que Kuze entiende el ruso, aunque hace ver que no. ¡Comprobemos hasta dónde llega esta curiosa historia de amor!",
-        "cover": "alia.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/alya.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "alya1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/alya1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1974,7 +1974,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
