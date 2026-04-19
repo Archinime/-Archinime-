@@ -1593,22 +1593,28 @@ const animes = [
     {
         "id": 69,
         "title": "Cars",
-        "aliases": [
-            "Rayo McQueen"
-        ],
-        "img": "cars.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Infantil",
-            "Familiar",
-            "Aventura",
-            "Animación",
-            "Comedia",
             "Acción",
-            "Road Movie",
+            "Animación",
+            "Aventura",
+            "Comedia",
             "Deportivo",
+            "Familiar",
+            "Infantil",
             "Kodomo"
+        ],
+        "lastUpdate": 1776609385870,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/cars3.avif",
+        "latestBlockName": "Película 3",
+        "latestEpTitle": "Película 3",
+        "isFinal": false,
+        "aliases": [
+            "Rayo McQueen"
         ]
     },
     {
