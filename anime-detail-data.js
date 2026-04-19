@@ -5839,12 +5839,12 @@ const data = {
     "51": {
         "title": "My Hero Academia",
         "desc": "My Hero Academia trata sobre un mundo donde la mayoría de las personas nacen con superpoderes llamados “Dones”. La historia sigue a Izuku Midoriya, un chico que nace sin “Don”, pero que sueña con convertirse en un héroe como su ídolo, All Might. Después de un encuentro fortuito con All Might, quien ve su gran determinación, le transfiere sus poderes. Izuku luego se matricula en una prestigiosa academia de héroes para aprender a usar sus nuevos poderes y enfrentarse a villanos.",
-        "cover": "sgsgsdseg.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BokuNoHero.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/1udlgl7s87fdvmwi7mp2l/Airbrush-IMAGE-ENHANCER-1762698551862-1762698551862.jpg?rlkey=e8rdhex2nwtlhyl6nume5oq9t&st=ojvzr0lg&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BokuNoHero1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
