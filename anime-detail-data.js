@@ -1982,12 +1982,12 @@ const data = {
     "15": {
         "title": "Reborn as a Vending Machine",
         "desc": "Después de morir en un accidente de tráfico, me encuentro de pie cerca de un lago desconocido. No puedo moverme, no me oigo mi voz, y cuando trato de gritar, ¡salen palabras inesperadas! ¡Parece que me he convertido en una máquina expendedora! Solo puedo hacer lo que las máquinas expendedoras reales pueden hacer. No puedo moverme solo, y no hay forma de tener una conversación significativa. ¿Cómo voy a sobrevivir en una mazmorra de un mundo de fantasía como este?",
-        "cover": "jidou.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "jidou1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2028,11 +2028,12 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/dnj6xs69vqtbrhj0f52n2/rebornt2.jpg?rlkey=pbkfo4ae79pmqm58u8l6gev0d&st=g1l714qi&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jidou2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2070,7 +2071,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
