@@ -260,7 +260,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma1.mp3"
     ],
     "84": [
-        "https://www.dropbox.com/scl/fi/g16veupg68rihmd46j25c/Miss-Kobayashis-Dragon-Maid-Opening-FULL.mp3?rlkey=egmnpr90obkf6g4j85su9xsxk&st=s3g1w50y&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kobayashis.mp3"
     ],
     "85": [
         "https://www.dropbox.com/scl/fi/z39v3kgx5m2mr8wbyguf4/CreditlessSword-Art-Online_-Alicization-OP-Opening-1UHD-60FPS.mp3?rlkey=kdt5874k5qyp2b7bwdkx9wifw&st=jq1anfiv&raw=1",
