@@ -7782,38 +7782,39 @@ const data = {
     "68": {
         "title": "It - Bienvenidos a Derry",
         "desc": "En 1962, una pareja con su hijo se muda a Derry, Maine, justo cuando un niño desaparece. Con su llegada, comienzan a suceder cosas malas en el pueblo.",
-        "cover": "it.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/it.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "it1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/it1.avif",
                 "eps": [
                     {
-                        "title": "Episodio 1"
+                        "title": "Capítulo 1"
                     },
                     {
-                        "title": "Episodio 2"
+                        "title": "Capítulo 2"
                     },
                     {
-                        "title": "Episodio 3"
+                        "title": "Capítulo 3"
                     },
                     {
-                        "title": "Episodio 4"
+                        "title": "Capítulo 4"
                     },
                     {
-                        "title": "Episodio 5"
+                        "title": "Capítulo 5"
                     },
                     {
-                        "title": "Episodio 6"
+                        "title": "Capítulo 6"
                     },
                     {
-                        "title": "Episodio 7"
+                        "title": "Capítulo 7"
                     },
                     {
-                        "title": "Episodio 8"
+                        "title": "Capítulo 8"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
