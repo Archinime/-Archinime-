@@ -542,7 +542,7 @@ const animes = [
     {
         "id": 24,
         "title": "Definitivamente. ¡No me gusta mi hermano para nada!",
-        "img": "Oni.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -554,11 +554,12 @@ const animes = [
             "Slice of Life",
             "Seinen"
         ],
-        "lastUpdate": 1768622729150,
-        "updateType": "ACTUALIZACIÓN 🛠️",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/1ds4mocfv035zgs7brobv/Definitivamente1.jpg?rlkey=xurw5jdgzeeww66ly0vmhiy6k&st=o8jyfz4c&raw=1",
+        "lastUpdate": 1776572872336,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto_ova.avif",
         "latestBlockName": "Ova 1",
-        "latestEpTitle": "Capítulo 1"
+        "latestEpTitle": "Capítulo 1",
+        "isFinal": false
     },
     {
         "id": 25,
