@@ -564,19 +564,26 @@ const animes = [
     {
         "id": 25,
         "title": "Kaiju No. 8",
-        "img": "kaijuportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun8.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Sobrenatural",
-            "Fantasía oscura",
             "Acción",
-            "Ciencia ficción",
             "Aventura",
+            "Ciencia ficción",
             "Comedia",
+            "Fantasía oscura",
             "Kaiju",
+            "Sobrenatural",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776573054219,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun82.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 11",
+        "isFinal": false
     },
     {
         "id": 26,
