@@ -7552,12 +7552,12 @@ const data = {
     "66": {
         "title": "Frieren: Más allá del final del viaje",
         "desc": "Frieren, una maga elfa inmortal, que tras derrotar al Rey Demonio con un grupo de héroes humanos, se da cuenta de que su larga vida le impide valorar el tiempo con sus compañeros mortales, por lo que emprende un nuevo viaje para entender las relaciones humanas y redescubrir el valor de los momentos efímeros antes de que todos a su alrededor desaparezcan, explorando temas de mortalidad, el paso del tiempo y la memoria con una perspectiva madura y reflexiva.",
-        "cover": "ff.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Frieren.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "ff1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Frieren1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7648,7 +7648,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/68met98fq4br4u8cd7594/frieren2.avif?rlkey=w5jv3dne0ffs2ponw3ai1kgt0&st=uqyu2mmm&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Frieren2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
