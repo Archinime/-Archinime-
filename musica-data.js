@@ -171,7 +171,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Tojima.mp3"
     ],
     "55": [
-        "Alma-chan wa Kazoku ni Naritai Ending Full『Arifuretetai』by KAF.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/almachan.mp3"
     ],
     "56": [
         "Spice and Wolf (2024) ED  Ending 2 - Creditless  4K  24FPS (1).mp3"
