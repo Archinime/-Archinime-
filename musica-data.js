@@ -143,7 +143,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo.mp3"
     ],
     "46": [
-        "My Dress-Up Darling Season 2 Opening Theme).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling.mp3"
     ],
     "47": [
         "Poison (Español Latino) - Hazbin Hotel Fan Lyric Vídeo.mp3"
