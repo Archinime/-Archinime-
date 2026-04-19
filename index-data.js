@@ -270,15 +270,22 @@ const animes = [
     },
     {
         "id": 12,
-        "title": "Wistoria: Wand and Sword",
-        "img": "wistoria.avif",
+        "title": "Tsue to Tsurugi no Wistoria",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía",
             "Aventura",
+            "Fantasía",
             "Shōnen"
-        ]
+        ],
+        "lastUpdate": 1776568559618,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 13,
