@@ -1051,7 +1051,7 @@ const animes = [
     {
         "id": 57,
         "title": "Oyasumi Sex",
-        "img": "oyasumi.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumi1.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1061,9 +1061,9 @@ const animes = [
             "Slice of Life",
             "Seijin"
         ],
-        "lastUpdate": 1774467255694,
+        "lastUpdate": 1776565116288,
         "updateType": "Ninguna",
-        "latestSeasonCover": "oyasumi1.jpg",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumii.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 4",
         "isFinal": false
