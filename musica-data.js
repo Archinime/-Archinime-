@@ -74,7 +74,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/atelier.mp3"
     ],
     "24": [
-        "Onii-chan no Koto Nanka Zenzen Suki Janain Dakara Ne!!  ED FULL.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Onii-chan_no_Koto.mp3"
     ],
     "25": [
         "アニメ『怪獣８号』ノンクレジットED｜OneRepublic「Nobody」｜毎週土曜23時～放送・配信.mp3"
