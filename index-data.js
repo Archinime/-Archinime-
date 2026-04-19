@@ -1036,19 +1036,26 @@ const animes = [
     {
         "id": 46,
         "title": "My Dress-Up Darling",
-        "aliases": [
-            "Sono Bisque Doll wa Koi wo Suru"
-        ],
-        "img": "muneca.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
+            "Cosplay",
+            "Escolar",
             "Romance",
             "Slice of Life",
-            "Escolar",
-            "Cosplay",
             "Seinen"
+        ],
+        "lastUpdate": 1776577813138,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/MyDress-UpDarling2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Sono Bisque Doll wa Koi wo Suru"
         ]
     },
     {
