@@ -500,16 +500,23 @@ const animes = [
     {
         "id": 22,
         "title": "Goblin Slayer",
-        "img": "goblinslayerportada.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/goblinslayerportada.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Fantasía oscura",
-            "Horror",
             "Aventura",
             "Fantasía",
+            "Fantasía oscura",
+            "Horror",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1776572440117,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Goblin_Slayer2.avif",
+        "latestBlockName": "Temporada 2",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false
     },
     {
         "id": 23,
