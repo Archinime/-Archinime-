@@ -2112,9 +2112,9 @@ const animes = [
             "VRMMO",
             "Shōnen"
         ],
-        "lastUpdate": 1773758461313,
+        "lastUpdate": 1776615585192,
         "updateType": "Ninguna",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZBEwK5ZjV7AT4DkE4YjShvLSJIRlLcMFJHV&size=2000x3000",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shangri-la-Frontier2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 25",
         "isFinal": true
