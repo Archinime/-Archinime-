@@ -2813,12 +2813,12 @@ const data = {
     "25": {
         "title": "Kaiju No. 8",
         "desc": "La historia la protagoniza Kafka Hibino, un hombre de 32 años que quiere unirse a la Fuerza de Defensa y cumplir la promesa que le hizo a una amiga de la infancia, Mina Ashiro. En su trabajo como limpiador de restos de Kaiju forja amistad con un nuevo compañero, Reno Ichikawa, cuya determinación de unirse a la Fuerza de Defensa inspira a Kafka a cumplir su promesa de la infancia de unirse a Mina para proteger a la humanidad. Cuando un pequeño Kaiju se introduce en el interior de Kafka, éste adquiere una fuerza sobrehumana y poderes que le permiten luchar contra los Kaiju. Ahora se esfuerza por ganarse la confianza de sus compañeros humanos, derrotar a unos Kaiju cada vez más poderosos y proteger el mundo.",
-        "cover": "kaijuportada.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun8.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/rzzudg19zjya3pznh615p/asfsafasffa.jpg?rlkey=361qlvv0mu9th0h9geqsk6tlb&st=qt1r5j00&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun81.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2856,22 +2856,22 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "name": "Ova 1",
-                "cover": "https://www.dropbox.com/scl/fi/p4dlxt691m5wf5izdpzk3/dhfdhdfhd.jpg?rlkey=0n05uw4dl6ov3cnv0eex17ulz&st=uggh95sn&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun8_ova.avif",
                 "eps": [
                     {
-                        "title": "Hoshina's Day Off"
+                        "title": "Capítulo 1"
                     }
-                ]
+                ],
+                "name": "Ova 1"
             },
             {
                 "num": 3,
-                "name": "Temporada 2",
-                "cover": "https://www.dropbox.com/scl/fi/56elv17hnsta80sv7afye/sdfgsdfghdfhdfhdfh.jpg?rlkey=e7vwqun3uk03otd58jcpcvdgs&st=bxzwu4yi&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/kaijun82.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -2906,7 +2906,8 @@ const data = {
                     {
                         "title": "Capítulo 11"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
