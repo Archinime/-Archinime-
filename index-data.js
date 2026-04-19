@@ -2169,7 +2169,7 @@ const animes = [
     {
         "id": 93,
         "title": "Tower of God",
-        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tower.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TowerOfGod.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2181,9 +2181,9 @@ const animes = [
             "Misterio",
             "Shōnen"
         ],
-        "lastUpdate": 1773758499527,
+        "lastUpdate": 1776616500278,
         "updateType": "Ninguna",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZR6EK5ZMbtpcgy8H3Ld11AsXGK1V5mXHjRk&size=2000x3000",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TowerOfGod2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 26",
         "isFinal": true,
