@@ -4996,12 +4996,12 @@ const data = {
     "47": {
         "title": "Hazbin Hotel",
         "desc": "Charlie, la princesa del Infierno, en su audaz intento de redimir demonios para aliviar la sobrepoblación en su reino de manera pacífica. Tras un exterminio anual decretado por el Cielo, Charlie inaugura un hotel con la esperanza de que los huéspedes lo abandonen una vez que demuestren la redención de sus almas.",
-        "cover": "hhzz.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/vakrqxl5ey2qk0qdq5q86/Airbrush-Image-Enhancer-1761696979492.jpg?rlkey=vj8z9u813mhcpdanjqgbimqy3&st=a98lyc2h&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5032,7 +5032,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/iz2jt0avm2d625tjb8trq/Airbrush-Image-Enhancer-1761697102126.jpg?rlkey=isj2usvel3oh22io1o620lfoi&st=8laf3wdv&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HazbinHotel2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
