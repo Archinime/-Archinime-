@@ -2499,62 +2499,62 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/13cHjl_5fCDW2L_REKpDNkyZJ_KSOCrya/preview",
                 "link2": "https://www.dropbox.com/scl/fi/zev8r3fa3crktbjzaunj7/tsue-to-tsurugi-no-wistoria-capitulo-1.mp4?rlkey=67vk0o60azy4tv0pieiih3q96&st=yhuzzn6v&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 1"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1EmQ-nJB0R2P2Cmy2dn7pEUS-8lnJCfAN/preview",
                 "link2": "https://www.dropbox.com/scl/fi/8idhpxnv5dwufik69s96b/tsue-to-tsurugi-no-wistoria-capitulo-2.mp4?rlkey=m8dgfb523e7w0hs9ad4ksvif0&st=ugad7am1&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 2"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/12YrcM2F0f7CHkGB7k6lt7eVEY5LtjAWE/preview",
                 "link2": "https://www.dropbox.com/scl/fi/9uee9h943qj7q2e1ecp13/Tsue-to-Tsurugi-no-Wistoria-Cap-3.mp4?rlkey=fia2ibz370mk4nwt3503hs886&st=g3uta009&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 3"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1OliQoOnjtm5u8FfBi2R8OPlxlwr97vBT/preview",
                 "link2": "https://www.dropbox.com/scl/fi/bl97wjhhb1bz99uzvlev4/Tsue-to-Tsurugi-no-Wistoria-cap-4.mp4?rlkey=p4i4zlohw18yk15v0jwj9urri&st=ma2kvpl6&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 4"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1UIP0D-hkjReLvOwdxLX7htSlgM9phxIV/preview",
                 "link2": "https://www.dropbox.com/scl/fi/yt583jrswcytrjydnwdpe/Tsue-to-Tsurugi-no-Wistoria-cap-5.mp4?rlkey=kxv71ubizd0gt0vzmaa6yxn7m&st=0d9fhayo&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 5"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1cYB5MV-25-6nxCAILufAVvySH2NzKSyg/preview",
                 "link2": "https://www.dropbox.com/scl/fi/a79802bnyda5tukze7fzc/Tsue-to-Tsurugi-no-Wistoria-cap-6.mp4?rlkey=6if0l6ul0d00mj0wggr16cwdh&st=7m2hdrja&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 6"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1CDasuv9_yH9onnP4sYDn4rzFA7XsWi7q/preview",
                 "link2": "https://www.dropbox.com/scl/fi/cpax56hdmbf712ka5f2jv/Tsue-to-Tsurugi-no-Wistoria-cap-7.mp4?rlkey=c1iatfsgn5kf1hrffy50tvvql&st=ign9qdqv&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 7"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1Z8Zq9KVb91phe83vNb2OZi9Retrfce9G/preview",
                 "link2": "https://www.dropbox.com/scl/fi/lla02ppxgye21mwxn93hc/Tsue-to-Tsurugi-no-Wistoria-cap-8.mp4?rlkey=v7e5fkznq1uljwbrry60s6kp3&st=bh0vb81r&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 8"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1uO5S_4D85ywDs1YkbgL-mswjUKngKDDg/preview",
                 "link2": "https://www.dropbox.com/scl/fi/p4srcnjy7n1fhp0wfpmsu/Tsue-to-Tsurugi-no-Wistoria-cap-9.mp4?rlkey=31uljois7r6n7ui702i0rblmv&st=sy6eesj2&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 9"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1vjqL5P82QiawAPTd1VCV0FU3Evd3503B/preview",
                 "link2": "https://www.dropbox.com/scl/fi/i21z47j0edido2v5nj9er/Tsue-to-Tsurugi-no-Wistoria-cap-10.mp4?rlkey=eezs9sittoiqxof8u255cm3j0&st=9ag3y7t6&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 10"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1Ooe8rK0Kd6oISY6QI2wTagUqbbu-VS-R/preview",
                 "link2": "https://www.dropbox.com/scl/fi/tm3qre7j40nv1xxbeq2s1/Tsue-to-Tsurugi-no-Wistoria-cap-11.mp4?rlkey=xjd0ik8gult8h23j45oksmamj&st=xlmu9r5c&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 11"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/15v-OS40pEarHAVBddRy8ohfvmvZe_SHz/preview",
                 "link2": "https://www.dropbox.com/scl/fi/rwyg3nemerjiz7vq5rsim/Tsue-to-Tsurugi-no-Wistoria-cap-12.mp4?rlkey=3czuw7yudpub0u3x46wu8gk32&st=d1yx1mte&raw=1",
-                "title": "Wistoria: Wand and Sword T1 Cap 12"
+                "title": "Tsue to Tsurugi no Wistoria T1 Cap 12"
             }
         }
     },
