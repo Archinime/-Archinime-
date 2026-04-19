@@ -3501,6 +3501,7 @@ const players = {
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1aPo-7hYNfyY3lVI3OJ9BQgrRLo-gz1bx/preview",
+                "link2": "",
                 "title": "Shiunji-ke no Kodomotachi T1 Cap 12"
             }
         }
