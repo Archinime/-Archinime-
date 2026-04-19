@@ -2,12 +2,12 @@ const data = {
     "1": {
         "title": "DAN DA DAN",
         "desc": "Cuando Momo, una estudiante de preparatoria de una familia de médiums espirituales, conoce a su compañero de clase Okarun, un friki del ocultismo, discuten: Momo cree en los fantasmas pero no en los extraterrestres, y Okarun cree en los extraterrestres pero no en los fantasmas. Cuando resulta que ambos fenómenos son reales, en Momo surge un poder oculto y en Okarun el poder de una maldición. Juntos, deberán desafiar a las fuerzas paranormales que amenazan su mundo.",
-        "cover": "dan.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dan.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "dan1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dan1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -50,7 +50,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "dan2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dan2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
