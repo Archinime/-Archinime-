@@ -6389,50 +6389,62 @@ const players = {
         "2": {
             "1": {
                 "link": "https://drive.google.com/file/d/13p62SAsPVrqdMxQN0h4KRAFQo-SlAvKA/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1KHtj4Petg8_kCnVpx42AEiOaNSFKb9aZ/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1_cgLB9waxS_DZyMmmF-d5aBn4o7TPsRF/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1tZFLQPLyou1bSyINdAqFYeDK8lBqpZgr/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1GGh6uepZ8GWxo6xq2Xrru4vormzDkaVO/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/13sDRuJxXqWbp_DoGECmF2w_sQbLDCB8w/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1GslHg_1MVbqMKi9LEbnLqMbZIeW5Qtt-/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1qLOBU3QJgWAidGhhXchDtZEkWtd6mBL1/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1Wj5IA3QpanA9OaV9MaCx8-F6S9mzdHC5/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/1_p10aXWcOhUtz6kE2qV4xMkEcBkmHoMX/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/18Om1_898VXKGo0eo_7V2IjIaRrUjNONw/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1w9nZ_ewQ_4Dstvh3UBJ_a1Yi-83jQaRM/preview",
+                "link2": "",
                 "title": "Tondemo Skill de Isekai Hourou Meshi T2 Cap 12"
             }
         }
