@@ -238,7 +238,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LetsPlay.mp3"
     ],
     "77": [
-        "https://www.dropbox.com/scl/fi/mgfvc0w16noqdh4a12ts5/Mrs.-GREEN-APPLE-Inferno.mp3?rlkey=7w7lenfoaplou65lu0vycsexg&st=p1ijtaxo&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/fireforce.mp3"
     ],
     "78": [
         "https://www.dropbox.com/scl/fi/fikl8mp1ht47xmzipjgxa/Hana-Kimi-Opening-Adrena-by-YOASOBI.mp3?rlkey=94ano4j50v8nhd492j9j2uw42&st=lnjja3mi&raw=1"
