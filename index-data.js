@@ -2122,7 +2122,7 @@ const animes = [
     {
         "id": 91,
         "title": "Trigun Stampede",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZswdK5ZPrDr8metTShLGWYpHJjgnJ3OvO3k&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TrigunStampede.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2133,8 +2133,8 @@ const animes = [
             "Drama",
             "Seinen"
         ],
-        "lastUpdate": 1775934757120,
-        "updateType": "NUEVO 🔥",
+        "lastUpdate": 1776615785068,
+        "updateType": "Ninguna",
         "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/trigun-stargaze-character-visuals-v0-no7rngaincuf1.jpg",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 11",
