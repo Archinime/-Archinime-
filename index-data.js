@@ -1112,7 +1112,7 @@ const animes = [
     {
         "id": 49,
         "title": "Spy × Family",
-        "img": "spy.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1122,9 +1122,9 @@ const animes = [
             "Fantasía",
             "Shōnen"
         ],
-        "lastUpdate": 1769402924356,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/mtki74k5zzzywfdegb4ir/dfffffg.jpg?rlkey=g563wasphqjhhyep83qnq548r&st=9uw7j6kq&raw=1",
+        "lastUpdate": 1776578651709,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family3.avif",
         "latestBlockName": "Temporada 3",
         "latestEpTitle": "Capítulo 13",
         "isFinal": true
