@@ -9005,54 +9005,67 @@ const players = {
         "1": {
             "1": {
                 "link": "https://drive.google.com/file/d/1CatR182WKabtDm3HcBDkP7S5SH2w2fC4/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/12DG3cou1GHK7CTy6MIQvFJ0NCXgQ6OFE/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/1NNUPy9hjoVe0b9bZ4Zd5QEQnygVEzTCH/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/1GbhxT_ug4rX2NujQWpaRvPIxDecxAcsP/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1FZhIa1diZlUDgdDsnTJkMHThwGFpPyE0/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 5"
             },
             "6": {
                 "link": "https://drive.google.com/file/d/1VfmrjDVMxjjNfu-lLSuYg51F8a8W_m0D/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 6"
             },
             "7": {
                 "link": "https://drive.google.com/file/d/1RSdyLLSp9Nmxi_dfxzd2-LkxdYQsxKOF/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 7"
             },
             "8": {
                 "link": "https://drive.google.com/file/d/1Y0oJ1Me8rgweo3OaVWaoM-LJUFxhQrYO/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 8"
             },
             "9": {
                 "link": "https://drive.google.com/file/d/1__0eJzv7551bGYfkMIpMeyH-oCeYMAke/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 9"
             },
             "10": {
                 "link": "https://drive.google.com/file/d/12Rrh0xj85a9WUXEZEARqliEsJfd4IW4Y/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 10"
             },
             "11": {
                 "link": "https://drive.google.com/file/d/1FDWj67l-uIUlXy92JDwREtgS4mF-iS2c/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 11"
             },
             "12": {
                 "link": "https://drive.google.com/file/d/1XqpWA9VyHLh8wAKfjQYEitdfczD0Q0gZ/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 12"
             },
             "13": {
                 "link": "https://drive.google.com/file/d/1gqh3LfEr2y887u165PVvMlmQSWRvFlp-/preview",
+                "link2": "",
                 "title": "Saigo ni Hitotsu dake Onegai shitemo Yoroshii deshou ka T1 Cap 13"
             }
         }
