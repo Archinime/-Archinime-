@@ -24,7 +24,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tayna.mp3"
     ],
     "8": [
-        "akame.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akame.mp3"
     ],
     "9": [
         "tobeherox.mp3"
