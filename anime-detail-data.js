@@ -1380,12 +1380,12 @@ const data = {
     "8": {
         "title": "Akame Ga Kill",
         "desc": "Bajo el gobierno de un imperio tirano, Tatsumi, un joven espadachín, parte de su pueblo natal para intentar salvarlo de una pobreza extrema. En su viaje conocerá a Akami, una chica que fue comprada por el imperio, criada y entrenada para convertirse en un aasesina de élite miembro del grupo \"Night Raid\". Juntos, Tatsumi y Night Raid se enfrentarán a la corrupción del imperio.",
-        "cover": "Akame1.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Akame1.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "akame11.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akame11.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1459,7 +1459,8 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
