@@ -6768,12 +6768,12 @@ const data = {
     "61": {
         "title": "Ataque a los titanes",
         "desc": "Desde que 100 años atrás los titanes apareciesen de la nada y llevasen a la humanidad al borde de la extinción, la población vive encerrada en ciudades rodeadas de enormes muros llamados Maria, Rose y Sina, con el fin de protegerse de la aparición de nuevos titanes. Ese es el día a día de Eren Jaeger, un joven que sueña con el poder estar fuera de los muros, fastidiado del conformismo con el que la humanidad vive encerrada como si fuese ganado. La repentina llegada de los titanes Colosal y Acorazado aplastará la ilusión de paz en la que hasta ahora vivía la sociedad humana y hará que Eren, junto a su hermana adoptiva Mikasa Ackerman y su mejor amigo Armin Arlert, se embarque en una arriesgada odisea de venganza en nombre de la humanidad.",
-        "cover": "synt.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "synt1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6855,7 +6855,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "synova1.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan_Ova1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6865,7 +6865,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "synova2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan_Ova2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6875,7 +6875,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "synova3.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan_Ova3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6885,7 +6885,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "synt2.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6928,7 +6928,7 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "synt3.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7001,7 +7001,7 @@ const data = {
             },
             {
                 "num": 7,
-                "cover": "synt4.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
