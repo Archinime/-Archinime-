@@ -96,7 +96,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/shoujoramune.mp3"
     ],
     "31": [
-        "To Your Eternity Opening  Hikaru Utada -  Pink Blood  Sub Español - Lyrics Romaji.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ToYourEternity.mp3"
     ],
     "32": [
         "Tsugunai Subbed.mp3"
