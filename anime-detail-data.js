@@ -1554,12 +1554,12 @@ const data = {
     "10": {
         "title": "Demon Slayer",
         "desc": "Estamos en la era Taisho de Japón. Tanjiro, un joven que se gana la vida vendiendo carbón, descubre un día que su familia ha sido asesinada por un demonio. Para empeorar las cosas, su hermana menor Nezuko, la única superviviente de la masacre, ha sufrido una transformación en demonio. Destrozado por los acontecimientos Tanjiro decide convertirse en un cazador de demonios para poder devolver a su hermana a la normalidad y matar al demonio que masacró a su familia.",
-        "cover": "demon.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demon.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/42hfl90nzsi656lafcrt3/Demon-Slayer-T1.jpg?rlkey=rjizwszzaw7yk1ijp23ygurah&st=k1xk99zw&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1644,17 +1644,17 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/2gpxn6o5gz54vbn3u2u7z/Demon-Slayer-Pelicula-1.jpg?rlkey=8qn7pm6o3jfeq0lnjaj1xv9rk&st=x62180e8&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer_pelicula.avif",
                 "eps": [
                     {
                         "title": "El Tren Infinito"
                     }
                 ],
-                "name": "Película: El Tren Infinito"
+                "name": "Película 1"
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/4d3m150tzzhxb3tswn90z/Demon-Slayer-T2.jpeg?rlkey=6x82tdvfwol55eimna1wtwq24&st=e673iluu&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1694,7 +1694,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/2bh2sfcsj8g79qyxybp5h/Demon-Slayer-T3.jpg?rlkey=f2dg28acvd30m0grwbemzwkoc&st=ir9k5y6a&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1734,7 +1734,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://www.dropbox.com/scl/fi/ojq9woi8mm516pvpn73mn/Demon-Slayer-Pelicula-3.jpg?rlkey=jtd9xw1i3pyttoev0o9cdhkq3&st=c706zo9r&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer4.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -1765,13 +1765,13 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "https://www.dropbox.com/scl/fi/ollpfsqskuvar6fg3zdza/Demon-Slayer-Pelicula-4.jpg?rlkey=trkr1eux9hwkpa1ryi7t3oxf8&st=0twpq5s7&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer_pelicula2.avif",
                 "eps": [
                     {
                         "title": "Castillo Infinito"
                     }
                 ],
-                "name": "Película: Castillo Infinito"
+                "name": "Película 2"
             }
         ]
     },
