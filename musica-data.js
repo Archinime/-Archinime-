@@ -156,7 +156,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family.mp3"
     ],
     "50": [
-        "Black Clover.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/BlackCover.mp3"
     ],
     "51": [
         "Boku no Hero Academia Season 1 Ending 1 full『 Brian the Sun - Heroes』【Sub EspañolJaponés】AMV.mp3"
