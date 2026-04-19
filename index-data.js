@@ -1717,7 +1717,7 @@ const animes = [
     {
         "id": 74,
         "title": "SHIBOYUGI: Me gano el pan participando de juegos mortales",
-        "img": "https://www.dropbox.com/scl/fi/fx5zw1358e8zykeh8qku1/ImageToStl.com_MV5BMzVmOTUyMTktZjg1ZC00ZjljLWE3MjEtNTRjMDc2Yjg1NzZiXkEyXkFqcGc._V1_-1.avif?rlkey=ejl6szzppyol14lq9nvcjgw4m&st=ipj0pclp&raw=1",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiboyugi.avif",
         "rating": 4.5,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -1730,9 +1730,9 @@ const animes = [
             "Thriller",
             "Seinen"
         ],
-        "lastUpdate": 1773968239416,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://www.dropbox.com/scl/fi/lxizxk8vjgtw98rlqs0gs/ImageToStl.com_MV5BMjhjNDQwYzEtY2EzNy00Zjk2LThmMjgtNGI2ODdlZDAxYzllXkEyXkFqcGc-._V1.avif?rlkey=evoiqoezadb87f7hqfqufabvg&st=qfm4dc84&raw=1",
+        "lastUpdate": 1776610520863,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Shiboyugi1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 11",
         "isFinal": true,
