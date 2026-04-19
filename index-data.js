@@ -1492,20 +1492,27 @@ const animes = [
     {
         "id": 65,
         "title": "Classroom of the Elite",
-        "aliases": [
-            "Yōkoso Jitsuryoku Shijō Shugi no Kyōshitsu e"
-        ],
-        "img": "classroomelite.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Drama",
+            "Escolar",
             "Slice of Life",
             "Survival Game",
             "Thriller",
             "Thriller psicológico",
-            "Escolar",
             "Seinen"
+        ],
+        "lastUpdate": 1776608963282,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/classroomelite3.avif",
+        "latestBlockName": "Temporada 3",
+        "latestEpTitle": "Capítulo 13",
+        "isFinal": false,
+        "aliases": [
+            "Yōkoso Jitsuryoku Shijō Shugi no Kyōshitsu e"
         ]
     },
     {
