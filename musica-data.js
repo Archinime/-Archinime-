@@ -183,7 +183,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RickAndMorty.mp3"
     ],
     "59": [
-        "akujiki.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akujiki.mp3"
     ],
     "60": [
         "saigonihitotsu.mp3"
