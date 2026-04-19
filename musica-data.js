@@ -6,7 +6,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/jujutsukaisen.mp3"
     ],
     "3": [
-        "konosuba.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/konosuba.mp3"
     ],
     "4": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/rezero.mp3",
