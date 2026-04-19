@@ -4084,12 +4084,12 @@ const data = {
     "39": {
         "title": "Ore dake Haireru Kakushi Dungeon",
         "desc": "Mazmorra Oculta es un lugar legendario repleto de tesoros y objetos muy poco comunes. Nor, el tercer hijo de una ahora en decencia familia noble y que ha perdido el único trabajo que tenía, tiene la suerte de escuchar hablar de esta mazmorra. Es entonces cuando adquiere una habilidad que le permite crear, usar y editar habilidades... y para poder usarla debe acumular puntos cumpliendo tareas como comer cosas deliciosas o dedicarse a hacer cosas eróticas a miembros del sexo opuesto.",
-        "cover": "oredake.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oredake.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/aou6bhbyss0r0ho2qr5iv/oredake1.jpg?rlkey=bpvxuzex7egs4keohqpg4qzfx&st=7uxvmh43&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oredake1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4127,7 +4127,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             }
         ]
     },
