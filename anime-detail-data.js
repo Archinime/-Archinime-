@@ -7684,13 +7684,13 @@ const data = {
     },
     "67": {
         "title": "Solo leveling",
-        "desc": "Sung Jinwoo, el cazador más débil de la humanidad, que recibe una misteriosa habilidad para subir de nivel como si fuera un videojuego tras una experiencia mortal en una mazmorra, lo que le permite volverse increíblemente fuerte y ascender de rango mientras otros cazadores no pueden, protegiendo al mundo de portales interdimensionales y monstruos. ",
-        "cover": "sololeveling.avif",
+        "desc": "Sung Jinwoo, el cazador más débil de la humanidad, que recibe una misteriosa habilidad para subir de nivel como si fuera un videojuego tras una experiencia mortal en una mazmorra, lo que le permite volverse increíblemente fuerte y ascender de rango mientras otros cazadores no pueden, protegiendo al mundo de portales interdimensionales y monstruos.",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SoloLeveling.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "sololeveling1.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SoloLeveling1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7728,11 +7728,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "sololeveling2.avif",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SoloLeveling2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -7773,7 +7774,8 @@ const data = {
                     {
                         "title": "Capítulo 13"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
