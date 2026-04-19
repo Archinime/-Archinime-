@@ -174,7 +174,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/almachan.mp3"
     ],
     "56": [
-        "Spice and Wolf (2024) ED  Ending 2 - Creditless  4K  24FPS (1).mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SpiceandWolf.mp3"
     ],
     "57": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/oyasumi.mp3"
