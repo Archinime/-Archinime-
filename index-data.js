@@ -1448,17 +1448,24 @@ const animes = [
     {
         "id": 63,
         "title": "Genshin Impact Hentai",
-        "aliases": [
-            "Hentai"
-        ],
-        "img": "gih.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImpactG.avif",
         "rating": 5,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Hentai",
             "Fantasía",
+            "Hentai",
             "Tentáculos",
             "Seijin"
+        ],
+        "lastUpdate": 1776608719839,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/ImpactG1.avif",
+        "latestBlockName": "Videos",
+        "latestEpTitle": "Capítulo 20",
+        "isFinal": false,
+        "aliases": [
+            "Hentai"
         ]
     },
     {
