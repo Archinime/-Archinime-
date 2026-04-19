@@ -777,12 +777,12 @@ const data = {
     "5": {
         "title": "Mushoku Tensei",
         "desc": "Cuando un autobús atropella a un joven de 34 años que no ha logrado mucho en su vida, su historia no termina ahí. Habiéndose reencarnado en un niño, Rudy aprovechará cada oportunidad para vivir la vida que siempre quiso. ¡Con la ayuda de sus amigos, unas habilidades mágicas recién adquiridas, y el coraje para hacer las cosas que siempre ha soñado, se embarca en una aventura épica, con su experiencia pasada intacta!",
-        "cover": "mushoku.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mushoku.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "mushoku11.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mushoku1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -858,7 +858,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "mushokuova.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mushoku_ova.avif",
                 "eps": [
                     {
                         "title": "Eris, La Cazaduendes"
@@ -868,7 +868,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "mushoku22.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mushoku2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 0"
