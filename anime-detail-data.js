@@ -5887,12 +5887,12 @@ const data = {
     "52": {
         "title": "Kakkou no Linazuke",
         "desc": "Nagi Umino es un estudiante de preparatoria al que intercambiaron con el hijo de otra familia cuando nació, pero ahora por fin va a conocer a sus padres biológicos. El día que va a concerlos se encuentra con Erika Amano, estudiante en una preparatoria femenina para señoritas de buena familia. A petición de la chica, Nagi se ve medio forzado a fingir ser su novio para evitar un matrimonio concertado... Sin embargo, lo que no sabían es que además de ser falsos prometidos, ¡son los bebés a los que intercambiaron al nacer!",
-        "cover": "pordf.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/KakouNoInazuke.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/ypmn2br72oz7vlho68bst/dfgdfgdfggg.jpg?rlkey=0ynfd69wl61vfyby3adhnnznu&st=r3ez8jha&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/KakouNoInazuke%201.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5966,11 +5966,12 @@ const data = {
                     {
                         "title": "Capítulo 24"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/mb74fbq9n4mdfdqeo6i7t/fghfgfg.jpg?rlkey=mzejn8x7frccbnefptgma6n9f&st=fuh5o4x0&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/KakouNoInazuke%202.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -6008,7 +6009,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
