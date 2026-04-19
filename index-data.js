@@ -1990,7 +1990,7 @@ const animes = [
     {
         "id": 85,
         "title": "Sword Art Online",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZexDK5ZF3sDn1qITuYL1VScYcuknLSBUcDy&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2005,9 +2005,9 @@ const animes = [
             "VRMMO",
             "Shōnen"
         ],
-        "lastUpdate": 1769805090130,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZr1TK5ZWqGs6z8IT6JzKyMNjMbUSH5P9wOk&size=2000x3000",
+        "lastUpdate": 1776613443125,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SwordArtOnline_alternative2.avif",
         "latestBlockName": "Alternative: Gun Gale Online II",
         "latestEpTitle": "Capítulo 12",
         "isFinal": true
