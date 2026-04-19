@@ -35,7 +35,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/demonslayer3.mp3"
     ],
     "11": [
-        "maou2099.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/maou2099.mp3"
     ],
     "12": [
         "Wistoria Wand and Sword - Opening  Fire and Fear.mp3"
