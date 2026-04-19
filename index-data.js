@@ -202,17 +202,24 @@ const animes = [
     {
         "id": 9,
         "title": "To Be Hero X",
-        "img": "hero11.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/hero.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Acción",
-            "Comedia",
             "Animación",
+            "Comedia",
             "Fantasía",
             "Superhéroes",
             "Seinen"
-        ]
+        ],
+        "lastUpdate": 1776567586218,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/hero1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 24",
+        "isFinal": false
     },
     {
         "id": 10,
