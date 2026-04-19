@@ -186,7 +186,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/akujiki.mp3"
     ],
     "60": [
-        "saigonihitotsu.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/SaigoNiHitotsu.mp3"
     ],
     "61": [
         "syn.mp3",
