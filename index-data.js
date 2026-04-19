@@ -2,7 +2,7 @@ const animes = [
     {
         "id": 1,
         "title": "DAN DA DAN",
-        "img": "dan.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dan.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -14,9 +14,9 @@ const animes = [
             "Sobrenatural",
             "Shōnen"
         ],
-        "lastUpdate": 1768745863080,
+        "lastUpdate": 1776565311098,
         "updateType": "Ninguna",
-        "latestSeasonCover": "dan2.jpg",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/dan2.avif",
         "latestBlockName": "Temporada 2",
         "latestEpTitle": "Capítulo 12",
         "isFinal": false
