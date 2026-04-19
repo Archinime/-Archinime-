@@ -456,17 +456,24 @@ const animes = [
     {
         "id": 20,
         "title": "Overflow",
-        "img": "overflow.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overflow.avif",
         "rating": 4.6,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Hentai",
             "Escolar",
-            "Romance",
             "Harem",
+            "Hentai",
             "Incesto",
+            "Romance",
             "Seijin"
-        ]
+        ],
+        "lastUpdate": 1776570522521,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/overflow1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 8",
+        "isFinal": false
     },
     {
         "id": 21,
