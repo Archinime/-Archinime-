@@ -2015,7 +2015,7 @@ const animes = [
     {
         "id": 86,
         "title": "Baki",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZ0p9K5Zz7CYJaaP8E4a4o9sBzCkrSwHI6k0&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki.avif",
         "rating": 4.7,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2025,9 +2025,9 @@ const animes = [
             "Deportivo",
             "Shōnen"
         ],
-        "lastUpdate": 1769789195067,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZ6rMK5ZTji8HdOSHVXg8AlDp46GWV3zzusy&size=2000x3000",
+        "lastUpdate": 1776614591106,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Baki_pelicula.avif",
         "latestBlockName": "Película 1",
         "latestEpTitle": "Baki Hanma vs. Kengan Ashura",
         "isFinal": false
