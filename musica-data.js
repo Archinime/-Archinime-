@@ -193,7 +193,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/AttackOnTitan1.mp3"
     ],
     "62": [
-        "record.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RecordOfRagnarok.mp3"
     ],
     "63": [
         "phub.mp3"
