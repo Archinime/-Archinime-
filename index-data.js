@@ -314,17 +314,24 @@ const animes = [
     {
         "id": 14,
         "title": "Alya Sometimes Hides Her Feelings in Russian",
-        "aliases": [
-            "Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"
-        ],
-        "img": "alia.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/alya.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
             "Comedia",
-            "Romance",
             "Escolar",
+            "Romance",
             "Josei"
+        ],
+        "lastUpdate": 1776568869289,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/alya1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 12",
+        "isFinal": false,
+        "aliases": [
+            "Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san"
         ]
     },
     {
