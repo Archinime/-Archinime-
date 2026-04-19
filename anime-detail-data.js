@@ -4135,12 +4135,12 @@ const data = {
     "40": {
         "title": "One Punch-Man",
         "desc": "Saitama comenzó a hacer de héroe por pura afición, y tras tres años de un durísimo entrenamiento consiguió tal nivel de fuerza que puede acabar con cualquier enemigo de un solo puñetazo. Ahora la vida emocionante que esperaba tener se ha convertido en una de tedio absoluto, pero ¿habrá alguien a su nivel entre todos los héroes del mundo? ¿Y un villano capaz de hacerle sombra?",
-        "cover": "onepunch.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/e90mvl54sx6as45mlwlfr/unnamed-1.jpg?rlkey=w5y5f5vipr6b97cqrke3zow2p&st=qjqrvo8v&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch_ova.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4150,7 +4150,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/gt6int1d0scu0qkbd2e79/onepunch1.jpg?rlkey=rd15zof6ij6uhkje9ckemlfw3&st=ps4vgrz6&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4193,7 +4193,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "https://www.dropbox.com/scl/fi/gb5c5qs9vk8urqfgu2cnz/asfasf.avif?rlkey=riiqywxtk4ocat1oy879m46il&st=f9sl6b6d&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch1_ova.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4218,7 +4218,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/xx302drnrqurqrj7eggdc/gsdgsdgsdg-1.jpg?rlkey=ee9b8kqmq7kdbef8tqr622d5j&st=9qw1ilb1&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4261,7 +4261,7 @@ const data = {
             },
             {
                 "num": 5,
-                "cover": "https://www.dropbox.com/scl/fi/whxth23vsbdxykczed7fp/sdafssfd.avif?rlkey=2enj7arpalqyogu9fzir3etf3&st=hvbj3t83&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch2_ova.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4286,7 +4286,7 @@ const data = {
             },
             {
                 "num": 6,
-                "cover": "https://www.dropbox.com/scl/fi/1r0djgkxmptdfe2ltkbk1/onepunch3.jpg?rlkey=4e2i0r1cvl5ufsh5f41fa2sqm&st=woghk9gy&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/onepunch3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
