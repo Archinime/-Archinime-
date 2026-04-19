@@ -6104,12 +6104,12 @@ const data = {
     "54": {
         "title": "Tojima Tanzaburō wa Kamen Rider ni Naritai",
         "desc": "Tanzaburo Tojima ha soñado con ser un Kamen Rider toda su vida. Pero ahora que tiene 40 años, empieza a pensar que su sueño quizá nunca se haga realidad… ¡hasta que se ve envuelto en una serie de crímenes inspirados en el infame “Shocker”! De Shibata Yokusaru, creador de Air Master y 81 Diver, llega una historia alocada y conmovedora sobre adultos que adoran a Kamen Rider demasiado y empiezan a jugar a serlo… ¡de verdad!",
-        "cover": "tojima1.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Tojima.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/1acwpuwtsx2f20urv44eo/Airbrush-IMAGE-ENHANCER-1763730194883-1763730194884.jpg?rlkey=ornue772yaoazcagrsinqj1fc&st=nlz517kl&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Tojima1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
