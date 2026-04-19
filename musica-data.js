@@ -129,9 +129,9 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/mashle.mp3"
     ],
     "42": [
-        "Kusuriya no Hitorigoto ed 1.mp3",
-        "Kusuriya no Hitorigoto Season 2 Opening Full  Hyakka Ryouran by Lilas Ikuta - Sub. Español ♡.mp3",
-        "Kusuriya no Hitorigoto 3.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria2.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/LosDiariosdelaBoticaria3.mp3"
     ],
     "43": [
         "phub.mp3"
