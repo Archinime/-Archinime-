@@ -2035,7 +2035,7 @@ const animes = [
     {
         "id": 87,
         "title": "Death Note",
-        "img": "https://api.pcloud.com/getpubthumb?code=XZC3PK5ZI5e4GKRCk8Xvz6QX7v678Q275LUy&size=2000x3000",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DeadNote.avif",
         "rating": 4.8,
         "uploader": "archinime12@gmail.com",
         "uploaderImg": "Logo_Archinime.avif",
@@ -2047,9 +2047,9 @@ const animes = [
             "Thriller psicológico",
             "Shōnen"
         ],
-        "lastUpdate": 1769889152335,
-        "updateType": "NUEVO 🔥",
-        "latestSeasonCover": "https://api.pcloud.com/getpubthumb?code=XZd3PK5ZpT0OB7y4ALjU5DNn1jo74HFpQ6FV&size=2000x3000",
+        "lastUpdate": 1776614917067,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/DeadNote1.avif",
         "latestBlockName": "Temporada 1",
         "latestEpTitle": "Capítulo 37",
         "isFinal": true
