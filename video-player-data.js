@@ -4509,27 +4509,27 @@ const players = {
             "1": {
                 "link": "https://drive.google.com/file/d/1MHT1yZHIcM90WDy4Kb6NgEyzsxFGpmJ3/preview",
                 "link2": "https://www.dropbox.com/scl/fi/tlnut3bzb13xfv26bhgcm/Shoujo-Ramune-01-Audio-Latino-1080p-LatinoHentai.mp4?rlkey=8zytsseg2kx0gtne5rk90gtvg&st=50bjf2pi&raw=1",
-                "title": "Shoujo Ramune ESPAÑOL T1 Cap 1"
+                "title": "Shoujo Ramune T1 Cap 1"
             },
             "2": {
                 "link": "https://drive.google.com/file/d/1lXOVeXg_2foWKBzfSnn8GOa6EubCNROk/preview",
                 "link2": "https://www.dropbox.com/scl/fi/wlkyg9ywcpcqhvwlc13hp/shoujoramuness-01.mp4?rlkey=82jdrgrl5q2vraljjzm85llt8&st=sjou2cqk&raw=1",
-                "title": "Shoujo Ramune SUB T1 Cap 1"
+                "title": "Shoujo Ramune T1 Cap 2"
             },
             "3": {
                 "link": "https://drive.google.com/file/d/17V_QYmym1M2lfESWgGnb_VLND3Gtn4-P/preview",
                 "link2": "https://www.dropbox.com/scl/fi/jraramv6b5uwt4rkubr1a/shoujoramuness-02.mp4?rlkey=r0rf6h8rfy0mwkqkzgz14cqx0&st=mdgk1hsp&raw=1",
-                "title": "Shoujo Ramune SUB T1 Cap 2"
+                "title": "Shoujo Ramune T1 Cap 3"
             },
             "4": {
                 "link": "https://drive.google.com/file/d/188T2-RuivfFi-oXcM8vOBv-1o_H-Oe-b/preview",
                 "link2": "https://www.dropbox.com/scl/fi/728kl0dztz3po9x58a1ct/shoujoramuness-03.mp4?rlkey=9dpcv1r2r6vh07m2reom8dfmb&st=6b2f5o2e&raw=1",
-                "title": "Shoujo Ramune SUB T1 Cap 3"
+                "title": "Shoujo Ramune T1 Cap 4"
             },
             "5": {
                 "link": "https://drive.google.com/file/d/1URAydZR1W-MYIJrU-Ou0p__1jqTMEZB8/preview",
                 "link2": "https://www.dropbox.com/scl/fi/n2iaalss7ez17ib1ceolk/shoujoramuness-04.mp4?rlkey=klvlmhftp91dzfodk99s0fz78&st=5b9pc2bn&raw=1",
-                "title": "Shoujo Ramune SUB T1 Cap 4"
+                "title": "Shoujo Ramune T1 Cap 5"
             }
         }
     },
