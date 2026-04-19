@@ -153,7 +153,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TheEminenceinShadow2.mp3"
     ],
     "49": [
-        "Spy x Family Ed. 2 Full  Shikisai by yama  Sub Español.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family.mp3"
     ],
     "50": [
         "Black Clover.mp3"
