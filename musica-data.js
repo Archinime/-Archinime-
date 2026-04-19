@@ -289,8 +289,8 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TrigunStampede.mp3"
     ],
     "92": [
-        "https://www.dropbox.com/scl/fi/0zvi91ka303ok249u5wpx/Roll-Over-and-Die-Opening-Liberator-with-KanRomEn.mp3?rlkey=p2tbx1hsquc5zn9qp9lm8ywky&st=pc8vqkmf&raw=1",
-        "https://www.dropbox.com/scl/fi/g7xm04ivmp2cn25bbi5vx/Roll-Over-and-Die-Ending-I-need-with-KanRomEn.mp3?rlkey=lj6ouvwmd94wvurid38iow3gp&st=rpud5p98&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RollOver1.mp3",
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/RollOver2.mp3"
     ],
     "93": [
         "https://www.dropbox.com/scl/fi/aahlmgroyqa04fgpw9xhk/SLUMP-Ending-1.-Tower-of-God.-Subtitulado-al-Espa-ol..mp3?rlkey=qvn3wnudtnpr4c27rgu4kukcd&st=2y7f6hd6&raw=1",
