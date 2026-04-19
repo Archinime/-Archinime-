@@ -140,7 +140,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/uzumaki.mp3"
     ],
     "45": [
-        "Tondemo Skill de Isekai Hourou Meshi Opening Full  Luxury Spoon -  Van de Shop  Sub Español Latino.mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/todemo.mp3"
     ],
     "46": [
         "My Dress-Up Darling Season 2 Opening Theme).mp3"
