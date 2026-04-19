@@ -253,7 +253,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata.mp3"
     ],
     "82": [
-        "https://www.dropbox.com/scl/fi/3vfig1wo2afaq4ybyg423/Tsuki-ga-Michibiku-Isekai-Douchuu-Season-2-OP.-2-Full-Sub-espa-ol-Rom-Reversal-Syudou.mp3?rlkey=tq0kcg5gnxsqjm333ftcxbfgz&st=7ums4zwn&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/TsukiGaMichibiku.mp3"
     ],
     "83": [
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/iruma.mp3",
