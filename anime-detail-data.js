@@ -3990,12 +3990,12 @@ const data = {
     "38": {
         "title": "Kami-tachi ni Hirowareta Otoko",
         "desc": "Ryoma no había tenido suerte en su vida previa. Pero tres deidades deciden darle una segunda oportunidad en un mundo de fantasía y magia.",
-        "cover": "Kamitachi.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/pj52xk7ed29w5geipwj5a/kamitachi1.jpg?rlkey=ktl75d2p09k4m0nd9nij39rkv&st=kj1aaaue&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4033,11 +4033,12 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 1"
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/mh2a1yka1pwlhvvpr22h1/kamitachi2.jpg?rlkey=mpyq7ft571c9odi23rvfromfx&st=qxx9rdlr&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Kamitachi2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -4075,7 +4076,8 @@ const data = {
                     {
                         "title": "Capítulo 12"
                     }
-                ]
+                ],
+                "name": "Temporada 2"
             }
         ]
     },
