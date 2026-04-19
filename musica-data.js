@@ -250,7 +250,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/HellParadire.mp3"
     ],
     "81": [
-        "https://www.dropbox.com/scl/fi/w5j4gmrjtjmtkcgi8eo3q/NieRAutomata-Ver1.1a-Season-2-Ending-Full-Hai-to-Inori-Sub-Espa-ol-AMV.mp3?rlkey=1fmp1g26rlnvjr1wozqskgvjs&st=s70ilkpy&raw=1"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata.mp3"
     ],
     "82": [
         "https://www.dropbox.com/scl/fi/3vfig1wo2afaq4ybyg423/Tsuki-ga-Michibiku-Isekai-Douchuu-Season-2-OP.-2-Full-Sub-espa-ol-Rom-Reversal-Syudou.mp3?rlkey=tq0kcg5gnxsqjm333ftcxbfgz&st=7ums4zwn&raw=1"
