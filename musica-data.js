@@ -71,7 +71,7 @@ const audioPlaylists = {
         "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Goblin_Slayer.mp3"
     ],
     "23": [
-        "Unaware Atelier Meister - Opening full FACTSORY by MeseMoa [Lyrics].mp3"
+        "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/atelier.mp3"
     ],
     "24": [
         "Onii-chan no Koto Nanka Zenzen Suki Janain Dakara Ne!!  ED FULL.mp3"
