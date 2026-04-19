@@ -5184,12 +5184,12 @@ const data = {
     "49": {
         "title": "Spy × Family",
         "desc": "Todo el mundo tiene una parte de sí mismos que no puede mostrar a los demás. En una era en la que las naciones de todo el mundo se encuentran involucradas en una feroz guerra de información a puerta cerrada, Ostania y Westalis llevan décadas en guerra fría. La División de Inteligencia de Westalis (WISE) envía a su mejor espía, “Twilight”, en una misión ultrasecreta para vigilar los movimientos de Donovan Desmond, quien dirige el Partido Nacional por la Unidad de Ostania, responsable de bombardear los esfuerzos de paz entre ambos países.",
-        "cover": "spy.avif",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/47fpy586gvqdv5uz2w6w8/0623385.jpg?rlkey=eto92eui4oe0u8qtn0dm4nhsm&st=yyzrugde&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5271,7 +5271,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/da304j8cu2p1m8aorjtm8/ddfgfdgdfgdfg.jpg?rlkey=9ocn8z1kxwqm0w1jegyawm4v2&st=8huenzv4&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -5314,7 +5314,7 @@ const data = {
             },
             {
                 "num": 3,
-                "cover": "spyxfamilypeli.jpg",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family_pelicula.avif",
                 "eps": [
                     {
                         "title": "Code: White"
@@ -5324,7 +5324,7 @@ const data = {
             },
             {
                 "num": 4,
-                "cover": "https://www.dropbox.com/scl/fi/mtki74k5zzzywfdegb4ir/dfffffg.jpg?rlkey=g563wasphqjhhyep83qnq548r&st=9uw7j6kq&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/spy-x-family3.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
