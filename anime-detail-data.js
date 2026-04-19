@@ -9011,12 +9011,12 @@ const data = {
     "81": {
         "title": "NieR: Automata Ver1.1a",
         "desc": "2B es una unidad que participa en una misión que tristemente sale mal y eliminan a todo su equipo. Ella intenta seguir con su misión, donde conoce a 9S.",
-        "cover": "https://www.dropbox.com/scl/fi/54c7obrwsgh12oojlpvkx/ImageToStl.com_Airbrush-IMAGE-ENHANCER-1769098432658-1769098432658-1.avif?rlkey=md3jxz8n24z6i6ube8locfa9o&st=1kc4iygy&raw=1",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata.avif",
         "uploader": "archinime12@gmail.com",
         "seasons": [
             {
                 "num": 1,
-                "cover": "https://www.dropbox.com/scl/fi/dyghot1udf99pi7ilffjp/ImageToStl.com_nier-replicant-and-nier-automata-v0-e1ca85rjutna1.avif?rlkey=lefktvdfb8fd2d391v96mu8w1&st=netf26qi&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata1.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9059,7 +9059,7 @@ const data = {
             },
             {
                 "num": 2,
-                "cover": "https://www.dropbox.com/scl/fi/8r1nblzvbi56izp0v7kog/ImageToStl.com_sadfsf.avif?rlkey=dqr0neuyaiwp4tnhc9t8e2jcf&st=2ij9738d&raw=1",
+                "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/NieRAutomata2.avif",
                 "eps": [
                     {
                         "title": "Capítulo 1"
@@ -9098,7 +9098,7 @@ const data = {
                         "title": "Capítulo 12"
                     }
                 ],
-                "name": "Temporada 2"
+                "name": "Temporada 1 - Parte II"
             }
         ]
     },
