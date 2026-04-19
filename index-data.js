@@ -1568,19 +1568,26 @@ const animes = [
     {
         "id": 68,
         "title": "It - Bienvenidos a Derry",
-        "aliases": [
-            "It - Welcome to Derry"
-        ],
-        "img": "it.avif",
+        "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/it.avif",
         "rating": 4.9,
         "uploader": "archinime12@gmail.com",
+        "uploaderImg": "Logo_Archinime.avif",
         "genres": [
-            "Terror",
+            "Drama",
             "Sobrenatural",
             "Suspenso",
-            "Drama",
+            "Terror",
             "Thriller",
             "Seijin"
+        ],
+        "lastUpdate": 1776609278046,
+        "updateType": "Ninguna",
+        "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/it1.avif",
+        "latestBlockName": "Temporada 1",
+        "latestEpTitle": "Capítulo 8",
+        "isFinal": false,
+        "aliases": [
+            "It - Welcome to Derry"
         ]
     },
     {
