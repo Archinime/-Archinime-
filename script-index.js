@@ -1,121 +1,264 @@
-/* Archivo: script-index.js */
+/* Archivo: script-index.js - Versión final estable con Firestore */
+/* -------------------------------------------------- */
+/* PAGINACIÓN + FILTROS EN CLIENTE         */
+/* -------------------------------------------------- */
 
-/* ----------------------------
-    Renderizado grid
-    ---------------------------- */
-function render(list) {
-    const grid = document.getElementById('grid');
+// ============================================
+// VARIABLES GLOBALES PARA FIRESTORE
+// ============================================
+let lastVisible = null;
+let isLoading = false;
+let hasMore = true;
+let currentFilters = {
+    search: '',
+    genre: '',
+    demographic: '',
+    rating: ''
+};
+let debounceTimer = null;
+const gridEl = document.getElementById('grid');
+const loadingEl = document.getElementById('loadingMore');
+
+// ============================================
+// FUNCIONES DE RENDERIZADO
+// ============================================
+function render(list, append = false) {
+    if (!append) gridEl.innerHTML = '';
     if (!list || list.length === 0) {
-        grid.innerHTML = `
-        <div class="no-results" role="status" aria-live="polite">
-        <div class="title shimmer">¡Ups! No se encontraron resultados que coincidan con la búsqueda.</div>
-        <div class="subtitle">¿No lo encuentras? Puede que lo hayas escrito con un error o que todavía no lo haya subido.</div>
-        <div class="sparkles"><button class="btn-reset" id="btn-reset">Entiendo</button></div>
-        </div>
-        `;
-        const btn = document.getElementById('btn-reset');
-        if (btn) btn.addEventListener('click', () => {
-            document.getElementById('search').value = '';
-            document.getElementById('genre-select').value = '';
-            document.getElementById('demographic-select') && (document.getElementById('demographic-select').value = '');
-            document.getElementById('rating-select').value = '';
-            filtro();
-            document.getElementById('search').focus();
-        });
+        if (!append && gridEl.children.length === 0) mostrarNoResultados();
         return;
     }
 
-    grid.innerHTML = list.map(a => `
-    <div class="card" onclick="location='anime-detail.html?id=${a.id}'" role="link" tabindex="0">
-        <img src="${a.img}" alt="${a.title}">
-        <div class="info"><strong>${a.title}</strong><span>⭐ ${a.rating ? (a.rating.toFixed? a.rating.toFixed(1): a.rating) : '—'}</span></div>
-    </div>
-    `).join('');
-}
+    const fragment = document.createDocumentFragment();
+    list.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.id = a.id;
+        card.setAttribute('onclick', `location='anime-detail.html?id=${a.id}'`);
+        card.setAttribute('role', 'link');
+        card.setAttribute('tabindex', '0');
 
-function updateResultsCount(count){ const el = document.getElementById('results-count'); if (el) el.textContent = count; }
-
-function debounce(fn, wait){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
-
-const debouncedFiltro = debounce(filtro, 200);
-function normalizeText(s){
-    try {
-        return (s||'').toLowerCase().normalize('NFD').replace(/\p{M}/gu, '');
-    } catch(e) {
-        return (s||'').toLowerCase().replace(/[\u0300-\u036f]/g, '');
-    }
-}
-
-function getBestTitleForSort(a){ 
-    const titles = [a.title].concat(a.aliases || []);
-    const norm = titles.map(t=>normalizeText(t)); 
-    norm.sort(); 
-    return norm[0]; 
-}
-
-function filtro(){
-    const qRaw = document.getElementById('search').value || '';
-    const q = qRaw.trim(); const qn = normalizeText(q);
-    const g = document.getElementById('genre-select').value;
-    const d = document.getElementById('demographic-select') ? document.getElementById('demographic-select').value : '';
-    const cat = document.getElementById('rating-select').value;
-
-    const filtrados = animes.filter(a=>{
-        const titles = [a.title].concat(a.aliases || []);
-        const matchesText = !qn || titles.some(t => normalizeText(t).startsWith(qn));
-        const byGenre = !g || (a.genres && a.genres.includes(g));
-        const byDemo  = !d || (a.genres && a.genres.includes(d));
-        let byRating = true;
-        
-        if (cat==='excellent') byRating = a.rating >= 4.8;
-        else if (cat==='good') byRating = a.rating >= 4.6 && a.rating < 4.8;
-        else if (cat==='regular') byRating = a.rating < 4.6;
-    
-        return matchesText && byGenre && byDemo && byRating;
+        const rating = (a.rating != null && !isNaN(a.rating)) ? a.rating.toFixed(1) : '—';
+        card.innerHTML = `
+            <img src="${a.img}" alt="${a.title}" loading="lazy">
+            <div class="info">
+                <strong>${a.title}</strong>
+                <span class="rating-value">⭐ ${rating}</span>
+            </div>
+        `;
+        fragment.appendChild(card);
     });
+    gridEl.appendChild(fragment);
+    aplicarTiltANuevasCards();
+}
 
-    let resultList = filtrados.slice();
-    if (qn) {
-        resultList.sort((A,B)=>{
-            const titlesA = [A.title].concat(A.aliases||[]).map(t=>normalizeText(t));
-            const titlesB = [B.title].concat(B.aliases||[]).map(t=>normalizeText(t));
-            const aStarts = titlesA.some(t=>t.startsWith(qn));
-            const bStarts = titlesB.some(t=>t.startsWith(qn));
-            if (aStarts !== bStarts) return aStarts ? -1 : 1;
-            const na = getBestTitleForSort(A); const nb = getBestTitleForSort(B);
-            return na < nb ? -1 : na > nb ? 1 : 0;
-        });
-    } else {
-        resultList.sort((A,B)=> normalizeText(A.title) < normalizeText(B.title) ? -1 : normalizeText(A.title) > normalizeText(B.title) ? 1 : 0);
+function mostrarNoResultados() {
+    if (!document.getElementById('archinime-no-results-css')) {
+        const style = document.createElement('style');
+        style.id = 'archinime-no-results-css';
+        style.innerHTML = `
+            .cyber-no-results {
+                grid-column: 1 / -1;
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                padding: 60px 20px; background: rgba(10, 12, 16, 0.7); border: 1px solid var(--neon-purple);
+                border-radius: 16px;
+                box-shadow: 0 0 30px rgba(188, 19, 254, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05); backdrop-filter: blur(10px);
+                text-align: center; margin-top: 20px; animation: fadeInCyber 0.5s ease forwards;
+            }
+            .cyber-no-results i { font-size: 3.5rem;
+                color: var(--neon-cyan); margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--neon-cyan)); animation: floatIcon 3s ease-in-out infinite;
+            }
+            .cyber-no-results h2 { font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+                color: #fff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--neon-purple);
+            }
+            .cyber-no-results p { color: #aaa; font-size: 1rem;
+                margin-bottom: 25px; max-width: 500px; line-height: 1.5; }
+            .btn-cyber-reset { background: transparent;
+                border: 2px solid var(--neon-pink); color: #fff; font-family: 'Orbitron', sans-serif; padding: 12px 30px; font-size: 1rem; border-radius: 8px; cursor: pointer;
+                transition: all 0.3s ease; box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+            }
+            .btn-cyber-reset:hover { background: var(--neon-pink);
+                box-shadow: 0 0 25px var(--neon-pink); color: #fff; transform: scale(1.05); }
+            @keyframes fadeInCyber { from { opacity: 0;
+                transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes floatIcon { 0%, 100% { transform: translateY(0);
+            } 50% { transform: translateY(-10px); } }
+        `;
+        document.head.appendChild(style);
     }
 
-    render(resultList);
-    updateResultsCount(resultList.length);
+    gridEl.innerHTML = `
+        <div class="cyber-no-results">
+            <i class="fas fa-satellite-dish"></i>
+            <h2>¡Ups! Sin Resultados</h2>
+            <p>Verifica el nombre o prueba buscar por un alias.<br>Si no aparece, puedes solicitar que se suba a la base de datos.</p>
+            <button class="btn-cyber-reset" id="btn-reset">RESTAURAR RADARES</button>
+        </div>
+    `;
+    const btn = document.getElementById('btn-reset');
+    if (btn) btn.addEventListener('click', resetearFiltros);
 }
 
-function shuffleArray(arr){ 
-    const a = arr.slice();
-    for(let i=a.length-1;i>0;i--){ 
-        const j=Math.floor(Math.random()*(i+1)); 
-        [a[i],a[j]]=[a[j],a[i]]; 
-    } 
-    return a; 
+// ============================================
+// CARGA DE DATOS DESDE FIRESTORE (PAGINACIÓN)
+// ============================================
+async function cargarAnimes(reset = true) {
+    if (isLoading) return;
+    if (!reset && !hasMore) return;
+
+    isLoading = true;
+    if (reset) {
+        gridEl.innerHTML = '';
+        lastVisible = null;
+        hasMore = true;
+    }
+    if (loadingEl) loadingEl.style.display = 'block';
+    try {
+        let query = db.collection('catalogo');
+        // Solo aplicamos el filtro de género en Firestore (más eficiente)
+        if (currentFilters.genre) {
+            query = query.where('genres', 'array-contains', currentFilters.genre);
+        }
+
+        query = query.orderBy('title').limit(20);
+        if (lastVisible) query = query.startAfter(lastVisible);
+        const snapshot = await query.get();
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (snapshot.empty) {
+            hasMore = false;
+            if (reset) mostrarNoResultados();
+            isLoading = false;
+            return;
+        }
+
+        lastVisible = snapshot.docs[snapshot.docs.length - 1];
+        let animes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Normalización para filtros cliente
+        const normalize = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        // Filtro de demografía en cliente (para evitar doble array-contains)
+        if (currentFilters.demographic) {
+            const target = normalize(currentFilters.demographic);
+            animes = animes.filter(a => (a.genres || []).some(g => normalize(g) === target));
+        }
+
+        // Búsqueda por texto (título + aliases)
+        if (currentFilters.search) {
+            const term = normalize(currentFilters.search);
+            animes = animes.filter(a => {
+                const titles = [a.title, ...(a.aliases || [])];
+                return titles.some(t => normalize(t).includes(term));
+            });
+        }
+
+        // Filtro por rating
+        if (currentFilters.rating) {
+            animes = animes.filter(a => {
+                const r = a.rating || 0;
+                if (currentFilters.rating === 'excellent') return r >= 4.8;
+                if (currentFilters.rating === 'good') return r >= 4.6 && r < 4.8;
+                if (currentFilters.rating === 'regular') return r < 4.6;
+                return true;
+            });
+        }
+
+        render(animes, !reset);
+        if (snapshot.docs.length < 20) hasMore = false;
+    } catch (error) {
+        console.error('Error cargando catálogo:', error);
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (reset) {
+            gridEl.innerHTML = `<div class="error-message" style="grid-column:1/-1; text-align:center; padding:40px; color:var(--neon-pink);">Error al cargar.
+            Recarga la página.<br><small>${error.message}</small></div>`;
+        }
+    } finally {
+        isLoading = false;
+    }
 }
 
-if (typeof animes !== 'undefined') {
-    render(shuffleArray(animes));
-    updateResultsCount(animes.length);
-} else {
-    console.error("Error: No se encontró la lista 'animes'. Revisa que index-data.js esté bien vinculado.");
+// ============================================
+// FUNCIONES AUXILIARES PARA FILTROS
+// ============================================
+function normalizeText(s) {
+    try { return (s || '').toLowerCase().normalize('NFD').replace(/\p{M}/gu, ''); }
+    catch(e) { return (s || '').toLowerCase().replace(/[\u0300-\u036f]/g, ''); }
 }
 
-document.getElementById('search').addEventListener('input', debouncedFiltro);
-document.getElementById('search').addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); filtro(); } });
-['genre-select','rating-select','demographic-select'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', filtro); });
+function debouncedCargar() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => cargarAnimes(true), 300);
+}
 
-/* ----------------------------
-    Helpers de rendimiento
----------------------------- */
+function resetearFiltros() {
+    document.getElementById('search').value = '';
+    document.getElementById('genre-select').value = '';
+    document.getElementById('demographic-select').value = '';
+    document.getElementById('rating-select').value = '';
+    currentFilters = { search: '', genre: '', demographic: '', rating: '' };
+    cargarAnimes(true);
+}
+
+// ============================================
+// EVENT LISTENERS
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    cargarAnimes(true);
+
+    const searchInput = document.getElementById('search');
+    const genreSelect = document.getElementById('genre-select');
+    const demographicSelect = document.getElementById('demographic-select');
+    const ratingSelect = document.getElementById('rating-select');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentFilters.search = e.target.value;
+            debouncedCargar();
+        });
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); cargarAnimes(true); }
+        });
+    }
+    if (genreSelect) genreSelect.addEventListener('change', (e) => { currentFilters.genre = e.target.value; cargarAnimes(true); });
+    if (demographicSelect) demographicSelect.addEventListener('change', (e) => { currentFilters.demographic = e.target.value; cargarAnimes(true); });
+    if (ratingSelect) ratingSelect.addEventListener('change', (e) => { currentFilters.rating = e.target.value; cargarAnimes(true); });
+    window.addEventListener('scroll', () => {
+        if (isLoading || !hasMore) return;
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) cargarAnimes(false);
+    });
+});
+
+// ============================================
+// TILT EFFECT
+// ============================================
+function aplicarTiltANuevasCards() {
+    document.querySelectorAll('.card:not([data-tilt-init])').forEach(card => {
+        card.dataset.tiltInit = 'true';
+        card.addEventListener('mousemove', handleCardTilt);
+        card.addEventListener('mouseleave', resetCardTilt);
+    });
+}
+
+function handleCardTilt(e) {
+    const card = e.currentTarget;
+    if (card.tiltRAF) cancelAnimationFrame(card.tiltRAF);
+    card.tiltRAF = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -6;
+        const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+        card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+}
+
+function resetCardTilt(e) {
+    const card = e.currentTarget;
+    if (card.tiltRAF) cancelAnimationFrame(card.tiltRAF);
+    card.style.transform = '';
+}
+
+// ============================================
+// HELPERS DE RENDIMIENTO
+// ============================================
 function getPerformanceHints() {
     let cores = navigator.hardwareConcurrency || 4;
     let deviceMem = navigator.deviceMemory || 4;
@@ -129,62 +272,34 @@ function getPerformanceHints() {
     return { cores, deviceMem, processingScale, prefersReducedMotion };
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    const video = document.getElementById('bg-video');
-    const overlay = document.getElementById('overlay');
-    const hints = getPerformanceHints();
-
-    if (hints.processingScale < 0.55 || hints.prefersReducedMotion) {
-        try { video.pause(); video.style.display = 'none'; overlay.style.opacity = '1'; } catch(e){}
-    } else {
-        try { video.preload = video.getAttribute('preload') || 'metadata'; } catch(e){ console.warn(e); }
-        video.muted = true; video.playsInline = true;
-        const revealVideo = () => { video.style.opacity = '1'; overlay.style.opacity = '0'; };
-        overlay.addEventListener('transitionend', (ev) => { 
-            if (ev.propertyName === 'opacity' && getComputedStyle(overlay).opacity === '0') overlay.style.display = 'none'; 
-        });
-        video.addEventListener('playing', () => { revealVideo(); }, { once: true });
-        video.addEventListener('canplaythrough', () => { video.play().catch(()=>{}); }, { once: true });
-        video.addEventListener('loadeddata', () => { video.play().catch(()=>{}); }, { once: true });
-    }
-});
-
-/* ----------------------------
-   Lógica de Música
----------------------------- */
+// ============================================
+// LÓGICA DE MÚSICA
+// ============================================
 window.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('bg-music');
     const hints = getPerformanceHints();
-    
     if (typeof musicList === 'undefined' || musicList.length === 0) return;
 
     let currentMusicIndex = Math.floor(Math.random() * musicList.length);
-
     function playByIndex(idx) {
         currentMusicIndex = ((idx % musicList.length) + musicList.length) % musicList.length;
         audio.src = musicList[currentMusicIndex];
         audio.load();
         audio.volume = 0.75;
-        
+    
         if (hints.processingScale >= 0.6) {
-            audio.play().catch(()=> { 
-                document.addEventListener('click', ()=>{ audio.play().catch(()=>{}); }, { once: true }); 
+            audio.play().catch(() => {
+                document.addEventListener('click', () => { audio.play().catch(() => {}); }, { once: true });
             });
         }
     }
-
-    audio.addEventListener('ended', ()=> { 
-        currentMusicIndex = currentMusicIndex + 1; 
-        playByIndex(currentMusicIndex); 
-    });
+    audio.addEventListener('ended', () => { currentMusicIndex = currentMusicIndex + 1; playByIndex(currentMusicIndex); });
     playByIndex(currentMusicIndex);
 });
 
-function openInNewTab(url){ try{ const w = window.open(url, '_blank'); if (w) w.focus(); }catch(e){} }
-
-/* ----------------------------
-    Chroma + FG logic
----------------------------- */
+// ============================================
+// CHROMA + FG LOGIC
+// ============================================
 const fgContainer = document.getElementById('fgContainer');
 const fgCanvas = document.getElementById('fgCanvas');
 const fgVideo = document.getElementById('fgVideo');
@@ -240,7 +355,6 @@ function adjustContainerToVideo(video, infoObj){
     const hints = getPerformanceHints();
     let maxW = Math.min(window.innerWidth * 0.32, 360);
     let maxH = Math.min(window.innerHeight * 0.4, 640);
-    
     if (window.matchMedia('(max-width:767px)').matches) {
         if (infoObj && infoObj.id === 'rem') {
             maxW = Math.min(window.innerWidth * 0.30, 180);
@@ -268,7 +382,6 @@ function adjustContainerToVideo(video, infoObj){
     fgCanvas.height = Math.round(displayH * dpr);
     fgCanvas.style.width = displayW + 'px';
     fgCanvas.style.height = displayH + 'px';
-    
     if (ctx && typeof ctx.setTransform === 'function') {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
@@ -299,12 +412,10 @@ function applyChromaKey(imageData, settings, keyColor = 'green'){
     const len = data.length;
     const thresh = settings.threshold ?? 0.4; const minDiff = settings.diff ?? 30;
     const soften = settings.soft ?? 30;
-    
     for (let i = 0; i < len; i += 4) {
         const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
         if (a === 0) continue;
         const sum = r + g + b + 1;
-        
         if (keyColor === 'blue') {
             const maxrg = Math.max(r, g);
             const blueScore = (b - maxrg) / sum;
@@ -338,7 +449,6 @@ function processFrame(video, infoObj){
     if (!usingChroma || visibilityPaused) return;
     if (video.paused || video.ended) return;
     if (!offCtx) return;
-    
     try { 
         offCtx.drawImage(video, 0, 0, off.width, off.height);
     } catch (err) {
@@ -385,19 +495,13 @@ function scheduleNextVideo(afterSeconds = 3, excludeId = null){
     scheduledTimer = setTimeout(()=>{ const next = pickRandomVideo(excludeId); if (!next) return; playVideoClip(next); }, afterSeconds*1000);
 }
 
-/* ----------------------------
-    Fuegos artificiales (canvas)
----------------------------- */
+// Fuegos artificiales
 const fireCanvas = document.createElement('canvas');
 fireCanvas.className = 'firework-canvas';
 fireCanvas.style.position = 'absolute';
-fireCanvas.style.left = '0';
-fireCanvas.style.top = '0';
-fireCanvas.style.width = '100%';
-fireCanvas.style.height = '100%';
-fireCanvas.style.zIndex = '9999';
-fireCanvas.style.pointerEvents = 'none';
-
+fireCanvas.style.left = '0'; fireCanvas.style.top = '0';
+fireCanvas.style.width = '100%'; fireCanvas.style.height = '100%';
+fireCanvas.style.zIndex = '9999'; fireCanvas.style.pointerEvents = 'none';
 if (fgContainer) {
     fgContainer.appendChild(fireCanvas);
 } else {
@@ -422,7 +526,8 @@ function resizeFireCanvas(){
 window.addEventListener('resize', resizeFireCanvas, {passive:true});
 setTimeout(resizeFireCanvas, 120);
 
-function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
+// MEJORA: Aumentamos velocidad, vida y expansión de chispas
+function explodeParticlesAt(x, y, colors, count = 150, duration = 900) {
     const hints = getPerformanceHints();
     const rect = fgContainer.getBoundingClientRect();
     const areaFactor = Math.min(2.2, Math.max(0.45, (rect.width * rect.height) / (360 * 640)));
@@ -431,8 +536,7 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
     if (hints.processingScale < 0.45) effectiveCount = Math.max(12, Math.round(effectiveCount * 0.30));
     else if (hints.processingScale < 0.6) effectiveCount = Math.max(18, Math.round(effectiveCount * 0.45));
     else if (hints.processingScale < 0.85) effectiveCount = Math.max(28, Math.round(effectiveCount * 0.7));
-    effectiveCount = Math.min(220, effectiveCount);
-    
+    effectiveCount = Math.min(300, effectiveCount);
     const targetFps = hints.processingScale >= 0.85 ? 50 : hints.processingScale >= 0.6 ? 36 : 24;
     const frameInterval = 1000 / targetFps;
 
@@ -441,21 +545,20 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
 
     for (let i = 0; i < effectiveCount; i++) {
         const angle = rnd(0, Math.PI*2);
-        const speed = rnd(1.2, 6.0);
+        const speed = rnd(3.5, 12.0); // FIX: Chispas más rápidas y lejanas
         particles.push({
             x, y,
-            vx: Math.cos(angle) * speed * rnd(0.6, 1.2),
-            vy: Math.sin(angle) * speed * rnd(0.6, 1.2) - rnd(0.6, 2.2),
-            life: rnd(duration*0.65, duration*1.05),
+            vx: Math.cos(angle) * speed * rnd(0.8, 1.5),
+            vy: Math.sin(angle) * speed * rnd(0.8, 1.5) - rnd(1.0, 3.0),
+            life: rnd(duration*0.8, duration*1.2), // FIX: Viven más tiempo
             age: 0,
-            radius: rnd(1.6, 5.2),
+            radius: rnd(2.0, 6.0),
             color: colors[Math.floor(Math.random()*colors.length)]
         });
     }
 
     const safeTimeoutMs = Math.round(duration + 400);
     const start = performance.now();
-    
     return new Promise(resolve => {
         let lastFrameTime = 0;
         let finished = false;
@@ -471,6 +574,7 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
             try {
                 if (finished) return;
                 if (!lastFrameTime) lastFrameTime = now;
+            
                 const dt = now - lastFrameTime;
                 
                 if (dt < frameInterval) {
@@ -488,7 +592,6 @@ function explodeParticlesAt(x, y, colors, count = 60, duration = 650) {
                     p.x += p.vx * (dt/16.67);
                     p.y += p.vy * (dt/16.67);
                     p.vy += 0.16 * (dt/16.67);
-
                     const alpha = Math.max(0, Math.min(1, lifeRatio));
                     fctx.globalAlpha = alpha;
                     fctx.beginPath();
@@ -539,13 +642,19 @@ async function doFireworkThenHide(){
 
         resizeFireCanvas();
         const palette = ['#ffcc00','#ff4d4d','#ffd700','#00fff7','#ff6ad5','#ff7f50','#8b5cf6'];
-        fgContainer.style.transition = 'transform .25s ease-out, opacity .25s ease';
-        fgContainer.style.transform = 'scale(0.96)';
-        fgContainer.style.opacity = '0.85';
+        
+        // FIX: Cambiamos la animación para que brille y explote hacia adelante en lugar de caer
+        fgContainer.style.transition = 'transform .25s ease-out, opacity .25s ease, filter .25s ease';
+        fgContainer.style.transform = 'scale(1.05)';
+        fgContainer.style.filter = 'drop-shadow(0 0 15px var(--neon-cyan)) brightness(1.2)';
+        fgContainer.style.opacity = '0.9';
 
-        await explodeParticlesAt(cx, cy, palette, 80, 700);
+        await explodeParticlesAt(cx, cy, palette, 200, 900); // Más chispas y más tiempo
+        
         fgContainer.style.opacity = '0';
-        fgContainer.style.transform = 'scale(.8) translateY(10px)';
+        fgContainer.style.transform = 'scale(1.2) translateZ(0)'; // En vez de caer, se expande
+        fgContainer.style.filter = '';
+        
         await new Promise(r => setTimeout(r, 220));
         fgContainer.style.display = 'none';
         fgContainer.style.transform = '';
@@ -565,7 +674,6 @@ async function playVideoClip(infoObj){
 
     fgVideo.src = infoObj.src;
     fgVideo.load();
-    
     const onMeta = () => {
         fgVideo.removeEventListener('loadedmetadata', onMeta);
         if (infoObj.id === 'hola') { fgContainer.style.bottom = '0px'; }
@@ -587,7 +695,6 @@ async function playVideoClip(infoObj){
         fgVideo.style.display = 'block';
         fgVideo.play().catch(()=>{ document.getElementById('playOverlay').style.display = 'flex'; });
     };
-
     fgVideo.onended = () => {
         scheduleNextVideo(3, infoObj.id);
     };
@@ -608,7 +715,7 @@ fgContainer.addEventListener('click', async (ev) => {
     setTimeout(() => { playVideoClip(next); }, 420);
 });
 
-document.getElementById('playBtn').addEventListener('click', ()=>{
+document.getElementById('playBtn') && document.getElementById('playBtn').addEventListener('click', ()=>{
     document.getElementById('playOverlay').style.display = 'none';
     bgVideo.play().catch(()=>{}); fgVideo.play().catch(()=>{});
     try { bgMusic.play().catch(()=>{}); } catch(e){}
@@ -639,168 +746,6 @@ document.addEventListener('visibilitychange', ()=> {
     }
 }, {passive:true});
 
-/* ----------------------------
-    POPUP MÓVIL (FIX: Estilos aplicados en CSS)
----------------------------- */
-(function mobileSelectPopups() {
-    const mobileQ = () => window.matchMedia('(max-width:780px)').matches;
-    const SELECT_IDS = ['genre-select','demographic-select','rating-select'];
-    let activePopup = null;
-    let outsideListener = null;
-    let resizeListener = null;
-    let scrollListener = null;
-
-    function closePopup() {
-        if (activePopup) {
-            try { activePopup.remove(); } catch(e){}
-            activePopup = null;
-        }
-        if (outsideListener) { document.removeEventListener('pointerdown', outsideListener, true); outsideListener = null; }
-        if (resizeListener) { window.removeEventListener('resize', resizeListener); resizeListener = null; }
-        if (scrollListener) { window.removeEventListener('scroll', scrollListener, true); scrollListener = null; }
-    }
-
-    function createPopupFor(selectEl) {
-        selectEl.addEventListener('click', function onClick(e){
-            if (!mobileQ()) return;
-            e.preventDefault();
-            e.stopPropagation();
-            openPopupFor(selectEl);
-        });
-        
-        selectEl.addEventListener('touchend', function onTouch(e){
-            if (!mobileQ()) return;
-            setTimeout(() => {
-                if (document.activeElement === selectEl) return;
-                 e.preventDefault();
-                 e.stopPropagation();
-                 openPopupFor(selectEl);
-            }, 10);
-        }, {passive:false});
-        
-        selectEl.addEventListener('keydown', (e) => {
-            if (!mobileQ()) return;
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openPopupFor(selectEl);
-            }
-        });
-    }
-
-    function openPopupFor(selectEl) {
-        closePopup();
-        const rect = selectEl.getBoundingClientRect();
-        const docEl = document.documentElement;
-        const winW = Math.max(docEl.clientWidth || 0, window.innerWidth || 0);
-        const winH = Math.max(docEl.clientHeight || 0, window.innerHeight || 0);
-        
-        const popup = document.createElement('div');
-        popup.className = 'mobile-select-popup'; 
-        popup.setAttribute('role','listbox');
-        popup.setAttribute('aria-label', selectEl.getAttribute('aria-label') || 'Opciones');
-
-        const pad = 8;
-        const maxHeight = window.matchMedia('(max-width:420px)').matches ? 200 : 300;
-        popup.style.maxHeight = maxHeight + 'px';
-        const width = Math.min(rect.width, Math.max(120, winW - 24));
-        popup.style.minWidth = Math.max(150, width) + 'px';
-        
-        let top = rect.bottom + 6;
-        const estimatedHeight = Math.min(maxHeight, (selectEl.options ? selectEl.options.length * 40 : maxHeight));
-        if (top + estimatedHeight + pad > winH) {
-            top = rect.top - estimatedHeight - 6;
-            if (top < pad) top = pad;
-        }
-        popup.style.left = Math.max(pad, rect.left) + 'px';
-        popup.style.top = Math.max(pad, top) + 'px';
-
-        const opts = Array.from(selectEl.options);
-        opts.forEach((opt, idx) => {
-            const d = document.createElement('div');
-            d.className = 'opt';
-            d.setAttribute('role','option');
-            d.setAttribute('data-value', opt.value || opt.text);
-            d.setAttribute('tabindex','0');
-            if (opt.selected) d.setAttribute('aria-selected','true');
-            d.textContent = opt.textContent || opt.innerText || opt.value;
-
-            d.addEventListener('click', (ev) => {
-                ev.stopPropagation();
-                try {
-                    selectEl.value = opt.value;
-                    Array.from(selectEl.options).forEach(o => o.selected = (o.value === opt.value));
-                    const evCh = new Event('change', { bubbles: true });
-                    selectEl.dispatchEvent(evCh);
-                } catch(e){}
-                closePopup();
-                try { selectEl.focus(); } catch(e){}
-            });
-            
-            d.addEventListener('keydown', (ev) => {
-                if (ev.key === 'Enter' || ev.key === ' ') {
-                    ev.preventDefault();
-                    d.click();
-                } else if (ev.key === 'ArrowDown') {
-                    ev.preventDefault();
-                    const next = d.nextElementSibling;
-                    if (next) next.focus();
-                } else if (ev.key === 'ArrowUp') {
-                    ev.preventDefault();
-                    const prev = d.previousElementSibling;
-                    if (prev) prev.focus();
-                } else if (ev.key === 'Escape') {
-                    closePopup();
-                    try { selectEl.focus(); } catch(e){}
-                }
-            });
-            popup.appendChild(d);
-        });
-
-        document.body.appendChild(popup);
-        activePopup = popup;
-        const selected = popup.querySelector('.opt[aria-selected="true"]') || popup.querySelector('.opt');
-        if (selected) { 
-            selected.focus();
-            popup.scrollTop = Math.max(0, selected.offsetTop - 8);
-        }
-
-        outsideListener = function outsideHandler(ev){
-            if (!activePopup) return;
-            if (ev.target === selectEl || activePopup.contains(ev.target)) return;
-            closePopup();
-        };
-        document.addEventListener('pointerdown', outsideListener, true);
-        resizeListener = () => closePopup();
-        window.addEventListener('resize', resizeListener);
-        
-        scrollListener = function scrollHandler(ev) {
-            if (!activePopup) return;
-            if (activePopup.contains(ev.target) || ev.target === selectEl) return;
-            closePopup();
-        };
-        window.addEventListener('scroll', scrollListener, true);
-    }
-
-    function init() {
-        try {
-            SELECT_IDS.forEach(id => {
-                const el = document.getElementById(id);
-                if(el) createPopupFor(el);
-            });
-        } catch(e) {
-            console.warn('mobileSelectPopups init error', e);
-        }
-    }
-
-    window.addEventListener('resize', function(){
-        if (!mobileQ()) closePopup();
-    }, { passive:true });
-    
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-    else init();
-    window._closeMobileSelectPopup = closePopup;
-})();
-
 function init(){
     fgContainer.style.display = 'none';
     fgCanvas.style.display = 'none'; fgVideo.style.display = 'none';
@@ -810,4 +755,4 @@ function init(){
 }
 
 init();
-window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){}; });
+window.addEventListener('beforeunload', ()=>{ if (lastObjectUrl) try{ URL.revokeObjectURL(lastObjectUrl); } catch(e){} });
