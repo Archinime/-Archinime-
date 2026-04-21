@@ -128,7 +128,6 @@
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
       z-index: -5; opacity: 0;
-      /* Aumentado el brillo de 0.6 a 0.85 */
       filter: contrast(1.2) brightness(1.25) saturate(1.4);
       transition: opacity 1.2s ease;
       background: url('galaxia-morado1.avif') no-repeat center center / cover; 
@@ -480,6 +479,50 @@
     .event-btn { background: white; color: black; border: none; padding: 14px; width: 100%; border-radius: 40px; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; will-change: transform, box-shadow; }
     .event-btn:hover { background: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan); transform: scale(1.02); }
     
+    /* ESTILOS PARA PAGINACIÓN */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px 0 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pagination-btn {
+      background: rgba(20, 20, 30, 0.8);
+      border: 1px solid var(--neon-cyan);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+      min-width: 45px;
+      text-align: center;
+    }
+    .pagination-btn:hover {
+      background: var(--neon-cyan);
+      color: black;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+    .pagination-btn.active {
+      background: var(--neon-purple);
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 15px var(--neon-purple);
+    }
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .pagination-ellipsis {
+      color: var(--neon-cyan);
+      padding: 0 5px;
+      font-weight: bold;
+    }
+
     @media (max-width: 768px) {
       .controls-container { gap: 10px; padding: 12px 16px; }
       .grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -494,6 +537,7 @@
       .cyber-nav { background: rgba(5, 5, 10, 0.98); }
       .user-dropdown, .notif-dropdown { background: rgba(15, 15, 20, 1); }
       .search-input { background: rgba(0, 0, 0, 0.8); }
+      .pagination-btn { padding: 6px 12px; min-width: 35px; font-size: 0.8rem; }
     }
     @media (max-width: 480px) {
       .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -543,9 +587,7 @@
     <i class="fas fa-search search-icon"></i>
   </div>
   <div class="nav-actions header-actions">
-    <!-- BOTÓN DE INSTALACIÓN PWA (solo móvil sin instalar) -->
     <button id="installBtn" class="cyber-btn-icon install-pulse" title="Instalar App"><i class="fas fa-download"></i></button>
-    <!-- BOTÓN DE YOUTUBE (PC siempre + móvil instalado) -->
     <button id="youtubeBtn" class="cyber-btn-icon" title="Canal de YouTube" onclick="window.open('https://www.youtube.com/@Archinime-k2g', '_blank')">
       <img src="youtube.avif" alt="YouTube" style="width: 100%; height: 100%; border-radius: 50%;" decoding="async">
     </button>
@@ -654,6 +696,8 @@
 
 <main class="container">
   <div class="grid" id="grid"></div>
+  <!-- CONTENEDOR DE PAGINACIÓN -->
+  <div id="pagination" class="pagination-container"></div>
 </main>
 
 <div class="stage" aria-hidden="true">
@@ -663,7 +707,6 @@
   </div>
 </div>
 
-<!-- Modal de instrucciones para iOS -->
 <div id="iosInstallModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 999999; justify-content: center; align-items: center; padding: 20px;">
   <div style="background: #0f0f13; border: 1px solid var(--neon-cyan); border-radius: 24px; max-width: 320px; padding: 25px; text-align: center; color: white; font-family: 'Poppins';">
     <i class="fab fa-apple" style="font-size: 3rem; color: var(--neon-cyan);"></i>
@@ -699,45 +742,23 @@
   const providerGitHub = new firebase.auth.GithubAuthProvider();
 </script>
 
-<!-- ========== DEFINICIÓN DE VARIABLES FALTANTES ========== -->
 <script>
-  // Lista de videos para el chroma key (animación flotante)
+  // Variables para paginación
   window.videoList = [
-    {
-      id: "rem",
-      src: "https://cdn.pixabay.com/video/2022/05/24/118507-716387776_large.mp4", // Video de ejemplo con chroma green (pixabay)
-      keyColor: "green",
-      preset: { threshold: 0.4, diff: 30, soft: 30 }
-    },
-    {
-      id: "hola",
-      src: "https://cdn.pixabay.com/video/2023/02/03/149220-797461338_large.mp4",
-      keyColor: "blue",
-      preset: { threshold: 0.45, diff: 35, soft: 35 }
-    }
+    { id: "rem", src: "https://cdn.pixabay.com/video/2022/05/24/118507-716387776_large.mp4", keyColor: "green", preset: { threshold: 0.4, diff: 30, soft: 30 } },
+    { id: "hola", src: "https://cdn.pixabay.com/video/2023/02/03/149220-797461338_large.mp4", keyColor: "blue", preset: { threshold: 0.45, diff: 35, soft: 35 } }
   ];
-
-  // Lista de música de fondo
   window.musicListGlobal = [
     "https://cdn.pixabay.com/download/audio/2022/05/27/audio_0b7c1e5c5c.mp3",
     "https://cdn.pixabay.com/download/audio/2022/03/17/audio_3a4b5c6d7e.mp3"
   ];
-
-  // Función auxiliar para el menú de notificaciones
   window.toggleNotifMenu = function() {
     const menu = document.getElementById('notifMenu');
-    if (menu) {
-      menu.classList.toggle('active');
-    }
+    if (menu) menu.classList.toggle('active');
   };
-
-  // Función auxiliar para las notificaciones (simulada)
-  window.startNotificationSequence = function() {
-    console.log("Sistema de notificaciones listo");
-  };
+  window.startNotificationSequence = function() { console.log("Sistema de notificaciones listo"); };
 </script>
 
-<!-- Cargar scripts externos (si existen, sino no afectan) -->
 <script src="animaciones.js"></script>
 <script src="musica_fondo.js"></script>
 <script src="notification-system.js"></script>
@@ -769,35 +790,27 @@
   };
   const isMobile = () => window.matchMedia('(max-width: 780px)').matches;
 
-  // Función para mostrar/ocultar botones según el contexto
   function updateButtonsVisibility() {
-    // En PC (no móvil) -> solo mostrar YouTube
     if (!isMobile()) {
       if (installBtn) installBtn.style.display = 'none';
       if (youtubeBtn) youtubeBtn.style.display = 'flex';
       return;
     }
-    
-    // En móvil: decidir según si está instalada o no
     if (isInStandaloneMode()) {
-      // App instalada -> mostrar YouTube
       if (installBtn) installBtn.style.display = 'none';
       if (youtubeBtn) youtubeBtn.style.display = 'flex';
     } else {
-      // Navegador normal -> mostrar botón de instalación
       if (installBtn) installBtn.style.display = 'flex';
       if (youtubeBtn) youtubeBtn.style.display = 'none';
     }
   }
 
-  // Evento beforeinstallprompt (solo navegadores compatibles)
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     updateButtonsVisibility();
   });
 
-  // Click en botón de instalación
   if (installBtn) {
     installBtn.addEventListener('click', () => {
       if (isIos()) {
@@ -814,22 +827,16 @@
     });
   }
 
-  // Cerrar modal de iOS
-  function closeIosModal() {
-    iosModal.style.display = 'none';
-  }
+  function closeIosModal() { iosModal.style.display = 'none'; }
   window.closeIosModal = closeIosModal;
-
-  // Escuchar cambios en el modo standalone (cuando se abre la app instalada)
   window.matchMedia('(display-mode: standalone)').addEventListener('change', updateButtonsVisibility);
   window.addEventListener('appinstalled', updateButtonsVisibility);
   window.addEventListener('DOMContentLoaded', updateButtonsVisibility);
   window.addEventListener('resize', updateButtonsVisibility);
 
-  // ==================== MÚSICA: PRIMER CLIC EN CUALQUIER PARTE ====================
+  // ==================== MÚSICA ====================
   let isMusicStarted = false;
   let currentAudio = null;
-
   function startMusic() {
     if (isMusicStarted) return;
     isMusicStarted = true;
@@ -837,22 +844,19 @@
     currentAudio = new Audio(track);
     currentAudio.volume = 0.3;
     currentAudio.onended = () => {
-      // Cuando termina una canción, iniciar otra (solo si ya se empezó)
       if (isMusicStarted) {
         const nextTrack = musicListGlobal[Math.floor(Math.random() * musicListGlobal.length)];
         currentAudio = new Audio(nextTrack);
         currentAudio.volume = 0.3;
-        currentAudio.play().catch(e => console.log("Error al reproducir siguiente canción", e));
+        currentAudio.play().catch(e => console.log("Error", e));
       }
     };
     currentAudio.play().catch(e => console.log("Error al iniciar música", e));
   }
-
-  // Escuchar el primer clic en cualquier parte del documento
   document.addEventListener('click', startMusic, { once: true });
   document.addEventListener('touchstart', startMusic, { once: true });
 
-  // ==================== RESTO DE TU CÓDIGO ORIGINAL (sin cambios, con chroma key) ====================
+  // ==================== GIF ALEATORIO ====================
   if (typeof listaDeGifs !== 'undefined' && listaDeGifs.length > 0) {
     const gifElegido = listaDeGifs[Math.floor(Math.random() * listaDeGifs.length)];
     const imgGif = document.getElementById('personaje-gif');
@@ -892,9 +896,17 @@
     updateProgress(100);
     finishLoading();
   });
-  setTimeout(() => {
-    if (!loadingCompleted) finishLoading();
-  }, 8000);
+  setTimeout(() => { if (!loadingCompleted) finishLoading(); }, 8000);
+
+  // ==================== UTILIDADES ====================
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
   let firestoreRatings = new Map();
   async function loadRatings() {
     try {
@@ -908,9 +920,7 @@
     } catch (e) { console.warn('Error cargando ratings:', e); }
   }
   loadRatings();
-  function normalizeText(s) {
-    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  }
+  function normalizeText(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
   function getDisplayRating(anime) {
     const animeId = parseInt(anime.id);
     if (firestoreRatings.has(animeId)) {
@@ -927,19 +937,15 @@
     return 0;
   }
 
+  // ==================== ANUNCIOS ====================
   let anuncioActual = null;
   let cachedAdCard = null;
-
   function inicializarAnuncio() {
     if (typeof window.listaAnuncios !== 'undefined' && window.listaAnuncios.length > 0) {
       const randomIndex = Math.floor(Math.random() * window.listaAnuncios.length);
       anuncioActual = window.listaAnuncios[randomIndex];
-      console.log('Anuncio cargado:', anuncioActual.id);
-    } else {
-      console.warn('No hay anuncios definidos en anuncios_index.js');
     }
   }
-
   function crearTarjetaAnuncio() {
     if (cachedAdCard) return cachedAdCard;
     if (!anuncioActual) return null;
@@ -947,12 +953,7 @@
     card.className = 'card card-ad';
     card.dataset.id = anuncioActual.id;
     const innerDiv = document.createElement('div');
-    innerDiv.style.width = '100%';
-    innerDiv.style.height = '100%';
-    innerDiv.style.display = 'flex';
-    innerDiv.style.alignItems = 'center';
-    innerDiv.style.justifyContent = 'center';
-    innerDiv.style.overflow = 'hidden';
+    innerDiv.style.cssText = 'width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;';
     innerDiv.innerHTML = anuncioActual.codigo;
     innerDiv.querySelectorAll('script').forEach(oldScript => {
       const newScript = document.createElement('script');
@@ -970,23 +971,44 @@
     return card;
   }
 
+  // ==================== VARIABLES GLOBALES DE PAGINACIÓN ====================
+  let allAnimes = [];               // Almacena todos los animes filtrados y mezclados
+  let currentPage = 1;
+  const itemsPerPage = 35;
+  let totalPages = 1;
+  let currentFilters = { search: '', genre: '', demographic: '', rating: '' };
+  let debounceTimer = null;
+
+  const grid = document.getElementById('grid');
+  const paginationContainer = document.getElementById('pagination');
+
+  // Función para renderizar la página actual
+  function renderPage() {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageItems = allAnimes.slice(start, end);
+    renderAnimes(pageItems, false);
+    renderPagination();
+    // Scroll suave hacia arriba al cambiar de página
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Renderiza las tarjetas en el grid
   function renderAnimes(animes, append = false) {
-    const grid = document.getElementById('grid');
-    if (!grid) return;
     if (!append) grid.innerHTML = '';
-    if (!animes.length && !append) {
+    if (!animes.length) {
       mostrarNoResultados();
+      paginationContainer.innerHTML = '';
       return;
     }
     const frag = document.createDocumentFragment();
     const hasActiveFilters = currentFilters.search || currentFilters.genre || currentFilters.demographic || currentFilters.rating;
-    const shouldInsertAd = !append && !hasActiveFilters && anuncioActual !== null;
+    const shouldInsertAd = !hasActiveFilters && anuncioActual !== null;
     let adPosition = -1;
     if (shouldInsertAd && animes.length >= 5) {
       const minPos = 4;
       const maxPos = animes.length - 2;
       adPosition = Math.floor(Math.random() * (maxPos - minPos + 1)) + minPos;
-      console.log(`El anuncio se insertará en la posición ${adPosition + 1} (índice ${adPosition})`);
     }
     for (let i = 0; i < animes.length; i++) {
       if (shouldInsertAd && i === adPosition) {
@@ -994,7 +1016,6 @@
         if (adCard) {
           if (adCard.parentNode) adCard.remove();
           frag.appendChild(adCard);
-          console.log(`Anuncio insertado en posición ${i + 1}`);
         }
       }
       const anime = animes[i];
@@ -1018,8 +1039,6 @@
   }
 
   function mostrarNoResultados() {
-    const grid = document.getElementById('grid');
-    if (!grid) return;
     grid.innerHTML = `<div class="cyber-no-results" style="grid-column:1/-1; display:flex; flex-direction:column; align-items:center; padding:60px; background:rgba(10,12,16,0.7); border:1px solid var(--neon-purple); border-radius:16px;">
       <i class="fas fa-satellite-dish" style="font-size:3rem; color:var(--neon-cyan);"></i>
       <h2 style="font-family:Orbitron; margin:20px 0;">Sin Resultados</h2>
@@ -1028,62 +1047,69 @@
     </div>`;
   }
 
-  let lastVisibleAnime = null;
-  let isFetchingAnimes = false;
-  let hasMoreAnimes = true;
-  const ANIMES_PER_PAGE = 20;
-
-  async function cargarAnimesPaginado(reset = false) {
-    if (reset) {
-      lastVisibleAnime = null;
-      hasMoreAnimes = true;
-      isFetchingAnimes = false;
-      document.getElementById('grid').innerHTML = '';
-    }
-    if (isFetchingAnimes || !hasMoreAnimes) return;
-    isFetchingAnimes = true;
-    try {
-      let query = db.collection('catalogo').orderBy('title').limit(ANIMES_PER_PAGE);
-      if (lastVisibleAnime && !reset) {
-        query = query.startAfter(lastVisibleAnime);
-      }
-      const snapshot = await query.get();
-      if (snapshot.empty) {
-        hasMoreAnimes = false;
-        return;
-      }
-      lastVisibleAnime = snapshot.docs[snapshot.docs.length - 1];
-      const animes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      renderAnimes(animes, !reset);
-      if (reset) {
-        const event = new CustomEvent('firstAnimesLoaded');
-        window.dispatchEvent(event);
-      }
-    } catch (error) {
-      console.error('Error en paginación:', error);
-      document.getElementById('grid').innerHTML = `<div style="text-align:center; padding:40px; color:red;">Error al cargar animes: ${error.message}</div>`;
-    } finally {
-      isFetchingAnimes = false;
-    }
-  }
-
-  let currentFilters = { search: '', genre: '', demographic: '', rating: '' };
-  let debounceTimer = null;
-
-  async function aplicarFiltros() {
-    const hasActive = currentFilters.search || currentFilters.genre || currentFilters.demographic || currentFilters.rating;
-    if (!hasActive) {
-      cargarAnimesPaginado(true);
+  // Renderiza los controles de paginación
+  function renderPagination() {
+    if (totalPages <= 1) {
+      paginationContainer.innerHTML = '';
       return;
     }
-    document.getElementById('grid').innerHTML = '<div style="text-align:center; padding:40px;"><i class="fas fa-spinner fa-spin"></i> Filtrando...</div>';
+    let html = '';
+    // Botón Anterior
+    html += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})"><i class="fas fa-chevron-left"></i></button>`;
+    
+    // Lógica para mostrar un rango de páginas (ej: 1 ... 4 5 6 ... 10)
+    const maxVisible = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    if (endPage - startPage + 1 < maxVisible) {
+      startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+    
+    if (startPage > 1) {
+      html += `<button class="pagination-btn" onclick="changePage(1)">1</button>`;
+      if (startPage > 2) html += `<span class="pagination-ellipsis">...</span>`;
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+    }
+    
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) html += `<span class="pagination-ellipsis">...</span>`;
+      html += `<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+    }
+    
+    // Botón Siguiente
+    html += `<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})"><i class="fas fa-chevron-right"></i></button>`;
+    
+    paginationContainer.innerHTML = html;
+  }
+
+  // Cambiar de página
+  window.changePage = function(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    renderPage();
+  };
+
+  // Cargar todos los datos según filtros y luego mostrar primera página
+  async function cargarDatosYMostrar() {
+    grid.innerHTML = '<div style="text-align:center; padding:40px;"><i class="fas fa-spinner fa-spin"></i> Cargando catálogo...</div>';
+    paginationContainer.innerHTML = '';
     try {
+      // Consulta base
       let query = db.collection('catalogo');
-      if (currentFilters.genre) query = query.where('genres', 'array-contains', currentFilters.genre);
-      query = query.orderBy('title');
-      const snapshot = await query.limit(200).get();
+      if (currentFilters.genre) {
+        query = query.where('genres', 'array-contains', currentFilters.genre);
+      }
+      query = query.orderBy('title').limit(500); // Suficiente para la mayoría de catálogos
+      const snapshot = await query.get();
       let animes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      if (currentFilters.demographic) animes = animes.filter(a => a.genres && a.genres.includes(currentFilters.demographic));
+      
+      // Filtros cliente
+      if (currentFilters.demographic) {
+        animes = animes.filter(a => a.genres && a.genres.includes(currentFilters.demographic));
+      }
       if (currentFilters.search) {
         const searchTerm = normalizeText(currentFilters.search);
         animes = animes.filter(a => {
@@ -1100,45 +1126,58 @@
           return true;
         });
       }
-      renderAnimes(animes, false);
-      if (animes.length === 0) mostrarNoResultados();
-    } catch (e) {
-      console.error('Error en filtros:', e);
-      document.getElementById('grid').innerHTML = `<div class="error-message">Error: ${e.message}</div>`;
+      
+      // Mezclar aleatoriamente
+      allAnimes = shuffleArray(animes);
+      totalPages = Math.ceil(allAnimes.length / itemsPerPage);
+      currentPage = 1;
+      
+      if (allAnimes.length === 0) {
+        mostrarNoResultados();
+        paginationContainer.innerHTML = '';
+      } else {
+        renderPage();
+      }
+      
+      // Disparar evento de carga inicial
+      if (!window.firstAnimesDispatched) {
+        window.firstAnimesDispatched = true;
+        window.dispatchEvent(new CustomEvent('firstAnimesLoaded'));
+      }
+    } catch (error) {
+      console.error('Error cargando datos:', error);
+      grid.innerHTML = `<div style="text-align:center; padding:40px; color:red;">Error al cargar animes: ${error.message}</div>`;
     }
   }
 
-  function debouncedAplicarFiltros() {
+  // Debounce para búsqueda
+  function debouncedCargar() {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => aplicarFiltros(), 300);
+    debounceTimer = setTimeout(() => cargarDatosYMostrar(), 300);
   }
 
+  // Resetear filtros
+  window.resetearFiltrosGlobal = function() {
+    document.getElementById('search').value = '';
+    document.getElementById('genre-select').value = '';
+    document.getElementById('demographic-select').value = '';
+    document.getElementById('rating-select').value = '';
+    currentFilters = { search: '', genre: '', demographic: '', rating: '' };
+    cargarDatosYMostrar();
+  };
+
+  // Event listeners de filtros
   const searchInput = document.getElementById('search');
   const genreSelect = document.getElementById('genre-select');
   const demographicSelect = document.getElementById('demographic-select');
   const ratingSelect = document.getElementById('rating-select');
 
-  searchInput.addEventListener('input', e => { currentFilters.search = e.target.value; debouncedAplicarFiltros(); });
-  genreSelect.addEventListener('change', e => { currentFilters.genre = e.target.value; aplicarFiltros(); });
-  demographicSelect.addEventListener('change', e => { currentFilters.demographic = e.target.value; aplicarFiltros(); });
-  ratingSelect.addEventListener('change', e => { currentFilters.rating = e.target.value; aplicarFiltros(); });
+  searchInput.addEventListener('input', e => { currentFilters.search = e.target.value; debouncedCargar(); });
+  genreSelect.addEventListener('change', e => { currentFilters.genre = e.target.value; cargarDatosYMostrar(); });
+  demographicSelect.addEventListener('change', e => { currentFilters.demographic = e.target.value; cargarDatosYMostrar(); });
+  ratingSelect.addEventListener('change', e => { currentFilters.rating = e.target.value; cargarDatosYMostrar(); });
 
-  window.resetearFiltrosGlobal = function() {
-    searchInput.value = '';
-    genreSelect.value = '';
-    demographicSelect.value = '';
-    ratingSelect.value = '';
-    currentFilters = { search: '', genre: '', demographic: '', rating: '' };
-    cargarAnimesPaginado(true);
-  };
-
-  window.addEventListener('scroll', () => {
-    const hasActive = currentFilters.search || currentFilters.genre || currentFilters.demographic || currentFilters.rating;
-    if (!hasActive && !isFetchingAnimes && hasMoreAnimes && window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-      cargarAnimesPaginado(false);
-    }
-  });
-
+  // ==================== AUTENTICACIÓN Y PERFIL (sin cambios) ====================
   let currentUser = null;
   let newAvatarUrl = null;
   let lastProfileUpdate = 0;
@@ -1151,8 +1190,7 @@
     return neonColors[Math.abs(hash) % neonColors.length];
   }
   function showProfileModal() {
-    if (!currentUser) { showAuthModal();
-    document.getElementById('authError').innerText = "⚠️ Inicia sesión para configurar tu perfil."; return; }
+    if (!currentUser) { showAuthModal(); document.getElementById('authError').innerText = "⚠️ Inicia sesión para configurar tu perfil."; return; }
     document.getElementById('profileAvatar').src = currentUser.photoURL || 'invitado.avif';
     newAvatarUrl = currentUser.photoURL;
     document.getElementById('profileUid').value = currentUser.uid;
@@ -1193,8 +1231,7 @@
         document.getElementById('profileAvatar').src = newAvatarUrl;
       }
     } catch (err) { alert("Error subiendo la imagen."); }
-    finally { btnLabel.innerHTML = '<i class="fas fa-upload"></i> Subir nuevo avatar';
-    }
+    finally { btnLabel.innerHTML = '<i class="fas fa-upload"></i> Subir nuevo avatar'; }
   });
   async function guardarCambiosPerfil() {
     if (!currentUser) return;
@@ -1202,8 +1239,7 @@
     const statusMsg = document.getElementById('profileStatusMsg');
     const newName = document.getElementById('profileDisplayName').value.trim();
     const newColor = document.getElementById('profileNameColor').value;
-    if (!newName) { statusMsg.style.color = '#ff0055';
-    statusMsg.innerText = 'El nombre no puede estar vacío.'; return; }
+    if (!newName) { statusMsg.style.color = '#ff0055'; statusMsg.innerText = 'El nombre no puede estar vacío.'; return; }
     const isAdmin = currentUser.email === 'archinime12@gmail.com';
     const now = Date.now();
     const fiveDaysMs = 5 * 24 * 60 * 60 * 1000;
@@ -1265,15 +1301,10 @@
   });
   function showAuthModal() { document.getElementById('authModal').classList.add('show'); disableBodyScroll(); }
   function closeAuthModal() { document.getElementById('authModal').classList.remove('show'); enableBodyScroll(); document.getElementById('authError').innerText = ''; }
-  async function loginWithEmail() { const email = document.getElementById('loginEmail').value, pass = document.getElementById('loginPassword').value; try { await auth.signInWithEmailAndPassword(email, pass); closeAuthModal();
-  } catch (err) { document.getElementById('authError').innerText = err.message; } }
-  async function registerWithEmail() { const email = document.getElementById('registerEmail').value, pass = document.getElementById('registerPassword').value, confirm = document.getElementById('registerConfirm').value;
-  if (pass !== confirm) { document.getElementById('authError').innerText = 'Las contraseñas no coinciden'; return; } try { await auth.createUserWithEmailAndPassword(email, pass); closeAuthModal();
-  } catch (err) { document.getElementById('authError').innerText = err.message; } }
-  async function loginWithGoogle() { try { await auth.signInWithPopup(providerGoogle); closeAuthModal();
-  } catch (err) { document.getElementById('authError').innerText = err.message; } }
-  async function loginWithGitHub() { try { await auth.signInWithPopup(providerGitHub); closeAuthModal();
-  } catch (err) { document.getElementById('authError').innerText = err.message; } }
+  async function loginWithEmail() { const email = document.getElementById('loginEmail').value, pass = document.getElementById('loginPassword').value; try { await auth.signInWithEmailAndPassword(email, pass); closeAuthModal(); } catch (err) { document.getElementById('authError').innerText = err.message; } }
+  async function registerWithEmail() { const email = document.getElementById('registerEmail').value, pass = document.getElementById('registerPassword').value, confirm = document.getElementById('registerConfirm').value; if (pass !== confirm) { document.getElementById('authError').innerText = 'Las contraseñas no coinciden'; return; } try { await auth.createUserWithEmailAndPassword(email, pass); closeAuthModal(); } catch (err) { document.getElementById('authError').innerText = err.message; } }
+  async function loginWithGoogle() { try { await auth.signInWithPopup(providerGoogle); closeAuthModal(); } catch (err) { document.getElementById('authError').innerText = err.message; } }
+  async function loginWithGitHub() { try { await auth.signInWithPopup(providerGitHub); closeAuthModal(); } catch (err) { document.getElementById('authError').innerText = err.message; } }
   function logoutUser() { auth.signOut().then(() => location.reload()); }
   function updateUserUI(user) {
     currentUser = user;
@@ -1294,8 +1325,7 @@
       dropdownName.innerText = 'Invitado';
       loginItem.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión'; loginItem.onclick = showAuthModal;
       avatarBtn.style.borderColor = 'var(--neon-cyan)'; avatarBtn.style.boxShadow = 'none';
-      dropdownAvatar.style.borderColor = 'var(--neon-cyan)';
-      dropdownAvatar.style.boxShadow = 'none';
+      dropdownAvatar.style.borderColor = 'var(--neon-cyan)'; dropdownAvatar.style.boxShadow = 'none';
       dropdownName.style.color = 'var(--neon-cyan)'; dropdownName.style.textShadow = 'none';
     }
   }
@@ -1307,9 +1337,10 @@
   window.loginWithEmail = loginWithEmail; window.registerWithEmail = registerWithEmail; window.loginWithGoogle = loginWithGoogle;
   window.loginWithGitHub = loginWithGitHub; window.showAuthModal = showAuthModal; window.closeAuthModal = closeAuthModal;
   window.guardarCambiosPerfil = guardarCambiosPerfil; window.closeProfileModal = closeProfileModal; window.copiarUID = copiarUID;
-  function disableBodyScroll() { const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; document.body.style.paddingRight = scrollbarWidth + 'px';
-  document.body.classList.add('modal-open'); document.documentElement.classList.add('modal-open'); }
+  function disableBodyScroll() { const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; document.body.style.paddingRight = scrollbarWidth + 'px'; document.body.classList.add('modal-open'); document.documentElement.classList.add('modal-open'); }
   function enableBodyScroll() { document.body.style.paddingRight = ''; document.body.classList.remove('modal-open'); document.documentElement.classList.remove('modal-open'); }
+
+  // Custom selects (sin cambios)
   (function() {
     const selects = ['genre-select', 'demographic-select', 'rating-select'], isMobile = window.matchMedia('(max-width: 768px)').matches;
     function updateTriggerText(trigger, selectEl) { trigger.textContent = selectEl.options[selectEl.selectedIndex]?.textContent || selectEl.options[0].textContent; }
@@ -1320,8 +1351,7 @@
         if (isMobile) {
           const overlay = document.createElement('div'); overlay.className = 'select-popup-overlay';
           const popup = document.createElement('div'); popup.className = 'select-popup';
-          const header = document.createElement('div'); header.className = 'select-popup-header';
-          header.textContent = select.getAttribute('aria-label') || 'Seleccionar'; popup.appendChild(header);
+          const header = document.createElement('div'); header.className = 'select-popup-header'; header.textContent = select.getAttribute('aria-label') || 'Seleccionar'; popup.appendChild(header);
           Array.from(select.options).forEach(opt => {
             const optDiv = document.createElement('div'); optDiv.className = 'select-popup-option'; if (opt.value === select.value) optDiv.classList.add('selected'); optDiv.textContent = opt.textContent;
             optDiv.addEventListener('click', () => { select.value = opt.value; select.dispatchEvent(new Event('change')); updateTriggerText(trigger, select); overlay.classList.remove('active'); enableBodyScroll(); setTimeout(() => overlay.remove(), 300); });
@@ -1333,8 +1363,7 @@
           const existing = document.querySelector('.custom-select-dropdown');
           if (existing) existing.remove();
           const rect = trigger.getBoundingClientRect(), dropdown = document.createElement('div'); dropdown.className = 'custom-select-dropdown';
-          dropdown.style.top = (rect.bottom + window.scrollY) + 'px';
-          dropdown.style.left = (rect.left + window.scrollX) + 'px'; dropdown.style.minWidth = rect.width + 'px';
+          dropdown.style.top = (rect.bottom + window.scrollY) + 'px'; dropdown.style.left = (rect.left + window.scrollX) + 'px'; dropdown.style.minWidth = rect.width + 'px';
           Array.from(select.options).forEach(opt => {
             const optDiv = document.createElement('div'); optDiv.className = 'custom-select-option'; optDiv.textContent = opt.textContent;
             if (opt.value === select.value) { optDiv.style.background = 'rgba(0, 243, 255, 0.15)'; optDiv.style.color = 'var(--neon-cyan)'; }
@@ -1360,7 +1389,6 @@
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          
           const rotX = ((y - rect.height/2) / (rect.height/2)) * -6;
           const rotY = ((x - rect.width/2) / (rect.width/2)) * 6;
           card.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
@@ -1373,13 +1401,13 @@
     });
   }
 
+  // Chroma key (sin cambios)
   const fgContainer = document.getElementById('fgContainer');
   const fgVideo = document.getElementById('fgVideo');
   const fgCanvas = document.getElementById('fgCanvas');
   const fgCtx = fgCanvas.getContext('2d', { willReadFrequently: true });
   let currentAnim = videoList[Math.floor(Math.random() * videoList.length)];
   let isTransitioning = false;
-
   fgVideo.style.display = 'none';
   fgVideo.src = currentAnim.src;
   fgVideo.addEventListener('loadedmetadata', () => {
@@ -1417,7 +1445,6 @@
     fgVideo.muted = true;
     fgVideo.play().catch(e => console.log('Animación bloqueada', e));
   }
-
   function createSparks(clientX, clientY) {
     const neonColors = ['#00f3ff', '#bc13fe', '#ff0055', '#f1c40f'];
     for (let i = 0; i < 80; i++) {
@@ -1438,7 +1465,6 @@
       setTimeout(() => spark.remove(), 800);
     }
   }
-
   fgContainer.addEventListener('click', (e) => {
     e.stopPropagation();
     if (isTransitioning) return;
@@ -1450,16 +1476,15 @@
       do { newAnim = videoList[Math.floor(Math.random() * videoList.length)]; } while (newAnim.id === currentAnim.id && videoList.length > 1);
       currentAnim = newAnim;
       fgVideo.src = currentAnim.src;
-      fgVideo.play().then(() => { isTransitioning = false; fgContainer.classList.remove('poof'); 
-      }).catch(err => { console.log('Error cambiando anim', err); isTransitioning = false; });
+      fgVideo.play().then(() => { isTransitioning = false; fgContainer.classList.remove('poof'); }).catch(err => { console.log('Error cambiando anim', err); isTransitioning = false; });
     }, 600);
   });
-
   window.addEventListener('DOMContentLoaded', startVisualMedia);
-
   window.addEventListener('load', () => { if (window.startNotificationSequence) window.startNotificationSequence(); });
+
+  // Inicializar anuncio y cargar datos
   inicializarAnuncio();
-  cargarAnimesPaginado(true);
+  cargarDatosYMostrar();
 </script>
 </body>
 </html>
