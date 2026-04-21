@@ -11,13 +11,11 @@
       "src": "Logo_Archinime.avif",
       "sizes": "192x192",
       "type": "image/avif"
-      "purpose": "any maskable"
     },
     {
       "src": "Logo_Archinime.avif",
       "sizes": "512x512",
       "type": "image/avif"
-      "purpose": "any maskable"
     }
   ]
 }
