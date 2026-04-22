@@ -1,5 +1,5 @@
-// video-player-core.js - Versión Firestore + Estado central
-// Obtiene los enlaces desde la colección 'catalogo'
+// video-player-core.js - Versión con catálogo local + Firestore para funciones sociales
+// Obtiene los enlaces desde catalogoArray (definido en catalogo.js)
 // MEJORA: Restricción de descarga solo para usuarios autenticados
 // OPTIMIZACIÓN: Carga diferida de sistemas externos, validaciones mejoradas
 
@@ -125,15 +125,16 @@ class VideoPlayer {
     });
   }
   
+  // ***** NUEVO: Carga desde catálogo local (catalogoArray) *****
   async loadEpisodeData() {
     try {
-      const docRef = this.db.collection('catalogo').doc(this.animeId);
-      const doc = await docRef.get();
-      if (!doc.exists) {
+      // Buscar el anime en el array local
+      const anime = catalogoArray.find(a => a.id == this.animeId);
+      if (!anime) {
         document.getElementById('epTitle').innerText = 'Anime no encontrado';
         return;
       }
-      this.animeData = doc.data();
+      this.animeData = anime;
       const seasons = this.animeData.seasons || [];
       const season = seasons.find(s => s.num === parseInt(this.season));
       if (!season) {
