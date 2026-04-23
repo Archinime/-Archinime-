@@ -2,6 +2,7 @@
 // Obtiene los enlaces desde catalogoArray (definido en catalogo.js)
 // MEJORA: Restricción de descarga solo para usuarios autenticados
 // OPTIMIZACIÓN: Carga diferida de sistemas externos, validaciones mejoradas
+// ACTUALIZACIÓN: Soporte para descargas de Odysee/ok.ru (vía AnyDownloader)
 
 class VideoPlayer {
   constructor() {
@@ -216,15 +217,32 @@ class VideoPlayer {
     this.currentDownloadUrl = this.generateDirectLink(url);
   }
   
+  // ***** MEJORA: Generador de enlace directo con soporte para Odysee/ok.ru *****
   generateDirectLink(url) {
     if (!url) return '#';
+
+    // Google Drive
     if (url.includes('drive.google.com')) {
       const match = url.match(/\/d\/(.+?)\//);
       if (match) return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download`;
+      const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (altMatch) return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download`;
     }
+
+    // Dropbox
     if (url.includes('dropbox.com') && url.includes('dl=0')) {
       return url.replace('dl=0', 'dl=1');
     }
+
+    // Odysee / ok.ru → usar AnyDownloader como puente
+    if (url.includes('ok.ru/')) {
+      const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
+      if (match && match[1]) {
+        return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
+      }
+    }
+
+    // Si no coincide con ningún caso especial, devolvemos la URL original
     return url;
   }
   
@@ -240,6 +258,13 @@ class VideoPlayer {
     
     // Usuario autenticado: proceder con la descarga
     if (this.currentDownloadUrl && this.currentDownloadUrl !== '#') {
+      // Si la URL es de AnyDownloader, abrir en nueva pestaña
+      if (this.currentDownloadUrl.includes('anydownloader.com')) {
+        window.open(this.currentDownloadUrl, '_blank');
+        return;
+      }
+      
+      // Para otros casos (Google Drive, Dropbox, enlaces directos) forzar descarga
       const link = document.createElement('a');
       link.href = this.currentDownloadUrl;
       link.download = '';               // Sugerir descarga
