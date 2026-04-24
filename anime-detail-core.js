@@ -2,8 +2,9 @@
 // Obtiene los datos del anime desde catalogoArray (archivo estático)
 // Los ratings, comentarios y autenticación siguen usando Firestore.
 // Incluye mecanismo de espera para asegurar que catalogoArray esté disponible.
+// ⚠️ SIN ANUNCIOS - 12 sugerencias en vez de 11
 
-// ---------- FUNCIÓN DE ESCAPE HTML (incluida para evitar dependencias) ----------
+// ---------- FUNCIÓN DE ESCAPE HTML ----------
 function escapeHtml(text) {
   if (!text) return text;
   return String(text)
@@ -14,7 +15,7 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
-// ---------- CONFIGURACIÓN FIREBASE (para ratings, auth, etc.) ----------
+// ---------- CONFIGURACIÓN FIREBASE ----------
 const firebaseConfig = {
   apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
   authDomain: "login-admin-archinime.firebaseapp.com",
@@ -26,54 +27,6 @@ const firebaseConfig = {
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-
-// ---------- ANUNCIOS (INTEGRACIÓN EN RECOMENDACIONES) ----------
-let anuncioActual = null;
-let cachedAdCard = null;
-
-function inicializarAnuncio() {
-  if (typeof window.listaAnuncios !== 'undefined' && window.listaAnuncios.length > 0) {
-    const randomIndex = Math.floor(Math.random() * window.listaAnuncios.length);
-    anuncioActual = window.listaAnuncios[randomIndex];
-    console.log('Anuncio cargado en detalle:', anuncioActual.id);
-  }
-}
-
-function crearTarjetaAnuncio() {
-  if (cachedAdCard) return cachedAdCard;
-  if (!anuncioActual) return null;
-  
-  const card = document.createElement('div');
-  card.className = 'rec-card card-ad';
-  card.style.cursor = 'default';
-  
-  const innerDiv = document.createElement('div');
-  innerDiv.style.width = '100%';
-  innerDiv.style.height = '100%';
-  innerDiv.style.display = 'flex';
-  innerDiv.style.alignItems = 'center';
-  innerDiv.style.justifyContent = 'center';
-  innerDiv.style.overflow = 'hidden';
-  innerDiv.style.position = 'relative';
-  
-  innerDiv.innerHTML = anuncioActual.codigo;
-  
-  innerDiv.querySelectorAll('script').forEach(oldScript => {
-    const newScript = document.createElement('script');
-    if (oldScript.src) {
-      newScript.src = oldScript.src;
-      newScript.async = true;
-    } else {
-      newScript.textContent = oldScript.textContent;
-    }
-    innerDiv.appendChild(newScript);
-    oldScript.remove();
-  });
-  
-  card.appendChild(innerDiv);
-  cachedAdCard = card;
-  return card;
-}
 
 // ---------- AUDIO CONTEXT (SONIDOS UI) ----------
 let audioCtx = null;
@@ -164,8 +117,8 @@ const params = new URLSearchParams(location.search);
 const animeId = params.get('id');
 currentAnimeId = animeId;
 
-// Cache para búsqueda rápida (se llenará con catalogoArray)
-let searchCache = []; // { id, title, img, aliases }
+// Cache para búsqueda rápida
+let searchCache = [];
 
 // ---------- TOAST ----------
 function showToast(msg, isError = false) {
@@ -176,7 +129,7 @@ function showToast(msg, isError = false) {
   setTimeout(() => toast.style.display = 'none', 3000);
 }
 
-// ---------- HISTORIAL DE VISUALIZACIÓN (Firestore / localStorage) ----------
+// ---------- HISTORIAL DE VISUALIZACIÓN ----------
 function getLocalKey(animeId, s, e) { return `watched_${animeId}_${s}_${e}`; }
 async function markEpisodeWatched(animeId, s, e) {
   if (currentUserId) {
@@ -476,36 +429,22 @@ async function loadUserRating(animeId, userId) {
   }
 }
 
-// ---------- RENDER PRINCIPAL (usando catalogoArray) ----------
+// ---------- RENDER PRINCIPAL ----------
 async function renderRecommendations(currentId) {
   const grid = document.getElementById('rec-grid');
   try {
     const allAnimes = (typeof catalogoArray !== 'undefined') ? catalogoArray : [];
     const others = allAnimes.filter(a => String(a.id) !== String(currentId));
-    const random = others.sort(() => 0.5 - Math.random()).slice(0, 11);
+    // ✅ 12 sugerencias en vez de 11
+    const random = others.sort(() => 0.5 - Math.random()).slice(0, 12);
     
     if (!random.length) {
       grid.innerHTML = '<p style="color:#666;">Sin recomendaciones</p>';
       return;
     }
 
-    const shouldInsertAd = anuncioActual !== null && random.length >= 5;
-    let adPosition = -1;
-    if (shouldInsertAd) {
-      const minPos = 4;
-      const maxPos = random.length - 1;
-      adPosition = Math.floor(Math.random() * (maxPos - minPos + 1)) + minPos;
-    }
-
     const frag = document.createDocumentFragment();
     for (let i = 0; i < random.length; i++) {
-      if (shouldInsertAd && i === adPosition) {
-        const adCard = crearTarjetaAnuncio();
-        if (adCard) {
-          if (adCard.parentNode) adCard.remove();
-          frag.appendChild(adCard.cloneNode(true));
-        }
-      }
       const a = random[i];
       const card = document.createElement('div');
       card.className = 'rec-card';
@@ -594,7 +533,7 @@ async function renderMainContent() {
   });
 }
 
-// ---------- CARGAR CACHÉ DE BÚSQUEDA (desde catalogoArray) ----------
+// ---------- CARGAR CACHÉ DE BÚSQUEDA ----------
 function loadSearchCache() {
   if (typeof catalogoArray !== 'undefined') {
     searchCache = catalogoArray.map(item => ({
@@ -610,7 +549,7 @@ function loadSearchCache() {
   }
 }
 
-// ---------- BÚSQUEDA RÁPIDA (prefijo + alias, en cliente) ----------
+// ---------- BÚSQUEDA RÁPIDA ----------
 function initSearch() {
   const searchInput = document.getElementById('quick-search');
   let floatingDropdown = null;
@@ -689,7 +628,7 @@ function initSearch() {
   searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) searchInput.dispatchEvent(new Event('input')); });
 }
 
-// ---------- AUTENTICACIÓN (usando ArchinimeState) ----------
+// ---------- AUTENTICACIÓN ----------
 function initAuthListener() {
   if (window.ArchinimeState) {
     ArchinimeState.on('currentUser', async (user) => {
@@ -743,7 +682,7 @@ function initAuthListener() {
   }
 }
 
-// ---------- Función para esperar a que catalogoArray esté disponible ----------
+// ---------- ESPERAR POR catalogoArray ----------
 function waitForCatalog() {
   return new Promise((resolve) => {
     if (typeof catalogoArray !== 'undefined') {
@@ -771,7 +710,7 @@ function waitForCatalog() {
 
 // ---------- INICIALIZACIÓN ----------
 (async function init() {
-  inicializarAnuncio();
+  // ✅ Ya no se llama a inicializarAnuncio()
   
   await waitForCatalog();
   
