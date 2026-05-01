@@ -1,5 +1,6 @@
 // notification-system.js - Versión Profesional
 // Sistema de notificaciones con cola de popups, persistencia y sincronización en tiempo real.
+// AHORA LAS NOTIFICACIONES DE ANIME SE BASAN EN catalogoArray (local), NO EN Firestore.
 
 (function(global) {
   'use strict';
@@ -143,14 +144,15 @@
 
       const isFirstVisit = !localStorage.getItem(CONFIG.STORAGE_KEYS.FIRST_VISIT);
       if (isFirstVisit && !this.firstVisitInitialized) {
-        await this.handleFirstVisit();
+        // ===== CAMBIO: usar catálogo local en lugar de Firestore =====
+        await this.handleFirstVisitLocal();
       } else {
         this.renderNotificationList();
         this.updateBadge();
         this.attemptResumeQueue('init');
       }
 
-      this.listenForCatalogUpdates();
+      // listenForCatalogUpdates() ya NO se llama (las notificaciones de anime vienen de catalogoArray)
       this.setupAuthListener();
     }
 
@@ -276,12 +278,12 @@
       }
     }
 
-    // ==================== PRIMERA VISITA ====================
-    async handleFirstVisit() {
-      console.log('🎉 Primera visita detectada. Cargando popups iniciales...');
+    // ==================== NUEVA PRIMERA VISITA USANDO CATÁLOGO LOCAL ====================
+    async handleFirstVisitLocal() {
+      console.log('🎉 Primera visita detectada. Procesando catálogo local...');
       this.firstVisitInitialized = true;
 
-      // Marcar todas las notificaciones existentes como vistas
+      // Marcar notificaciones antiguas como vistas
       let changed = false;
       this.history.forEach(n => { if (!n.seen) { n.seen = true; changed = true; } });
       if (changed) {
@@ -289,56 +291,56 @@
         this.renderNotificationList();
       }
 
-      // Reiniciar cola
+      // Resetear cola de popups
       this.queue = [];
       this.popupsShownCount = 0;
 
-      try {
-        const db = getFirestore();
-        if (!db) throw new Error('Firestore no disponible');
-
-        const snapshot = await db.collection('catalogo')
-          .orderBy('lastUpdate', 'desc')
-          .limit(CONFIG.MAX_POPUPS)
-          .get();
-
-        const animes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        console.log(`📦 ${animes.length} animes recientes para popups iniciales`);
-
-        for (const anime of animes) {
-          if (!anime.updateType || anime.updateType === 'Ninguna') continue;
-          const notif = this.createAnimeNotification(anime);
-          if (!notif) continue;
-
-          // Verificar si ya existe en historial
-          if (this.history.some(n => n.notifId === notif.notifId)) continue;
-
-          this.history.unshift(notif);
-          this.markAsSeenInStorage(notif.notifId);
-
-          if (this.queue.length < CONFIG.MAX_POPUPS) {
-            this.queue.push(notif);
-          }
-        }
-
-        // Limitar historial
-        if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) {
-          this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
-        }
-
-        this.persistHistory();
-        this.renderNotificationList();
-        this.updateBadge();
-
-        if (this.queue.length > 0) {
-          this.persistQueue();
-          this.showNextPopup();
-        }
-
+      // Verificar que catalogoArray exista
+      if (typeof catalogoArray === 'undefined' || catalogoArray.length === 0) {
+        console.warn('⚠️ catalogoArray no está disponible para generar notificaciones.');
         localStorage.setItem(CONFIG.STORAGE_KEYS.FIRST_VISIT, 'true');
-      } catch (error) {
-        console.error('❌ Error en primera visita:', error);
+        return;
       }
+
+      // Animes con updateType diferente de "Ninguna"
+      const candidatos = catalogoArray
+        .filter(a => a.updateType && a.updateType !== 'Ninguna')
+        .sort((a, b) => (b.lastUpdate || 0) - (a.lastUpdate || 0))
+        .slice(0, CONFIG.MAX_POPUPS);
+
+      console.log(`📦 ${candidatos.length} animes recientes para popups iniciales`);
+
+      for (const anime of candidatos) {
+        const notif = this.createAnimeNotification(anime);
+        if (!notif) continue;
+
+        // Verificar si ya existe en el historial
+        if (this.history.some(n => n.notifId === notif.notifId)) continue;
+
+        // Agregar al historial y marcar como visto
+        this.history.unshift(notif);
+        this.markAsSeenInStorage(notif.notifId);
+
+        if (this.queue.length < CONFIG.MAX_POPUPS) {
+          this.queue.push(notif);
+        }
+      }
+
+      // Limitar historial
+      if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) {
+        this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
+      }
+
+      this.persistHistory();
+      this.renderNotificationList();
+      this.updateBadge();
+
+      if (this.queue.length > 0) {
+        this.persistQueue();
+        this.showNextPopup();
+      }
+
+      localStorage.setItem(CONFIG.STORAGE_KEYS.FIRST_VISIT, 'true');
     }
 
     createAnimeNotification(anime) {
@@ -505,8 +507,9 @@
       };
     }
 
-    // ==================== ESCUCHA DE CATÁLOGO ====================
+    // ==================== ESCUCHA DE CATÁLOGO (DESACTIVADA, SE CONSERVA PARA FUTURO USO) ====================
     listenForCatalogUpdates() {
+      // Este método ya NO se llama en init(). Las notificaciones de anime vienen de catalogoArray.
       if (this.catalogUnsubscribe) this.catalogUnsubscribe();
 
       const db = getFirestore();
