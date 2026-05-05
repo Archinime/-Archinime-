@@ -9,10 +9,10 @@
    Compatible con PWA y notificaciones push (base)
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v25';
-const CACHE_DYNAMIC = 'archinime-dynamic-v25';
-const CACHE_IMAGES = 'archinime-images-v25';
-const CACHE_FONTS = 'archinime-fonts-v25';
+const CACHE_STATIC = 'archinime-static-v26';
+const CACHE_DYNAMIC = 'archinime-dynamic-v26';
+const CACHE_IMAGES = 'archinime-images-v26';
+const CACHE_FONTS = 'archinime-fonts-v26';
 
 // Recursos críticos a precachear (estáticos y siempre necesarios)
 // NOTA: catalogo.js ha sido ELIMINADO de esta lista para que no se cachee estáticamente

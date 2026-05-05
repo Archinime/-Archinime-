@@ -698,6 +698,7 @@
 
 <main class="container">
   <div class="grid" id="grid"></div>
+  <!-- CONTENEDOR DE PAGINACIÓN -->
   <div id="pagination" class="pagination-container"></div>
 </main>
 
@@ -724,6 +725,7 @@
 
 <!-- SCRIPTS -->
 <script>
+  // Configuración de Firebase (necesaria para auth, ratings, etc.)
   const firebaseConfig = {
     apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
     authDomain: "login-admin-archinime.firebaseapp.com",
@@ -744,13 +746,18 @@
   const providerGitHub = new firebase.auth.GithubAuthProvider();
 </script>
 
+<!-- Catálogo local (reemplaza la consulta a Firestore) -->
 <script src="catalogo.js"></script>
+
+<!-- Otros scripts de la aplicación -->
 <script src="animaciones.js"></script>
 <script src="musica_fondo.js"></script>
 <script src="notification-system.js"></script>
 <script src="gifs.js"></script>
 
+
 <script>
+  // Variables para paginación y música global (se mantienen)
   window.videoList = [
     { id: "rem", src: "https://cdn.pixabay.com/video/2022/05/24/118507-716387776_large.mp4", keyColor: "green", preset: { threshold: 0.4, diff: 30, soft: 30 } },
     { id: "hola", src: "https://cdn.pixabay.com/video/2023/02/03/149220-797461338_large.mp4", keyColor: "blue", preset: { threshold: 0.45, diff: 35, soft: 35 } }
@@ -765,6 +772,7 @@
   };
   window.startNotificationSequence = function() { console.log("Sistema de notificaciones listo"); };
 
+  // ==================== REGISTRO DEL SERVICE WORKER ====================
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js').then(reg => {
@@ -775,6 +783,7 @@
     });
   }
 
+  // ==================== LÓGICA DE BOTONES (INSTALACIÓN Y YOUTUBE) ====================
   let deferredPrompt;
   const installBtn = document.getElementById('installBtn');
   const youtubeBtn = document.getElementById('youtubeBtn');
@@ -831,6 +840,7 @@
   window.addEventListener('DOMContentLoaded', updateButtonsVisibility);
   window.addEventListener('resize', updateButtonsVisibility);
 
+  // ==================== MÚSICA ====================
   let isMusicStarted = false;
   let currentAudio = null;
   function startMusic() {
@@ -852,6 +862,7 @@
   document.addEventListener('click', startMusic, { once: true });
   document.addEventListener('touchstart', startMusic, { once: true });
 
+  // ==================== GIF ALEATORIO ====================
   if (typeof listaDeGifs !== 'undefined' && listaDeGifs.length > 0) {
     const gifElegido = listaDeGifs[Math.floor(Math.random() * listaDeGifs.length)];
     const imgGif = document.getElementById('personaje-gif');
@@ -893,6 +904,7 @@
   });
   setTimeout(() => { if (!loadingCompleted) finishLoading(); }, 8000);
 
+  // ==================== UTILIDADES ====================
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -901,13 +913,9 @@
     return array;
   }
 
-  // ==================== RATINGS DESDE FIRESTORE (MODIFICADO) ====================
+  // ==================== RATINGS DESDE FIRESTORE (SE MANTIENE) ====================
   let firestoreRatings = new Map();
-  let ratingsLoaded = false;
-  let ratingsLoadPromise = null;
-
   async function loadRatings() {
-    if (ratingsLoaded) return;
     try {
       const snapshot = await db.collection('animeRatings').get();
       snapshot.forEach(doc => {
@@ -916,13 +924,9 @@
           firestoreRatings.set(parseInt(doc.id), { avg: data.avg, count: data.count || 0 });
         }
       });
-      ratingsLoaded = true;
-      console.log('✅ Ratings de Firestore cargados:', firestoreRatings.size);
-    } catch (e) {
-      console.warn('Error cargando ratings:', e);
-    }
+    } catch (e) { console.warn('Error cargando ratings:', e); }
   }
-  ratingsLoadPromise = loadRatings();
+  loadRatings();
 
   function normalizeText(s) { 
     return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); 
@@ -934,15 +938,19 @@
       const ratingObj = firestoreRatings.get(animeId);
       if (ratingObj && typeof ratingObj.avg === 'number') return ratingObj.avg.toFixed(1);
     }
+    // Si no hay rating en Firestore, usar el campo 'rating' del catálogo local como fallback
+    if (anime.rating != null && typeof anime.rating === 'number' && !isNaN(anime.rating)) return anime.rating.toFixed(1);
     return '—';
   }
 
   function getNumericRating(anime) {
     const animeId = parseInt(anime.id);
     if (firestoreRatings.has(animeId)) return firestoreRatings.get(animeId).avg;
+    if (anime.rating != null && typeof anime.rating === 'number') return anime.rating;
     return 0;
   }
 
+  // ==================== ANUNCIOS ====================
   let anuncioActual = null;
   let cachedAdCard = null;
   function inicializarAnuncio() {
@@ -976,7 +984,8 @@
     return card;
   }
 
-  let allAnimes = [];
+  // ==================== VARIABLES GLOBALES DE PAGINACIÓN ====================
+  let allAnimes = [];               // Almacena todos los animes filtrados y mezclados
   let currentPage = 1;
   const itemsPerPage = 36;
   let totalPages = 1;
@@ -986,6 +995,7 @@
   const grid = document.getElementById('grid');
   const paginationContainer = document.getElementById('pagination');
 
+  // Función para renderizar la página actual
   function renderPage() {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
@@ -995,6 +1005,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Renderiza las tarjetas en el grid
   function renderAnimes(animes, append = false) {
     if (!append) grid.innerHTML = '';
     if (!animes.length) {
@@ -1045,7 +1056,7 @@
       <h2 style="font-family:Orbitron; margin:20px 0;">Sin Resultados</h2>
       <p>Prueba con otros filtros o busca por alias.</p>
       <button onclick="resetearFiltrosGlobal()" style="margin-top:20px; background:transparent; border:2px solid var(--neon-pink); color:#fff; padding:12px 30px; border-radius:8px; cursor:pointer;">Restaurar Radares</button>
-    </div>`);
+    </div>`;
   }
 
   function renderPagination() {
@@ -1088,16 +1099,16 @@
     renderPage();
   };
 
+  // ==================== CARGA DE DATOS (AHORA DESDE catalogoArray) ====================
   async function cargarDatosYMostrar() {
     grid.innerHTML = '<div style="text-align:center; padding:40px;"><i class="fas fa-spinner fa-spin"></i> Cargando catálogo...</div>';
     paginationContainer.innerHTML = '';
 
     try {
-      // 🔥 ESPERAR a que los ratings de Firestore estén listos
-      await ratingsLoadPromise;
-
+      // Usar el array global catalogoArray (definido en catalogo.js)
       let animes = (typeof catalogoArray !== 'undefined') ? [...catalogoArray] : [];
 
+      // Aplicar filtros (todo en cliente)
       if (currentFilters.genre) {
         animes = animes.filter(a => a.genres && a.genres.includes(currentFilters.genre));
       }
@@ -1121,6 +1132,7 @@
         });
       }
 
+      // Mezclar aleatoriamente
       allAnimes = shuffleArray(animes);
       totalPages = Math.ceil(allAnimes.length / itemsPerPage);
       currentPage = 1;
@@ -1132,6 +1144,7 @@
         renderPage();
       }
 
+      // Disparar evento de carga inicial (para la pantalla de carga)
       if (!window.firstAnimesDispatched) {
         window.firstAnimesDispatched = true;
         window.dispatchEvent(new CustomEvent('firstAnimesLoaded'));
@@ -1142,11 +1155,13 @@
     }
   }
 
+  // Debounce para búsqueda
   function debouncedCargar() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => cargarDatosYMostrar(), 300);
   }
 
+  // Resetear filtros
   window.resetearFiltrosGlobal = function() {
     document.getElementById('search').value = '';
     document.getElementById('genre-select').value = '';
@@ -1156,6 +1171,7 @@
     cargarDatosYMostrar();
   };
 
+  // Event listeners de filtros
   const searchInput = document.getElementById('search');
   const genreSelect = document.getElementById('genre-select');
   const demographicSelect = document.getElementById('demographic-select');
@@ -1166,6 +1182,7 @@
   demographicSelect.addEventListener('change', e => { currentFilters.demographic = e.target.value; cargarDatosYMostrar(); });
   ratingSelect.addEventListener('change', e => { currentFilters.rating = e.target.value; cargarDatosYMostrar(); });
 
+  // ==================== AUTENTICACIÓN Y PERFIL (sin cambios) ====================
   let currentUser = null;
   let newAvatarUrl = null;
   let lastProfileUpdate = 0;
@@ -1328,6 +1345,7 @@
   function disableBodyScroll() { const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; document.body.style.paddingRight = scrollbarWidth + 'px'; document.body.classList.add('modal-open'); document.documentElement.classList.add('modal-open'); }
   function enableBodyScroll() { document.body.style.paddingRight = ''; document.body.classList.remove('modal-open'); document.documentElement.classList.remove('modal-open'); }
 
+  // Custom selects (sin cambios)
   (function() {
     const selects = ['genre-select', 'demographic-select', 'rating-select'], isMobile = window.matchMedia('(max-width: 768px)').matches;
     function updateTriggerText(trigger, selectEl) { trigger.textContent = selectEl.options[selectEl.selectedIndex]?.textContent || selectEl.options[0].textContent; }
@@ -1388,6 +1406,7 @@
     });
   }
 
+  // Chroma key (sin cambios)
   const fgContainer = document.getElementById('fgContainer');
   const fgVideo = document.getElementById('fgVideo');
   const fgCanvas = document.getElementById('fgCanvas');
@@ -1468,6 +1487,7 @@
   window.addEventListener('DOMContentLoaded', startVisualMedia);
   window.addEventListener('load', () => { if (window.startNotificationSequence) window.startNotificationSequence(); });
 
+  // Inicializar anuncio y cargar datos
   inicializarAnuncio();
   cargarDatosYMostrar();
 </script>
