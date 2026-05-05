@@ -4,16 +4,18 @@
    - HTML: Network-first (nunca cachear HTML para respuesta)
    - Imágenes y vídeos: Stale-while-revalidate
    - Fuentes y estilos: Cache-first con actualización en segundo plano
+   - catálogo.js: Network-first (siempre obtener la última versión)
    - Otros recursos: Network-first
    Compatible con PWA y notificaciones push (base)
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v23';
-const CACHE_DYNAMIC = 'archinime-dynamic-v23';
-const CACHE_IMAGES = 'archinime-images-v23';
-const CACHE_FONTS = 'archinime-fonts-v23';
+const CACHE_STATIC = 'archinime-static-v24';
+const CACHE_DYNAMIC = 'archinime-dynamic-v24';
+const CACHE_IMAGES = 'archinime-images-v24';
+const CACHE_FONTS = 'archinime-fonts-v24';
 
 // Recursos críticos a precachear (estáticos y siempre necesarios)
+// NOTA: catalogo.js ha sido ELIMINADO de esta lista para que no se cachee estáticamente
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -79,6 +81,12 @@ self.addEventListener('fetch', event => {
 
   // Ignorar peticiones no GET
   if (request.method !== 'GET') return;
+
+  // 🔥 REGLA ESPECIAL: catalogo.js siempre network-first (para actualización inmediata)
+  if (url.pathname === '/catalogo.js') {
+    event.respondWith(networkFirst(request));
+    return;
+  }
 
   // 🔥 REGLA #1: NUNCA SERVIR HTML DESDE CACHÉ (siempre red primero)
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
