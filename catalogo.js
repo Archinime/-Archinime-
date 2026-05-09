@@ -1,19 +1,61 @@
-// ============================================================
-// ARCHINIME - CATÁLOGO EXPORTADO DESDE FIRESTORE
-// ============================================================
-// Fecha de exportación: 8/5/2026, 20:32:51
-// Total de animes: 121
-// Criterio de orden: lastUpdate
-// 
-// ⚠️  Este archivo NO incluye ratings ni otras colecciones.
-//     Contiene únicamente los documentos de la colección "catalogo".
-// 
-// 📌 Estructura: Array de objetos Anime.
-//    Cada anime tiene 'id', 'title', 'img', 'desc', 'genres',
-//    'seasons' (array ordenado por num), 'lastUpdate' (ms), etc.
-// ============================================================
+// Catalogo Archinime – 9/5/2026
+// Total animes: 121
 
 const catalogoArray = [
+  {
+    "id": 37,
+    "title": "KILL BLUE",
+    "desc": "El legendario sicario Juzo Ogami nunca ha fallado en una tarea. Pero después de una misión, es picado por una misteriosa avispa y se despierta en el cuerpo de un niño de 13 años! Y para hacer las cosas aún más raras, recibe una nueva y extraña orden: infiltrarse en una escuela secundaria. Ahora el otrora temido asesino debe equilibrar el caos de la vida escolar con su trabajo mortal, ¡mientras busca una manera de recuperar su cuerpo adulto!",
+    "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue.avif",
+    "genres": [
+      "Acción",
+      "Comedia",
+      "Escolar",
+      "Slice of Life",
+      "Shōnen"
+    ],
+    "lastUpdate": 1778342823032,
+    "updateType": "NUEVO 🔥",
+    "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue1.avif",
+    "latestBlockName": "Temporada 1",
+    "latestEpTitle": "Capítulo 4",
+    "isFinal": false,
+    "music": [
+      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue.mp3"
+    ],
+    "uploader": "archinime12@gmail.com",
+    "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Temporada 1",
+        "type": "Temporada",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue1.avif",
+        "eps": [
+          {
+            "title": "Capítulo 1",
+            "link": "https://odysee.com/$/embed/@blody:8/kkb1:c",
+            "link2": "https://drive.google.com/file/d/1GflFpgSuDfGA7XuRcn8_0-e7-UJWLqaG/preview"
+          },
+          {
+            "title": "Capítulo 2",
+            "link": "https://odysee.com/$/embed/@blody:8/kllblue12:d",
+            "link2": "https://drive.google.com/file/d/1ZWwk0z9EfOPujv7fmvDRQola2yhG48Xp/preview"
+          },
+          {
+            "title": "Capítulo 3",
+            "link": "https://odysee.com/$/embed/@blody:8/kblue3:0",
+            "link2": ""
+          },
+          {
+            "title": "Capítulo 4",
+            "link": "https://odysee.com/$/embed/@blody:8/KLL14:9",
+            "link2": ""
+          }
+        ]
+      }
+    ]
+  },
   {
     "id": 6,
     "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/tenseislima4.avif",
@@ -3385,56 +3427,6 @@ const catalogoArray = [
     "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
     "title": "Witch Hat Atelier",
     "latestEpTitle": "Capítulo 6"
-  },
-  {
-    "id": 37,
-    "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue.avif",
-    "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue1.avif",
-    "latestBlockName": "Temporada 1",
-    "genres": [
-      "Acción",
-      "Comedia",
-      "Escolar",
-      "Slice of Life",
-      "Shōnen"
-    ],
-    "rating": 0,
-    "seasons": [
-      {
-        "type": "Temporada",
-        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue1.avif",
-        "eps": [
-          {
-            "link2": "https://drive.google.com/file/d/1GflFpgSuDfGA7XuRcn8_0-e7-UJWLqaG/preview",
-            "title": "Capítulo 1",
-            "link": "https://odysee.com/$/embed/@blody:8/kkb1:c"
-          },
-          {
-            "link2": "https://drive.google.com/file/d/1ZWwk0z9EfOPujv7fmvDRQola2yhG48Xp/preview",
-            "title": "Capítulo 2",
-            "link": "https://odysee.com/$/embed/@blody:8/kllblue12:d"
-          },
-          {
-            "link2": "",
-            "title": "Capítulo 3",
-            "link": "https://odysee.com/$/embed/@blody:8/kblue3:0"
-          }
-        ],
-        "num": 1,
-        "name": "Temporada 1"
-      }
-    ],
-    "lastUpdate": 1777824871885,
-    "music": [
-      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/killblue.mp3"
-    ],
-    "updateType": "NUEVO 🔥",
-    "desc": "El legendario sicario Juzo Ogami nunca ha fallado en una tarea. Pero después de una misión, es picado por una misteriosa avispa y se despierta en el cuerpo de un niño de 13 años! Y para hacer las cosas aún más raras, recibe una nueva y extraña orden: infiltrarse en una escuela secundaria. Ahora el otrora temido asesino debe equilibrar el caos de la vida escolar con su trabajo mortal, ¡mientras busca una manera de recuperar su cuerpo adulto!",
-    "uploader": "archinime12@gmail.com",
-    "isFinal": false,
-    "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
-    "title": "KILL BLUE",
-    "latestEpTitle": "Capítulo 3"
   },
   {
     "id": 83,
@@ -22076,6 +22068,3 @@ const catalogoArray = [
     "uploaderImg": "Logo_Archinime.avif"
   }
 ];
-
-// Si prefieres un objeto indexado por ID:
-// const catalogoObj = Object.fromEntries(catalogoArray.map(a => [a.id, a]));
