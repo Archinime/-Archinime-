@@ -1,7 +1,54 @@
-// Catalogo Archinime – 9/5/2026
+// Catalogo Archinime – 10/5/2026
 // Total animes: 121
 
 const catalogoArray = [
+  {
+    "id": 120,
+    "title": "Needy Girl Overdose",
+    "desc": "En un mundo en el que los \"me gusta\" son la moneda de cambio y cada espectador es un juez, OMGkawaiiAngel, también conocida como angeliKa, está decidida a convertirse en el \"ángel de Internet\" definitivo Sin embargo, tras su sonrisa de colores pastel y sus animadas retransmisiones, hay más de lo que parece a simple vista.",
+    "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/needy.avif",
+    "genres": [
+      "Aventura",
+      "Comedia oscura",
+      "Drama",
+      "Psicológico",
+      "Suspenso",
+      "Thriller",
+      "Seinen"
+    ],
+    "lastUpdate": 1778418351231,
+    "updateType": "NUEVO 🔥",
+    "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/needy1.avif",
+    "latestBlockName": "Temporada 1",
+    "latestEpTitle": "Capítulo 2",
+    "isFinal": false,
+    "music": [
+      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Needy%20Girl%20Overdose.mp3",
+      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Needy%20Girl%20Overdose1.mp3"
+    ],
+    "uploader": "archinime12@gmail.com",
+    "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Temporada 1",
+        "type": "Temporada",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/needy1.avif",
+        "eps": [
+          {
+            "title": "Capítulo 1",
+            "link": "https://odysee.com/$/embed/@blody:8/Needy1:1",
+            "link2": ""
+          },
+          {
+            "title": "Capítulo 2",
+            "link": "https://odysee.com/$/embed/@blody:8/Needy12:a",
+            "link2": ""
+          }
+        ]
+      }
+    ]
+  },
   {
     "id": 37,
     "title": "KILL BLUE",
@@ -2964,49 +3011,6 @@ const catalogoArray = [
     "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
     "title": "La Melancolía De Haruhi Suzumiya",
     "latestEpTitle": "La Desaparición de Nagato Yuki-chan"
-  },
-  {
-    "id": 120,
-    "rating": 0,
-    "lastUpdate": 1778006172732,
-    "seasons": [
-      {
-        "name": "Temporada 1",
-        "eps": [
-          {
-            "link": "https://odysee.com/$/embed/@blody:8/Needy1:1",
-            "title": "Capítulo 1",
-            "link2": ""
-          }
-        ],
-        "num": 1,
-        "type": "Temporada",
-        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/needy1.avif"
-      }
-    ],
-    "music": [
-      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Needy%20Girl%20Overdose.mp3",
-      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/Needy%20Girl%20Overdose1.mp3"
-    ],
-    "updateType": "ESTRENO 🚨",
-    "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/needy.avif",
-    "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/needy1.avif",
-    "latestBlockName": "Temporada 1",
-    "genres": [
-      "Aventura",
-      "Comedia oscura",
-      "Drama",
-      "Psicológico",
-      "Suspenso",
-      "Thriller",
-      "Seinen"
-    ],
-    "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
-    "title": "Needy Girl Overdose",
-    "latestEpTitle": "Capítulo 1",
-    "desc": "En un mundo en el que los \"me gusta\" son la moneda de cambio y cada espectador es un juez, OMGkawaiiAngel, también conocida como angeliKa, está decidida a convertirse en el \"ángel de Internet\" definitivo Sin embargo, tras su sonrisa de colores pastel y sus animadas retransmisiones, hay más de lo que parece a simple vista.",
-    "uploader": "archinime12@gmail.com",
-    "isFinal": false
   },
   {
     "id": 119,
