@@ -1,21 +1,14 @@
 /* ============================================================
    sw.js - Archinime OS Service Worker
-   Estrategia híbrida:
-   - HTML: Network-first (nunca cachear HTML para respuesta)
-   - Imágenes y vídeos: Stale-while-revalidate
-   - Fuentes y estilos: Cache-first con actualización en segundo plano
-   - catálogo.js: Network-first (siempre obtener la última versión)
-   - Otros recursos: Network-first
-   Compatible con PWA y notificaciones push (base)
+   Estrategia híbrida con control absoluto sobre catálogo.js
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v28';
-const CACHE_DYNAMIC = 'archinime-dynamic-v28';
-const CACHE_IMAGES = 'archinime-images-v28';
-const CACHE_FONTS = 'archinime-fonts-v28';
+const CACHE_STATIC = 'archinime-static-v29';
+const CACHE_DYNAMIC = 'archinime-dynamic-v29';
+const CACHE_IMAGES = 'archinime-images-v29';
+const CACHE_FONTS = 'archinime-fonts-v29';
 
-// Recursos críticos a precachear (estáticos y siempre necesarios)
-// NOTA: catalogo.js ha sido ELIMINADO de esta lista para que no se cachee estáticamente
+// Recursos precacheados (catálogo NO está incluido)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -38,26 +31,22 @@ const STATIC_ASSETS = [
   '/chica_corriendo.gif'
 ];
 
-// Instalación: precache de recursos estáticos
+// ---------- INSTALACIÓN ----------
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando Service Worker...');
-  self.skipWaiting(); // Activar inmediatamente
-
+  console.log('[SW] Instalando...');
+  self.skipWaiting(); // tomar control de inmediato
   event.waitUntil(
-    caches.open(CACHE_STATIC)
-      .then(cache => {
-        console.log('[SW] Precaching static assets');
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .catch(err => console.warn('[SW] Precache falló en algunos recursos:', err))
+    caches.open(CACHE_STATIC).then(cache => {
+      console.log('[SW] Precaching recursos estáticos');
+      return cache.addAll(STATIC_ASSETS);
+    }).catch(err => console.warn('[SW] Error en precache:', err))
   );
 });
 
-// Activación: limpieza de cachés antiguas
+// ---------- ACTIVACIÓN ----------
 self.addEventListener('activate', event => {
-  console.log('[SW] Activando Service Worker...');
+  console.log('[SW] Activando...');
   const currentCaches = [CACHE_STATIC, CACHE_DYNAMIC, CACHE_IMAGES, CACHE_FONTS];
-
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -70,79 +59,73 @@ self.addEventListener('activate', event => {
       );
     })
   );
-
-  return self.clients.claim(); // Tomar control de todas las pestañas
+  return self.clients.claim();
 });
 
-// Estrategia de fetch según tipo de recurso
+// ---------- FETCH (estrategias por tipo) ----------
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const request = event.request;
-
-  // Ignorar peticiones no GET
   if (request.method !== 'GET') return;
 
-  // 🔥 REGLA ESPECIAL: catalogo.js siempre network-first (para actualización inmediata)
-  if (url.pathname === '/catalogo.js') {
-    event.respondWith(networkFirst(request));
+  /* 🔥 REGLA 0: Catálogo siempre fresco - red con no-cache */
+  if (url.pathname.endsWith('/catalogo.js')) {
+    event.respondWith(
+      fetch(request, { cache: 'no-cache' })
+        .then(response => {
+          const responseClone = response.clone();
+          caches.open(CACHE_DYNAMIC).then(cache => cache.put(request, responseClone));
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
     return;
   }
 
-  // 🔥 REGLA #1: NUNCA SERVIR HTML DESDE CACHÉ (siempre red primero)
+  // HTML -> network-first
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // 🎨 REGLA #2: FUENTES Y CSS/JS (cache first con actualización en segundo plano)
+  // Fuentes, CSS, JS -> stale-while-revalidate
   if (request.destination === 'font' || request.destination === 'style' || request.destination === 'script') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // 🖼️ REGLA #3: IMÁGENES Y VÍDEOS (stale-while-revalidate para carga instantánea)
+  // Imágenes, vídeos -> stale-while-revalidate
   if (request.destination === 'image' || request.destination === 'video') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // 🌐 REGLA #4: API o cualquier otra petición (network-first, sin cache)
+  // API / Firestore -> solo red, sin cache
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
-    event.respondWith(fetch(request)); // Solo red, no cachear
+    event.respondWith(fetch(request));
     return;
   }
 
-  // 📦 REGLA #5: Resto de recursos (network-first con fallback a cache)
+  // Resto -> network-first
   event.respondWith(networkFirst(request));
 });
 
 // ---------- ESTRATEGIAS ----------
 
-// Network-first: intenta red, si falla usa cache (y guarda en dinámica)
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_DYNAMIC);
   try {
     const networkResponse = await fetch(request);
     if (networkResponse && networkResponse.status === 200) {
-      // Guardar en cache dinámico para futuro offline
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (err) {
     const cachedResponse = await cache.match(request);
-    if (cachedResponse) {
-      console.log('[SW] Sirviendo desde cache (offline):', request.url);
-      return cachedResponse;
-    }
-    // Si no está en cache, devolver fallback (p.ej. página offline)
-    if (request.destination === 'document') {
-      return caches.match('/offline.html'); // Puedes crear una página offline
-    }
-    throw err;
+    return cachedResponse || Response.error();
   }
 }
 
-// Stale-while-revalidate: devuelve cache primero, actualiza en segundo plano
 async function staleWhileRevalidate(request) {
   const cacheName = getCacheNameForRequest(request);
   const cache = await caches.open(cacheName);
@@ -153,13 +136,11 @@ async function staleWhileRevalidate(request) {
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
-  }).catch(err => console.warn('[SW] Actualización en segundo plano falló:', err));
+  }).catch(() => {});
 
-  // Devolver cache inmediatamente si existe, si no esperar a la red
   return cachedResponse || fetchPromise;
 }
 
-// Determinar qué caché usar según el tipo de recurso
 function getCacheNameForRequest(request) {
   const dest = request.destination;
   if (dest === 'image' || dest === 'video') return CACHE_IMAGES;
@@ -168,51 +149,32 @@ function getCacheNameForRequest(request) {
   return CACHE_DYNAMIC;
 }
 
-// ---------- MENSAJES (para actualización de SW) ----------
-self.addEventListener('message', event => {
-  if (event.data && event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
-});
-
-// ---------- PUSH NOTIFICATIONS (opcional) ----------
+// ---------- PUSH (opcional) ----------
 self.addEventListener('push', event => {
-  let data = { title: 'Archinime', body: 'Nueva actualización disponible', icon: '/Logo_Archinime.png' };
+  let data = { title: 'Archinime', body: 'Nueva actualización', icon: '/Logo_Archinime.png' };
   if (event.data) {
-    try {
-      data = event.data.json();
-    } catch (e) {
-      data.body = event.data.text();
-    }
+    try { data = event.data.json(); } catch (e) { data.body = event.data.text(); }
   }
-
-  const options = {
-    body: data.body,
-    icon: data.icon || '/Logo_Archinime.png',
-    badge: '/Logo_Archinime.png',
-    vibrate: [200, 100, 200],
-    data: { url: data.url || '/' },
-    actions: data.actions || []
-  };
-
   event.waitUntil(
-    self.registration.showNotification(data.title, options)
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon || '/Logo_Archinime.png',
+      badge: '/Logo_Archinime.png',
+      vibrate: [200, 100, 200],
+      data: { url: data.url || '/' }
+    })
   );
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const urlToOpen = event.notification.data?.url || '/';
+  const url = event.notification.data?.url || '/';
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
       for (let client of windowClients) {
-        if (client.url.includes(urlToOpen) && 'focus' in client) {
-          return client.focus();
-        }
+        if (client.url.includes(url) && 'focus' in client) return client.focus();
       }
-      if (clients.openWindow) {
-        return clients.openWindow(urlToOpen);
-      }
+      return clients.openWindow(url);
     })
   );
 });
