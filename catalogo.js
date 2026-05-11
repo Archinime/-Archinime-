@@ -3,6 +3,116 @@
 
 const catalogoArray = [
   {
+    "id": 12,
+    "title": "Tsue to Tsurugi no Wistoria",
+    "desc": "Will es un chico muy trabajador que se inscribe en una academia de magia con la esperanza de convertirse en un gran hechicero. Por desgracia, su plan tiene un fallo crítico: que no tiene la habilidad de usar magia. Las miradas de desprecio de sus compañeros e instructores hacen que Will se desanime en ocasiones, pero sigue adelante con una fuerza de voluntad inquebrantable. No puede usar una varita, pero puede blandir su espada en su intento por llegar a lo más alto de un mundo dominado por la magia. Solo tiene que creer en sus propios puntos fuertes y recordar la promesa que le hizo a alguien muy importante para él...",
+    "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria.avif",
+    "genres": [
+      "Aventura",
+      "Fantasía",
+      "Shōnen"
+    ],
+    "lastUpdate": 1778468673679,
+    "updateType": "NUEVO 🔥",
+    "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria2.avif",
+    "latestBlockName": "Temporada 2",
+    "latestEpTitle": "Capítulo 2",
+    "isFinal": false,
+    "music": [
+      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria.mp3"
+    ],
+    "uploader": "archinime12@gmail.com",
+    "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
+    "seasons": [
+      {
+        "num": 1,
+        "name": "Temporada 1",
+        "type": "Temporada",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria1.avif",
+        "eps": [
+          {
+            "title": "Capítulo 1",
+            "link": "https://drive.google.com/file/d/13cHjl_5fCDW2L_REKpDNkyZJ_KSOCrya/preview",
+            "link2": "https://www.dropbox.com/scl/fi/zev8r3fa3crktbjzaunj7/tsue-to-tsurugi-no-wistoria-capitulo-1.mp4?rlkey=67vk0o60azy4tv0pieiih3q96&st=yhuzzn6v&raw=1"
+          },
+          {
+            "title": "Capítulo 2",
+            "link": "https://drive.google.com/file/d/1EmQ-nJB0R2P2Cmy2dn7pEUS-8lnJCfAN/preview",
+            "link2": "https://www.dropbox.com/scl/fi/8idhpxnv5dwufik69s96b/tsue-to-tsurugi-no-wistoria-capitulo-2.mp4?rlkey=m8dgfb523e7w0hs9ad4ksvif0&st=ugad7am1&raw=1"
+          },
+          {
+            "title": "Capítulo 3",
+            "link": "https://drive.google.com/file/d/12YrcM2F0f7CHkGB7k6lt7eVEY5LtjAWE/preview",
+            "link2": "https://www.dropbox.com/scl/fi/9uee9h943qj7q2e1ecp13/Tsue-to-Tsurugi-no-Wistoria-Cap-3.mp4?rlkey=fia2ibz370mk4nwt3503hs886&st=g3uta009&raw=1"
+          },
+          {
+            "title": "Capítulo 4",
+            "link": "https://drive.google.com/file/d/1OliQoOnjtm5u8FfBi2R8OPlxlwr97vBT/preview",
+            "link2": "https://www.dropbox.com/scl/fi/bl97wjhhb1bz99uzvlev4/Tsue-to-Tsurugi-no-Wistoria-cap-4.mp4?rlkey=p4i4zlohw18yk15v0jwj9urri&st=ma2kvpl6&raw=1"
+          },
+          {
+            "title": "Capítulo 5",
+            "link": "https://drive.google.com/file/d/1UIP0D-hkjReLvOwdxLX7htSlgM9phxIV/preview",
+            "link2": "https://www.dropbox.com/scl/fi/yt583jrswcytrjydnwdpe/Tsue-to-Tsurugi-no-Wistoria-cap-5.mp4?rlkey=kxv71ubizd0gt0vzmaa6yxn7m&st=0d9fhayo&raw=1"
+          },
+          {
+            "title": "Capítulo 6",
+            "link": "https://drive.google.com/file/d/1cYB5MV-25-6nxCAILufAVvySH2NzKSyg/preview",
+            "link2": "https://www.dropbox.com/scl/fi/a79802bnyda5tukze7fzc/Tsue-to-Tsurugi-no-Wistoria-cap-6.mp4?rlkey=6if0l6ul0d00mj0wggr16cwdh&st=7m2hdrja&raw=1"
+          },
+          {
+            "title": "Capítulo 7",
+            "link": "https://drive.google.com/file/d/1CDasuv9_yH9onnP4sYDn4rzFA7XsWi7q/preview",
+            "link2": "https://www.dropbox.com/scl/fi/cpax56hdmbf712ka5f2jv/Tsue-to-Tsurugi-no-Wistoria-cap-7.mp4?rlkey=c1iatfsgn5kf1hrffy50tvvql&st=ign9qdqv&raw=1"
+          },
+          {
+            "title": "Capítulo 8",
+            "link": "https://drive.google.com/file/d/1Z8Zq9KVb91phe83vNb2OZi9Retrfce9G/preview",
+            "link2": "https://www.dropbox.com/scl/fi/lla02ppxgye21mwxn93hc/Tsue-to-Tsurugi-no-Wistoria-cap-8.mp4?rlkey=v7e5fkznq1uljwbrry60s6kp3&st=bh0vb81r&raw=1"
+          },
+          {
+            "title": "Capítulo 9",
+            "link": "https://drive.google.com/file/d/1uO5S_4D85ywDs1YkbgL-mswjUKngKDDg/preview",
+            "link2": "https://www.dropbox.com/scl/fi/p4srcnjy7n1fhp0wfpmsu/Tsue-to-Tsurugi-no-Wistoria-cap-9.mp4?rlkey=31uljois7r6n7ui702i0rblmv&st=sy6eesj2&raw=1"
+          },
+          {
+            "title": "Capítulo 10",
+            "link": "https://drive.google.com/file/d/1vjqL5P82QiawAPTd1VCV0FU3Evd3503B/preview",
+            "link2": "https://www.dropbox.com/scl/fi/i21z47j0edido2v5nj9er/Tsue-to-Tsurugi-no-Wistoria-cap-10.mp4?rlkey=eezs9sittoiqxof8u255cm3j0&st=9ag3y7t6&raw=1"
+          },
+          {
+            "title": "Capítulo 11",
+            "link": "https://drive.google.com/file/d/1Ooe8rK0Kd6oISY6QI2wTagUqbbu-VS-R/preview",
+            "link2": "https://www.dropbox.com/scl/fi/tm3qre7j40nv1xxbeq2s1/Tsue-to-Tsurugi-no-Wistoria-cap-11.mp4?rlkey=xjd0ik8gult8h23j45oksmamj&st=xlmu9r5c&raw=1"
+          },
+          {
+            "title": "Capítulo 12",
+            "link": "https://drive.google.com/file/d/15v-OS40pEarHAVBddRy8ohfvmvZe_SHz/preview",
+            "link2": "https://www.dropbox.com/scl/fi/rwyg3nemerjiz7vq5rsim/Tsue-to-Tsurugi-no-Wistoria-cap-12.mp4?rlkey=3czuw7yudpub0u3x46wu8gk32&st=d1yx1mte&raw=1"
+          }
+        ]
+      },
+      {
+        "num": 2,
+        "name": "Temporada 2",
+        "type": "Temporada",
+        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria2.avif",
+        "eps": [
+          {
+            "title": "Capítulo 1",
+            "link": "https://odysee.com/$/embed/@blody:8/wisto21:e",
+            "link2": ""
+          },
+          {
+            "title": "Capítulo 2",
+            "link": "https://odysee.com/$/embed/@blody:8/Wis22:4",
+            "link2": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": 120,
     "title": "Needy Girl Overdose",
     "desc": "En un mundo en el que los \"me gusta\" son la moneda de cambio y cada espectador es un juez, OMGkawaiiAngel, también conocida como angeliKa, está decidida a convertirse en el \"ángel de Internet\" definitivo Sin embargo, tras su sonrisa de colores pastel y sus animadas retransmisiones, hay más de lo que parece a simple vista.",
@@ -3258,112 +3368,6 @@ const catalogoArray = [
     "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
     "latestEpTitle": "Capítulo 5",
     "title": "Rilakkuma"
-  },
-  {
-    "id": 12,
-    "seasons": [
-      {
-        "name": "Temporada 1",
-        "eps": [
-          {
-            "link": "https://drive.google.com/file/d/13cHjl_5fCDW2L_REKpDNkyZJ_KSOCrya/preview",
-            "link2": "https://www.dropbox.com/scl/fi/zev8r3fa3crktbjzaunj7/tsue-to-tsurugi-no-wistoria-capitulo-1.mp4?rlkey=67vk0o60azy4tv0pieiih3q96&st=yhuzzn6v&raw=1",
-            "title": "Capítulo 1"
-          },
-          {
-            "link": "https://drive.google.com/file/d/1EmQ-nJB0R2P2Cmy2dn7pEUS-8lnJCfAN/preview",
-            "link2": "https://www.dropbox.com/scl/fi/8idhpxnv5dwufik69s96b/tsue-to-tsurugi-no-wistoria-capitulo-2.mp4?rlkey=m8dgfb523e7w0hs9ad4ksvif0&st=ugad7am1&raw=1",
-            "title": "Capítulo 2"
-          },
-          {
-            "link": "https://drive.google.com/file/d/12YrcM2F0f7CHkGB7k6lt7eVEY5LtjAWE/preview",
-            "link2": "https://www.dropbox.com/scl/fi/9uee9h943qj7q2e1ecp13/Tsue-to-Tsurugi-no-Wistoria-Cap-3.mp4?rlkey=fia2ibz370mk4nwt3503hs886&st=g3uta009&raw=1",
-            "title": "Capítulo 3"
-          },
-          {
-            "link": "https://drive.google.com/file/d/1OliQoOnjtm5u8FfBi2R8OPlxlwr97vBT/preview",
-            "link2": "https://www.dropbox.com/scl/fi/bl97wjhhb1bz99uzvlev4/Tsue-to-Tsurugi-no-Wistoria-cap-4.mp4?rlkey=p4i4zlohw18yk15v0jwj9urri&st=ma2kvpl6&raw=1",
-            "title": "Capítulo 4"
-          },
-          {
-            "link2": "https://www.dropbox.com/scl/fi/yt583jrswcytrjydnwdpe/Tsue-to-Tsurugi-no-Wistoria-cap-5.mp4?rlkey=kxv71ubizd0gt0vzmaa6yxn7m&st=0d9fhayo&raw=1",
-            "title": "Capítulo 5",
-            "link": "https://drive.google.com/file/d/1UIP0D-hkjReLvOwdxLX7htSlgM9phxIV/preview"
-          },
-          {
-            "title": "Capítulo 6",
-            "link2": "https://www.dropbox.com/scl/fi/a79802bnyda5tukze7fzc/Tsue-to-Tsurugi-no-Wistoria-cap-6.mp4?rlkey=6if0l6ul0d00mj0wggr16cwdh&st=7m2hdrja&raw=1",
-            "link": "https://drive.google.com/file/d/1cYB5MV-25-6nxCAILufAVvySH2NzKSyg/preview"
-          },
-          {
-            "link": "https://drive.google.com/file/d/1CDasuv9_yH9onnP4sYDn4rzFA7XsWi7q/preview",
-            "link2": "https://www.dropbox.com/scl/fi/cpax56hdmbf712ka5f2jv/Tsue-to-Tsurugi-no-Wistoria-cap-7.mp4?rlkey=c1iatfsgn5kf1hrffy50tvvql&st=ign9qdqv&raw=1",
-            "title": "Capítulo 7"
-          },
-          {
-            "link": "https://drive.google.com/file/d/1Z8Zq9KVb91phe83vNb2OZi9Retrfce9G/preview",
-            "link2": "https://www.dropbox.com/scl/fi/lla02ppxgye21mwxn93hc/Tsue-to-Tsurugi-no-Wistoria-cap-8.mp4?rlkey=v7e5fkznq1uljwbrry60s6kp3&st=bh0vb81r&raw=1",
-            "title": "Capítulo 8"
-          },
-          {
-            "link2": "https://www.dropbox.com/scl/fi/p4srcnjy7n1fhp0wfpmsu/Tsue-to-Tsurugi-no-Wistoria-cap-9.mp4?rlkey=31uljois7r6n7ui702i0rblmv&st=sy6eesj2&raw=1",
-            "title": "Capítulo 9",
-            "link": "https://drive.google.com/file/d/1uO5S_4D85ywDs1YkbgL-mswjUKngKDDg/preview"
-          },
-          {
-            "link": "https://drive.google.com/file/d/1vjqL5P82QiawAPTd1VCV0FU3Evd3503B/preview",
-            "title": "Capítulo 10",
-            "link2": "https://www.dropbox.com/scl/fi/i21z47j0edido2v5nj9er/Tsue-to-Tsurugi-no-Wistoria-cap-10.mp4?rlkey=eezs9sittoiqxof8u255cm3j0&st=9ag3y7t6&raw=1"
-          },
-          {
-            "link": "https://drive.google.com/file/d/1Ooe8rK0Kd6oISY6QI2wTagUqbbu-VS-R/preview",
-            "link2": "https://www.dropbox.com/scl/fi/tm3qre7j40nv1xxbeq2s1/Tsue-to-Tsurugi-no-Wistoria-cap-11.mp4?rlkey=xjd0ik8gult8h23j45oksmamj&st=xlmu9r5c&raw=1",
-            "title": "Capítulo 11"
-          },
-          {
-            "link": "https://drive.google.com/file/d/15v-OS40pEarHAVBddRy8ohfvmvZe_SHz/preview",
-            "link2": "https://www.dropbox.com/scl/fi/rwyg3nemerjiz7vq5rsim/Tsue-to-Tsurugi-no-Wistoria-cap-12.mp4?rlkey=3czuw7yudpub0u3x46wu8gk32&st=d1yx1mte&raw=1",
-            "title": "Capítulo 12"
-          }
-        ],
-        "num": 1,
-        "type": "Temporada",
-        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria1.avif"
-      },
-      {
-        "name": "Temporada 2",
-        "eps": [
-          {
-            "link2": "",
-            "title": "Capítulo 1",
-            "link": "https://odysee.com/$/embed/@blody:8/wisto21:e"
-          }
-        ],
-        "num": 2,
-        "type": "Temporada",
-        "cover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria2.avif"
-      }
-    ],
-    "lastUpdate": 1777954617767,
-    "rating": 0,
-    "updateType": "ESTRENO 🚨",
-    "music": [
-      "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria.mp3"
-    ],
-    "latestBlockName": "Temporada 2",
-    "latestSeasonCover": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria2.avif",
-    "img": "https://cdn.jsdelivr.net/gh/Archinime/imagenes@main/wistoria.avif",
-    "genres": [
-      "Aventura",
-      "Fantasía",
-      "Shōnen"
-    ],
-    "uploaderImg": "https://avatars.githubusercontent.com/u/227717199?v=4",
-    "latestEpTitle": "Capítulo 1",
-    "title": "Tsue to Tsurugi no Wistoria",
-    "uploader": "archinime12@gmail.com",
-    "isFinal": false,
-    "desc": "Will es un chico muy trabajador que se inscribe en una academia de magia con la esperanza de convertirse en un gran hechicero. Por desgracia, su plan tiene un fallo crítico: que no tiene la habilidad de usar magia. Las miradas de desprecio de sus compañeros e instructores hacen que Will se desanime en ocasiones, pero sigue adelante con una fuerza de voluntad inquebrantable. No puede usar una varita, pero puede blandir su espada en su intento por llegar a lo más alto de un mundo dominado por la magia. Solo tiene que creer en sus propios puntos fuertes y recordar la promesa que le hizo a alguien muy importante para él..."
   },
   {
     "id": 111,
