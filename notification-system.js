@@ -1,4 +1,4 @@
-// notification-system.js - Versión completa corregida (orden garantizado)
+// notification-system.js - Versión completa corregida con orden y HTML original
 (function(global) {
   'use strict';
 
@@ -113,7 +113,7 @@
 
     loadPersistedData() {
       this.history = StorageManager.load(CONFIG.STORAGE_KEYS.HISTORY, []);
-      // 🛑 ORDENAR POR FECHA DESCENDENTE para que lo más reciente esté primero
+      // 🔥 ORDENAR POR FECHA DESCENDENTE
       this.history.sort((a, b) => b.date - a.date);
       if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) {
         this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
@@ -166,7 +166,6 @@
       }
     }
 
-    // ==================== PERSISTENCIA ====================
     persistQueue() {
       if (this.queue.length > 0) {
         const serializable = this.queue.map(n => ({
@@ -197,7 +196,6 @@
       }
     }
 
-    // ==================== GENERACIÓN DESDE CATÁLOGO LOCAL ====================
     async generateCatalogNotifications() {
       if (typeof catalogoArray === 'undefined' || catalogoArray.length === 0) {
         console.warn('⏳ catalogoArray no disponible. Reintentando en 500ms...');
@@ -226,7 +224,7 @@
         const notif = this.createAnimeNotification(anime);
         if (!notif) continue;
         seenIds.push(notif.notifId);
-        this.history.unshift(notif); // siempre al inicio
+        this.history.unshift(notif);
         if (this.popupsShownCount < CONFIG.MAX_POPUPS && this.queue.length < CONFIG.MAX_POPUPS) {
           this.queue.push(notif);
           console.log(`🔔 Popup encolado: ${anime.title}`);
@@ -262,7 +260,6 @@
       };
     }
 
-    // ==================== SINCRONIZACIÓN CON CLOUD ====================
     async syncWithCloud(uid) {
       try {
         const db = getFirestore(); if (!db) return;
@@ -289,7 +286,6 @@
       } catch (e) { console.error('[Sync] Error:', e); }
     }
 
-    // ==================== ESCUCHA DE RESPUESTAS ====================
     listenForReplies(uid) {
       if (this.repliesUnsubscribe) this.repliesUnsubscribe();
       const db = getFirestore(); if (!db) return;
@@ -350,7 +346,6 @@
       };
     }
 
-    // ==================== GESTIÓN DE POPUPS ====================
     attemptResumeQueue(source) {
       console.log(`🎬 [${source}] Reanudando cola. Pendientes: ${this.queue.length}, Mostrados: ${this.popupsShownCount}`);
       const existingModal = document.getElementById('eventModal');
@@ -376,7 +371,7 @@
       this.isShowingPopup = true;
       this.popupsShownCount++;
       this.persistQueue();
-      console.log(`🎬 Popup #${this.popupsShownCount} (quedan ${this.queue.length - 1})`);
+      console.log(`🎬 Mostrando popup #${this.popupsShownCount} (quedan ${this.queue.length - 1})`);
       this.renderPopup(this.queue[0]);
     }
 
@@ -392,17 +387,66 @@
     }
 
     generatePopupHTML(notif) {
+      // Popup para RESPUESTAS
       if (notif.type === 'RESPUESTA') {
-        return `...`; // HTML idéntico al original
+        return `
+          <div class="event-card" style="border: 1px solid var(--neon-cyan); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15); background: #0a0a0f; overflow: hidden; border-radius: 20px; max-width: 420px; width: 90%;">
+            <button class="event-close" onclick="closePopup()" aria-label="Cerrar" style="background: rgba(0,0,0,0.5); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); top: 15px; right: 15px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10;"><i class="fas fa-times"></i></button>
+            <div style="background: linear-gradient(135deg, rgba(0,243,255,0.1) 0%, transparent 100%); padding: 25px 20px 15px; border-bottom: 1px solid rgba(0, 243, 255, 0.15); display: flex; align-items: center; gap: 15px; position: relative;">
+              <div style="position: relative; flex-shrink: 0;">
+                <img src="${notif.img}" alt="Avatar Usuario" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--neon-cyan); box-shadow: 0 0 15px rgba(0,243,255,0.4);">
+                <div style="position: absolute; bottom: -2px; right: -2px; background: #0a0a0f; border-radius: 50%; padding: 4px; border: 1px solid var(--neon-cyan); display: flex; align-items: center; justify-content: center; width: 22px; height: 22px;">
+                  <i class="fas fa-reply" style="color: var(--neon-cyan); font-size: 0.65rem;"></i>
+                </div>
+              </div>
+              <div style="flex: 1; text-align: left; padding-right: 20px; overflow: hidden;">
+                <div style="color: var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 3px;">NUEVA RESPUESTA</div>
+                <h2 style="font-size: 1.05rem; color: #fff; margin: 0; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${domUtils.sanitizeHTML(notif.title)}</h2>
+              </div>
+            </div>
+            <div style="padding: 20px; text-align: left;">
+              <div style="background: rgba(255,255,255,0.03); border-left: 3px solid rgba(255,255,255,0.15); padding: 12px 15px; border-radius: 0 8px 8px 0; margin-bottom: 15px; position: relative;">
+                <i class="fas fa-quote-left" style="position: absolute; top: 10px; right: 15px; font-size: 1.2rem; color: rgba(255,255,255,0.03);"></i>
+                <div style="font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Tu comentario</div>
+                <span style="font-size: 0.85rem; color: #aaa; font-style: italic; display: block; padding-right: 20px; line-height: 1.4;">${domUtils.sanitizeHTML(notif.originalText)}</span>
+              </div>
+              <div style="background: rgba(0, 243, 255, 0.05); border: 1px solid rgba(0, 243, 255, 0.15); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <p style="color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.5; word-wrap: break-word;">${domUtils.sanitizeHTML(notif.epTitle)}</p>
+              </div>
+              <button class="event-btn" style="background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); border-radius: 10px; font-size: 0.85rem; padding: 12px; width: 100%; border: none; font-weight: 800; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')"> <i class="fas fa-comments"></i> VER CONVERSACIÓN </button>
+            </div>
+          </div>`;
       }
+
+      // Popup de anime normal
       let infoString = "";
       if (notif.blockName && notif.blockName !== "Novedad") infoString += `<span style="color:var(--neon-cyan)">${notif.blockName}</span>`;
       if (notif.epTitle && notif.epTitle !== "Nuevo Contenido") infoString += (infoString ? " • " : "") + `<span style="color:#fff">${notif.epTitle}</span>`;
       else if (!infoString) infoString = "Nuevo Contenido";
+
       let badgeColor = "#bc13fe";
       if (notif.type.includes("ESTRENO")) badgeColor = "#ff0055";
       else if (notif.type.includes("PRÓXIMAMENTE")) badgeColor = "#f1c40f";
-      return `...`; // HTML idéntico al original
+
+      return `
+        <div class="event-card">
+          <button class="event-close" onclick="closePopup()" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+          <div class="event-visuals">
+            <div class="visual-bg" style="background-image: url('${notif.img}');"></div>
+            <div class="covers-container">
+              <img src="${notif.img}" class="cover-back" alt="Poster">
+              <img src="${notif.seasonCover}" class="cover-front" alt="Season">
+            </div>
+            <div class="event-type-badge" style="background: ${badgeColor}; box-shadow: 0 0 15px ${badgeColor};">${notif.type}</div>
+            ${notif.isFinal ? '<div style="position: absolute; bottom: 15px; right: 15px; z-index: 20; color: #fff; background: rgba(255, 0, 0, 0.8); border: 2px solid #ff0000; padding: 4px 12px; border-radius: 4px; font-weight: 900; font-family: \'Orbitron\', sans-serif; font-size: 0.85rem; transform: rotate(-10deg); box-shadow: 0 0 15px #ff0000; letter-spacing: 1px;">FINALIZADO</div>' : ''}
+          </div>
+          <div class="event-info">
+            <h2 class="event-title">${domUtils.sanitizeHTML(notif.title)}</h2>
+            <div class="event-meta">${infoString}</div>
+            <p class="event-desc">¡Ya disponible en la plataforma! Disfruta del estreno.</p>
+            <button class="event-btn" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')"><i class="fas fa-play"></i> VER AHORA</button>
+          </div>
+        </div>`;
     }
 
     closePopup() {
@@ -429,7 +473,6 @@
       else window.location.href = `anime-detail.html?id=${animeId}`;
     }
 
-    // ==================== MENÚ UI ====================
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
       if (this.isMenuOpen) { this.dom.menu?.classList.add('active'); this.renderNotificationList(); }
@@ -459,26 +502,75 @@
         const btn = document.createElement('button');
         btn.className = 'mark-all-btn';
         btn.innerHTML = '<i class="fas fa-check-double"></i> Marcar todo';
+        btn.title = 'Marcar todas las notificaciones como vistas';
         btn.onclick = (e) => { e.stopPropagation(); this.markAllAsRead(); };
-        btn.style.cssText = `...`;
+        btn.style.cssText = `
+          background: rgba(0,243,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
+          border-radius: 20px; padding: 4px 12px; font-size: 0.7rem; font-family: 'Orbitron', sans-serif;
+          cursor: pointer; transition: all 0.2s; margin-left: 10px;
+          ${window.innerWidth <= 768 ? 'margin-right: 35px;' : ''}
+        `;
+        btn.onmouseenter = () => { btn.style.background = 'rgba(0,243,255,0.3)'; btn.style.transform = 'scale(1.02)'; };
+        btn.onmouseleave = () => { btn.style.background = 'rgba(0,243,255,0.1)'; btn.style.transform = 'scale(1)'; };
         header.appendChild(btn);
       }
+
       if (!this.history.length) {
         container.innerHTML = '<div class="empty-notif"><i class="fas fa-satellite-dish"></i><br>Sin novedades por ahora.</div>';
         return;
       }
+
       const visible = this.history.slice(0, CONFIG.MAX_VISIBLE_NOTIFICATIONS);
       const fragment = document.createDocumentFragment();
+
       visible.forEach(item => {
         const div = document.createElement('div');
         div.className = 'notif-item';
-        // ... (HTML idéntico)
+
+        let imgClass = 'notif-img-box';
+        if (item.type === 'RESPUESTA') imgClass += ' rounded-avatar';
+
+        let infoString = "";
+        if (item.blockName && item.blockName !== "Novedad") infoString += `<span class="n-block">${item.blockName}</span>`;
+        if (item.epTitle && item.epTitle !== "Nuevo Contenido") infoString += (infoString ? " " : "") + `<span class="n-ep-title">${item.epTitle}</span>`;
+        else if (!infoString) infoString = `<span class="n-ep-title">Nuevo Contenido</span>`;
+
+        let typeColor = "var(--neon-purple)";
+        if (item.type.includes("ESTRENO")) typeColor = "var(--neon-pink)";
+        else if (item.type.includes("PRÓXIMAMENTE")) typeColor = "var(--neon-yellow)";
+        else if (item.type === "RESPUESTA") typeColor = "var(--neon-cyan)";
+
+        div.innerHTML = `
+          <div style="position:relative; display:inline-block;">
+            ${!item.seen ? '<div class="unread-dot" style="position:absolute; top:-4px; left:-4px; width:12px; height:12px; background:#ff0000; border-radius:50%; box-shadow:0 0 8px #ff0000; z-index:20; border:1px solid #fff;"></div>' : ''}
+            <div class="${imgClass}"><img src="${item.seasonCover}" alt="cover" loading="lazy"></div>
+          </div>
+          <div class="notif-content">
+            <div class="notif-header-line"><span class="n-title">${domUtils.sanitizeHTML(item.title)}</span></div>
+            <div class="n-type" style="color:${typeColor}">${item.type} ${item.isFinal ? '<span class="tag-final">FINALIZADO</span>' : ''}</div>
+            <div class="n-meta">${infoString}</div>
+          </div>`;
+
+        div.addEventListener('click', () => {
+          if (!item.seen) {
+            this.markAsRead(item.notifId);
+            div.querySelector('.unread-dot')?.remove();
+          }
+          location.href = item.url || `anime-detail.html?id=${item.animeId}`;
+        });
+
         fragment.appendChild(div);
       });
+
       container.innerHTML = '';
       container.appendChild(fragment);
+
       if (this.history.length > CONFIG.MAX_VISIBLE_NOTIFICATIONS) {
-        const more = document.createElement('div'); more.className = 'notif-item'; /* ... */
+        const more = document.createElement('div');
+        more.className = 'notif-item';
+        more.style.justifyContent = 'center';
+        more.style.opacity = '0.7';
+        more.innerHTML = `<div style="text-align:center;"><i class="fas fa-ellipsis-h"></i> ${this.history.length - CONFIG.MAX_VISIBLE_NOTIFICATIONS} notificaciones antiguas</div>`;
         container.appendChild(more);
       }
     }, 100);
