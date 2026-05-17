@@ -1,18 +1,18 @@
-// notification-system.js - Versión completa corregida con orden y HTML original
+// notification-system.js - Con límite de 5 popups por carga de página
 (function(global) {
   'use strict';
 
   const CONFIG = {
-    MAX_POPUPS: 5,
     MAX_HISTORY_ITEMS: 50,
     MAX_VISIBLE_NOTIFICATIONS: 30,
+    MAX_POPUPS_PER_PAGE_LOAD: 5,   // 👈 LÍMITE: 5 popups por cada vez que se carga la página
     STORAGE_KEYS: {
       QUEUE: 'archinime_popup_queue',
-      SHOWN_COUNT: 'archinime_popups_shown',
       HISTORY: 'archinime_notif_history',
       SEEN_IDS: 'archinime_seen_notif_ids',
       FIRST_VISIT: 'archinime_notif_first_visit',
-      LAST_CATALOG_CHECK: 'archinime_last_catalog_check'
+      LAST_CATALOG_CHECK: 'archinime_last_catalog_check',
+      POPUP_SHOWN_IDS: 'archinime_popup_shown_ids'
     },
     ANIME_MAX_AGE_DAYS: 30,
     CATALOG_CHECK_INTERVAL_HOURS: 6
@@ -68,9 +68,9 @@
     constructor() {
       this.queue = [];
       this.history = [];
-      this.popupsShownCount = 0;
       this.isMenuOpen = false;
       this.isShowingPopup = false;
+      this.popupsShownInThisLoad = 0;   // 👈 Contador por carga de página
       this.repliesUnsubscribe = null;
       this.dom = { menu: null, list: null, badge: null, modal: null };
       this.toggleMenu = this.toggleMenu.bind(this);
@@ -94,7 +94,6 @@
         this.history.forEach(n => { if (!n.seen) n.seen = true; });
         localStorage.setItem(CONFIG.STORAGE_KEYS.FIRST_VISIT, 'true');
         this.queue = [];
-        this.popupsShownCount = 0;
         this.persistQueue();
       }
 
@@ -113,14 +112,12 @@
 
     loadPersistedData() {
       this.history = StorageManager.load(CONFIG.STORAGE_KEYS.HISTORY, []);
-      // 🔥 ORDENAR POR FECHA DESCENDENTE
       this.history.sort((a, b) => b.date - a.date);
       if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) {
         this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
       }
       this.queue = StorageManager.loadSession(CONFIG.STORAGE_KEYS.QUEUE, []);
-      this.popupsShownCount = parseInt(StorageManager.loadSession(CONFIG.STORAGE_KEYS.SHOWN_COUNT, '0'), 10);
-      console.log(`📦 Estado: ${this.queue.length} en cola, ${this.popupsShownCount} mostrados`);
+      console.log(`📦 Estado: ${this.queue.length} en cola`);
     }
 
     setupEventListeners() {
@@ -178,10 +175,10 @@
       } else {
         StorageManager.removeSession(CONFIG.STORAGE_KEYS.QUEUE);
       }
-      StorageManager.saveSession(CONFIG.STORAGE_KEYS.SHOWN_COUNT, this.popupsShownCount.toString());
     }
 
     persistHistory() {
+      this.history.sort((a, b) => b.date - a.date);
       StorageManager.save(CONFIG.STORAGE_KEYS.HISTORY, this.history);
       this.updateBadge();
       const user = this.getCurrentUser();
@@ -196,6 +193,20 @@
       }
     }
 
+    addToHistory(notif) {
+      const existingIndex = this.history.findIndex(n => n.notifId === notif.notifId);
+      if (existingIndex !== -1) {
+        this.history[existingIndex] = notif;
+      } else {
+        this.history.push(notif);
+      }
+      this.history.sort((a, b) => b.date - a.date);
+      if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) {
+        this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
+      }
+      this.persistHistory();
+    }
+
     async generateCatalogNotifications() {
       if (typeof catalogoArray === 'undefined' || catalogoArray.length === 0) {
         console.warn('⏳ catalogoArray no disponible. Reintentando en 500ms...');
@@ -207,6 +218,7 @@
       const now = Date.now();
       const thirtyDaysAgo = now - (CONFIG.ANIME_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
       const seenIds = StorageManager.load(CONFIG.STORAGE_KEYS.SEEN_IDS, []);
+      const popupShownIds = StorageManager.load(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, []);
 
       const candidatos = catalogoArray
         .filter(a => a.updateType && a.updateType !== 'Ninguna')
@@ -215,8 +227,7 @@
           const notifId = `${a.id}_${this._getTimestamp(a.lastUpdate)}`;
           return !seenIds.includes(notifId) && !this.history.some(n => n.notifId === notifId);
         })
-        .sort((a, b) => this._getTimestamp(b.lastUpdate) - this._getTimestamp(a.lastUpdate))
-        .slice(0, CONFIG.MAX_POPUPS);
+        .sort((a, b) => this._getTimestamp(b.lastUpdate) - this._getTimestamp(a.lastUpdate));
 
       console.log(`✨ ${candidatos.length} animes nuevos para notificar.`);
 
@@ -224,18 +235,15 @@
         const notif = this.createAnimeNotification(anime);
         if (!notif) continue;
         seenIds.push(notif.notifId);
-        this.history.unshift(notif);
-        if (this.popupsShownCount < CONFIG.MAX_POPUPS && this.queue.length < CONFIG.MAX_POPUPS) {
+        this.addToHistory(notif);
+        
+        if (!popupShownIds.includes(notif.notifId)) {
           this.queue.push(notif);
           console.log(`🔔 Popup encolado: ${anime.title}`);
         }
       }
 
       StorageManager.save(CONFIG.STORAGE_KEYS.SEEN_IDS, seenIds.slice(-1000));
-      if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) {
-        this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
-      }
-      this.persistHistory();
       this.renderNotificationList();
       this.updateBadge();
       this.persistQueue();
@@ -278,9 +286,9 @@
             this.history = Array.from(uniqueMap.values())
               .sort((a, b) => b.date - a.date)
               .slice(0, CONFIG.MAX_HISTORY_ITEMS);
+            this.persistHistory();
           }
         }
-        this.persistHistory();
         this.renderNotificationList();
         this.updateBadge();
       } catch (e) { console.error('[Sync] Error:', e); }
@@ -302,17 +310,25 @@
             const docId = change.doc.id;
             const notifId = `reply_${docId}`;
             if (this.history.some(n => n.notifId === notifId)) continue;
+            
             const notif = await this.createReplyNotification(data, docId, notifId);
             if (!notif) continue;
-            this.history.unshift(notif);
+            
+            this.addToHistory(notif);
             hasNew = true;
             this.markAsSeenInStorage(notifId);
+            
+            const popupShownIds = StorageManager.load(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, []);
+            if (!popupShownIds.includes(notifId)) {
+              this.queue.push(notif);
+              console.log(`🔔 Popup de respuesta encolado: ${notif.title}`);
+              this.persistQueue();
+            }
           }
           if (hasNew) {
-            if (this.history.length > CONFIG.MAX_HISTORY_ITEMS) this.history = this.history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
-            this.persistHistory();
             this.renderNotificationList();
             if (!this.isMenuOpen) this.updateBadge();
+            this.attemptResumeQueue('reply');
           }
         }, error => console.error('[Replies] Error:', error));
     }
@@ -347,32 +363,34 @@
     }
 
     attemptResumeQueue(source) {
-      console.log(`🎬 [${source}] Reanudando cola. Pendientes: ${this.queue.length}, Mostrados: ${this.popupsShownCount}`);
+      console.log(`🎬 [${source}] Reanudando cola. Pendientes: ${this.queue.length}`);
       const existingModal = document.getElementById('eventModal');
       if (existingModal) { existingModal.remove(); domUtils.enableScroll(); this.isShowingPopup = false; }
       if (this.queue.length === 0) { console.log('✅ Cola vacía'); return; }
-      if (this.popupsShownCount >= CONFIG.MAX_POPUPS) {
-        console.log('⛔ Límite alcanzado. Limpiando cola.');
-        this.queue = [];
-        this.persistQueue();
-        return;
-      }
       if (!this.isShowingPopup) this.showNextPopup();
     }
 
     showNextPopup() {
       if (this.isShowingPopup) return;
       if (this.queue.length === 0) return;
-      if (this.popupsShownCount >= CONFIG.MAX_POPUPS) {
-        this.queue = [];
-        this.persistQueue();
+      
+      // 👇 Verificar límite por carga de página
+      if (this.popupsShownInThisLoad >= CONFIG.MAX_POPUPS_PER_PAGE_LOAD) {
+        console.log(`⏸️ Límite de ${CONFIG.MAX_POPUPS_PER_PAGE_LOAD} popups por carga alcanzado. Restantes en cola: ${this.queue.length}`);
         return;
       }
+      
+      const notif = this.queue[0];
+      const popupShownIds = StorageManager.load(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, []);
+      if (!popupShownIds.includes(notif.notifId)) {
+        popupShownIds.push(notif.notifId);
+        StorageManager.save(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, popupShownIds.slice(-500));
+      }
+      
+      this.popupsShownInThisLoad++;
+      console.log(`🎬 Mostrando popup ${this.popupsShownInThisLoad}/${CONFIG.MAX_POPUPS_PER_PAGE_LOAD}: ${notif.title}`);
       this.isShowingPopup = true;
-      this.popupsShownCount++;
-      this.persistQueue();
-      console.log(`🎬 Mostrando popup #${this.popupsShownCount} (quedan ${this.queue.length - 1})`);
-      this.renderPopup(this.queue[0]);
+      this.renderPopup(notif);
     }
 
     renderPopup(notif) {
@@ -387,7 +405,6 @@
     }
 
     generatePopupHTML(notif) {
-      // Popup para RESPUESTAS
       if (notif.type === 'RESPUESTA') {
         return `
           <div class="event-card" style="border: 1px solid var(--neon-cyan); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15); background: #0a0a0f; overflow: hidden; border-radius: 20px; max-width: 420px; width: 90%;">
@@ -418,7 +435,6 @@
           </div>`;
       }
 
-      // Popup de anime normal
       let infoString = "";
       if (notif.blockName && notif.blockName !== "Novedad") infoString += `<span style="color:var(--neon-cyan)">${notif.blockName}</span>`;
       if (notif.epTitle && notif.epTitle !== "Nuevo Contenido") infoString += (infoString ? " • " : "") + `<span style="color:#fff">${notif.epTitle}</span>`;

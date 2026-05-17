@@ -1,7 +1,5 @@
-// video-player-core.js - Versión con catálogo local + Firestore para funciones sociales
-// Obtiene los enlaces desde catalogoArray (definido en catalogo.js)
-// MEJORA: Restricción de descarga solo para usuarios autenticados
-// OPTIMIZACIÓN: Carga diferida de sistemas externos, validaciones mejoradas
+// video-player-core.js - Versión con catálogo local + Firestore
+// CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
 
 class VideoPlayer {
   constructor() {
@@ -14,19 +12,22 @@ class VideoPlayer {
     this.db = null;
     this.storage = null;
     this.animeData = null;
-    this.currentDownloadUrl = '#';       // Almacena la URL directa de descarga
+    this.currentDownloadUrl = '#';
+    this.authReady = false;      // Indica si ya se resolvió el estado de auth
+    this.pendingMarks = [];      // Guarda episodios pendientes de marcar cuando el usuario esté listo
     
-    // Variables de contexto para sistemas externos (comentarios, stickers)
+    // Variables de contexto para sistemas externos
     window.comentariosAnimeId = this.animeId;
     window.comentariosSeason = this.season;
     window.comentariosEpisode = this.episode;
     
     this.initFirebase();
     this.initUI();
-    this.loadEpisodeData();
+    this.waitForCatalogAndLoad();
     this.setupAuthUI();
+    this.setupAuthMigration();    // Nuevo: migración de localStorage a Firestore al loguearse
 
-    // Exponer métodos públicos para el HTML (manteniendo compatibilidad)
+    // Exponer métodos públicos
     window.videoPlayerMethods = {
       toggleStickerPanel: () => this.toggleStickerPanel(),
       enviarComentario: () => this.enviarComentario(),
@@ -39,8 +40,29 @@ class VideoPlayer {
       loginWithGitHub: () => this.loginWithGitHub(),
       switchStickerTab: (tab) => this.switchStickerTab(tab)
     };
-
     window.videoPlayer = window.videoPlayerMethods;
+  }
+  
+  // Espera a que catalogoArray esté disponible (igual que en anime-detail)
+  async waitForCatalogAndLoad() {
+    if (typeof catalogoArray !== 'undefined') {
+      this.loadEpisodeData();
+      return;
+    }
+    console.log('⏳ Esperando catalogoArray en video-player...');
+    const checkInterval = setInterval(() => {
+      if (typeof catalogoArray !== 'undefined') {
+        clearInterval(checkInterval);
+        this.loadEpisodeData();
+      }
+    }, 50);
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      if (typeof catalogoArray === 'undefined') {
+        console.error('❌ No se cargó catalogoArray');
+        document.getElementById('epTitle').innerText = 'Error: Catálogo no disponible';
+      }
+    }, 5000);
   }
   
   initFirebase() {
@@ -52,32 +74,27 @@ class VideoPlayer {
       messagingSenderId: "938164660242",
       appId: "1:938164660242:web:648e0dce0e0d18dd78d0cb"
     };
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     
     this.auth = firebase.auth();
     this.db = firebase.firestore();
     this.storage = firebase.storage();
     
+    // Listener principal que actualiza el estado de autenticación
     this.auth.onAuthStateChanged(user => {
-      // Actualizar estado global (ArchinimeState o respaldo)
       if (window.ArchinimeState) {
         window.ArchinimeState.set('currentUser', user);
       } else {
         this.currentUser = user;
       }
-      
-      // Refrescar UI según autenticación
+      this.authReady = true;
       this.updateCommentFormVisibility();
       
-      // Inicializar sistemas dependientes de autenticación (carga diferida)
+      // Inicializar sistemas dependientes
       if (typeof initComentariosSystem === 'function') {
         initComentariosSystem(this.db, this.auth);
       }
-      
       if (typeof initStickersSystem === 'function') {
         initStickersSystem(this.db, this.auth);
       }
@@ -85,19 +102,121 @@ class VideoPlayer {
   }
   
   getCurrentUser() {
-    // Obtener usuario desde el estado central o respaldo local
     if (window.ArchinimeState) return window.ArchinimeState.get('currentUser');
     return this.currentUser;
   }
   
+  // Nueva función: migra todos los episodios vistos en localStorage a Firestore
+  async migrateLocalToFirestore(userId) {
+    if (!userId) return;
+    const watchedKeys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('watched_')) {
+        watchedKeys.push(key);
+      }
+    }
+    if (watchedKeys.length === 0) return;
+    
+    console.log(`🔄 Migrando ${watchedKeys.length} registros locales a Firestore...`);
+    const historyRef = this.db.collection('watchHistory').doc(userId);
+    
+    for (const key of watchedKeys) {
+      // Formato: watched_<animeId>_<season>_<episode>
+      const parts = key.split('_');
+      if (parts.length < 4) continue;
+      const animeId = parts[1];
+      const seasonNum = parseInt(parts[2]);
+      const episodeNum = parseInt(parts[3]);
+      if (isNaN(seasonNum) || isNaN(episodeNum)) continue;
+      
+      try {
+        const doc = await historyRef.get();
+        let data = doc.exists ? doc.data() : {};
+        if (!data[animeId]) data[animeId] = {};
+        if (!data[animeId][seasonNum]) data[animeId][seasonNum] = [];
+        if (!data[animeId][seasonNum].includes(episodeNum)) {
+          data[animeId][seasonNum].push(episodeNum);
+        }
+        await historyRef.set(data, { merge: true });
+        localStorage.removeItem(key);
+      } catch (e) {
+        console.warn(`Error migrando ${key}:`, e);
+      }
+    }
+    console.log('✅ Migración completada');
+  }
+  
+  setupAuthMigration() {
+    // Escucha cambios de autenticación y migra cuando haya usuario
+    this.auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await this.migrateLocalToFirestore(user.uid);
+        // Reprocesar marcas pendientes que se hayan generado antes de tener usuario
+        if (this.pendingMarks.length > 0) {
+          for (const mark of this.pendingMarks) {
+            await this.saveToFirestore(mark.animeId, mark.season, mark.episode, user.uid);
+          }
+          this.pendingMarks = [];
+        }
+      }
+    });
+  }
+  
+  async saveToFirestore(animeId, seasonNum, episodeNum, userId) {
+    if (!userId) return false;
+    try {
+      const docRef = this.db.collection('watchHistory').doc(userId);
+      const doc = await docRef.get();
+      let data = doc.exists ? doc.data() : {};
+      if (!data[animeId]) data[animeId] = {};
+      if (!data[animeId][seasonNum]) data[animeId][seasonNum] = [];
+      if (!data[animeId][seasonNum].includes(episodeNum)) {
+        data[animeId][seasonNum].push(episodeNum);
+        await docRef.set(data, { merge: true });
+      }
+      return true;
+    } catch (e) {
+      console.warn('Error guardando en Firestore:', e);
+      return false;
+    }
+  }
+  
+  async autoMarkAsWatched() {
+    const aId = this.animeId;
+    const sNum = parseInt(this.season);
+    const eNum = parseInt(this.episode);
+    if (!aId || isNaN(sNum) || isNaN(eNum)) return;
+    
+    const user = this.getCurrentUser();
+    const localKey = `watched_${aId}_${sNum}_${eNum}`;
+    
+    // Si hay usuario autenticado, intentar guardar en Firestore
+    if (user && user.uid) {
+      const success = await this.saveToFirestore(aId, sNum, eNum, user.uid);
+      if (success) {
+        // Eliminar cualquier versión local obsoleta
+        localStorage.removeItem(localKey);
+        return;
+      }
+    }
+    
+    // Si no hay usuario o falló Firestore, guardar en localStorage
+    localStorage.setItem(localKey, 'true');
+    
+    // Si no hay usuario pero la autenticación aún no está resuelta,
+    // guardamos en lista pendiente para cuando llegue el usuario
+    if (!user && !this.authReady) {
+      this.pendingMarks.push({ animeId: aId, season: sNum, episode: eNum });
+    }
+  }
+  
   initUI() {
-    // Configurar enlace "Volver"
     const backLink = document.getElementById('backLink');
     if (backLink && this.animeId) {
       backLink.href = `anime-detail.html?id=${this.animeId}`;
     }
     
-    // Configurar envío con Enter en textarea de comentarios
     const textarea = document.getElementById('comentarioTexto');
     if (textarea) {
       textarea.addEventListener('keydown', (e) => {
@@ -109,26 +228,21 @@ class VideoPlayer {
       textarea.addEventListener('input', () => this.validateSendButton());
     }
     
-    // ***** NUEVO: Configurar botón de descarga con verificación de autenticación *****
     const downloadBtn = document.getElementById('downloadBtn');
     if (downloadBtn) {
-      // Reemplazar cualquier listener previo y usar el nuestro
       downloadBtn.addEventListener('click', (e) => {
         e.preventDefault();
         this.handleDownloadClick();
       });
     }
     
-    // Pestañas del panel de stickers
     document.querySelectorAll('.sticker-tab').forEach(tab => {
       tab.addEventListener('click', () => this.switchStickerTab(tab.dataset.tab));
     });
   }
   
-  // ***** NUEVO: Carga desde catálogo local (catalogoArray) *****
   async loadEpisodeData() {
     try {
-      // Buscar el anime en el array local
       const anime = catalogoArray.find(a => a.id == this.animeId);
       if (!anime) {
         document.getElementById('epTitle').innerText = 'Anime no encontrado';
@@ -154,16 +268,16 @@ class VideoPlayer {
       const initialLink = episodeData.link || episodeData.link2;
       this.updateDownloadUrl(initialLink);
       this.loadVideo(initialLink);
-
-      // Botones de servidores
+      
       const serverContainer = document.getElementById('serverOptions');
       serverContainer.innerHTML = '';
       if (episodeData.link) this.createServerButton('Latino', episodeData.link, true);
       if (episodeData.link2) this.createServerButton('Opción 2', episodeData.link2, !episodeData.link);
       
       this.setupNavigation();
-      this.autoMarkAsWatched();
-
+      // MARCADO AUTOMÁTICO - se ejecuta siempre
+      await this.autoMarkAsWatched();
+      
     } catch (error) {
       console.error('Error cargando episodio:', error);
       document.getElementById('epTitle').innerText = 'Error al cargar el episodio';
@@ -174,10 +288,8 @@ class VideoPlayer {
     const container = document.getElementById('serverOptions');
     const btn = document.createElement('button');
     const isFirst = container.children.length === 0;
-
     btn.className = 'opt-btn' + ((isActive || isFirst) ? ' active' : '');
     btn.innerText = label;
-
     btn.onclick = () => {
       document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -191,7 +303,6 @@ class VideoPlayer {
     const container = document.getElementById('mediaContainer');
     container.innerHTML = '';
     if (!url) return;
-
     const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
     if (isVideoFile && !url.includes('drive.google.com')) {
       const video = document.createElement('video');
@@ -211,61 +322,45 @@ class VideoPlayer {
     }
   }
   
-  // Actualiza la URL de descarga interna (sin modificar el DOM directamente)
   updateDownloadUrl(url) {
     this.currentDownloadUrl = this.generateDirectLink(url);
   }
   
   generateDirectLink(url) {
-        if (!url) return "#";
-        if (url.includes("drive.google.com")) {
-            const match = url.match(/\/d\/(.+?)\//);
-            if (match && match[1]) {
-               return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
-            }
-            const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
-            if (altMatch && altMatch[1]) {
-               return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
-            }
-        }
-        if (url.includes("dropbox.com") && url.includes("dl=0")) {
-             return url.replace('dl=0', 'dl=1');
-        }
-        if (url.includes("ok.ru/")) {
-            const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
-            if (match && match[1]) {
-                return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
-            }
-        }
-        if (url.includes("odysee.com")) {
-            let claimStr = url.split("/embed/")[1];
-            if (claimStr) {
-                if (claimStr.includes('/')) {
-                    claimStr = claimStr.split('/').pop();
-                }
-                claimStr = claimStr.replace(':', '/');
-                return `https://odysee.com/$/download/${claimStr}`;
-            }
-            return url;
-        }
-        return url;
+    if (!url) return "#";
+    if (url.includes("drive.google.com")) {
+      const match = url.match(/\/d\/(.+?)\//);
+      if (match && match[1]) return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
+      const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (altMatch && altMatch[1]) return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
     }
+    if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace('dl=0', 'dl=1');
+    if (url.includes("ok.ru/")) {
+      const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
+      if (match && match[1]) return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
+    }
+    if (url.includes("odysee.com")) {
+      let claimStr = url.split("/embed/")[1];
+      if (claimStr) {
+        if (claimStr.includes('/')) claimStr = claimStr.split('/').pop();
+        claimStr = claimStr.replace(':', '/');
+        return `https://odysee.com/$/download/${claimStr}`;
+      }
+      return url;
+    }
+    return url;
+  }
   
-  // ***** NUEVO: Manejador del clic en descarga *****
   handleDownloadClick() {
     const user = this.getCurrentUser();
-    
     if (!user) {
-      // No autenticado: mostrar modal de inicio de sesión
       this.openLoginModal();
       return;
     }
-    
-    // Usuario autenticado: proceder con la descarga
     if (this.currentDownloadUrl && this.currentDownloadUrl !== '#') {
       const link = document.createElement('a');
       link.href = this.currentDownloadUrl;
-      link.download = '';               // Sugerir descarga
+      link.download = '';
       link.target = this.isMobile() ? '_blank' : '_self';
       document.body.appendChild(link);
       link.click();
@@ -284,16 +379,12 @@ class VideoPlayer {
     const flat = [];
     this.animeData.seasons.sort((a,b) => a.num - b.num).forEach(season => {
       season.eps?.forEach((ep, idx) => {
-        if (ep.link || ep.link2) {
-          flat.push({ s: season.num, e: idx + 1 });
-        }
+        if (ep.link || ep.link2) flat.push({ s: season.num, e: idx + 1 });
       });
     });
-
     const idx = flat.findIndex(i => i.s === parseInt(this.season) && i.e === parseInt(this.episode));
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-
     if (idx > 0) {
       prevBtn.classList.remove('btn-hidden');
       prevBtn.href = `?anime=${this.animeId}&s=${flat[idx-1].s}&e=${flat[idx-1].e}`;
@@ -301,32 +392,6 @@ class VideoPlayer {
     if (idx < flat.length - 1) {
       nextBtn.classList.remove('btn-hidden');
       nextBtn.href = `?anime=${this.animeId}&s=${flat[idx+1].s}&e=${flat[idx+1].e}`;
-    }
-  }
-  
-  async autoMarkAsWatched() {
-    const aId = this.animeId;
-    const sNum = parseInt(this.season);
-    const eNum = parseInt(this.episode);
-    if (!aId || isNaN(sNum) || isNaN(eNum)) return;
-    const user = this.getCurrentUser();
-
-    if (user) {
-      try {
-        const docRef = this.db.collection('watchHistory').doc(user.uid);
-        const doc = await docRef.get();
-        let data = doc.exists ? doc.data() : {};
-        let animeData = data[aId] || {};
-        let seasonData = animeData[sNum] || [];
-        if (!seasonData.includes(eNum)) {
-          seasonData.push(eNum);
-          animeData[sNum] = seasonData;
-          data[aId] = animeData;
-          await docRef.set(data, { merge: true });
-        }
-      } catch (e) { console.warn('Error al marcar como visto:', e); }
-    } else {
-      localStorage.setItem(`watched_${aId}_${sNum}_${eNum}`, 'true');
     }
   }
   
@@ -342,7 +407,6 @@ class VideoPlayer {
     });
   }
   
-  // --- Métodos de autenticación (invocados desde el HTML) ---
   openLoginModal() { document.getElementById('authModal').classList.add('show'); }
   closeAuthModal() { 
     document.getElementById('authModal').classList.remove('show'); 
@@ -397,14 +461,12 @@ class VideoPlayer {
     }
   }
   
-  // --- Interfaz de comentarios y stickers ---
   updateCommentFormVisibility() {
     const user = this.getCurrentUser();
     const loginMsg = document.getElementById('comentarioLoginMessage');
     const form = document.getElementById('comentarioFormContainer');
     const avatar = document.getElementById('comentarioUserAvatar');
     const nameSpan = document.getElementById('comentarioUserName');
-
     if (user) {
       if (loginMsg) loginMsg.style.display = 'none';
       if (form) {
@@ -438,7 +500,7 @@ class VideoPlayer {
       document.getElementById(tabId === 'mis' ? 'misStickersTab' : 'subirStickersTab')?.classList.add('active');
     }
   }
-
+  
   validateSendButton() {
     const textarea = document.getElementById('comentarioTexto');
     const btn = document.getElementById('enviarComentarioBtn');
@@ -466,7 +528,6 @@ if (document.readyState === 'loading') {
   new VideoPlayer();
 }
 
-// Funciones globales para compatibilidad con el HTML antiguo
+// Funciones globales para compatibilidad
 window.openLoginModalFromComent = () => window.videoPlayer?.openLoginModal();
 window.toggleStickerPanelSistema = () => window.videoPlayer?.toggleStickerPanel();
-// NOTA: window.subirStickerDesdePC fue eliminado para que stickers-system.js lo maneje.
