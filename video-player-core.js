@@ -1,5 +1,6 @@
 // video-player-core.js - Versión con catálogo local + Firestore
 // CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
+// NUEVO: Descarga directa desde PeerTube (obtiene enlace real del archivo .mp4 vía API)
 
 class VideoPlayer {
   constructor() {
@@ -12,9 +13,10 @@ class VideoPlayer {
     this.db = null;
     this.storage = null;
     this.animeData = null;
-    this.currentDownloadUrl = '#';
-    this.authReady = false;      // Indica si ya se resolvió el estado de auth
-    this.pendingMarks = [];      // Guarda episodios pendientes de marcar cuando el usuario esté listo
+    this.currentDownloadUrl = '#';      // URL sincrónica (para enlaces directos normales)
+    this.currentPeerTubeUrl = null;     // Guardamos la URL original de PeerTube si es el caso
+    this.authReady = false;
+    this.pendingMarks = [];
     
     // Variables de contexto para sistemas externos
     window.comentariosAnimeId = this.animeId;
@@ -25,7 +27,7 @@ class VideoPlayer {
     this.initUI();
     this.waitForCatalogAndLoad();
     this.setupAuthUI();
-    this.setupAuthMigration();    // Nuevo: migración de localStorage a Firestore al loguearse
+    this.setupAuthMigration();
 
     // Exponer métodos públicos
     window.videoPlayerMethods = {
@@ -43,7 +45,7 @@ class VideoPlayer {
     window.videoPlayer = window.videoPlayerMethods;
   }
   
-  // Espera a que catalogoArray esté disponible (igual que en anime-detail)
+  // ========== ESPERA DEL CATÁLOGO ==========
   async waitForCatalogAndLoad() {
     if (typeof catalogoArray !== 'undefined') {
       this.loadEpisodeData();
@@ -65,6 +67,7 @@ class VideoPlayer {
     }, 5000);
   }
   
+  // ========== FIREBASE ==========
   initFirebase() {
     const firebaseConfig = {
       apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
@@ -81,7 +84,6 @@ class VideoPlayer {
     this.db = firebase.firestore();
     this.storage = firebase.storage();
     
-    // Listener principal que actualiza el estado de autenticación
     this.auth.onAuthStateChanged(user => {
       if (window.ArchinimeState) {
         window.ArchinimeState.set('currentUser', user);
@@ -91,7 +93,6 @@ class VideoPlayer {
       this.authReady = true;
       this.updateCommentFormVisibility();
       
-      // Inicializar sistemas dependientes
       if (typeof initComentariosSystem === 'function') {
         initComentariosSystem(this.db, this.auth);
       }
@@ -106,7 +107,7 @@ class VideoPlayer {
     return this.currentUser;
   }
   
-  // Nueva función: migra todos los episodios vistos en localStorage a Firestore
+  // ========== MIGRACIÓN Y MARCAS ==========
   async migrateLocalToFirestore(userId) {
     if (!userId) return;
     const watchedKeys = [];
@@ -122,7 +123,6 @@ class VideoPlayer {
     const historyRef = this.db.collection('watchHistory').doc(userId);
     
     for (const key of watchedKeys) {
-      // Formato: watched_<animeId>_<season>_<episode>
       const parts = key.split('_');
       if (parts.length < 4) continue;
       const animeId = parts[1];
@@ -148,11 +148,9 @@ class VideoPlayer {
   }
   
   setupAuthMigration() {
-    // Escucha cambios de autenticación y migra cuando haya usuario
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
         await this.migrateLocalToFirestore(user.uid);
-        // Reprocesar marcas pendientes que se hayan generado antes de tener usuario
         if (this.pendingMarks.length > 0) {
           for (const mark of this.pendingMarks) {
             await this.saveToFirestore(mark.animeId, mark.season, mark.episode, user.uid);
@@ -191,26 +189,21 @@ class VideoPlayer {
     const user = this.getCurrentUser();
     const localKey = `watched_${aId}_${sNum}_${eNum}`;
     
-    // Si hay usuario autenticado, intentar guardar en Firestore
     if (user && user.uid) {
       const success = await this.saveToFirestore(aId, sNum, eNum, user.uid);
       if (success) {
-        // Eliminar cualquier versión local obsoleta
         localStorage.removeItem(localKey);
         return;
       }
     }
     
-    // Si no hay usuario o falló Firestore, guardar en localStorage
     localStorage.setItem(localKey, 'true');
-    
-    // Si no hay usuario pero la autenticación aún no está resuelta,
-    // guardamos en lista pendiente para cuando llegue el usuario
     if (!user && !this.authReady) {
       this.pendingMarks.push({ animeId: aId, season: sNum, episode: eNum });
     }
   }
   
+  // ========== UI INICIAL ==========
   initUI() {
     const backLink = document.getElementById('backLink');
     if (backLink && this.animeId) {
@@ -241,6 +234,7 @@ class VideoPlayer {
     });
   }
   
+  // ========== CARGA DEL EPISODIO ==========
   async loadEpisodeData() {
     try {
       const anime = catalogoArray.find(a => a.id == this.animeId);
@@ -275,7 +269,6 @@ class VideoPlayer {
       if (episodeData.link2) this.createServerButton('Opción 2', episodeData.link2, !episodeData.link);
       
       this.setupNavigation();
-      // MARCADO AUTOMÁTICO - se ejecuta siempre
       await this.autoMarkAsWatched();
       
     } catch (error) {
@@ -322,10 +315,21 @@ class VideoPlayer {
     }
   }
   
+  // ========== ACTUALIZACIÓN DE URL DE DESCARGA (síncrona normal) ==========
   updateDownloadUrl(url) {
     this.currentDownloadUrl = this.generateDirectLink(url);
+    this.currentPeerTubeUrl = this.isPeerTubeUrl(url) ? url : null;
   }
   
+  // Detección de PeerTube
+  isPeerTubeUrl(url) {
+    if (!url) return false;
+    // Detecta dominio peertube.* (peertube.wtf, peertube.mydomain, etc.)
+    const peerTubePattern = /^(https?:\/\/)?([a-z0-9-]+\.)*peertube\.\w+\//i;
+    return peerTubePattern.test(url);
+  }
+  
+  // Generador de enlaces síncrono (Google Drive, Dropbox, etc.) - NO para PeerTube asíncrono
   generateDirectLink(url) {
     if (!url) return "#";
     if (url.includes("drive.google.com")) {
@@ -348,18 +352,104 @@ class VideoPlayer {
       }
       return url;
     }
+    // Para PeerTube devolvemos la misma URL (pero la descarga real se manejará aparte con fetch)
     return url;
   }
   
-  handleDownloadClick() {
+  // ========== OBTENCIÓN ASÍNCRONA DEL ENLACE DIRECTO DE PEERTUBE ==========
+  async getPeerTubeDirectDownloadUrl(embedUrl) {
+    try {
+      // Extraer dominio e ID del video
+      let videoId = null;
+      let instanceUrl = null;
+      
+      // Formato típico: https://peertube.wtf/videos/embed/og8cXE5WuULTyTDQaY2AQW
+      // También puede ser https://peertube.wtf/w/og8cXE5WuULTyTDQaY2AQW
+      const urlParts = embedUrl.match(/^(https?:\/\/[^\/]+)\/(?:videos\/embed|w)\/([a-zA-Z0-9_-]+)/i);
+      if (urlParts && urlParts[2]) {
+        instanceUrl = urlParts[1];
+        videoId = urlParts[2];
+      } else {
+        // Intentar extraer solo el ID al final
+        const idMatch = embedUrl.match(/\/([a-zA-Z0-9_-]+)$/);
+        if (idMatch && idMatch[1]) {
+          videoId = idMatch[1];
+          const domainMatch = embedUrl.match(/^(https?:\/\/[^\/]+)/);
+          if (domainMatch) instanceUrl = domainMatch[1];
+        }
+      }
+      
+      if (!instanceUrl || !videoId) {
+        console.warn('No se pudo extraer ID o dominio de PeerTube:', embedUrl);
+        return null;
+      }
+      
+      // Llamar a la API pública de PeerTube
+      const apiUrl = `${instanceUrl}/api/v1/videos/${videoId}`;
+      console.log('📡 Consultando API de PeerTube:', apiUrl);
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const data = await response.json();
+      // Buscar la URL de descarga del archivo original o del primer archivo disponible
+      let downloadUrl = null;
+      if (data.files && data.files.length > 0) {
+        // Normalmente el primer archivo es el de mejor calidad
+        downloadUrl = data.files[0].fileDownloadUrl;
+      } else if (data.streamingPlaylists && data.streamingPlaylists.length > 0) {
+        // Algunas instancias usan HLS, pero puede haber archivos fragmentados
+        const playlist = data.streamingPlaylists[0];
+        if (playlist.files && playlist.files.length > 0) {
+          downloadUrl = playlist.files[0].fileDownloadUrl;
+        }
+      }
+      
+      if (!downloadUrl) {
+        console.warn('No se encontró fileDownloadUrl en la respuesta de PeerTube');
+        return null;
+      }
+      
+      console.log('✅ Enlace directo obtenido:', downloadUrl);
+      return downloadUrl;
+    } catch (error) {
+      console.error('❌ Error obteniendo descarga de PeerTube:', error);
+      return null;
+    }
+  }
+  
+  // ========== MANEJADOR DEL BOTÓN DESCARGAR ==========
+  async handleDownloadClick() {
     const user = this.getCurrentUser();
     if (!user) {
       this.openLoginModal();
       return;
     }
-    if (this.currentDownloadUrl && this.currentDownloadUrl !== '#') {
+    
+    let finalDownloadUrl = this.currentDownloadUrl;
+    
+    // Si es un enlace de PeerTube, obtener la URL real asíncronamente
+    if (this.currentPeerTubeUrl) {
+      // Mostrar un indicador de carga en el botón (opcional)
+      const btn = document.getElementById('downloadBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Obteniendo enlace...';
+      btn.disabled = true;
+      
+      const directUrl = await this.getPeerTubeDirectDownloadUrl(this.currentPeerTubeUrl);
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      
+      if (directUrl) {
+        finalDownloadUrl = directUrl;
+      } else {
+        alert('No se pudo obtener el enlace de descarga directa de PeerTube. Es posible que el administrador no lo haya habilitado.');
+        return;
+      }
+    }
+    
+    if (finalDownloadUrl && finalDownloadUrl !== '#') {
       const link = document.createElement('a');
-      link.href = this.currentDownloadUrl;
+      link.href = finalDownloadUrl;
       link.download = '';
       link.target = this.isMobile() ? '_blank' : '_self';
       document.body.appendChild(link);
@@ -374,6 +464,7 @@ class VideoPlayer {
     return /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase());
   }
   
+  // ========== NAVEGACIÓN ENTRE EPISODIOS ==========
   setupNavigation() {
     if (!this.animeData?.seasons) return;
     const flat = [];
@@ -395,6 +486,7 @@ class VideoPlayer {
     }
   }
   
+  // ========== SISTEMA DE AUTENTICACIÓN ==========
   setupAuthUI() {
     document.querySelectorAll('.auth-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -461,6 +553,7 @@ class VideoPlayer {
     }
   }
   
+  // ========== COMENTARIOS Y STICKERS ==========
   updateCommentFormVisibility() {
     const user = this.getCurrentUser();
     const loginMsg = document.getElementById('comentarioLoginMessage');
