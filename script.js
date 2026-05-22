@@ -680,34 +680,60 @@ function validate(input) {
     else input.style.borderColor = '#2a2b35';
 }
 
+/**
+ * Extrae la URL del atributo src de un iframe si el texto completo es un iframe.
+ * @param {string} value - El texto a evaluar
+ * @returns {string|null} - La URL del src o null si no es un iframe válido
+ */
+function extractUrlFromIframe(value) {
+    if (!value || typeof value !== 'string') return null;
+    // Buscar etiqueta iframe y extraer src (comillas simples o dobles)
+    const iframeRegex = /<iframe[^>]*src=["']([^"']+)["'][^>]*>/i;
+    const match = value.match(iframeRegex);
+    if (match && match[1]) {
+        return match[1];
+    }
+    return null;
+}
+
 function smartLinkConvert(input) {
-    // (función original sin cambios)
     let val = input.value.trim();
     let changed = false;
-    if (val.includes('http://10.22.7.119:8080')) {
-        input.value = val.replace('http://10.22.7.119:8080', 'https://fsb-latest-gdv3.onrender.com');
+
+    // ----- NUEVA FUNCIONALIDAD: convertir iframe a su URL src -----
+    const extractedUrl = extractUrlFromIframe(val);
+    if (extractedUrl) {
+        input.value = extractedUrl;
         changed = true;
-    }
-    if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
-        input.value = val.replace('&dl=0', '&raw=1');
-        changed = true;
-    }
-    const driveRegex = /(https:\/\/drive\.google\.com\/file\/d\/[^\/]+)\/(?:view|preview)(?:\?.*)?/;
-    if (driveRegex.test(val) && !val.endsWith('/preview')) {
-        const match = val.match(driveRegex);
-        if (match && match[1]) {
-            input.value = match[1] + '/preview';
+        showToast("Iframe convertido a enlace directo");
+    } else {
+        // Conversiones existentes
+        if (val.includes('http://10.22.7.119:8080')) {
+            input.value = val.replace('http://10.22.7.119:8080', 'https://fsb-latest-gdv3.onrender.com');
+            changed = true;
+        }
+        if (val.includes('dropbox.com') && val.endsWith('&dl=0')) {
+            input.value = val.replace('&dl=0', '&raw=1');
+            changed = true;
+        }
+        const driveRegex = /(https:\/\/drive\.google\.com\/file\/d\/[^\/]+)\/(?:view|preview)(?:\?.*)?/;
+        if (driveRegex.test(val) && !val.endsWith('/preview')) {
+            const match = val.match(driveRegex);
+            if (match && match[1]) {
+                input.value = match[1] + '/preview';
+                changed = true;
+            }
+        }
+        if (/ok\.ru\/video\//i.test(val)) {
+            input.value = val.replace(/ok\.ru\/video\//i, 'ok.ru/videoembed/');
+            changed = true;
+        }
+        if (val.includes('odysee.com/') && !val.includes('odysee.com/$/embed/')) {
+            input.value = val.replace(/odysee\.com\//i, 'odysee.com/$/embed/');
             changed = true;
         }
     }
-    if (/ok\.ru\/video\//i.test(val)) {
-        input.value = val.replace(/ok\.ru\/video\//i, 'ok.ru/videoembed/');
-        changed = true;
-    }
-    if (val.includes('odysee.com/') && !val.includes('odysee.com/$/embed/')) {
-        input.value = val.replace(/odysee\.com\//i, 'odysee.com/$/embed/');
-        changed = true;
-    }
+
     if (changed) {
         if (input.id === 'portadaAnime') checkCoverVisual(input);
         else if (input.classList.contains('m-url')) updateAudioPreview(input);
@@ -1113,7 +1139,5 @@ function highlightLogoutButton() {
 // INICIALIZACIÓN AL CARGAR
 // ============================================
 window.onload = () => {
-    // Si ya hay usuario autenticado, el observer 'auth.onAuthStateChanged' se encargará de mostrar la UI.
-    // Rellenar géneros solo si la UI ya es visible (puede llamarse tras login)
     fillGenres();
 };
