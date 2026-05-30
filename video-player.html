@@ -97,6 +97,14 @@
       opacity: 0.5;
       pointer-events: none;
     }
+    /* En móviles, el video se oculta y usamos solo el poster como fondo */
+    body.is-mobile #bg-video {
+      display: none;
+    }
+    /* Para móviles, aseguramos que el fondo tenga la imagen del poster */
+    body.is-mobile {
+      background: url('galaxia-morado1.avif') center center / cover no-repeat fixed;
+    }
 
     #overlay {
       position: fixed;
@@ -352,7 +360,6 @@
       justify-content: center;
       align-items: flex-start;
       padding-top: 1.5%;
-      /* ===== SOLUCIÓN: Cambiado a 'auto' para bloquear clics en la tira ===== */
       pointer-events: auto;
       border-top-left-radius: 16px;
       border-top-right-radius: 16px;
@@ -1202,6 +1209,23 @@
   if (typeof listaDeGifs !== 'undefined' && listaDeGifs.length > 0) {
     const gifElegido = listaDeGifs[Math.floor(Math.random() * listaDeGifs.length)];
     document.getElementById('personaje-gif').src = gifElegido;
+  }
+
+  // 🔥 DETECCIÓN DE MÓVIL Y DESACTIVACIÓN DEL VIDEO DE FONDO 🔥
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+  }
+
+  if (isMobileDevice()) {
+    document.body.classList.add('is-mobile');
+    // Eliminar el source del video para evitar cualquier intento de reproducción
+    const bgVideo = document.getElementById('bg-video');
+    if (bgVideo) {
+      bgVideo.pause();
+      bgVideo.removeAttribute('src');
+      bgVideo.load(); // limpia el buffer
+      bgVideo.style.display = 'none';
+    }
   }
 
   // Progreso de carga
