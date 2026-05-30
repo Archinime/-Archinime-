@@ -2,6 +2,7 @@
 // CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
 // NUEVO: Descarga directa desde PeerTube (obtiene enlace real del archivo .mp4 vía API)
 // MEJORADO: Títulos dinámicos según tipo de temporada (T1 Cap 1, Spin-Off: Nombre Cap 1, OVA 1, Película: Nombre, etc.)
+// CORRECCIÓN: Detección insensible a mayúsculas para Spin-Off y uso correcto del nombre de la temporada.
 
 class VideoPlayer {
   constructor() {
@@ -235,7 +236,7 @@ class VideoPlayer {
     });
   }
   
-  // ========== GENERACIÓN DE TÍTULO SEGÚN TIPO DE TEMPORADA ==========
+  // ========== GENERACIÓN DE TÍTULO SEGÚN TIPO DE TEMPORADA (CORREGIDO) ==========
   /**
    * Genera el título formateado para el episodio actual.
    * @param {Object} season - Objeto de la temporada (contiene name, type, num, etc.)
@@ -244,26 +245,30 @@ class VideoPlayer {
    * @returns {string} Título formateado
    */
   formatEpisodeTitle(season, epNum, episodeData) {
-    const seasonType = season.type || 'Temporada';
+    const seasonTypeRaw = season.type || 'Temporada';
+    // Normalizar el tipo: convertir a minúsculas y eliminar guiones/espacios para comparación flexible
+    const normalizedType = seasonTypeRaw.toLowerCase().replace(/[-\s]/g, '');
     const seasonName = season.name || `Temporada ${season.num}`;
     const episodeTitleRaw = episodeData.title || `Capítulo ${epNum}`;
 
     // Película
-    if (seasonType === 'Pelicula') {
+    if (normalizedType === 'pelicula') {
       return `Película: ${episodeTitleRaw}`;
     }
     // OVA: mostrar "OVA X" donde X es el número extraído del título o el season.num
-    else if (seasonType === 'OVA') {
+    else if (normalizedType === 'ova') {
       const match = episodeTitleRaw.match(/\d+/);
       const ovaNum = match ? match[0] : (season.num || epNum);
       return `OVA ${ovaNum}`;
     }
     // Especial
-    else if (seasonType === 'Especial') {
+    else if (normalizedType === 'especial') {
       return `Especial ${epNum}`;
     }
     // Spin-Off: usar el nombre completo de la temporada + " Cap " + número
-    else if (seasonType === 'Spin-Off') {
+    else if (normalizedType === 'spinoff') {
+      // Si el nombre de la temporada contiene "Temporada", lo reemplazamos por el nombre real (ej. "Tensura Nikki...")
+      // No es necesario, ya que en el catálogo el name ya es el específico.
       return `${seasonName} Cap ${epNum}`;
     }
     // Temporada normal
