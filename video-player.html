@@ -2,15 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
 
+  <!-- Tema de color dinámico optimizado (intervalo más largo para reducir carga) -->
   <script>
     (function() {
       const colors = ["#00f3ff", "#0066ff", "#bc13fe", "#ff0055", "#bc13fe", "#0066ff", "#00f3ff"];
       const animationDuration = 20000;
-      const intervalTime = 20;
+      const intervalTime = 120;  // antes 20ms, ahora 120ms -> mucho más ligero
       const segments = colors.length - 1;
       const step = (intervalTime / animationDuration) * segments;
       let currentProgress = 0;
@@ -30,6 +31,7 @@
         return hex.length === 1 ? "0" + hex : hex;
       }).join('');
       const lerp = (start, end, t) => start + (end - start) * t;
+      
       setInterval(() => {
         currentProgress += step;
         if (currentProgress >= segments) currentProgress = currentProgress % segments;
@@ -65,7 +67,7 @@
   <script src="app-core.js"></script>
 
   <style>
-    /* ===== ESTILOS OPTIMIZADOS ===== */
+    /* ===== ESTILOS ORIGINALES (SIN DEFORMACIONES) CON OPTIMIZACIONES DE RENDIMIENTO ===== */
     
     :root {
       --primary-color: #00fff7;
@@ -113,7 +115,7 @@
       height: 100%;
       z-index: -5;
       background: radial-gradient(circle at center, rgba(123, 44, 191, 0.15) 0%, #000000 90%);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(4px); /* reducido de 8px para menor lag */
       pointer-events: none;
     }
 
@@ -132,8 +134,8 @@
       align-items: center;
       font-family: 'Orbitron', sans-serif;
       transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.8s;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       will-change: opacity;
     }
     #loadingScreen.hidden {
@@ -154,10 +156,11 @@
       border-radius: 50%;
       padding: 5px;
       background: linear-gradient(45deg, var(--primary-color), #bc13fe, var(--accent-color));
-      animation: spinGradient 3s linear infinite, floatAnim 2s ease-in-out infinite alternate;
+      animation: floatAnim 2s ease-in-out infinite alternate;
       box-shadow: 0 0 40px rgba(188, 19, 254, 0.6), inset 0 0 20px rgba(0, 243, 255, 0.5);
-      will-change: transform, filter;
+      will-change: transform;
     }
+    /* eliminado hue-rotate costoso, se mantiene el glow */
     .gif-inner {
       width: 100%;
       height: 100%;
@@ -220,10 +223,6 @@
     .loader-sub i {
       color: #bc13fe;
     }
-    @keyframes spinGradient {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
-    }
     @keyframes floatAnim {
       0% { transform: translateY(0px); }
       100% { transform: translateY(-12px); }
@@ -274,7 +273,7 @@
       font-weight: 600;
       font-size: 0.85rem;
       background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(4px);
       padding: 8px 18px;
       border-radius: 50px;
       border: 1px solid rgba(0, 255, 247, 0.3);
@@ -353,8 +352,8 @@
       height: 14%;
       min-height: 45px;
       background: linear-gradient(to bottom, rgba(5, 5, 5, 1) 0%, rgba(5, 5, 5, 0.85) 40%, transparent 100%);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       z-index: 100;
       display: flex;
       justify-content: center;
@@ -445,7 +444,7 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.3s;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(4px);
       font-weight: 600;
       min-width: 100px;
       cursor: pointer;
@@ -478,7 +477,7 @@
       margin-top: 40px;
       padding: 30px;
       background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(6px);
       border-radius: 24px;
       border: 1px solid rgba(0, 243, 255, 0.3);
       box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
@@ -746,7 +745,7 @@
       transform: translateY(-3px);
     }
 
-    /* ===== ESTILO MODERNO PARA STICKERS VACÍOS ===== */
+    /* ESTILO MODERNO PARA STICKERS VACÍOS */
     .sticker-empty-modern {
       grid-column: 1 / -1;
       text-align: center;
@@ -802,7 +801,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(6px);
       z-index: 10001;
       display: flex;
       justify-content: center;
@@ -907,7 +906,7 @@
       font-weight: 600;
     }
 
-    /* ===== ESTILOS PARA PREVIEW DE STICKER ===== */
+    /* PREVIEW DE STICKER */
     .comentario-sticker-preview {
       margin: 12px 0;
       padding: 8px;
@@ -963,7 +962,7 @@
       background: #ff3366;
     }
 
-    /* ===== AJUSTES MÓVILES ===== */
+    /* AJUSTES MÓVILES */
     @media (max-width: 768px) {
       .container { padding: 10px; }
       .top-nav { justify-content: space-between; }
@@ -1140,7 +1139,6 @@
   </div>
 </div>
 
-<!-- IMPORTANTE: El catálogo local se carga antes que el core del reproductor -->
 <script src="catalogo.js"></script>
 <script defer src="stickers-system.js"></script>
 <script defer src="reacciones.js"></script>
@@ -1149,7 +1147,7 @@
 <script src="gifs.js"></script>
 
 <script>
-  // Configuración de drag & drop para stickers
+  // Configuración de drag & drop para stickers (ligera)
   (function() {
     const dropZone = document.getElementById('dragDropZone');
     const fileInput = document.getElementById('stickerFileInput');
@@ -1211,21 +1209,24 @@
     document.getElementById('personaje-gif').src = gifElegido;
   }
 
-  // 🔥 DETECCIÓN DE MÓVIL Y DESACTIVACIÓN DEL VIDEO DE FONDO 🔥
+  // DETECCIÓN DE MÓVIL Y DESACTIVACIÓN DEL VIDEO DE FONDO
   function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
   }
 
   if (isMobileDevice()) {
     document.body.classList.add('is-mobile');
-    // Eliminar el source del video para evitar cualquier intento de reproducción
     const bgVideo = document.getElementById('bg-video');
     if (bgVideo) {
       bgVideo.pause();
       bgVideo.removeAttribute('src');
-      bgVideo.load(); // limpia el buffer
+      bgVideo.load();
       bgVideo.style.display = 'none';
     }
+    // Reducir aún más el blur en móviles para mejorar fps
+    const style = document.createElement('style');
+    style.textContent = `body.is-mobile .comentarios-section { backdrop-filter: blur(3px) !important; } body.is-mobile #overlay { backdrop-filter: blur(3px) !important; } body.is-mobile .logo-blocker { backdrop-filter: blur(2px) !important; }`;
+    document.head.appendChild(style);
   }
 
   // Progreso de carga
@@ -1257,7 +1258,7 @@
       return;
     }
     if (progressValue < 85) {
-      progressValue += Math.random() * 8;
+      progressValue += Math.random() * 6;
       if (progressValue > 85) progressValue = 85;
       updateProgress(progressValue);
     }
