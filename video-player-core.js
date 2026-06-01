@@ -1,9 +1,8 @@
 // video-player-core.js - Versión con catálogo local + Firestore
 // CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
 // NUEVO: Descarga directa desde PeerTube (obtiene enlace real del archivo .mp4 vía API)
-// MEJORADO: Títulos dinámicos según tipo de temporada (T1 Cap 1, Spin-Off: Nombre Cap 1, OVA 1, Película: Nombre, etc.)
-// CORRECCIÓN: Detección insensible a mayúsculas para Spin-Off y uso correcto del nombre de la temporada.
-// FIX: Descarga con audio desde PeerTube (filtrado por hasAudio y fallback con /download/videos/generate)
+// MEJORADO: Títulos dinámicos según tipo de temporada
+// FIX FINAL: Para PeerTube, toma el primer archivo con fileDownloadUrl (ignorando hasAudio) y si falla, abre en nueva pestaña.
 
 class VideoPlayer {
   constructor() {
@@ -16,12 +15,11 @@ class VideoPlayer {
     this.db = null;
     this.storage = null;
     this.animeData = null;
-    this.currentDownloadUrl = '#';      // URL sincrónica (para enlaces directos normales)
-    this.currentPeerTubeUrl = null;     // Guardamos la URL original de PeerTube si es el caso
+    this.currentDownloadUrl = '#';
+    this.currentPeerTubeUrl = null;
     this.authReady = false;
     this.pendingMarks = [];
     
-    // Variables de contexto para sistemas externos
     window.comentariosAnimeId = this.animeId;
     window.comentariosSeason = this.season;
     window.comentariosEpisode = this.episode;
@@ -32,7 +30,6 @@ class VideoPlayer {
     this.setupAuthUI();
     this.setupAuthMigration();
 
-    // Exponer métodos públicos
     window.videoPlayerMethods = {
       toggleStickerPanel: () => this.toggleStickerPanel(),
       enviarComentario: () => this.enviarComentario(),
@@ -48,7 +45,6 @@ class VideoPlayer {
     window.videoPlayer = window.videoPlayerMethods;
   }
   
-  // ========== ESPERA DEL CATÁLOGO ==========
   async waitForCatalogAndLoad() {
     if (typeof catalogoArray !== 'undefined') {
       this.loadEpisodeData();
@@ -70,7 +66,6 @@ class VideoPlayer {
     }, 5000);
   }
   
-  // ========== FIREBASE ==========
   initFirebase() {
     const firebaseConfig = {
       apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
@@ -110,7 +105,6 @@ class VideoPlayer {
     return this.currentUser;
   }
   
-  // ========== MIGRACIÓN Y MARCAS ==========
   async migrateLocalToFirestore(userId) {
     if (!userId) return;
     const watchedKeys = [];
@@ -206,7 +200,6 @@ class VideoPlayer {
     }
   }
   
-  // ========== UI INICIAL ==========
   initUI() {
     const backLink = document.getElementById('backLink');
     if (backLink && this.animeId) {
@@ -237,45 +230,28 @@ class VideoPlayer {
     });
   }
   
-  // ========== GENERACIÓN DE TÍTULO SEGÚN TIPO DE TEMPORADA (CORREGIDO) ==========
-  /**
-   * Genera el título formateado para el episodio actual.
-   * @param {Object} season - Objeto de la temporada (contiene name, type, num, etc.)
-   * @param {number} epNum - Número del episodio (1-indexed)
-   * @param {Object} episodeData - Datos del episodio (puede contener title específico)
-   * @returns {string} Título formateado
-   */
   formatEpisodeTitle(season, epNum, episodeData) {
     const seasonTypeRaw = season.type || 'Temporada';
-    // Normalizar el tipo: convertir a minúsculas y eliminar guiones/espacios para comparación flexible
     const normalizedType = seasonTypeRaw.toLowerCase().replace(/[-\s]/g, '');
     const seasonName = season.name || `Temporada ${season.num}`;
     const episodeTitleRaw = episodeData.title || `Capítulo ${epNum}`;
 
-    // Película
     if (normalizedType === 'pelicula') {
       return `Película: ${episodeTitleRaw}`;
     }
-    // OVA: mostrar "OVA X" donde X es el número extraído del título o el season.num
     else if (normalizedType === 'ova') {
       const match = episodeTitleRaw.match(/\d+/);
       const ovaNum = match ? match[0] : (season.num || epNum);
       return `OVA ${ovaNum}`;
     }
-    // Especial
     else if (normalizedType === 'especial') {
       return `Especial ${epNum}`;
     }
-    // Spin-Off: usar el nombre completo de la temporada + " Cap " + número
     else if (normalizedType === 'spinoff') {
-      // Si el nombre de la temporada contiene "Temporada", lo reemplazamos por el nombre real (ej. "Tensura Nikki...")
-      // No es necesario, ya que en el catálogo el name ya es el específico.
       return `${seasonName} Cap ${epNum}`;
     }
-    // Temporada normal
     else {
       let seasonNumber = season.num;
-      // Si no tiene num, intentar extraer del nombre (ej: "Temporada 1")
       if (!seasonNumber) {
         const match = seasonName.match(/\d+/);
         seasonNumber = match ? match[0] : '?';
@@ -284,7 +260,6 @@ class VideoPlayer {
     }
   }
 
-  // ========== CARGA DEL EPISODIO ==========
   async loadEpisodeData() {
     try {
       const anime = catalogoArray.find(a => a.id == this.animeId);
@@ -306,7 +281,6 @@ class VideoPlayer {
         return;
       }
       
-      // 🔥 Generar título dinámico según el tipo de temporada
       const formattedTitle = this.formatEpisodeTitle(season, parseInt(this.episode), episodeData);
       
       document.title = `Ver ${formattedTitle} - Archinime`;
@@ -368,20 +342,17 @@ class VideoPlayer {
     }
   }
   
-  // ========== ACTUALIZACIÓN DE URL DE DESCARGA (síncrona normal) ==========
   updateDownloadUrl(url) {
     this.currentDownloadUrl = this.generateDirectLink(url);
     this.currentPeerTubeUrl = this.isPeerTubeUrl(url) ? url : null;
   }
   
-  // Detección de PeerTube
   isPeerTubeUrl(url) {
     if (!url) return false;
     const peerTubePattern = /^(https?:\/\/)?([a-z0-9-]+\.)*peertube\.\w+\//i;
     return peerTubePattern.test(url);
   }
   
-  // Generador de enlaces síncrono (Google Drive, Dropbox, etc.) - NO para PeerTube asíncrono
   generateDirectLink(url) {
     if (!url) return "#";
     if (url.includes("drive.google.com")) {
@@ -407,13 +378,12 @@ class VideoPlayer {
     return url;
   }
   
-  // ========== OBTENCIÓN ASÍNCRONA DEL ENLACE DIRECTO DE PEERTUBE (CON AUDIO) ==========
+  // ========== FUNCIÓN MEJORADA PARA PEERTUBE: IGNORA hasAudio, TOMA EL PRIMER fileDownloadUrl ==========
   async getPeerTubeDirectDownloadUrl(embedUrl) {
     try {
       let videoId = null;
       let instanceUrl = null;
       
-      // Extraer ID y dominio
       const urlParts = embedUrl.match(/^(https?:\/\/[^\/]+)\/(?:videos\/embed|w)\/([a-zA-Z0-9_-]+)/i);
       if (urlParts && urlParts[2]) {
         instanceUrl = urlParts[1];
@@ -438,76 +408,43 @@ class VideoPlayer {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       
       const data = await response.json();
-      console.log('🔍 Respuesta API completa (para depuración):', data);
+      console.log('🔍 Respuesta API (primeros 2 files):', data.files?.slice(0,2));
       
       let downloadUrl = null;
       
-      // 1️⃣ Buscar archivo con audio (hasAudio: true) y que tenga fileDownloadUrl o fileUrl
-      if (data.files && Array.isArray(data.files)) {
-        const fileWithAudio = data.files.find(file => 
-          (file.hasAudio === true) && (file.fileDownloadUrl || file.fileUrl)
-        );
-        if (fileWithAudio) {
-          downloadUrl = fileWithAudio.fileDownloadUrl || fileWithAudio.fileUrl;
-          console.log('✅ Archivo con audio encontrado:', downloadUrl);
+      // Estrategia: Tomar el primer archivo que tenga fileDownloadUrl (normalmente el de mayor calidad)
+      // Ignoramos hasAudio porque en muchas instancias es incorrecto.
+      if (data.files && data.files.length > 0) {
+        const firstFile = data.files.find(f => f.fileDownloadUrl);
+        if (firstFile) {
+          downloadUrl = firstFile.fileDownloadUrl;
+          console.log('✅ Usando primer archivo con fileDownloadUrl (se espera que contenga audio):', downloadUrl);
         }
       }
       
-      // 2️⃣ Si no hay con audio, tomar el primer archivo que tenga fileDownloadUrl (puede no tener audio)
+      // Si no hay fileDownloadUrl, probar con fileUrl
       if (!downloadUrl && data.files && data.files.length > 0) {
-        const anyFile = data.files.find(f => f.fileDownloadUrl || f.fileUrl);
-        if (anyFile) {
-          downloadUrl = anyFile.fileDownloadUrl || anyFile.fileUrl;
-          console.warn('⚠️ Usando archivo sin garantía de audio:', downloadUrl);
+        const firstFile = data.files.find(f => f.fileUrl);
+        if (firstFile) {
+          downloadUrl = firstFile.fileUrl;
+          console.log('⚠️ Usando fileUrl (puede no ser descargable directamente):', downloadUrl);
         }
       }
       
-      // 3️⃣ Intentar obtener desde streamingPlaylists
+      // Si aún no tenemos URL, intentar con streamingPlaylists
       if (!downloadUrl && data.streamingPlaylists && data.streamingPlaylists.length > 0) {
         const playlist = data.streamingPlaylists[0];
         if (playlist.files && playlist.files.length > 0) {
-          const firstFile = playlist.files[0];
-          if (firstFile.fileDownloadUrl) downloadUrl = firstFile.fileDownloadUrl;
-          else if (firstFile.fileUrl) downloadUrl = firstFile.fileUrl;
-        }
-      }
-      
-      // 4️⃣ Último recurso: endpoint de generación (remux) - puede requerir token
-      if (!downloadUrl && data.streamingPlaylists && data.streamingPlaylists.length > 0) {
-        console.warn('⚠️ Intentando generar MP4 completo vía endpoint de remux...');
-        try {
-          const tokenUrl = `${instanceUrl}/api/v1/videos/${videoId}/download-token`;
-          const tokenResponse = await fetch(tokenUrl);
-          if (!tokenResponse.ok) throw new Error(`Error al obtener token (HTTP ${tokenResponse.status})`);
-          const tokenData = await tokenResponse.json();
-          const videoFileToken = tokenData.downloadToken;
-          
-          let allFileIds = [];
-          if (data.files && Array.isArray(data.files)) {
-            allFileIds = data.files.map(f => f.id);
-          } else if (data.streamingPlaylists[0] && data.streamingPlaylists[0].files) {
-            allFileIds = data.streamingPlaylists[0].files.map(f => f.id);
-          }
-          
-          if (allFileIds.length > 0) {
-            const generateUrl = `${instanceUrl}/download/videos/generate/${videoId}?videoFileIds=${allFileIds.join(',')}&videoFileToken=${videoFileToken}`;
-            console.log('⚙️ Probando endpoint de remux:', generateUrl);
-            const headTest = await fetch(generateUrl, { method: 'HEAD' });
-            if (headTest.ok) {
-              downloadUrl = generateUrl;
-              console.log('✅ Endpoint de generación accesible');
-            } else {
-              console.warn('Endpoint de generación no accesible (HTTP', headTest.status, ')');
-            }
-          }
-        } catch (genErr) {
-          console.error('❌ Error en endpoint de generación:', genErr);
+          const firstPlaylistFile = playlist.files.find(f => f.fileDownloadUrl);
+          if (firstPlaylistFile) downloadUrl = firstPlaylistFile.fileDownloadUrl;
         }
       }
       
       if (!downloadUrl) {
         console.error('❌ No se encontró ningún enlace descargable en PeerTube');
-        console.warn('Enlace original:', embedUrl);
+        // Fallback: abrir la página del video en lugar de embed
+        const watchUrl = `${instanceUrl}/w/${videoId}`;
+        console.log('💡 Sugerencia: abre manualmente', watchUrl);
         return null;
       }
       
@@ -518,7 +455,6 @@ class VideoPlayer {
     }
   }
   
-  // ========== MANEJADOR DEL BOTÓN DESCARGAR ==========
   async handleDownloadClick() {
     const user = this.getCurrentUser();
     if (!user) {
@@ -541,7 +477,12 @@ class VideoPlayer {
       if (directUrl) {
         finalDownloadUrl = directUrl;
       } else {
-        alert('No se pudo obtener el enlace de descarga directa de PeerTube. Es posible que el administrador no lo haya habilitado.');
+        // No se pudo obtener enlace directo: ofrecer abrir en nueva pestaña
+        const watchUrl = this.currentPeerTubeUrl.replace(/\/embed\//, '/w/').replace(/\/videos\/embed\//, '/w/');
+        const userConfirmed = confirm('No se pudo obtener un enlace de descarga directa con audio.\n¿Quieres abrir el video en PeerTube para descargarlo manualmente?');
+        if (userConfirmed) {
+          window.open(watchUrl, '_blank');
+        }
         return;
       }
     }
@@ -563,10 +504,8 @@ class VideoPlayer {
     return /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase());
   }
   
-  // ========== NAVEGACIÓN ENTRE EPISODIOS (con títulos dinámicos) ==========
   setupNavigation() {
     if (!this.animeData?.seasons) return;
-    // Aplanar todos los episodios disponibles (con link o link2)
     const flat = [];
     this.animeData.seasons.sort((a,b) => a.num - b.num).forEach(season => {
       season.eps?.forEach((ep, idx) => {
@@ -607,7 +546,6 @@ class VideoPlayer {
     }
   }
   
-  // ========== SISTEMA DE AUTENTICACIÓN ==========
   setupAuthUI() {
     document.querySelectorAll('.auth-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -674,7 +612,6 @@ class VideoPlayer {
     }
   }
   
-  // ========== COMENTARIOS Y STICKERS ==========
   updateCommentFormVisibility() {
     const user = this.getCurrentUser();
     const loginMsg = document.getElementById('comentarioLoginMessage');
@@ -735,13 +672,11 @@ class VideoPlayer {
   }
 }
 
-// Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => new VideoPlayer());
 } else {
   new VideoPlayer();
 }
 
-// Funciones globales para compatibilidad
 window.openLoginModalFromComent = () => window.videoPlayer?.openLoginModal();
 window.toggleStickerPanelSistema = () => window.videoPlayer?.toggleStickerPanel();
