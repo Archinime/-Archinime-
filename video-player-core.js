@@ -438,29 +438,50 @@ class VideoPlayer {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       
       const data = await response.json();
+      console.log('🔍 Respuesta API completa (para depuración):', data);
+      
       let downloadUrl = null;
       
-      // 1️⃣ Intentar obtener un archivo que tenga audio (hasAudio: true)
+      // 1️⃣ Buscar archivo con audio (hasAudio: true) y que tenga fileDownloadUrl o fileUrl
       if (data.files && Array.isArray(data.files)) {
-        const fileWithAudio = data.files.find(file => file.hasAudio === true);
+        const fileWithAudio = data.files.find(file => 
+          (file.hasAudio === true) && (file.fileDownloadUrl || file.fileUrl)
+        );
         if (fileWithAudio) {
-          downloadUrl = fileWithAudio.fileDownloadUrl;
-          console.log('✅ Archivo con audio encontrado (hasAudio: true):', downloadUrl);
+          downloadUrl = fileWithAudio.fileDownloadUrl || fileWithAudio.fileUrl;
+          console.log('✅ Archivo con audio encontrado:', downloadUrl);
         }
       }
       
-      // 2️⃣ Si no hay archivo con audio, probar el endpoint de generación (PeerTube ≥ 6.3)
+      // 2️⃣ Si no hay con audio, tomar el primer archivo que tenga fileDownloadUrl (puede no tener audio)
+      if (!downloadUrl && data.files && data.files.length > 0) {
+        const anyFile = data.files.find(f => f.fileDownloadUrl || f.fileUrl);
+        if (anyFile) {
+          downloadUrl = anyFile.fileDownloadUrl || anyFile.fileUrl;
+          console.warn('⚠️ Usando archivo sin garantía de audio:', downloadUrl);
+        }
+      }
+      
+      // 3️⃣ Intentar obtener desde streamingPlaylists
       if (!downloadUrl && data.streamingPlaylists && data.streamingPlaylists.length > 0) {
-        console.warn('⚠️ No se encontró archivo con audio. Intentando generar MP4 completo vía endpoint de remux...');
+        const playlist = data.streamingPlaylists[0];
+        if (playlist.files && playlist.files.length > 0) {
+          const firstFile = playlist.files[0];
+          if (firstFile.fileDownloadUrl) downloadUrl = firstFile.fileDownloadUrl;
+          else if (firstFile.fileUrl) downloadUrl = firstFile.fileUrl;
+        }
+      }
+      
+      // 4️⃣ Último recurso: endpoint de generación (remux) - puede requerir token
+      if (!downloadUrl && data.streamingPlaylists && data.streamingPlaylists.length > 0) {
+        console.warn('⚠️ Intentando generar MP4 completo vía endpoint de remux...');
         try {
-          // Obtener token de descarga
           const tokenUrl = `${instanceUrl}/api/v1/videos/${videoId}/download-token`;
           const tokenResponse = await fetch(tokenUrl);
           if (!tokenResponse.ok) throw new Error(`Error al obtener token (HTTP ${tokenResponse.status})`);
           const tokenData = await tokenResponse.json();
           const videoFileToken = tokenData.downloadToken;
           
-          // Recopilar IDs de todos los archivos (video y audio por separado)
           let allFileIds = [];
           if (data.files && Array.isArray(data.files)) {
             allFileIds = data.files.map(f => f.id);
@@ -470,30 +491,29 @@ class VideoPlayer {
           
           if (allFileIds.length > 0) {
             const generateUrl = `${instanceUrl}/download/videos/generate/${videoId}?videoFileIds=${allFileIds.join(',')}&videoFileToken=${videoFileToken}`;
-            console.log('⚙️ Solicitando remux en:', generateUrl);
-            downloadUrl = generateUrl;
-          } else {
-            console.warn('No se pudieron obtener IDs de archivos para remux.');
+            console.log('⚙️ Probando endpoint de remux:', generateUrl);
+            const headTest = await fetch(generateUrl, { method: 'HEAD' });
+            if (headTest.ok) {
+              downloadUrl = generateUrl;
+              console.log('✅ Endpoint de generación accesible');
+            } else {
+              console.warn('Endpoint de generación no accesible (HTTP', headTest.status, ')');
+            }
           }
         } catch (genErr) {
-          console.error('❌ Error en el endpoint de generación:', genErr);
+          console.error('❌ Error en endpoint de generación:', genErr);
         }
       }
       
-      // 3️⃣ Fallback: si aún no hay URL, tomar el primer archivo disponible (sin garantía de audio)
-      if (!downloadUrl && data.files && data.files.length > 0) {
-        downloadUrl = data.files[0].fileDownloadUrl;
-        console.warn('⚠️ Usando primer archivo (puede no tener audio):', downloadUrl);
-      }
-      
       if (!downloadUrl) {
-        console.warn('No se encontró ningún enlace descargable en PeerTube');
+        console.error('❌ No se encontró ningún enlace descargable en PeerTube');
+        console.warn('Enlace original:', embedUrl);
         return null;
       }
       
       return downloadUrl;
     } catch (error) {
-      console.error('❌ Error obteniendo descarga de PeerTube:', error);
+      console.error('❌ Error fatal obteniendo descarga de PeerTube:', error);
       return null;
     }
   }
