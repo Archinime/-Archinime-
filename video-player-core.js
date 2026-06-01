@@ -3,6 +3,7 @@
 // NUEVO: Descarga directa desde PeerTube (obtiene enlace real del archivo .mp4 vía API)
 // MEJORADO: Títulos dinámicos según tipo de temporada (T1 Cap 1, Spin-Off: Nombre Cap 1, OVA 1, Película: Nombre, etc.)
 // CORRECCIÓN: Detección insensible a mayúsculas para Spin-Off y uso correcto del nombre de la temporada.
+// FIX: Descarga con audio desde PeerTube (filtrado por hasAudio y fallback con /download/videos/generate)
 
 class VideoPlayer {
   constructor() {
@@ -406,12 +407,13 @@ class VideoPlayer {
     return url;
   }
   
-  // ========== OBTENCIÓN ASÍNCRONA DEL ENLACE DIRECTO DE PEERTUBE ==========
+  // ========== OBTENCIÓN ASÍNCRONA DEL ENLACE DIRECTO DE PEERTUBE (CON AUDIO) ==========
   async getPeerTubeDirectDownloadUrl(embedUrl) {
     try {
       let videoId = null;
       let instanceUrl = null;
       
+      // Extraer ID y dominio
       const urlParts = embedUrl.match(/^(https?:\/\/[^\/]+)\/(?:videos\/embed|w)\/([a-zA-Z0-9_-]+)/i);
       if (urlParts && urlParts[2]) {
         instanceUrl = urlParts[1];
@@ -437,21 +439,58 @@ class VideoPlayer {
       
       const data = await response.json();
       let downloadUrl = null;
-      if (data.files && data.files.length > 0) {
-        downloadUrl = data.files[0].fileDownloadUrl;
-      } else if (data.streamingPlaylists && data.streamingPlaylists.length > 0) {
-        const playlist = data.streamingPlaylists[0];
-        if (playlist.files && playlist.files.length > 0) {
-          downloadUrl = playlist.files[0].fileDownloadUrl;
+      
+      // 1️⃣ Intentar obtener un archivo que tenga audio (hasAudio: true)
+      if (data.files && Array.isArray(data.files)) {
+        const fileWithAudio = data.files.find(file => file.hasAudio === true);
+        if (fileWithAudio) {
+          downloadUrl = fileWithAudio.fileDownloadUrl;
+          console.log('✅ Archivo con audio encontrado (hasAudio: true):', downloadUrl);
         }
       }
       
+      // 2️⃣ Si no hay archivo con audio, probar el endpoint de generación (PeerTube ≥ 6.3)
+      if (!downloadUrl && data.streamingPlaylists && data.streamingPlaylists.length > 0) {
+        console.warn('⚠️ No se encontró archivo con audio. Intentando generar MP4 completo vía endpoint de remux...');
+        try {
+          // Obtener token de descarga
+          const tokenUrl = `${instanceUrl}/api/v1/videos/${videoId}/download-token`;
+          const tokenResponse = await fetch(tokenUrl);
+          if (!tokenResponse.ok) throw new Error(`Error al obtener token (HTTP ${tokenResponse.status})`);
+          const tokenData = await tokenResponse.json();
+          const videoFileToken = tokenData.downloadToken;
+          
+          // Recopilar IDs de todos los archivos (video y audio por separado)
+          let allFileIds = [];
+          if (data.files && Array.isArray(data.files)) {
+            allFileIds = data.files.map(f => f.id);
+          } else if (data.streamingPlaylists[0] && data.streamingPlaylists[0].files) {
+            allFileIds = data.streamingPlaylists[0].files.map(f => f.id);
+          }
+          
+          if (allFileIds.length > 0) {
+            const generateUrl = `${instanceUrl}/download/videos/generate/${videoId}?videoFileIds=${allFileIds.join(',')}&videoFileToken=${videoFileToken}`;
+            console.log('⚙️ Solicitando remux en:', generateUrl);
+            downloadUrl = generateUrl;
+          } else {
+            console.warn('No se pudieron obtener IDs de archivos para remux.');
+          }
+        } catch (genErr) {
+          console.error('❌ Error en el endpoint de generación:', genErr);
+        }
+      }
+      
+      // 3️⃣ Fallback: si aún no hay URL, tomar el primer archivo disponible (sin garantía de audio)
+      if (!downloadUrl && data.files && data.files.length > 0) {
+        downloadUrl = data.files[0].fileDownloadUrl;
+        console.warn('⚠️ Usando primer archivo (puede no tener audio):', downloadUrl);
+      }
+      
       if (!downloadUrl) {
-        console.warn('No se encontró fileDownloadUrl en la respuesta de PeerTube');
+        console.warn('No se encontró ningún enlace descargable en PeerTube');
         return null;
       }
       
-      console.log('✅ Enlace directo obtenido:', downloadUrl);
       return downloadUrl;
     } catch (error) {
       console.error('❌ Error obteniendo descarga de PeerTube:', error);
