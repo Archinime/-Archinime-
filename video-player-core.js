@@ -3,6 +3,7 @@
 // MODIFICADO: Descarga en PeerTube usa el enlace de Opción 2 en lugar de API (más fiable)
 // MEJORADO: Títulos dinámicos según tipo de temporada (T1 Cap 1, Spin-Off: Nombre Cap 1, OVA 1, Película: Nombre, etc.)
 // CORRECCIÓN: Detección insensible a mayúsculas para Spin-Off y uso correcto del nombre de la temporada.
+// CORREGIDO: Numeración de temporadas secuencial (ignorando OVAs, Películas, Especiales para el conteo)
 
 class VideoPlayer {
   constructor() {
@@ -20,6 +21,7 @@ class VideoPlayer {
     this.currentEpisodeData = null;     // Guardamos los datos del episodio actual (para acceder a link2)
     this.authReady = false;
     this.pendingMarks = [];
+    this.seasonNumberMap = new Map();    // Mapa: season.num -> índice secuencial (solo para tipo "Temporada")
     
     // Variables de contexto para sistemas externos
     window.comentariosAnimeId = this.animeId;
@@ -237,15 +239,38 @@ class VideoPlayer {
     });
   }
   
-  // ========== GENERACIÓN DE TÍTULO SEGÚN TIPO DE TEMPORADA (CORREGIDO) ==========
+  // ========== GENERACIÓN DE MAPA DE NÚMEROS DE TEMPORADA (SECUENCIAL) ==========
+  /**
+   * Construye un mapa que asigna el season.num original al índice secuencial
+   * solo para las temporadas de tipo "Temporada".
+   * @param {Array} seasons - Array de temporadas del anime
+   * @returns {Map} Mapa: season.num -> índice (1,2,3...)
+   */
+  buildSeasonNumberMap(seasons) {
+    const map = new Map();
+    // Filtrar solo temporadas con type === "Temporada" (insensible a mayúsculas)
+    const normalSeasons = seasons.filter(s => {
+      const type = (s.type || 'Temporada').toLowerCase().replace(/[-\s]/g, '');
+      return type === 'temporada';
+    });
+    // Ordenar por num (original) para mantener el orden
+    normalSeasons.sort((a, b) => a.num - b.num);
+    // Asignar índice secuencial (1,2,3...)
+    normalSeasons.forEach((season, idx) => {
+      map.set(season.num, idx + 1);
+    });
+    return map;
+  }
+
   /**
    * Genera el título formateado para el episodio actual.
    * @param {Object} season - Objeto de la temporada (contiene name, type, num, etc.)
    * @param {number} epNum - Número del episodio (1-indexed)
    * @param {Object} episodeData - Datos del episodio (puede contener title específico)
+   * @param {number} seasonIndex - Número secuencial de temporada (solo para tipo Temporada)
    * @returns {string} Título formateado
    */
-  formatEpisodeTitle(season, epNum, episodeData) {
+  formatEpisodeTitle(season, epNum, episodeData, seasonIndex = null) {
     const seasonTypeRaw = season.type || 'Temporada';
     // Normalizar el tipo: convertir a minúsculas y eliminar guiones/espacios para comparación flexible
     const normalizedType = seasonTypeRaw.toLowerCase().replace(/[-\s]/g, '');
@@ -268,15 +293,13 @@ class VideoPlayer {
     }
     // Spin-Off: usar el nombre completo de la temporada + " Cap " + número
     else if (normalizedType === 'spinoff') {
-      // Si el nombre de la temporada contiene "Temporada", lo reemplazamos por el nombre real (ej. "Tensura Nikki...")
-      // No es necesario, ya que en el catálogo el name ya es el específico.
       return `${seasonName} Cap ${epNum}`;
     }
-    // Temporada normal
+    // Temporada normal: usar el índice secuencial si está disponible, de lo contrario fallback
     else {
-      let seasonNumber = season.num;
-      // Si no tiene num, intentar extraer del nombre (ej: "Temporada 1")
-      if (!seasonNumber) {
+      let seasonNumber = seasonIndex !== null ? seasonIndex : season.num;
+      // Si no tenemos índice secuencial, intentar extraer del nombre (ej: "Temporada 1")
+      if (seasonNumber === undefined || seasonNumber === null) {
         const match = seasonName.match(/\d+/);
         seasonNumber = match ? match[0] : '?';
       }
@@ -294,6 +317,10 @@ class VideoPlayer {
       }
       this.animeData = anime;
       const seasons = this.animeData.seasons || [];
+      
+      // Construir mapa de números secuenciales para temporadas normales
+      this.seasonNumberMap = this.buildSeasonNumberMap(seasons);
+      
       const season = seasons.find(s => s.num === parseInt(this.season));
       if (!season) {
         document.getElementById('epTitle').innerText = 'Temporada no encontrada';
@@ -309,8 +336,15 @@ class VideoPlayer {
       // Guardar datos del episodio actual para uso posterior (ej. descarga alternativa)
       this.currentEpisodeData = episodeData;
       
+      // Obtener el índice secuencial para esta temporada (si es tipo Temporada)
+      let seasonIndex = null;
+      const typeNorm = (season.type || 'Temporada').toLowerCase().replace(/[-\s]/g, '');
+      if (typeNorm === 'temporada') {
+        seasonIndex = this.seasonNumberMap.get(season.num) || season.num;
+      }
+      
       // 🔥 Generar título dinámico según el tipo de temporada
-      const formattedTitle = this.formatEpisodeTitle(season, parseInt(this.episode), episodeData);
+      const formattedTitle = this.formatEpisodeTitle(season, parseInt(this.episode), episodeData, seasonIndex);
       
       document.title = `Ver ${formattedTitle} - Archinime`;
       document.getElementById('epTitle').innerText = formattedTitle;
@@ -450,19 +484,26 @@ class VideoPlayer {
     return /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase());
   }
   
-  // ========== NAVEGACIÓN ENTRE EPISODIOS (con títulos dinámicos) ==========
+  // ========== NAVEGACIÓN ENTRE EPISODIOS (con títulos dinámicos y numeración secuencial) ==========
   setupNavigation() {
     if (!this.animeData?.seasons) return;
     // Aplanar todos los episodios disponibles (con link o link2)
     const flat = [];
     this.animeData.seasons.sort((a,b) => a.num - b.num).forEach(season => {
+      // Obtener índice secuencial para esta temporada (si es tipo Temporada)
+      let seasonIndex = null;
+      const typeNorm = (season.type || 'Temporada').toLowerCase().replace(/[-\s]/g, '');
+      if (typeNorm === 'temporada') {
+        seasonIndex = this.seasonNumberMap.get(season.num) || season.num;
+      }
       season.eps?.forEach((ep, idx) => {
         if (ep.link || ep.link2) {
           flat.push({ 
             s: season.num, 
             e: idx + 1,
             seasonObj: season,
-            episodeData: ep
+            episodeData: ep,
+            seasonIndex: seasonIndex
           });
         }
       });
@@ -475,8 +516,7 @@ class VideoPlayer {
       const prev = flat[idx-1];
       prevBtn.classList.remove('btn-hidden');
       prevBtn.href = `?anime=${this.animeId}&s=${prev.s}&e=${prev.e}`;
-      const prevSeason = prev.seasonObj;
-      const prevTitle = this.formatEpisodeTitle(prevSeason, prev.e, prev.episodeData);
+      const prevTitle = this.formatEpisodeTitle(prev.seasonObj, prev.e, prev.episodeData, prev.seasonIndex);
       prevBtn.setAttribute('title', prevTitle);
     } else {
       prevBtn.classList.add('btn-hidden');
@@ -486,8 +526,7 @@ class VideoPlayer {
       const next = flat[idx+1];
       nextBtn.classList.remove('btn-hidden');
       nextBtn.href = `?anime=${this.animeId}&s=${next.s}&e=${next.e}`;
-      const nextSeason = next.seasonObj;
-      const nextTitle = this.formatEpisodeTitle(nextSeason, next.e, next.episodeData);
+      const nextTitle = this.formatEpisodeTitle(next.seasonObj, next.e, next.episodeData, next.seasonIndex);
       nextBtn.setAttribute('title', nextTitle);
     } else {
       nextBtn.classList.add('btn-hidden');
