@@ -1,9 +1,8 @@
 // video-player-core.js - Versión con catálogo local + Firestore
 // CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
-// NUEVO: Descarga directa desde PeerTube (obtiene enlace real del archivo .mp4 vía API)
+// MODIFICADO: Descarga en PeerTube usa el enlace de Opción 2 en lugar de API (más fiable)
 // MEJORADO: Títulos dinámicos según tipo de temporada (T1 Cap 1, Spin-Off: Nombre Cap 1, OVA 1, Película: Nombre, etc.)
 // CORRECCIÓN: Detección insensible a mayúsculas para Spin-Off y uso correcto del nombre de la temporada.
-// FIX: Descarga con audio desde PeerTube usando endpoint /download/videos/generate
 
 class VideoPlayer {
   constructor() {
@@ -18,6 +17,7 @@ class VideoPlayer {
     this.animeData = null;
     this.currentDownloadUrl = '#';      // URL sincrónica (para enlaces directos normales)
     this.currentPeerTubeUrl = null;     // Guardamos la URL original de PeerTube si es el caso
+    this.currentEpisodeData = null;     // Guardamos los datos del episodio actual (para acceder a link2)
     this.authReady = false;
     this.pendingMarks = [];
     
@@ -306,6 +306,9 @@ class VideoPlayer {
         return;
       }
       
+      // Guardar datos del episodio actual para uso posterior (ej. descarga alternativa)
+      this.currentEpisodeData = episodeData;
+      
       // 🔥 Generar título dinámico según el tipo de temporada
       const formattedTitle = this.formatEpisodeTitle(season, parseInt(this.episode), episodeData);
       
@@ -407,101 +410,7 @@ class VideoPlayer {
     return url;
   }
   
-  // ========== OBTENCIÓN ASÍNCRONA DEL ENLACE DIRECTO DE PEERTUBE (CON AUDIO MEDIANTE GENERACIÓN) ==========
-  async getPeerTubeDirectDownloadUrl(embedUrl) {
-    try {
-      let videoId = null;
-      let instanceUrl = null;
-      
-      // Extraer ID y dominio
-      const urlParts = embedUrl.match(/^(https?:\/\/[^\/]+)\/(?:videos\/embed|w|embed)\/([a-zA-Z0-9_-]+)/i);
-      if (urlParts && urlParts[2]) {
-        instanceUrl = urlParts[1];
-        videoId = urlParts[2];
-      } else {
-        const idMatch = embedUrl.match(/\/([a-zA-Z0-9_-]+)$/);
-        if (idMatch && idMatch[1]) {
-          videoId = idMatch[1];
-          const domainMatch = embedUrl.match(/^(https?:\/\/[^\/]+)/);
-          if (domainMatch) instanceUrl = domainMatch[1];
-        }
-      }
-      
-      if (!instanceUrl || !videoId) {
-        console.warn('No se pudo extraer ID o dominio de PeerTube:', embedUrl);
-        return null;
-      }
-      
-      // 1. Obtener metadatos del video
-      const apiUrl = `${instanceUrl}/api/v1/videos/${videoId}`;
-      console.log('📡 Consultando API de PeerTube:', apiUrl);
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      
-      let videoFileId = null;
-      let audioFileId = null;
-      
-      // 2. Buscar en streamingPlaylists (estructura moderna)
-      if (data.streamingPlaylists && data.streamingPlaylists.length > 0) {
-        const playlist = data.streamingPlaylists[0];
-        if (playlist.files && Array.isArray(playlist.files)) {
-          // Archivo de video: mejor resolución disponible (hasVideo true y resolution.id > 0)
-          const videoFiles = playlist.files.filter(f => f.hasVideo === true && f.resolution?.id > 0);
-          if (videoFiles.length > 0) {
-            // Ordenar de mayor a menor resolución y tomar el primero
-            videoFiles.sort((a, b) => (b.resolution?.id || 0) - (a.resolution?.id || 0));
-            videoFileId = videoFiles[0].id;
-            console.log(`🎥 Video encontrado: resolución ${videoFiles[0].resolution?.id}p, id=${videoFileId}`);
-          }
-          // Archivo de audio: resolution.id === 0
-          const audioFile = playlist.files.find(f => f.hasAudio === true && f.resolution?.id === 0);
-          if (audioFile) {
-            audioFileId = audioFile.id;
-            console.log(`🔊 Audio encontrado, id=${audioFileId}`);
-          }
-        }
-      }
-      
-      // 3. Fallback a data.files si no hay streamingPlaylists o faltan IDs
-      if ((!videoFileId || !audioFileId) && data.files && data.files.length > 0) {
-        if (!videoFileId) {
-          const videoFile = data.files.find(f => f.hasVideo === true && f.resolution?.id > 0);
-          if (videoFile) videoFileId = videoFile.id;
-        }
-        if (!audioFileId) {
-          const audioFile = data.files.find(f => f.hasAudio === true);
-          if (audioFile) audioFileId = audioFile.id;
-        }
-      }
-      
-      if (!videoFileId) {
-        console.error('No se pudo identificar ningún archivo de video');
-        return null;
-      }
-      
-      // 4. Obtener token de descarga
-      const tokenUrl = `${instanceUrl}/api/v1/videos/${videoId}/download-token`;
-      console.log('🔑 Solicitando token de descarga:', tokenUrl);
-      const tokenResponse = await fetch(tokenUrl);
-      if (!tokenResponse.ok) throw new Error(`Error al obtener token: ${tokenResponse.status}`);
-      const tokenData = await tokenResponse.json();
-      const videoFileToken = tokenData.downloadToken;
-      
-      // 5. Construir la URL de generación (combina video y audio si hay audio, si no, solo video)
-      let fileIds = [videoFileId];
-      if (audioFileId) fileIds.push(audioFileId);
-      const generateUrl = `${instanceUrl}/download/videos/generate/${videoId}?videoFileIds=${fileIds.join(',')}&videoFileToken=${videoFileToken}`;
-      console.log('✅ Enlace de descarga generado (con audio si estaba disponible):', generateUrl);
-      return generateUrl;
-      
-    } catch (error) {
-      console.error('❌ Error obteniendo descarga de PeerTube:', error);
-      return null;
-    }
-  }
-  
-  // ========== MANEJADOR DEL BOTÓN DESCARGAR ==========
+  // ========== MANEJADOR DEL BOTÓN DESCARGAR (MODIFICADO PARA USAR link2 EN PEERTUBE) ==========
   async handleDownloadClick() {
     const user = this.getCurrentUser();
     if (!user) {
@@ -511,20 +420,15 @@ class VideoPlayer {
     
     let finalDownloadUrl = this.currentDownloadUrl;
     
+    // Si el servidor activo es PeerTube, usamos el enlace de Opción 2 (link2) en lugar de intentar la API
     if (this.currentPeerTubeUrl) {
-      const btn = document.getElementById('downloadBtn');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Obteniendo enlace...';
-      btn.disabled = true;
-      
-      const directUrl = await this.getPeerTubeDirectDownloadUrl(this.currentPeerTubeUrl);
-      btn.innerHTML = originalText;
-      btn.disabled = false;
-      
-      if (directUrl) {
-        finalDownloadUrl = directUrl;
+      const fallbackUrl = this.currentEpisodeData?.link2;
+      if (fallbackUrl) {
+        // Aplicamos las mismas transformaciones (Google Drive, Dropbox, etc.) al enlace alternativo
+        finalDownloadUrl = this.generateDirectLink(fallbackUrl);
+        console.log('📥 Usando enlace alternativo (Opción 2) para descargar video de PeerTube:', finalDownloadUrl);
       } else {
-        alert('No se pudo obtener el enlace de descarga directa de PeerTube. Es posible que el administrador no lo haya habilitado.');
+        alert('No hay un enlace alternativo disponible para descargar este video de PeerTube.');
         return;
       }
     }
