@@ -91,7 +91,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 
-  <!-- Estilos -->
   <style>
     /* ===== TODOS TUS ESTILOS ORIGINALES (se mantienen exactamente igual) ===== */
     :root {
@@ -795,7 +794,7 @@
   </div>
 </div>
 
-<!-- SCRIPTS -->
+<!-- SCRIPTS (no se ha eliminado nada original) -->
 <script>
   // Configuración de Firebase (necesaria para auth, ratings, etc.)
   const firebaseConfig = {
@@ -827,6 +826,64 @@
 <script src="notification-system.js"></script>
 <script src="gifs.js"></script>
 
+<!-- ========== SCRIPT DE DONACIÓN KO-FI (CONTROLADO POR PAÍS Y ADMIN) ========== -->
+<script>
+  // Lista de países permitidos (códigos ISO 3166-1 alfa-2)
+  const allowedCountries = ['NG', 'ID', 'EG', 'AE', 'KW', 'QA', 'SA', 'BD', 'TR', 'MY']; // NO incluye Perú, solo los que pediste
+
+  // Función para detectar país mediante IP (gratuita, sin clave)
+  function getUserCountry(callback) {
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => callback(data.country_code))
+      .catch(() => callback(null));
+  }
+
+  // Función para cargar el widget de Ko-fi dinámicamente (solo una vez)
+  let kofiLoaded = false;
+  function loadKoFiWidget() {
+    if (kofiLoaded) return;
+    kofiLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://storage.ko-fi.com/cdn/scripts/overlay-widget.js';
+    script.async = true;
+    script.onload = () => {
+      if (typeof kofiWidgetOverlay !== 'undefined') {
+        kofiWidgetOverlay.draw('archinime', {
+          'type': 'floating-chat',
+          'floating-chat.donateButton.text': 'Apóyame',
+          'floating-chat.donateButton.background-color': '#00b9fe',
+          'floating-chat.donateButton.text-color': '#fff'
+        });
+      }
+    };
+    document.head.appendChild(script);
+  }
+
+  // Lógica principal: mostrar solo si el usuario es admin O el país está en la lista
+  function evaluarMostrarDonacion() {
+    const user = auth.currentUser;
+    // Administradores: archinime12@gmail.com y blodelywar@gmail.com
+    if (user && (user.email === 'archinime12@gmail.com' || user.email === 'blodelywar@gmail.com')) {
+      loadKoFiWidget();
+      return;
+    }
+    // No admin: comprobar país
+    getUserCountry(country => {
+      if (country && allowedCountries.includes(country)) {
+        loadKoFiWidget();
+      }
+      // En caso contrario, no se carga nada.
+    });
+  }
+
+  // Escuchar cambios de autenticación (Firebase ya está inicializado arriba)
+  auth.onAuthStateChanged(() => {
+    evaluarMostrarDonacion();
+  });
+  // También ejecutar por si ya hay sesión antes del evento
+  if (auth.currentUser) evaluarMostrarDonacion();
+</script>
 
 <script>
   // Variables para paginación y música global (se mantienen)
@@ -1489,14 +1546,11 @@
   function randomizeFgPosition() {
     const fg = document.getElementById('fgContainer');
     if (!fg) return;
-    // Eliminar clases existentes
     fg.classList.remove('fg-left', 'fg-right');
-    // Elegir aleatoriamente left o right
     const side = Math.random() < 0.5 ? 'left' : 'right';
     fg.classList.add(`fg-${side}`);
   }
 
-  // Chroma key (sin cambios relevantes, solo añadimos la aleatoriedad al cambiar de video)
   const fgContainer = document.getElementById('fgContainer');
   const fgVideo = document.getElementById('fgVideo');
   const fgCanvas = document.getElementById('fgCanvas');
@@ -1539,7 +1593,6 @@
     bgVideo.play().then(() => bgVideo.classList.add('loaded')).catch(e => console.log('Fondo bloqueado', e));
     fgVideo.muted = true;
     fgVideo.play().catch(e => console.log('Animación bloqueada', e));
-    // Posición aleatoria al inicio
     randomizeFgPosition();
   }
   function createSparks(clientX, clientY) {
@@ -1576,7 +1629,6 @@
       fgVideo.play().then(() => {
         isTransitioning = false;
         fgContainer.classList.remove('poof');
-        // Cambiar también la posición aleatoriamente después de la transición
         randomizeFgPosition();
       }).catch(err => { console.log('Error cambiando anim', err); isTransitioning = false; });
     }, 600);
@@ -1584,7 +1636,6 @@
   window.addEventListener('DOMContentLoaded', startVisualMedia);
   window.addEventListener('load', () => { if (window.startNotificationSequence) window.startNotificationSequence(); });
 
-  // Inicializar anuncio y cargar datos después de ratings
   inicializarAnuncio();
   loadRatings().then(() => {
     cargarDatosYMostrar();
