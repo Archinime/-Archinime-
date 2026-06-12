@@ -6,12 +6,12 @@
   <title>Reproductor - Archinime</title>
   <link rel="icon" href="Logo_Archinime.png" type="image/png">
 
-  <!-- Tema de color dinámico optimizado (intervalo más largo para reducir carga) -->
+  <!-- Tema de color dinámico optimizado -->
   <script>
     (function() {
       const colors = ["#00f3ff", "#0066ff", "#bc13fe", "#ff0055", "#bc13fe", "#0066ff", "#00f3ff"];
       const animationDuration = 20000;
-      const intervalTime = 120;  // antes 20ms, ahora 120ms -> mucho más ligero
+      const intervalTime = 120;
       const segments = colors.length - 1;
       const step = (intervalTime / animationDuration) * segments;
       let currentProgress = 0;
@@ -67,7 +67,7 @@
   <script src="app-core.js"></script>
 
   <style>
-    /* ===== ESTILOS ORIGINALES (SIN DEFORMACIONES) CON OPTIMIZACIONES DE RENDIMIENTO ===== */
+    /* ===== ESTILOS ORIGINALES + NUEVO BRILLO PARA OPCIÓN 2 DUAL ===== */
     
     :root {
       --primary-color: #00fff7;
@@ -99,11 +99,9 @@
       opacity: 0.5;
       pointer-events: none;
     }
-    /* En móviles, el video se oculta y usamos solo el poster como fondo */
     body.is-mobile #bg-video {
       display: none;
     }
-    /* Para móviles, aseguramos que el fondo tenga la imagen del poster */
     body.is-mobile {
       background: url('galaxia-morado1.avif') center center / cover no-repeat fixed;
     }
@@ -115,7 +113,7 @@
       height: 100%;
       z-index: -5;
       background: radial-gradient(circle at center, rgba(123, 44, 191, 0.15) 0%, #000000 90%);
-      backdrop-filter: blur(4px); /* reducido de 8px para menor lag */
+      backdrop-filter: blur(4px);
       pointer-events: none;
     }
 
@@ -160,7 +158,6 @@
       box-shadow: 0 0 40px rgba(188, 19, 254, 0.6), inset 0 0 20px rgba(0, 243, 255, 0.5);
       will-change: transform;
     }
-    /* eliminado hue-rotate costoso, se mantiene el glow */
     .gif-inner {
       width: 100%;
       height: 100%;
@@ -318,6 +315,32 @@
       color: #000;
       background: var(--primary-color);
       font-weight: 700;
+      box-shadow: 0 0 15px var(--primary-color);
+    }
+
+    /* 🔥 NUEVO: efecto brillante para Opción 2 cuando ambas opciones existen */
+    .opt-btn.dual-option {
+      position: relative;
+      animation: softPulse 1.8s infinite ease-in-out;
+      border-color: rgba(255, 0, 85, 0.6);
+    }
+    @keyframes softPulse {
+      0% {
+        box-shadow: 0 0 2px rgba(0, 255, 247, 0.2), 0 0 2px rgba(255, 0, 85, 0.2);
+        border-color: rgba(255, 0, 85, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 10px rgba(0, 255, 247, 0.6), 0 0 15px rgba(255, 0, 85, 0.5);
+        border-color: var(--accent-color);
+      }
+      100% {
+        box-shadow: 0 0 2px rgba(0, 255, 247, 0.2), 0 0 2px rgba(255, 0, 85, 0.2);
+        border-color: rgba(255, 0, 85, 0.4);
+      }
+    }
+    /* El efecto no se aplica si ya está activo (para no sobrecargar) */
+    .opt-btn.active.dual-option {
+      animation: none;
       box-shadow: 0 0 15px var(--primary-color);
     }
 
@@ -745,7 +768,6 @@
       transform: translateY(-3px);
     }
 
-    /* ESTILO MODERNO PARA STICKERS VACÍOS */
     .sticker-empty-modern {
       grid-column: 1 / -1;
       text-align: center;
@@ -1223,7 +1245,6 @@
       bgVideo.load();
       bgVideo.style.display = 'none';
     }
-    // Reducir aún más el blur en móviles para mejorar fps
     const style = document.createElement('style');
     style.textContent = `body.is-mobile .comentarios-section { backdrop-filter: blur(3px) !important; } body.is-mobile #overlay { backdrop-filter: blur(3px) !important; } body.is-mobile .logo-blocker { backdrop-filter: blur(2px) !important; }`;
     document.head.appendChild(style);

@@ -1,9 +1,10 @@
 // video-player-core.js - Versión con catálogo local + Firestore
 // CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
 // MODIFICADO: Descarga en PeerTube usa el enlace de Opción 2 en lugar de API (más fiable)
-// MEJORADO: Títulos dinámicos: ahora muestra "Nombre Temporada - Título Episodio"
+// MEJORADO: Títulos dinámicos: ahora muestra "Nombre Anime - Nombre Temporada - Título Episodio"
 // NUEVO: Descarga forzada con barra de progreso para Catbox y dominios externos
 // NUEVO: Soporte para episodios divididos en múltiples partes (arrays de URLs)
+// ACTUALIZADO: Selección automática de Opción 2 si Latino está vacío; efecto dual en botón Opción 2
 
 class VideoPlayer {
   constructor() {
@@ -226,10 +227,12 @@ class VideoPlayer {
     });
   }
   
+  // 🔥 MODIFICADO: Incluye el nombre del anime al inicio
   formatEpisodeTitle(season, epNum, episodeData) {
+    const animeTitle = this.animeData?.title || 'Anime';
     const seasonName = season.name || `Temporada ${season.num}`;
     const episodeTitle = episodeData.title || `Capítulo ${epNum}`;
-    return `${seasonName} - ${episodeTitle}`;
+    return `${animeTitle} - ${seasonName} - ${episodeTitle}`;
   }
   
   async loadEpisodeData() {
@@ -262,14 +265,36 @@ class VideoPlayer {
       const latinoUrls = this.normalizeUrls(episodeData.link);
       const subUrls = this.normalizeUrls(episodeData.link2);
       
-      this.updateDownloadUrls(latinoUrls);
-      this.activeOption = 'latino';
-      this.playPart(0, latinoUrls);
+      // --- NUEVA LÓGICA: seleccionar automáticamente la opción disponible ---
+      let activeUrls;
+      let activeOptionLabel;
+      let hasBoth = latinoUrls.length > 0 && subUrls.length > 0;
       
+      if (latinoUrls.length > 0) {
+        activeUrls = latinoUrls;
+        activeOptionLabel = 'latino';
+      } else if (subUrls.length > 0) {
+        activeUrls = subUrls;
+        activeOptionLabel = 'sub';
+      } else {
+        // No hay videos
+        document.getElementById('epTitle').innerText = 'No hay enlaces disponibles';
+        return;
+      }
+      
+      this.updateDownloadUrls(activeUrls);
+      this.activeOption = activeOptionLabel;
+      this.playPart(0, activeUrls);
+      
+      // Crear botones de servidor
       const serverContainer = document.getElementById('serverOptions');
       serverContainer.innerHTML = '';
-      if (latinoUrls.length > 0) this.createServerButton('Latino', latinoUrls, true);
-      if (subUrls.length > 0) this.createServerButton('Opción 2', subUrls, false);
+      if (latinoUrls.length > 0) {
+        this.createServerButton('Latino', latinoUrls, activeOptionLabel === 'latino', hasBoth && activeOptionLabel !== 'latino');
+      }
+      if (subUrls.length > 0) {
+        this.createServerButton('Opción 2', subUrls, activeOptionLabel === 'sub', hasBoth && activeOptionLabel !== 'sub');
+      }
       
       this.setupNavigation();
       await this.autoMarkAsWatched();
@@ -287,10 +312,13 @@ class VideoPlayer {
     return [];
   }
   
-  createServerButton(label, urls, isActive) {
+  createServerButton(label, urls, isActive, highlightAsDual = false) {
     const container = document.getElementById('serverOptions');
     const btn = document.createElement('button');
     btn.className = 'opt-btn' + (isActive ? ' active' : '');
+    if (highlightAsDual) {
+      btn.classList.add('dual-option');
+    }
     btn.innerText = label;
     btn.onclick = () => {
       document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
@@ -362,7 +390,6 @@ class VideoPlayer {
         if (partIndex + 1 < urlsArray.length) {
           this.playPart(partIndex + 1, urlsArray);
         } else {
-          // Fin del episodio completo
           console.log('Episodio completado');
         }
       };
@@ -376,7 +403,6 @@ class VideoPlayer {
       iframe.style.height = '100%';
       container.appendChild(iframe);
       this.currentVideoElement = null;
-      // Para iframes no podemos controlar el fin automático, el usuario debe cambiar manualmente
     }
   }
   
@@ -468,7 +494,7 @@ class VideoPlayer {
     let urlsToDownload = [...this.currentDownloadUrls];
     
     if (this.currentPeerTubeUrl) {
-      const fallbackUrls = this.getActiveEpisodeUrls(); // Re-intentar con opción actual
+      const fallbackUrls = this.getActiveEpisodeUrls();
       if (fallbackUrls.length > 0) {
         urlsToDownload = fallbackUrls.map(url => this.generateDirectLink(url));
       } else {
@@ -486,7 +512,6 @@ class VideoPlayer {
     let baseFilename = epTitleElem ? epTitleElem.innerText : 'video';
     baseFilename = baseFilename.replace(/[^a-z0-9ñáéíóúü \-_]/gi, '').replace(/\s+/g, '_');
     
-    // Descargar todas las partes
     for (let i = 0; i < urlsToDownload.length; i++) {
       const url = urlsToDownload[i];
       const isCatbox = url.includes('catbox.moe');
@@ -502,7 +527,6 @@ class VideoPlayer {
       if (isCatbox || isCrossOrigin) {
         await this.forceDownload(url, filename);
       } else {
-        // Descarga directa con enlace
         const link = document.createElement('a');
         link.href = url;
         link.download = filename;
@@ -510,7 +534,6 @@ class VideoPlayer {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        // Pequeña pausa para no saturar
         await new Promise(r => setTimeout(r, 500));
       }
     }
