@@ -1,6 +1,7 @@
 // ============================================
 // SISTEMA DE STICKERS (CATBOX + FIRESTORE)
-// CON PROXY CORS Y DRAG & DROP (MÁX. 2 MB)
+// CON PROXY CORS Y DRAG & DROP (MÁX. 5 MB)
+// MODIFICADO: Límite de archivos aumentado a 5 MB
 // ============================================
 
 let stickersDb = null;
@@ -142,7 +143,7 @@ function renderSubirStickersTab() {
     if (!container) return;
 
     container.innerHTML = `
-        <p style="color:#fff; margin-bottom: 10px;">Arrastra una imagen o video aquí, o haz clic para seleccionar (máx. 2 MB)</p>
+        <p style="color:#fff; margin-bottom: 10px;">Arrastra una imagen o video aquí, o haz clic para seleccionar (máx. 5 MB)</p>
         <label for="stickerFileInput" class="upload-sticker-label" id="dropZoneLabel">
             <i class="fas fa-cloud-upload-alt"></i> Seleccionar archivo
         </label>
@@ -224,9 +225,9 @@ function handleDroppedFile(file) {
         return;
     }
 
-    // Validar tamaño 2 MB
-    if (file.size > 2 * 1024 * 1024) {
-        alert('El archivo es muy pesado. Máximo 2 MB.');
+    // 🔼 LÍMITE AUMENTADO A 5 MB
+    if (file.size > 5 * 1024 * 1024) {
+        alert('El archivo es muy pesado. Máximo 5 MB.');
         return;
     }
 
@@ -243,7 +244,7 @@ function handleDroppedFile(file) {
 // Exponer función global para el drag & drop del HTML
 window.procesarArchivoSticker = handleDroppedFile;
 
-// ========== FUNCIÓN DE SUBIDA CON PROXY CORS (LÍMITE 2 MB) ==========
+// ========== FUNCIÓN DE SUBIDA CON PROXY CORS (LÍMITE 5 MB) ==========
 window.subirStickerDesdePC = async function(inputElement) {
     const user = getCurrentUser();
     if (!user) {
@@ -255,8 +256,9 @@ window.subirStickerDesdePC = async function(inputElement) {
     const file = inputElement.files[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) {
-        alert('El archivo es muy pesado. Máximo 2 MB.');
+    // 🔼 LÍMITE AUMENTADO A 5 MB
+    if (file.size > 5 * 1024 * 1024) {
+        alert('El archivo es muy pesado. Máximo 5 MB.');
         inputElement.value = '';
         return;
     }
