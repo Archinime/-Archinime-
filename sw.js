@@ -1,11 +1,11 @@
 /* ============================================================
-   sw.js - Archinime OS Service Worker - OFFLINE FIRST
+   sw.js - Archinime OS - OFFLINE FIRST (mejorado)
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v59';
-const CACHE_DYNAMIC = 'archinime-dynamic-v59';
-const CACHE_IMAGES = 'archinime-images-v59';
-const CACHE_FONTS = 'archinime-fonts-v59';
+const CACHE_STATIC = 'archinime-static-v60';
+const CACHE_DYNAMIC = 'archinime-dynamic-v60';
+const CACHE_IMAGES = 'archinime-images-v60';
+const CACHE_FONTS = 'archinime-fonts-v60';
 
 const STATIC_ASSETS = [
   '/',
@@ -63,47 +63,53 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
-  // Catálogo: siempre desde caché primero (stale-while-revalidate)
+  // 1. Catálogo: stale-while-revalidate
   if (url.pathname.endsWith('/catalogo.js')) {
     event.respondWith(staleWhileRevalidate(request, CACHE_DYNAMIC));
     return;
   }
 
-  // HTML: cache-first (offline prioritario)
+  // 2. HTML: cache-first para cualquier página .html o raíz
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
     event.respondWith(cacheFirst(request));
     return;
   }
 
-  // CSS/JS/Fuentes: stale-while-revalidate
+  // 3. CSS/JS/Fuentes: stale-while-revalidate
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // Imágenes/vídeos: stale-while-revalidate
+  // 4. Imágenes/vídeos: stale-while-revalidate
   if (request.destination === 'image' || request.destination === 'video') {
     event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
     return;
   }
 
-  // Firestore/API: solo red (sin caché)
+  // 5. Firestore/API: solo red
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // Resto: network-first
+  // 6. Resto: network-first
   event.respondWith(networkFirst(request));
 });
 
 // ========== ESTRATEGIAS ==========
 
-// Cache first: devuelve caché, si no, red
 async function cacheFirst(request) {
   const cache = await caches.open(CACHE_STATIC);
-  const cached = await cache.match(request);
+  // Intentamos encontrar en caché cualquier respuesta que coincida con la URL (sin query string)
+  let cached = await cache.match(request);
+  if (!cached) {
+    // Si no, intentamos con la URL sin parámetros
+    const urlWithoutParams = request.url.split('?')[0];
+    cached = await cache.match(urlWithoutParams);
+  }
   if (cached) return cached;
+
   try {
     const response = await fetch(request);
     if (response && response.status === 200) {
@@ -111,11 +117,11 @@ async function cacheFirst(request) {
     }
     return response;
   } catch (e) {
+    // Fallback: intentar devolver la página de error o un mensaje
     return new Response('Página no disponible offline', { status: 503 });
   }
 }
 
-// Network-first con fallback a caché
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_DYNAMIC);
   try {
@@ -130,7 +136,6 @@ async function networkFirst(request) {
   }
 }
 
-// Stale-while-revalidate
 async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
@@ -143,7 +148,7 @@ async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   return cached || fetchPromise;
 }
 
-// Push (notificaciones)
+// Push...
 self.addEventListener('push', event => {
   let data = { title: 'Archinime', body: 'Nueva actualización', icon: '/Logo_Archinime.png' };
   if (event.data) {
