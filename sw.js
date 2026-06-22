@@ -1,14 +1,12 @@
 /* ============================================================
-   sw.js - Archinime OS Service Worker
-   OFFLINE FIRST: Catálogo, páginas y recursos siempre disponibles
+   sw.js - Archinime OS Service Worker - OFFLINE FIRST
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v56';
-const CACHE_DYNAMIC = 'archinime-dynamic-v56';
-const CACHE_IMAGES = 'archinime-images-v56';
-const CACHE_FONTS = 'archinime-fonts-v56';
+const CACHE_STATIC = 'archinime-static-v57';
+const CACHE_DYNAMIC = 'archinime-dynamic-v57';
+const CACHE_IMAGES = 'archinime-images-v57';
+const CACHE_FONTS = 'archinime-fonts-v57';
 
-// Recursos esenciales para offline (¡todas las páginas HTML!)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -36,18 +34,14 @@ const STATIC_ASSETS = [
   '/youtube.avif'
 ];
 
-// Instalación: precache de todo
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando y precacheando...');
+  console.log('[SW] Instalando...');
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_STATIC).then(cache => {
-      return cache.addAll(STATIC_ASSETS);
-    }).catch(err => console.warn('[SW] Error en precache:', err))
+    caches.open(CACHE_STATIC).then(cache => cache.addAll(STATIC_ASSETS))
   );
 });
 
-// Activación: limpieza y toma de control
 self.addEventListener('activate', event => {
   console.log('[SW] Activando...');
   const currentCaches = [CACHE_STATIC, CACHE_DYNAMIC, CACHE_IMAGES, CACHE_FONTS];
@@ -56,7 +50,6 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (!currentCaches.includes(cacheName)) {
-            console.log('[SW] Eliminando caché obsoleta:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -65,77 +58,59 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch: estrategias por tipo
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const request = event.request;
-
   if (request.method !== 'GET') return;
 
-  // ============================================================
-  // 1. CATÁLOGO: stale-while-revalidate (siempre disponible)
-  // ============================================================
+  // Catálogo: siempre desde caché primero (stale-while-revalidate)
   if (url.pathname.endsWith('/catalogo.js')) {
     event.respondWith(staleWhileRevalidate(request, CACHE_DYNAMIC));
     return;
   }
 
-  // ============================================================
-  // 2. HTML (páginas): ¡CACHE FIRST! (offline prioritario)
-  // ============================================================
+  // HTML: cache-first (offline prioritario)
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
     event.respondWith(cacheFirst(request));
     return;
   }
 
-  // ============================================================
-  // 3. CSS, JS, fuentes: stale-while-revalidate
-  // ============================================================
+  // CSS/JS/Fuentes: stale-while-revalidate
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // ============================================================
-  // 4. Imágenes y vídeos: stale-while-revalidate
-  // ============================================================
+  // Imágenes/vídeos: stale-while-revalidate
   if (request.destination === 'image' || request.destination === 'video') {
     event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
     return;
   }
 
-  // ============================================================
-  // 5. API / Firestore: solo red (sin caché)
-  // ============================================================
+  // Firestore/API: solo red (sin caché)
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // ============================================================
-  // 6. Resto: network-first con fallback a caché
-  // ============================================================
+  // Resto: network-first
   event.respondWith(networkFirst(request));
 });
 
-// ==================== ESTRATEGIAS ====================
+// ========== ESTRATEGIAS ==========
 
-// Cache first: prioriza la caché, si no, red
+// Cache first: devuelve caché, si no, red
 async function cacheFirst(request) {
   const cache = await caches.open(CACHE_STATIC);
-  const cachedResponse = await cache.match(request);
-  if (cachedResponse) {
-    return cachedResponse;
-  }
-  // Si no está en caché, intentar red (y guardar para futuras veces)
+  const cached = await cache.match(request);
+  if (cached) return cached;
   try {
-    const networkResponse = await fetch(request);
-    if (networkResponse && networkResponse.status === 200) {
-      cache.put(request, networkResponse.clone());
+    const response = await fetch(request);
+    if (response && response.status === 200) {
+      cache.put(request, response.clone());
     }
-    return networkResponse;
-  } catch (err) {
-    // Si falla la red y no hay caché, devolver error
+    return response;
+  } catch (e) {
     return new Response('Página no disponible offline', { status: 503 });
   }
 }
@@ -144,33 +119,31 @@ async function cacheFirst(request) {
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_DYNAMIC);
   try {
-    const networkResponse = await fetch(request);
-    if (networkResponse && networkResponse.status === 200) {
-      cache.put(request, networkResponse.clone());
+    const response = await fetch(request);
+    if (response && response.status === 200) {
+      cache.put(request, response.clone());
     }
-    return networkResponse;
-  } catch (err) {
-    const cachedResponse = await cache.match(request);
-    return cachedResponse || new Response('Recurso no disponible offline', { status: 503 });
+    return response;
+  } catch (e) {
+    const cached = await cache.match(request);
+    return cached || new Response('Recurso no disponible', { status: 503 });
   }
 }
 
-// Stale-while-revalidate: sirve caché mientras se actualiza en segundo plano
+// Stale-while-revalidate
 async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   const cache = await caches.open(cacheName);
-  const cachedResponse = await cache.match(request);
-
-  const fetchPromise = fetch(request).then(networkResponse => {
-    if (networkResponse && networkResponse.status === 200) {
-      cache.put(request, networkResponse.clone());
+  const cached = await cache.match(request);
+  const fetchPromise = fetch(request).then(response => {
+    if (response && response.status === 200) {
+      cache.put(request, response.clone());
     }
-    return networkResponse;
+    return response;
   }).catch(() => {});
-
-  return cachedResponse || fetchPromise;
+  return cached || fetchPromise;
 }
 
-// ==================== PUSH (notificaciones) ====================
+// Push (notificaciones)
 self.addEventListener('push', event => {
   let data = { title: 'Archinime', body: 'Nueva actualización', icon: '/Logo_Archinime.png' };
   if (event.data) {
