@@ -2,10 +2,10 @@
    sw.js - Archinime OS Service Worker - OFFLINE FIRST
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v58';
-const CACHE_DYNAMIC = 'archinime-dynamic-v58';
-const CACHE_IMAGES = 'archinime-images-v58';
-const CACHE_FONTS = 'archinime-fonts-v58';
+const CACHE_STATIC = 'archinime-static-v59';
+const CACHE_DYNAMIC = 'archinime-dynamic-v59';
+const CACHE_IMAGES = 'archinime-images-v59';
+const CACHE_FONTS = 'archinime-fonts-v59';
 
 const STATIC_ASSETS = [
   '/',
@@ -38,10 +38,7 @@ self.addEventListener('install', event => {
   console.log('[SW] Instalando...');
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_STATIC).then(cache => {
-      console.log('[SW] Precacheando assets...');
-      return cache.addAll(STATIC_ASSETS).catch(err => console.warn('[SW] Error en precache:', err));
-    })
+    caches.open(CACHE_STATIC).then(cache => cache.addAll(STATIC_ASSETS))
   );
 });
 
@@ -53,7 +50,6 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (!currentCaches.includes(cacheName)) {
-            console.log('[SW] Eliminando caché obsoleta:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -67,62 +63,47 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
-  // ============================================================
-  // 1. CATÁLOGO: CACHE FIRST (siempre disponible)
-  // ============================================================
+  // Catálogo: siempre desde caché primero (stale-while-revalidate)
   if (url.pathname.endsWith('/catalogo.js')) {
-    event.respondWith(cacheFirst(request, CACHE_STATIC));
+    event.respondWith(staleWhileRevalidate(request, CACHE_DYNAMIC));
     return;
   }
 
-  // ============================================================
-  // 2. HTML: CACHE FIRST (offline prioritario)
-  // ============================================================
+  // HTML: cache-first (offline prioritario)
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
-    event.respondWith(cacheFirst(request, CACHE_STATIC));
+    event.respondWith(cacheFirst(request));
     return;
   }
 
-  // ============================================================
-  // 3. CSS/JS/Fuentes: stale-while-revalidate
-  // ============================================================
+  // CSS/JS/Fuentes: stale-while-revalidate
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // ============================================================
-  // 4. Imágenes/vídeos: stale-while-revalidate
-  // ============================================================
+  // Imágenes/vídeos: stale-while-revalidate
   if (request.destination === 'image' || request.destination === 'video') {
     event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
     return;
   }
 
-  // ============================================================
-  // 5. Firestore/API: solo red (sin caché)
-  // ============================================================
+  // Firestore/API: solo red (sin caché)
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // ============================================================
-  // 6. Resto: network-first
-  // ============================================================
+  // Resto: network-first
   event.respondWith(networkFirst(request));
 });
 
 // ========== ESTRATEGIAS ==========
 
 // Cache first: devuelve caché, si no, red
-async function cacheFirst(request, cacheName = CACHE_STATIC) {
-  const cache = await caches.open(cacheName);
+async function cacheFirst(request) {
+  const cache = await caches.open(CACHE_STATIC);
   const cached = await cache.match(request);
-  if (cached) {
-    console.log('[SW] Sirviendo desde caché:', request.url);
-    return cached;
-  }
+  if (cached) return cached;
   try {
     const response = await fetch(request);
     if (response && response.status === 200) {
@@ -130,8 +111,7 @@ async function cacheFirst(request, cacheName = CACHE_STATIC) {
     }
     return response;
   } catch (e) {
-    console.warn('[SW] No se pudo obtener:', request.url);
-    return new Response('Recurso no disponible offline', { status: 503 });
+    return new Response('Página no disponible offline', { status: 503 });
   }
 }
 
