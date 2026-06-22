@@ -1,33 +1,19 @@
 /* ============================================================
    sw.js - Archinime OS Service Worker
-   OFFLINE FIRST: todos los recursos precargados
+   Estrategia híbrida con control absoluto sobre catálogo.js
+   MEJORADO: Caché más inteligente, actualizaciones en caliente
    ============================================================ */
 
-const APP_VERSION = '2025-06-22-v9.0';
-const CACHE_STATIC = `archinime-static-${APP_VERSION}`;
-const CACHE_DYNAMIC = `archinime-dynamic-${APP_VERSION}`;
-const CACHE_IMAGES = `archinime-images-${APP_VERSION}`;
-const CACHE_FONTS = `archinime-fonts-${APP_VERSION}`;
+const CACHE_STATIC = 'archinime-static-v62';
+const CACHE_DYNAMIC = 'archinime-dynamic-v62';
+const CACHE_IMAGES = 'archinime-images-v62';
+const CACHE_FONTS = 'archinime-fonts-v62';
 
-// Lista completa de recursos a precachear (¡todos los necesarios!)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/anime-detail.html',
   '/video-player.html',
-  '/catalogo.js',
-  '/animaciones.js',
-  '/musica_fondo.js',
-  '/notification-system.js',
-  '/gifs.js',
-  '/state.js',
-  '/app-core.js',
-  '/dompurify-config.js',
-  '/comentarios.js',
-  '/reacciones.js',
-  '/stickers-system.js',
-  '/video-player-core.js',
-  '/anime-detail-core.js',
   '/manifest.json',
   '/Logo_Archinime.avif',
   '/Logo_Archinime.png',
@@ -37,132 +23,123 @@ const STATIC_ASSETS = [
   '/youtube.avif'
 ];
 
+// Instalación
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando y precacheando...');
+  console.log('[SW] Instalando...');
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_STATIC).then(cache => {
+      console.log('[SW] Precaching recursos estáticos');
       return cache.addAll(STATIC_ASSETS);
     }).catch(err => console.warn('[SW] Error en precache:', err))
   );
 });
 
+// Activación
 self.addEventListener('activate', event => {
   console.log('[SW] Activando...');
-  // Eliminar cachés de versiones anteriores
+  const currentCaches = [CACHE_STATIC, CACHE_DYNAMIC, CACHE_IMAGES, CACHE_FONTS];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName.startsWith('archinime-') && !cacheName.includes(APP_VERSION)) {
+          if (!currentCaches.includes(cacheName)) {
             console.log('[SW] Eliminando caché obsoleta:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
-    }).then(() => self.clients.claim())
+    })
   );
+  return self.clients.claim();
 });
 
+// Fetch
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const request = event.request;
-
   if (request.method !== 'GET') return;
 
-  // ============================================================
-  // 1. CATÁLOGO: siempre desde caché (stale-while-revalidate)
-  // ============================================================
+  // Catálogo siempre fresco
   if (url.pathname.endsWith('/catalogo.js')) {
-    event.respondWith(staleWhileRevalidate(request, CACHE_STATIC));
+    event.respondWith(
+      fetch(request, { cache: 'no-cache' })
+        .then(response => {
+          const responseClone = response.clone();
+          caches.open(CACHE_DYNAMIC).then(cache => cache.put(request, responseClone));
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
     return;
   }
 
-  // ============================================================
-  // 2. HTML (páginas): cache-first (offline prioritario)
-  // ============================================================
+  // HTML -> network-first
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
-    event.respondWith(cacheFirst(request));
+    event.respondWith(networkFirst(request));
     return;
   }
 
-  // ============================================================
-  // 3. CSS, JS, fuentes: stale-while-revalidate
-  // ============================================================
-  if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
+  // Fuentes, CSS, JS -> stale-while-revalidate
+  if (request.destination === 'font' || request.destination === 'style' || request.destination === 'script') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // ============================================================
-  // 4. Imágenes y vídeos: stale-while-revalidate
-  // ============================================================
+  // Imágenes, vídeos -> stale-while-revalidate
   if (request.destination === 'image' || request.destination === 'video') {
-    event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
+    event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // ============================================================
-  // 5. API / Firestore: solo red (sin caché)
-  // ============================================================
+  // API / Firestore -> solo red
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // ============================================================
-  // 6. Resto: network-first
-  // ============================================================
+  // Resto -> network-first
   event.respondWith(networkFirst(request));
 });
 
-// ==================== ESTRATEGIAS ====================
-
-// Cache first: devuelve caché, si no, red
-async function cacheFirst(request) {
-  const cache = await caches.open(CACHE_STATIC);
-  const cached = await cache.match(request);
-  if (cached) return cached;
-  try {
-    const response = await fetch(request);
-    if (response && response.status === 200) {
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (e) {
-    return new Response('Página no disponible offline', { status: 503 });
-  }
-}
-
-// Network-first con fallback a caché
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_DYNAMIC);
   try {
-    const response = await fetch(request);
-    if (response && response.status === 200) {
-      cache.put(request, response.clone());
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.status === 200) {
+      cache.put(request, networkResponse.clone());
     }
-    return response;
-  } catch (e) {
-    const cached = await cache.match(request);
-    return cached || new Response('Recurso no disponible', { status: 503 });
+    return networkResponse;
+  } catch (err) {
+    const cachedResponse = await cache.match(request);
+    return cachedResponse || Response.error();
   }
 }
 
-// Stale-while-revalidate: sirve caché, actualiza en segundo plano
-async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
+async function staleWhileRevalidate(request) {
+  const cacheName = getCacheNameForRequest(request);
   const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
-  const fetchPromise = fetch(request).then(response => {
-    if (response && response.status === 200) {
-      cache.put(request, response.clone());
+  const cachedResponse = await cache.match(request);
+
+  const fetchPromise = fetch(request).then(networkResponse => {
+    if (networkResponse && networkResponse.status === 200) {
+      cache.put(request, networkResponse.clone());
     }
-    return response;
+    return networkResponse;
   }).catch(() => {});
-  return cached || fetchPromise;
+
+  return cachedResponse || fetchPromise;
 }
 
-// ==================== PUSH ====================
+function getCacheNameForRequest(request) {
+  const dest = request.destination;
+  if (dest === 'image' || dest === 'video') return CACHE_IMAGES;
+  if (dest === 'font') return CACHE_FONTS;
+  if (dest === 'style' || dest === 'script') return CACHE_STATIC;
+  return CACHE_DYNAMIC;
+}
+
+// Push
 self.addEventListener('push', event => {
   let data = { title: 'Archinime', body: 'Nueva actualización', icon: '/Logo_Archinime.png' };
   if (event.data) {
