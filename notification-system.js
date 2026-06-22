@@ -1,20 +1,20 @@
 // notification-system.js - Con límite de 5 popups por carga de página
+// CORREGIDO: Evita popups duplicados al cargar, cola sincronizada correctamente
 (function(global) {
   'use strict';
 
   const CONFIG = {
     MAX_HISTORY_ITEMS: 50,
     MAX_VISIBLE_NOTIFICATIONS: 30,
-    MAX_POPUPS_PER_PAGE_LOAD: 5,   // 👈 LÍMITE: 5 popups por cada vez que se carga la página
+    MAX_POPUPS_PER_PAGE_LOAD: 5,
     STORAGE_KEYS: {
       QUEUE: 'archinime_popup_queue',
       HISTORY: 'archinime_notif_history',
       SEEN_IDS: 'archinime_seen_notif_ids',
       FIRST_VISIT: 'archinime_notif_first_visit',
-      LAST_CATALOG_CHECK: 'archinime_last_catalog_check',
-      POPUP_SHOWN_IDS: 'archinime_popup_shown_ids'
+      LAST_CATALOG_CHECK: 'archinime_last_catalog_check'
     },
-    ANIME_MAX_AGE_DAYS: 30,
+    ANIME_MAX_AGE_DAYS: 60,
     CATALOG_CHECK_INTERVAL_HOURS: 6
   };
 
@@ -34,6 +34,9 @@
       document.documentElement.classList.remove('modal-open');
     },
     sanitizeHTML(str) {
+      if (typeof DOMPurify !== 'undefined') {
+        return DOMPurify.sanitize(str);
+      }
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
@@ -70,7 +73,8 @@
       this.history = [];
       this.isMenuOpen = false;
       this.isShowingPopup = false;
-      this.popupsShownInThisLoad = 0;   // 👈 Contador por carga de página
+      this.popupsShownInThisLoad = 0;
+      this.isProcessingQueue = false; // 🔥 nuevo flag para evitar colisiones
       this.repliesUnsubscribe = null;
       this.dom = { menu: null, list: null, badge: null, modal: null };
       this.toggleMenu = this.toggleMenu.bind(this);
@@ -98,9 +102,15 @@
       }
 
       await this.generateCatalogNotifications();
+      this.rebuildQueueFromHistory();
       this.renderNotificationList();
       this.updateBadge();
-      this.attemptResumeQueue('init');
+      
+      // Esperar un pequeño tick para que todo esté listo y luego mostrar popups
+      setTimeout(() => {
+        this.attemptResumeQueue('init');
+      }, 100);
+      
       this.setupAuthListener();
     }
 
@@ -140,6 +150,10 @@
       if (user) {
         await this.syncWithCloud(user.uid);
         this.listenForReplies(user.uid);
+        this.rebuildQueueFromHistory();
+        this.renderNotificationList();
+        this.updateBadge();
+        // No llamar a attemptResumeQueue aquí para evitar duplicados, se llamará en pageshow o mediante el primer popup
       } else {
         if (this.repliesUnsubscribe) { this.repliesUnsubscribe(); this.repliesUnsubscribe = null; }
       }
@@ -148,9 +162,13 @@
     handlePageShow(event) {
       console.log(`🔄 pageshow (persisted: ${event.persisted})`);
       this.loadPersistedData();
+      this.rebuildQueueFromHistory();
       this.updateBadge();
       this.renderNotificationList();
-      this.attemptResumeQueue('pageshow');
+      // Solo intentar reanudar si no hay un popup mostrándose y no está procesando
+      if (!this.isShowingPopup && !this.isProcessingQueue) {
+        this.attemptResumeQueue('pageshow');
+      }
     }
 
     handleBeforeUnload() { this.persistQueue(); }
@@ -207,6 +225,14 @@
       this.persistHistory();
     }
 
+    rebuildQueueFromHistory() {
+      const pending = this.history.filter(n => !n.seen);
+      pending.sort((a, b) => b.date - a.date);
+      this.queue = pending;
+      this.persistQueue();
+      console.log(`🔄 Cola reconstruida: ${this.queue.length} pendientes`);
+    }
+
     async generateCatalogNotifications() {
       if (typeof catalogoArray === 'undefined' || catalogoArray.length === 0) {
         console.warn('⏳ catalogoArray no disponible. Reintentando en 500ms...');
@@ -216,13 +242,12 @@
 
       console.log('📦 Revisando catálogo local...');
       const now = Date.now();
-      const thirtyDaysAgo = now - (CONFIG.ANIME_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
+      const sixtyDaysAgo = now - (CONFIG.ANIME_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
       const seenIds = StorageManager.load(CONFIG.STORAGE_KEYS.SEEN_IDS, []);
-      const popupShownIds = StorageManager.load(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, []);
 
       const candidatos = catalogoArray
         .filter(a => a.updateType && a.updateType !== 'Ninguna')
-        .filter(a => this._getTimestamp(a.lastUpdate) > thirtyDaysAgo)
+        .filter(a => this._getTimestamp(a.lastUpdate) > sixtyDaysAgo)
         .filter(a => {
           const notifId = `${a.id}_${this._getTimestamp(a.lastUpdate)}`;
           return !seenIds.includes(notifId) && !this.history.some(n => n.notifId === notifId);
@@ -236,17 +261,11 @@
         if (!notif) continue;
         seenIds.push(notif.notifId);
         this.addToHistory(notif);
-        
-        if (!popupShownIds.includes(notif.notifId)) {
-          this.queue.push(notif);
-          console.log(`🔔 Popup encolado: ${anime.title}`);
-        }
       }
 
       StorageManager.save(CONFIG.STORAGE_KEYS.SEEN_IDS, seenIds.slice(-1000));
       this.renderNotificationList();
       this.updateBadge();
-      this.persistQueue();
     }
 
     _getTimestamp(value) {
@@ -262,9 +281,9 @@
       return {
         notifId, animeId: anime.id, title: anime.title, img: anime.img,
         seasonCover: anime.latestSeasonCover || anime.img,
-        blockName: anime.latestBlockName || "", epTitle: anime.latestEpTitle || "Nuevo Contenido",
-        type: anime.updateType, date: ts, seen: false, isFinal: anime.isFinal || false,
-        popupShown: false
+        blockName: anime.latestBlockName || "",
+        epTitle: anime.latestEpTitle || "Nuevo Contenido",
+        type: anime.updateType, date: ts, seen: false, isFinal: anime.isFinal || false
       };
     }
 
@@ -274,19 +293,28 @@
         const doc = await db.collection('users').doc(uid).get();
         if (doc.exists) {
           const data = doc.data();
-          if (data.seenNotifIds) {
-            const localSeen = StorageManager.load(CONFIG.STORAGE_KEYS.SEEN_IDS, []);
-            const merged = [...new Set([...localSeen, ...data.seenNotifIds])].slice(-1000);
-            StorageManager.save(CONFIG.STORAGE_KEYS.SEEN_IDS, merged);
-          }
           if (data.notifHistory) {
             const merged = [...this.history, ...data.notifHistory];
             const uniqueMap = new Map();
-            merged.forEach(n => uniqueMap.set(n.notifId, n));
+            merged.forEach(n => {
+              if (!uniqueMap.has(n.notifId)) {
+                uniqueMap.set(n.notifId, n);
+              } else {
+                const existing = uniqueMap.get(n.notifId);
+                if (n.date > existing.date || (n.seen && !existing.seen)) {
+                  uniqueMap.set(n.notifId, { ...existing, ...n });
+                }
+              }
+            });
             this.history = Array.from(uniqueMap.values())
               .sort((a, b) => b.date - a.date)
               .slice(0, CONFIG.MAX_HISTORY_ITEMS);
             this.persistHistory();
+          }
+          if (data.seenNotifIds) {
+            const localSeen = StorageManager.load(CONFIG.STORAGE_KEYS.SEEN_IDS, []);
+            const merged = [...new Set([...localSeen, ...data.seenNotifIds])].slice(-1000);
+            StorageManager.save(CONFIG.STORAGE_KEYS.SEEN_IDS, merged);
           }
         }
         this.renderNotificationList();
@@ -317,18 +345,15 @@
             this.addToHistory(notif);
             hasNew = true;
             this.markAsSeenInStorage(notifId);
-            
-            const popupShownIds = StorageManager.load(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, []);
-            if (!popupShownIds.includes(notifId)) {
-              this.queue.push(notif);
-              console.log(`🔔 Popup de respuesta encolado: ${notif.title}`);
-              this.persistQueue();
-            }
           }
           if (hasNew) {
+            this.rebuildQueueFromHistory();
             this.renderNotificationList();
             if (!this.isMenuOpen) this.updateBadge();
-            this.attemptResumeQueue('reply');
+            // Solo intentar reanudar si no hay popup mostrándose ni procesando
+            if (!this.isShowingPopup && !this.isProcessingQueue) {
+              this.attemptResumeQueue('reply');
+            }
           }
         }, error => console.error('[Replies] Error:', error));
     }
@@ -363,30 +388,50 @@
     }
 
     attemptResumeQueue(source) {
+      // Evitar ejecuciones concurrentes
+      if (this.isProcessingQueue) {
+        console.log(`⏳ [${source}] Ya procesando cola, ignorando.`);
+        return;
+      }
       console.log(`🎬 [${source}] Reanudando cola. Pendientes: ${this.queue.length}`);
       const existingModal = document.getElementById('eventModal');
-      if (existingModal) { existingModal.remove(); domUtils.enableScroll(); this.isShowingPopup = false; }
-      if (this.queue.length === 0) { console.log('✅ Cola vacía'); return; }
-      if (!this.isShowingPopup) this.showNextPopup();
+      if (existingModal) { 
+        existingModal.remove(); 
+        domUtils.enableScroll(); 
+        this.isShowingPopup = false; 
+      }
+      if (this.queue.length === 0) { 
+        console.log('✅ Cola vacía'); 
+        return; 
+      }
+      if (!this.isShowingPopup) {
+        this.isProcessingQueue = true;
+        this.showNextPopup();
+      }
     }
 
     showNextPopup() {
-      if (this.isShowingPopup) return;
-      if (this.queue.length === 0) return;
-      
-      // 👇 Verificar límite por carga de página
-      if (this.popupsShownInThisLoad >= CONFIG.MAX_POPUPS_PER_PAGE_LOAD) {
-        console.log(`⏸️ Límite de ${CONFIG.MAX_POPUPS_PER_PAGE_LOAD} popups por carga alcanzado. Restantes en cola: ${this.queue.length}`);
+      // Si ya hay un popup mostrándose, no hacer nada
+      if (this.isShowingPopup) {
+        console.log('⏳ Ya hay un popup mostrándose, esperando...');
         return;
       }
       
-      const notif = this.queue[0];
-      const popupShownIds = StorageManager.load(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, []);
-      if (!popupShownIds.includes(notif.notifId)) {
-        popupShownIds.push(notif.notifId);
-        StorageManager.save(CONFIG.STORAGE_KEYS.POPUP_SHOWN_IDS, popupShownIds.slice(-500));
+      // Si la cola está vacía, liberar el flag y salir
+      if (this.queue.length === 0) {
+        this.isProcessingQueue = false;
+        return;
       }
       
+      // Verificar límite por carga de página
+      if (this.popupsShownInThisLoad >= CONFIG.MAX_POPUPS_PER_PAGE_LOAD) {
+        console.log(`⏸️ Límite de ${CONFIG.MAX_POPUPS_PER_PAGE_LOAD} popups por carga alcanzado. Restantes en cola: ${this.queue.length}`);
+        this.isProcessingQueue = false;
+        return;
+      }
+      
+      // Tomar la primera notificación (ya está ordenada por fecha)
+      const notif = this.queue[0];
       this.popupsShownInThisLoad++;
       console.log(`🎬 Mostrando popup ${this.popupsShownInThisLoad}/${CONFIG.MAX_POPUPS_PER_PAGE_LOAD}: ${notif.title}`);
       this.isShowingPopup = true;
@@ -394,6 +439,14 @@
     }
 
     renderPopup(notif) {
+      // Marcar como vista inmediatamente al mostrar el popup
+      if (!notif.seen) {
+        this.markAsRead(notif.notifId);
+        // Eliminar de la cola (ya que se marcó como vista)
+        this.queue = this.queue.filter(n => n.notifId !== notif.notifId);
+        this.persistQueue();
+      }
+
       const existing = document.getElementById('eventModal');
       if (existing) existing.remove();
       const modal = document.createElement('div');
@@ -470,35 +523,42 @@
       modal.classList.remove('show');
       setTimeout(() => {
         modal.remove();
-        if (this.queue.length > 0) this.queue.shift();
         domUtils.enableScroll();
         this.isShowingPopup = false;
-        this.persistQueue();
+        // Mostrar el siguiente popup (si hay más y no se ha alcanzado el límite)
         this.showNextPopup();
       }, 300);
     }
 
     goToAnimeFromPopup(animeId, notifId) {
+      // Ya está marcada como vista, solo redirigir
+      this.closePopup(); // cierra el popup y limpia
+      // Redirigir
       const targetNotif = this.history.find(n => n.notifId === notifId);
-      if (targetNotif && !targetNotif.seen) this.markAsRead(notifId);
-      if (this.queue.length > 0 && this.queue[0].notifId === notifId) this.queue.shift();
-      this.persistQueue();
-      this.isShowingPopup = false;
-      domUtils.enableScroll();
       if (targetNotif && targetNotif.url) window.location.href = targetNotif.url;
       else window.location.href = `anime-detail.html?id=${animeId}`;
     }
 
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
-      if (this.isMenuOpen) { this.dom.menu?.classList.add('active'); this.renderNotificationList(); }
-      else this.dom.menu?.classList.remove('active');
+      if (this.isMenuOpen) { 
+        this.dom.menu?.classList.add('active'); 
+        this.renderNotificationList(); 
+      } else {
+        this.dom.menu?.classList.remove('active');
+      }
     }
 
     markAllAsRead() {
       let changed = false;
       this.history.forEach(n => { if (!n.seen) { n.seen = true; changed = true; } });
-      if (changed) { this.persistHistory(); this.renderNotificationList(); this.updateBadge(); }
+      if (changed) { 
+        this.persistHistory(); 
+        this.renderNotificationList(); 
+        this.updateBadge();
+        this.rebuildQueueFromHistory(); // vacía la cola porque todos están vistos
+        this.isProcessingQueue = false; // liberar flag
+      }
     }
 
     markAsRead(notifId) {
@@ -508,6 +568,9 @@
         this.persistHistory();
         this.updateBadge();
         this.renderNotificationList();
+        // Eliminar de la cola si está
+        this.queue = this.queue.filter(n => n.notifId !== notifId);
+        this.persistQueue();
       }
     }
 

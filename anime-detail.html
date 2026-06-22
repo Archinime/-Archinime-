@@ -72,7 +72,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== ESTILOS SUAVIZADOS (CYBERPUNK ELEGANTE) ===== */
+    /* ===== ESTILOS OPTIMIZADOS ===== */
     * {
       margin: 0;
       padding: 0;
@@ -90,6 +90,7 @@
       --header-height: 72px;
       --glow-intensity: 0.2;
       --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --radius: 16px;
     }
 
     html, body {
@@ -144,7 +145,7 @@
       transform: translateZ(0);
     }
 
-    /* ===== PANTALLA DE CARGA INTEGRADA ===== */
+    /* Pantalla de carga */
     #loadingScreen {
       position: fixed;
       top: 0;
@@ -206,8 +207,8 @@
       -webkit-text-fill-color: transparent;
       margin-bottom: 20px;
       text-shadow: 0 0 20px rgba(0,243,255,0.5);
-      animation: glitchText 3s infinite;
     }
+    @media (min-width: 769px) { .loader-title { animation: glitchText 3s infinite; } }
     .loader-percentage {
       font-size: 1.4rem;
       font-weight: 900;
@@ -234,32 +235,17 @@
       transition: width 0.2s linear;
       box-shadow: 0 0 12px var(--neon-cyan);
     }
-    .loader-sub {
-      margin-top: 20px;
-      font-size: 0.75rem;
-      color: #aaa;
-      letter-spacing: 1px;
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
-    .loader-sub i {
-      color: var(--neon-purple);
-    }
-    @keyframes spinGradient {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
-    }
-    @keyframes floatAnim {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-12px); }
-    }
+    .loader-sub { margin-top: 20px; font-size: 0.75rem; color: #aaa; letter-spacing: 1px; display: flex; gap: 12px; justify-content: center; }
+    .loader-sub i { color: var(--neon-purple); }
+    @keyframes spinGradient { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+    @keyframes floatAnim { 0% { transform: translateY(0px); } 100% { transform: translateY(-12px); } }
     @keyframes glitchText {
       0%,100% { opacity: 1; transform: skewX(0deg); }
       94% { opacity: 1; transform: skewX(0deg); }
       96% { opacity: 0.8; transform: skewX(6deg); text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-cyan); }
       98% { opacity: 0.9; transform: skewX(-6deg); text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-cyan); }
     }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     .container {
       position: relative;
@@ -369,7 +355,7 @@
       position: fixed;
       background: #0f0f13;
       border: 1px solid var(--neon-purple);
-      border-radius: 16px;
+      border-radius: var(--radius);
       max-height: 60vh;
       overflow-y: auto;
       z-index: 99999;
@@ -399,8 +385,7 @@
       transform: translateZ(0);
     }
     .search-item:hover { background: rgba(0,243,255,0.1); }
-    .search-item img { width: 40px; height: 55px;
-      object-fit: cover; border-radius: 6px; }
+    .search-item img { width: 40px; height: 55px; object-fit: cover; border-radius: 6px; }
 
     .anime-cover {
       text-align: center;
@@ -453,7 +438,7 @@
       background: rgba(0,0,0,0.3);
       border-left: 3px solid var(--neon-pink);
       padding: 18px 20px;
-      border-radius: 16px;
+      border-radius: var(--radius);
       margin-bottom: 25px;
       line-height: 1.6;
       color: #e0e0e0;
@@ -510,7 +495,7 @@
       margin-bottom: 15px;
       background: rgba(10, 10, 15, 0.5);
       border: 1px solid rgba(188, 19, 254, 0.25);
-      border-radius: 16px;
+      border-radius: var(--radius);
       overflow: hidden;
       transition: 0.2s;
     }
@@ -619,7 +604,6 @@
       .star { font-size: 1.5rem; }
     }
     
-    /* NUEVOS ESTILOS PARA TARJETAS DE RECOMENDACIÓN (MISMO TAMAÑO QUE INDEX) */
     .rec-card {
       background: rgba(0,0,0,0.35);
       border-radius: 12px;
@@ -630,7 +614,6 @@
       display: flex;
       flex-direction: column;
       aspect-ratio: 2/3;
-      /* Proporción fija como en index */
       width: 100%;
       will-change: transform;
     }
@@ -646,7 +629,7 @@
       flex-shrink: 0;
     }
     .rec-card p {
-      padding: 25px 8px 8px; /* Ajustado superior para el efecto del degradado */
+      padding: 25px 8px 8px;
       margin: 0;
       text-align: center;
       font-size: 0.8rem;
@@ -655,14 +638,13 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      background: linear-gradient(to top, #000000e6 0%, rgba(5,5,5,0.9) 60%, transparent 100%); /* Sombra degradada */
+      background: linear-gradient(to top, #000000e6 0%, rgba(5,5,5,0.9) 60%, transparent 100%);
       flex-shrink: 0;
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
     }
-    /* Ajuste para que el texto no tape la imagen completamente */
     .rec-card {
       position: relative;
     }
@@ -672,35 +654,6 @@
     }
     .rec-card p {
       z-index: 2;
-    }
-    
-    /* Tarjeta de anuncio */
-    .rec-card.card-ad {
-      cursor: default;
-    }
-    .rec-card.card-ad > div {
-      width: 100% !important;
-      height: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-      /* Recorta el contenido que sobresalga */
-      position: relative;
-    }
-    .rec-card.card-ad iframe,
-    .rec-card.card-ad ins,
-    .rec-card.card-ad [id^="container-"] {
-      width: 100% !important;
-      height: 100% !important;
-      border: none;
-      object-fit: cover;            /* Ajusta sin deformar */
-    }
-    /* Asegurar que el contenedor del anuncio no tenga padding/margen extra */
-    .rec-card.card-ad [id^="container-"] {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
     }
 
     .toast {
@@ -770,20 +723,14 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 
-<!-- Anuncios y catálogo local -->
 <script src="catalogo.js"></script>
-
-<!-- Core de anime-detail (ahora con espera de catalogoArray) -->
 <script src="anime-detail-core.js?v=20250406"></script>
-
-<!-- GIFs aleatorios -->
 <script src="gifs.js"></script>
 
 <script>
-  // Lógica para cargar el GIF aleatorio antes de iniciar el progreso
+  // GIF aleatorio
   if (typeof listaDeGifs !== 'undefined' && listaDeGifs.length > 0) {
     const gifElegido = listaDeGifs[Math.floor(Math.random() * listaDeGifs.length)];
     document.getElementById('personaje-gif').src = gifElegido;
@@ -805,17 +752,12 @@
     loadingCompleted = true;
     updateProgress(100);
     if (percentEl) percentEl.innerText = "SISTEMA LISTO";
-    setTimeout(() => {
-      if (loadingScreen) loadingScreen.classList.add('hidden');
-    }, 800);
+    setTimeout(() => { if (loadingScreen) loadingScreen.classList.add('hidden'); }, 800);
   }
 
   let progressValue = 0;
   const interval = setInterval(() => {
-    if (loadingCompleted) {
-      clearInterval(interval);
-      return;
-    }
+    if (loadingCompleted) { clearInterval(interval); return; }
     if (progressValue < 85) {
       progressValue += Math.random() * 8;
       if (progressValue > 85) progressValue = 85;
@@ -826,13 +768,9 @@
   window.addEventListener('load', () => {
     const bgVideo = document.getElementById('bg-video');
     if (bgVideo) bgVideo.play().catch(()=>{});
-
     clearInterval(interval);
     updateProgress(95);
-    setTimeout(() => {
-      updateProgress(100);
-      finishLoading();
-    }, 300);
+    setTimeout(() => { updateProgress(100); finishLoading(); }, 300);
   });
 
   window.playUISound = function(type) {

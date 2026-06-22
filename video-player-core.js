@@ -1,10 +1,6 @@
 // video-player-core.js - Versión con catálogo local + Firestore
-// CORREGIDO: Marcado automático de episodios vistos con migración localStorage -> Firestore
-// MODIFICADO: Descarga en PeerTube usa el enlace de Opción 2 en lugar de API (más fiable)
-// MEJORADO: Títulos dinámicos: ahora muestra "Nombre Anime - Nombre Temporada - Título Episodio"
-// NUEVO: Descarga forzada con barra de progreso para Catbox y dominios externos
-// NUEVO: Soporte para episodios divididos en múltiples partes (arrays de URLs)
-// ACTUALIZADO: Selección automática de Opción 2 si Latino está vacío; efecto dual en botón Opción 2
+// MEJORADO: Descarga única (bloqueo de botón), barra de progreso única
+// SOPORTE: Múltiples partes, selección automática de opción, títulos dinámicos
 
 class VideoPlayer {
   constructor() {
@@ -15,16 +11,16 @@ class VideoPlayer {
     
     this.auth = null;
     this.db = null;
-    this.storage = null;
     this.animeData = null;
-    this.currentDownloadUrls = []; // array de URLs para la opción activa
+    this.currentDownloadUrls = [];
     this.currentPeerTubeUrl = null;
     this.currentEpisodeData = null;
     this.authReady = false;
     this.pendingMarks = [];
     this.currentPartIndex = 0;
-    this.activeOption = 'latino'; // 'latino' o 'sub'
+    this.activeOption = 'latino';
     this.currentVideoElement = null;
+    this.isDownloading = false; // ← NUEVA VARIABLE DE CONTROL
     
     window.comentariosAnimeId = this.animeId;
     window.comentariosSeason = this.season;
@@ -86,7 +82,6 @@ class VideoPlayer {
     
     this.auth = firebase.auth();
     this.db = firebase.firestore();
-    this.storage = firebase.storage();
     
     this.auth.onAuthStateChanged(user => {
       if (window.ArchinimeState) {
@@ -227,7 +222,6 @@ class VideoPlayer {
     });
   }
   
-  // 🔥 MODIFICADO: Incluye el nombre del anime al inicio
   formatEpisodeTitle(season, epNum, episodeData) {
     const animeTitle = this.animeData?.title || 'Anime';
     const seasonName = season.name || `Temporada ${season.num}`;
@@ -261,14 +255,11 @@ class VideoPlayer {
       document.title = `Ver ${formattedTitle} - Archinime`;
       document.getElementById('epTitle').innerText = formattedTitle;
       
-      // Procesar links (pueden ser strings o arrays)
       const latinoUrls = this.normalizeUrls(episodeData.link);
       const subUrls = this.normalizeUrls(episodeData.link2);
       
-      // --- NUEVA LÓGICA: seleccionar automáticamente la opción disponible ---
       let activeUrls;
       let activeOptionLabel;
-      let hasBoth = latinoUrls.length > 0 && subUrls.length > 0;
       
       if (latinoUrls.length > 0) {
         activeUrls = latinoUrls;
@@ -277,7 +268,6 @@ class VideoPlayer {
         activeUrls = subUrls;
         activeOptionLabel = 'sub';
       } else {
-        // No hay videos
         document.getElementById('epTitle').innerText = 'No hay enlaces disponibles';
         return;
       }
@@ -286,14 +276,13 @@ class VideoPlayer {
       this.activeOption = activeOptionLabel;
       this.playPart(0, activeUrls);
       
-      // Crear botones de servidor
       const serverContainer = document.getElementById('serverOptions');
       serverContainer.innerHTML = '';
       if (latinoUrls.length > 0) {
-        this.createServerButton('Latino', latinoUrls, activeOptionLabel === 'latino', hasBoth && activeOptionLabel !== 'latino');
+        this.createServerButton('Latino', latinoUrls, activeOptionLabel === 'latino');
       }
       if (subUrls.length > 0) {
-        this.createServerButton('Opción 2', subUrls, activeOptionLabel === 'sub', hasBoth && activeOptionLabel !== 'sub');
+        this.createServerButton('Opción 2', subUrls, activeOptionLabel === 'sub');
       }
       
       this.setupNavigation();
@@ -304,7 +293,6 @@ class VideoPlayer {
     }
   }
   
-  // Convierte string o array a array
   normalizeUrls(urls) {
     if (!urls) return [];
     if (Array.isArray(urls)) return urls.filter(u => u && u.trim() !== '');
@@ -312,13 +300,10 @@ class VideoPlayer {
     return [];
   }
   
-  createServerButton(label, urls, isActive, highlightAsDual = false) {
+  createServerButton(label, urls, isActive) {
     const container = document.getElementById('serverOptions');
     const btn = document.createElement('button');
     btn.className = 'opt-btn' + (isActive ? ' active' : '');
-    if (highlightAsDual) {
-      btn.classList.add('dual-option');
-    }
     btn.innerText = label;
     btn.onclick = () => {
       document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
@@ -332,7 +317,6 @@ class VideoPlayer {
   
   updateDownloadUrls(urls) {
     this.currentDownloadUrls = urls.map(url => this.generateDirectLink(url));
-    // Detectar si es PeerTube (solo para el primer URL, asumimos todos igual)
     this.currentPeerTubeUrl = (urls.length > 0 && this.isPeerTubeUrl(urls[0])) ? urls[0] : null;
   }
   
@@ -366,7 +350,6 @@ class VideoPlayer {
     return url;
   }
   
-  // Reproducir una parte específica
   playPart(partIndex, urlsArray) {
     if (!urlsArray || partIndex >= urlsArray.length) return;
     const url = urlsArray[partIndex];
@@ -385,7 +368,6 @@ class VideoPlayer {
       container.appendChild(video);
       this.currentVideoElement = video;
       
-      // Cuando termine esta parte, pasar a la siguiente
       const onEnded = () => {
         if (partIndex + 1 < urlsArray.length) {
           this.playPart(partIndex + 1, urlsArray);
@@ -406,7 +388,6 @@ class VideoPlayer {
     }
   }
   
-  // Obtener las URLs de la opción activa actual
   getActiveEpisodeUrls() {
     const episodeData = this.currentEpisodeData;
     if (!episodeData) return [];
@@ -417,8 +398,9 @@ class VideoPlayer {
     }
   }
   
-  // ========== BARRA DE PROGRESO PARA DESCARGA ==========
+  // ========== BARRA DE PROGRESO PARA DESCARGA (MEJORADA) ==========
   showProgressBar() {
+    // Si ya existe, no crear otra
     if (document.getElementById('customDownloadProgress')) return;
     const div = document.createElement('div');
     div.id = 'customDownloadProgress';
@@ -440,6 +422,7 @@ class VideoPlayer {
   }
 
   async forceDownload(url, suggestedFilename = 'video.mp4') {
+    // Mostrar barra solo si no existe ya (la primera llamada la crea)
     this.showProgressBar();
     const percentSpan = document.getElementById('progressPercent');
     const fillDiv = document.getElementById('progressBarFill');
@@ -480,11 +463,17 @@ class VideoPlayer {
       alert('No se pudo descargar automáticamente.\nHaz clic derecho en el enlace y selecciona "Guardar enlace como..."');
       window.open(url, '_blank');
     } finally {
-      this.hideProgressBar();
+      // La barra se eliminará al final de handleDownloadClick, no aquí
     }
   }
 
   async handleDownloadClick() {
+    // Si ya hay una descarga en curso, salir sin hacer nada
+    if (this.isDownloading) {
+      console.log('Descarga en curso, espera a que termine');
+      return;
+    }
+
     const user = this.getCurrentUser();
     if (!user) {
       this.openLoginModal();
@@ -511,31 +500,56 @@ class VideoPlayer {
     const epTitleElem = document.getElementById('epTitle');
     let baseFilename = epTitleElem ? epTitleElem.innerText : 'video';
     baseFilename = baseFilename.replace(/[^a-z0-9ñáéíóúü \-_]/gi, '').replace(/\s+/g, '_');
-    
-    for (let i = 0; i < urlsToDownload.length; i++) {
-      const url = urlsToDownload[i];
-      const isCatbox = url.includes('catbox.moe');
-      const isCrossOrigin = !url.startsWith(location.origin);
-      
-      let filename = `${baseFilename}`;
-      if (urlsToDownload.length > 1) {
-        filename = `${baseFilename}_parte${i+1}.mp4`;
-      } else {
-        filename = `${baseFilename}.mp4`;
+
+    // Bloquear el botón y mostrar barra
+    this.isDownloading = true;
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+      downloadBtn.disabled = true;
+      downloadBtn.style.opacity = '0.6';
+      downloadBtn.style.cursor = 'not-allowed';
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Descargando...';
+    }
+    // Mostrar la barra de progreso (solo una vez)
+    this.showProgressBar();
+
+    try {
+      for (let i = 0; i < urlsToDownload.length; i++) {
+        const url = urlsToDownload[i];
+        const isCatbox = url.includes('catbox.moe');
+        const isCrossOrigin = !url.startsWith(location.origin);
+        
+        let filename = `${baseFilename}`;
+        if (urlsToDownload.length > 1) {
+          filename = `${baseFilename}_parte${i+1}.mp4`;
+        } else {
+          filename = `${baseFilename}.mp4`;
+        }
+        
+        if (isCatbox || isCrossOrigin) {
+          await this.forceDownload(url, filename);
+        } else {
+          // Descarga directa (sin barra)
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          link.target = this.isMobile() ? '_blank' : '_self';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          await new Promise(r => setTimeout(r, 500));
+        }
       }
-      
-      if (isCatbox || isCrossOrigin) {
-        await this.forceDownload(url, filename);
-      } else {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        link.target = this.isMobile() ? '_blank' : '_self';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        await new Promise(r => setTimeout(r, 500));
+    } finally {
+      // Restaurar botón y ocultar barra
+      this.isDownloading = false;
+      if (downloadBtn) {
+        downloadBtn.disabled = false;
+        downloadBtn.style.opacity = '1';
+        downloadBtn.style.cursor = 'pointer';
+        downloadBtn.innerHTML = '⬇ Descargar';
       }
+      this.hideProgressBar();
     }
   }
   

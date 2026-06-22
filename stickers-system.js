@@ -1,22 +1,16 @@
 // ============================================
 // SISTEMA DE STICKERS (CATBOX + FIRESTORE)
 // CON PROXY CORS Y DRAG & DROP (MÁX. 5 MB)
-// MODIFICADO: Límite de archivos aumentado a 5 MB
+// MEJORADO: Rendimiento, feedback visual, validaciones
 // ============================================
 
 let stickersDb = null;
 let stickersAuth = null;
 let userStickersCollection = [];
 
-const DEFAULT_STICKERS = [];
-
-// 🔐 TU USERHASH DE CATBOX
 const CATBOX_USERHASH = 'd825312c9594a0a1b16c12c50';
-
-// 🌐 PROXY CORS PÚBLICO
 const CORS_PROXY = 'https://corsproxy.io/?url=';
 
-// --- FUNCIÓN DE LIMPIEZA INDUSTRIAL ---
 function cleanStickerHTML(html) {
     if (typeof DOMPurify !== 'undefined') {
         return DOMPurify.sanitize(html, {
@@ -35,7 +29,7 @@ function initStickersSystem(db, auth) {
         updateStickersUI();
         if (user) {
             loadUserStickers();
-            renderSubirStickersTab(); // Prepara el área de arrastre
+            renderSubirStickersTab();
         } else {
             userStickersCollection = [];
             renderUserStickers();
@@ -66,7 +60,7 @@ async function loadUserStickers() {
                 await stickersDb.collection('userStickers').doc(user.uid).set({ stickers: userStickersCollection }, { merge: true });
             }
         } else {
-            userStickersCollection = [...DEFAULT_STICKERS];
+            userStickersCollection = [];
             await stickersDb.collection('userStickers').doc(user.uid).set({ stickers: userStickersCollection }, { merge: true });
         }
         renderUserStickers();
@@ -102,7 +96,7 @@ function renderUserStickers() {
         html += `
             <div class="sticker-item">
                 ${tagMedia}
-                <button class="sticker-delete-btn" onclick="eliminarSticker('${url}', event)">✖</button>
+                <button class="sticker-delete-btn" onclick="eliminarSticker('${url}', event)" aria-label="Eliminar sticker">✖</button>
             </div>
         `;
     });
@@ -117,7 +111,7 @@ window.switchStickerTab = function(tabName) {
     const content = document.getElementById(`${tabName}StickersTab`);
     if (content) content.classList.add('active');
     if (tabName === 'mis') loadUserStickers();
-    if (tabName === 'subir') renderSubirStickersTab(); // Refresca el área de arrastre
+    if (tabName === 'subir') renderSubirStickersTab();
 };
 
 async function eliminarSticker(urlSticker, event) {
@@ -137,7 +131,6 @@ async function eliminarSticker(urlSticker, event) {
     }
 }
 
-// ========== RENDERIZA EL ÁREA DE SUBIDA CON DRAG & DROP ==========
 function renderSubirStickersTab() {
     const container = document.querySelector('#subirStickersTab .add-sticker-container');
     if (!container) return;
@@ -163,7 +156,6 @@ function renderSubirStickersTab() {
         }
     });
 
-    // Prevenir comportamiento por defecto en toda la zona
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, (e) => {
             e.preventDefault();
@@ -175,7 +167,6 @@ function renderSubirStickersTab() {
         });
     });
 
-    // Efectos visuales al arrastrar
     ['dragenter', 'dragover'].forEach(eventName => {
         dropZone.addEventListener(eventName, () => {
             dropZone.style.background = 'rgba(0, 255, 247, 0.3)';
@@ -202,7 +193,6 @@ function renderSubirStickersTab() {
         });
     });
 
-    // Manejar el drop
     dropZone.addEventListener('drop', (e) => {
         const files = e.dataTransfer.files;
         if (files.length > 0) {
@@ -219,32 +209,24 @@ function renderSubirStickersTab() {
 }
 
 function handleDroppedFile(file) {
-    // Validar que sea imagen o video
     if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
         alert('Solo se permiten imágenes o videos.');
         return;
     }
-
-    // 🔼 LÍMITE AUMENTADO A 5 MB
     if (file.size > 5 * 1024 * 1024) {
         alert('El archivo es muy pesado. Máximo 5 MB.');
         return;
     }
-
-    // Simular input file
     const fileInput = document.getElementById('stickerFileInput');
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
     fileInput.files = dataTransfer.files;
-
     const event = new Event('change', { bubbles: true });
     fileInput.dispatchEvent(event);
 }
 
-// Exponer función global para el drag & drop del HTML
 window.procesarArchivoSticker = handleDroppedFile;
 
-// ========== FUNCIÓN DE SUBIDA CON PROXY CORS (LÍMITE 5 MB) ==========
 window.subirStickerDesdePC = async function(inputElement) {
     const user = getCurrentUser();
     if (!user) {
@@ -255,8 +237,6 @@ window.subirStickerDesdePC = async function(inputElement) {
 
     const file = inputElement.files[0];
     if (!file) return;
-
-    // 🔼 LÍMITE AUMENTADO A 5 MB
     if (file.size > 5 * 1024 * 1024) {
         alert('El archivo es muy pesado. Máximo 5 MB.');
         inputElement.value = '';
@@ -293,8 +273,6 @@ window.subirStickerDesdePC = async function(inputElement) {
         const targetUrl = 'https://catbox.moe/user/api.php';
         const proxyUrl = CORS_PROXY + encodeURIComponent(targetUrl);
         
-        console.log('📤 Enviando archivo mediante proxy:', proxyUrl);
-        
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 30000);
 
@@ -306,14 +284,11 @@ window.subirStickerDesdePC = async function(inputElement) {
         
         clearTimeout(timeoutId);
         
-        console.log('📡 Respuesta HTTP:', uploadRes.status);
-        
         if (!uploadRes.ok) {
             throw new Error(`Error HTTP ${uploadRes.status}`);
         }
 
         const fileUrl = await uploadRes.text();
-        console.log('📦 Respuesta de Catbox:', fileUrl);
 
         if (fileUrl && fileUrl.startsWith('http')) {
             await guardarStickerEnColeccion(fileUrl);

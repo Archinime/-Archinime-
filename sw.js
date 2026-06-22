@@ -1,51 +1,55 @@
 /* ============================================================
    sw.js - Archinime OS Service Worker
-   Estrategia híbrida con control absoluto sobre catálogo.js
+   OFFLINE FIRST: Catálogo, páginas y recursos siempre disponibles
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v54';
-const CACHE_DYNAMIC = 'archinime-dynamic-v54';
-const CACHE_IMAGES = 'archinime-images-v54';
-const CACHE_FONTS = 'archinime-fonts-v54';
+const CACHE_STATIC = 'archinime-static-v55';
+const CACHE_DYNAMIC = 'archinime-dynamic-v55';
+const CACHE_IMAGES = 'archinime-images-v55';
+const CACHE_FONTS = 'archinime-fonts-v55';
 
-// Recursos precacheados (catálogo NO está incluido)
+// Lista completa de recursos que se cachean al instalar
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/anime-detail.html',
   '/video-player.html',
-  '/styles-index.css',
-  '/script-index.js',
-  '/anime-detail-core.js',
-  '/notification-system.js',
-  '/musica_fondo.js',
+  '/catalogo.js',
   '/animaciones.js',
+  '/musica_fondo.js',
+  '/notification-system.js',
   '/gifs.js',
-  '/anuncios_index.js',
+  '/state.js',
+  '/app-core.js',
+  '/dompurify-config.js',
+  '/comentarios.js',
+  '/reacciones.js',
+  '/stickers-system.js',
+  '/video-player-core.js',
+  '/anime-detail-core.js',
   '/manifest.json',
   '/Logo_Archinime.avif',
   '/Logo_Archinime.png',
-  '/youtube.avif',
   '/invitado.avif',
   '/galaxia-morado1.avif',
-  '/chica_corriendo.gif'
+  '/chica_corriendo.gif',
+  '/youtube.avif'
 ];
 
-// ---------- INSTALACIÓN ----------
+// Instalación: precache de todos los recursos
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando...');
-  self.skipWaiting(); // tomar control de inmediato
+  console.log('[SW] Instalando y precacheando...');
+  self.skipWaiting(); // Toma el control inmediatamente
   event.waitUntil(
     caches.open(CACHE_STATIC).then(cache => {
-      console.log('[SW] Precaching recursos estáticos');
       return cache.addAll(STATIC_ASSETS);
     }).catch(err => console.warn('[SW] Error en precache:', err))
   );
 });
 
-// ---------- ACTIVACIÓN ----------
+// Activación: limpieza de cachés antiguas
 self.addEventListener('activate', event => {
-  console.log('[SW] Activando...');
+  console.log('[SW] Activando y limpiando...');
   const currentCaches = [CACHE_STATIC, CACHE_DYNAMIC, CACHE_IMAGES, CACHE_FONTS];
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -57,61 +61,67 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  return self.clients.claim();
 });
 
-// ---------- FETCH (estrategias por tipo) ----------
+// Fetch: estrategias por tipo de recurso
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const request = event.request;
+
+  // Solo GET
   if (request.method !== 'GET') return;
 
-  /* 🔥 REGLA 0: Catálogo siempre fresco - red con no-cache */
+  // ============================================================
+  // 1. CATÁLOGO: stale-while-revalidate (siempre disponible)
+  // ============================================================
   if (url.pathname.endsWith('/catalogo.js')) {
-    event.respondWith(
-      fetch(request, { cache: 'no-cache' })
-        .then(response => {
-          const responseClone = response.clone();
-          caches.open(CACHE_DYNAMIC).then(cache => cache.put(request, responseClone));
-          return response;
-        })
-        .catch(() => caches.match(request))
-    );
+    event.respondWith(staleWhileRevalidate(request, CACHE_DYNAMIC));
     return;
   }
 
-  // HTML -> network-first
+  // ============================================================
+  // 2. HTML: network-first, fallback a caché
+  // ============================================================
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // Fuentes, CSS, JS -> stale-while-revalidate
-  if (request.destination === 'font' || request.destination === 'style' || request.destination === 'script') {
+  // ============================================================
+  // 3. CSS/JS/Fuentes: stale-while-revalidate
+  // ============================================================
+  if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // Imágenes, vídeos -> stale-while-revalidate
+  // ============================================================
+  // 4. Imágenes y vídeos: stale-while-revalidate (caché separada)
+  // ============================================================
   if (request.destination === 'image' || request.destination === 'video') {
-    event.respondWith(staleWhileRevalidate(request));
+    event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
     return;
   }
 
-  // API / Firestore -> solo red, sin cache
+  // ============================================================
+  // 5. API / Firestore: solo red (sin caché)
+  // ============================================================
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // Resto -> network-first
+  // ============================================================
+  // 6. Resto: network-first
+  // ============================================================
   event.respondWith(networkFirst(request));
 });
 
-// ---------- ESTRATEGIAS ----------
+// ==================== ESTRATEGIAS ====================
 
+// Network-first con fallback a caché
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_DYNAMIC);
   try {
@@ -126,11 +136,12 @@ async function networkFirst(request) {
   }
 }
 
-async function staleWhileRevalidate(request) {
-  const cacheName = getCacheNameForRequest(request);
+// Stale-while-revalidate: sirve caché mientras se actualiza en segundo plano
+async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(request);
 
+  // Actualización en segundo plano (no bloquea)
   const fetchPromise = fetch(request).then(networkResponse => {
     if (networkResponse && networkResponse.status === 200) {
       cache.put(request, networkResponse.clone());
@@ -138,18 +149,11 @@ async function staleWhileRevalidate(request) {
     return networkResponse;
   }).catch(() => {});
 
+  // Devuelve caché si existe, sino espera la red
   return cachedResponse || fetchPromise;
 }
 
-function getCacheNameForRequest(request) {
-  const dest = request.destination;
-  if (dest === 'image' || dest === 'video') return CACHE_IMAGES;
-  if (dest === 'font') return CACHE_FONTS;
-  if (dest === 'style' || dest === 'script') return CACHE_STATIC;
-  return CACHE_DYNAMIC;
-}
-
-// ---------- PUSH (opcional) ----------
+// ==================== PUSH (notificaciones) ====================
 self.addEventListener('push', event => {
   let data = { title: 'Archinime', body: 'Nueva actualización', icon: '/Logo_Archinime.png' };
   if (event.data) {

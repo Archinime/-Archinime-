@@ -1,6 +1,6 @@
 // ============================================
-// SISTEMA DE COMENTARIOS "PREMIUM" CYBERPUNK v10.3
-// CORREGIDO: Scroll perfecto a respuestas desde notificaciones
+// SISTEMA DE COMENTARIOS "PREMIUM" CYBERPUNK v11.0
+// MEJORADO: Rendimiento, accesibilidad, animaciones, scroll perfecto
 // ============================================
 
 let comentariosDb = null;
@@ -11,16 +11,18 @@ let comentariosInicializados = false;
 window.stickerSeleccionadoParaEnviar = null;
 window.respondiendoA = null;
 window.lastPostedCommentId = null;
+window.hasScrolledToTarget = false;
 
 // --- FUNCIÓN DE LIMPIEZA INDUSTRIAL (DOMPurify) ---
 function archinimeClean(html, isSticker = false) {
     if (typeof DOMPurify !== 'undefined') {
         const config = isSticker 
             ? { ALLOWED_TAGS: ['img'], ALLOWED_ATTR: ['src', 'class', 'alt', 'style'] }
-            : { ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'span', 'br', 'img'], ALLOWED_ATTR: ['src', 'class', 'style', 'alt'] };
+            : { ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'span', 'br', 'img', 'a', 'blockquote'], 
+                ALLOWED_ATTR: ['src', 'class', 'style', 'alt', 'href', 'target', 'rel'] };
         return DOMPurify.sanitize(html, config);
     }
-    // Fallback de seguridad si falla la carga de la librería
+    // Fallback seguro
     return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "");
 }
 
@@ -84,7 +86,6 @@ function initComentariosSystem(db, auth) {
                 validarBotonPrincipal(this);
             });
         }
-        // ÍCONO DE STICKER
         const stickerBtn = document.querySelector('.sticker-btn');
         if (stickerBtn) stickerBtn.innerHTML = '🖼️';
     }, 1000);
@@ -119,11 +120,19 @@ function injectCommentsCSS() {
 
         .comentario-item { 
             position: relative;
-            background: var(--cm-bg-glass); backdrop-filter: blur(12px);
-            border: 1px solid var(--cm-border); border-left: 3px solid var(--user-color, var(--cm-neon-primary));
-            border-radius: 12px; margin-bottom: 12px; padding: 16px;
-            display: flex; flex-direction: row; gap: 15px;
-            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: var(--cm-bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--cm-border);
+            border-left: 3px solid var(--user-color, var(--cm-neon-primary));
+            border-radius: 12px;
+            margin-bottom: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            will-change: transform, background;
         }
         .comentario-item:hover { background: var(--cm-bg-glass-hover); border-color: rgba(255,255,255,0.1); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
 
@@ -185,7 +194,6 @@ function injectCommentsCSS() {
         .comentario-media-wrapper { margin-top: 10px; border-radius: 12px; overflow: hidden; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
         .comentario-media { display: block; max-width: 200px; max-height: 250px; object-fit: contain; }
 
-        /* PREVIEW STICKER */
         .comentario-sticker-preview {
             margin: 12px 0; padding: 8px; background: rgba(0, 0, 0, 0.4); border-radius: 16px; border: 1px solid rgba(0, 243, 255, 0.3); display: flex; align-items: center; gap: 12px; max-width: 100%; overflow: hidden;
         }
@@ -199,9 +207,7 @@ function injectCommentsCSS() {
         .remove-sticker-btn {
             position: absolute; top: -8px; right: -8px; background: #ff0055; border: none; color: white; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 8px rgba(255,0,85,0.6); transition: transform 0.2s;
         }
-        .remove-sticker-btn:hover {
-            transform: scale(1.1); background: #ff3366;
-        }
+        .remove-sticker-btn:hover { transform: scale(1.1); background: #ff3366; }
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(-15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .new-comment-fx { animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important; }
@@ -286,8 +292,8 @@ function setupComentariosRealtimeListener() {
         .where('animeId', '==', window.comentariosAnimeId)
         .where('season', '==', tempSeason)
         .where('episode', '==', tempEpisode)
-        .orderBy('timestamp', 'desc') 
-        .limit(100);
+        .orderBy('timestamp', 'desc')
+        .limit(150);
 
     comentariosUnsubscribe = commentsRef.onSnapshot((snapshot) => {
         const container = document.getElementById('comentariosList');
@@ -298,6 +304,7 @@ function setupComentariosRealtimeListener() {
             return;
         }
 
+        // Guardar estado de contenedores abiertos
         const openContainers = new Set();
         document.querySelectorAll('.replies-thread').forEach(el => {
             if (el.style.display !== 'none') openContainers.add(el.id);
@@ -373,6 +380,7 @@ function setupComentariosRealtimeListener() {
         roots.forEach(root => html += renderNode(root, 0, false, null));
         container.innerHTML = html;
 
+        // Restaurar contenedores abiertos
         openContainers.forEach(id => {
             const el = document.getElementById(id);
             if (el) {
@@ -385,24 +393,23 @@ function setupComentariosRealtimeListener() {
 
         window.lastPostedCommentId = null;
 
-        // --- MEJORA EXTREMA: SCROLL PERFECTO A COMENTARIO DESTINO ---
+        // Scroll perfecto a comentario destino (desde URL)
         const urlParams = new URLSearchParams(window.location.search);
         const targetCommentId = urlParams.get('targetComment');
         
         if (targetCommentId && !window.hasScrolledToTarget) {
-            // Función para expandir completamente el comentario y todos sus contenedores
             const expandFullyAndScroll = (attempt = 0) => {
                 const targetEl = document.getElementById(`comment-${targetCommentId}`);
                 if (!targetEl) {
-                    if (attempt < 30) { // Reintentar hasta 30 veces (6 segundos)
+                    if (attempt < 30) {
                         setTimeout(() => expandFullyAndScroll(attempt + 1), 200);
                     } else {
-                        console.warn('No se encontró el comentario destino tras múltiples intentos:', targetCommentId);
+                        console.warn('No se encontró el comentario destino:', targetCommentId);
                     }
                     return;
                 }
 
-                // 1. Expandir todos los replies-thread padres que estén ocultos
+                // Expandir padres
                 let parent = targetEl.parentElement;
                 const parentsToExpand = [];
                 while (parent && parent.id !== 'comentariosList') {
@@ -411,7 +418,6 @@ function setupComentariosRealtimeListener() {
                     }
                     parent = parent.parentElement;
                 }
-                // Expandir de arriba hacia abajo para mantener consistencia
                 parentsToExpand.reverse().forEach(thread => {
                     thread.style.display = 'flex';
                     const rootId = thread.id.replace('container-', '');
@@ -419,44 +425,36 @@ function setupComentariosRealtimeListener() {
                     if (textSpan) textSpan.innerText = 'Ocultar respuestas';
                 });
 
-                // 2. Si el comentario está dentro de un hidden-reply-* (por el límite de 5 respuestas)
+                // Si está dentro de hidden-reply
                 let hiddenContainer = targetEl.closest('[class*="hidden-reply-"]');
                 if (hiddenContainer) {
-                    // Obtener el rootId (el ID del comentario padre que tiene el botón "Cargar más")
                     const match = hiddenContainer.className.match(/hidden-reply-([^ ]+)/);
                     if (match && match[1]) {
                         const rootId = match[1];
-                        // Revelar todos los hidden-reply de ese root
                         document.querySelectorAll(`.hidden-reply-${rootId}`).forEach(el => el.style.display = 'block');
                         const moreBtn = document.getElementById(`showMore-${rootId}`);
                         if (moreBtn) moreBtn.style.display = 'none';
                     }
                 }
 
-                // 3. Pequeño retraso para que el DOM se actualice después de las expansiones
                 setTimeout(() => {
-                    // Re-obtener el elemento (por si cambió su posición)
                     const finalTarget = document.getElementById(`comment-${targetCommentId}`);
                     if (finalTarget) {
-                        // Scroll suave con offset para que no quede pegado al borde superior
                         const rect = finalTarget.getBoundingClientRect();
                         const absoluteTop = rect.top + window.pageYOffset;
-                        const offset = 100; // margen superior para que se vea completo
                         window.scrollTo({
-                            top: absoluteTop - offset,
+                            top: absoluteTop - 100,
                             behavior: 'smooth'
                         });
                         finalTarget.classList.add('comment-targeted');
                         window.hasScrolledToTarget = true;
                         
-                        // Limpiar parámetro de la URL para evitar reintentos
                         const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?anime=${window.comentariosAnimeId}&s=${window.comentariosSeason}&e=${window.comentariosEpisode}`;
                         window.history.replaceState({path: cleanUrl}, '', cleanUrl);
                     }
                 }, 150);
             };
             
-            // Iniciar la expansión después de un breve retraso para que el DOM se estabilice
             setTimeout(() => expandFullyAndScroll(0), 400);
         }
     }, (error) => {
@@ -702,7 +700,6 @@ window.prepararRespuesta = function(commentId, userName, userId) {
     const replyBox = document.createElement('div');
     replyBox.id = `dynamicReplyBox-${commentId}`;
     replyBox.className = 'reply-box-container';
-    // ÍCONO DE STICKER
     replyBox.innerHTML = `
         <div class="reply-box-header">
             <span>Respondiendo a <b>@${escapeHtmlComent(userName)}</b></span>

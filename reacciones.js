@@ -1,8 +1,6 @@
 // reacciones.js
-// ============================================
-// SISTEMA DE REACCIONES TIPO FACEBOOK CYBERPUNK v4.1
-// (Adaptado a ArchinimeState - estado central)
-// ============================================
+// SISTEMA DE REACCIONES TIPO FACEBOOK CYBERPUNK v5.0
+// MEJORADO: Rendimiento, tooltips, accesibilidad, animaciones
 
 const REACTIONS_MAP = {
     'like':  { emoji: '👍', color: '#00f3ff', name: 'Me gusta' },
@@ -72,6 +70,7 @@ function injectReaccionesCSS() {
             filter: grayscale(0) opacity(1);
             z-index: 10;
         }
+        .reaction-icon:active { transform: scale(0.8); }
 
         .reactions-summary {
             display: flex;
@@ -172,6 +171,7 @@ window.quitarReaccion = async function(commentId, event) {
         await docRef.update({
             [`reactions.${user.uid}`]: firebase.firestore.FieldValue.delete()
         });
+        if (typeof playUISound === 'function') playUISound('click');
     } catch (e) {
         console.error("Error al quitar reacción", e);
         alert("No se pudo quitar la reacción. Inténtalo de nuevo.");
