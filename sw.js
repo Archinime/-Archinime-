@@ -1,12 +1,15 @@
 /* ============================================================
-   sw.js - Archinime OS - OFFLINE FIRST (mejorado)
+   sw.js - Archinime OS Service Worker
+   OFFLINE FIRST: todos los recursos precargados
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v61';
-const CACHE_DYNAMIC = 'archinime-dynamic-v61';
-const CACHE_IMAGES = 'archinime-images-v61';
-const CACHE_FONTS = 'archinime-fonts-v61';
+const APP_VERSION = '2025-06-22-v9.0';
+const CACHE_STATIC = `archinime-static-${APP_VERSION}`;
+const CACHE_DYNAMIC = `archinime-dynamic-${APP_VERSION}`;
+const CACHE_IMAGES = `archinime-images-${APP_VERSION}`;
+const CACHE_FONTS = `archinime-fonts-${APP_VERSION}`;
 
+// Lista completa de recursos a precachear (¡todos los necesarios!)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -35,21 +38,24 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando...');
+  console.log('[SW] Instalando y precacheando...');
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_STATIC).then(cache => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_STATIC).then(cache => {
+      return cache.addAll(STATIC_ASSETS);
+    }).catch(err => console.warn('[SW] Error en precache:', err))
   );
 });
 
 self.addEventListener('activate', event => {
   console.log('[SW] Activando...');
-  const currentCaches = [CACHE_STATIC, CACHE_DYNAMIC, CACHE_IMAGES, CACHE_FONTS];
+  // Eliminar cachés de versiones anteriores
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (!currentCaches.includes(cacheName)) {
+          if (cacheName.startsWith('archinime-') && !cacheName.includes(APP_VERSION)) {
+            console.log('[SW] Eliminando caché obsoleta:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -61,55 +67,62 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const request = event.request;
+
   if (request.method !== 'GET') return;
 
-  // 1. Catálogo: stale-while-revalidate
+  // ============================================================
+  // 1. CATÁLOGO: siempre desde caché (stale-while-revalidate)
+  // ============================================================
   if (url.pathname.endsWith('/catalogo.js')) {
-    event.respondWith(staleWhileRevalidate(request, CACHE_DYNAMIC));
+    event.respondWith(staleWhileRevalidate(request, CACHE_STATIC));
     return;
   }
 
-  // 2. HTML: cache-first para cualquier página .html o raíz
+  // ============================================================
+  // 2. HTML (páginas): cache-first (offline prioritario)
+  // ============================================================
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
     event.respondWith(cacheFirst(request));
     return;
   }
 
-  // 3. CSS/JS/Fuentes: stale-while-revalidate
+  // ============================================================
+  // 3. CSS, JS, fuentes: stale-while-revalidate
+  // ============================================================
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // 4. Imágenes/vídeos: stale-while-revalidate
+  // ============================================================
+  // 4. Imágenes y vídeos: stale-while-revalidate
+  // ============================================================
   if (request.destination === 'image' || request.destination === 'video') {
     event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
     return;
   }
 
-  // 5. Firestore/API: solo red
+  // ============================================================
+  // 5. API / Firestore: solo red (sin caché)
+  // ============================================================
   if (url.origin.includes('firestore') || url.origin.includes('googleapis') || url.pathname.includes('/api/')) {
     event.respondWith(fetch(request));
     return;
   }
 
+  // ============================================================
   // 6. Resto: network-first
+  // ============================================================
   event.respondWith(networkFirst(request));
 });
 
-// ========== ESTRATEGIAS ==========
+// ==================== ESTRATEGIAS ====================
 
+// Cache first: devuelve caché, si no, red
 async function cacheFirst(request) {
   const cache = await caches.open(CACHE_STATIC);
-  // Intentamos encontrar en caché cualquier respuesta que coincida con la URL (sin query string)
-  let cached = await cache.match(request);
-  if (!cached) {
-    // Si no, intentamos con la URL sin parámetros
-    const urlWithoutParams = request.url.split('?')[0];
-    cached = await cache.match(urlWithoutParams);
-  }
+  const cached = await cache.match(request);
   if (cached) return cached;
-
   try {
     const response = await fetch(request);
     if (response && response.status === 200) {
@@ -117,11 +130,11 @@ async function cacheFirst(request) {
     }
     return response;
   } catch (e) {
-    // Fallback: intentar devolver la página de error o un mensaje
     return new Response('Página no disponible offline', { status: 503 });
   }
 }
 
+// Network-first con fallback a caché
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_DYNAMIC);
   try {
@@ -136,6 +149,7 @@ async function networkFirst(request) {
   }
 }
 
+// Stale-while-revalidate: sirve caché, actualiza en segundo plano
 async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   const cache = await caches.open(cacheName);
   const cached = await cache.match(request);
@@ -148,7 +162,7 @@ async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   return cached || fetchPromise;
 }
 
-// Push...
+// ==================== PUSH ====================
 self.addEventListener('push', event => {
   let data = { title: 'Archinime', body: 'Nueva actualización', icon: '/Logo_Archinime.png' };
   if (event.data) {
