@@ -3,12 +3,12 @@
    OFFLINE FIRST: Catálogo, páginas y recursos siempre disponibles
    ============================================================ */
 
-const CACHE_STATIC = 'archinime-static-v55';
-const CACHE_DYNAMIC = 'archinime-dynamic-v55';
-const CACHE_IMAGES = 'archinime-images-v55';
-const CACHE_FONTS = 'archinime-fonts-v55';
+const CACHE_STATIC = 'archinime-static-v56';
+const CACHE_DYNAMIC = 'archinime-dynamic-v56';
+const CACHE_IMAGES = 'archinime-images-v56';
+const CACHE_FONTS = 'archinime-fonts-v56';
 
-// Lista completa de recursos que se cachean al instalar
+// Recursos esenciales para offline (¡todas las páginas HTML!)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -36,10 +36,10 @@ const STATIC_ASSETS = [
   '/youtube.avif'
 ];
 
-// Instalación: precache de todos los recursos
+// Instalación: precache de todo
 self.addEventListener('install', event => {
   console.log('[SW] Instalando y precacheando...');
-  self.skipWaiting(); // Toma el control inmediatamente
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_STATIC).then(cache => {
       return cache.addAll(STATIC_ASSETS);
@@ -47,9 +47,9 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activación: limpieza de cachés antiguas
+// Activación: limpieza y toma de control
 self.addEventListener('activate', event => {
-  console.log('[SW] Activando y limpiando...');
+  console.log('[SW] Activando...');
   const currentCaches = [CACHE_STATIC, CACHE_DYNAMIC, CACHE_IMAGES, CACHE_FONTS];
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -65,12 +65,11 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch: estrategias por tipo de recurso
+// Fetch: estrategias por tipo
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   const request = event.request;
 
-  // Solo GET
   if (request.method !== 'GET') return;
 
   // ============================================================
@@ -82,15 +81,15 @@ self.addEventListener('fetch', event => {
   }
 
   // ============================================================
-  // 2. HTML: network-first, fallback a caché
+  // 2. HTML (páginas): ¡CACHE FIRST! (offline prioritario)
   // ============================================================
   if (request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname === '/') {
-    event.respondWith(networkFirst(request));
+    event.respondWith(cacheFirst(request));
     return;
   }
 
   // ============================================================
-  // 3. CSS/JS/Fuentes: stale-while-revalidate
+  // 3. CSS, JS, fuentes: stale-while-revalidate
   // ============================================================
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font') {
     event.respondWith(staleWhileRevalidate(request));
@@ -98,7 +97,7 @@ self.addEventListener('fetch', event => {
   }
 
   // ============================================================
-  // 4. Imágenes y vídeos: stale-while-revalidate (caché separada)
+  // 4. Imágenes y vídeos: stale-while-revalidate
   // ============================================================
   if (request.destination === 'image' || request.destination === 'video') {
     event.respondWith(staleWhileRevalidate(request, CACHE_IMAGES));
@@ -114,12 +113,32 @@ self.addEventListener('fetch', event => {
   }
 
   // ============================================================
-  // 6. Resto: network-first
+  // 6. Resto: network-first con fallback a caché
   // ============================================================
   event.respondWith(networkFirst(request));
 });
 
 // ==================== ESTRATEGIAS ====================
+
+// Cache first: prioriza la caché, si no, red
+async function cacheFirst(request) {
+  const cache = await caches.open(CACHE_STATIC);
+  const cachedResponse = await cache.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  // Si no está en caché, intentar red (y guardar para futuras veces)
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.status === 200) {
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (err) {
+    // Si falla la red y no hay caché, devolver error
+    return new Response('Página no disponible offline', { status: 503 });
+  }
+}
 
 // Network-first con fallback a caché
 async function networkFirst(request) {
@@ -132,7 +151,7 @@ async function networkFirst(request) {
     return networkResponse;
   } catch (err) {
     const cachedResponse = await cache.match(request);
-    return cachedResponse || Response.error();
+    return cachedResponse || new Response('Recurso no disponible offline', { status: 503 });
   }
 }
 
@@ -141,7 +160,6 @@ async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
   const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(request);
 
-  // Actualización en segundo plano (no bloquea)
   const fetchPromise = fetch(request).then(networkResponse => {
     if (networkResponse && networkResponse.status === 200) {
       cache.put(request, networkResponse.clone());
@@ -149,7 +167,6 @@ async function staleWhileRevalidate(request, cacheName = CACHE_DYNAMIC) {
     return networkResponse;
   }).catch(() => {});
 
-  // Devuelve caché si existe, sino espera la red
   return cachedResponse || fetchPromise;
 }
 
