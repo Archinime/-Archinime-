@@ -830,38 +830,53 @@
   window.addEventListener('DOMContentLoaded', updateButtonsVisibility);
   window.addEventListener('resize', updateButtonsVisibility);
 
-  // Música de fondo
+  // ============================================================
+  // 🔥 MÚSICA DE FONDO (REPRODUCCIÓN CONTINUA)
+  // ============================================================
   let isMusicStarted = false;
   let currentAudio = null;
+
+  function playNextTrack() {
+    if (!isMusicStarted) return;
+    // Detener el audio anterior si existe
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.onended = null;
+      currentAudio = null;
+    }
+    // Elegir una canción aleatoria
+    const track = musicListGlobal[Math.floor(Math.random() * musicListGlobal.length)];
+    if (!track) {
+      console.warn('No hay canciones disponibles. Reintentando en 5 segundos...');
+      setTimeout(playNextTrack, 5000);
+      return;
+    }
+    // Crear nuevo audio
+    currentAudio = new Audio(track);
+    currentAudio.volume = 0.3;
+    // Al terminar, llamar a playNextTrack (bucle infinito)
+    currentAudio.onended = playNextTrack;
+    // Intentar reproducir
+    currentAudio.play().catch(e => {
+      console.log('Error al reproducir, reintentando en 3 segundos:', e);
+      setTimeout(playNextTrack, 3000);
+    });
+  }
 
   function startMusic() {
     if (isMusicStarted) return;
     isMusicStarted = true;
-    const track = musicListGlobal[Math.floor(Math.random() * musicListGlobal.length)];
-    currentAudio = new Audio(track);
-    currentAudio.volume = 0.3;
-    currentAudio.onended = () => {
-      if (isMusicStarted) {
-        const nextTrack = musicListGlobal[Math.floor(Math.random() * musicListGlobal.length)];
-        currentAudio = new Audio(nextTrack);
-        currentAudio.volume = 0.3;
-        currentAudio.play().catch(e => console.log("Error al cambiar de canción", e));
-      }
-    };
-    currentAudio.play().catch(e => {
-      console.log("Error al reproducir música automáticamente:", e);
-      const oneClick = () => {
-        if (!isMusicStarted) {
-          startMusic();
-        }
-        document.removeEventListener('click', oneClick);
-        document.removeEventListener('touchstart', oneClick);
-      };
-      document.addEventListener('click', oneClick);
-      document.addEventListener('touchstart', oneClick);
-    });
+    playNextTrack();
   }
 
+  // Reanudar si la página se hace visible y estaba pausada
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && isMusicStarted && currentAudio && currentAudio.paused) {
+      currentAudio.play().catch(() => {});
+    }
+  });
+
+  // Iniciar música al cargar la página
   window.addEventListener('load', () => {
     startMusic();
   });
