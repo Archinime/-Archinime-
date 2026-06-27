@@ -1,5 +1,6 @@
 // notification-system.js - Con límite de 5 popups por carga de página
 // CORREGIDO: Evita popups duplicados al cargar, cola sincronizada correctamente
+// MODIFICADO: Colores de tipo y episodio en popups ahora son celestes (--neon-blue)
 (function(global) {
   'use strict';
 
@@ -460,17 +461,17 @@
     generatePopupHTML(notif) {
       if (notif.type === 'RESPUESTA') {
         return `
-          <div class="event-card" style="border: 1px solid var(--neon-cyan); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15); background: #0a0a0f; overflow: hidden; border-radius: 20px; max-width: 420px; width: 90%;">
-            <button class="event-close" onclick="closePopup()" aria-label="Cerrar" style="background: rgba(0,0,0,0.5); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); top: 15px; right: 15px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10;"><i class="fas fa-times"></i></button>
+          <div class="event-card" style="border: 1px solid var(--neon-blue); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15); background: #0a0a0f; overflow: hidden; border-radius: 20px; max-width: 420px; width: 90%;">
+            <button class="event-close" onclick="closePopup()" aria-label="Cerrar" style="background: rgba(0,0,0,0.5); border: 1px solid var(--neon-blue); color: var(--neon-blue); top: 15px; right: 15px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; z-index: 10;"><i class="fas fa-times"></i></button>
             <div style="background: linear-gradient(135deg, rgba(0,243,255,0.1) 0%, transparent 100%); padding: 25px 20px 15px; border-bottom: 1px solid rgba(0, 243, 255, 0.15); display: flex; align-items: center; gap: 15px; position: relative;">
               <div style="position: relative; flex-shrink: 0;">
-                <img src="${notif.img}" alt="Avatar Usuario" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--neon-cyan); box-shadow: 0 0 15px rgba(0,243,255,0.4);">
-                <div style="position: absolute; bottom: -2px; right: -2px; background: #0a0a0f; border-radius: 50%; padding: 4px; border: 1px solid var(--neon-cyan); display: flex; align-items: center; justify-content: center; width: 22px; height: 22px;">
-                  <i class="fas fa-reply" style="color: var(--neon-cyan); font-size: 0.65rem;"></i>
+                <img src="${notif.img}" alt="Avatar Usuario" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--neon-blue); box-shadow: 0 0 15px rgba(0,243,255,0.4);">
+                <div style="position: absolute; bottom: -2px; right: -2px; background: #0a0a0f; border-radius: 50%; padding: 4px; border: 1px solid var(--neon-blue); display: flex; align-items: center; justify-content: center; width: 22px; height: 22px;">
+                  <i class="fas fa-reply" style="color: var(--neon-blue); font-size: 0.65rem;"></i>
                 </div>
               </div>
               <div style="flex: 1; text-align: left; padding-right: 20px; overflow: hidden;">
-                <div style="color: var(--neon-cyan); font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 3px;">NUEVA RESPUESTA</div>
+                <div style="color: var(--neon-blue); font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 3px;">NUEVA RESPUESTA</div>
                 <h2 style="font-size: 1.05rem; color: #fff; margin: 0; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${domUtils.sanitizeHTML(notif.title)}</h2>
               </div>
             </div>
@@ -481,16 +482,16 @@
                 <span style="font-size: 0.85rem; color: #aaa; font-style: italic; display: block; padding-right: 20px; line-height: 1.4;">${domUtils.sanitizeHTML(notif.originalText)}</span>
               </div>
               <div style="background: rgba(0, 243, 255, 0.05); border: 1px solid rgba(0, 243, 255, 0.15); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-                <p style="color: #fff; font-size: 0.95rem; margin: 0; line-height: 1.5; word-wrap: break-word;">${domUtils.sanitizeHTML(notif.epTitle)}</p>
+                <p style="color: var(--neon-blue); font-size: 0.95rem; margin: 0; line-height: 1.5; word-wrap: break-word;">${domUtils.sanitizeHTML(notif.epTitle)}</p>
               </div>
-              <button class="event-btn" style="background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); border-radius: 10px; font-size: 0.85rem; padding: 12px; width: 100%; border: none; font-weight: 800; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')"> <i class="fas fa-comments"></i> VER CONVERSACIÓN </button>
+              <button class="event-btn" style="background: var(--neon-blue); color: #000; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); border-radius: 10px; font-size: 0.85rem; padding: 12px; width: 100%; border: none; font-weight: 800; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="goToAnimeFromPopup('${notif.animeId}', '${notif.notifId}')"> <i class="fas fa-comments"></i> VER CONVERSACIÓN </button>
             </div>
           </div>`;
       }
 
       let infoString = "";
-      if (notif.blockName && notif.blockName !== "Novedad") infoString += `<span style="color:var(--neon-cyan)">${notif.blockName}</span>`;
-      if (notif.epTitle && notif.epTitle !== "Nuevo Contenido") infoString += (infoString ? " • " : "") + `<span style="color:#fff">${notif.epTitle}</span>`;
+      if (notif.blockName && notif.blockName !== "Novedad") infoString += `<span style="color:var(--neon-blue)">${notif.blockName}</span>`;
+      if (notif.epTitle && notif.epTitle !== "Nuevo Contenido") infoString += (infoString ? " • " : "") + `<span style="color:var(--neon-blue)">${notif.epTitle}</span>`;
       else if (!infoString) infoString = "Nuevo Contenido";
 
       let badgeColor = "#bc13fe";
@@ -506,7 +507,7 @@
               <img src="${notif.img}" class="cover-back" alt="Poster">
               <img src="${notif.seasonCover}" class="cover-front" alt="Season">
             </div>
-            <div class="event-type-badge" style="background: ${badgeColor}; box-shadow: 0 0 15px ${badgeColor};">${notif.type}</div>
+            <div class="event-type-badge" style="background: ${badgeColor}; box-shadow: 0 0 15px ${badgeColor}; color: var(--neon-blue);">${notif.type}</div>
             ${notif.isFinal ? '<div style="position: absolute; bottom: 15px; right: 15px; z-index: 20; color: #fff; background: rgba(255, 0, 0, 0.8); border: 2px solid #ff0000; padding: 4px 12px; border-radius: 4px; font-weight: 900; font-family: \'Orbitron\', sans-serif; font-size: 0.85rem; transform: rotate(-10deg); box-shadow: 0 0 15px #ff0000; letter-spacing: 1px;">FINALIZADO</div>' : ''}
           </div>
           <div class="event-info">
@@ -584,7 +585,7 @@
         btn.title = 'Marcar todas las notificaciones como vistas';
         btn.onclick = (e) => { e.stopPropagation(); this.markAllAsRead(); };
         btn.style.cssText = `
-          background: rgba(0,243,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
+          background: rgba(0,243,255,0.1); border: 1px solid var(--neon-blue); color: var(--neon-blue);
           border-radius: 20px; padding: 4px 12px; font-size: 0.7rem; font-family: 'Orbitron', sans-serif;
           cursor: pointer; transition: all 0.2s; margin-left: 10px;
           ${window.innerWidth <= 768 ? 'margin-right: 35px;' : ''}
@@ -617,7 +618,7 @@
         let typeColor = "var(--neon-purple)";
         if (item.type.includes("ESTRENO")) typeColor = "var(--neon-pink)";
         else if (item.type.includes("PRÓXIMAMENTE")) typeColor = "var(--neon-yellow)";
-        else if (item.type === "RESPUESTA") typeColor = "var(--neon-cyan)";
+        else if (item.type === "RESPUESTA") typeColor = "var(--neon-blue)";
 
         div.innerHTML = `
           <div style="position:relative; display:inline-block;">
