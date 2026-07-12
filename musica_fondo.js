@@ -15,4 +15,5 @@ const musicListGlobal = [
   'https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/Nightcore%20-%20When%20You%20Leave%20(Numa%20Numa).mp3',
   'https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/Nightcore%20-%20Yo%20y%20los%20que%20tuvieron%20etapa%20Vocaloid%20cuando%20suena%20😼✨.mp3',
   'https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/FLOW%20-%20HERO%20-Kibou%20no%20uta-.mp3',
+  'https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/Caramella%20Girls.mp3',
 ];
