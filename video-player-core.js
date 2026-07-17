@@ -1,6 +1,7 @@
 // video-player-core.js - Versión con catálogo local + Firestore
 // MEJORADO: Descarga única (bloqueo de botón), barra de progreso única
 // SOPORTE: Múltiples partes, selección automática de opción, títulos dinámicos
+// NUEVO: Conversión de enlaces DoomStream (/e/ -> /d/), ocultar logo en DoomStream, sin alert en fallos de descarga
 
 class VideoPlayer {
   constructor() {
@@ -20,7 +21,7 @@ class VideoPlayer {
     this.currentPartIndex = 0;
     this.activeOption = 'latino';
     this.currentVideoElement = null;
-    this.isDownloading = false; // ← NUEVA VARIABLE DE CONTROL
+    this.isDownloading = false;
     
     window.comentariosAnimeId = this.animeId;
     window.comentariosSeason = this.season;
@@ -47,6 +48,236 @@ class VideoPlayer {
     window.videoPlayer = window.videoPlayerMethods;
   }
   
+  // ---------- DETECCIÓN DE DOOMSTREAM ----------
+  isDoomStreamUrl(url) {
+    if (!url) return false;
+    // Detecta dominios comunes de DoomStream y la ruta /e/
+    return /(playmogo\.com|doomstream\.com)\/e\//i.test(url);
+  }
+
+  // ---------- CONVERSIÓN DE ENLACES ----------
+  generateDirectLink(url) {
+    if (!url) return "#";
+    
+    // --- NUEVO: convertir DoomStream /e/ -> /d/ ---
+    if (this.isDoomStreamUrl(url)) {
+      return url.replace(/\/e\//, '/d/');
+    }
+
+    if (url.includes("drive.google.com")) {
+      const match = url.match(/\/d\/(.+?)\//);
+      if (match && match[1]) return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
+      const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (altMatch && altMatch[1]) return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
+    }
+    if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace('dl=0', 'dl=1');
+    if (url.includes("ok.ru/")) {
+      const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
+      if (match && match[1]) return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
+    }
+    if (url.includes("odysee.com")) {
+      let claimStr = url.split("/embed/")[1];
+      if (claimStr) {
+        if (claimStr.includes('/')) claimStr = claimStr.split('/').pop();
+        claimStr = claimStr.replace(':', '/');
+        return `https://odysee.com/$/download/${claimStr}`;
+      }
+      return url;
+    }
+    return url;
+  }
+
+  // ---------- CONTROL DEL LOGO (ARCHINIME HD) ----------
+  updateLogoBlocker(url) {
+    const logo = document.querySelector('.logo-blocker');
+    if (!logo) return;
+    // Ocultar si es DoomStream, mostrar en cualquier otro caso
+    if (this.isDoomStreamUrl(url)) {
+      logo.style.display = 'none';
+    } else {
+      logo.style.display = 'flex';
+    }
+  }
+
+  // ---------- REPRODUCIR EPISODIO ----------
+  playPart(partIndex, urlsArray) {
+    if (!urlsArray || partIndex >= urlsArray.length) return;
+    const url = urlsArray[partIndex];
+    if (!url) return;
+    
+    const container = document.getElementById('mediaContainer');
+    container.innerHTML = '';
+    
+    const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
+    if (isVideoFile && !url.includes('drive.google.com')) {
+      const video = document.createElement('video');
+      video.src = url;
+      video.controls = true;
+      video.style.width = '100%';
+      video.style.height = '100%';
+      container.appendChild(video);
+      this.currentVideoElement = video;
+      
+      // --- Actualizar logo (para videos directos no es DoomStream) ---
+      this.updateLogoBlocker(url);
+
+      const onEnded = () => {
+        if (partIndex + 1 < urlsArray.length) {
+          this.playPart(partIndex + 1, urlsArray);
+        } else {
+          console.log('Episodio completado');
+        }
+      };
+      video.addEventListener('ended', onEnded, { once: true });
+    } else {
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.allow = 'autoplay; fullscreen';
+      iframe.allowFullscreen = true;
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      container.appendChild(iframe);
+      this.currentVideoElement = null;
+      
+      // --- Actualizar logo según la URL del iframe ---
+      this.updateLogoBlocker(url);
+    }
+  }
+
+  // ========== DESCARGA (sin alert, directa para DoomStream) ==========
+  async forceDownload(url, suggestedFilename = 'video.mp4') {
+    this.showProgressBar();
+    const percentSpan = document.getElementById('progressPercent');
+    const fillDiv = document.getElementById('progressBarFill');
+
+    try {
+      const response = await fetch(url, { mode: 'cors' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const contentLength = response.headers.get('content-length');
+      const total = contentLength ? parseInt(contentLength, 10) : 0;
+      let loaded = 0;
+
+      const reader = response.body.getReader();
+      const chunks = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        loaded += value.length;
+        if (total) {
+          const percent = Math.round((loaded / total) * 100);
+          if (percentSpan) percentSpan.innerText = percent;
+          if (fillDiv) fillDiv.style.width = percent + '%';
+        } else {
+          if (percentSpan) percentSpan.innerText = '...';
+        }
+      }
+      const blob = new Blob(chunks, { type: response.headers.get('content-type') || 'video/mp4' });
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = suggestedFilename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.warn(error);
+      // --- SIN ALERT: solo abrir la URL en nueva pestaña ---
+      window.open(url, '_blank');
+    } finally {
+      // La barra se oculta en handleDownloadClick
+    }
+  }
+
+  async handleDownloadClick() {
+    if (this.isDownloading) {
+      console.log('Descarga en curso, espera a que termine');
+      return;
+    }
+
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.openLoginModal();
+      return;
+    }
+    
+    let urlsToDownload = [...this.currentDownloadUrls];
+    
+    if (this.currentPeerTubeUrl) {
+      const fallbackUrls = this.getActiveEpisodeUrls();
+      if (fallbackUrls.length > 0) {
+        urlsToDownload = fallbackUrls.map(url => this.generateDirectLink(url));
+      } else {
+        alert('No hay enlace alternativo para PeerTube.');
+        return;
+      }
+    }
+    
+    if (urlsToDownload.length === 0 || urlsToDownload[0] === '#') {
+      alert('No hay enlace de descarga disponible.');
+      return;
+    }
+    
+    const epTitleElem = document.getElementById('epTitle');
+    let baseFilename = epTitleElem ? epTitleElem.innerText : 'video';
+    baseFilename = baseFilename.replace(/[^a-z0-9ñáéíóúü \-_]/gi, '').replace(/\s+/g, '_');
+
+    this.isDownloading = true;
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+      downloadBtn.disabled = true;
+      downloadBtn.style.opacity = '0.6';
+      downloadBtn.style.cursor = 'not-allowed';
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Descargando...';
+    }
+
+    try {
+      for (let i = 0; i < urlsToDownload.length; i++) {
+        const url = urlsToDownload[i];
+        
+        // --- NUEVO: si es DoomStream, abrir directamente sin barra ---
+        if (this.isDoomStreamUrl(url)) {
+          window.open(url, '_blank');
+          continue;
+        }
+
+        const isCatbox = url.includes('catbox.moe');
+        const isCrossOrigin = !url.startsWith(location.origin);
+        
+        let filename = `${baseFilename}`;
+        if (urlsToDownload.length > 1) {
+          filename = `${baseFilename}_parte${i+1}.mp4`;
+        } else {
+          filename = `${baseFilename}.mp4`;
+        }
+        
+        if (isCatbox || isCrossOrigin) {
+          await this.forceDownload(url, filename);
+        } else {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          link.target = this.isMobile() ? '_blank' : '_self';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          await new Promise(r => setTimeout(r, 500));
+        }
+      }
+    } finally {
+      this.isDownloading = false;
+      if (downloadBtn) {
+        downloadBtn.disabled = false;
+        downloadBtn.style.opacity = '1';
+        downloadBtn.style.cursor = 'pointer';
+        downloadBtn.innerHTML = '⬇ Descargar';
+      }
+      this.hideProgressBar();
+    }
+  }
+
+  // ---------- RESTO DE MÉTODOS (sin cambios) ----------
   async waitForCatalogAndLoad() {
     if (typeof catalogoArray !== 'undefined') {
       this.loadEpisodeData();
@@ -67,7 +298,7 @@ class VideoPlayer {
       }
     }, 5000);
   }
-  
+
   initFirebase() {
     const firebaseConfig = {
       apiKey: "AIzaSyBpzYARIxaJijLbbL-2S6F9MWecbAbvK_I",
@@ -100,12 +331,12 @@ class VideoPlayer {
       }
     });
   }
-  
+
   getCurrentUser() {
     if (window.ArchinimeState) return window.ArchinimeState.get('currentUser');
     return this.currentUser;
   }
-  
+
   async migrateLocalToFirestore(userId) {
     if (!userId) return;
     const watchedKeys = [];
@@ -140,7 +371,7 @@ class VideoPlayer {
     }
     console.log('✅ Migración completada');
   }
-  
+
   setupAuthMigration() {
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -154,7 +385,7 @@ class VideoPlayer {
       }
     });
   }
-  
+
   async saveToFirestore(animeId, seasonNum, episodeNum, userId) {
     if (!userId) return false;
     try {
@@ -170,7 +401,7 @@ class VideoPlayer {
       return true;
     } catch (e) { return false; }
   }
-  
+
   async autoMarkAsWatched() {
     const aId = this.animeId;
     const sNum = parseInt(this.season);
@@ -193,7 +424,7 @@ class VideoPlayer {
       this.pendingMarks.push({ animeId: aId, season: sNum, episode: eNum });
     }
   }
-  
+
   initUI() {
     const backLink = document.getElementById('backLink');
     if (backLink && this.animeId) backLink.href = `anime-detail.html?id=${this.animeId}`;
@@ -221,14 +452,14 @@ class VideoPlayer {
       tab.addEventListener('click', () => this.switchStickerTab(tab.dataset.tab));
     });
   }
-  
+
   formatEpisodeTitle(season, epNum, episodeData) {
     const animeTitle = this.animeData?.title || 'Anime';
     const seasonName = season.name || `Temporada ${season.num}`;
     const episodeTitle = episodeData.title || `Capítulo ${epNum}`;
     return `${animeTitle} - ${seasonName} - ${episodeTitle}`;
   }
-  
+
   async loadEpisodeData() {
     try {
       const anime = catalogoArray.find(a => a.id == this.animeId);
@@ -292,14 +523,14 @@ class VideoPlayer {
       document.getElementById('epTitle').innerText = 'Error al cargar el episodio';
     }
   }
-  
+
   normalizeUrls(urls) {
     if (!urls) return [];
     if (Array.isArray(urls)) return urls.filter(u => u && u.trim() !== '');
     if (typeof urls === 'string' && urls.trim() !== '') return [urls];
     return [];
   }
-  
+
   createServerButton(label, urls, isActive) {
     const container = document.getElementById('serverOptions');
     const btn = document.createElement('button');
@@ -314,80 +545,17 @@ class VideoPlayer {
     };
     container.appendChild(btn);
   }
-  
+
   updateDownloadUrls(urls) {
     this.currentDownloadUrls = urls.map(url => this.generateDirectLink(url));
     this.currentPeerTubeUrl = (urls.length > 0 && this.isPeerTubeUrl(urls[0])) ? urls[0] : null;
   }
-  
+
   isPeerTubeUrl(url) {
     if (!url) return false;
     return /^(https?:\/\/)?([a-z0-9-]+\.)*peertube\.\w+\//i.test(url);
   }
-  
-  generateDirectLink(url) {
-    if (!url) return "#";
-    if (url.includes("drive.google.com")) {
-      const match = url.match(/\/d\/(.+?)\//);
-      if (match && match[1]) return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
-      const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (altMatch && altMatch[1]) return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
-    }
-    if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace('dl=0', 'dl=1');
-    if (url.includes("ok.ru/")) {
-      const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
-      if (match && match[1]) return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
-    }
-    if (url.includes("odysee.com")) {
-      let claimStr = url.split("/embed/")[1];
-      if (claimStr) {
-        if (claimStr.includes('/')) claimStr = claimStr.split('/').pop();
-        claimStr = claimStr.replace(':', '/');
-        return `https://odysee.com/$/download/${claimStr}`;
-      }
-      return url;
-    }
-    return url;
-  }
-  
-  playPart(partIndex, urlsArray) {
-    if (!urlsArray || partIndex >= urlsArray.length) return;
-    const url = urlsArray[partIndex];
-    if (!url) return;
-    
-    const container = document.getElementById('mediaContainer');
-    container.innerHTML = '';
-    
-    const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
-    if (isVideoFile && !url.includes('drive.google.com')) {
-      const video = document.createElement('video');
-      video.src = url;
-      video.controls = true;
-      video.style.width = '100%';
-      video.style.height = '100%';
-      container.appendChild(video);
-      this.currentVideoElement = video;
-      
-      const onEnded = () => {
-        if (partIndex + 1 < urlsArray.length) {
-          this.playPart(partIndex + 1, urlsArray);
-        } else {
-          console.log('Episodio completado');
-        }
-      };
-      video.addEventListener('ended', onEnded, { once: true });
-    } else {
-      const iframe = document.createElement('iframe');
-      iframe.src = url;
-      iframe.allow = 'autoplay; fullscreen';
-      iframe.allowFullscreen = true;
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      container.appendChild(iframe);
-      this.currentVideoElement = null;
-    }
-  }
-  
+
   getActiveEpisodeUrls() {
     const episodeData = this.currentEpisodeData;
     if (!episodeData) return [];
@@ -397,10 +565,9 @@ class VideoPlayer {
       return this.normalizeUrls(episodeData.link2);
     }
   }
-  
-  // ========== BARRA DE PROGRESO PARA DESCARGA (MEJORADA) ==========
+
+  // ========== BARRA DE PROGRESO PARA DESCARGA ==========
   showProgressBar() {
-    // Si ya existe, no crear otra
     if (document.getElementById('customDownloadProgress')) return;
     const div = document.createElement('div');
     div.id = 'customDownloadProgress';
@@ -421,142 +588,10 @@ class VideoPlayer {
     if (el) el.remove();
   }
 
-  async forceDownload(url, suggestedFilename = 'video.mp4') {
-    // Mostrar barra solo si no existe ya (la primera llamada la crea)
-    this.showProgressBar();
-    const percentSpan = document.getElementById('progressPercent');
-    const fillDiv = document.getElementById('progressBarFill');
-
-    try {
-      const response = await fetch(url, { mode: 'cors' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const contentLength = response.headers.get('content-length');
-      const total = contentLength ? parseInt(contentLength, 10) : 0;
-      let loaded = 0;
-
-      const reader = response.body.getReader();
-      const chunks = [];
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-        loaded += value.length;
-        if (total) {
-          const percent = Math.round((loaded / total) * 100);
-          if (percentSpan) percentSpan.innerText = percent;
-          if (fillDiv) fillDiv.style.width = percent + '%';
-        } else {
-          if (percentSpan) percentSpan.innerText = '...';
-        }
-      }
-      const blob = new Blob(chunks, { type: response.headers.get('content-type') || 'video/mp4' });
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = suggestedFilename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.warn(error);
-      alert('No se pudo descargar automáticamente.\nHaz clic derecho en el enlace y selecciona "Guardar enlace como..."');
-      window.open(url, '_blank');
-    } finally {
-      // La barra se eliminará al final de handleDownloadClick, no aquí
-    }
-  }
-
-  async handleDownloadClick() {
-    // Si ya hay una descarga en curso, salir sin hacer nada
-    if (this.isDownloading) {
-      console.log('Descarga en curso, espera a que termine');
-      return;
-    }
-
-    const user = this.getCurrentUser();
-    if (!user) {
-      this.openLoginModal();
-      return;
-    }
-    
-    let urlsToDownload = [...this.currentDownloadUrls];
-    
-    if (this.currentPeerTubeUrl) {
-      const fallbackUrls = this.getActiveEpisodeUrls();
-      if (fallbackUrls.length > 0) {
-        urlsToDownload = fallbackUrls.map(url => this.generateDirectLink(url));
-      } else {
-        alert('No hay enlace alternativo para PeerTube.');
-        return;
-      }
-    }
-    
-    if (urlsToDownload.length === 0 || urlsToDownload[0] === '#') {
-      alert('No hay enlace de descarga disponible.');
-      return;
-    }
-    
-    const epTitleElem = document.getElementById('epTitle');
-    let baseFilename = epTitleElem ? epTitleElem.innerText : 'video';
-    baseFilename = baseFilename.replace(/[^a-z0-9ñáéíóúü \-_]/gi, '').replace(/\s+/g, '_');
-
-    // Bloquear el botón y mostrar barra
-    this.isDownloading = true;
-    const downloadBtn = document.getElementById('downloadBtn');
-    if (downloadBtn) {
-      downloadBtn.disabled = true;
-      downloadBtn.style.opacity = '0.6';
-      downloadBtn.style.cursor = 'not-allowed';
-      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Descargando...';
-    }
-    // Mostrar la barra de progreso (solo una vez)
-    this.showProgressBar();
-
-    try {
-      for (let i = 0; i < urlsToDownload.length; i++) {
-        const url = urlsToDownload[i];
-        const isCatbox = url.includes('catbox.moe');
-        const isCrossOrigin = !url.startsWith(location.origin);
-        
-        let filename = `${baseFilename}`;
-        if (urlsToDownload.length > 1) {
-          filename = `${baseFilename}_parte${i+1}.mp4`;
-        } else {
-          filename = `${baseFilename}.mp4`;
-        }
-        
-        if (isCatbox || isCrossOrigin) {
-          await this.forceDownload(url, filename);
-        } else {
-          // Descarga directa (sin barra)
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = filename;
-          link.target = this.isMobile() ? '_blank' : '_self';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          await new Promise(r => setTimeout(r, 500));
-        }
-      }
-    } finally {
-      // Restaurar botón y ocultar barra
-      this.isDownloading = false;
-      if (downloadBtn) {
-        downloadBtn.disabled = false;
-        downloadBtn.style.opacity = '1';
-        downloadBtn.style.cursor = 'pointer';
-        downloadBtn.innerHTML = '⬇ Descargar';
-      }
-      this.hideProgressBar();
-    }
-  }
-  
   isMobile() {
     return /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent.toLowerCase());
   }
-  
+
   setupNavigation() {
     if (!this.animeData?.seasons) return;
     const flat = [];
@@ -590,7 +625,7 @@ class VideoPlayer {
       nextBtn.classList.add('btn-hidden');
     }
   }
-  
+
   setupAuthUI() {
     document.querySelectorAll('.auth-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -602,14 +637,14 @@ class VideoPlayer {
       });
     });
   }
-  
+
   openLoginModal() { document.getElementById('authModal').classList.add('show'); }
   closeAuthModal() { 
     document.getElementById('authModal').classList.remove('show'); 
     const errEl = document.getElementById('authError');
     if (errEl) errEl.innerText = '';
   }
-  
+
   async loginWithEmail() {
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPassword').value;
@@ -620,7 +655,7 @@ class VideoPlayer {
       document.getElementById('authError').innerText = e.message; 
     }
   }
-  
+
   async registerWithEmail() {
     const email = document.getElementById('registerEmail').value;
     const pass = document.getElementById('registerPassword').value;
@@ -636,7 +671,7 @@ class VideoPlayer {
       document.getElementById('authError').innerText = e.message; 
     }
   }
-  
+
   async loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     try { 
@@ -646,7 +681,7 @@ class VideoPlayer {
       document.getElementById('authError').innerText = e.message; 
     }
   }
-  
+
   async loginWithGitHub() {
     const provider = new firebase.auth.GithubAuthProvider();
     try { 
@@ -656,7 +691,7 @@ class VideoPlayer {
       document.getElementById('authError').innerText = e.message; 
     }
   }
-  
+
   updateCommentFormVisibility() {
     const user = this.getCurrentUser();
     const loginMsg = document.getElementById('comentarioLoginMessage');
@@ -675,7 +710,7 @@ class VideoPlayer {
       if (form) form.style.display = 'none';
     }
   }
-  
+
   toggleStickerPanel() {
     const panel = document.getElementById('stickerPanelFull');
     if (panel) {
@@ -685,7 +720,7 @@ class VideoPlayer {
       }
     }
   }
-  
+
   switchStickerTab(tabId) {
     if (typeof window.switchStickerTab === 'function') {
       window.switchStickerTab(tabId);
@@ -696,7 +731,7 @@ class VideoPlayer {
       document.getElementById(tabId === 'mis' ? 'misStickersTab' : 'subirStickersTab')?.classList.add('active');
     }
   }
-  
+
   validateSendButton() {
     const textarea = document.getElementById('comentarioTexto');
     const btn = document.getElementById('enviarComentarioBtn');
@@ -706,11 +741,11 @@ class VideoPlayer {
       btn.style.opacity = hasContent ? '1' : '0.5';
     }
   }
-  
+
   enviarComentario() { 
     if (typeof enviarComentarioTexto === 'function') enviarComentarioTexto();
   }
-  
+
   quitarStickerPreview() { 
     if (typeof quitarStickerPreview === 'function') { quitarStickerPreview(); } 
     this.validateSendButton();
