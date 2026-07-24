@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🗑️ Borrador Masivo - GitHub API</title>
+    <title>🗑️ Borrador Masivo - Todos los archivos</title>
     <style>
         /* ===== ESTILO CYBERPUNK ===== */
         * {
@@ -16,20 +16,21 @@
             color: #f0f2f5;
             font-family: 'Segoe UI', 'Poppins', sans-serif;
             min-height: 100vh;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
+            align-items: flex-start;
         }
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             width: 100%;
-            background: rgba(11, 14, 20, 0.9);
+            background: rgba(11, 14, 20, 0.92);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 240, 255, 0.2);
             border-radius: 24px;
             padding: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            margin-top: 20px;
         }
         h1 {
             font-family: 'Orbitron', sans-serif;
@@ -38,7 +39,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             letter-spacing: 2px;
         }
         .sub {
@@ -60,16 +61,17 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            align-items: center;
         }
         .input-row label {
-            min-width: 100px;
+            min-width: 70px;
             font-weight: 600;
             color: #00f0ff;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .input-row input, .input-row textarea {
+        .input-row input {
             flex: 1;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -78,23 +80,21 @@
             color: #fff;
             font-family: inherit;
             transition: 0.2s;
-            min-width: 180px;
+            min-width: 150px;
         }
-        .input-row input:focus, .input-row textarea:focus {
+        .input-row input:focus {
             border-color: #00f0ff;
             outline: none;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
         }
-        .input-row textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-size: 0.8rem;
+        .input-row input[type="text"] {
+            flex: 2;
         }
         .actions {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
-            margin: 20px 0;
+            margin: 16px 0 20px;
         }
         .btn {
             padding: 12px 28px;
@@ -127,36 +127,64 @@
             box-shadow: 0 0 30px rgba(255, 26, 107, 0.4);
             transform: translateY(-3px);
         }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
         }
-        .file-list {
-            margin-top: 25px;
+        .file-list-container {
+            margin-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.04);
-            padding-top: 20px;
+            padding-top: 16px;
         }
-        .file-list h3 {
+        .file-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .file-list-header h3 {
             color: #8a90a0;
             font-weight: 400;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             letter-spacing: 1px;
+        }
+        .file-list-header .badge {
+            background: rgba(0, 240, 255, 0.15);
+            color: #00f0ff;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .file-list {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 0;
         }
         .file-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
-            margin-bottom: 4px;
-            border-left: 3px solid transparent;
+            padding: 8px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             transition: 0.15s;
         }
         .file-item:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
         }
         .file-item input[type="checkbox"] {
             width: 18px;
@@ -175,11 +203,18 @@
         .file-item .size {
             color: #666;
             font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .file-item .type-icon {
+            color: #666;
+            font-size: 0.9rem;
+            width: 20px;
+            text-align: center;
         }
         .status-box {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px 18px;
             margin-top: 16px;
             border: 1px solid rgba(255, 255, 255, 0.04);
             color: #8a90a0;
@@ -203,14 +238,7 @@
         }
         .status-box .ok { color: #00ff9d; }
         .status-box .err { color: #ff1a6b; }
-        .badge {
-            background: rgba(255, 26, 107, 0.2);
-            color: #ff1a6b;
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-weight: 700;
-        }
+        .status-box .info { color: #ffd700; }
         .footer-note {
             text-align: center;
             margin-top: 20px;
@@ -222,11 +250,32 @@
         .footer-note i {
             color: #ffd700;
         }
+        .select-all-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 6px 14px;
+            background: rgba(0, 240, 255, 0.04);
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+        .select-all-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00f0ff;
+        }
+        .select-all-row label {
+            font-size: 0.85rem;
+            color: #aaa;
+            cursor: pointer;
+        }
         @media (max-width: 600px) {
             .container { padding: 16px; }
-            .input-row { flex-direction: column; }
+            .input-row { flex-direction: column; align-items: stretch; }
             .input-row label { min-width: auto; }
             .btn { min-width: 100%; }
+            .file-item { flex-wrap: wrap; }
+            .file-item .size { display: none; }
         }
     </style>
 </head>
@@ -234,7 +283,7 @@
 
 <div class="container">
     <h1>🗑️ BORRADOR MASIVO</h1>
-    <p class="sub"><i class="fas fa-skull"></i> Elimina múltiples archivos de GitHub en 1 commit</p>
+    <p class="sub"><i class="fas fa-skull"></i> Elimina archivos de GitHub en 1 commit · <span style="color:#00f0ff;">Todos los archivos visibles</span></p>
 
     <!-- CONFIGURACIÓN -->
     <div class="input-group">
@@ -248,40 +297,35 @@
             <label style="min-width:60px;"><i class="fas fa-branch"></i> Rama</label>
             <input type="text" id="branchInput" placeholder="main" value="main" style="flex:0.5; min-width:100px;">
         </div>
-        <div class="input-row">
-            <label><i class="fas fa-filter"></i> Patrón</label>
-            <input type="text" id="patternInput" placeholder="Ej: (1)\. (regex)" value="\(1\)\.[^.]+$">
-            <span style="color:#666; font-size:0.75rem; display:flex; align-items:center;">Detecta archivos con (1)</span>
-        </div>
-        <div class="input-row">
-            <label><i class="fas fa-list"></i> Archivos</label>
-            <textarea id="fileListInput" placeholder="O escribe rutas específicas (una por línea)&#10;Ej:&#10;video-player (1).js&#10;anime-detail (1).html">video-player-core (1).js
-video-player (1).html
-anime-detail-core.js
-anime-detail.html
-app-core.js
-index.html</textarea>
-        </div>
     </div>
 
     <!-- ACCIONES -->
     <div class="actions">
-        <button class="btn btn-primary" id="scanBtn"><i class="fas fa-search"></i> Escanear archivos</button>
+        <button class="btn btn-primary" id="scanBtn"><i class="fas fa-search"></i> Ver todos los archivos</button>
         <button class="btn btn-danger" id="deleteBtn" disabled><i class="fas fa-trash-alt"></i> Eliminar seleccionados</button>
+        <button class="btn btn-secondary" id="clearBtn" disabled><i class="fas fa-times"></i> Deseleccionar todos</button>
     </div>
 
     <!-- ESTADO -->
     <div class="status-box" id="statusBox">
-        <span id="statusText">🔍 Listo para escanear.</span>
+        <span id="statusText">🔍 Ingresa tu token y haz clic en "Ver todos los archivos".</span>
     </div>
 
     <!-- LISTA DE ARCHIVOS -->
-    <div class="file-list" id="fileListContainer">
-        <h3><i class="fas fa-files"></i> Archivos encontrados <span id="countBadge" class="badge">0</span></h3>
-        <div id="fileList"></div>
+    <div class="file-list-container" id="fileListContainer" style="display:none;">
+        <div class="file-list-header">
+            <h3><i class="fas fa-files"></i> Archivos encontrados <span id="countBadge" class="badge">0</span></h3>
+            <span id="selectedCount" style="color:#8a90a0; font-size:0.85rem;">Seleccionados: 0</span>
+        </div>
+        <div class="select-all-row">
+            <input type="checkbox" id="selectAllCheckbox">
+            <label for="selectAllCheckbox">Seleccionar / Deseleccionar todos</label>
+        </div>
+        <div class="file-list" id="fileList"></div>
     </div>
+
     <div class="footer-note">
-        <i class="fas fa-shield-alt"></i> El token solo se guarda en tu navegador. No se envía a ningún servidor externo.
+        <i class="fas fa-shield-alt"></i> El token solo se guarda en tu navegador (localStorage). No se envía a servidores externos.
     </div>
 </div>
 
@@ -296,16 +340,18 @@ index.html</textarea>
         const tokenInput = document.getElementById('tokenInput');
         const repoInput = document.getElementById('repoInput');
         const branchInput = document.getElementById('branchInput');
-        const patternInput = document.getElementById('patternInput');
-        const fileListInput = document.getElementById('fileListInput');
         const scanBtn = document.getElementById('scanBtn');
         const deleteBtn = document.getElementById('deleteBtn');
+        const clearBtn = document.getElementById('clearBtn');
         const statusText = document.getElementById('statusText');
         const fileListDiv = document.getElementById('fileList');
         const countBadge = document.getElementById('countBadge');
+        const selectedCountSpan = document.getElementById('selectedCount');
+        const fileListContainer = document.getElementById('fileListContainer');
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
 
         // Estado
-        let currentFiles = []; // { path, sha, type, size }
+        let allFiles = [];           // { path, sha, type, size, mode }
         let selectedPaths = new Set();
 
         // ===== UTILIDADES =====
@@ -313,7 +359,7 @@ index.html</textarea>
             const box = document.getElementById('statusBox');
             statusText.innerHTML = msg;
             // Limpiar clases anteriores
-            box.querySelectorAll('.ok, .err, .spinner').forEach(el => el.remove());
+            box.querySelectorAll('.ok, .err, .info, .spinner').forEach(el => el.remove());
             if (type === 'loading') {
                 const spin = document.createElement('div');
                 spin.className = 'spinner';
@@ -327,6 +373,11 @@ index.html</textarea>
                 const span = document.createElement('span');
                 span.className = 'err';
                 span.innerHTML = '❌';
+                box.prepend(span);
+            } else if (type === 'info') {
+                const span = document.createElement('span');
+                span.className = 'info';
+                span.innerHTML = 'ℹ️';
                 box.prepend(span);
             }
         }
@@ -353,8 +404,8 @@ index.html</textarea>
             return res.json();
         }
 
-        // ===== OBTENER ÁRBOL ACTUAL =====
-        async function getCurrentTree(token, repo, branch) {
+        // ===== OBTENER ÁRBOL COMPLETO (recursivo) =====
+        async function getFullTree(token, repo, branch) {
             // 1. Obtener ref de la rama
             const refUrl = `https://api.github.com/repos/${repo}/git/refs/heads/${branch}`;
             const refData = await apiFetch(refUrl, token);
@@ -365,7 +416,7 @@ index.html</textarea>
             const commitData = await apiFetch(commitUrl, token);
             const treeSha = commitData.tree.sha;
 
-            // 3. Obtener el árbol (recursivo para todos los archivos)
+            // 3. Obtener el árbol recursivo
             const treeUrl = `https://api.github.com/repos/${repo}/git/trees/${treeSha}?recursive=1`;
             const treeData = await apiFetch(treeUrl, token);
 
@@ -376,74 +427,68 @@ index.html</textarea>
             };
         }
 
-        // ===== ESCANEAR =====
-        async function scanFiles() {
+        // ===== ESCANEAR TODOS LOS ARCHIVOS =====
+        async function scanAllFiles() {
             const token = tokenInput.value.trim();
             const repo = repoInput.value.trim();
             const branch = branchInput.value.trim();
-            const patternRaw = patternInput.value.trim();
-            const manualFiles = fileListInput.value.split('\n').map(s => s.trim()).filter(s => s);
 
             if (!token) { setStatus('⚠️ Ingresa tu token de GitHub.', 'err'); return; }
             if (!repo) { setStatus('⚠️ Ingresa el repositorio (usuario/repo).', 'err'); return; }
 
-            setStatus('⏳ Conectando a GitHub...', 'loading');
+            setStatus('⏳ Conectando a GitHub y obteniendo todos los archivos...', 'loading');
             scanBtn.disabled = true;
             deleteBtn.disabled = true;
+            clearBtn.disabled = true;
 
             try {
-                const { commitSha, treeSha, tree } = await getCurrentTree(token, repo, branch);
+                const { commitSha, treeSha, tree } = await getFullTree(token, repo, branch);
 
-                // Determinar qué archivos buscar
-                let filesToCheck = [];
-                if (manualFiles.length > 0) {
-                    filesToCheck = manualFiles;
-                } else if (patternRaw) {
-                    const regex = new RegExp(patternRaw);
-                    // Solo archivos (blob) que coincidan con el patrón
-                    tree.forEach(item => {
-                        if (item.type === 'blob' && regex.test(item.path)) {
-                            filesToCheck.push(item.path);
-                        }
-                    });
-                } else {
-                    setStatus('⚠️ No hay patrón ni lista de archivos manual.', 'err');
-                    scanBtn.disabled = false;
-                    return;
-                }
+                // Filtrar solo archivos (blob), excluir directorios
+                const fileItems = tree.filter(item => item.type === 'blob');
 
-                // Filtrar el árbol para obtener solo los que queremos
-                const matchedItems = tree.filter(item => {
-                    if (item.type !== 'blob') return false;
-                    return filesToCheck.includes(item.path);
-                });
-
-                if (matchedItems.length === 0) {
-                    setStatus(`⚠️ No se encontraron archivos que coincidan. (Revisa el patrón o las rutas)`, 'err');
-                    fileListDiv.innerHTML = '<div style="color:#666;padding:12px;">Sin coincidencias.</div>';
+                if (fileItems.length === 0) {
+                    setStatus('⚠️ No se encontraron archivos en este repositorio/rama.', 'err');
+                    fileListDiv.innerHTML = '<div style="color:#666;padding:20px;text-align:center;">📭 Repositorio vacío.</div>';
                     countBadge.textContent = '0';
+                    selectedCountSpan.textContent = 'Seleccionados: 0';
+                    fileListContainer.style.display = 'block';
                     scanBtn.disabled = false;
                     return;
                 }
 
-                currentFiles = matchedItems.map(item => ({
+                allFiles = fileItems.map(item => ({
                     path: item.path,
                     sha: item.sha,
                     type: item.type,
-                    size: item.size || 0
+                    size: item.size || 0,
+                    mode: item.mode || '100644'
                 }));
 
-                // Renderizar lista
-                renderFileList(currentFiles);
+                // Ordenar alfabéticamente
+                allFiles.sort((a, b) => a.path.localeCompare(b.path));
 
-                setStatus(`✅ Encontrados ${currentFiles.length} archivos. Selecciona los que quieras eliminar.`, 'ok');
-                countBadge.textContent = currentFiles.length;
+                // Seleccionar todos por defecto (para facilitar)
+                selectedPaths = new Set(allFiles.map(f => f.path));
+
+                // Renderizar lista
+                renderFileList(allFiles);
+
+                setStatus(`✅ Encontrados ${allFiles.length} archivos. Puedes seleccionar/deseleccionar.`, 'ok');
+                countBadge.textContent = allFiles.length;
+                updateSelectedCount();
                 deleteBtn.disabled = false;
+                clearBtn.disabled = false;
+                fileListContainer.style.display = 'block';
+
+                // Marcar "Seleccionar todos" como checked
+                selectAllCheckbox.checked = true;
 
             } catch (error) {
                 console.error(error);
                 setStatus(`❌ Error: ${error.message}`, 'err');
                 fileListDiv.innerHTML = `<div style="color:#ff1a6b;padding:12px;">${error.message}</div>`;
+                fileListContainer.style.display = 'block';
             } finally {
                 scanBtn.disabled = false;
             }
@@ -452,41 +497,81 @@ index.html</textarea>
         // ===== RENDERIZAR LISTA =====
         function renderFileList(files) {
             if (!files || files.length === 0) {
-                fileListDiv.innerHTML = '<div style="color:#666;padding:12px;">No hay archivos.</div>';
+                fileListDiv.innerHTML = '<div style="color:#666;padding:20px;text-align:center;">No hay archivos.</div>';
                 return;
             }
-            // Por defecto, seleccionar todos
-            selectedPaths = new Set(files.map(f => f.path));
 
             let html = '';
             files.forEach(file => {
                 const checked = selectedPaths.has(file.path) ? 'checked' : '';
-                const sizeKB = (file.size / 1024).toFixed(1);
+                const sizeKB = file.size > 0 ? (file.size / 1024).toFixed(1) + ' KB' : '—';
+                // Icono según extensión
+                let icon = '📄';
+                if (file.path.endsWith('.js')) icon = '📜';
+                else if (file.path.endsWith('.html') || file.path.endsWith('.htm')) icon = '🌐';
+                else if (file.path.endsWith('.css')) icon = '🎨';
+                else if (file.path.endsWith('.json')) icon = '📋';
+                else if (file.path.endsWith('.md')) icon = '📝';
+                else if (file.path.endsWith('.png') || file.path.endsWith('.jpg') || file.path.endsWith('.jpeg') || file.path.endsWith('.gif')) icon = '🖼️';
+                else if (file.path.endsWith('.mp4') || file.path.endsWith('.webm')) icon = '🎬';
+                else if (file.path.endsWith('.mp3') || file.path.endsWith('.wav')) icon = '🎵';
+                else if (file.path.includes('/')) icon = '📁';
+
                 html += `
                     <div class="file-item">
                         <input type="checkbox" ${checked} data-path="${file.path}" onchange="toggleFileSelection('${file.path}')">
+                        <span class="type-icon">${icon}</span>
                         <span class="path">${file.path}</span>
-                        <span class="size">${sizeKB} KB</span>
+                        <span class="size">${sizeKB}</span>
                     </div>
                 `;
             });
             fileListDiv.innerHTML = html;
         }
 
-        // ===== SELECCIÓN =====
+        // ===== SELECCIÓN INDIVIDUAL =====
         window.toggleFileSelection = function(path) {
             if (selectedPaths.has(path)) selectedPaths.delete(path);
             else selectedPaths.add(path);
-            // Actualizar contador visual
-            const total = currentFiles.length;
-            const selected = selectedPaths.size;
-            countBadge.textContent = `${selected}/${total}`;
-            if (selected === 0) deleteBtn.disabled = true;
-            else deleteBtn.disabled = false;
+            updateSelectedCount();
+            updateSelectAllState();
+            // Actualizar visual del checkbox
+            const checkbox = document.querySelector(`.file-item input[data-path="${path}"]`);
+            if (checkbox) checkbox.checked = selectedPaths.has(path);
         };
 
-        // ===== ELIMINAR =====
-        async function deleteFiles() {
+        // ===== SELECCIONAR / DESELECCIONAR TODOS =====
+        function toggleSelectAll() {
+            const checked = selectAllCheckbox.checked;
+            if (checked) {
+                selectedPaths = new Set(allFiles.map(f => f.path));
+            } else {
+                selectedPaths.clear();
+            }
+            // Actualizar todos los checkboxes
+            document.querySelectorAll('.file-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = checked;
+            });
+            updateSelectedCount();
+            deleteBtn.disabled = (selectedPaths.size === 0);
+        }
+
+        // ===== ACTUALIZAR CONTADOR =====
+        function updateSelectedCount() {
+            const count = selectedPaths.size;
+            selectedCountSpan.textContent = `Seleccionados: ${count}`;
+            deleteBtn.disabled = (count === 0);
+            if (count === 0) clearBtn.disabled = true;
+            else clearBtn.disabled = false;
+        }
+
+        function updateSelectAllState() {
+            const allChecked = allFiles.every(f => selectedPaths.has(f.path));
+            selectAllCheckbox.checked = allChecked;
+        }
+
+        // ===== ELIMINAR SELECCIONADOS =====
+        async function deleteSelectedFiles() {
             const token = tokenInput.value.trim();
             const repo = repoInput.value.trim();
             const branch = branchInput.value.trim();
@@ -502,15 +587,16 @@ index.html</textarea>
             }
 
             // Confirmar
-            if (!confirm(`¿Eliminar ${selectedPaths.size} archivo(s) definitivamente?`)) return;
+            if (!confirm(`⚠️ ¿Eliminar DEFINITIVAMENTE ${selectedPaths.size} archivo(s)?\nEsta acción no se puede deshacer fácilmente.`)) return;
 
             setStatus(`⏳ Eliminando ${selectedPaths.size} archivos...`, 'loading');
             deleteBtn.disabled = true;
             scanBtn.disabled = true;
+            clearBtn.disabled = true;
 
             try {
                 // 1. Obtener árbol actual completo
-                const { commitSha, treeSha, tree } = await getCurrentTree(token, repo, branch);
+                const { commitSha, treeSha, tree } = await getFullTree(token, repo, branch);
 
                 // 2. Filtrar: conservar todos los elementos EXCEPTO los seleccionados
                 const newTreeElements = tree.filter(item => {
@@ -559,14 +645,7 @@ index.html</textarea>
                 });
 
                 setStatus(`✅ ¡Éxito! Commit creado: ${newCommitSha.slice(0,8)}. Se eliminaron ${selectedPaths.size} archivos.`, 'ok');
-                // Limpiar selección y recargar
-                selectedPaths.clear();
-                currentFiles = [];
-                renderFileList([]);
-                countBadge.textContent = '0';
-                deleteBtn.disabled = true;
-
-                // Mostrar enlace al commit
+                // Añadir enlace
                 const link = document.createElement('a');
                 link.href = `https://github.com/${repo}/commit/${newCommitSha}`;
                 link.target = '_blank';
@@ -574,20 +653,44 @@ index.html</textarea>
                 link.textContent = ' Ver commit en GitHub';
                 statusText.appendChild(link);
 
+                // Limpiar selección y recargar
+                selectedPaths.clear();
+                allFiles = [];
+                renderFileList([]);
+                countBadge.textContent = '0';
+                selectedCountSpan.textContent = 'Seleccionados: 0';
+                deleteBtn.disabled = true;
+                clearBtn.disabled = true;
+                selectAllCheckbox.checked = false;
+
             } catch (error) {
                 console.error(error);
                 setStatus(`❌ Error al eliminar: ${error.message}`, 'err');
             } finally {
                 deleteBtn.disabled = false;
                 scanBtn.disabled = false;
+                clearBtn.disabled = false;
             }
         }
 
-        // ===== EVENTOS =====
-        scanBtn.addEventListener('click', scanFiles);
-        deleteBtn.addEventListener('click', deleteFiles);
+        // ===== LIMPIAR SELECCIÓN =====
+        function clearSelection() {
+            selectedPaths.clear();
+            document.querySelectorAll('.file-item input[type="checkbox"]').forEach(cb => cb.checked = false);
+            updateSelectedCount();
+            selectAllCheckbox.checked = false;
+            deleteBtn.disabled = true;
+            clearBtn.disabled = true;
+            setStatus('🧹 Selección limpiada.', 'info');
+        }
 
-        // Cargar token desde localStorage (opcional)
+        // ===== EVENTOS =====
+        scanBtn.addEventListener('click', scanAllFiles);
+        deleteBtn.addEventListener('click', deleteSelectedFiles);
+        clearBtn.addEventListener('click', clearSelection);
+        selectAllCheckbox.addEventListener('change', toggleSelectAll);
+
+        // Cargar token desde localStorage
         const savedToken = localStorage.getItem('gh_token');
         if (savedToken) tokenInput.value = savedToken;
         tokenInput.addEventListener('change', () => {
@@ -595,9 +698,9 @@ index.html</textarea>
         });
 
         // Al cargar, poner un placeholder
-        setStatus('🔍 Listo. Haz clic en "Escanear archivos".');
+        setStatus('🔍 Ingresa tu token y haz clic en "Ver todos los archivos".');
 
-        console.log('🗑️ Borrador Masivo listo.');
+        console.log('🗑️ Borrador Masivo - Todos los archivos listo.');
     })();
 </script>
 
