@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗑️ Borrador Masivo - GitHub API</title>
+    <style>
+        /* ===== ESTILO CYBERPUNK ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b0e14;
+            color: #f0f2f5;
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(11, 14, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #00f0ff, #b114ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        .sub {
+            text-align: center;
+            color: #8a90a0;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        .sub i {
+            color: #ff1a6b;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .input-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .input-row label {
+            min-width: 100px;
+            font-weight: 600;
+            color: #00f0ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .input-row input, .input-row textarea {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #fff;
+            font-family: inherit;
+            transition: 0.2s;
+            min-width: 180px;
+        }
+        .input-row input:focus, .input-row textarea:focus {
+            border-color: #00f0ff;
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+        .input-row textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-size: 0.8rem;
+        }
+        .actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            flex: 1;
+            justify-content: center;
+            min-width: 140px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00f0ff, #0066ff);
+            color: #000;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+            transform: translateY(-3px);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ff1a6b, #cc0044);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            box-shadow: 0 0 30px rgba(255, 26, 107, 0.4);
+            transform: translateY(-3px);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .file-list {
+            margin-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+        }
+        .file-list h3 {
+            color: #8a90a0;
+            font-weight: 400;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            margin-bottom: 4px;
+            border-left: 3px solid transparent;
+            transition: 0.15s;
+        }
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .file-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00f0ff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .file-item .path {
+            flex: 1;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            color: #ccc;
+            word-break: break-all;
+        }
+        .file-item .size {
+            color: #666;
+            font-size: 0.7rem;
+        }
+        .status-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #8a90a0;
+            font-size: 0.9rem;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .status-box .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: #00f0ff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .status-box .ok { color: #00ff9d; }
+        .status-box .err { color: #ff1a6b; }
+        .badge {
+            background: rgba(255, 26, 107, 0.2);
+            color: #ff1a6b;
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-weight: 700;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: #555;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 16px;
+        }
+        .footer-note i {
+            color: #ffd700;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 16px; }
+            .input-row { flex-direction: column; }
+            .input-row label { min-width: auto; }
+            .btn { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🗑️ BORRADOR MASIVO</h1>
+    <p class="sub"><i class="fas fa-skull"></i> Elimina múltiples archivos de GitHub en 1 commit</p>
+
+    <!-- CONFIGURACIÓN -->
+    <div class="input-group">
+        <div class="input-row">
+            <label><i class="fas fa-key"></i> Token</label>
+            <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxx" value="">
+        </div>
+        <div class="input-row">
+            <label><i class="fas fa-code-branch"></i> Repo</label>
+            <input type="text" id="repoInput" placeholder="usuario/repo" value="Archinime/-Archinime-">
+            <label style="min-width:60px;"><i class="fas fa-branch"></i> Rama</label>
+            <input type="text" id="branchInput" placeholder="main" value="main" style="flex:0.5; min-width:100px;">
+        </div>
+        <div class="input-row">
+            <label><i class="fas fa-filter"></i> Patrón</label>
+            <input type="text" id="patternInput" placeholder="Ej: (1)\. (regex)" value="\(1\)\.[^.]+$">
+            <span style="color:#666; font-size:0.75rem; display:flex; align-items:center;">Detecta archivos con (1)</span>
+        </div>
+        <div class="input-row">
+            <label><i class="fas fa-list"></i> Archivos</label>
+            <textarea id="fileListInput" placeholder="O escribe rutas específicas (una por línea)&#10;Ej:&#10;video-player (1).js&#10;anime-detail (1).html">video-player-core (1).js
+video-player (1).html
+anime-detail-core.js
+anime-detail.html
+app-core.js
+index.html</textarea>
+        </div>
+    </div>
+
+    <!-- ACCIONES -->
+    <div class="actions">
+        <button class="btn btn-primary" id="scanBtn"><i class="fas fa-search"></i> Escanear archivos</button>
+        <button class="btn btn-danger" id="deleteBtn" disabled><i class="fas fa-trash-alt"></i> Eliminar seleccionados</button>
+    </div>
+
+    <!-- ESTADO -->
+    <div class="status-box" id="statusBox">
+        <span id="statusText">🔍 Listo para escanear.</span>
+    </div>
+
+    <!-- LISTA DE ARCHIVOS -->
+    <div class="file-list" id="fileListContainer">
+        <h3><i class="fas fa-files"></i> Archivos encontrados <span id="countBadge" class="badge">0</span></h3>
+        <div id="fileList"></div>
+    </div>
+    <div class="footer-note">
+        <i class="fas fa-shield-alt"></i> El token solo se guarda en tu navegador. No se envía a ningún servidor externo.
+    </div>
+</div>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+    (function() {
+        "use strict";
+
+        // DOM refs
+        const tokenInput = document.getElementById('tokenInput');
+        const repoInput = document.getElementById('repoInput');
+        const branchInput = document.getElementById('branchInput');
+        const patternInput = document.getElementById('patternInput');
+        const fileListInput = document.getElementById('fileListInput');
+        const scanBtn = document.getElementById('scanBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const statusText = document.getElementById('statusText');
+        const fileListDiv = document.getElementById('fileList');
+        const countBadge = document.getElementById('countBadge');
+
+        // Estado
+        let currentFiles = []; // { path, sha, type, size }
+        let selectedPaths = new Set();
+
+        // ===== UTILIDADES =====
+        function setStatus(msg, type = 'info') {
+            const box = document.getElementById('statusBox');
+            statusText.innerHTML = msg;
+            // Limpiar clases anteriores
+            box.querySelectorAll('.ok, .err, .spinner').forEach(el => el.remove());
+            if (type === 'loading') {
+                const spin = document.createElement('div');
+                spin.className = 'spinner';
+                box.prepend(spin);
+            } else if (type === 'ok') {
+                const span = document.createElement('span');
+                span.className = 'ok';
+                span.innerHTML = '✅';
+                box.prepend(span);
+            } else if (type === 'err') {
+                const span = document.createElement('span');
+                span.className = 'err';
+                span.innerHTML = '❌';
+                box.prepend(span);
+            }
+        }
+
+        function getHeaders(token) {
+            return {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            };
+        }
+
+        async function apiFetch(url, token, options = {}) {
+            const res = await fetch(url, {
+                ...options,
+                headers: {
+                    ...getHeaders(token),
+                    ...(options.headers || {})
+                }
+            });
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`HTTP ${res.status}: ${text.slice(0, 150)}`);
+            }
+            return res.json();
+        }
+
+        // ===== OBTENER ÁRBOL ACTUAL =====
+        async function getCurrentTree(token, repo, branch) {
+            // 1. Obtener ref de la rama
+            const refUrl = `https://api.github.com/repos/${repo}/git/refs/heads/${branch}`;
+            const refData = await apiFetch(refUrl, token);
+            const commitSha = refData.object.sha;
+
+            // 2. Obtener el commit
+            const commitUrl = `https://api.github.com/repos/${repo}/git/commits/${commitSha}`;
+            const commitData = await apiFetch(commitUrl, token);
+            const treeSha = commitData.tree.sha;
+
+            // 3. Obtener el árbol (recursivo para todos los archivos)
+            const treeUrl = `https://api.github.com/repos/${repo}/git/trees/${treeSha}?recursive=1`;
+            const treeData = await apiFetch(treeUrl, token);
+
+            return {
+                commitSha,
+                treeSha,
+                tree: treeData.tree || []
+            };
+        }
+
+        // ===== ESCANEAR =====
+        async function scanFiles() {
+            const token = tokenInput.value.trim();
+            const repo = repoInput.value.trim();
+            const branch = branchInput.value.trim();
+            const patternRaw = patternInput.value.trim();
+            const manualFiles = fileListInput.value.split('\n').map(s => s.trim()).filter(s => s);
+
+            if (!token) { setStatus('⚠️ Ingresa tu token de GitHub.', 'err'); return; }
+            if (!repo) { setStatus('⚠️ Ingresa el repositorio (usuario/repo).', 'err'); return; }
+
+            setStatus('⏳ Conectando a GitHub...', 'loading');
+            scanBtn.disabled = true;
+            deleteBtn.disabled = true;
+
+            try {
+                const { commitSha, treeSha, tree } = await getCurrentTree(token, repo, branch);
+
+                // Determinar qué archivos buscar
+                let filesToCheck = [];
+                if (manualFiles.length > 0) {
+                    filesToCheck = manualFiles;
+                } else if (patternRaw) {
+                    const regex = new RegExp(patternRaw);
+                    // Solo archivos (blob) que coincidan con el patrón
+                    tree.forEach(item => {
+                        if (item.type === 'blob' && regex.test(item.path)) {
+                            filesToCheck.push(item.path);
+                        }
+                    });
+                } else {
+                    setStatus('⚠️ No hay patrón ni lista de archivos manual.', 'err');
+                    scanBtn.disabled = false;
+                    return;
+                }
+
+                // Filtrar el árbol para obtener solo los que queremos
+                const matchedItems = tree.filter(item => {
+                    if (item.type !== 'blob') return false;
+                    return filesToCheck.includes(item.path);
+                });
+
+                if (matchedItems.length === 0) {
+                    setStatus(`⚠️ No se encontraron archivos que coincidan. (Revisa el patrón o las rutas)`, 'err');
+                    fileListDiv.innerHTML = '<div style="color:#666;padding:12px;">Sin coincidencias.</div>';
+                    countBadge.textContent = '0';
+                    scanBtn.disabled = false;
+                    return;
+                }
+
+                currentFiles = matchedItems.map(item => ({
+                    path: item.path,
+                    sha: item.sha,
+                    type: item.type,
+                    size: item.size || 0
+                }));
+
+                // Renderizar lista
+                renderFileList(currentFiles);
+
+                setStatus(`✅ Encontrados ${currentFiles.length} archivos. Selecciona los que quieras eliminar.`, 'ok');
+                countBadge.textContent = currentFiles.length;
+                deleteBtn.disabled = false;
+
+            } catch (error) {
+                console.error(error);
+                setStatus(`❌ Error: ${error.message}`, 'err');
+                fileListDiv.innerHTML = `<div style="color:#ff1a6b;padding:12px;">${error.message}</div>`;
+            } finally {
+                scanBtn.disabled = false;
+            }
+        }
+
+        // ===== RENDERIZAR LISTA =====
+        function renderFileList(files) {
+            if (!files || files.length === 0) {
+                fileListDiv.innerHTML = '<div style="color:#666;padding:12px;">No hay archivos.</div>';
+                return;
+            }
+            // Por defecto, seleccionar todos
+            selectedPaths = new Set(files.map(f => f.path));
+
+            let html = '';
+            files.forEach(file => {
+                const checked = selectedPaths.has(file.path) ? 'checked' : '';
+                const sizeKB = (file.size / 1024).toFixed(1);
+                html += `
+                    <div class="file-item">
+                        <input type="checkbox" ${checked} data-path="${file.path}" onchange="toggleFileSelection('${file.path}')">
+                        <span class="path">${file.path}</span>
+                        <span class="size">${sizeKB} KB</span>
+                    </div>
+                `;
+            });
+            fileListDiv.innerHTML = html;
+        }
+
+        // ===== SELECCIÓN =====
+        window.toggleFileSelection = function(path) {
+            if (selectedPaths.has(path)) selectedPaths.delete(path);
+            else selectedPaths.add(path);
+            // Actualizar contador visual
+            const total = currentFiles.length;
+            const selected = selectedPaths.size;
+            countBadge.textContent = `${selected}/${total}`;
+            if (selected === 0) deleteBtn.disabled = true;
+            else deleteBtn.disabled = false;
+        };
+
+        // ===== ELIMINAR =====
+        async function deleteFiles() {
+            const token = tokenInput.value.trim();
+            const repo = repoInput.value.trim();
+            const branch = branchInput.value.trim();
+
+            if (!token || !repo) {
+                setStatus('⚠️ Configura token y repositorio.', 'err');
+                return;
+            }
+
+            if (selectedPaths.size === 0) {
+                setStatus('⚠️ Selecciona al menos un archivo.', 'err');
+                return;
+            }
+
+            // Confirmar
+            if (!confirm(`¿Eliminar ${selectedPaths.size} archivo(s) definitivamente?`)) return;
+
+            setStatus(`⏳ Eliminando ${selectedPaths.size} archivos...`, 'loading');
+            deleteBtn.disabled = true;
+            scanBtn.disabled = true;
+
+            try {
+                // 1. Obtener árbol actual completo
+                const { commitSha, treeSha, tree } = await getCurrentTree(token, repo, branch);
+
+                // 2. Filtrar: conservar todos los elementos EXCEPTO los seleccionados
+                const newTreeElements = tree.filter(item => {
+                    // Si es un blob y está en la lista de seleccionados, lo excluimos
+                    if (item.type === 'blob' && selectedPaths.has(item.path)) {
+                        return false;
+                    }
+                    return true;
+                });
+
+                // 3. Crear nuevo árbol
+                const createTreeUrl = `https://api.github.com/repos/${repo}/git/trees`;
+                const treePayload = {
+                    base_tree: treeSha,
+                    tree: newTreeElements.map(item => ({
+                        path: item.path,
+                        mode: item.mode || '100644',
+                        type: item.type || 'blob',
+                        sha: item.sha
+                    }))
+                };
+                const treeData = await apiFetch(createTreeUrl, token, {
+                    method: 'POST',
+                    body: JSON.stringify(treePayload)
+                });
+                const newTreeSha = treeData.sha;
+
+                // 4. Crear commit
+                const commitUrl = `https://api.github.com/repos/${repo}/git/commits`;
+                const commitPayload = {
+                    message: `Eliminar ${selectedPaths.size} archivo(s) desde web`,
+                    tree: newTreeSha,
+                    parents: [commitSha]
+                };
+                const commitData = await apiFetch(commitUrl, token, {
+                    method: 'POST',
+                    body: JSON.stringify(commitPayload)
+                });
+                const newCommitSha = commitData.sha;
+
+                // 5. Actualizar la rama
+                const refUrl = `https://api.github.com/repos/${repo}/git/refs/heads/${branch}`;
+                await apiFetch(refUrl, token, {
+                    method: 'PATCH',
+                    body: JSON.stringify({ sha: newCommitSha, force: false })
+                });
+
+                setStatus(`✅ ¡Éxito! Commit creado: ${newCommitSha.slice(0,8)}. Se eliminaron ${selectedPaths.size} archivos.`, 'ok');
+                // Limpiar selección y recargar
+                selectedPaths.clear();
+                currentFiles = [];
+                renderFileList([]);
+                countBadge.textContent = '0';
+                deleteBtn.disabled = true;
+
+                // Mostrar enlace al commit
+                const link = document.createElement('a');
+                link.href = `https://github.com/${repo}/commit/${newCommitSha}`;
+                link.target = '_blank';
+                link.style.color = '#00f0ff';
+                link.textContent = ' Ver commit en GitHub';
+                statusText.appendChild(link);
+
+            } catch (error) {
+                console.error(error);
+                setStatus(`❌ Error al eliminar: ${error.message}`, 'err');
+            } finally {
+                deleteBtn.disabled = false;
+                scanBtn.disabled = false;
+            }
+        }
+
+        // ===== EVENTOS =====
+        scanBtn.addEventListener('click', scanFiles);
+        deleteBtn.addEventListener('click', deleteFiles);
+
+        // Cargar token desde localStorage (opcional)
+        const savedToken = localStorage.getItem('gh_token');
+        if (savedToken) tokenInput.value = savedToken;
+        tokenInput.addEventListener('change', () => {
+            localStorage.setItem('gh_token', tokenInput.value);
+        });
+
+        // Al cargar, poner un placeholder
+        setStatus('🔍 Listo. Haz clic en "Escanear archivos".');
+
+        console.log('🗑️ Borrador Masivo listo.');
+    })();
+</script>
+
+</body>
+</html>
