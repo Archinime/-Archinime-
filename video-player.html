@@ -362,6 +362,182 @@
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
+    /* --- NUEVO: Banner para recomendar Brave --- */
+    #braveBanner {
+      display: none; /* Oculto por defecto, se muestra con JS si no es Brave */
+      background: linear-gradient(135deg, rgba(0, 243, 255, 0.08), rgba(188, 19, 254, 0.08));
+      border: 1px solid rgba(0, 243, 255, 0.3);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      margin: 0 0 15px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      backdrop-filter: blur(4px);
+    }
+    #braveBanner:hover {
+      background: rgba(0, 243, 255, 0.15);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.15);
+      transform: scale(1.02);
+    }
+    #braveBanner img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    #braveBanner .banner-text {
+      color: #eee;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    #braveBanner .banner-text strong {
+      color: var(--primary-color);
+      font-weight: 800;
+    }
+    #braveBanner .banner-cta {
+      background: var(--primary-color);
+      color: #000;
+      font-weight: 800;
+      padding: 6px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      transition: 0.2s;
+      border: none;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+    #braveBanner .banner-cta:hover {
+      background: #fff;
+      box-shadow: 0 0 20px var(--primary-color);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      #braveBanner { flex-direction: column; gap: 10px; padding: 12px; }
+      #braveBanner img { height: 40px; width: 40px; }
+      #braveBanner .banner-text { font-size: 0.85rem; }
+    }
+
+    /* --- NUEVO: Modal para el video tutorial --- */
+    #tutorialModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 20px;
+    }
+    #tutorialModal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .tutorial-card {
+      background: #0a0a0f;
+      border: 1px solid var(--primary-color);
+      border-radius: 24px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+      transform: scale(0.95) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+    #tutorialModal.show .tutorial-card {
+      transform: scale(1) translateY(0);
+    }
+    .tutorial-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: 0.3s;
+      backdrop-filter: blur(4px);
+    }
+    .tutorial-close:hover {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px var(--accent-color);
+    }
+    .tutorial-video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+    }
+    .tutorial-video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .tutorial-info {
+      padding: 20px 24px 24px;
+      text-align: center;
+    }
+    .tutorial-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+    .tutorial-info p {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .tutorial-info .btn-primary {
+      background: var(--primary-color);
+      color: #000;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+    }
+    .tutorial-info .btn-primary:hover {
+      background: #fff;
+      box-shadow: 0 0 25px var(--primary-color);
+      transform: translateY(-2px);
+    }
+
     .controls {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -622,6 +798,7 @@
       .sticker-btn { padding: 12px; }
       .preview-sticker-wrapper { max-width: 80px; max-height: 80px; }
       .preview-sticker-wrapper img, .preview-sticker-wrapper video { max-width: 80px; max-height: 80px; }
+      .tutorial-card { max-width: 100%; }
     }
   </style>
 </head>
@@ -671,6 +848,15 @@
   </div>
 
   <h1 id="epTitle">Cargando...</h1>
+
+  <!-- NUEVO: Banner para recomendar Brave (oculto por defecto) -->
+  <div id="braveBanner">
+    <img src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/ads.avif" alt="Brave Browser" loading="lazy">
+    <span class="banner-text">
+      📺 <strong>¿Anuncios molestos?</strong> Mira este tutorial para ver sin interrupciones
+    </span>
+    <button class="banner-cta" id="openTutorialBtn">▶ Ver Tutorial</button>
+  </div>
 
   <div class="controls">
     <a id="prevBtn" class="btn nav-btn btn-hidden">⏮ Ant.</a>
@@ -745,6 +931,24 @@
 
     <div id="comentariosList" class="comentarios-list">
       <div class="empty-comments"><i class="fas fa-spinner fa-spin"></i> Cargando comentarios...</div>
+    </div>
+  </div>
+</div>
+
+<!-- NUEVO: Modal para el video tutorial -->
+<div id="tutorialModal">
+  <div class="tutorial-card">
+    <button class="tutorial-close" id="closeTutorialBtn">&times;</button>
+    <div class="tutorial-video-wrapper">
+      <video id="tutorialVideo" controls playsinline>
+        <source src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/tutorial.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de video.
+      </video>
+    </div>
+    <div class="tutorial-info">
+      <h3>📺 Ver sin anuncios</h3>
+      <p>Descubre cómo instalar Brave y la PWA de Archinime para una experiencia sin interrupciones.</p>
+      <button class="btn-primary" id="closeTutorialBtn2">Cerrar</button>
     </div>
   </div>
 </div>

@@ -2,6 +2,7 @@
 // MEJORADO: Descarga única (bloqueo de botón), barra de progreso única
 // SOPORTE: Múltiples partes, selección automática de opción, títulos dinámicos
 // NUEVO: Conversión de enlaces DoomStream (/e/ -> /d/), ocultar logo en DoomStream, sin alert en fallos de descarga
+// NUEVO: Banner para recomendar Brave y modal con video tutorial (solo si no es Brave)
 
 class VideoPlayer {
   constructor() {
@@ -32,6 +33,9 @@ class VideoPlayer {
     this.waitForCatalogAndLoad();
     this.setupAuthUI();
     this.setupAuthMigration();
+
+    // NUEVO: Detectar Brave y mostrar banner si no lo es
+    this.checkBraveAndShowBanner();
 
     window.videoPlayerMethods = {
       toggleStickerPanel: () => this.toggleStickerPanel(),
@@ -451,6 +455,83 @@ class VideoPlayer {
     document.querySelectorAll('.sticker-tab').forEach(tab => {
       tab.addEventListener('click', () => this.switchStickerTab(tab.dataset.tab));
     });
+
+    // NUEVO: Vincular eventos del banner y modal
+    const openBtn = document.getElementById('openTutorialBtn');
+    const closeBtns = document.querySelectorAll('#closeTutorialBtn, #closeTutorialBtn2');
+    const modal = document.getElementById('tutorialModal');
+    if (openBtn) {
+      openBtn.addEventListener('click', () => this.openTutorialModal());
+    }
+    closeBtns.forEach(btn => {
+      if (btn) {
+        btn.addEventListener('click', () => this.closeTutorialModal());
+      }
+    });
+    // Cerrar modal al hacer clic fuera del contenido (en el overlay)
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          this.closeTutorialModal();
+        }
+      });
+    }
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeTutorialModal();
+      }
+    });
+  }
+
+  // NUEVO: Detectar Brave y mostrar/ocultar banner
+  async checkBraveAndShowBanner() {
+    const banner = document.getElementById('braveBanner');
+    if (!banner) return;
+
+    let isBrave = false;
+    // Detección oficial de Brave
+    if (navigator.brave && typeof navigator.brave.isBrave === 'function') {
+      try {
+        isBrave = await navigator.brave.isBrave();
+      } catch (e) {
+        console.warn('Error detectando Brave:', e);
+      }
+    }
+
+    if (!isBrave) {
+      banner.style.display = 'flex';
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
+  // NUEVO: Abrir modal de tutorial
+  openTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    if (!modal) return;
+    modal.classList.add('show');
+    // Reproducir video automáticamente
+    const video = document.getElementById('tutorialVideo');
+    if (video) {
+      video.play().catch(() => {});
+    }
+    // Deshabilitar scroll del body
+    document.body.style.overflow = 'hidden';
+  }
+
+  // NUEVO: Cerrar modal de tutorial
+  closeTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    if (!modal) return;
+    modal.classList.remove('show');
+    // Pausar video
+    const video = document.getElementById('tutorialVideo');
+    if (video) {
+      video.pause();
+    }
+    // Restaurar scroll
+    document.body.style.overflow = '';
   }
 
   formatEpisodeTitle(season, epNum, episodeData) {
