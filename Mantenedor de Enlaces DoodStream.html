@@ -4,37 +4,217 @@
     <meta charset="UTF-8">
     <title>Mantenedor de Enlaces DoodStream</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: #16213e; padding: 20px; border-radius: 10px; }
-        h1 { text-align: center; }
-        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
-        .controls button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        #btnStart { background: #00b894; color: #fff; }
-        #btnStart:disabled { opacity: 0.5; cursor: not-allowed; }
-        #btnStop { background: #e17055; color: #fff; }
-        #btnStop:disabled { opacity: 0.5; cursor: not-allowed; }
-        .progress { background: #2d3436; border-radius: 10px; height: 20px; margin: 20px 0; overflow: hidden; }
-        .progress-bar { height: 100%; width: 0%; background: #00b894; transition: width 0.3s; }
-        .info { margin: 10px 0; }
-        .links-list { max-height: 300px; overflow-y: auto; background: #0f0f1f; padding: 10px; border-radius: 5px; font-size: 12px; }
-        .links-list li { list-style: none; padding: 2px 0; border-bottom: 1px solid #2d3436; }
-        .settings { margin: 20px 0; }
-        .settings label { margin-right: 10px; }
-        .settings input { width: 60px; padding: 5px; }
-        .status { margin-top: 10px; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #00f3ff;
+            margin-top: 0;
+        }
+        .status-bar {
+            background: #0f0f1f;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #00b894;
+        }
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .controls button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #btnStart {
+            background: #00b894;
+            color: #fff;
+        }
+        #btnStart:hover:not(:disabled) {
+            background: #00d2a0;
+            transform: scale(1.02);
+        }
+        #btnStart:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        #btnStop {
+            background: #e17055;
+            color: #fff;
+        }
+        #btnStop:hover:not(:disabled) {
+            background: #ff6b4a;
+        }
+        #btnStop:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .progress {
+            background: #2d3436;
+            border-radius: 30px;
+            height: 24px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00b894, #00f3ff);
+            transition: width 0.4s ease;
+            border-radius: 30px;
+        }
+        .progress-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 6px rgba(0,0,0,0.8);
+        }
+        .info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .settings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            background: #0f0f1f;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .settings label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        .settings input[type="number"] {
+            width: 70px;
+            padding: 6px 10px;
+            background: #1a1a2e;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        details {
+            margin-top: 20px;
+        }
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #aaa;
+            padding: 8px 0;
+        }
+        .links-list {
+            max-height: 350px;
+            overflow-y: auto;
+            background: #0f0f1f;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: monospace;
+            border: 1px solid #2d3436;
+        }
+        .links-list li {
+            list-style: none;
+            padding: 4px 0;
+            border-bottom: 1px solid #1a1a2e;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .badge {
+            display: inline-block;
+            background: #00b894;
+            color: #000;
+            padding: 0 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        .badge.error {
+            background: #e17055;
+        }
+        .badge.pending {
+            background: #fdcb6e;
+            color: #000;
+        }
         .error { color: #e17055; }
         .success { color: #00b894; }
+        .info-color { color: #74b9ff; }
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #555;
+            border-top: 1px solid #2d3436;
+            padding-top: 15px;
+        }
+        .warning {
+            background: #e1705522;
+            border-left: 4px solid #e17055;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            color: #ffb8a0;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🔄 Mantenedor de Enlaces DoodStream</h1>
-    <p>Esta herramienta visitará automáticamente los enlaces de DoodStream (playmogo.com) de tu catálogo para evitar que se borren por inactividad.</p>
-    
+    <p style="text-align:center; color:#aaa;">Visita automáticamente todos los enlaces de <strong>playmogo.com</strong> en tu catálogo para evitar que se borren por inactividad.</p>
+
+    <div class="warning">
+        ⚠️ <strong>No abuses:</strong> Una vez cada 15-20 días es suficiente. Usa tiempos de espera <strong>≥ 12 segundos</strong> para parecer humano.
+    </div>
+
     <div class="settings">
-        <label for="waitTime">Tiempo de espera por video (segundos):</label>
-        <input type="number" id="waitTime" value="15" min="8" max="30"> 
-        <span style="font-size: 12px; color: #aaa;">(Recomendado: 15-20s)</span>
+        <label>
+            ⏱️ Espera (segundos):
+            <input type="number" id="waitTime" value="15" min="8" max="40">
+        </label>
+        <label>
+            📄 Límite de enlaces:
+            <input type="number" id="limitLinks" value="0" min="0" title="0 = sin límite">
+        </label>
+        <span style="font-size:13px; color:#888;">(0 = todos)</span>
     </div>
 
     <div class="controls">
@@ -43,48 +223,55 @@
     </div>
 
     <div class="progress">
-        <div class="progress-bar" id="progressBar" style="width:0%"></div>
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">0%</div>
     </div>
 
     <div class="info">
-        <span id="counter">0</span> de <span id="total">0</span> enlaces procesados
+        <span><strong id="counter">0</strong> de <strong id="total">0</strong> enlaces procesados</span>
+        <span id="statusText" style="color:#74b9ff;">📡 Cargando catálogo...</span>
     </div>
 
-    <div class="status" id="status">Listo para comenzar.</div>
-
     <details>
-        <summary>📋 Enlaces encontrados (click para ver)</summary>
-        <ul class="links-list" id="linksList"></ul>
+        <summary>📋 Enlaces encontrados (<span id="linkCount">0</span>)</summary>
+        <ul class="links-list" id="linksList">
+            <li style="color:#888;">Cargando...</li>
+        </ul>
     </details>
+
+    <div class="footer">
+        ⚡ Los enlaces se abren en pestañas nuevas. El tiempo de espera simula una visualización real.
+    </div>
 </div>
 
 <script>
 // ============================================================
-// Aquí debes incluir TODO el contenido de tu catalogo.js
-// Para no hacer esta página enorme, voy a simular que ya lo tienes.
-// En la práctica, copia y pega todo tu catalogoArray aquí:
+// 1. CARGAR catalogo.js desde el servidor
 // ============================================================
-// const catalogoArray = [ ... ];  // <--- Pegar aquí
-// ============================================================
+let allLinks = [];
+let total = 0;
+let processed = 0;
+let isRunning = false;
+let stopRequested = false;
+let timerId = null;
+let timeoutId = null;
+let popupWindow = null;
 
-// Para pruebas, usaré un catálogo mínimo de ejemplo (reemplázalo con el tuyo)
-const catalogoArray = [
-    {
-        id: 1,
-        title: "Anime de prueba",
-        seasons: [
-            {
-                eps: [
-                    { link: ["https://playmogo.com/e/abc123"], link2: [] },
-                    { link: ["https://playmogo.com/e/def456"], link2: ["https://playmogo.com/e/ghi789"] },
-                ]
-            }
-        ]
-    }
-];
-// ============================================================
+const statusText = document.getElementById('statusText');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const counterSpan = document.getElementById('counter');
+const totalSpan = document.getElementById('total');
+const linkCountSpan = document.getElementById('linkCount');
+const linksList = document.getElementById('linksList');
+const btnStart = document.getElementById('btnStart');
+const btnStop = document.getElementById('btnStop');
+const waitTimeInput = document.getElementById('waitTime');
+const limitInput = document.getElementById('limitLinks');
 
-// --- Funciones de extracción ---
+// ============================================================
+// 2. FUNCIÓN PARA EXTRAER ENLACES DE DOODSTREAM
+// ============================================================
 function extraerEnlacesDood(catalogo) {
     const enlaces = [];
     catalogo.forEach(anime => {
@@ -92,195 +279,244 @@ function extraerEnlacesDood(catalogo) {
             anime.seasons.forEach(season => {
                 if (season.eps) {
                     season.eps.forEach(ep => {
-                        // Revisar link (latino)
-                        if (ep.link && Array.isArray(ep.link)) {
-                            ep.link.forEach(url => {
-                                if (url && (url.includes('playmogo.com') || url.includes('doodstream') || url.includes('doomstream'))) {
-                                    enlaces.push(url);
-                                }
-                            });
-                        }
-                        // Revisar link2 (sub)
-                        if (ep.link2 && Array.isArray(ep.link2)) {
-                            ep.link2.forEach(url => {
-                                if (url && (url.includes('playmogo.com') || url.includes('doodstream') || url.includes('doomstream'))) {
-                                    enlaces.push(url);
-                                }
-                            });
-                        }
+                        ['link', 'link2'].forEach(field => {
+                            const urls = ep[field];
+                            if (Array.isArray(urls)) {
+                                urls.forEach(url => {
+                                    if (url && typeof url === 'string' &&
+                                        (url.includes('playmogo.com') || url.includes('doodstream') || url.includes('doomstream'))) {
+                                        // Asegurar protocolo
+                                        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                                            url = 'https://' + url;
+                                        }
+                                        enlaces.push(url);
+                                    }
+                                });
+                            }
+                        });
                     });
                 }
             });
         }
     });
-    return [...new Set(enlaces)]; // eliminar duplicados
+    return [...new Set(enlaces)];
 }
 
-// --- Obtener enlaces y mostrarlos ---
-const enlaces = extraerEnlacesDood(catalogoArray);
-const total = enlaces.length;
-document.getElementById('total').textContent = total;
+// ============================================================
+// 3. CARGAR CATÁLOGO Y RENDERIZAR LISTA
+// ============================================================
+async function cargarCatalogo() {
+    try {
+        statusText.textContent = '📡 Cargando catalogo.js...';
+        const response = await fetch('catalogo.js');
+        if (!response.ok) throw new Error(`No se pudo cargar catalogo.js (HTTP ${response.status})`);
 
-const listEl = document.getElementById('linksList');
-if (total === 0) {
-    listEl.innerHTML = '<li>No se encontraron enlaces de DoodStream en el catálogo.</li>';
-} else {
-    enlaces.forEach((url, idx) => {
-        const li = document.createElement('li');
-        li.textContent = `${idx+1}. ${url}`;
-        listEl.appendChild(li);
-    });
+        const text = await response.text();
+        // Extraer el array con una expresión regular robusta
+        const match = text.match(/const catalogoArray\s*=\s*(\[[\s\S]*?\]);/);
+        if (!match) throw new Error('No se encontró "const catalogoArray = [...]" en catalogo.js');
+
+        // Evaluar el array (seguro porque es nuestro propio archivo)
+        const catalogoArray = eval(match[1]);
+        allLinks = extraerEnlacesDood(catalogoArray);
+        total = allLinks.length;
+
+        // Actualizar UI
+        totalSpan.textContent = total;
+        linkCountSpan.textContent = total;
+        counterSpan.textContent = '0';
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+
+        // Renderizar lista
+        if (total === 0) {
+            linksList.innerHTML = '<li style="color:#888;">No se encontraron enlaces de DoodStream en el catálogo.</li>';
+            statusText.textContent = '✅ No hay enlaces para mantener.';
+            btnStart.disabled = true;
+            return;
+        }
+
+        let html = '';
+        allLinks.forEach((url, idx) => {
+            html += `<li id="link-${idx}">${idx+1}. ${url} <span class="badge pending">⏳ pendiente</span></li>`;
+        });
+        linksList.innerHTML = html;
+        statusText.textContent = `✅ Se encontraron ${total} enlaces únicos. Listo para iniciar.`;
+        btnStart.disabled = false;
+
+    } catch (err) {
+        console.error(err);
+        linksList.innerHTML = `<li class="error">❌ Error: ${err.message}</li>`;
+        statusText.textContent = '❌ ' + err.message;
+        btnStart.disabled = true;
+    }
 }
 
-// --- Variables de control ---
-let procesoActivo = false;
-let procesoDetenido = false;
-let indiceActual = 0;
-let ventana = null; // referencia a la pestaña/ventana
-let temporizador = null;
-let timeoutId = null;
-
-// --- Elementos UI ---
-const btnStart = document.getElementById('btnStart');
-const btnStop = document.getElementById('btnStop');
-const progressBar = document.getElementById('progressBar');
-const counterSpan = document.getElementById('counter');
-const statusDiv = document.getElementById('status');
-const waitTimeInput = document.getElementById('waitTime');
-
-// --- Funciones ---
+// ============================================================
+// 4. FUNCIONES DE CONTROL DEL PROCESO
+// ============================================================
 function actualizarUI() {
-    counterSpan.textContent = indiceActual;
-    const porcentaje = total > 0 ? (indiceActual / total) * 100 : 0;
+    counterSpan.textContent = processed;
+    const porcentaje = total > 0 ? (processed / total) * 100 : 0;
     progressBar.style.width = Math.min(porcentaje, 100) + '%';
+    progressText.textContent = Math.round(porcentaje) + '%';
 }
 
-function setStatus(msg, type = 'info') {
-    statusDiv.textContent = msg;
-    statusDiv.className = 'status ' + type;
+function marcarEnlace(index, estado) {
+    const el = document.getElementById(`link-${index}`);
+    if (!el) return;
+    const badge = el.querySelector('.badge');
+    if (estado === 'visitado') {
+        badge.textContent = '✅ visitado';
+        badge.className = 'badge';
+        el.style.color = '#00b894';
+    } else if (estado === 'error') {
+        badge.textContent = '❌ error';
+        badge.className = 'badge error';
+        el.style.color = '#e17055';
+    } else {
+        badge.textContent = '⏳ pendiente';
+        badge.className = 'badge pending';
+        el.style.color = '#eee';
+    }
+}
+
+function setStatus(msg, tipo = 'info') {
+    statusText.textContent = msg;
+    statusText.style.color = tipo === 'error' ? '#e17055' : tipo === 'success' ? '#00b894' : '#74b9ff';
 }
 
 function finalizarProceso(mensaje) {
-    procesoActivo = false;
-    procesoDetenido = false;
+    isRunning = false;
+    stopRequested = false;
     btnStart.disabled = false;
     btnStop.disabled = true;
-    if (temporizador) {
-        clearTimeout(temporizador);
-        temporizador = null;
+    if (timerId) { clearTimeout(timerId); timerId = null; }
+    if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+    if (popupWindow && !popupWindow.closed) {
+        popupWindow.close();
+        popupWindow = null;
     }
-    if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-    }
-    if (ventana && !ventana.closed) {
-        ventana.close();
-    }
-    ventana = null;
     setStatus(mensaje, 'success');
     actualizarUI();
 }
 
 function procesarSiguiente() {
-    if (!procesoActivo || procesoDetenido) {
-        return;
-    }
+    if (!isRunning || stopRequested) return;
 
-    if (indiceActual >= total) {
+    if (processed >= total) {
         finalizarProceso('✅ Todos los enlaces han sido procesados.');
         return;
     }
 
-    const url = enlaces[indiceActual];
-    setStatus(`⏳ Abriendo enlace ${indiceActual+1} de ${total}: ${url}`, 'info');
+    const url = allLinks[processed];
+    const waitSeconds = parseInt(waitTimeInput.value) || 15;
+    const randomExtra = Math.floor(Math.random() * 2000); // +0-2s aleatorio
+    const totalWait = (waitSeconds * 1000) + randomExtra;
 
-    // Abrir ventana/pestaña
+    setStatus(`⏳ Abriendo ${processed+1}/${total}: ${url}`, 'info');
+    marcarEnlace(processed, 'pending');
+
     try {
-        if (ventana && !ventana.closed) {
-            ventana.location.href = url;
+        if (popupWindow && !popupWindow.closed) {
+            popupWindow.location.href = url;
         } else {
-            ventana = window.open(url, '_blank');
-            if (!ventana) {
-                setStatus('❌ No se pudo abrir la ventana. Permite ventanas emergentes para este sitio.', 'error');
-                finalizarProceso('Proceso detenido por error de ventana.');
+            popupWindow = window.open(url, '_blank');
+            if (!popupWindow) {
+                setStatus('❌ No se pudo abrir la ventana. Permite ventanas emergentes.', 'error');
+                marcarEnlace(processed, 'error');
+                // Continuar de todas formas
+                processed++;
+                actualizarUI();
+                setTimeout(procesarSiguiente, 1500);
                 return;
             }
         }
     } catch (e) {
-        setStatus('❌ Error al abrir la ventana: ' + e.message, 'error');
-        finalizarProceso('Proceso detenido por error.');
+        setStatus('❌ Error al abrir: ' + e.message, 'error');
+        marcarEnlace(processed, 'error');
+        processed++;
+        actualizarUI();
+        setTimeout(procesarSiguiente, 1500);
         return;
     }
 
     // Esperar el tiempo configurado
-    const waitSeconds = parseInt(waitTimeInput.value) || 15;
-    const waitMs = waitSeconds * 1000;
+    timerId = setTimeout(() => {
+        if (stopRequested || !isRunning) return;
 
-    // Añadir un pequeño random entre 0 y 2 segundos para simular humano
-    const randomExtra = Math.floor(Math.random() * 2000);
-    const totalWait = waitMs + randomExtra;
-
-    setStatus(`⏳ Esperando ${Math.round(totalWait/1000)} segundos...`, 'info');
-
-    temporizador = setTimeout(() => {
-        if (procesoDetenido || !procesoActivo) {
-            return;
-        }
-        indiceActual++;
+        // Marcar como visitado
+        marcarEnlace(processed, 'visitado');
+        processed++;
         actualizarUI();
+
         // Pequeña pausa entre enlaces (1-3 segundos)
         const pausa = 1000 + Math.floor(Math.random() * 2000);
-        timeoutId = setTimeout(() => {
-            procesarSiguiente();
-        }, pausa);
+        timeoutId = setTimeout(procesarSiguiente, pausa);
     }, totalWait);
 }
 
-// --- Eventos ---
+// ============================================================
+// 5. EVENTOS DE BOTONES
+// ============================================================
 btnStart.addEventListener('click', () => {
-    if (procesoActivo) return;
+    if (isRunning) return;
     if (total === 0) {
         setStatus('⚠️ No hay enlaces para procesar.', 'error');
         return;
     }
-    procesoActivo = true;
-    procesoDetenido = false;
-    indiceActual = 0;
+
+    // Respetar límite
+    let limite = parseInt(limitInput.value) || 0;
+    if (limite > 0 && limite < total) {
+        // Opcional: mostrar advertencia
+        if (!confirm(`⚠️ Solo se procesarán ${limite} enlaces de ${total}. ¿Continuar?`)) return;
+    }
+
+    isRunning = true;
+    stopRequested = false;
+    processed = 0;
     btnStart.disabled = true;
     btnStop.disabled = false;
-    setStatus('🔄 Iniciando proceso...', 'info');
+    setStatus('🔄 Proceso en ejecución...', 'info');
     actualizarUI();
+
+    // Resetear colores de la lista
+    for (let i = 0; i < total; i++) {
+        marcarEnlace(i, 'pending');
+    }
+
     procesarSiguiente();
 });
 
 btnStop.addEventListener('click', () => {
-    if (!procesoActivo) return;
-    procesoDetenido = true;
-    setStatus('⏹ Deteniendo proceso...', 'info');
+    if (!isRunning) return;
+    stopRequested = true;
+    setStatus('⏹ Deteniendo...', 'info');
     btnStop.disabled = true;
-    // Limpiar temporizadores
-    if (temporizador) {
-        clearTimeout(temporizador);
-        temporizador = null;
+    if (timerId) { clearTimeout(timerId); timerId = null; }
+    if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+    if (popupWindow && !popupWindow.closed) {
+        popupWindow.close();
+        popupWindow = null;
     }
-    if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-    }
-    if (ventana && !ventana.closed) {
-        ventana.close();
-        ventana = null;
-    }
-    finalizarProceso('⏹ Proceso detenido por el usuario.');
+    // Esperar a que termine el bucle
+    setTimeout(() => {
+        finalizarProceso('⏹ Proceso detenido por el usuario.');
+    }, 500);
 });
 
-// Si el usuario cierra la ventana principal, intentar cerrar la secundaria
+// Si la pestaña principal se cierra, cerrar la secundaria
 window.addEventListener('beforeunload', () => {
-    if (ventana && !ventana.closed) {
-        ventana.close();
+    if (popupWindow && !popupWindow.closed) {
+        popupWindow.close();
     }
 });
 
+// ============================================================
+// 6. INICIAR
+// ============================================================
+cargarCatalogo();
 </script>
 </body>
 </html>
