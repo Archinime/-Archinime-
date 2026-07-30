@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mantenedor de Enlaces DoodStream</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #16213e; padding: 20px; border-radius: 10px; }
+        h1 { text-align: center; }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+        .controls button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        #btnStart { background: #00b894; color: #fff; }
+        #btnStart:disabled { opacity: 0.5; cursor: not-allowed; }
+        #btnStop { background: #e17055; color: #fff; }
+        #btnStop:disabled { opacity: 0.5; cursor: not-allowed; }
+        .progress { background: #2d3436; border-radius: 10px; height: 20px; margin: 20px 0; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: #00b894; transition: width 0.3s; }
+        .info { margin: 10px 0; }
+        .links-list { max-height: 300px; overflow-y: auto; background: #0f0f1f; padding: 10px; border-radius: 5px; font-size: 12px; }
+        .links-list li { list-style: none; padding: 2px 0; border-bottom: 1px solid #2d3436; }
+        .settings { margin: 20px 0; }
+        .settings label { margin-right: 10px; }
+        .settings input { width: 60px; padding: 5px; }
+        .status { margin-top: 10px; font-weight: bold; }
+        .error { color: #e17055; }
+        .success { color: #00b894; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔄 Mantenedor de Enlaces DoodStream</h1>
+    <p>Esta herramienta visitará automáticamente los enlaces de DoodStream (playmogo.com) de tu catálogo para evitar que se borren por inactividad.</p>
+    
+    <div class="settings">
+        <label for="waitTime">Tiempo de espera por video (segundos):</label>
+        <input type="number" id="waitTime" value="15" min="8" max="30"> 
+        <span style="font-size: 12px; color: #aaa;">(Recomendado: 15-20s)</span>
+    </div>
+
+    <div class="controls">
+        <button id="btnStart">▶ Iniciar proceso</button>
+        <button id="btnStop" disabled>⏹ Detener</button>
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+
+    <div class="info">
+        <span id="counter">0</span> de <span id="total">0</span> enlaces procesados
+    </div>
+
+    <div class="status" id="status">Listo para comenzar.</div>
+
+    <details>
+        <summary>📋 Enlaces encontrados (click para ver)</summary>
+        <ul class="links-list" id="linksList"></ul>
+    </details>
+</div>
+
+<script>
+// ============================================================
+// Aquí debes incluir TODO el contenido de tu catalogo.js
+// Para no hacer esta página enorme, voy a simular que ya lo tienes.
+// En la práctica, copia y pega todo tu catalogoArray aquí:
+// ============================================================
+// const catalogoArray = [ ... ];  // <--- Pegar aquí
+// ============================================================
+
+// Para pruebas, usaré un catálogo mínimo de ejemplo (reemplázalo con el tuyo)
+const catalogoArray = [
+    {
+        id: 1,
+        title: "Anime de prueba",
+        seasons: [
+            {
+                eps: [
+                    { link: ["https://playmogo.com/e/abc123"], link2: [] },
+                    { link: ["https://playmogo.com/e/def456"], link2: ["https://playmogo.com/e/ghi789"] },
+                ]
+            }
+        ]
+    }
+];
+// ============================================================
+
+// --- Funciones de extracción ---
+function extraerEnlacesDood(catalogo) {
+    const enlaces = [];
+    catalogo.forEach(anime => {
+        if (anime.seasons) {
+            anime.seasons.forEach(season => {
+                if (season.eps) {
+                    season.eps.forEach(ep => {
+                        // Revisar link (latino)
+                        if (ep.link && Array.isArray(ep.link)) {
+                            ep.link.forEach(url => {
+                                if (url && (url.includes('playmogo.com') || url.includes('doodstream') || url.includes('doomstream'))) {
+                                    enlaces.push(url);
+                                }
+                            });
+                        }
+                        // Revisar link2 (sub)
+                        if (ep.link2 && Array.isArray(ep.link2)) {
+                            ep.link2.forEach(url => {
+                                if (url && (url.includes('playmogo.com') || url.includes('doodstream') || url.includes('doomstream'))) {
+                                    enlaces.push(url);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+    return [...new Set(enlaces)]; // eliminar duplicados
+}
+
+// --- Obtener enlaces y mostrarlos ---
+const enlaces = extraerEnlacesDood(catalogoArray);
+const total = enlaces.length;
+document.getElementById('total').textContent = total;
+
+const listEl = document.getElementById('linksList');
+if (total === 0) {
+    listEl.innerHTML = '<li>No se encontraron enlaces de DoodStream en el catálogo.</li>';
+} else {
+    enlaces.forEach((url, idx) => {
+        const li = document.createElement('li');
+        li.textContent = `${idx+1}. ${url}`;
+        listEl.appendChild(li);
+    });
+}
+
+// --- Variables de control ---
+let procesoActivo = false;
+let procesoDetenido = false;
+let indiceActual = 0;
+let ventana = null; // referencia a la pestaña/ventana
+let temporizador = null;
+let timeoutId = null;
+
+// --- Elementos UI ---
+const btnStart = document.getElementById('btnStart');
+const btnStop = document.getElementById('btnStop');
+const progressBar = document.getElementById('progressBar');
+const counterSpan = document.getElementById('counter');
+const statusDiv = document.getElementById('status');
+const waitTimeInput = document.getElementById('waitTime');
+
+// --- Funciones ---
+function actualizarUI() {
+    counterSpan.textContent = indiceActual;
+    const porcentaje = total > 0 ? (indiceActual / total) * 100 : 0;
+    progressBar.style.width = Math.min(porcentaje, 100) + '%';
+}
+
+function setStatus(msg, type = 'info') {
+    statusDiv.textContent = msg;
+    statusDiv.className = 'status ' + type;
+}
+
+function finalizarProceso(mensaje) {
+    procesoActivo = false;
+    procesoDetenido = false;
+    btnStart.disabled = false;
+    btnStop.disabled = true;
+    if (temporizador) {
+        clearTimeout(temporizador);
+        temporizador = null;
+    }
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
+    if (ventana && !ventana.closed) {
+        ventana.close();
+    }
+    ventana = null;
+    setStatus(mensaje, 'success');
+    actualizarUI();
+}
+
+function procesarSiguiente() {
+    if (!procesoActivo || procesoDetenido) {
+        return;
+    }
+
+    if (indiceActual >= total) {
+        finalizarProceso('✅ Todos los enlaces han sido procesados.');
+        return;
+    }
+
+    const url = enlaces[indiceActual];
+    setStatus(`⏳ Abriendo enlace ${indiceActual+1} de ${total}: ${url}`, 'info');
+
+    // Abrir ventana/pestaña
+    try {
+        if (ventana && !ventana.closed) {
+            ventana.location.href = url;
+        } else {
+            ventana = window.open(url, '_blank');
+            if (!ventana) {
+                setStatus('❌ No se pudo abrir la ventana. Permite ventanas emergentes para este sitio.', 'error');
+                finalizarProceso('Proceso detenido por error de ventana.');
+                return;
+            }
+        }
+    } catch (e) {
+        setStatus('❌ Error al abrir la ventana: ' + e.message, 'error');
+        finalizarProceso('Proceso detenido por error.');
+        return;
+    }
+
+    // Esperar el tiempo configurado
+    const waitSeconds = parseInt(waitTimeInput.value) || 15;
+    const waitMs = waitSeconds * 1000;
+
+    // Añadir un pequeño random entre 0 y 2 segundos para simular humano
+    const randomExtra = Math.floor(Math.random() * 2000);
+    const totalWait = waitMs + randomExtra;
+
+    setStatus(`⏳ Esperando ${Math.round(totalWait/1000)} segundos...`, 'info');
+
+    temporizador = setTimeout(() => {
+        if (procesoDetenido || !procesoActivo) {
+            return;
+        }
+        indiceActual++;
+        actualizarUI();
+        // Pequeña pausa entre enlaces (1-3 segundos)
+        const pausa = 1000 + Math.floor(Math.random() * 2000);
+        timeoutId = setTimeout(() => {
+            procesarSiguiente();
+        }, pausa);
+    }, totalWait);
+}
+
+// --- Eventos ---
+btnStart.addEventListener('click', () => {
+    if (procesoActivo) return;
+    if (total === 0) {
+        setStatus('⚠️ No hay enlaces para procesar.', 'error');
+        return;
+    }
+    procesoActivo = true;
+    procesoDetenido = false;
+    indiceActual = 0;
+    btnStart.disabled = true;
+    btnStop.disabled = false;
+    setStatus('🔄 Iniciando proceso...', 'info');
+    actualizarUI();
+    procesarSiguiente();
+});
+
+btnStop.addEventListener('click', () => {
+    if (!procesoActivo) return;
+    procesoDetenido = true;
+    setStatus('⏹ Deteniendo proceso...', 'info');
+    btnStop.disabled = true;
+    // Limpiar temporizadores
+    if (temporizador) {
+        clearTimeout(temporizador);
+        temporizador = null;
+    }
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+    }
+    if (ventana && !ventana.closed) {
+        ventana.close();
+        ventana = null;
+    }
+    finalizarProceso('⏹ Proceso detenido por el usuario.');
+});
+
+// Si el usuario cierra la ventana principal, intentar cerrar la secundaria
+window.addEventListener('beforeunload', () => {
+    if (ventana && !ventana.closed) {
+        ventana.close();
+    }
+});
+
+</script>
+</body>
+</html>
