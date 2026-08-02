@@ -3,6 +3,10 @@
 // SOPORTE: Múltiples partes, selección automática de opción, títulos dinámicos
 // NUEVO: Conversión de enlaces DoomStream (/e/ -> /d/), ocultar logo en DoomStream, sin alert en fallos de descarga
 // NUEVO: Banner para recomendar Brave y modal con video tutorial (solo si no es Brave)
+// NUEVO: Soporte para 4 opciones de enlaces (latino, op2, op3, op4)
+// NUEVO: Conversión de mp4upload embed a directo para descarga
+// NUEVO: Menú desplegable (select) para opciones de servidor (mejor para móviles)
+// NUEVO: Reordenamiento automático: mp4upload -> Opción 1, Google Drive -> Opción 4
 
 class VideoPlayer {
   constructor() {
@@ -20,7 +24,8 @@ class VideoPlayer {
     this.authReady = false;
     this.pendingMarks = [];
     this.currentPartIndex = 0;
-    this.activeOption = 'latino';
+    this.activeOptionLabel = 'Opción 1';
+    this.activeOptionKey = 'link'; // clave del campo en episodeData
     this.currentVideoElement = null;
     this.isDownloading = false;
     
@@ -34,7 +39,6 @@ class VideoPlayer {
     this.setupAuthUI();
     this.setupAuthMigration();
 
-    // NUEVO: Detectar Brave y mostrar banner si no lo es
     this.checkBraveAndShowBanner();
 
     window.videoPlayerMethods = {
@@ -52,20 +56,23 @@ class VideoPlayer {
     window.videoPlayer = window.videoPlayerMethods;
   }
   
-  // ---------- DETECCIÓN DE DOOMSTREAM ----------
   isDoomStreamUrl(url) {
     if (!url) return false;
-    // Detecta dominios comunes de DoomStream y la ruta /e/
     return /(playmogo\.com|doomstream\.com)\/e\//i.test(url);
   }
 
-  // ---------- CONVERSIÓN DE ENLACES ----------
   generateDirectLink(url) {
     if (!url) return "#";
     
-    // --- NUEVO: convertir DoomStream /e/ -> /d/ ---
     if (this.isDoomStreamUrl(url)) {
       return url.replace(/\/e\//, '/d/');
+    }
+
+    if (url.includes('mp4upload.com/embed-')) {
+      const match = url.match(/embed-([^\.]+)(\.html)?/);
+      if (match && match[1]) {
+        return `https://www.mp4upload.com/${match[1]}`;
+      }
     }
 
     if (url.includes("drive.google.com")) {
@@ -91,11 +98,9 @@ class VideoPlayer {
     return url;
   }
 
-  // ---------- CONTROL DEL LOGO (ARCHINIME HD) ----------
   updateLogoBlocker(url) {
     const logo = document.querySelector('.logo-blocker');
     if (!logo) return;
-    // Ocultar si es DoomStream, mostrar en cualquier otro caso
     if (this.isDoomStreamUrl(url)) {
       logo.style.display = 'none';
     } else {
@@ -103,7 +108,6 @@ class VideoPlayer {
     }
   }
 
-  // ---------- REPRODUCIR EPISODIO ----------
   playPart(partIndex, urlsArray) {
     if (!urlsArray || partIndex >= urlsArray.length) return;
     const url = urlsArray[partIndex];
@@ -121,10 +125,7 @@ class VideoPlayer {
       video.style.height = '100%';
       container.appendChild(video);
       this.currentVideoElement = video;
-      
-      // --- Actualizar logo (para videos directos no es DoomStream) ---
       this.updateLogoBlocker(url);
-
       const onEnded = () => {
         if (partIndex + 1 < urlsArray.length) {
           this.playPart(partIndex + 1, urlsArray);
@@ -142,13 +143,10 @@ class VideoPlayer {
       iframe.style.height = '100%';
       container.appendChild(iframe);
       this.currentVideoElement = null;
-      
-      // --- Actualizar logo según la URL del iframe ---
       this.updateLogoBlocker(url);
     }
   }
 
-  // ========== DESCARGA (sin alert, directa para DoomStream) ==========
   async forceDownload(url, suggestedFilename = 'video.mp4') {
     this.showProgressBar();
     const percentSpan = document.getElementById('progressPercent');
@@ -187,7 +185,6 @@ class VideoPlayer {
       URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.warn(error);
-      // --- SIN ALERT: solo abrir la URL en nueva pestaña ---
       window.open(url, '_blank');
     } finally {
       // La barra se oculta en handleDownloadClick
@@ -240,7 +237,6 @@ class VideoPlayer {
       for (let i = 0; i < urlsToDownload.length; i++) {
         const url = urlsToDownload[i];
         
-        // --- NUEVO: si es DoomStream, abrir directamente sin barra ---
         if (this.isDoomStreamUrl(url)) {
           window.open(url, '_blank');
           continue;
@@ -281,7 +277,6 @@ class VideoPlayer {
     }
   }
 
-  // ---------- RESTO DE MÉTODOS (sin cambios) ----------
   async waitForCatalogAndLoad() {
     if (typeof catalogoArray !== 'undefined') {
       this.loadEpisodeData();
@@ -456,7 +451,6 @@ class VideoPlayer {
       tab.addEventListener('click', () => this.switchStickerTab(tab.dataset.tab));
     });
 
-    // NUEVO: Vincular eventos del banner y modal
     const openBtn = document.getElementById('openTutorialBtn');
     const closeBtns = document.querySelectorAll('#closeTutorialBtn, #closeTutorialBtn2');
     const modal = document.getElementById('tutorialModal');
@@ -468,7 +462,6 @@ class VideoPlayer {
         btn.addEventListener('click', () => this.closeTutorialModal());
       }
     });
-    // Cerrar modal al hacer clic fuera del contenido (en el overlay)
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
@@ -476,7 +469,6 @@ class VideoPlayer {
         }
       });
     }
-    // Cerrar con tecla ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.closeTutorialModal();
@@ -484,13 +476,11 @@ class VideoPlayer {
     });
   }
 
-  // NUEVO: Detectar Brave y mostrar/ocultar banner
   async checkBraveAndShowBanner() {
     const banner = document.getElementById('braveBanner');
     if (!banner) return;
 
     let isBrave = false;
-    // Detección oficial de Brave
     if (navigator.brave && typeof navigator.brave.isBrave === 'function') {
       try {
         isBrave = await navigator.brave.isBrave();
@@ -506,31 +496,25 @@ class VideoPlayer {
     }
   }
 
-  // NUEVO: Abrir modal de tutorial
   openTutorialModal() {
     const modal = document.getElementById('tutorialModal');
     if (!modal) return;
     modal.classList.add('show');
-    // Reproducir video automáticamente
     const video = document.getElementById('tutorialVideo');
     if (video) {
       video.play().catch(() => {});
     }
-    // Deshabilitar scroll del body
     document.body.style.overflow = 'hidden';
   }
 
-  // NUEVO: Cerrar modal de tutorial
   closeTutorialModal() {
     const modal = document.getElementById('tutorialModal');
     if (!modal) return;
     modal.classList.remove('show');
-    // Pausar video
     const video = document.getElementById('tutorialVideo');
     if (video) {
       video.pause();
     }
-    // Restaurar scroll
     document.body.style.overflow = '';
   }
 
@@ -541,70 +525,6 @@ class VideoPlayer {
     return `${animeTitle} - ${seasonName} - ${episodeTitle}`;
   }
 
-  async loadEpisodeData() {
-    try {
-      const anime = catalogoArray.find(a => a.id == this.animeId);
-      if (!anime) {
-        document.getElementById('epTitle').innerText = 'Anime no encontrado';
-        return;
-      }
-      this.animeData = anime;
-      const seasons = this.animeData.seasons || [];
-      const season = seasons.find(s => s.num === parseInt(this.season));
-      if (!season) {
-        document.getElementById('epTitle').innerText = 'Temporada no encontrada';
-        return;
-      }
-      const epIndex = parseInt(this.episode) - 1;
-      const episodeData = season.eps?.[epIndex];
-      if (!episodeData) {
-        document.getElementById('epTitle').innerText = 'Episodio no encontrado';
-        return;
-      }
-      
-      this.currentEpisodeData = episodeData;
-      const formattedTitle = this.formatEpisodeTitle(season, parseInt(this.episode), episodeData);
-      document.title = `Ver ${formattedTitle} - Archinime`;
-      document.getElementById('epTitle').innerText = formattedTitle;
-      
-      const latinoUrls = this.normalizeUrls(episodeData.link);
-      const subUrls = this.normalizeUrls(episodeData.link2);
-      
-      let activeUrls;
-      let activeOptionLabel;
-      
-      if (latinoUrls.length > 0) {
-        activeUrls = latinoUrls;
-        activeOptionLabel = 'latino';
-      } else if (subUrls.length > 0) {
-        activeUrls = subUrls;
-        activeOptionLabel = 'sub';
-      } else {
-        document.getElementById('epTitle').innerText = 'No hay enlaces disponibles';
-        return;
-      }
-      
-      this.updateDownloadUrls(activeUrls);
-      this.activeOption = activeOptionLabel;
-      this.playPart(0, activeUrls);
-      
-      const serverContainer = document.getElementById('serverOptions');
-      serverContainer.innerHTML = '';
-      if (latinoUrls.length > 0) {
-        this.createServerButton('Latino', latinoUrls, activeOptionLabel === 'latino');
-      }
-      if (subUrls.length > 0) {
-        this.createServerButton('Opción 2', subUrls, activeOptionLabel === 'sub');
-      }
-      
-      this.setupNavigation();
-      await this.autoMarkAsWatched();
-    } catch (error) {
-      console.error(error);
-      document.getElementById('epTitle').innerText = 'Error al cargar el episodio';
-    }
-  }
-
   normalizeUrls(urls) {
     if (!urls) return [];
     if (Array.isArray(urls)) return urls.filter(u => u && u.trim() !== '');
@@ -612,19 +532,78 @@ class VideoPlayer {
     return [];
   }
 
-  createServerButton(label, urls, isActive) {
-    const container = document.getElementById('serverOptions');
-    const btn = document.createElement('button');
-    btn.className = 'opt-btn' + (isActive ? ' active' : '');
-    btn.innerText = label;
-    btn.onclick = () => {
-      document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      this.activeOption = (label === 'Latino') ? 'latino' : 'sub';
-      this.updateDownloadUrls(urls);
-      this.playPart(0, urls);
+  // ===== NUEVA FUNCIÓN: PRIORIZAR Y RENOMBRAR OPCIONES =====
+  prioritizeOptions(options) {
+    // Asignar prioridad según el primer enlace de cada opción
+    const getPriority = (urls) => {
+      if (!urls || urls.length === 0) return 1;
+      const firstUrl = urls[0] || '';
+      if (firstUrl.includes('mp4upload.com')) return 0;   // mayor prioridad
+      if (firstUrl.includes('drive.google.com')) return 2; // menor prioridad
+      return 1; // otros
     };
-    container.appendChild(btn);
+
+    // Ordenar por prioridad (ascendente)
+    options.sort((a, b) => getPriority(a.urls) - getPriority(b.urls));
+
+    // Renombrar etiquetas y guardar la clave original
+    const labels = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+    options.forEach((opt, index) => {
+      opt.label = labels[index] || `Opción ${index + 1}`;
+      // Guardar la clave original (link, link2, link3, link4) para usarla después
+      opt.originalKey = opt.key; // asumimos que cada opción tiene un 'key'
+    });
+
+    return options;
+  }
+
+  // Crear el select con las opciones ya ordenadas
+  createServerSelect(options, initialIndex) {
+    const container = document.getElementById('serverOptions');
+    container.innerHTML = '';
+    
+    const select = document.createElement('select');
+    select.id = 'serverSelect';
+    select.style.cssText = `
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+      padding-right: 35px;
+    `;
+    
+    options.forEach((opt, idx) => {
+      const option = document.createElement('option');
+      option.value = idx;
+      option.textContent = opt.label; // "Opción 1", "Opción 2", ...
+      if (idx === initialIndex) option.selected = true;
+      select.appendChild(option);
+    });
+    
+    select.addEventListener('change', (e) => {
+      const idx = parseInt(e.target.value);
+      const selected = options[idx];
+      if (selected) {
+        this.activeOptionLabel = selected.label;
+        this.activeOptionKey = selected.originalKey || 'link'; // usar la clave guardada
+        this.updateDownloadUrls(selected.urls);
+        this.playPart(0, selected.urls);
+      }
+    });
+    
+    container.appendChild(select);
+    return select;
   }
 
   updateDownloadUrls(urls) {
@@ -637,17 +616,15 @@ class VideoPlayer {
     return /^(https?:\/\/)?([a-z0-9-]+\.)*peertube\.\w+\//i.test(url);
   }
 
+  // Obtener las URLs según la clave activa
   getActiveEpisodeUrls() {
     const episodeData = this.currentEpisodeData;
     if (!episodeData) return [];
-    if (this.activeOption === 'latino') {
-      return this.normalizeUrls(episodeData.link);
-    } else {
-      return this.normalizeUrls(episodeData.link2);
-    }
+    // Usar la clave almacenada (link, link2, link3, link4)
+    const key = this.activeOptionKey || 'link';
+    return this.normalizeUrls(episodeData[key]);
   }
 
-  // ========== BARRA DE PROGRESO PARA DESCARGA ==========
   showProgressBar() {
     if (document.getElementById('customDownloadProgress')) return;
     const div = document.createElement('div');
@@ -678,8 +655,11 @@ class VideoPlayer {
     const flat = [];
     this.animeData.seasons.sort((a,b) => a.num - b.num).forEach(season => {
       season.eps?.forEach((ep, idx) => {
-        if ((ep.link && (Array.isArray(ep.link) ? ep.link.length : ep.link)) || 
-            (ep.link2 && (Array.isArray(ep.link2) ? ep.link2.length : ep.link2))) {
+        const hasLink = (ep.link && (Array.isArray(ep.link) ? ep.link.length : ep.link)) ||
+                        (ep.link2 && (Array.isArray(ep.link2) ? ep.link2.length : ep.link2)) ||
+                        (ep.link3 && (Array.isArray(ep.link3) ? ep.link3.length : ep.link3)) ||
+                        (ep.link4 && (Array.isArray(ep.link4) ? ep.link4.length : ep.link4));
+        if (hasLink) {
           flat.push({ s: season.num, e: idx + 1, seasonObj: season, episodeData: ep });
         }
       });
@@ -831,9 +811,68 @@ class VideoPlayer {
     if (typeof quitarStickerPreview === 'function') { quitarStickerPreview(); } 
     this.validateSendButton();
   }
+
+  async loadEpisodeData() {
+    try {
+      const anime = catalogoArray.find(a => a.id == this.animeId);
+      if (!anime) {
+        document.getElementById('epTitle').innerText = 'Anime no encontrado';
+        return;
+      }
+      this.animeData = anime;
+      const seasons = this.animeData.seasons || [];
+      const season = seasons.find(s => s.num === parseInt(this.season));
+      if (!season) {
+        document.getElementById('epTitle').innerText = 'Temporada no encontrada';
+        return;
+      }
+      const epIndex = parseInt(this.episode) - 1;
+      const episodeData = season.eps?.[epIndex];
+      if (!episodeData) {
+        document.getElementById('epTitle').innerText = 'Episodio no encontrado';
+        return;
+      }
+      
+      this.currentEpisodeData = episodeData;
+      const formattedTitle = this.formatEpisodeTitle(season, parseInt(this.episode), episodeData);
+      document.title = `Ver ${formattedTitle} - Archinime`;
+      document.getElementById('epTitle').innerText = formattedTitle;
+      
+      // Crear array de opciones con sus claves originales
+      let options = [
+        { label: 'Latino', key: 'link', urls: this.normalizeUrls(episodeData.link) },
+        { label: 'Opción 2', key: 'link2', urls: this.normalizeUrls(episodeData.link2) },
+        { label: 'Opción 3', key: 'link3', urls: this.normalizeUrls(episodeData.link3) },
+        { label: 'Opción 4', key: 'link4', urls: this.normalizeUrls(episodeData.link4) }
+      ].filter(opt => opt.urls.length > 0);
+
+      if (options.length === 0) {
+        document.getElementById('epTitle').innerText = 'No hay enlaces disponibles';
+        return;
+      }
+
+      // Reordenar y renombrar según prioridad
+      options = this.prioritizeOptions(options);
+
+      // Crear el select con las opciones ya ordenadas
+      this.createServerSelect(options, 0);
+
+      // Establecer la primera opción como activa
+      const firstOption = options[0];
+      this.activeOptionLabel = firstOption.label;
+      this.activeOptionKey = firstOption.originalKey || 'link';
+      this.updateDownloadUrls(firstOption.urls);
+      this.playPart(0, firstOption.urls);
+      
+      this.setupNavigation();
+      await this.autoMarkAsWatched();
+    } catch (error) {
+      console.error(error);
+      document.getElementById('epTitle').innerText = 'Error al cargar el episodio';
+    }
+  }
 }
 
-// Inicializar
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => new VideoPlayer());
 } else {
