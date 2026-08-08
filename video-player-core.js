@@ -7,6 +7,13 @@
 // NUEVO: Conversión de mp4upload embed a directo para descarga
 // NUEVO: Menú desplegable (select) para opciones de servidor (mejor para móviles)
 // NUEVO: Reordenamiento automático: mp4upload -> Opción 1, Google Drive -> Opción 4
+// FIX: Detección de URLs de PixelDrain como video, con referrerpolicy="no-referrer"
+// MEJORA: Pixeldrain: proxy para reproducción (cdn49...), en descarga se usa el enlace original sin conversión
+// MEJORA: Prioridad de opciones: Pixeldrain -> Otros -> Google Drive
+// MEJORA: Logo ARCHINIME HD solo se muestra en Odysee y Google Drive
+// CAMBIO: El botón Descargar abre enlaces directos de DoodStream, mp4upload y Google Drive, y original para Pixeldrain
+// NUEVO: Para enlaces de Pixeldrain se muestra un botón PLAY que abre el enlace en nueva ventana (centrado)
+// FIX: Extracción correcta del código para mp4upload (sin /embed- ni /d-)
 
 class VideoPlayer {
   constructor() {
@@ -25,7 +32,7 @@ class VideoPlayer {
     this.pendingMarks = [];
     this.currentPartIndex = 0;
     this.activeOptionLabel = 'Opción 1';
-    this.activeOptionKey = 'link'; // clave del campo en episodeData
+    this.activeOptionKey = 'link';
     this.currentVideoElement = null;
     this.isDownloading = false;
     
@@ -61,71 +68,167 @@ class VideoPlayer {
     return /(playmogo\.com|doomstream\.com)\/e\//i.test(url);
   }
 
-  generateDirectLink(url) {
-    if (!url) return "#";
-    
-    if (this.isDoomStreamUrl(url)) {
+  // ===== CONVERSIÓN DE PIXELDRAIN SOLO PARA REPRODUCCIÓN (proxy) =====
+  convertPixeldrainUrl(url, forDownload = false) {
+    if (!url) return url;
+    const uMatch = url.match(/pixeldrain\.com\/u\/([a-zA-Z0-9_\-]+)/);
+    if (uMatch) {
+      const id = uMatch[1];
+      return `https://cdn49.pixeldrain.eu.cc/api/file/${id}`;
+    }
+    const apiMatch = url.match(/pixeldrain\.com\/api\/file\/([a-zA-Z0-9_\-]+)/);
+    if (apiMatch) {
+      const id = apiMatch[1];
+      return `https://cdn49.pixeldrain.eu.cc/api/file/${id}`;
+    }
+    return url;
+  }
+
+  // ===== CONVERSIÓN PARA DESCARGA DIRECTA =====
+  getDirectDownloadUrl(url) {
+    if (!url) return url;
+
+    // 1. DoodStream / playmogo / doomstream
+    if (/(playmogo\.com|doomstream\.com)\/e\//i.test(url)) {
       return url.replace(/\/e\//, '/d/');
     }
 
-    if (url.includes('mp4upload.com/embed-')) {
-      const match = url.match(/embed-([^\.]+)(\.html)?/);
-      if (match && match[1]) {
+    // 2. mp4upload: extraer el código y construir el enlace directo
+    if (url.includes('mp4upload.com')) {
+      const match = url.match(/mp4upload\.com\/(?:embed-|d-)([^\/]+?)(?:\.html)?$/i);
+      if (match) {
         return `https://www.mp4upload.com/${match[1]}`;
+      }
+      // Si no se pudo extraer, devolver la original
+    }
+
+    // 3. Google Drive
+    if (url.includes('drive.google.com') && (url.includes('/preview') || url.includes('/file/d/'))) {
+      const match = url.match(/\/file\/d\/([^\/]+)/);
+      if (match) {
+        return `https://drive.google.com/uc?export=download&id=${match[1]}`;
       }
     }
 
-    if (url.includes("drive.google.com")) {
-      const match = url.match(/\/d\/(.+?)\//);
-      if (match && match[1]) return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
-      const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (altMatch && altMatch[1]) return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
-    }
-    if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace('dl=0', 'dl=1');
-    if (url.includes("ok.ru/")) {
-      const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
-      if (match && match[1]) return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
-    }
-    if (url.includes("odysee.com")) {
-      let claimStr = url.split("/embed/")[1];
-      if (claimStr) {
-        if (claimStr.includes('/')) claimStr = claimStr.split('/').pop();
-        claimStr = claimStr.replace(':', '/');
-        return `https://odysee.com/$/download/${claimStr}`;
-      }
-      return url;
-    }
+    // Para Pixeldrain y otros, devolver la URL original
     return url;
+  }
+
+  // Mantenemos generateDirectLink por compatibilidad (puede ser usado en otros lados)
+  generateDirectLink(url) {
+    return this.getDirectDownloadUrl(url);
   }
 
   updateLogoBlocker(url) {
     const logo = document.querySelector('.logo-blocker');
     if (!logo) return;
-    if (this.isDoomStreamUrl(url)) {
-      logo.style.display = 'none';
-    } else {
+    const isOdysee = url && url.includes('odysee.com');
+    const isGoogleDrive = url && (url.includes('drive.google.com') || url.includes('drive.usercontent.google.com'));
+    if (isOdysee || isGoogleDrive) {
       logo.style.display = 'flex';
+    } else {
+      logo.style.display = 'none';
     }
+  }
+
+  isVideoUrl(url) {
+    if (!url) return false;
+    if (/\.(mp4|webm|ogg|mov|m3u8)$/i.test(url)) return true;
+    if (url.includes('pixeldrain.eu.cc') || url.includes('pixeldrain.com')) return true;
+    if (url.includes('catbox.moe') && /\.(mp4|webm|ogg|mov)$/i.test(url)) return true;
+    return false;
   }
 
   playPart(partIndex, urlsArray) {
     if (!urlsArray || partIndex >= urlsArray.length) return;
-    const url = urlsArray[partIndex];
-    if (!url) return;
+    let originalUrl = urlsArray[partIndex];
+    if (!originalUrl) return;
     
     const container = document.getElementById('mediaContainer');
     container.innerHTML = '';
-    
-    const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
-    if (isVideoFile && !url.includes('drive.google.com')) {
+
+    // ===== PIXELDRAIN: botón PLAY centrado =====
+    if (originalUrl.includes('pixeldrain.com')) {
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0b;
+        z-index: 1;
+      `;
+
+      const btn = document.createElement('button');
+      btn.style.cssText = `
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #e50914;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      `;
+      btn.innerHTML = `<span style="width:0; height:0; border-left:45px solid white; border-top:28px solid transparent; border-bottom:28px solid transparent; margin-left:12px;"></span>`;
+
+      btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'scale(1.08)';
+        btn.style.boxShadow = '0 0 50px rgba(229,9,20,0.9)';
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'scale(1)';
+        btn.style.boxShadow = '0 0 30px rgba(229,9,20,0.6)';
+      });
+      btn.addEventListener('click', () => {
+        window.open(originalUrl, '_blank');
+      });
+
+      const label = document.createElement('p');
+      label.style.cssText = 'color:#cccccc; font-size:1.2rem; letter-spacing:1px; font-weight:300; margin-top:1.5rem;';
+      label.innerHTML = 'Haz clic en <strong style="color:#ffffff; font-weight:500;">PLAY</strong> para ver el video';
+
+      wrapper.appendChild(btn);
+      wrapper.appendChild(label);
+      container.appendChild(wrapper);
+
+      this.currentVideoElement = null;
+      this.updateLogoBlocker(originalUrl);
+      return;
+    }
+
+    // ===== REPRODUCCIÓN NORMAL =====
+    if (this.isVideoUrl(originalUrl) && !originalUrl.includes('drive.google.com')) {
       const video = document.createElement('video');
-      video.src = url;
       video.controls = true;
       video.style.width = '100%';
       video.style.height = '100%';
+      
+      const source = document.createElement('source');
+      source.src = originalUrl;
+      let type = 'video/mp4';
+      if (originalUrl.endsWith('.webm')) type = 'video/webm';
+      else if (originalUrl.endsWith('.ogg')) type = 'video/ogg';
+      else if (originalUrl.endsWith('.mov')) type = 'video/quicktime';
+      else if (originalUrl.endsWith('.m3u8')) type = 'application/vnd.apple.mpegurl';
+      source.type = type;
+      source.referrerPolicy = 'no-referrer';
+      
+      video.appendChild(source);
+      video.referrerPolicy = 'no-referrer';
+      
       container.appendChild(video);
       this.currentVideoElement = video;
-      this.updateLogoBlocker(url);
+      this.updateLogoBlocker(originalUrl);
+      
       const onEnded = () => {
         if (partIndex + 1 < urlsArray.length) {
           this.playPart(partIndex + 1, urlsArray);
@@ -136,61 +239,18 @@ class VideoPlayer {
       video.addEventListener('ended', onEnded, { once: true });
     } else {
       const iframe = document.createElement('iframe');
-      iframe.src = url;
+      iframe.src = originalUrl;
       iframe.allow = 'autoplay; fullscreen';
       iframe.allowFullscreen = true;
       iframe.style.width = '100%';
       iframe.style.height = '100%';
       container.appendChild(iframe);
       this.currentVideoElement = null;
-      this.updateLogoBlocker(url);
+      this.updateLogoBlocker(originalUrl);
     }
   }
 
-  async forceDownload(url, suggestedFilename = 'video.mp4') {
-    this.showProgressBar();
-    const percentSpan = document.getElementById('progressPercent');
-    const fillDiv = document.getElementById('progressBarFill');
-
-    try {
-      const response = await fetch(url, { mode: 'cors' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const contentLength = response.headers.get('content-length');
-      const total = contentLength ? parseInt(contentLength, 10) : 0;
-      let loaded = 0;
-
-      const reader = response.body.getReader();
-      const chunks = [];
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-        loaded += value.length;
-        if (total) {
-          const percent = Math.round((loaded / total) * 100);
-          if (percentSpan) percentSpan.innerText = percent;
-          if (fillDiv) fillDiv.style.width = percent + '%';
-        } else {
-          if (percentSpan) percentSpan.innerText = '...';
-        }
-      }
-      const blob = new Blob(chunks, { type: response.headers.get('content-type') || 'video/mp4' });
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = suggestedFilename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.warn(error);
-      window.open(url, '_blank');
-    } finally {
-      // La barra se oculta en handleDownloadClick
-    }
-  }
-
+  // ===== BOTÓN DESCARGAR CON CONVERSIÓN DIRECTA =====
   async handleDownloadClick() {
     if (this.isDownloading) {
       console.log('Descarga en curso, espera a que termine');
@@ -208,7 +268,7 @@ class VideoPlayer {
     if (this.currentPeerTubeUrl) {
       const fallbackUrls = this.getActiveEpisodeUrls();
       if (fallbackUrls.length > 0) {
-        urlsToDownload = fallbackUrls.map(url => this.generateDirectLink(url));
+        urlsToDownload = fallbackUrls;
       } else {
         alert('No hay enlace alternativo para PeerTube.');
         return;
@@ -219,61 +279,13 @@ class VideoPlayer {
       alert('No hay enlace de descarga disponible.');
       return;
     }
-    
-    const epTitleElem = document.getElementById('epTitle');
-    let baseFilename = epTitleElem ? epTitleElem.innerText : 'video';
-    baseFilename = baseFilename.replace(/[^a-z0-9ñáéíóúü \-_]/gi, '').replace(/\s+/g, '_');
 
-    this.isDownloading = true;
-    const downloadBtn = document.getElementById('downloadBtn');
-    if (downloadBtn) {
-      downloadBtn.disabled = true;
-      downloadBtn.style.opacity = '0.6';
-      downloadBtn.style.cursor = 'not-allowed';
-      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Descargando...';
-    }
-
-    try {
-      for (let i = 0; i < urlsToDownload.length; i++) {
-        const url = urlsToDownload[i];
-        
-        if (this.isDoomStreamUrl(url)) {
-          window.open(url, '_blank');
-          continue;
-        }
-
-        const isCatbox = url.includes('catbox.moe');
-        const isCrossOrigin = !url.startsWith(location.origin);
-        
-        let filename = `${baseFilename}`;
-        if (urlsToDownload.length > 1) {
-          filename = `${baseFilename}_parte${i+1}.mp4`;
-        } else {
-          filename = `${baseFilename}.mp4`;
-        }
-        
-        if (isCatbox || isCrossOrigin) {
-          await this.forceDownload(url, filename);
-        } else {
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = filename;
-          link.target = this.isMobile() ? '_blank' : '_self';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          await new Promise(r => setTimeout(r, 500));
-        }
+    // Convertir cada URL a su versión directa
+    for (const url of urlsToDownload) {
+      if (url && url !== '#') {
+        const directUrl = this.getDirectDownloadUrl(url);
+        window.open(directUrl, '_blank');
       }
-    } finally {
-      this.isDownloading = false;
-      if (downloadBtn) {
-        downloadBtn.disabled = false;
-        downloadBtn.style.opacity = '1';
-        downloadBtn.style.cursor = 'pointer';
-        downloadBtn.innerHTML = '⬇ Descargar';
-      }
-      this.hideProgressBar();
     }
   }
 
@@ -532,32 +544,26 @@ class VideoPlayer {
     return [];
   }
 
-  // ===== NUEVA FUNCIÓN: PRIORIZAR Y RENOMBRAR OPCIONES =====
   prioritizeOptions(options) {
-    // Asignar prioridad según el primer enlace de cada opción
     const getPriority = (urls) => {
       if (!urls || urls.length === 0) return 1;
       const firstUrl = urls[0] || '';
-      if (firstUrl.includes('mp4upload.com')) return 0;   // mayor prioridad
-      if (firstUrl.includes('drive.google.com')) return 2; // menor prioridad
-      return 1; // otros
+      if (firstUrl.includes('pixeldrain.com')) return 0;
+      if (firstUrl.includes('drive.google.com')) return 2;
+      return 1;
     };
 
-    // Ordenar por prioridad (ascendente)
     options.sort((a, b) => getPriority(a.urls) - getPriority(b.urls));
 
-    // Renombrar etiquetas y guardar la clave original
     const labels = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
     options.forEach((opt, index) => {
       opt.label = labels[index] || `Opción ${index + 1}`;
-      // Guardar la clave original (link, link2, link3, link4) para usarla después
-      opt.originalKey = opt.key; // asumimos que cada opción tiene un 'key'
+      opt.originalKey = opt.key;
     });
 
     return options;
   }
 
-  // Crear el select con las opciones ya ordenadas
   createServerSelect(options, initialIndex) {
     const container = document.getElementById('serverOptions');
     container.innerHTML = '';
@@ -586,7 +592,7 @@ class VideoPlayer {
     options.forEach((opt, idx) => {
       const option = document.createElement('option');
       option.value = idx;
-      option.textContent = opt.label; // "Opción 1", "Opción 2", ...
+      option.textContent = opt.label;
       if (idx === initialIndex) option.selected = true;
       select.appendChild(option);
     });
@@ -596,7 +602,7 @@ class VideoPlayer {
       const selected = options[idx];
       if (selected) {
         this.activeOptionLabel = selected.label;
-        this.activeOptionKey = selected.originalKey || 'link'; // usar la clave guardada
+        this.activeOptionKey = selected.originalKey || 'link';
         this.updateDownloadUrls(selected.urls);
         this.playPart(0, selected.urls);
       }
@@ -607,7 +613,7 @@ class VideoPlayer {
   }
 
   updateDownloadUrls(urls) {
-    this.currentDownloadUrls = urls.map(url => this.generateDirectLink(url));
+    this.currentDownloadUrls = urls;
     this.currentPeerTubeUrl = (urls.length > 0 && this.isPeerTubeUrl(urls[0])) ? urls[0] : null;
   }
 
@@ -616,11 +622,9 @@ class VideoPlayer {
     return /^(https?:\/\/)?([a-z0-9-]+\.)*peertube\.\w+\//i.test(url);
   }
 
-  // Obtener las URLs según la clave activa
   getActiveEpisodeUrls() {
     const episodeData = this.currentEpisodeData;
     if (!episodeData) return [];
-    // Usar la clave almacenada (link, link2, link3, link4)
     const key = this.activeOptionKey || 'link';
     return this.normalizeUrls(episodeData[key]);
   }
@@ -838,7 +842,6 @@ class VideoPlayer {
       document.title = `Ver ${formattedTitle} - Archinime`;
       document.getElementById('epTitle').innerText = formattedTitle;
       
-      // Crear array de opciones con sus claves originales
       let options = [
         { label: 'Latino', key: 'link', urls: this.normalizeUrls(episodeData.link) },
         { label: 'Opción 2', key: 'link2', urls: this.normalizeUrls(episodeData.link2) },
@@ -851,13 +854,9 @@ class VideoPlayer {
         return;
       }
 
-      // Reordenar y renombrar según prioridad
       options = this.prioritizeOptions(options);
-
-      // Crear el select con las opciones ya ordenadas
       this.createServerSelect(options, 0);
 
-      // Establecer la primera opción como activa
       const firstOption = options[0];
       this.activeOptionLabel = firstOption.label;
       this.activeOptionKey = firstOption.originalKey || 'link';
