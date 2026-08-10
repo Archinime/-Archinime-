@@ -7,7 +7,7 @@
 // NUEVO: Conversión de mp4upload embed a directo para descarga
 // NUEVO: Menú desplegable (select) para opciones de servidor (mejor para móviles)
 // NUEVO: Reordenamiento automático: mp4upload -> Opción 1, Google Drive -> Opción 4
-// CAMBIO: Link de descarga de Google Drive ahora usa drive.google.com/uc?export=download&id= (sin authuser=0)
+// CAMBIO: Google Drive genera enlace con drive.usercontent.google.com y authuser=0
 
 class VideoPlayer {
   constructor() {
@@ -65,10 +65,12 @@ class VideoPlayer {
   generateDirectLink(url) {
     if (!url) return "#";
     
+    // DoomStream
     if (this.isDoomStreamUrl(url)) {
       return url.replace(/\/e\//, '/d/');
     }
 
+    // mp4upload
     if (url.includes('mp4upload.com/embed-')) {
       const match = url.match(/embed-([^\.]+)(\.html)?/);
       if (match && match[1]) {
@@ -76,21 +78,36 @@ class VideoPlayer {
       }
     }
 
-    // Google Drive: ahora usa el formato estándar sin authuser=0
+    // Google Drive - formato con drive.usercontent.google.com y authuser=0
     if (url.includes("drive.google.com")) {
       const match = url.match(/\/d\/(.+?)\//);
-      if (match && match[1]) return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+      if (match && match[1]) {
+        return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
+      }
       const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (altMatch && altMatch[1]) return `https://drive.google.com/uc?export=download&id=${altMatch[1]}`;
-      // Si el enlace ya es de descarga directa (uc?export=download), lo devolvemos tal cual
-      if (url.includes('uc?export=download')) return url;
+      if (altMatch && altMatch[1]) {
+        return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
+      }
+      // Si ya es un enlace de descarga directa con drive.usercontent, lo dejamos igual
+      if (url.includes('drive.usercontent.google.com')) {
+        return url;
+      }
     }
 
-    if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace('dl=0', 'dl=1');
+    // Dropbox
+    if (url.includes("dropbox.com") && url.includes("dl=0")) {
+      return url.replace('dl=0', 'dl=1');
+    }
+
+    // OK.ru
     if (url.includes("ok.ru/")) {
       const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
-      if (match && match[1]) return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
+      if (match && match[1]) {
+        return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
+      }
     }
+
+    // Odysee
     if (url.includes("odysee.com")) {
       let claimStr = url.split("/embed/")[1];
       if (claimStr) {
@@ -100,6 +117,8 @@ class VideoPlayer {
       }
       return url;
     }
+
+    // Pixeldrain y otros: no se modifican
     return url;
   }
 
