@@ -7,7 +7,8 @@
 // NUEVO: Conversión de mp4upload embed a directo para descarga
 // NUEVO: Menú desplegable (select) para opciones de servidor (mejor para móviles)
 // NUEVO: Reordenamiento automático: mp4upload -> Opción 1, Google Drive -> Opción 4
-// CAMBIO: Google Drive genera enlace con drive.usercontent.google.com y authuser=0
+// REACTIVADO: Botón PLAY para Pixeldrain (abre en nueva ventana)
+// FIX: Link de descarga de Google Drive con formato drive.usercontent.google.com
 
 class VideoPlayer {
   constructor() {
@@ -78,8 +79,11 @@ class VideoPlayer {
       }
     }
 
-    // Google Drive - formato con drive.usercontent.google.com y authuser=0
+    // Google Drive: formato solicitado
     if (url.includes("drive.google.com")) {
+      // Si ya es el formato deseado, devolver tal cual
+      if (url.includes('drive.usercontent.google.com/download')) return url;
+      // Extraer ID
       const match = url.match(/\/d\/(.+?)\//);
       if (match && match[1]) {
         return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
@@ -88,10 +92,12 @@ class VideoPlayer {
       if (altMatch && altMatch[1]) {
         return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
       }
-      // Si ya es un enlace de descarga directa con drive.usercontent, lo dejamos igual
-      if (url.includes('drive.usercontent.google.com')) {
-        return url;
+      // Si ya es uc?export=download, extraer id y convertir
+      const ucMatch = url.match(/uc\?export=download&id=([a-zA-Z0-9_-]+)/);
+      if (ucMatch && ucMatch[1]) {
+        return `https://drive.usercontent.google.com/download?id=${ucMatch[1]}&export=download&authuser=0`;
       }
+      // Si no se pudo, devolver original
     }
 
     // Dropbox
@@ -118,7 +124,7 @@ class VideoPlayer {
       return url;
     }
 
-    // Pixeldrain y otros: no se modifican
+    // Pixeldrain y otros: no se modifican (se usarán en el botón PLAY)
     return url;
   }
 
@@ -139,7 +145,66 @@ class VideoPlayer {
     
     const container = document.getElementById('mediaContainer');
     container.innerHTML = '';
-    
+
+    // ----- PIXELDRAIN: botón PLAY centrado -----
+    if (url.includes('pixeldrain.com')) {
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0b;
+        z-index: 1;
+      `;
+
+      const btn = document.createElement('button');
+      btn.style.cssText = `
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #e50914;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      `;
+      btn.innerHTML = `<span style="width:0; height:0; border-left:45px solid white; border-top:28px solid transparent; border-bottom:28px solid transparent; margin-left:12px;"></span>`;
+
+      btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'scale(1.08)';
+        btn.style.boxShadow = '0 0 50px rgba(229,9,20,0.9)';
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'scale(1)';
+        btn.style.boxShadow = '0 0 30px rgba(229,9,20,0.6)';
+      });
+      btn.addEventListener('click', () => {
+        window.open(url, '_blank');
+      });
+
+      const label = document.createElement('p');
+      label.style.cssText = 'color:#cccccc; font-size:1.2rem; letter-spacing:1px; font-weight:300; margin-top:1.5rem;';
+      label.innerHTML = 'Haz clic en <strong style="color:#ffffff; font-weight:500;">PLAY</strong> para ver el video';
+
+      wrapper.appendChild(btn);
+      wrapper.appendChild(label);
+      container.appendChild(wrapper);
+
+      this.currentVideoElement = null;
+      this.updateLogoBlocker(url);
+      return;
+    }
+
+    // ----- REPRODUCCIÓN NORMAL -----
     const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
     if (isVideoFile && !url.includes('drive.google.com')) {
       const video = document.createElement('video');
@@ -582,23 +647,24 @@ class VideoPlayer {
     
     const select = document.createElement('select');
     select.id = 'serverSelect';
+    // Estilo más compacto
     select.style.cssText = `
       width: 100%;
-      padding: 8px 12px;
+      padding: 4px 8px;
       background: rgba(0,0,0,0.7);
       border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
+      border-radius: 6px;
       color: #fff;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       font-family: 'Poppins', sans-serif;
       cursor: pointer;
       appearance: none;
       -webkit-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 16px;
-      padding-right: 35px;
+      background-position: right 6px center;
+      background-size: 14px;
+      padding-right: 28px;
     `;
     
     options.forEach((opt, idx) => {
