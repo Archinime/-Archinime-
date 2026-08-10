@@ -251,41 +251,41 @@
       transform: translateY(-2px);
     }
 
-    /* Contenedor del select: ocupa el espacio restante y se alinea a la derecha */
+    /* Contenedor de opciones: botones en fila */
     .options {
       display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
       flex: 1 1 auto;
       min-width: 120px;
-      max-width: 280px;
-      justify-content: flex-end;
     }
-    #serverSelect {
-      width: 100%;
-      padding: 8px 12px;
-      background: rgba(0,0,0,0.7);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
+
+    /* Estilo para los botones de opciones */
+    .opt-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 0.85rem;
-      font-family: 'Poppins', sans-serif;
+      padding: 8px 20px;
+      border-radius: 30px;
       cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 16px;
-      padding-right: 35px;
-      transition: border-color 0.2s;
+      font-weight: 600;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      backdrop-filter: blur(2px);
     }
-    #serverSelect:focus {
-      outline: none;
+    .opt-btn.active {
+      background: var(--primary-color);
+      color: #000;
       border-color: var(--primary-color);
-      box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+      box-shadow: 0 0 15px var(--primary-color);
     }
-    #serverSelect option {
-      background: #1a1a1a;
-      color: #fff;
+    .opt-btn:hover {
+      background: rgba(0, 255, 247, 0.15);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
     }
 
     .player-wrapper {
@@ -371,182 +371,6 @@
       font-weight: 700;
       letter-spacing: 0.5px;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    /* --- Banner Brave --- */
-    #braveBanner {
-      display: none;
-      background: linear-gradient(135deg, rgba(0, 243, 255, 0.08), rgba(188, 19, 254, 0.08));
-      border: 1px solid rgba(0, 243, 255, 0.3);
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      margin: 0 0 15px 0;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-      backdrop-filter: blur(4px);
-    }
-    #braveBanner:hover {
-      background: rgba(0, 243, 255, 0.15);
-      border-color: var(--primary-color);
-      box-shadow: 0 0 25px rgba(0, 243, 255, 0.15);
-      transform: scale(1.02);
-    }
-    #braveBanner img {
-      height: 48px;
-      width: 48px;
-      object-fit: contain;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-    #braveBanner .banner-text {
-      color: #eee;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-align: center;
-    }
-    #braveBanner .banner-text strong {
-      color: var(--primary-color);
-      font-weight: 800;
-    }
-    #braveBanner .banner-cta {
-      background: var(--primary-color);
-      color: #000;
-      font-weight: 800;
-      padding: 6px 20px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      transition: 0.2s;
-      border: none;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-    }
-    #braveBanner .banner-cta:hover {
-      background: #fff;
-      box-shadow: 0 0 20px var(--primary-color);
-      transform: translateY(-2px);
-    }
-    @media (max-width: 768px) {
-      #braveBanner { flex-direction: column; gap: 10px; padding: 12px; }
-      #braveBanner img { height: 40px; width: 40px; }
-      #braveBanner .banner-text { font-size: 0.85rem; }
-    }
-
-    /* --- Modal tutorial --- */
-    #tutorialModal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 99999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      padding: 20px;
-    }
-    #tutorialModal.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .tutorial-card {
-      background: #0a0a0f;
-      border: 1px solid var(--primary-color);
-      border-radius: 24px;
-      max-width: 800px;
-      width: 100%;
-      max-height: 90vh;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
-      transform: scale(0.95) translateY(20px);
-      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      position: relative;
-    }
-    #tutorialModal.show .tutorial-card {
-      transform: scale(1) translateY(0);
-    }
-    .tutorial-close {
-      position: absolute;
-      top: 12px;
-      right: 16px;
-      background: rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      color: #fff;
-      font-size: 1.4rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      transition: 0.3s;
-      backdrop-filter: blur(4px);
-    }
-    .tutorial-close:hover {
-      background: var(--accent-color);
-      border-color: var(--accent-color);
-      transform: rotate(90deg);
-      box-shadow: 0 0 20px var(--accent-color);
-    }
-    .tutorial-video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      background: #000;
-    }
-    .tutorial-video-wrapper video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-    .tutorial-info {
-      padding: 20px 24px 24px;
-      text-align: center;
-    }
-    .tutorial-info h3 {
-      font-family: 'Orbitron', sans-serif;
-      color: var(--primary-color);
-      font-size: 1.2rem;
-      margin-bottom: 6px;
-    }
-    .tutorial-info p {
-      color: #aaa;
-      font-size: 0.9rem;
-      margin-bottom: 16px;
-    }
-    .tutorial-info .btn-primary {
-      background: var(--primary-color);
-      color: #000;
-      border: none;
-      padding: 10px 28px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      transition: 0.2s;
-      font-size: 0.9rem;
-    }
-    .tutorial-info .btn-primary:hover {
-      background: #fff;
-      box-shadow: 0 0 25px var(--primary-color);
-      transform: translateY(-2px);
     }
 
     .controls {
@@ -807,14 +631,13 @@
         padding: 5px 10px;
       }
       .options {
-        min-width: 100px;
-        max-width: 160px;
+        gap: 6px;
+        min-width: 80px;
+        justify-content: flex-end;
       }
-      #serverSelect {
+      .opt-btn {
         font-size: 0.7rem;
-        padding: 5px 8px;
-        padding-right: 28px;
-        background-size: 14px;
+        padding: 5px 12px;
       }
       .controls {
         grid-template-columns: 1fr 1fr;
@@ -830,12 +653,11 @@
       .sticker-btn { padding: 12px; }
       .preview-sticker-wrapper { max-width: 80px; max-height: 80px; }
       .preview-sticker-wrapper img, .preview-sticker-wrapper video { max-width: 80px; max-height: 80px; }
-      .tutorial-card { max-width: 100%; }
     }
 
     @media (max-width: 480px) {
-      .options { min-width: 80px; max-width: 120px; }
-      #serverSelect { font-size: 0.65rem; padding: 4px 6px; padding-right: 22px; background-size: 12px; }
+      .options { min-width: 60px; }
+      .opt-btn { font-size: 0.65rem; padding: 4px 10px; }
     }
   </style>
 </head>
@@ -885,14 +707,6 @@
   </div>
 
   <h1 id="epTitle">Cargando...</h1>
-
-  <div id="braveBanner">
-    <img src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/ads.avif" alt="Brave Browser" loading="lazy">
-    <span class="banner-text">
-      📺 <strong>¿Anuncios molestos?</strong> Mira este tutorial para ver sin interrupciones
-    </span>
-    <button class="banner-cta" id="openTutorialBtn">▶ Ver Tutorial</button>
-  </div>
 
   <div class="controls">
     <a id="prevBtn" class="btn nav-btn btn-hidden">⏮ Ant.</a>
@@ -967,23 +781,6 @@
 
     <div id="comentariosList" class="comentarios-list">
       <div class="empty-comments"><i class="fas fa-spinner fa-spin"></i> Cargando comentarios...</div>
-    </div>
-  </div>
-</div>
-
-<div id="tutorialModal">
-  <div class="tutorial-card">
-    <button class="tutorial-close" id="closeTutorialBtn">&times;</button>
-    <div class="tutorial-video-wrapper">
-      <video id="tutorialVideo" controls playsinline>
-        <source src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/tutorial.mp4" type="video/mp4">
-        Tu navegador no soporta la reproducción de video.
-      </video>
-    </div>
-    <div class="tutorial-info">
-      <h3>📺 Ver sin anuncios</h3>
-      <p>Descubre cómo instalar Brave y la PWA de Archinime para una experiencia sin interrupciones.</p>
-      <button class="btn-primary" id="closeTutorialBtn2">Cerrar</button>
     </div>
   </div>
 </div>
