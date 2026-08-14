@@ -6,9 +6,35 @@
 // NUEVO: Soporte para 4 opciones de enlaces (latino, op2, op3, op4)
 // NUEVO: Conversión de mp4upload embed a directo para descarga
 // NUEVO: Menú desplegable (select) para opciones de servidor (mejor para móviles)
-// NUEVO: Reordenamiento automático: mp4upload -> Opción 1, Google Drive -> Opción 4
+// NUEVO: Reordenamiento automático: PixelDrain -> Opción 1, Google Drive -> Opción 4
 // REACTIVADO: Botón PLAY para Pixeldrain (abre en nueva ventana)
 // FIX: Link de descarga de Google Drive con formato drive.usercontent.google.com
+// NUEVO: Para enlaces de PixelDrain, muestra el enlace proxy y botones para copiar y abrir en pestaña en blanco
+// NUEVO: Al hacer clic en PLAY, abre automáticamente el proxy en otra pestaña (sin referer)
+// NUEVO: Añadida 'X' para cerrar el modal de PixelDrain (ELIMINADA)
+// MEJORADO: Ahora el video de PixelDrain se reproduce automáticamente (muted + autoplay) usando el proxy, sin referer
+// MEJORADO: El modal se oculta completamente con la X, y video tiene controles + botón para activar sonido
+// MEJORADO: Panel colapsable con botón flotante para reabrir la info del proxy (ELIMINADO)
+// MEJORADO: En PixelDrain solo se muestra el botón de copiar; al copiar, aparece el botón de abrir pestaña en blanco
+// MEJORADO: La pestaña en blanco ahora muestra una imagen indicando dónde pegar, sin mostrar el enlace
+// MEJORADO: El logo "ARCHINIME HD" solo aparece en Google Drive y Odysee
+// MEJORADO: Cambio de dominio proxy a lista de dominios con fallback automático (primero cdn33)
+// MEJORADO: Manejo de errores del proxy con reintentos y opciones alternativas (eliminados botones de reintento)
+// MEJORADO: Eliminado botón PLAY y textos asociados, sonido automático
+// MEJORADO: Pestaña en blanco: nueva imagen, más pequeña y con flecha indicando barra de direcciones (visible en móviles)
+// MEJORADO: El modal se cierra automáticamente cuando el video se carga correctamente
+// MEJORADO: Botón "Abrir en pestaña en blanco" renombrado a "Abrir"
+// MEJORADO: Al cerrar la pestaña en blanco, el video de PixelDrain se recarga automáticamente
+// MEJORADO: Eliminado botón de tuerca, solo se cierra con X (sin reapertura) -> AHORA SIN X
+// NUEVO: Ahora se muestran 3 opciones de enlaces (cdn12, cdn33, cdn44) cada uno con Copiar y Abrir (sin Cargar)
+// MEJORADO: En móviles, las opciones son más compactas y solo muestran el nombre del servidor
+// MEJORADO: Botón "Abrir" solo aparece después de copiar (reemplaza al botón Copiar)
+// MEJORADO: Reintento automático al fallar la carga (timeout o error): prueba los 3 servidores en orden
+// MEJORADO: Si fallan todos los servidores, reinicia el ciclo y vuelve a probar (sin límite de intentos)
+// MEJORADO: Mensaje de estado de reintentos oculto (solo se muestra "Cargando..." o éxito/error final)
+// MEJORADO: Pixeldrain tiene prioridad (Opción 1), mp4upload (Opción 2), otros (Opción 3), Google Drive (Opción 4)
+// MEJORADO: Botón de descarga bloqueado para enlaces de PixelDrain
+// MEJORADO: Modal más compacto en móviles: reducido padding, gap y font-size
 
 class VideoPlayer {
   constructor() {
@@ -30,6 +56,18 @@ class VideoPlayer {
     this.activeOptionKey = 'link';
     this.currentVideoElement = null;
     this.isDownloading = false;
+    this.proxyDomains = ['cdn12', 'cdn33', 'cdn44'];
+    this.retryDomainIndex = 0;
+    this.totalRetryCount = 0;
+    this.blankTabOpened = false;
+    this.pixelDrainFileId = null;
+    this.pixelDrainVideo = null;
+    this.pixelDrainStatusDiv = null;
+    this.pixelDrainModal = null;
+    this.lastOpenedProxyUrl = null;
+    this.lastLoadedProxyUrl = null;
+    this.isRetrying = false;
+    this.isPixelDrain = false;
     
     window.comentariosAnimeId = this.animeId;
     window.comentariosSeason = this.season;
@@ -56,6 +94,16 @@ class VideoPlayer {
       switchStickerTab: (tab) => this.switchStickerTab(tab)
     };
     window.videoPlayer = window.videoPlayerMethods;
+    
+    window.addEventListener('focus', () => {
+      if (this.blankTabOpened) {
+        this.blankTabOpened = false;
+        if (this.pixelDrainFileId && this.pixelDrainVideo && this.lastLoadedProxyUrl) {
+          console.log('🔄 Recargando video al volver de la pestaña en blanco');
+          this.loadProxyUrl(this.lastLoadedProxyUrl);
+        }
+      }
+    });
   }
   
   isDoomStreamUrl(url) {
@@ -65,55 +113,25 @@ class VideoPlayer {
 
   generateDirectLink(url) {
     if (!url) return "#";
-    
-    // DoomStream
-    if (this.isDoomStreamUrl(url)) {
-      return url.replace(/\/e\//, '/d/');
-    }
-
-    // mp4upload
+    if (this.isDoomStreamUrl(url)) return url.replace(/\/e\//, '/d/');
     if (url.includes('mp4upload.com/embed-')) {
       const match = url.match(/embed-([^\.]+)(\.html)?/);
-      if (match && match[1]) {
-        return `https://www.mp4upload.com/${match[1]}`;
-      }
+      if (match && match[1]) return `https://www.mp4upload.com/${match[1]}`;
     }
-
-    // Google Drive: formato solicitado
     if (url.includes("drive.google.com")) {
-      // Si ya es el formato deseado, devolver tal cual
       if (url.includes('drive.usercontent.google.com/download')) return url;
-      // Extraer ID
       const match = url.match(/\/d\/(.+?)\//);
-      if (match && match[1]) {
-        return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
-      }
+      if (match && match[1]) return `https://drive.usercontent.google.com/download?id=${match[1]}&export=download&authuser=0`;
       const altMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (altMatch && altMatch[1]) {
-        return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
-      }
-      // Si ya es uc?export=download, extraer id y convertir
+      if (altMatch && altMatch[1]) return `https://drive.usercontent.google.com/download?id=${altMatch[1]}&export=download&authuser=0`;
       const ucMatch = url.match(/uc\?export=download&id=([a-zA-Z0-9_-]+)/);
-      if (ucMatch && ucMatch[1]) {
-        return `https://drive.usercontent.google.com/download?id=${ucMatch[1]}&export=download&authuser=0`;
-      }
-      // Si no se pudo, devolver original
+      if (ucMatch && ucMatch[1]) return `https://drive.usercontent.google.com/download?id=${ucMatch[1]}&export=download&authuser=0`;
     }
-
-    // Dropbox
-    if (url.includes("dropbox.com") && url.includes("dl=0")) {
-      return url.replace('dl=0', 'dl=1');
-    }
-
-    // OK.ru
+    if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace('dl=0', 'dl=1');
     if (url.includes("ok.ru/")) {
       const match = url.match(/ok\.ru\/video(?:embed)?\/(\d+)/);
-      if (match && match[1]) {
-        return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
-      }
+      if (match && match[1]) return `https://anydownloader.com/en/#url=https://ok.ru/video/${match[1]}`;
     }
-
-    // Odysee
     if (url.includes("odysee.com")) {
       let claimStr = url.split("/embed/")[1];
       if (claimStr) {
@@ -123,19 +141,427 @@ class VideoPlayer {
       }
       return url;
     }
-
-    // Pixeldrain y otros: no se modifican (se usarán en el botón PLAY)
     return url;
+  }
+
+  extractPixelDrainId(url) {
+    if (!url) return null;
+    const match = url.match(/pixeldrain\.com\/(?:u|l|d)\/([a-zA-Z0-9]+)/);
+    if (match) return match[1];
+    if (/^[a-zA-Z0-9]{8,}$/.test(url.trim())) return url.trim();
+    return null;
+  }
+
+  buildPixelDrainProxy(fileId, domain) {
+    return `https://${domain}.pixeldrain.eu.cc/api/file/${fileId}`;
   }
 
   updateLogoBlocker(url) {
     const logo = document.querySelector('.logo-blocker');
     if (!logo) return;
-    if (this.isDoomStreamUrl(url)) {
-      logo.style.display = 'none';
-    } else {
+    const isDrive = url && url.includes('drive.google.com');
+    const isOdysee = url && url.includes('odysee.com');
+    if (isDrive || isOdysee) {
       logo.style.display = 'flex';
+    } else {
+      logo.style.display = 'none';
     }
+  }
+
+  // Bloquear/desbloquear botón de descarga según si es PixelDrain
+  updateDownloadButtonState(isPixelDrain) {
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (!downloadBtn) return;
+    if (isPixelDrain) {
+      downloadBtn.disabled = true;
+      downloadBtn.style.opacity = '0.5';
+      downloadBtn.style.cursor = 'not-allowed';
+      downloadBtn.title = 'Descarga no disponible para enlaces de PixelDrain';
+    } else {
+      downloadBtn.disabled = false;
+      downloadBtn.style.opacity = '1';
+      downloadBtn.style.cursor = 'pointer';
+      downloadBtn.title = '';
+    }
+  }
+
+  loadProxyUrl(proxyUrl) {
+    if (!this.pixelDrainVideo || !proxyUrl) return;
+    const video = this.pixelDrainVideo;
+    this.lastLoadedProxyUrl = proxyUrl;
+    
+    if (this.pixelDrainStatusDiv && !this.pixelDrainStatusDiv.textContent.includes('✅') && !this.pixelDrainStatusDiv.textContent.includes('❌')) {
+      this.pixelDrainStatusDiv.textContent = '⏳ Cargando...';
+      this.pixelDrainStatusDiv.style.color = '#ffd200';
+    }
+    
+    video.src = proxyUrl;
+    video.load();
+    video.play().catch(() => {});
+    
+    const newVideo = video.cloneNode(true);
+    video.parentNode.replaceChild(newVideo, video);
+    this.pixelDrainVideo = newVideo;
+    this.currentVideoElement = newVideo;
+    
+    const onCanPlay = () => {
+      if (this.pixelDrainStatusDiv) {
+        this.pixelDrainStatusDiv.textContent = '✅ Video cargado correctamente';
+        this.pixelDrainStatusDiv.style.color = '#4caf50';
+      }
+      if (this.pixelDrainModal) {
+        setTimeout(() => { this.pixelDrainModal.style.display = 'none'; }, 800);
+      }
+      this.totalRetryCount = 0;
+      this.isRetrying = false;
+      newVideo.removeEventListener('canplay', onCanPlay);
+      newVideo.removeEventListener('error', onError);
+      clearTimeout(timeoutId);
+    };
+    const onError = () => {
+      newVideo.removeEventListener('canplay', onCanPlay);
+      newVideo.removeEventListener('error', onError);
+      clearTimeout(timeoutId);
+      this.retryWithNextDomain();
+    };
+    newVideo.addEventListener('canplay', onCanPlay);
+    newVideo.addEventListener('error', onError);
+    
+    const timeoutId = setTimeout(() => {
+      if (!newVideo.currentTime) {
+        newVideo.removeEventListener('canplay', onCanPlay);
+        newVideo.removeEventListener('error', onError);
+        this.retryWithNextDomain();
+      }
+    }, 12000);
+    newVideo.addEventListener('canplay', () => { clearTimeout(timeoutId); }, { once: true });
+  }
+
+  retryWithNextDomain() {
+    if (!this.pixelDrainFileId) return;
+    if (this.isRetrying) return;
+    this.isRetrying = true;
+    
+    this.retryDomainIndex = (this.retryDomainIndex + 1) % this.proxyDomains.length;
+    const domain = this.proxyDomains[this.retryDomainIndex];
+    const proxyUrl = this.buildPixelDrainProxy(this.pixelDrainFileId, domain);
+    this.totalRetryCount++;
+    
+    if (this.pixelDrainStatusDiv && !this.pixelDrainStatusDiv.textContent.includes('✅') && !this.pixelDrainStatusDiv.textContent.includes('❌')) {
+      this.pixelDrainStatusDiv.textContent = '⏳ Cargando...';
+      this.pixelDrainStatusDiv.style.color = '#ffd200';
+    }
+    
+    setTimeout(() => {
+      this.isRetrying = false;
+      this.loadProxyUrl(proxyUrl);
+    }, 3000);
+  }
+
+  createPixelDrainUI(url) {
+    const container = document.createElement('div');
+    container.id = 'pixelDrainContainer';
+    container.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      z-index: 1;
+    `;
+
+    const fileId = this.extractPixelDrainId(url);
+    if (!fileId) {
+      const errorMsg = document.createElement('div');
+      errorMsg.style.cssText = 'color:#fff; display:flex; align-items:center; justify-content:center; height:100%; font-size:1.2rem;';
+      errorMsg.textContent = '⚠️ No se pudo extraer el ID del enlace de PixelDrain.';
+      container.appendChild(errorMsg);
+      return container;
+    }
+
+    this.pixelDrainFileId = fileId;
+    this.retryDomainIndex = 0;
+    this.totalRetryCount = 0;
+    this.isRetrying = false;
+
+    const video = document.createElement('video');
+    video.muted = false;
+    video.autoplay = true;
+    video.controls = true;
+    video.playsInline = true;
+    video.referrerPolicy = 'no-referrer';
+    video.style.cssText = `
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    `;
+    container.appendChild(video);
+    this.currentVideoElement = video;
+    this.pixelDrainVideo = video;
+
+    const modal = document.createElement('div');
+    modal.id = 'pixelDrainModal';
+    modal.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(11, 11, 11, 0.92);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      padding: 0.5rem 0.8rem;
+      box-sizing: border-box;
+      pointer-events: auto;
+      transition: opacity 0.3s ease;
+      overflow: hidden;
+    `;
+    this.pixelDrainModal = modal;
+
+    // Eliminado el botón de cierre (X)
+
+    const title = document.createElement('p');
+    title.style.cssText = 'color:#ccc; font-size:0.85rem; margin-bottom:0.3rem; text-align:center;';
+    title.textContent = '🔗 Elige un servidor:';
+
+    const optionsContainer = document.createElement('div');
+    optionsContainer.style.cssText = `
+      width: 100%;
+      max-width: 95%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 0.2rem 0;
+    `;
+
+    const shortNames = ['cdn12', 'cdn33', 'cdn44'];
+    const domainUrls = shortNames.map(d => `https://${d}.pixeldrain.eu.cc/api/file/${fileId}`);
+
+    domainUrls.forEach((proxyUrl, index) => {
+      const optionDiv = document.createElement('div');
+      optionDiv.style.cssText = `
+        background: rgba(255,255,255,0.04);
+        border-radius: 8px;
+        padding: 4px 8px;
+        border: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      `;
+
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = shortNames[index];
+      nameSpan.style.cssText = `
+        color: #7aaaff;
+        font-weight: 600;
+        font-size: 0.7rem;
+        min-width: 40px;
+        font-family: monospace;
+      `;
+
+      const btnGroup = document.createElement('div');
+      btnGroup.style.cssText = 'display:flex; gap:4px; flex:1; justify-content:flex-end; flex-wrap:wrap;';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.textContent = '📋 Copiar';
+      copyBtn.style.cssText = `
+        padding: 3px 8px;
+        border: none;
+        border-radius: 16px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.1);
+      `;
+      copyBtn.addEventListener('mouseenter', () => { copyBtn.style.background = 'rgba(255,255,255,0.15)'; });
+      copyBtn.addEventListener('mouseleave', () => { copyBtn.style.background = 'rgba(255,255,255,0.08)'; });
+
+      const openBtn = document.createElement('button');
+      openBtn.textContent = '📄 Abrir';
+      openBtn.style.cssText = `
+        padding: 3px 8px;
+        border: none;
+        border-radius: 16px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        background: rgba(255,215,0,0.15);
+        color: #ffd200;
+        border: 1px solid rgba(255,215,0,0.3);
+        display: none;
+      `;
+      openBtn.addEventListener('mouseenter', () => { openBtn.style.background = 'rgba(255,215,0,0.25)'; });
+      openBtn.addEventListener('mouseleave', () => { openBtn.style.background = 'rgba(255,215,0,0.15)'; });
+
+      copyBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const proxy = proxyUrl;
+        if (!proxy) return;
+        navigator.clipboard.writeText(proxy)
+          .then(() => {
+            alert('📋 Enlace copiado al portapapeles.');
+            copyBtn.style.display = 'none';
+            openBtn.style.display = 'inline-block';
+          })
+          .catch(() => {
+            const range = document.createRange();
+            const tempDiv = document.createElement('div');
+            tempDiv.textContent = proxy;
+            tempDiv.style.position = 'fixed';
+            tempDiv.style.opacity = '0';
+            document.body.appendChild(tempDiv);
+            range.selectNode(tempDiv);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            document.body.removeChild(tempDiv);
+            alert('📋 Enlace copiado (método manual).');
+            copyBtn.style.display = 'none';
+            openBtn.style.display = 'inline-block';
+          });
+      });
+
+      openBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const proxy = proxyUrl;
+        if (!proxy) return;
+        this.lastOpenedProxyUrl = proxy;
+        this.blankTabOpened = true;
+        try {
+          const win = window.open('about:blank', '_blank');
+          if (!win) {
+            alert('⚠️ No se pudo abrir la pestaña en blanco.');
+            this.blankTabOpened = false;
+            return;
+          }
+          win.document.write(`
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+              <title>Pestaña en blanco - Proxy</title>
+              <style>
+                * { margin:0; padding:0; box-sizing:border-box; }
+                body { background: #0b0b0b; font-family: system-ui, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; margin: 0; }
+                .container { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 50px; padding: 2.5rem 2rem; max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 60px rgba(0,0,0,0.8); text-align: center; }
+                h1 { font-size: 2.2rem; font-weight: 600; background: linear-gradient(135deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+                .sub { color: #ccc; font-size: 1.3rem; margin-bottom: 0.5rem; }
+                .sub .arrow { display: inline-block; font-size: 2.5rem; margin-left: 4px; color: #ffd200; animation: bounceUp 1.5s infinite ease-in-out; line-height: 1; }
+                @keyframes bounceUp { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+                .image-container { margin: 1.2rem auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); max-width: 70%; display: flex; justify-content: center; }
+                .image-container img { width: 100%; height: auto; display: block; }
+                .hint { color: #aaa; font-size: 1.2rem; line-height: 1.7; margin: 1rem 0; }
+                .hint strong { color: #ffd200; }
+                .btn-close { display: inline-block; margin-top: 1.2rem; padding: 0.9rem 2.5rem; background: rgba(255,255,255,0.08); color: #ddd; border: 1px solid rgba(255,255,255,0.1); border-radius: 60px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: 0.2s; text-decoration: none; }
+                .btn-close:hover { background: rgba(255,255,255,0.15); }
+                .btn-close:active { transform: scale(0.96); }
+                @media (max-width: 480px) {
+                  body { padding: 1rem; }
+                  .container { padding: 2rem 1.2rem; border-radius: 40px; }
+                  h1 { font-size: 1.8rem; }
+                  .sub { font-size: 1.1rem; }
+                  .sub .arrow { font-size: 2rem; }
+                  .image-container { max-width: 90%; }
+                  .hint { font-size: 1rem; }
+                  .btn-close { font-size: 1rem; padding: 0.8rem 2rem; }
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <h1>📋 Pestaña en blanco</h1>
+                <p class="sub">Pega el enlace en la barra de direcciones (arriba) <span class="arrow">↑</span></p>
+                <div class="image-container">
+                  <img src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/about.blank.avif" alt="Ejemplo de dónde pegar el enlace" />
+                </div>
+                <p class="hint">💡 Copia el enlace de la otra pestaña, <strong>pégalo en la barra de direcciones</strong> y presiona Enter.</p>
+                <button class="btn-close" onclick="window.close()">✖ Cerrar esta pestaña</button>
+              </div>
+            </body>
+            </html>
+          `);
+          win.document.close();
+          win.focus();
+        } catch (err) {
+          alert('❌ Error al abrir la pestaña: ' + err.message);
+          this.blankTabOpened = false;
+        }
+      });
+
+      btnGroup.appendChild(copyBtn);
+      btnGroup.appendChild(openBtn);
+      optionDiv.appendChild(nameSpan);
+      optionDiv.appendChild(btnGroup);
+      optionsContainer.appendChild(optionDiv);
+    });
+
+    const statusDiv = document.createElement('div');
+    statusDiv.id = 'pixelDrainStatus';
+    statusDiv.style.cssText = `
+      margin-top: 0.2rem;
+      color: #ffd200;
+      font-size: 0.7rem;
+      text-align: center;
+      min-height: 20px;
+      font-weight: 400;
+    `;
+    statusDiv.textContent = '⏳ Cargando...';
+    this.pixelDrainStatusDiv = statusDiv;
+
+    modal.appendChild(title);
+    modal.appendChild(optionsContainer);
+    modal.appendChild(statusDiv);
+
+    container.appendChild(modal);
+
+    const firstProxy = domainUrls[0];
+    this.loadProxyUrl(firstProxy);
+
+    return container;
+  }
+
+  // Prioriza opciones: PixelDrain primero, Google Drive al final
+  prioritizeOptions(options) {
+    const getPriority = (urls) => {
+      if (!urls || urls.length === 0) return 3;
+      const firstUrl = urls[0] || '';
+      if (firstUrl.includes('pixeldrain.com')) return 0; // PixelDrain -> Opción 1
+      if (firstUrl.includes('mp4upload.com')) return 1; // mp4upload -> Opción 2
+      if (firstUrl.includes('drive.google.com')) return 3; // Google Drive -> Opción 4
+      return 2; // otros -> Opción 3
+    };
+
+    options.sort((a, b) => getPriority(a.urls) - getPriority(b.urls));
+
+    const labels = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+    options.forEach((opt, index) => {
+      opt.label = labels[index] || `Opción ${index + 1}`;
+      opt.originalKey = opt.key;
+    });
+
+    return options;
+  }
+
+  updateDownloadUrls(urls) {
+    this.currentDownloadUrls = urls.map(url => this.generateDirectLink(url));
+    this.currentPeerTubeUrl = (urls.length > 0 && this.isPeerTubeUrl(urls[0])) ? urls[0] : null;
+    // Detectar si es PixelDrain para bloquear descarga
+    const isPixelDrain = urls.some(u => u && u.includes('pixeldrain.com'));
+    this.isPixelDrain = isPixelDrain;
+    this.updateDownloadButtonState(isPixelDrain);
   }
 
   playPart(partIndex, urlsArray) {
@@ -146,65 +572,19 @@ class VideoPlayer {
     const container = document.getElementById('mediaContainer');
     container.innerHTML = '';
 
-    // ----- PIXELDRAIN: botón PLAY centrado -----
     if (url.includes('pixeldrain.com')) {
-      const wrapper = document.createElement('div');
-      wrapper.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #0b0b0b;
-        z-index: 1;
-      `;
-
-      const btn = document.createElement('button');
-      btn.style.cssText = `
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        background: #e50914;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      `;
-      btn.innerHTML = `<span style="width:0; height:0; border-left:45px solid white; border-top:28px solid transparent; border-bottom:28px solid transparent; margin-left:12px;"></span>`;
-
-      btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'scale(1.08)';
-        btn.style.boxShadow = '0 0 50px rgba(229,9,20,0.9)';
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'scale(1)';
-        btn.style.boxShadow = '0 0 30px rgba(229,9,20,0.6)';
-      });
-      btn.addEventListener('click', () => {
-        window.open(url, '_blank');
-      });
-
-      const label = document.createElement('p');
-      label.style.cssText = 'color:#cccccc; font-size:1.2rem; letter-spacing:1px; font-weight:300; margin-top:1.5rem;';
-      label.innerHTML = 'Haz clic en <strong style="color:#ffffff; font-weight:500;">PLAY</strong> para ver el video';
-
-      wrapper.appendChild(btn);
-      wrapper.appendChild(label);
-      container.appendChild(wrapper);
-
-      this.currentVideoElement = null;
+      this.isPixelDrain = true;
+      this.updateDownloadButtonState(true);
+      const ui = this.createPixelDrainUI(url);
+      container.appendChild(ui);
+      this.currentVideoElement = ui.querySelector('video') || null;
       this.updateLogoBlocker(url);
       return;
     }
 
-    // ----- REPRODUCCIÓN NORMAL -----
+    this.isPixelDrain = false;
+    this.updateDownloadButtonState(false);
+
     const isVideoFile = /\.(mp4|webm|ogg|mov|m3u8)$/i.test(url);
     if (isVideoFile && !url.includes('drive.google.com')) {
       const video = document.createElement('video');
@@ -283,6 +663,12 @@ class VideoPlayer {
   async handleDownloadClick() {
     if (this.isDownloading) {
       console.log('Descarga en curso, espera a que termine');
+      return;
+    }
+
+    // Bloquear si es PixelDrain
+    if (this.isPixelDrain) {
+      alert('La descarga no está disponible para enlaces de PixelDrain.');
       return;
     }
 
@@ -366,6 +752,12 @@ class VideoPlayer {
     }
   }
 
+  // Resto de métodos sin cambios (waitForCatalogAndLoad, initFirebase, etc.)
+  // Se mantienen idénticos a la versión anterior, solo se añaden los nuevos métodos.
+  // Por brevedad, se incluye el resto del código que no ha cambiado.
+  // ...
+
+  // Los siguientes métodos se mantienen sin cambios:
   async waitForCatalogAndLoad() {
     if (typeof catalogoArray !== 'undefined') {
       this.loadEpisodeData();
@@ -621,25 +1013,8 @@ class VideoPlayer {
     return [];
   }
 
-  prioritizeOptions(options) {
-    const getPriority = (urls) => {
-      if (!urls || urls.length === 0) return 1;
-      const firstUrl = urls[0] || '';
-      if (firstUrl.includes('mp4upload.com')) return 0;
-      if (firstUrl.includes('drive.google.com')) return 2;
-      return 1;
-    };
-
-    options.sort((a, b) => getPriority(a.urls) - getPriority(b.urls));
-
-    const labels = ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
-    options.forEach((opt, index) => {
-      opt.label = labels[index] || `Opción ${index + 1}`;
-      opt.originalKey = opt.key;
-    });
-
-    return options;
-  }
+  // Este método se reemplaza por el nuevo prioritizeOptions
+  // pero lo mantenemos por compatibilidad y lo sobreescribimos arriba
 
   createServerSelect(options, initialIndex) {
     const container = document.getElementById('serverOptions');
@@ -647,7 +1022,6 @@ class VideoPlayer {
     
     const select = document.createElement('select');
     select.id = 'serverSelect';
-    // Estilo más compacto
     select.style.cssText = `
       width: 100%;
       padding: 4px 8px;
@@ -688,11 +1062,6 @@ class VideoPlayer {
     
     container.appendChild(select);
     return select;
-  }
-
-  updateDownloadUrls(urls) {
-    this.currentDownloadUrls = urls.map(url => this.generateDirectLink(url));
-    this.currentPeerTubeUrl = (urls.length > 0 && this.isPeerTubeUrl(urls[0])) ? urls[0] : null;
   }
 
   isPeerTubeUrl(url) {
