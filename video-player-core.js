@@ -35,6 +35,10 @@
 // MEJORADO: Pixeldrain tiene prioridad (Opción 1), mp4upload (Opción 2), otros (Opción 3), Google Drive (Opción 4)
 // MEJORADO: Botón de descarga bloqueado para enlaces de PixelDrain
 // MEJORADO: Modal más compacto en móviles: reducido padding, gap y font-size
+// MODIFICADO: El botón "Abrir" ahora se comporta diferente según el contexto:
+//             - En navegador web normal (no standalone): usa window.open con ejem.html (instrucciones).
+//             - En modo standalone (PWA instalada): usa navigator.share() para elegir navegador externo.
+//             - En ambos casos se muestra la página de instrucciones (ejem.html).
 
 class VideoPlayer {
   constructor() {
@@ -106,6 +110,10 @@ class VideoPlayer {
     });
   }
   
+  isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  }
+
   isDoomStreamUrl(url) {
     if (!url) return false;
     return /(playmogo\.com|doomstream\.com)\/e\//i.test(url);
@@ -433,71 +441,100 @@ class VideoPlayer {
           });
       });
 
+      // ============================================================
+      // BOTÓN "ABRIR" - Comportamiento diferenciado según contexto
+      // ============================================================
       openBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         const proxy = proxyUrl;
         if (!proxy) return;
         this.lastOpenedProxyUrl = proxy;
-        this.blankTabOpened = true;
-        try {
-          const win = window.open('about:blank', '_blank');
-          if (!win) {
-            alert('⚠️ No se pudo abrir la pestaña en blanco.');
-            this.blankTabOpened = false;
-            return;
+
+        // Construir URL de instrucciones
+        const instruccionesUrl = `ejem.html?url=${encodeURIComponent(proxy)}`;
+
+        // Función de fallback (se usa si el método principal falla)
+        const fallbackOpen = (url) => {
+          // Intentar window.open normal
+          try {
+            const win = window.open(url, '_blank');
+            if (win) {
+              win.focus();
+              this.mostrarToast('📋 Abriendo instrucciones...');
+              return true;
+            }
+          } catch (err) {
+            console.warn('Error en fallback window.open:', err);
           }
-          win.document.write(`
-            <!DOCTYPE html>
-            <html lang="es">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-              <title>Pestaña en blanco - Proxy</title>
-              <style>
-                * { margin:0; padding:0; box-sizing:border-box; }
-                body { background: #0b0b0b; font-family: system-ui, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; margin: 0; }
-                .container { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 50px; padding: 2.5rem 2rem; max-width: 600px; width: 100%; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 60px rgba(0,0,0,0.8); text-align: center; }
-                h1 { font-size: 2.2rem; font-weight: 600; background: linear-gradient(135deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
-                .sub { color: #ccc; font-size: 1.3rem; margin-bottom: 0.5rem; }
-                .sub .arrow { display: inline-block; font-size: 2.5rem; margin-left: 4px; color: #ffd200; animation: bounceUp 1.5s infinite ease-in-out; line-height: 1; }
-                @keyframes bounceUp { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-                .image-container { margin: 1.2rem auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); max-width: 70%; display: flex; justify-content: center; }
-                .image-container img { width: 100%; height: auto; display: block; }
-                .hint { color: #aaa; font-size: 1.2rem; line-height: 1.7; margin: 1rem 0; }
-                .hint strong { color: #ffd200; }
-                .btn-close { display: inline-block; margin-top: 1.2rem; padding: 0.9rem 2.5rem; background: rgba(255,255,255,0.08); color: #ddd; border: 1px solid rgba(255,255,255,0.1); border-radius: 60px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: 0.2s; text-decoration: none; }
-                .btn-close:hover { background: rgba(255,255,255,0.15); }
-                .btn-close:active { transform: scale(0.96); }
-                @media (max-width: 480px) {
-                  body { padding: 1rem; }
-                  .container { padding: 2rem 1.2rem; border-radius: 40px; }
-                  h1 { font-size: 1.8rem; }
-                  .sub { font-size: 1.1rem; }
-                  .sub .arrow { font-size: 2rem; }
-                  .image-container { max-width: 90%; }
-                  .hint { font-size: 1rem; }
-                  .btn-close { font-size: 1rem; padding: 0.8rem 2rem; }
-                }
-              </style>
-            </head>
-            <body>
-              <div class="container">
-                <h1>📋 Pestaña en blanco</h1>
-                <p class="sub">Pega el enlace en la barra de direcciones (arriba) <span class="arrow">↑</span></p>
-                <div class="image-container">
-                  <img src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/about.blank.avif" alt="Ejemplo de dónde pegar el enlace" />
-                </div>
-                <p class="hint">💡 Copia el enlace de la otra pestaña, <strong>pégalo en la barra de direcciones</strong> y presiona Enter.</p>
-                <button class="btn-close" onclick="window.close()">✖ Cerrar esta pestaña</button>
-              </div>
-            </body>
-            </html>
-          `);
-          win.document.close();
-          win.focus();
-        } catch (err) {
-          alert('❌ Error al abrir la pestaña: ' + err.message);
-          this.blankTabOpened = false;
+
+          // Si falla, copiar el enlace del proxy
+          navigator.clipboard.writeText(proxy)
+            .then(() => {
+              alert('📋 Enlace copiado al portapapeles.\n\nAbre tu navegador y pégalo en la barra de direcciones.');
+            })
+            .catch(() => {
+              const range = document.createRange();
+              const tempDiv = document.createElement('div');
+              tempDiv.textContent = proxy;
+              tempDiv.style.position = 'fixed';
+              tempDiv.style.opacity = '0';
+              document.body.appendChild(tempDiv);
+              range.selectNode(tempDiv);
+              window.getSelection().removeAllRanges();
+              window.getSelection().addRange(range);
+              document.execCommand('copy');
+              document.body.removeChild(tempDiv);
+              alert('📋 Enlace copiado (método manual).\n\nAbre tu navegador y pégalo en la barra de direcciones.');
+            });
+          return false;
+        };
+
+        // ============================================================
+        // ESTRATEGIA PRINCIPAL: Según modo standalone
+        // ============================================================
+        const isStandalone = this.isStandalone();
+
+        if (isStandalone) {
+          // ========== MODO STANDALONE (PWA instalada) ==========
+          // Usar navigator.share() para elegir navegador externo
+          if (navigator.share) {
+            navigator.share({
+              title: 'Abrir enlace en tu navegador',
+              text: 'Abre esta página para ver las instrucciones y pegar el enlace.',
+              url: instruccionesUrl
+            })
+            .then(() => {
+              console.log('📤 Instrucciones compartidas exitosamente');
+              this.mostrarToast('✅ Selecciona tu navegador favorito');
+            })
+            .catch((err) => {
+              if (err.name === 'AbortError') {
+                console.log('Compartir cancelado por el usuario');
+                return;
+              }
+              console.warn('Error en navigator.share:', err);
+              fallbackOpen(instruccionesUrl);
+            });
+          } else {
+            // Si navigator.share no está disponible en standalone (caso raro)
+            fallbackOpen(instruccionesUrl);
+          }
+        } else {
+          // ========== NAVEGADOR WEB NORMAL (PC o móvil sin instalar) ==========
+          // Usar window.open directamente
+          try {
+            const win = window.open(instruccionesUrl, '_blank');
+            if (win) {
+              win.focus();
+              this.mostrarToast('📋 Abriendo instrucciones...');
+            } else {
+              // Si falla, usar fallback
+              fallbackOpen(instruccionesUrl);
+            }
+          } catch (err) {
+            console.warn('Error en window.open:', err);
+            fallbackOpen(instruccionesUrl);
+          }
         }
       });
 
@@ -533,15 +570,50 @@ class VideoPlayer {
     return container;
   }
 
+  // Método auxiliar para mostrar un toast
+  mostrarToast(mensaje) {
+    let toast = document.getElementById('pixelDrainToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'pixelDrainToast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.85);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        z-index: 99999;
+        border: 1px solid rgba(255,215,0,0.3);
+        box-shadow: 0 0 20px rgba(0,0,0,0.7);
+        transition: opacity 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+        backdrop-filter: blur(8px);
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensaje;
+    toast.style.opacity = '1';
+    if (this.toastTimeout) clearTimeout(this.toastTimeout);
+    this.toastTimeout = setTimeout(() => {
+      toast.style.opacity = '0';
+    }, 3000);
+  }
+
   // Prioriza opciones: PixelDrain primero, Google Drive al final
   prioritizeOptions(options) {
     const getPriority = (urls) => {
       if (!urls || urls.length === 0) return 3;
       const firstUrl = urls[0] || '';
-      if (firstUrl.includes('pixeldrain.com')) return 0; // PixelDrain -> Opción 1
-      if (firstUrl.includes('mp4upload.com')) return 1; // mp4upload -> Opción 2
-      if (firstUrl.includes('drive.google.com')) return 3; // Google Drive -> Opción 4
-      return 2; // otros -> Opción 3
+      if (firstUrl.includes('pixeldrain.com')) return 0;
+      if (firstUrl.includes('mp4upload.com')) return 1;
+      if (firstUrl.includes('drive.google.com')) return 3;
+      return 2;
     };
 
     options.sort((a, b) => getPriority(a.urls) - getPriority(b.urls));
@@ -558,7 +630,6 @@ class VideoPlayer {
   updateDownloadUrls(urls) {
     this.currentDownloadUrls = urls.map(url => this.generateDirectLink(url));
     this.currentPeerTubeUrl = (urls.length > 0 && this.isPeerTubeUrl(urls[0])) ? urls[0] : null;
-    // Detectar si es PixelDrain para bloquear descarga
     const isPixelDrain = urls.some(u => u && u.includes('pixeldrain.com'));
     this.isPixelDrain = isPixelDrain;
     this.updateDownloadButtonState(isPixelDrain);
@@ -666,7 +737,6 @@ class VideoPlayer {
       return;
     }
 
-    // Bloquear si es PixelDrain
     if (this.isPixelDrain) {
       alert('La descarga no está disponible para enlaces de PixelDrain.');
       return;
@@ -752,12 +822,6 @@ class VideoPlayer {
     }
   }
 
-  // Resto de métodos sin cambios (waitForCatalogAndLoad, initFirebase, etc.)
-  // Se mantienen idénticos a la versión anterior, solo se añaden los nuevos métodos.
-  // Por brevedad, se incluye el resto del código que no ha cambiado.
-  // ...
-
-  // Los siguientes métodos se mantienen sin cambios:
   async waitForCatalogAndLoad() {
     if (typeof catalogoArray !== 'undefined') {
       this.loadEpisodeData();
@@ -1012,9 +1076,6 @@ class VideoPlayer {
     if (typeof urls === 'string' && urls.trim() !== '') return [urls];
     return [];
   }
-
-  // Este método se reemplaza por el nuevo prioritizeOptions
-  // pero lo mantenemos por compatibilidad y lo sobreescribimos arriba
 
   createServerSelect(options, initialIndex) {
     const container = document.getElementById('serverOptions');

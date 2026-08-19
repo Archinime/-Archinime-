@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pestaña en blanco - Proxy</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: #0b0b0b;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      margin: 0;
+    }
+    .container {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 2.5rem 2rem;
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .sub {
+      color: #ccc;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .sub .arrow {
+      display: inline-block;
+      font-size: 2.5rem;
+      margin-left: 4px;
+      color: #ffd200;
+      animation: bounceUp 1.5s infinite ease-in-out;
+      line-height: 1;
+    }
+    @keyframes bounceUp {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .image-container {
+      margin: 1.2rem auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      max-width: 70%;
+      display: flex;
+      justify-content: center;
+    }
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hint {
+      color: #aaa;
+      font-size: 1.2rem;
+      line-height: 1.7;
+      margin: 1rem 0;
+    }
+    .hint strong {
+      color: #ffd200;
+    }
+    .btn-close {
+      display: inline-block;
+      margin-top: 1.2rem;
+      padding: 0.9rem 2.5rem;
+      background: rgba(255,255,255,0.08);
+      color: #ddd;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 60px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .btn-close:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .btn-close:active {
+      transform: scale(0.96);
+    }
+
+    /* ===== SECCIÓN DE URL (solo visible si hay ?url) ===== */
+    .url-section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: none;
+    }
+    .url-section.visible {
+      display: block;
+    }
+    .url-box {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 10px 0 16px 0;
+      word-wrap: break-word;
+      text-align: center;
+    }
+    .url-box .label {
+      font-size: 0.7rem;
+      color: #00f0ff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .url-box .url-text {
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 400;
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.03);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px dashed rgba(255,255,255,0.06);
+    }
+    .btn-copy-link {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: rgba(255,215,0,0.15);
+      color: #ffd200;
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 60px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      text-decoration: none;
+    }
+    .btn-copy-link:hover {
+      background: rgba(255,215,0,0.25);
+      transform: scale(1.03);
+    }
+    .btn-copy-link:active {
+      transform: scale(0.96);
+    }
+    .btn-copy-link.copied {
+      background: rgba(0,255,0,0.15);
+      border-color: #4caf50;
+      color: #4caf50;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem; }
+      .container { padding: 2rem 1.2rem; border-radius: 40px; }
+      h1 { font-size: 1.8rem; }
+      .sub { font-size: 1.1rem; }
+      .sub .arrow { font-size: 2rem; }
+      .image-container { max-width: 90%; }
+      .hint { font-size: 1rem; }
+      .btn-close { font-size: 1rem; padding: 0.8rem 2rem; }
+      .btn-copy-link { font-size: 1rem; padding: 0.7rem 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Pestaña en blanco</h1>
+    <p class="sub">
+      Pega el enlace en la barra de direcciones (arriba)
+      <span class="arrow">↑</span>
+    </p>
+
+    <div class="image-container">
+      <img
+        src="https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/ejem.avif"
+        alt="Ejemplo de dónde pegar el enlace"
+        loading="lazy"
+      />
+    </div>
+
+    <p class="hint">
+      💡 Copia el enlace de la otra pestaña,
+      <strong>pégalo en la barra de direcciones</strong>
+      y presiona Enter.
+    </p>
+
+    <!-- Sección que se muestra SOLO si hay parámetro ?url -->
+    <div class="url-section" id="urlSection">
+      <div class="url-box">
+        <span class="label">📎 ENLACE RECIBIDO</span>
+        <div class="url-text" id="urlDisplay">Cargando...</div>
+      </div>
+      <button class="btn-copy-link" id="copyUrlBtn">
+        📋 Copiar enlace
+      </button>
+    </div>
+
+    <button class="btn-close" onclick="window.close()">
+      ✖ Cerrar esta pestaña
+    </button>
+  </div>
+
+  <script>
+    (function() {
+      const params = new URLSearchParams(location.search);
+      const urlParam = params.get('url');
+
+      const urlSection = document.getElementById('urlSection');
+      const urlDisplay = document.getElementById('urlDisplay');
+      const copyBtn = document.getElementById('copyUrlBtn');
+
+      if (urlParam && urlParam.trim() !== '') {
+        // Decodificar y mostrar la URL
+        const decodedUrl = decodeURIComponent(urlParam);
+        urlDisplay.textContent = decodedUrl;
+        urlSection.classList.add('visible');
+
+        // Botón "Copiar enlace"
+        copyBtn.addEventListener('click', function() {
+          navigator.clipboard.writeText(decodedUrl)
+            .then(() => {
+              copyBtn.textContent = '✅ ¡Copiado!';
+              copyBtn.classList.add('copied');
+              setTimeout(() => {
+                copyBtn.textContent = '📋 Copiar enlace';
+                copyBtn.classList.remove('copied');
+              }, 2500);
+            })
+            .catch(() => {
+              // Fallback manual
+              const range = document.createRange();
+              const tempDiv = document.createElement('div');
+              tempDiv.textContent = decodedUrl;
+              tempDiv.style.position = 'fixed';
+              tempDiv.style.opacity = '0';
+              document.body.appendChild(tempDiv);
+              range.selectNode(tempDiv);
+              window.getSelection().removeAllRanges();
+              window.getSelection().addRange(range);
+              document.execCommand('copy');
+              document.body.removeChild(tempDiv);
+              copyBtn.textContent = '✅ ¡Copiado!';
+              copyBtn.classList.add('copied');
+              setTimeout(() => {
+                copyBtn.textContent = '📋 Copiar enlace';
+                copyBtn.classList.remove('copied');
+              }, 2500);
+            });
+        });
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            window.close();
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
