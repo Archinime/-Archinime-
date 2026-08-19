@@ -39,6 +39,7 @@
 //             - En navegador web normal (no standalone): usa window.open con ejem.html (instrucciones).
 //             - En modo standalone (PWA instalada): usa navigator.share() para elegir navegador externo.
 //             - En ambos casos se muestra la página de instrucciones (ejem.html).
+// MODIFICADO: El botón "Abrir" ahora muestra una imagen (chrome.avif) en lugar de texto, con tamaño 1rem.
 
 class VideoPlayer {
   constructor() {
@@ -396,7 +397,7 @@ class VideoPlayer {
       copyBtn.addEventListener('mouseleave', () => { copyBtn.style.background = 'rgba(255,255,255,0.08)'; });
 
       const openBtn = document.createElement('button');
-      openBtn.textContent = '📄 Abrir';
+      // En lugar de texto, se muestra una imagen
       openBtn.style.cssText = `
         padding: 3px 8px;
         border: none;
@@ -410,8 +411,12 @@ class VideoPlayer {
         border: 1px solid rgba(255,215,0,0.3);
         display: none;
       `;
-      openBtn.addEventListener('mouseenter', () => { openBtn.style.background = 'rgba(255,215,0,0.25)'; });
-      openBtn.addEventListener('mouseleave', () => { openBtn.style.background = 'rgba(255,215,0,0.15)'; });
+      const img = document.createElement('img');
+      // CAMBIO AQUÍ: nueva imagen chrome.avif
+      img.src = 'https://cdn.jsdelivr.net/gh/Archinime/Archivos-data@main/chrome.avif';
+      img.alt = 'Abrir';
+      img.style.cssText = 'height: 1rem; width: auto; vertical-align: middle;';
+      openBtn.appendChild(img);
 
       copyBtn.addEventListener('click', (e) => {
         e.stopPropagation();
