@@ -40,6 +40,7 @@
 //             - En modo standalone (PWA instalada): usa navigator.share() para elegir navegador externo.
 //             - En ambos casos se muestra la página de instrucciones (ejem.html).
 // MODIFICADO: El botón "Abrir" ahora muestra una imagen (chrome.avif) en lugar de texto, con tamaño 1rem.
+// NUEVO: Prioridad máxima para enlaces de hubu.cloud (Opción 1).
 
 class VideoPlayer {
   constructor() {
@@ -610,11 +611,15 @@ class VideoPlayer {
     }, 3000);
   }
 
-  // Prioriza opciones: PixelDrain primero, Google Drive al final
+  // ============================================================
+  // NUEVA: Prioriza hubu.cloud, PixelDrain, mp4upload, otros y Drive
+  // ============================================================
   prioritizeOptions(options) {
     const getPriority = (urls) => {
       if (!urls || urls.length === 0) return 3;
       const firstUrl = urls[0] || '';
+      // Prioridad máxima para hubu.cloud (nuevo)
+      if (firstUrl.includes('hubu.cloud')) return 0;
       if (firstUrl.includes('pixeldrain.com')) return 0;
       if (firstUrl.includes('mp4upload.com')) return 1;
       if (firstUrl.includes('drive.google.com')) return 3;
